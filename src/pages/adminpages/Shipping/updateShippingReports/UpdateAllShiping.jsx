@@ -1,40 +1,53 @@
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { UpdateShippingReport } from '../../../../services/outScopeService';
-import { FadeLoader } from 'react-spinners/FadeLoader';
+import  FadeLoader  from 'react-spinners/FadeLoader';
+import { toast } from 'react-toastify';
 
 
 const UpdateAllShiping = () => {
 const[loading,setLoading]=useState(false)
 const navigate=useNavigate()
     let color = "#0c4088"
+useEffect(()=>{
+    update()
+},[])
     const update = async () => {
         setLoading(true)
         try {
             const { data, status } = await UpdateShippingReport()
             if (status === 200) {
                 setLoading(false)
+                toast.success("اطلاعات با موفقیت دریافت شد", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
             }
-            navigate(-1)
+           
         } catch (e) {
             console.log(e)
+            
+
         }
+        navigate(-1)
     }
 
-    useEffect(()=>{
-
-        update()
-    },[])
 
     if (loading) {
         return (
 
-            <div className="text-center m-auto" >
-                <p>دریافت اطلاعات ...</p>
+            <div className="text-center m-auto mt-5" >
+                <p className='mb-4'>دریافت اطلاعات ...</p>
                 <FadeLoader style={{ position: 'absolute', top: '50%', left: '50%' }} loading={loading} color={color} />
             </div>
         )
     }
+   
 }
 
 export default UpdateAllShiping
