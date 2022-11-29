@@ -1,0 +1,205 @@
+import Modal from 'react-modal';
+import {GetProductSupplyConditions} from "../../services/ProductSupplyConditionService";
+import {useState , useEffect} from "react";
+import {GetGroupsForEntity} from "../../services/GroupService";
+import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
+import {useNavigate} from "react-router-dom";
+import {editOrderDetail} from "../../services/orderService";
+import FadeLoader from "react-spinners/FadeLoader";
+
+
+
+const customStyles = {
+    content: {
+
+        inset: '50% auto auto 50%',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '5%',
+        border: '2px ridge black'
+    }
+
+}
+const OrderProductSupplyConditionEdit = ({modalIsOpen , closeModal,id , Detail}) => {
+    const Navigate = useNavigate()
+const [checked ,setChecked]=useState({selectedValue: 0})
+    const [condition , setCondition ]=useState([])
+    const [customerg, setCustomerg] = useState([])
+    let color="#0c4088";
+    let [loading, setLoading] = useState(false);
+
+    const submit = async () => {
+        const body={
+            "orderDetail": {
+                "id": Detail.id,
+                "orderId": Detail.orderId,
+                "productId": Detail.productId,
+                "measureUnitId": Detail.measureUnitId,
+                "quantity": Detail.quantity,
+                "basePrice": Detail.basePrice,
+                "price": Detail.price,
+                "priceIncludingTax":Detail.priceIncludingTax,
+                "createDate": Detail.createDate,
+                "productSupplyId": Detail.productSupplyId,
+                "productSupplyConditionId": checked.selectedValue,
+                "extId": null,
+                "comment": Detail.comment,
+                "derivedFrom": null,
+                "product": null
+            }
+        }
+        setLoading(true)
+
+        try {
+            const {data , status}= await editOrderDetail(body)
+
+
+                setTimeout(()=> {
+                    if (data.result.message === "Done.") {
+                        closeModal()
+
+                            setLoading(false)
+                    }
+                } , 4000)
+
+
+        }catch (e) {
+            console.log(e)
+            setLoading(false)
+        }
+    }
+    const CheckedHadnler = (conditionId) => {
+
+
+        setChecked({selectedValue: conditionId})
+
+
+    }
+    const getProductSupplyCondition=async ()=>{
+        try {
+            const {data , status}=await GetProductSupplyConditions(id)
+            setCondition(data.result.productSupplyConditions.values)
+        }catch (e){
+
+        }
+    }
+    const GetCustomerGroup = async () => {
+        const {data, status} = await GetGroupsForEntity(1);
+        if (status === 200) {
+            setCustomerg(data.result.groups);
+        }
+    }
+    useEffect(() => {
+        getProductSupplyCondition()
+        GetCustomerGroup();
+
+    }, [id])
+    const CustomerG = () => {
+        return (customerg.map(data => ({
+            label: data.name,
+            value: data.id
+        })))
+
+    }
+    const PaymentId = (id) => {
+        return (PaymentStructureEnums.filter(item => item.id === id).map(data => data.name))
+
+    }
+    const editHandler = (id) => {
+        Navigate(`/editproductsupply/${id}`)
+    }
+
+  return(
+
+      <Modal
+      isOpen={modalIsOpen}
+      // onRequestClose={closeModal}
+      style={customStyles}
+      contentLabel="Selected Option"
+      ariaHideApp={false}
+
+
+  >
+          { loading === true ?  <div >
+          <p>ثبت تغییرات ...</p>
+          <FadeLoader loading={loading} color={color}/>
+      </div>:
+
+          <div className=" rounded  " style={{border:" 1px solid #bfc9d4"}} >
+              {condition ===null?  (
+                      <div className="text-center">
+                  <span className="d-block  p-3">هیچ شرطی یافت نشد</span>
+              <span className="d-block  p-3 ">برای افزودن شرط  کلیک کنید  </span>
+                          <button className="btn btn-primary m-3" onClick={()=> editHandler(id)}> افزودن شرط </button>
+                      </div>
+              ) :(
+                  <div className="table-responsive p-2">
+                      <table
+                          className="table table-bordered table-hover table-striped  mt-2  mb-4">
+                          <thead>
+                          <tr style={{fontSize:'10px'}}>
+
+                              <th style={{fontSize:'10px'}} className="text-center">ردیف</th>
+                              <th style={{fontSize:'10px'}} className="text-center">نوع پرداخت</th>
+                              <th style={{fontSize:'10px'}} className="text-center">تعداد اقساط</th>
+                              <th style={{fontSize:'10px'}} className="text-center">بازه</th>
+                              <th style={{fontSize:'10px'}}  className="text-center">فی</th>
+
+                              <th style={{fontSize:'10px'}} className="text-center">گروه مشتریان</th>
+                              <th style={{fontSize:'10px'}}  className="text-center">فعال</th>
+                              <th style={{fontSize:'10px'}}  className="text-center">انتخاب</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {condition.map((contact , index) => (
+                              <tr  className='text-center'>
+
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{index + 1}</td>
+
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}><p className="mb-0">{PaymentId(contact.paymentMethodId)}</p></td>
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.paymentMethodId === 4 ? contact.installmentOccureCount : "-"}</td>
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.price}</td>
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{ contact.customerGroupId? CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label): "عمومی"}</td>
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.active === true ? (
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
+                                           stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                           className="feather feather-check  "
+                                           style={{color: 'green'}}>
+                                          <polyline points="20 6 9 17 4 12"></polyline>
+                                      </svg>
+                                  ) : (
+                                      <svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
+                                           fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                           className="feather feather-x  danger "
+                                           style={{color: 'red'}}>
+                                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                                      </svg>)
+                                  }</td>
+                                  <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}><input  type="radio"  name={Detail.productSupplyConditionId} checked={ Detail.productSupplyConditionId === contact.id ? contact.id : checked.selectedValue === contact.id} value={contact.id} id={contact.id} onChange={(e)=>CheckedHadnler(contact.id) }/></td>
+
+                              </tr>
+
+                          )) }
+
+                          </tbody>
+                      </table>
+                      <div  className="row  m-auto ">
+                          <button className="col-4 btn-sm btn-success" onClick={submit}>ثبت </button>
+                          <button className="col-4 btn-sm btn-danger " onClick={()=> closeModal()}>لغو </button>
+                          <button className=" col-4 btn-sm btn-info  " onClick={()=> editHandler(id)}> افزودن شرط جدید</button>
+
+                      </div>
+
+                  </div>)}
+                  </div>}
+
+      </Modal>
+  )
+}
+export default OrderProductSupplyConditionEdit

@@ -1,0 +1,8 @@
+{
+    "ForoshApi": "http://10.10.20.4/api/v1",
+    "attachments": "http://10.10.20.4/",
+    "localapi": "http://localhost:4000",
+    "MyApi":"https://localhost:5001/api",
+    "FromOutSide":"http://178.252.184.206:8091/api/v1"
+}
+

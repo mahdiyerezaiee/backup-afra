@@ -1,0 +1,261 @@
+.dark-mode {
+    color: #BDBDD7;
+    background-color:#233649!important;
+
+}
+.dark-mode .header {
+    color: #BDBDD7;
+    background-color:#0e2338 !important;
+
+}
+.dark-mode span{
+    color: #BDBDD7!important;
+
+}
+.dark-mode h1{
+    color: #BDBDD7!important;
+
+}.dark-mode h2{
+     color: #BDBDD7!important;
+
+ }.dark-mode h3{
+      color: #BDBDD7!important;
+
+  }.dark-mode h4{
+       color: #BDBDD7!important;
+
+   }.dark-mode h5{
+        color: #BDBDD7!important;
+
+    }.dark-mode h6{
+         color: #BDBDD7!important;
+
+     }.dark-mode a{
+          color: #BDBDD7!important;
+
+      }.dark-mode td{
+           color: #BDBDD7!important;
+
+       }.dark-mode p{
+            color: #BDBDD7!important;
+
+        }
+.dark-mode .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item{
+    background-color:#233649!important;
+
+}
+.dark-mode .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:focus {
+    background-color: #365388;
+
+}
+.dark-mode .user-progress{
+    background-color:#0e2338!important;
+}
+.dark-mode .widget-content-area{
+    background-color:#0e2338!important;
+
+}.dark-mode .widget{
+     background-color:#0e2338!important;
+
+ }
+.dark-mode .pro-sidebar .pro-sidebar-inner{
+    background-color:#0e2338!important;
+
+}
+.dark-mode .navbar .navbar-item .nav-item.dropdown a svg{
+    color: #3b82f6;
+}
+.dark-mode body{
+    background-color:#233649!important;
+}
+
+.dark-mode #toggle {
+    background-color: #5e6e82;
+}
+
+.dark-mode .btn_info{
+    background-color:#233649;
+    color: #BDBDD7;
+}
+.dark-mode .nav-bg {
+    background-color:#0e2338;
+
+}
+.dark-mode .nav-bg-md {
+    background-color:#0e2338;
+
+}
+.dark-mode .offcanvas {
+    background-color:#233649;
+
+}
+
+.dark-mode .nav-link{
+    color:  #BDBDD7!important;
+}
+.dark-mode .navbar-brand{
+    color: #BDBDD7!important;
+}
+.dark-mode .card{
+    /*border: 3px solid #ff8906!important;*/
+    box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
+    background-color:#233649;
+
+}
+.dark-mode .auth{
+    background-color:#233649;
+    border:#233649;
+;
+}
+.form-control{
+    background-color: transparent;
+}
+.dark-mode .textOnInput label:after {background-color:#0e2338 }
+.dark-mode .textOnInput label {background-color:transparent}
+.dark-mode .css-1s2u09g-control{background-color:#0e2338}
+.dark-mode .css-b62m3t-container input{background-color:#233649;
+    color: #BDBDD7;
+}
+.dark-mode .css-2613qy-menu {background-color:#233649!important;
+    color: #BDBDD7!important;
+}
+.dark-mode .css-1pahdxg-control {background-color:#233649!important;
+    color: #BDBDD7!important;
+}
+.dark-mode #react-select-5-listbox{background-color:#233649}
+.dark-mode .css-1paxdxg-control{background-color:#233649}
+.dark-mode svg{color: white;
+    background-color: transparent}
+.dark-mode .pro-sidebar.collapsed .pro-menu > ul > .pro-menu-item.pro-sub-menu > .pro-inner-list-item > .popper-inner{background-color:#233649}
+.dark-mode ul button{background-color: transparent}
+.dark-mode .rmdp-wrapper {background-color:#233649}
+.dark-mode .navbar .navbar-item .nav-item.dropdown .dropdown-menu{background-color:#233649}
+.dark-mode .dropdown-item:hover {
+
+    background-color: transparent;
+}
+.dark-mode .chat-system .user-list-box{
+
+    background-color: transparent;
+}
+.dark-mode input{
+    border: 1px solid #3b82f6;
+    background-color: #233649!important;
+    color: #BDBDD7;
+}.dark-mode textarea{
+    border: 1px solid #3b82f6;
+    background-color: #233649!important;
+    color: #BDBDD7;
+}
+.dark-mode label{
+    background-color:transparent!important;
+    color:  #BDBDD7!important;
+}
+
+.dark-mode .navbar .navbar-item .nav-item.dropdown.message-dropdown .nav-link:before{
+    background-color:#233649!important;
+
+}
+.dark-mode .navbar .navbar-item .nav-item.user-profile-dropdown .dropdown-menu .dropdown-item svg {
+    color: #BDBDD7;
+
+}
+.dark-mode .btn-primary{
+    background-color: #3b82f6!important;
+    color:  #BDBDD7!important;
+    border-color:#3b82f6!important ;
+}
+.dark-mode .footer-wrapper{
+    background-color:#233649!important;
+
+}
+.dark-mode ::selection{
+    color:  #BDBDD7!important;
+
+}
+.dark-mode .navbar .navbar-item .nav-item form.form-inline input.search-form-control{
+    border-color:#3b82f6!important ;
+border: 1px solid;
+}
+.dark-mode input::placeholder{
+    color:  #BDBDD7!important;
+
+}
+.dark-mode textarea::placeholder{
+    color:  #BDBDD7!important;
+
+}
+.dark-mode .navbar .navbar-item .nav-item.search-animated svg {
+    color:  #BDBDD7!important;
+
+}
+.dark-mode .table > thead > tr > th{
+   color: #51b6ff;
+}
+.dark-mode .form-control:focus{
+    border-color:#3b82f6!important ;
+    color:  #BDBDD7!important;
+}
+.dark-mode time{
+    color:  #BDBDD7!important;
+
+}
+.dark-mode .publisher{
+    background-color:#233649!important;
+
+}
+.dark-mode .publisher input{
+    border-color:#233649!important ;
+
+}
+.dark-mode #colorPallet .pallet-icon{
+    background-color: #3b82f6!important ;
+    color: white;
+}
+.dark-mode .css-1insrsq-control {
+    background-color:#233649!important ;
+}
+.dark-mode .css-14el2xx-placeholder{
+color: white;
+}
+.dark-mode  .css-qc6sy-singleValue{
+    color: white;
+}
+.dark-mode .form-control{
+    background-color:#0e2338!important ;
+
+}
+.dark-mode .cart-shop {
+    background-color:#233649!important ;
+
+}
+.nav-item.dropdown.notification-dropdown .dropdown-menu .dropdown-item:hover{
+  background-color: rgb(26 46 66)!important;
+}
+.dark-mode .navbar .navbar-item .nav-item.dropdown.notification-dropdown .nav-link:before{
+    background-color: rgb(26 46 66)!important;
+}
+.dark-mode .ReactModal__Content{
+    background-color:#0e2338!important;
+}
+.dark-mode .btn-light{
+    background-color: #0e2338!important ;
+    color: white;
+    border: #0e2338!important ;
+}
+.dark-mode .p-colors{
+    background-color: #0e2338!important ;
+    color: white;
+}
+.dark-mode
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s}
