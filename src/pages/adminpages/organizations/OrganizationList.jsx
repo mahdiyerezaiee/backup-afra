@@ -59,8 +59,8 @@ const OrganizationList = () => {
             NationalId:params.NationalId,
             RegistrationNumber:params.RegistrationNumber,
 
-            PageNumber:0,
-            PageSize:10
+            PageNumber,
+            PageSize
 
 
         }
@@ -77,7 +77,6 @@ const OrganizationList = () => {
         const { data, status } = await GetAllOrganisationCode(config);
 
         setOrganization(data.result.organizationLists.values);
-        sessionStorage.setItem('params', JSON.stringify(params));
 
     }
     const close = () => {
@@ -96,8 +95,8 @@ const OrganizationList = () => {
                     Name:params.Name,
                     NationalId:params.NationalId,
                     RegistrationNumber:params.RegistrationNumber,
-PageSize,
-                    PageNumber,
+                    PageSize:10,
+                    PageNumber:0,
 
 
 
@@ -294,7 +293,9 @@ PageSize,
                 params: {
                     Name:params.Name,
                     NationalId:params.NationalId,
-                    RegistrationNumber:params.RegistrationNumber
+                    RegistrationNumber:params.RegistrationNumber,
+                    PageSize,
+                    PageNumber
                 },
                 paramsSerializer: params => {
 

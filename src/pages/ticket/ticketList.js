@@ -52,7 +52,7 @@ const Navigate=useNavigate()
                 setTicket(data.result.supportRequests.values)
             }else {
                 const {data , status}= await GetSupportRequesstsUser(user.id , config)
-                setTicket(data.result.supportRequests)
+                setTicket(data.result.supportRequests.values)
 
             }
         } catch (error) {
@@ -222,7 +222,7 @@ const getSelectedData=(data)=>{
         setTotalCount(data.result.supportRequests.totalCount)
     }else {
       const {data , status}= await GetSupportRequesstsUser(user.id)
-setTicket(data.result.supportRequests)
+setTicket(data.result.supportRequests.values)
         setTotalCount(data.result.supportRequests.totalCount)
 
     }

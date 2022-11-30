@@ -344,6 +344,7 @@ const productForSelect=()=>{
         sessionStorage.clear()
 
         getProductSupply();
+        sessionStorage.clear()
 
         getProduct();
     }, [getData])
@@ -634,7 +635,7 @@ setCreateDate('')
 
                     </AdvancedSearch>
                 </div>
-                {getDefault()  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().ProductId || getDefault().CreateDate || getDefault().CottageCode  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
@@ -760,7 +761,7 @@ setCreateDate('')
 
                     </AdvancedSearch>
                 </div>
-                {getDefault()   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().ProductId || getDefault().CreateDate || getDefault().CottageCode  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>

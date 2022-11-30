@@ -76,7 +76,7 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
 
                 <div className="  buttons  text-end  p-2 mt-5">
 
-                    <button className="btn-danger   btn m-1" onClick={()=>{openModal(12)}}>رد درخواست </button>
+                    <button className="btn-danger   btn m-1" onClick={()=>{openModal(13)}}>رد درخواست </button>
                     <button className={ order.orderStatusId === 5?"btn-primary   btn m-1 ":"btn-success   btn m-1 "} onClick={()=>openModalEdit(order.id)}>صدور پیش فاکتور </button>
                     <button className="btn-success  m-1 btn "hidden={order.orderStatusId===5?false:true} onClick={()=>{openModal(8)}}>تایید درخواست </button>
                 </div>
