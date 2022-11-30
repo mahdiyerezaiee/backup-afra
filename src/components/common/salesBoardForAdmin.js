@@ -66,8 +66,8 @@ const SalesBoardForAdmin = () => {
     }, [])
     let formatter = new Intl.NumberFormat('fa-IR', {
         style: 'currency',
-        currency: 'IRR', maximumFractionDigits: 0, 
-        minimumFractionDigits: 0, 
+        currency: 'IRR', maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
     });
 
     let formatter2 = new Intl.NumberFormat('fa-IR', {
@@ -126,8 +126,11 @@ const SalesBoardForAdmin = () => {
         }
 
     }
+    let productCondistion;
+    if(productSupply!==null){
 
-    let productCondistion = productSupply.map(item => item.productSupplyConditions)
+     productCondistion = productSupply.map(item => item.productSupplyConditions)
+    }
     const groupReturn = (array) => {
         let newArray = [];
         for (let i = 0; i < array.length; i++) {
@@ -156,7 +159,7 @@ const SalesBoardForAdmin = () => {
             <div className=" statbox widget-content widget-content-area">
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2">
-                        <h5 className="text-center">تابلو عرضه </h5>
+                    <h4 className="text-center" style={{color:'#027f00'}}>تابلوی عرضه</h4>
                     </div>
                 </div>
                 <div className="   ">
@@ -188,6 +191,7 @@ const SalesBoardForAdmin = () => {
                             <thead>
                                 <tr>
                                     <th className="text-center">شناسه</th>
+                                    <th className="text-center">شماره کوتاژ</th>
                                     <th className="text-center">محصول</th>
                                     <th className="text-center">قیمت</th>
                                     <th className="text-center">واحد</th>
@@ -195,7 +199,9 @@ const SalesBoardForAdmin = () => {
                                     <th className="text-center">توضیحات</th>
                                     <th className="text-center">گروه مشتری</th>
                                     <th className="text-center">تاریخ شروع</th>
-                                    <th className="text-center">باقی مانده</th>
+                                    <th className="text-center">تاریخ پایان</th>
+
+                                    {/* <th className="text-center">باقی مانده</th> */}
                                     <th className="text-center">عملیات</th>
                                 </tr>
                             </thead>
@@ -205,6 +211,8 @@ const SalesBoardForAdmin = () => {
 
                                     <tr key={item.id}>
                                         <td className="text-center">{item.id}</td>
+                                        <td className="text-center">{item.cottageCode}</td>
+
                                         <td className="text-center">{item.product.name}</td>
                                         <td className="text-center">{formatter.format(item.price)}</td>
                                         <td className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnit).map(e => e.name)}</td>
@@ -212,7 +220,7 @@ const SalesBoardForAdmin = () => {
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
                                         <td className="text-center">{groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item => item.gpName)).length === 0 ? "عمومی" : [...new Set(groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item, index) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                        <td className="text-center">--</td>
+                                       <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td> 
                                         <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>درخواست
                                         </button>) : (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
 

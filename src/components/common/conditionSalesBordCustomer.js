@@ -69,7 +69,7 @@ const ConditionSalesBordCustomer = ({productSupplyConditions , handelClick, clos
                 </tr>
                 </thead>
                 <tbody>
-                {Condition.map((contact , index)=>
+                {Condition?Condition.map((contact , index)=>
 
                     <tr className='text-center'>
             <td>{index +1 }</td>
@@ -96,7 +96,7 @@ const ConditionSalesBordCustomer = ({productSupplyConditions , handelClick, clos
                 </ul>
             </td>
                     </tr>
-            )}
+            ):<tr className="text-center "><td colSpan='7' className="text-danger">این عرضه برای شما قابل درخواست نمی باشد</td></tr>}
 
                 </tbody>
             </table>

@@ -140,7 +140,7 @@ const SalesBoardForCustomer = () => {
             <div className=" statbox widget-content widget-content-area" >
                 <div className="row " >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2 " >
-                        <h4 className="text-center" style={{color:'#027f00'}}>کالای قابل عرضه به گروه مشتریان ( {groupInfo.name === " " ?  "عمومی" : groupInfo.name} )</h4>
+                    <h4 className="text-center" style={{color:'#027f00'}}>کالای قابل عرضه به گروه مشتریان ( {!groupInfo.name  ?  "عمومی" : groupInfo.name} )</h4>
                     </div>
                 </div>
                 <div className="   ">
@@ -172,14 +172,17 @@ const SalesBoardForCustomer = () => {
                             <thead>
                                 <tr>
                                     <th className="text-center">شناسه</th>
+                                    <th className="text-center">شماره کوتاژ</th>
                                     <th className="text-center">محصول</th>
                                     <th className="text-center">قیمت</th>
                                     <th className="text-center">واحد</th>
                                     <th className="text-center">تعداد</th>
                                     <th className="text-center">توضیحات</th>
-                                    <th className="text-center">حداقل میزان سفارش</th>
+
                                     <th className="text-center">تاریخ شروع</th>
-                                    <th className="text-center">باقی مانده</th>
+                                    <th className="text-center">تاریخ پایان</th>
+                                    
+                                    {/* <th className="text-center">باقی مانده</th> */}
                                     <th className="text-center">عملیات</th>
                                 </tr>
                             </thead>
@@ -189,14 +192,14 @@ const SalesBoardForCustomer = () => {
 
                                     <tr key={item.id}>
                                         <td className="text-center">{item.id}</td>
+                                        <td className="text-center">{item.cottageCode}</td>
                                         <td className="text-center">{item.product.name}</td>
                                         <td className="text-center">{formatter.format(item.price)}</td>
                                         <td className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnitId).map(e => e.name)}</td>
                                         <td className="text-center">{item.quantity}</td>
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
-                                        <td className="text-center">{item.minSellableAmount}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                        <td className="text-center">--</td>
+                                        <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td> 
                                         <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>ثبت درخواست
                                             </button>) : (<button  className=" btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
 

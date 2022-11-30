@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { GetAddress } from './../../services/addressService';
-import { DateObject } from 'react-multi-date-picker';
 import { ShippingStatusEnums } from './../../Enums/ShippingStatusEnums';
 import { OrderStatus } from './../../Enums/OrderStatusEnums';
 import { PaymentStructureEnums } from './../../Enums/PaymentStructureEnums';
@@ -16,13 +15,17 @@ import {
 } from '../../services/orderService';
 import { GetAllOrganisationCode } from './../../services/organisationService';
 import  Modal  from 'react-modal';
-import AddAdressCustomerForOrder from './../../components/common/addAdressCustomerForOrder';
-import MyTableClick from './../../components/form/MyTableClickable';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
 import ModalGroupWork from './../../components/common/ModalGroupWork';
 import { ExportToExcel } from './../../components/common/ExportToExcel';
 import InvoiceCreator from "../../utils/invoiceCreator";
 import ImageFileUploader from "../../utils/ImageFileUploader";
 import TableOrderCustomer from './../../components/form/TableOrderCustomer';
+import AdvancedSearch from "../../components/common/AdvancedSearch";
+import {PaymentStatusEnums} from "../../Enums/PaymentStatus";
+import Select from "react-select";
 
 const customStyles = {
   content: {
@@ -47,6 +50,7 @@ const OrderCustomer = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalIsOpenEdit, setIsOpenEdit] = useState(false);
   const [modalIsOpenUpload, setIsOpenUpload] = useState(false);
+  const [getOrders, SetGetOrders] = useState(false);
 
   const [idEdit, setIdEdit] = useState(0);
   const [stateSuccess, SetStateSuccess] = useState(0)
@@ -59,18 +63,20 @@ const OrderCustomer = () => {
   const [ShippingInformation, SetShippingInformation] = useState([]);
   const [organizations, SetOrganisations] = useState([]);
   const [ShoppingCartInformation, SetShoppingCartInformation] = useState([]);
-  const [userName, setUserName] = useState("")
-  const [StartDate, setStartDate] = useState("")
-  const [EndDate, setEndDate] = useState("")
-  const [ExtId, setExtId] = useState("")
-  const [nationalCode, setNationalCode] = useState("")
-  const [orderStatusIds, setOrderStatusIds] = useState([])
-  const [paymentMethodIds, setPaymentMethodIds] = useState([])
-  const [shippingStatusIds, setShippingStatusIds] = useState([])
+  const [StartDate, setStartDate] = useState(getDefault().StartDate)
+  const [EndDate, setEndDate] = useState(getDefault().EndDate)
+  const [ExtId, setExtId] = useState(getDefault().ExtId?getDefault().ExtId:null)
+  const [orderStatusIds, setOrderStatusIds] = useState(getDefault().orderStatusIds)
+  const [paymentMethodIds, setPaymentMethodIds] = useState(getDefault().paymentMethodIds)
+  const [shippingStatusIds, setShippingStatusIds] = useState(getDefault().shippingStatusIds)
   const [order, setOrder] = useState([])
   const [DetailAddress, setDetailAddress] = useState([]);
   const [orderDetail, setOrderDetail] = useState([]);
+  const[OrderDetailExtId,setOrderDetailExtId]=useState(getDefault().OrderDetailExtId)
+  const[Id,setId]=useState(getDefault().Id ?getDefault().Id :null)
+
   const[entity,setEntity]=useState(0)
+  const [paymentStatusIds, setPaymentStatusId] = useState(getDefault().paymentMethodIds)
 
 
 
@@ -196,6 +202,9 @@ const OrderCustomer = () => {
   }
   const shippingId = () => {
     return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
+  }
+  const PaymentStatus = () => {
+    return (PaymentStatusEnums.map(data => ({ label: data.name, value: data.id })))
   }
   const OrderStatusID = () => {
     return (OrderStatus.map(data => ({ label: data.name, value: data.id })))
@@ -333,24 +342,32 @@ const OrderCustomer = () => {
 
 
   }
+  const params = { paymentStatusIds, Id,ExtId,paymentMethodIds, shippingStatusIds, orderStatusIds, StartDate, EndDate, OrderDetailExtId}
+  function getDefault() {
+    let items = JSON.parse(sessionStorage.getItem('params'));
+    return items? items:''
 
+
+  }
   const getDataBySearch = async () => {
+    let userName = localStorage.getItem("mobile")
+
     let config = {
 
       headers: { 'Content-Type': 'application/json' },
       params: {
+        Id:Number(Id),
         UserName: userName,
-        OrderStatusIds: orderStatusIds.map(item => item.value),
+        OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
         StartDate
         , EndDate
-        , ExtId,
-        PaymentMethodIds: paymentMethodIds.map(item => item.value),
-        ShippingStatusIds: shippingStatusIds.map(item => item.value),
-        NationalCode: nationalCode,
-        PageNumber,
-        PageSize,
-
-
+        , ExtId: Number(ExtId),
+        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
+        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
+        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+        OrderDetailExtId,
+        PageNumber:0,
+        PageSize:10
       }
       ,
       paramsSerializer: params => {
@@ -365,6 +382,10 @@ const OrderCustomer = () => {
       const { data, status } = await GetDataWithSearchOrder(config);
       if (status === 200) {
         setOrder(data.result.orderList.values);
+        setTotalCount(data.result.orderList.totalCount)
+
+        sessionStorage.setItem('params', JSON.stringify(params));
+
       }
 
     } catch (err) {
@@ -375,15 +396,45 @@ const OrderCustomer = () => {
 
   useEffect(() => {
     GetOrders()
+    sessionStorage.clear()
+
     getOrganization()
-  }, [])
+  }, [getOrders])
   const GetOrders = async () => {
+    let userName = localStorage.getItem("mobile")
+
+    let config = {
+
+      headers: { 'Content-Type': 'application/json' },
+      params: {
+        Id:Number(Id),
+        UserName: userName,
+        OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+        StartDate
+        , EndDate
+        , ExtId: Number(ExtId),
+        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
+        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
+        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+        OrderDetailExtId,
+        PageNumber:0,
+        PageSize:10
+      }
+      ,
+      paramsSerializer: params => {
+
+        return QueryString.stringify(params)
+      }
+
+
+    };
 
     try {
      
-        let userName = localStorage.getItem("mobile")
-        const { data, status } = await GetCustomerOrders(userName)
-        setOrder(data.result.orderList.values)
+        const { data, status } = await GetDataWithSearchOrder(config);
+      SetGetOrders(false)
+
+      setOrder(data.result.orderList.values)
       setTotalCount(data.result.orderList.totalCount)
 
       }
@@ -414,24 +465,26 @@ const OrderCustomer = () => {
   }
   const getDataByPage = async () => {
     let userName = localStorage.getItem("mobile")
-
     let config = {
-
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       params: {
-userName,
+        Id:Number(Id),
+        UserName: userName,
+        OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+        StartDate
+        , EndDate
+        , ExtId: Number(ExtId),
+        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
+        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
+        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+        OrderDetailExtId,
         PageNumber,
-        PageSize,
-
-
+        PageSize
       }
       ,
       paramsSerializer: params => {
-
         return QueryString.stringify(params)
       }
-
-
     };
 
     try {
@@ -552,11 +605,24 @@ userName,
 
 
   const data = useMemo(() => order);
-  
-  
 
-   
- 
+  const handelSearchFieldClear =  () => {
+    setOrderStatusIds([])
+    SetAddress({active: false})
+    setId('')
+    setStartDate('')
+    setEndDate('')
+    setExtId('')
+    setPaymentStatusId([])
+    setPaymentMethodIds([])
+    setShippingStatusIds([])
+    sessionStorage.clear()
+    SetGetOrders(true)
+  }
+
+
+
+
   const formatTrProps = (state = {}) => {
     if (modalIsOpenEdit === false) {
       return {
@@ -645,6 +711,171 @@ if(order){
    <InvoiceCreator orderId={idEdit} closeModal={closeModalEdit}/>
     </Modal>
     <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={entity} EntityTypesId={10} comment={"مشتری عزیز لطفا عکس پیش فاکتور تایید شده خود را بگذارید (پیش فاکتور حتما باید همراه با مهر و امضا شخص خریدار باشد)"}/>
+  <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+                    <AdvancedSearch>
+                        <br />
+
+                        <form className='form-row textOnInput'>
+
+
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+
+                                <label style={{
+                                    position: 'absolute',
+                                    zIndex: '1',
+                                    top: '-15px',
+                                    right: '10px',
+                                    background: 'none',
+                                    padding: '0 8px'
+                                }}>از تاریخ </label>
+                                <div className='form-group  '>
+                                    <DatePicker
+                                        calendar={persian}
+
+                                        locale={persian_fa}
+                                        style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                        value={StartDate}
+                                        onChange={handelStartDate}
+                                    />
+
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+
+                                <label style={{
+                                    position: 'absolute',
+                                    zIndex: '1',
+                                    top: '-15px',
+                                    right: '10px',
+                                    background: 'none',
+                                    padding: '0 8px'
+                                }}>تا تاریخ </label>
+                                <div className='form-group  '>
+                                    <DatePicker
+                                        calendar={persian}
+
+                                        locale={persian_fa}
+                                        style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                        value={EndDate}
+                                        onChange={handelEndDate}
+                                    />
+
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>شماره سفارش</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="سفارش"
+                                       value={Id} onChange={e => setId(e.target.value)} />
+                            </div>
+
+
+
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> شناسه خرید بازارگاه</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه خرید"
+                                       value={ExtId} onChange={e => setExtId(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> کد تخصیص</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
+                                       value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                                <div className=" form-control-sm">
+                                    <label>وضعیت سفارش</label>
+
+                                    <Select
+
+                                        value={orderStatusIds}
+                                        placeholder='وضعیت سفارش'
+                                        options={OrderStatusID()}
+                                        isMulti
+
+                                        isClearable={true}
+                                        onChange={e => {
+                                            setOrderStatusIds(e)
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                                <div className=" form-control-sm">
+                                    <label>وضعیت ارسال </label>
+
+                                    <Select
+                                        value={shippingStatusIds}
+                                        placeholder='وضعیت تخصیص'
+                                        options={shippingId()}
+                                        isMulti
+
+                                        isClearable={true}
+                                        onChange={e => {
+
+                                            setShippingStatusIds(e)
+
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                                <div className=" form-control-sm">
+                                    <label>وضعیت پرداخت </label>
+
+                                    <Select
+                                        value={paymentStatusIds}
+                                        placeholder='وضعیت پرداخت'
+                                        options={PaymentStatus()}
+                                        isMulti
+
+                                        isClearable={true}
+                                        onChange={e => {
+
+                                            setPaymentStatusId(e)
+
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                                <div className=" form-control-sm">
+                                    <label>  نحوه پرداخت </label>
+
+                                    <Select
+                                        value={paymentMethodIds}
+                                        placeholder=' پرداخت '
+                                        options={paymentMethodIDs()}
+                                        isMulti
+
+                                        isClearable={true}
+                                        onChange={e => {
+
+                                            setPaymentMethodIds(e)
+
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                        </form>
+                        <div className="row float-right ">
+                            <div >
+                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
+
+                            </div>
+                            <div >
+                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
+
+                            </div>
+                        </div>
+                    </AdvancedSearch>
+                </div>
+                {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
 
     <div className=" statbox widget-content widget-content-area">
@@ -673,9 +904,194 @@ if(order){
   
 else{
   return(
-    <div className='text-center mt-5'>
-      <h5>شما هیچ سفارشی ندارید</h5>
-    </div>
+      <div className='user-progress'>
+        <div className='row'>
+          <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+
+
+          </div>
+        </div>
+        <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+
+          <AdvancedSearch>
+            <br />
+
+            <form className='form-row textOnInput'>
+
+
+              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+
+                <label style={{
+                  position: 'absolute',
+                  zIndex: '1',
+                  top: '-15px',
+                  right: '10px',
+                  background: 'none',
+                  padding: '0 8px'
+                }}>از تاریخ </label>
+                <div className='form-group  '>
+                  <DatePicker
+                      calendar={persian}
+
+                      locale={persian_fa}
+                      style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                      value={StartDate}
+                      onChange={handelStartDate}
+                  />
+
+                </div>
+              </div>
+              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+
+                <label style={{
+                  position: 'absolute',
+                  zIndex: '1',
+                  top: '-15px',
+                  right: '10px',
+                  background: 'none',
+                  padding: '0 8px'
+                }}>تا تاریخ </label>
+                <div className='form-group  '>
+                  <DatePicker
+                      calendar={persian}
+
+                      locale={persian_fa}
+                      style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                      value={EndDate}
+                      onChange={handelEndDate}
+                  />
+
+                </div>
+              </div>
+              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                <label>شماره سفارش</label>
+
+                <input className="form-control opacityForInput  mb-4" type="text" placeholder="سفارش"
+                       value={Id} onChange={e => setId(e.target.value)} />
+              </div>
+              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                <label> شناسه خرید بازارگاه</label>
+
+                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه خرید"
+                       value={ExtId} onChange={e => setExtId(e.target.value)} />
+              </div>
+              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                <label> کد تخصیص</label>
+
+                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
+                       value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
+              </div>
+              <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                <div className=" form-control-sm">
+                  <label>وضعیت سفارش</label>
+
+                  <Select
+
+                      value={orderStatusIds}
+                      placeholder='وضعیت سفارش'
+                      options={OrderStatusID()}
+                      isMulti
+
+                      isClearable={true}
+                      onChange={e => {
+                        setOrderStatusIds(e)
+                      }}
+                  />
+                </div>
+              </div>
+
+
+              <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group " style={{marginBottom:"3rem"}}>
+                <div className=" form-control-sm">
+                  <label>وضعیت ارسال </label>
+
+                  <Select
+                      value={shippingStatusIds}
+                      placeholder='وضعیت تخصیص'
+                      options={shippingId()}
+                      isMulti
+
+                      isClearable={true}
+                      onChange={e => {
+
+                        setShippingStatusIds(e)
+
+                      }}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                <div className=" form-control-sm">
+                  <label>وضعیت پرداخت </label>
+
+                  <Select
+                      value={paymentStatusIds}
+                      placeholder='وضعیت پرداخت'
+                      options={PaymentStatus()}
+                      isMulti
+
+                      isClearable={true}
+                      onChange={e => {
+
+                        setPaymentStatusId(e)
+
+                      }}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-2 col-md-4  col-sm-12  mb-3  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                <div className=" form-control-sm">
+                  <label> نحوه پرداخت </label>
+
+                  <Select
+                      value={paymentMethodIds}
+                      placeholder=' پرداخت '
+                      options={paymentMethodIDs()}
+                      isMulti
+
+                      isClearable={true}
+                      onChange={e => {
+
+                        setPaymentMethodIds(e)
+
+                      }}
+                  />
+                </div>
+              </div>
+
+            </form>
+            <div className="row float-right ">
+              <div >
+                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
+
+              </div>
+              <div >
+                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
+
+              </div>
+            </div>
+          </AdvancedSearch>
+        </div>
+        {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+
+        <div className=" statbox widget-content widget-content-area">
+          <div>
+
+
+
+
+            <div className='text-center mt-5'>
+              <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+
+      </div>
   )
 }
 

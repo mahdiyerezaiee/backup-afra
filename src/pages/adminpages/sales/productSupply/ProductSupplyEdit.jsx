@@ -203,7 +203,7 @@ const ProductSupplyEdit = () => {
                 comment,
                 name,
                 price,
-                installmentStartDate: new Date(),
+                
 
 
             },

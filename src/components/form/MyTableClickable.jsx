@@ -296,7 +296,7 @@ useEffect(()=>{
                                                                     <td >{item.quantity}</td>
                                                                     <td >{new  Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                                                     {/*The unit price must be read from the backend*/}
-                                                                    <td >{item.price / item.quantity}</td>
+                                                                    <td >{item.basePrice}</td>
                                                                     <td title={item.fullAddress}>{item.fullAddress?item.fullAddress.substring(0,20)+ "...":""}</td>
                                                                     <td >{item.postalCode}</td>
                                                                     <td >{item.receiverTel}</td>
