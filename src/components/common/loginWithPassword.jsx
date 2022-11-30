@@ -8,8 +8,8 @@ import afra from "../login/afra.jpg";
 import { decodeToken } from '../../utils/decodeToken';
 import { addUser } from '../../actions/user';
 import {loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha} from "react-simple-captcha";
-
-const LoginWithPassword = ({value , onchange}) => {
+import {AiOutlineReload} from "react-icons/ai"
+const LoginWithPassword = ({value , onchange  ,setShows }) => {
     const [input , setInput]= useState('')
     const [valid , setValid]= useState(true)
     const [SHOW , setShow]= useState(false)
@@ -19,7 +19,7 @@ const LoginWithPassword = ({value , onchange}) => {
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
 useEffect(()=>{
-    loadCaptchaEnginge(6,'transparent','black','numbers');
+    loadCaptchaEnginge(6,'lightgray','black','numbers');
 },[])
     const validator = useRef(new SimpleReactValidator({
 
@@ -134,15 +134,8 @@ const submitCaptcha = () => {
         
     }
 
-        let maxNumber1 = 10;
-        const randomNumber1 = Math.floor((Math.random() * maxNumber1) + 1);
 
-
-        let maxNumber2 = 20;
-        const randomNumber2 = Math.floor((Math.random() * maxNumber2) + 1);
-
-
-
+    console.log(AiOutlineReload)
 
     return (
 
@@ -182,13 +175,13 @@ const submitCaptcha = () => {
                <div className=' row mt-4' style={{display:SHOW? "flex":"none"}} >
                         <div  className='col-6 textOnInput' style={{direction: 'ltr'}}>
 
-                            <label>کپچا</label>
+                            <label>کد امنیتی</label>
 
                             <input  className='form-control opacityForInput' value={input} onChange={e=> setInput(e.target.value)}/>
 
                         </div>
                         <div className="col-6">
-                            <LoadCanvasTemplate reloadText="بازنشانی مجدد"/>
+                            <LoadCanvasTemplate reloadColor="black"  reloadText={`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/> <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/> </svg>`}/>
 
                         </div>
 
@@ -200,9 +193,15 @@ const submitCaptcha = () => {
                     {validator.current.message("required", password, "required")}
 
                 </div>
+                <div className='row'>
+                    <div className="col-5">
+                        <button className='btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid()? false: true} onClick={handleSubmit}>تایید</button>
+                    </div>
+                    <div className="col-7">
+                <button className=' btn btn-primary  mt-5 mb-5 float-right' onClick={() => setShows(true)}>ورود با رمز یکبار مصرف</button>
+                    </div>
 
-
-                <button className='btn btn-success mt-5 mb-5 float-right' disabled={validator.current.allValid()? false: true} onClick={handleSubmit}>تایید</button>
+                        </div>
             </form>
         </div>
 
