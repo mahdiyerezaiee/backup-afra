@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
 import {
-    GetAllOrders,
-    GetCustomerOrders,
     GetDataWithSearchOrder,
     GetOrder,
     GetOrderDetails
@@ -25,7 +23,6 @@ import persian_fa from 'react-date-object/locales/persian_fa';
 import Modal from 'react-modal';
 import AddAdressCustomerForOrder from "../../components/common/addAdressCustomerForOrder";
 import { GetAddress } from "../../services/addressService";
-import OrderEdit from "./orderEdit";
 import OrderEditList from "./orderEditList";
 import {PaymentStatusEnums} from "../../Enums/PaymentStatus";
 
@@ -81,7 +78,6 @@ const OrderList = () => {
     const [DetailAddress, setDetailAddress] = useState([]);
     const[OrderDetailExtId,setOrderDetailExtId]=useState(getDefault().OrderDetailExtId)
     const[Id,setId]=useState(getDefault().Id ?getDefault().Id :null)
-
     const bindAdress = async (arr) => {
 
         if (arr.length > 1) {
@@ -143,11 +139,6 @@ const OrderList = () => {
 
 
     }
-
-
-
-
-
     const openModal = () => {
 
         setIsOpen(true);
@@ -358,9 +349,6 @@ const OrderList = () => {
                 OrderDetailExtId,
                 PageNumber:0,
                 PageSize:10
-
-
-
             }
             ,
             paramsSerializer: params => {
@@ -389,10 +377,8 @@ const OrderList = () => {
     }
         const getDataByPage = async () => {
         let config = {
-
             headers: { 'Content-Type': 'application/json' },
             params: {
-
                 Id:Number(Id),
                 UserName: userName,
                 OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
@@ -406,16 +392,11 @@ const OrderList = () => {
                 OrderDetailExtId,
                 PageNumber,
                 PageSize
-
-
             }
             ,
             paramsSerializer: params => {
-
                 return QueryString.stringify(params)
             }
-
-
         };
 
         try {
@@ -432,11 +413,8 @@ const OrderList = () => {
         }
 
     }
-
     const GetOrders = async () => {
-
         let config = {
-
             headers: { 'Content-Type': 'application/json' },
             params: {
                 Id:Number(Id),
@@ -452,11 +430,7 @@ const OrderList = () => {
                 NationalCode: nationalCode,
                 OrderDetailExtId,
                 PageNumber,
-                PageSize
-
-
-
-            }
+                PageSize}
             ,
             paramsSerializer: params => {
 
@@ -704,7 +678,7 @@ setDetailAddress([])
         setStartDate('')
         setEndDate('')
         setExtId('')
-
+setPaymentStatusId([])
         setPaymentMethodIds([])
         setShippingStatusIds([])
         sessionStorage.clear()
@@ -866,7 +840,7 @@ SetGetOrders(true)
                                     <label>وضعیت پرداخت </label>
 
                                     <Select
-                                        value={shippingStatusIds}
+                                        value={paymentStatusIds}
                                         placeholder='وضعیت پرداخت'
                                         options={PaymentStatus()}
                                         isMulti
@@ -1067,7 +1041,25 @@ SetGetOrders(true)
                                     />
                                 </div>
                             </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                                <div className=" form-control-sm">
+                                    <label>وضعیت پرداخت </label>
 
+                                    <Select
+                                        value={paymentStatusIds}
+                                        placeholder='وضعیت پرداخت'
+                                        options={PaymentStatus()}
+                                        isMulti
+
+                                        isClearable={true}
+                                        onChange={e => {
+
+                                            setPaymentStatusId(e)
+
+                                        }}
+                                    />
+                                </div>
+                            </div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-3  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label> نحوه پرداخت </label>

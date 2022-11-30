@@ -7,7 +7,7 @@ export const OrderStatusEnumsProgressBar=[
     {name:'تایید شده',id:6 , number:4},
     {name:'تخصیص آدرس',id:8 , number:5},
     // {name:'در حال انجام',id:8 , number:8},
-    {name:' حواله ارسال',id:10 , number:7},
+    {name:' حواله ارسال',id:9 , number:7},
     {name: 'ارسال شده',id:11 , number:8},
     {name:'تکمیل',id:12 , number:9},
     {name:'لغو شده',id:13 , number:12},

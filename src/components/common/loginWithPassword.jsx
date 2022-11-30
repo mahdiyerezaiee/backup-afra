@@ -18,10 +18,8 @@ const LoginWithPassword = ({value , onchange}) => {
     const dispatch = useDispatch();
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
-    const [captcha, setCaptcha] = useState(0);
 useEffect(()=>{
-    loadCaptchaEnginge(6)
-
+    loadCaptchaEnginge(6,'transparent','black','numbers');
 },[])
     const validator = useRef(new SimpleReactValidator({
 
@@ -34,7 +32,25 @@ useEffect(()=>{
     }));
    
  
+const submitCaptcha = () => {
+    if (SHOW){
+    if (validateCaptcha(input) !== true) {
+        setShow(true)
+        setValid(false)
+        toast.error("کپچا اشتباه ثبت شده", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined
+        });
+    }
 
+    setInput("")
+    }
+}
     const handleSubmit = async (event) => {
         const user = {
 
@@ -42,26 +58,13 @@ useEffect(()=>{
             password
         }
         event.preventDefault();
-       if (SHOW === true) {
-           if (validateCaptcha(input) === true) setValid(true)
-           else {
-               setValid(false)
-               toast.error("کپچا اشتباه ثبت شده", {
-                   position: "top-right",
-                   autoClose: 5000,
-                   hideProgressBar: false,
-                   closeOnClick: true,
-                   pauseOnHover: false,
-                   draggable: true,
-                   progress: undefined
-               });
-           }
-           setInput("")
-       }
+        submitCaptcha()
         if ( valid && validator.current.allValid()) {
         try {
-            
-                const {status, data} = await loginUser(user);
+
+
+
+            const {status, data} = await loginUser(user);
                 if (status === 200){
 
                     if (data.result.success===true) {
@@ -92,7 +95,6 @@ useEffect(()=>{
                
                     else{
                         setShow(true)
-                        setValid(false)
                         toast.error(`${data.result.message}`, {
                             position: "top-right",
                             autoClose: 5000,
@@ -102,14 +104,16 @@ useEffect(()=>{
                             draggable: true,
                             progress: undefined
                         });
+
                     }
                     
             
              
                     
                 }
+}
               
-            }
+
            
                 catch (error) {
                     toast.error("خطایی از سمت سرور رخ داده است", {
