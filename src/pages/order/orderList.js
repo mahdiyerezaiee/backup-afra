@@ -888,7 +888,7 @@ SetGetOrders(true)
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds||getDefault().userName ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds||getDefault().userName ||getDefault().paymentStatusIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area rounded">
                     <div>
@@ -1093,7 +1093,7 @@ SetGetOrders(true)
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds||getDefault().userName ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds||getDefault().userName||getDefault().paymentStatusIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>

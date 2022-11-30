@@ -193,7 +193,7 @@ setPageSize(10)
     }
 
     useEffect(() => {
-
+sessionStorage.clear()
         getUsers();
         getOrganizationName();
 
@@ -473,6 +473,7 @@ setPageSize(10)
     ])
     const handelSearchFieldClear = () => {
 
+        sessionStorage.clear();
 
         setFirstName('');
         setLastName('')
@@ -555,7 +556,7 @@ setGeData(true)
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().UserName|| getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName || getDefault().userRole  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().UserName|| getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area">
 
@@ -648,7 +649,7 @@ setGeData(true)
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().UserName || getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName || getDefault().userRole  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().UserName|| getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>
