@@ -117,9 +117,9 @@ mobileNo=mobile
                     <div className='col-md-5'>
                         {show === false ?
                             <>
-                            <LoginWithPassword value ={mobileNo} onchange={e =>{setMobile(e.target.value)
+                            <LoginWithPassword setShows={setShow} value ={mobileNo} onchange={e =>{setMobile(e.target.value)
                                                                                 localStorage.setItem('mobile',mobile)}}/>
-                            <p className='px-4 text-primary' onClick={() => setShow(true)}>ورود با رمز یکبار مصرف</p></>:
+                            </>:
                             <div className='card-body'>
 
                             <h4 className='card-title'>
@@ -143,11 +143,20 @@ mobileNo=mobile
                             <div className='form-group' style={{height: "20px"}}>
                         {validator.current.message("required", mobile, "required")}
                             </div>
+                                <div className='row'>
 
-                            <button className='btn btn-success mt-5 mb-5 float-right' disabled={click}>تایید و ادامه</button>
+
+                                    <div className="col-6">
+                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid()? false: true}>تایید و ادامه</button>
+
+                                    </div>
+                                    <div className="col-6">
+
+                                        <button className='   btn btn-primary mt-5 mb-5 float-right'  onClick={()=>setShow(false)}>ورود با رمز عبور</button>
+                                    </div>
+                                </div>
                             </form>
-                                <p className='px-4 text-primary'  onClick={()=>setShow(false)}>ورود با رمز عبور</p>
-                                    
+
                             </div>
                         }
                     </div>

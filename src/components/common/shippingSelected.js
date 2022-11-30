@@ -82,7 +82,10 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             "byPassContractLimit": false
         }
         try {
+            closeModal()
+
             const { data, status } = await SyncWithSender(body)
+            
             if (status === 200) {
                 if (data.result.success === true) {
                     toast.success(data.result.message, {
