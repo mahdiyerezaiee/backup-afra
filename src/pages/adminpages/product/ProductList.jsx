@@ -255,8 +255,7 @@ const ProductList = () => {
         try {
             const { data, status } = await GetProductsWithSearch(config)
             if (status === 200) {
-                setPageNumber(0)
-                setPageSize(10)
+
                 setProduct(data.result.products.values)
                 setTotalCount(data.result.products.totalCount)
                 sessionStorage.setItem('params', JSON.stringify(params));
@@ -273,6 +272,8 @@ const ProductList = () => {
             headers: { 'Content-Type': 'application/json' },
 
             params: {
+                isAdmin: true,
+                active: false,
                 Name:Name,
                 EnglishName:EnglishName,
                 GroupIds: groupIds ? groupIds.map(item => item.value) : [],
@@ -501,6 +502,8 @@ setGeData(false)
         }])
     const data = useMemo(() => product);
     const handelSearchFieldClear = () => {
+        sessionStorage.clear();
+
         setName('')
         setEnglishName('')
         SetGroupId([])
