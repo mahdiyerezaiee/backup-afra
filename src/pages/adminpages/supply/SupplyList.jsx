@@ -732,7 +732,7 @@ defaultValue={params.wareHouseId}
                         </div>
                     </Modal>
                     <div>
-                        <button className="btn btn-primary m-3" onClick={formHandler}>تعریف تامین کننده</button>
+                        <button className="btn btn-primary m-3" onClick={formHandler}>تعریف تامین جدید</button>
                         <MyTable columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob}
                             total={totalCount}
                             setPageSize={setPageSize}
@@ -882,7 +882,7 @@ defaultValue={params.wareHouseId}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>
-                        <button className="btn btn-primary m-3" onClick={formHandler}>تعریف تامین کننده</button>
+                        <button className="btn btn-primary m-3" onClick={formHandler}>تعریف تامین جدید</button>
 
 
 

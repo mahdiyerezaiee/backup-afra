@@ -304,7 +304,7 @@ const productForSelect=()=>{
                 getProductSupply()
             } if (data.result.success === false) {
 
-                toast.error("این عرضه به یک یا چند -- اختصاص داده شده است", {
+                toast.error("این عرضه به یک یا چند سفارش اختصاص داده شده است", {
                     position: "top-right",
                     closeOnClick: true
                 });
