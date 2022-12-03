@@ -47,7 +47,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             console.log(error);
         }
     }
-   
+
     console.log(order);
     const getShippingContractCompany = async (id) => {
         try {
@@ -81,14 +81,15 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             shippingContractId,
             "byPassContractLimit": false
         }
-        try {
-            closeModal()
+
+        
+            
 
             const { data, status } = await SyncWithSender(body)
-            
-            if (status === 200) {
-                if (data.result.success === true) {
-                    toast.success(data.result.message, {
+
+            if (status === 200 && data.result.success === true) {
+                
+                    toast.success('حواله با موفقیت صادر شد', {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -102,49 +103,33 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                         Orders = Order
                     }
                     const bodyOrder = {
-                        "order": { ...Orders, orderStatusId: 9 }
+                        "order": { ...Orders, orderStatusId: 9,customer:null, locked:false}
                     }
                     closeModal()
 
                     const response = await editOrder(bodyOrder)
-                    
+
                     window.location.reload()
                 }
+            
+            else {
 
-                else {
-
-                    toast.error(data.result.message, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined
-                    });
-                }
-
-              
-                closeModal()
-
-                
+                toast.error(data.result.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
             }
 
-        } catch (error) {
+        
+            closeModal()
 
-            toast.error('', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
-            console.log(error);
 
-        }
-
+  
 
     }
 

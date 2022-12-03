@@ -7,28 +7,23 @@ import {GetUserInfo} from "../../services/userService";
 import {addUserInfo} from "../../actions/user";
 import {GetAllProvince, SetAddress} from "../../services/addressService";
 import Select from "react-select";
-import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const EditProfile = () => {
-
+const navigate = useNavigate()
     const userinfo = useSelector(state => state.userInfo);
 
     const [firstName, setfirstName] = useState(userinfo.firstName);
     const [lastName, setlastName] = useState(userinfo.lastName);
     const [nationalCode, setnationalCode] = useState(userinfo.nationalCode);
     const [email, setemail] = useState(userinfo.email);
-    const [fullAddress, setFulAddress] = useState('');
-    const [postalCode, setpostalCode] = useState('');
-    const [receiverTel, setreceiverTel] = useState('');
-    const [receiverMobile, setreceiverMobile] = useState('');
-    const [province, setProvince] = useState([]);
-    const[provinceId,setProvinceId]=useState(0);
+
+
     const [password, setPassword]=useState(null)
     const [passwordConfirm , setPasswordConfirm]=useState(null)
     const [show , setShow]=useState(false)
     const [passwordType, setPasswordType] = useState("password");
 
-    const[ostanId,setOstanId]=useState(0);
     const dispatch = useDispatch();
     const togglePassword = (e) => {
         e.preventDefault()
@@ -38,42 +33,9 @@ const EditProfile = () => {
         }
         setPasswordType("password")
     }
-    const getProvince = async () => {
-
-        const { data, status } = await GetAllProvince();
-        setProvince(data.result.provinces);
-
-    }
-    useEffect(() => {
-
-            getProvince();
-
-        }
 
 
 
-
-        , []);
-
-    const Allcities = province.filter(data => data.parentId !== null);
-    const cities =Allcities.filter(data=>data.parentId===ostanId)
-    const ostan = province.filter(data => data.parentId === null);
-    const ProvincerenderList = () => {
-        return (ostan.map(data => ({ label: data.name, value: data.id })))
-    }
-    const CitiesrenderList = () => {
-        return (cities.map(data => ({ label: data.name, value: data.id })))
-    }
-    const body={
-        address:{
-            id:0,
-            provinceId,
-            fullAddress,
-            postalCode,receiverTel,receiverMobile
-        },
-        entityTypeId:1,
-        entityId:Number( localStorage.getItem('connect'))
-    }
     const user = {
         id: userinfo.id,
         userName: userinfo.userName,
@@ -117,29 +79,7 @@ const EditProfile = () => {
         }
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
-    const addressSetHandler =async () => {
-        try {
 
-            const {data,status}=await SetAddress(body);
-            if(status===200){
-                toast.success("اطلاعات با موفقیت ثبت شد", {
-                    position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined
-                });
-            }
-
-        } catch (error) {
-            console.log(error)
-        }
-
-
-
-    }
     const showHandler = (e) => {
 
       setShow(!show)
@@ -183,11 +123,14 @@ const EditProfile = () => {
 
     const handelSubmit = (event) => {
         event.preventDefault();
-        addressSetHandler()
 
         handelSetCustomer();
     }
+const backHandel=(e)=>{
+    e.preventDefault()
 
+    navigate(-1)
+}
 
     return (
 
@@ -199,17 +142,11 @@ const EditProfile = () => {
                 </div>
             </div>
 
-            <div className="account-settings-container layout-top-spacing">
 
-                <div className="account-content">
-                    <div className="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll"
-                         data-offset="-100">
-                        <div className="row">
 
-                            <div className="col-xl-5 col-lg-5 col-md-6 layout-spacing">
+                            <div className='row d-flex justify-content-center col-12'>
 
-                                <div className='widget box shadow  '>
-
+                                <div className='widget box shadow col-md-6 col-xs-12'>
                                     <form>
                                         <div className="form-group textOnInput  align-content-between">
 
@@ -329,113 +266,25 @@ const EditProfile = () => {
                                             </>:''
                                         }
 
+                                        <div className='row justify-content-between mt-4'>
+                                            <div >
+                                                    <button  onClick={handelSubmit} className="btn btn-success">ذخیره تغییرات</button>
+                                                </div>
+                                                <div >
+                                                    <button  onClick={backHandel} className="btn btn-primary">بازگشت</button>
+                                                </div>
+                                            </div>
 
                                     </form>
+
                                 </div>
 
                             </div>
 
-                            <div className="col-xl-7 col-lg-7 col-md-6 layout-spacing">
-                                <div className='row d-flex justify-content-center '>
-                                    <div className='widget box shadow'>
 
-
-                                        <form>
-
-                                            <div className="form-group mb-4 textOnInput">
-                                                <label>آدرس</label>
-                                                <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=>setFulAddress(e.target.value)}/>
-                                            </div>
-
-                                            <div className="form-row mb-4 textOnInput">
-                                                <div className="form-group col-md-4">
-                                                    <label >تلفن </label>
-                                                    <input type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=>setreceiverTel(e.target.value)}/>
-                                                </div>
-
-                                                <div className="form-group col-md-4">
-
-                                                    <label > موبایل</label>
-                                                    <input type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=>setreceiverMobile(e.target.value)} />
-                                                </div>
-                                                <div className="form-group col-md-4">
-
-                                                    <label >کد پستی</label>
-                                                    <input type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=>setpostalCode(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div className="form-row  textOnInput">
-                                                <div className="form-group col-md-6">
-                                                    <label>استان</label>
-                                                    <Select
-                                                        placeholder='استان'
-                                                        options={ProvincerenderList()}
-                                                        onChange={e=>setOstanId(e.value)}
-                                                    />
-
-                                                </div>
-                                                <div className="form-group col-md-6">
-
-                                                    <label >شهر</label>
-                                                    <Select
-                                                        placeholder='شهر'
-                                                        options={CitiesrenderList()}
-                                                        className='form-group'
-                                                        onChange={e=>setProvinceId(e.value)}
-                                                    />
-
-                                                </div>
-
-
-                                            </div>
-                                            <div className='form-row  tesxOnInput'>
-
-                                            </div>
-                                            <div className="form-group">
-                                                <div className="form-check pl-0">
-                                                    <div className="custom-control custom-checkbox checkbox-info">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {/*<div className='row justify-content-between'>*/}
-                                            {/*    <div className='col '>*/}
-                                            {/*        <button type="submit" className="btn btn-primary" >تایید</button>*/}
-                                            {/*    </div>*/}
-                                            {/*    <div className='col-lg-4 col-md-6  col-sm-12  '>*/}
-                                            {/*        <NavLink to='/identitypannel' className="btn btn-primary">بازگشت</NavLink>*/}
-                                            {/*    </div>*/}
-                                            {/*</div>*/}
-
-
-
-
-                                        </form>
-                                    </div >
-                                </div >
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-
-                <div className="account-settings-footer">
-
-                    <div className="as-footer-container">
-
-                        {/*<button id="multiple-reset" className="btn btn-warning">تنظیم مجدد</button>*/}
-
-                        <button  onClick={handelSubmit} className="btn btn-primary">ذخیره تغییرات</button>
 
                     </div>
 
-                </div>
-            </div>
-
-        </div>
     )
 }
 export default EditProfile

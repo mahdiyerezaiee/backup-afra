@@ -93,7 +93,7 @@ const CodeForMobile = () => {
             }
 
 
-            history('/dashboard', { replace: true });
+            history('/dashboard');
 
 
         }

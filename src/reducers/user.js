@@ -5,7 +5,7 @@ export const userReducer = (state = {}, action) => {
         case 'SET_USER':
             return { ...action.payload };
         case 'CLEAR_USER':
-            return { ...action.payload };
+            return {...action.payload};
 
         default:
             return state;
@@ -34,7 +34,7 @@ export const userInfoReducer = (state = {}, action) => {
         case 'SET_USERINFO':
             return { ...action.payload };
         case 'CLEAR_USERINFO':
-            return { ...action.payload};
+            return {};
 
         default:
             return state;

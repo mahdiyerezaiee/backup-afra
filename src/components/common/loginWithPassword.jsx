@@ -16,13 +16,20 @@ const LoginWithPassword = ({value , onchange  ,setShows }) => {
     const [, forceUpdate] = useState();
     let navigate = useNavigate();
     const dispatch = useDispatch();
+    const select=useSelector(state=>state.userInfo)
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
 useEffect(()=>{
     loadCaptchaEnginge(6,'lightgray','black','numbers');
 },[])
     const validator = useRef(new SimpleReactValidator({
-
+validators:{
+    min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
+        return val.length >= options[0];
+    }, messageReplace: function messageReplace(message, options) {
+        return message.replace(':min', options[0]);
+    } }
+},
         messages: {
             required: "پرکردن این فیلد الزامی می باشد"
 
@@ -32,6 +39,7 @@ useEffect(()=>{
     }));
    
  
+    console.log(select);
 const submitCaptcha = () => {
     if (SHOW){
     if (validateCaptcha(input) !== true) {
@@ -87,7 +95,7 @@ const submitCaptcha = () => {
                             progress: undefined
                         });
 
-                navigate('/dashboard',{replace:false})
+                navigate('/dashboard')
 
                         
                     }
@@ -148,17 +156,17 @@ const submitCaptcha = () => {
 
 
             <form onSubmit={handleSubmit}>
-                <div className='mt-5 textOnInput' style={{direction: 'ltr'}}>
+                <div className='mt-5 textOnInput'  style={{direction: 'ltr'}}>
                 <label>شماره موبایل</label>
 
-                    <input type='text' name='mobile' className='form-control opacityForInput' placeholder='09121234567 '
+                    <input type='text' name='mobile' className='form-control opacityForInput' placeholder='09121234567 ' maxLength="11"
                            value={value} onChange={onchange}/>
 
 
 
                 </div>
                 <div className='form-group' style={{height: "20px"}}>
-                    {validator.current.message("required", value, "required")}
+                    {validator.current.message("required", value, "required|min:11")}
 
                 </div>
                 <div className=' textOnInput' style={{direction: 'ltr'}}>

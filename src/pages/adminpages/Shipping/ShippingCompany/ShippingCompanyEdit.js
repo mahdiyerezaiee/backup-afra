@@ -1,44 +1,50 @@
 import react, { Fragment, useEffect, useState, useRef } from "react";
-import {useNavigate, NavLink, useParams} from "react-router-dom";
+import { useNavigate, NavLink, useParams } from "react-router-dom";
 
 import { toast } from 'react-toastify';
 
 import SimpleReactValidator from 'simple-react-validator';
 
-import {GetShippingCompany, GetShoppingContract, SetShippingCompany} from "../../../../services/ShippingService";
+import { GetShippingCompany, GetShoppingContract, SetShippingCompany } from "../../../../services/ShippingService";
 
 
 const EditShippingCompany = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('')
     const [createDate, setCreateDate] = useState('')
+    const [check, setChek] = useState(true);
+
 
     const [code, setCode] = useState(0)
     const params = useParams()
 
 
     const GetShippingcompany = async () => {
-        const {data, status} = await GetShippingCompany(params.id);
+        const { data, status } = await GetShippingCompany(params.id);
         setName(data.result.shippingCompany.name);
         setCode(data.result.shippingCompany.code);
+        setChek(data.result.shippingCompany.active)
         setCreateDate(data.result.shippingCompany.createDate)
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         GetShippingcompany()
-    },[])
+    }, [])
 
 
 
     const ShippingCompany = {
-        "shippingCompany":{
-        id:Number(params.id),
-        name,
-        code
-       
-       
-    }};
+        "shippingCompany": {
+            id: Number(params.id),
+            name,
+            code,
+            active: check
+
+
+
+        }
+    };
     const validator = useRef(new SimpleReactValidator({
         validators: {
             alpha: {
@@ -111,16 +117,24 @@ const EditShippingCompany = () => {
 
 
                     <form>
+                        <div className="col-12 mb-3">
 
+
+                            <label className="form-check-label mb-3">
+
+                                <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
+                                فعال /غیرفعال
+                            </label>
+                        </div>
                         <div className="form-group mb-4 textOnInput  align-content-between">
 
                             <label>نام باربری</label>
                             <input type="text" className="form-control opacityForInput" placeholder="نام باربری"
-                                   value={name} onChange={e => {
-                                setName(e.target.value)
-                                validator.current.showMessageFor("required");
+                                value={name} onChange={e => {
+                                    setName(e.target.value)
+                                    validator.current.showMessageFor("required");
 
-                            }} />
+                                }} />
                             {validator.current.message("required", name, "required|alpha")}
 
                         </div>

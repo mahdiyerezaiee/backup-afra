@@ -34,7 +34,14 @@ const Login = () => {
     //     console.log(history);
 
     const validator = useRef(new SimpleReactValidator({
-
+validators:{
+    min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
+        return val.length >= options[0];
+    }, messageReplace: function messageReplace(message, options) {
+        return message.replace(':min', options[0]);
+    } }
+}
+,
         messages: {
             required: "پرکردن این فیلد الزامی می باشد"
 
@@ -133,7 +140,7 @@ mobileNo=mobile
                             <div className=' mt-5 textOnInput ' style={{direction: 'ltr'}} >
                 <label>شماره موبایل</label>
 
-                            <input  type='text' name='mobile' className='form-control opacityForInput' value={mobile} placeholder='09121234567 ' onChange={e => {
+                            <input  type='text' name='mobile' className='form-control opacityForInput' value={mobile} placeholder='09121234567 ' maxLength="11" onChange={e => {
                             setMobile(e.target.value)
                             validator.current.showMessageFor("required");
                         }} />
@@ -141,7 +148,7 @@ mobileNo=mobile
 
                             </div>
                             <div className='form-group' style={{height: "20px"}}>
-                        {validator.current.message("required", mobile, "required")}
+                        {validator.current.message("required", mobile, "required|min:11")}
                             </div>
                                 <div className='row'>
 

@@ -190,7 +190,7 @@ let el = document.getElementById("sidebar");
                 <MenuItem onClick={handleHeaderClick}><NavLink to='/reportfromsql'> ترافیک بارگیری</NavLink></MenuItem> */}
                 <MenuItem onClick={handleHeaderClick}  ><NavLink to='/shippingcompanyList'>لیست باربری</NavLink> </MenuItem>
                 <MenuItem onClick={handleHeaderClick}  > <NavLink to='/ShippingContract'>لیست قرارداد باربری</NavLink></MenuItem>
-                <SubMenu title='بروزرسانی باربری'>
+                <SubMenu title='بروزرسانی باربری' onClick={handleHeaderClick}>
                 <MenuItem onClick={handleHeaderClick} > <NavLink to='/updateShippingReports'> براساس تاریخ </NavLink></MenuItem>
                 <MenuItem onClick={handleHeaderClick}><NavLink to='/updateAllShipping'> براساس حواله </NavLink></MenuItem>
                 </SubMenu>

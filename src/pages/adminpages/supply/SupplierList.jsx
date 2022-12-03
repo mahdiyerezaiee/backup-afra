@@ -221,6 +221,8 @@ const SupplierList = () => {
                 });
             }
         } catch (err) {
+            setIsOpen(false)
+
             console.log(err)
         }
     }

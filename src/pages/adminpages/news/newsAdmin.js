@@ -59,6 +59,8 @@ const[id,setId]=useState(0)
         try {
             const { data, status } = await GetAllNewsForAdminPage(config);
             setNews(data.result.news.values)
+            setTotalCount(data.result.news.totalCount)
+
         }catch (e) {
             console.log(e)
         }

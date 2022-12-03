@@ -257,7 +257,14 @@ const getSelectedData=(data)=>{
                 let condition=(d.storedInDb?'ثبت شده':'ثبت نشده')
                 return(`${condition}`)
 
-            },Cell:row=>((row.row.original.storedInDb)?'ثبت شده':'ثبت نشده')}
+            },Cell:row=>((row.row.original.storedInDb)?'ثبت شده':'ثبت نشده')},
+            { Header: 'قفل', accessor:d=>{
+
+                let condition=(d.lockedData?'قفل شده':'قفل نشده')
+                return(`${condition}`)
+
+            },Cell:row=>((row.row.original.lockedData)?'قفل شده':'قفل نشده')}
+
 
        
 
@@ -351,8 +358,9 @@ const getSelectedData=(data)=>{
               
                 <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}   rowProps={row => ({
                    
+                   
                     style: {
-                        backgroundColor: row.values.ثبت === 'ثبت شده'? 'lightgreen': '#ff00003b',
+                        backgroundColor: (row.values.ثبت === 'ثبت شده' && row.values.قفل==='قفل نشده')? 'lightgreen':(row.values.قفل ==='قفل شده' &&row.values.ثبت === 'ثبت شده'  )?'yellow':'#ff00003b',
 
                         cursor: "pointer"
                     }

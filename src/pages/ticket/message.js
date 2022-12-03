@@ -1,18 +1,16 @@
-import {useEffect, useRef, useState} from "react";
-import {
-    GetSupportRequesstsAdmin, GetSupportRequesstsUser,
-    GetSupportRequestMessages,
-    SetSupportRequestMessage
-} from "../../services/TicketService";
+import {useEffect, useState} from "react";
+import {GetSupportRequestMessages, SetSupportRequestMessage} from "../../services/TicketService";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {Card ,Button} from "react-bootstrap";
 
 const Message = () => {
+    let userName = localStorage.getItem("connect")
+
     const user = useSelector(state => state.userInfo);
 const [newMessage ,setNewMessage]=useState("")
     const params = useParams()
-    const [getmessage, setGetMessage] = useState('')
+    const [getmessage , setGetMessage] = useState([])
    
     const showMessage = async () => {
         try {
@@ -35,10 +33,10 @@ const [newMessage ,setNewMessage]=useState("")
         }
 
     }
-    const sendMessage =async () => {
+    const sendMessages =async () => {
       try {
           const {data , status}=await SetSupportRequestMessage(messageInfo)
-          setNewMessage("");
+          setNewMessage([]);
           showMessage()
 
       }catch (err){
@@ -47,10 +45,10 @@ const [newMessage ,setNewMessage]=useState("")
     }
     const interHandler = (e) => {
         if (e.key=== 'Enter'){
-            sendMessage()
-
+sendMessages()
         }
     }
+    console.log(getmessage.filter(item => item.creatorId === Number(userName)))
     
     return (<div className='  user-progress' >
         <div className='row'>
@@ -63,46 +61,26 @@ const [newMessage ,setNewMessage]=useState("")
         <div className="p-3 user-list-box">
             <div className="people  ps--active-y clearfix" id="chat-content"  >
 
-                {getmessage&&getmessage.map((item) => {
-                    if (item.creatorId === user.id)
-                        return (<div className=" col-lg-8 col-md-8 col-sm-8 col-xs-8 p-3 m-2 float-left d-grid" key={item.id}>
+                {getmessage.map(item =>
+                    <div className={item.creatorId === Number(userName) ? " col-lg-8 col-md-8 col-sm-8 col-xs-8 p-3 m-2 float-left d-grid" : "col-lg-8 col-md-8 col-sm-8 col-xs-8 p-3 m-2 float-right d-grid"} key={item.id}>
 
 
-<Card border="primary" text="dark" color="dark" className="d-block"  >
+                            <Card border={ item.creatorId === Number(userName) ?"primary":"success"} text="dark" color="dark" className="d-block"  >
 
-    <Card.Header className="p-2 " ><Card.Text>{item.creatorName}</Card.Text>
-        <time style={{float:'left' , color: 'black'}}>{  new Date(item.createDate.toString()).toLocaleString('fa-IR')}</time></Card.Header>
-    <hr style={{color:'primary', borderTop: '2px solid blue'}}/>
-                           <Card.Body>
-                                <Card.Text>
-                                    {item.message}
-                                </Card.Text>
+                                <Card.Header className="p-2 " ><Card.Text>{item.creatorName}</Card.Text>
+                                    <time style={{float:'left' , color: 'black'}}>{  new Date(item.createDate.toString()).toLocaleString('fa-IR')}</time></Card.Header>
+                                <hr style={{color: item.creatorId === Number(userName) ?"primary": "forestgreen", borderTop: item.creatorId === Number(userName) ? '2px solid blue':'2px solid forestgreen'}}/>
+                                <Card.Body>
+                                    <Card.Text>
+                                        {item.message}
+                                    </Card.Text>
 
-                           </Card.Body>
-</Card>
+                                </Card.Body>
+                            </Card>
 
-                        </div>)
-                    else
-                        return (
+                        </div>
 
-                            <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 p-3 m-2 float-right d-grid" key={item.id}>
-
-                                <Card border="success" text="dark" color="dark"  className="d-block m-2 " >
-                                    <Card.Header  className="p-2"  ><Card.Text>{item.creatorName}</Card.Text>
-                                        <time style={{float:'left' , color: 'black'}}>{new Date(item.createDate).toLocaleString('fa-IR')}</time></Card.Header>
-                                    <hr style={{color:'forestgreen', borderTop: '2px solid forestgreen'}}/>
-
-                                    <Card.Body>
-                                        <Card.Text>
-                                            {item.message}
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                </Card>
-
-                            </div>)
-
-                })}
+                )}
                 <div className="ps__rail-x" style={{left: '0px', bottom: '-600px'}}>
                     <div className="ps__thumb-x" tabIndex="0" style={{left: '0px', width: '0px'}}></div>
                 </div>
@@ -122,7 +100,7 @@ const [newMessage ,setNewMessage]=useState("")
                     onKeyDown={interHandler}
                 />
 <input type="file" disabled/>
-                <Button className=" " onClick={sendMessage}> ارسال پیام</Button>
+                <Button className=" " onClick={sendMessages}> ارسال پیام</Button>
             </div>
         </div>
     </div>)
