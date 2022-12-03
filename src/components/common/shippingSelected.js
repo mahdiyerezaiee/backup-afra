@@ -87,8 +87,8 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
 
             const { data, status } = await SyncWithSender(body)
 
-            if (status === 200) {
-                if (data.result.success === true) {
+            if (status === 200 && data.result.success === true) {
+                
                     toast.success(data.result.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -125,7 +125,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                 });
             }
 
-        }
+        
             closeModal()
 
 
