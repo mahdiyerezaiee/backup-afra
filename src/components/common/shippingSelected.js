@@ -82,14 +82,14 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             "byPassContractLimit": false
         }
 
-        try {
+        
             
 
             const { data, status } = await SyncWithSender(body)
 
             if (status === 200 && data.result.success === true) {
                 
-                    toast.success(data.result.message, {
+                    toast.success('حواله با موفقیت صادر شد', {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -103,7 +103,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                         Orders = Order
                     }
                     const bodyOrder = {
-                        "order": { ...Orders, orderStatusId: 9 }
+                        "order": { ...Orders, orderStatusId: 9,customer:null, locked:false}
                     }
                     closeModal()
 
@@ -129,23 +129,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             closeModal()
 
 
-        }
-
-        catch (error) {
-
-            toast.error('', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
-            console.log(error);
-
-        }
-
+  
 
     }
 

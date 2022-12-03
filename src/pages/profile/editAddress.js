@@ -18,7 +18,7 @@ const EditAddress = () => {
     const [receiverMobile, setreceiverMobile] = useState('');
     const[ostanId,setOstanId]=useState(0);
     const GetAddresUser= async ()=>{
-        const {data , status} = await GetAddress(1, 152164 )
+        const {data , status} = await GetAddress(1, user.id )
         let address = data.result.addresses.filter(i=> i.id === Number(params.id))[0]
         setFulAddress(address.fullAddress)
         setpostalCode(address.postalCode)

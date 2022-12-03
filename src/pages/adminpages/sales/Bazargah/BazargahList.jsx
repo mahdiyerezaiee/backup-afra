@@ -360,7 +360,7 @@ const getSelectedData=(data)=>{
                    
                    
                     style: {
-                        backgroundColor: row.values.ثبت === 'ثبت شده'? 'lightgreen':(row.values.قفل ==='قفل شده' &&row.values.ثبت === 'ثبت شده'  )?'yellow':'#ff00003b',
+                        backgroundColor: (row.values.ثبت === 'ثبت شده' && row.values.قفل==='قفل نشده')? 'lightgreen':(row.values.قفل ==='قفل شده' &&row.values.ثبت === 'ثبت شده'  )?'yellow':'#ff00003b',
 
                         cursor: "pointer"
                     }
