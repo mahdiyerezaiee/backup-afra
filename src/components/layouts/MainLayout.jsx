@@ -81,6 +81,7 @@ import UpdateShippingReports from "../../pages/adminpages/Shipping/updateShippin
 import OrderDetailTest from './../../pages/order/orderDetailtest2';
 import CustomerOrderDetailTest from './../../pages/customerpages/customerOrderDetailTest';
 import UpdateAllShiping from '../../pages/adminpages/Shipping/updateShippingReports/UpdateAllShiping';
+import EditAddress from "../../pages/profile/editAddress";
 
 
 
@@ -176,6 +177,7 @@ const MainLayout = (props) => {
 
                   <Route path='userProfile' element={<UserProfile />} />
                   <Route path='editProfile' element={<EditProfile />} />
+                  <Route path='editAddress/:id' element={<EditAddress />} />
                   <Route path='identitypannel' element={<IdentityPannel />} />
                   <Route path='addresform' element={<AddresForm />} />
                   <Route path='personidentity' element={<PersonIdetity />} />

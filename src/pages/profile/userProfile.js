@@ -3,9 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {GetUserAddress, GetUserInfo} from "../../services/userService";
 import {addUserAddress, addUserInfo} from "../../actions/user";
 import {useEffect} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {GetAddress, GetAllProvince} from "../../services/addressService";
+import {ImUser} from "react-icons/im"
 const UserProfile = () => {
+  const Navigate = useNavigate()
+
   const user=useSelector(state=>state.userInfo);
   const [address , setAddress] = useState([]);
   const [province, setProvince] = useState([]);
@@ -25,6 +28,12 @@ const UserProfile = () => {
     const {data,status}= await GetAddress(1 , user.id);
     setAddress(data.result.addresses);
   }
+  const navitage=()=>{
+    Navigate("/editProfile")
+  }
+  const navitageAddress=(id)=>{
+    Navigate(`/editAddress/${id}`)
+  }
   useEffect(() => {
     fetchApi();
 
@@ -39,17 +48,17 @@ const UserProfile = () => {
             <div className="widget-content widget-content-area">
               <div className="d-flex justify-content-between">
                 <h3 className="">اطلاعات</h3>
-                <NavLink to="/editProfile" className="mt-2 edit-profile">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+
+                  <svg  onClick={navitage} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                        className="feather feather-edit-3">
                     <path d="M12 20h9"></path>
                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                   </svg>
-                </NavLink>
+
               </div>
               <div className="text-center user-info">
-                <img src="assets/img/afralogo.png" className="round"  />
+<ImUser size={"4rem"}/>
                 <p >{user.firstName} {user.lastName}</p>
               </div>
               <div className="user-info-list">
@@ -102,8 +111,16 @@ const UserProfile = () => {
           <div className="skills layout-spacing ">
             <div className="widget-content widget-content-area">
               <h3 className=""> آدرس</h3>
+
               {address.map((item)=>
+
                   <div key={item.id}>
+                    <svg  onClick={navitageAddress(item.id)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                          className="feather feather-edit-3">
+                      <path d="M12 20h9"></path>
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
                     <p> آدرس :{item.fullAddress} </p>
                     <p> کدپستی :{item.postalCode} </p>
                     <p> شهر :{CitiesrenderList(item.provinceId)} </p>
