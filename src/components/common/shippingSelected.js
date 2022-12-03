@@ -81,8 +81,9 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             shippingContractId,
             "byPassContractLimit": false
         }
+
         try {
-            closeModal()
+            
 
             const { data, status } = await SyncWithSender(body)
 
@@ -110,7 +111,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
 
                     window.location.reload()
                 }
-            }
+            
             else {
 
                 toast.error(data.result.message, {
@@ -124,7 +125,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                 });
             }
 
-
+        }
             closeModal()
 
 
