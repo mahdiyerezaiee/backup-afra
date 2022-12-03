@@ -212,7 +212,7 @@ const EditWareHouse = () => {
                             </div>
                             <div className="mb-4 textOnInput selectIndex">
 
-                                <label>نوع انبار</label>
+                                <label>گروه انبار</label>
                                
                                    
                                         <Select

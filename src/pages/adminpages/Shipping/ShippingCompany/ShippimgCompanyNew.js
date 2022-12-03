@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import SimpleReactValidator from 'simple-react-validator';
 
-import {SetShippingCompany} from "../../../../services/ShippingService";
+import { SetShippingCompany } from "../../../../services/ShippingService";
 
 
 const NewShippingCompany = () => {
@@ -13,6 +13,8 @@ const NewShippingCompany = () => {
     const [name, setName] = useState('')
 
     const [code, setCode] = useState(0)
+    const [check, setChek] = useState(true);
+
 
 
 
@@ -20,10 +22,12 @@ const NewShippingCompany = () => {
 
 
     const ShippingCompany = {
+        "shippingCompany"  :{
         name,
-       code,
-createDate:new Date(),
-
+        code,
+        createDate: new Date(),
+        active:check
+        }
 
     };
     const validator = useRef(new SimpleReactValidator({
@@ -99,20 +103,29 @@ createDate:new Date(),
 
                     <form>
 
+                        <div className="col-12 mb-3">
+
+
+                            <label className="form-check-label mb-3">
+
+                                <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
+                            فعال /غیرفعال
+                            </label>
+                        </div>
                         <div className="form-group mb-4 textOnInput  align-content-between">
 
                             <label>نام باربری</label>
                             <input type="text" className="form-control opacityForInput" placeholder="نام باربری"
-                                   value={name} onChange={e => {
-                                setName(e.target.value)
-                                validator.current.showMessageFor("required");
+                                value={name} onChange={e => {
+                                    setName(e.target.value)
+                                    validator.current.showMessageFor("required");
 
-                            }} />
+                                }} />
                             {validator.current.message("required", name, "required|alpha")}
 
                         </div>
 
-                      <div className="form-group mb-4 textOnInput">
+                        <div className="form-group mb-4 textOnInput">
                             <label>کد</label>
                             <input type="text" className="form-control opacityForInput" value={code} onChange={e => {
                                 setCode(e.target.value)

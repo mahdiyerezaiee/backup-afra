@@ -144,10 +144,10 @@ const NewWareHouse = () => {
                             </div>
                             <div className="mb-4 textOnInput selectIndex">
 
-                                <label>نوع انبار</label>
+                                <label>گروه انبار</label>
 
                                 <Select
-                                    placeholder="نوع"
+                                    placeholder="گروه"
                                     options={inputwareHouseT()}
                                     onChange={e =>
                                         setGroupId(e.value)

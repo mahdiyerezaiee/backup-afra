@@ -32,9 +32,9 @@ const EditSupplier = () => {
         try {
             const supplier={
                 'supplier':{
-                    id:params.id,
+                    id:Number(params.id),
                     name,
-                    groupId:0
+                    groupId:null
                 }
             }
             const { data, status } = await SetSupplier(supplier);

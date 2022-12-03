@@ -130,24 +130,49 @@ const EditAddress = () => {
 
                       <div className="form-group mb-4 textOnInput">
                           <label>آدرس</label>
-                          <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=>setFulAddress(e.target.value)}/>
+                          <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=> {
+                              setFulAddress(e.target.value)
+                              validator.current.showMessageFor("required");
+
+                          }}/>
+                          {validator.current.message("required", receiverTel, "required")}
+
                       </div>
 
                       <div className="form-row mb-4 textOnInput">
                           <div className="form-group col-md-4">
                               <label >تلفن </label>
-                              <input type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=>setreceiverTel(e.target.value)}/>
+                              <input type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=> {
+                                  setreceiverTel(e.target.value)
+                                  validator.current.showMessageFor("required");
+
+                              }}/>
+                              {validator.current.message("required", receiverTel, "required")}
+
                           </div>
 
                           <div className="form-group col-md-4">
 
                               <label > موبایل</label>
-                              <input type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=>setreceiverMobile(e.target.value)} />
+                              <input type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=> {
+                                  setreceiverMobile(e.target.value)
+                                  validator.current.showMessageFor("required");
+
+                              }} />
+                              {validator.current.message("required", postalCode, "required|numeric|min:11")}
+
                           </div>
                           <div className="form-group col-md-4">
 
                               <label >کد پستی</label>
-                              <input type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=>setpostalCode(e.target.value)} />
+                              <input type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=> {
+                                  setpostalCode(e.target.value)
+                                  validator.current.showMessageFor("required");
+
+
+                              }} />
+                              {validator.current.message("required", postalCode, "required|numeric|min:10")}
+
                           </div>
                       </div>
 
@@ -155,11 +180,12 @@ const EditAddress = () => {
                           <div className="form-group col-md-6">
                               <label>استان</label>
                               <Select
-defaultValue={Provincerender()}
                                   placeholder='استان'
                                   options={ProvincerenderList()}
-                                  onChange={e=>setOstanId(e.value)}
+                                  onChange={e=>{setOstanId(e.value)
+                                  }}
                               />
+                              {ostanId ===0 ?<span className="text-danger">استان خود را انتخاب کنید</span> :null }
 
                           </div>
                           <div className="form-group col-md-6">
@@ -171,9 +197,13 @@ defaultValue={Provincerender()}
                                   className='form-group'
                                   onChange={e=>setProvinceId(e.value)}
                               />
+                              {provinceId ===0 ?<span className="text-danger">شهر خود را انتخاب کنید</span> :null }
 
                           </div>
 
+
+                      </div>
+                      <div className='form-row  tesxOnInput'>
 
                       </div>
                       <div className='form-row  tesxOnInput'>
