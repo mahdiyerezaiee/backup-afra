@@ -8,7 +8,9 @@ const DashbordAdmin = () => {
   return(
       <div >
           <ReportBlock/>
-        <SalesBoardForAdmin/>
+          <hr/>
+
+          <SalesBoardForAdmin/>
         <hr/>
           <div className="row">
               <div className="col-lg-6 col-md-6 col-sm-12" >

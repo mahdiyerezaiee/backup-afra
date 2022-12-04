@@ -129,10 +129,11 @@ const options = {
 
 export function ChartLine() {
     const [datas , setDatas]=useState([])
+    const [TypeId , setTypeId]=useState(2)
     useEffect(()=>{
         const GetReport = async () => {
             try {
-                const {data , status}= await GetPeriodicSalesReport(1)
+                const {data , status}= await GetPeriodicSalesReport(TypeId)
                 setDatas(data.result.ordersPerSchedule)
             }catch (e) {
                 console.log(e)
@@ -140,7 +141,7 @@ export function ChartLine() {
 
         }
         GetReport()
-    },[])
+    },[TypeId])
     const labels = datas.map(item=> item.scheduleName);
 
     const data = {
@@ -148,24 +149,44 @@ export function ChartLine() {
         datasets: [
             {
                 fill: true,
-                label: 'فروش کالا 1',
-                data: [88, 5, 10, 15, 44, 9, 46],
+                label: " سفارشات",
+                data: datas.map(item=> item.orderCount),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(255,255,255,0)',
             },
-            {
-                fill: true,
-                label: 'فروش کالا 2',
-                data: [10, 8, 18, 15, 94, 5, 4],
-                borderColor: 'rgb(235,53,86)',
-                backgroundColor: 'rgba(255,255,255,0)',
-            },
+
+
         ],
     };
 
     return (
         <div id="chartArea" className="col-xl-12 layout-spacing">
-            <div className="statbox widget  box-shadow ">
+            <div className="widget widget-chart-three">
+                <div className="widget-heading ">
+                    <div className="d-inline float-left">
+                        <h5 className="">تعداد سفارشات</h5>
+                    </div>
+                <div className="dropdown  custom-dropdown d-inline float-right ">
+                    <a className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                             className="feather feather-more-horizontal">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </a>
+
+                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
+                        <a className="dropdown-item" onClick={()=> setTypeId(1)}>1 سال گذشته</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه گذشته</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز گذشته</a>
+                    </div>
+                </div>
+                </div>
+                <div className="btn-group m-2" role="group" aria-label="Basic example">
+                </div>
                 {/*<div className="widget-heading">*/}
                 {/*    <h5 className="">درآمد</h5>*/}
 
