@@ -10,6 +10,8 @@ import {
     Legend,
 } from 'chart.js';
 import {Line} from 'react-chartjs-2';
+import {GetPeriodicSalesReport} from "../../services/reportService";
+import {useEffect, useState} from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -123,29 +125,44 @@ const options = {
     }
 };
 
-const labels = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر'];
 
-export const data = {
-    labels,
-    datasets: [
-        {
-            fill: true,
-            label: 'فروش کالا 1',
-            data: [88, 5, 10, 15, 44, 9, 46],
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(255,255,255,0)',
-        },
-        {
-            fill: true,
-            label: 'فروش کالا 2',
-            data: [10, 8, 18, 15, 94, 5, 4],
-            borderColor: 'rgb(235,53,86)',
-            backgroundColor: 'rgba(255,255,255,0)',
-        },
-    ],
-};
 
 export function ChartLine() {
+    const [datas , setDatas]=useState([])
+    useEffect(()=>{
+        const GetReport = async () => {
+            try {
+                const {data , status}= await GetPeriodicSalesReport(1)
+                setDatas(data.result.ordersPerSchedule)
+            }catch (e) {
+                console.log(e)
+            }
+
+        }
+        GetReport()
+    },[])
+    const labels = datas.map(item=> item.scheduleName);
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                fill: true,
+                label: 'فروش کالا 1',
+                data: [88, 5, 10, 15, 44, 9, 46],
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(255,255,255,0)',
+            },
+            {
+                fill: true,
+                label: 'فروش کالا 2',
+                data: [10, 8, 18, 15, 94, 5, 4],
+                borderColor: 'rgb(235,53,86)',
+                backgroundColor: 'rgba(255,255,255,0)',
+            },
+        ],
+    };
+
     return (
         <div id="chartArea" className="col-xl-12 layout-spacing">
             <div className="statbox widget  box-shadow ">
