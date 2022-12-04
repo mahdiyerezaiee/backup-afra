@@ -22,10 +22,10 @@ const EditNews = () => {
             try {
                 const {data, status} = await GetAllNewsForUsers()
 
-                    setMessage( data.result.news.filter(item => item.id == params.id).map(item => item.message)[0])
+                    setMessage( data.result.news.values.filter(item => item.id == params.id).map(item => item.message)[0])
 
 
-                    setTitle( data.result.news.filter(item => item.id == params.id).map(item => item.title)[0])
+                    setTitle( data.result.news.values.filter(item => item.id == params.id).map(item => item.title)[0])
 
 
             } catch (err) {

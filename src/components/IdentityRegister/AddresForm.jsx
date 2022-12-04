@@ -5,9 +5,40 @@ import { useState, useEffect } from 'react';
 import { GetAllProvince, SetAddress } from './../../services/addressService';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
+import {useRef} from "react";
+import SimpleReactValidator from "simple-react-validator";
 
 const AddresForm = () => {
+    const validator = useRef(new SimpleReactValidator({
+        validators:{
+            alpha:{
 
+                rule: (val ,params,validator) => {
+                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i, )&& params.indexOf(val) === -1;
+                }
+            },
+            numeric:{
+
+                rule: (val ,params,validator) => {
+                    return validator.helpers.testRegex(val,/^[u06F0-u06F9]+$/,)&& params.indexOf(val) === -1 && val.length===10;
+
+                }
+            },
+            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
+                    return val.length >= options[0];
+                }, messageReplace: function messageReplace(message, options) {
+                    return message.replace(':min', options[0]);
+                } }
+        },
+        messages: {
+            required: "پرکردن این فیلد الزامی می باشد",
+
+            email: 'ایمیل صحیح نیست',
+            alpha: 'حتما از حروف استفاده کنید',
+            numeric: 'کد ملی را صحیح وارد کنید'
+        }
+        , element: message => <p style={{ color: 'red' }}>{message}</p>
+    }));
     const userinfo = useSelector(state => state.userinfo);
     const [fullAddress, setFulAddress] = useState('');
     const [postalCode, setpostalCode] = useState('');
@@ -96,24 +127,49 @@ const AddresForm = () => {
 
                         <div className="form-group mb-4 textOnInput">
                             <label>آدرس</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=>setFulAddress(e.target.value)}/>
+                            <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=> {
+                                setFulAddress(e.target.value)
+                                validator.current.showMessageFor("required");
+
+                            }}/>
+                            {validator.current.message("required", receiverTel, "required")}
+
                         </div>
 
                         <div className="form-row mb-4 textOnInput">
                             <div className="form-group col-md-4">
                                 <label >تلفن </label>
-                                <input type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=>setreceiverTel(e.target.value)}/>
+                                <input type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=> {
+                                    setreceiverTel(e.target.value)
+                                    validator.current.showMessageFor("required");
+
+                                }}/>
+                                {validator.current.message("required", receiverTel, "required")}
+
                             </div>
 
                             <div className="form-group col-md-4">
 
                                 <label > موبایل</label>
-                                <input type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=>setreceiverMobile(e.target.value)} />
+                                <input type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=> {
+                                    setreceiverMobile(e.target.value)
+                                    validator.current.showMessageFor("required");
+
+                                }} />
+                                {validator.current.message("required", postalCode, "required|numeric|min:11")}
+
                             </div>
                             <div className="form-group col-md-4">
 
                                 <label >کد پستی</label>
-                                <input type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=>setpostalCode(e.target.value)} />
+                                <input type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=> {
+                                    setpostalCode(e.target.value)
+                                    validator.current.showMessageFor("required");
+
+
+                                }} />
+                                {validator.current.message("required", postalCode, "required|numeric|min:10")}
+
                             </div>
                         </div>
 
@@ -126,6 +182,7 @@ const AddresForm = () => {
                                     onChange={e=>{setostanId(e.value)
                                }}
                                 />
+                                {ostanId ===0 ?<span className="text-danger">استان خود را انتخاب کنید</span> :null }
 
                             </div>
                             <div className="form-group col-md-6">
@@ -137,6 +194,7 @@ const AddresForm = () => {
                                     className='form-group'
                                     onChange={e=>setProvinceId(e.value)}
                                 />
+                                {provinceId ===0 ?<span className="text-danger">شهر خود را انتخاب کنید</span> :null }
 
                             </div>
 

@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import SimpleReactValidator from 'simple-react-validator';
-import { NavLink } from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import "react-multi-date-picker/styles/layouts/prime.css";
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +12,8 @@ import { addUserInfo } from '../../actions/user';
 
 
 const PersonIdetity = () => {
+    const navigate=useNavigate()
+
     const [, forceUpdate] = useState();
     const [userData, setUserData] = useState({});
     const [Click, setClick] = useState(false);
@@ -105,7 +107,7 @@ const PersonIdetity = () => {
                 const { data, status } = await GetUserInfo();
 
                 dispatch(addUserInfo(data.result.customer));
-
+navigate('/identitypannel')
             }
 
 

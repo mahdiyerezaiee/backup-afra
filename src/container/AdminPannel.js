@@ -50,7 +50,8 @@ const AdminPannel = () => {
 
     <Routes>
      
-      <Route path='/*' element={<PrivateRoute>
+      <Route path='/*' element={
+          <PrivateRoute>
         <MainLayout/>
        
         </PrivateRoute>} />
