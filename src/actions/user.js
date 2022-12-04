@@ -21,7 +21,7 @@ export const addUser=(user)=>{
     
             return async dispatch=>{
         
-                await dispatch({type:'CLEAR_USERINFO',payload: {}});
+                await dispatch({type:'CLEAR_USERINFO'});
             };
         };
     export const clearUser=()=>{

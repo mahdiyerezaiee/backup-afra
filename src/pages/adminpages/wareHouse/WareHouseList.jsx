@@ -269,6 +269,7 @@ const WareHouseList = () => {
             const { data, status } = await DeleteHouses(id)
             if (data.result.success === true)
             {
+                closeModal2()
                 toast.success("انبار با موفقیت حذف شد", {
                     position: "top-right",
                     closeOnClick: true
@@ -297,7 +298,7 @@ const WareHouseList = () => {
         { Header: 'شناسه', accessor: 'id' },
         { Header: 'نام', accessor: 'name' },
         {
-            Header: 'نوع', accessor: d=>{
+            Header: 'گروه انبار', accessor: d=>{
                 let WareHosueType = wareTypes.filter(item => item.id ==d.groupId).map(item => item.name)
                 return(`${WareHosueType}`)
             }, Cell: row => {

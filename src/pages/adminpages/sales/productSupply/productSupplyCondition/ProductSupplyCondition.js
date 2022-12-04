@@ -313,6 +313,10 @@ const ProductSupplyCondition = ({quantity}) => {
             }
         } catch (err) {
             console.log(err)
+            toast.error("این شرط به یک یا چند سفارش اختصاص داده شده است", {
+                position: "top-right",
+                closeOnClick: true
+            });
         }
     }
     const CustomerG = () => {

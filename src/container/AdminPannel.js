@@ -25,25 +25,7 @@ const AdminPannel = () => {
 
   const User = useSelector(state => state.User);
  
-  const dispatch = useDispatch();
-  useEffect(() => {
-
-  
-    if (token!==null) {
-        const deToken = decodeToken(token);
-        const dateNow = Date.now() / 1000;
-        // console.log(decodeToken);
-        if (deToken.exp < dateNow) {
-
-            localStorage.removeItem("token");
-            dispatch(clearUser());
-
-        }
-        else {
-            dispatch(addUser(deToken));
-        }
-    }
-}, []);
+ 
  
 
   return (

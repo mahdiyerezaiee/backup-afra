@@ -113,6 +113,8 @@ const MainLayout = (props) => {
 
   const userInfo = useSelector(state => state.userInfo);
   const id = userInfo.id;
+  console.log(userInfo);
+
   const getRole = async () => {
     try {
 

@@ -86,7 +86,7 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
                             <th > واحد</th>
                             <th>  مقدار حواله</th>
                             <th> مقدار حمل شده</th>
-                            <th >تاریخ قرارداد</th>
+                            <th >تاریخ حواله</th>
                             <th >نحوه ارسال</th>
                             <th >شماره قرارداد</th>
                             <th >نام باربری</th>
