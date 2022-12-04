@@ -50,7 +50,7 @@ const IdentityPannel = () => {
                 </Link>
                 {user.nationalCode ? <HiArrowLeft  style={{margin:"auto 0 " ,color:"green"}} size={"3rem"}/> :  null}
 
-                <Link to='/addresform' className=' m-auto rounded' style={{ color:address && address.lenght > 0 ?  " green": " lightcoral" ,border:address && address.lenght > 0 ? " 1px solid green": " 1px solid lightcoral" , animation: address && address.lenght > 0 ? "none":"pulsered 2s infinite" }} >
+                <Link to='/addresform' className=' m-auto rounded' style={{ color:address && address.lenght !== 0 ?  " green": " lightcoral" ,border:address && address.lenght !==0 ? " 1px solid green": " 1px solid lightcoral" , animation: address && address.lenght!== 0 ? "none":"pulsered 2s infinite" }} >
                     
                 
                     <div className='col-lg-12 col-md-12 col-sm-2 col-xs-2 m-auto widget box shadow'  >
@@ -59,7 +59,7 @@ const IdentityPannel = () => {
 
                    
                             <div className='card-title text-left'>
-                                <h5  style={{ color: address && address.lenght>0 ? " green": " lightcoral"}} className='heading'> 2.ثبت آدرس </h5>
+                                <h5  style={{ color: address && address.lenght!==0 ? " green": " lightcoral"}} className='heading'> 2.ثبت آدرس </h5>
                                    {/* span baraye response server */}
                                 {/* <span className='status'>تست ریسپانس</span> */}
                             </div>
