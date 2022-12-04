@@ -313,7 +313,7 @@ useEffect(()=>{
                                                         </div>:null}
 
                                                         {/* {row.original.shippingStatusId===2?null:<Suspense><LazyShippingCom  id={row.original.id}/></Suspense>} */}
-{/* 
+
                                                         {row.original.extId > 0 ?
                                                             <div className=" w-85  table table-responsive ">
 
@@ -380,7 +380,9 @@ useEffect(()=>{
 
 
 
-                                                            :null} */}
+                                                            :null}
+
+
 
                                                     </div>
 
