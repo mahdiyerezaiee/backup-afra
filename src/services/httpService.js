@@ -60,10 +60,13 @@ axios.interceptors.response.use(
     if (error.response.status === 500) {
 
       console.log(error);
-      toast.error("مشکلی از سمت سرور رخ داده است.", {
+      toast.error("پاسخی از سمت سرور دریافت نشد", {
         position: "top-right",
         closeOnClick: true
       });
+      window.location.replace('/logout')
+
+
     }
 
 
