@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 
 import {useEffect, useState} from "react";
-import {editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
+import {ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
 
 import {toast} from "react-toastify";
 const customStyles = {
@@ -40,29 +40,16 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
 
 
     const handleEditFormSubmit =async () => {
-        const datas ={
-            "order": {
-                id,
-                "customerId": order.customerId,
-                orderStatusId,
-                'paymentStatusId':order.paymentStatusId,
-                paymentMethodId:order.paymentMethodId,
-                shippingStatusId:order.shippingStatusId,
-                "orderTotal": order.orderTotal,
-                "orderTax": order.orderTax,
-                "orderDiscount": order.orderDiscount,
-                orderFinalizedPrice:order.orderFinalizedPrice,
-                "createDate": order.createDate,
-                "extId":order.extId,
-                "paid": false,
-                "comment": null,
-                "customer": null,
-                "extraData":null
-            }
+        const datas = {
+
+            orderId:id,
+            orderStatusId,
+
         }
         try {
-            const {data , staus}= await editOrder(datas)
-            if (data.result.message==="Done.") {
+            const {data, staus} = await ChangeOrderStatus(datas)
+
+            if (data.result.success === true) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
                     position: "top-right",
                     autoClose: 5000,
