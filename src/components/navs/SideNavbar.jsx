@@ -198,7 +198,7 @@ let el = document.getElementById("sidebar");
               {/* <SubMenu ref={ref8} open={show.item8 === true? true:false} onClick={() => setShow({...show , item8: !show.item8 , item1: false,item3: false,item4: false,item5: false,item6: false,item2: false,item9: false,item10: false,item7: false,item11: false,item12: false,item14: false,item13: false})} hidden={roles.includes(7)||roles.includes(5) ? false : true} icon={<FaCashRegister size='2rem' />} title='حسابداری'>
 
               </SubMenu> */}
-              <MenuItem icon={<FaCashRegister size='2rem' />}>حسابداری</MenuItem>
+              <MenuItem hidden={roles.includes(7)||roles.includes(5) ? false : true} icon={<FaCashRegister size='2rem' />}>حسابداری</MenuItem>
 
             
 

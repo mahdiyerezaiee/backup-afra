@@ -11,7 +11,7 @@ export const setCustomerInfo=(user)=>{
 
 
 export const CreateCustomer=(user)=>{
-    return http.put(`${config.ForoshApi}/AuthenticatedUser/CreateUser`,JSON.stringify(user));
+    return http.post(`${config.ForoshApi}/AuthenticatedUser/CreateUser`,JSON.stringify(user));
 }
 
 
