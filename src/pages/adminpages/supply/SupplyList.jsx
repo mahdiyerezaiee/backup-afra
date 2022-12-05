@@ -504,6 +504,9 @@ const SupplyList = () => {
             }
         },
         {
+            Header: 'کد  کوتاژ', accessor: 'cottageCode'
+        },
+        {
             Header: 'توضیحات', accessor: 'comment', Cell: row => {
 
                 return (<span title={row.row.original.comment}>{row.row.original.comment.substring(0, 50) + '...'}</span>)

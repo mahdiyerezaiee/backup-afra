@@ -5,6 +5,10 @@ export const SetOrder=(order)=>{
 
     return http.post(`${configure.ForoshApi}/Order/SetOrder`,JSON.stringify(order));
 }
+export const ChangeOrderStatus=(orderStatus)=>{
+
+    return http.post(`${configure.ForoshApi}/Order/ChangeOrderStatus`,JSON.stringify(orderStatus));
+}
 export const GetAllOrders=()=>{
 
     return http.get(`${configure.ForoshApi}/Order/GetOrders`);

@@ -124,7 +124,8 @@ const SalesBoardForCustomer = () => {
     }
 
 
-    const submitHandler = async () => {
+    const submitHandler = async (e) => {
+        e.preventDefault()
         try {
             const { data, status } = await AddTOCart(addToCart)
             window.location.reload();
@@ -133,7 +134,7 @@ const SalesBoardForCustomer = () => {
         }
 
     }
-    console.log(groupInfo)
+
     if (productSupply !== null) {
 
         return (<div className=''>
@@ -182,7 +183,7 @@ const SalesBoardForCustomer = () => {
                                     <th className="text-center">تاریخ شروع</th>
                                     <th className="text-center">تاریخ پایان</th>
                                     
-                                    {/* <th className="text-center">باقی مانده</th> */}
+                                     <th className="text-center">باقی مانده</th>
                                     <th className="text-center">عملیات</th>
                                 </tr>
                             </thead>
@@ -200,6 +201,7 @@ const SalesBoardForCustomer = () => {
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td> 
+                                        <td className="text-center">{item.remainedQuantity}</td>
                                         <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>ثبت درخواست
                                             </button>) : (<button  className=" btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
 

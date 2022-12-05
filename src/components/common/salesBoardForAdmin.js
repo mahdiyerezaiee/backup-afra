@@ -117,7 +117,8 @@ const SalesBoardForAdmin = () => {
     }
 
 
-    const submitHandler = async () => {
+    const submitHandler = async (e) => {
+        e.preventDefault()
         try {
             const { data, status } = await AddTOCart(addToCart)
             window.location.reload();
@@ -126,6 +127,7 @@ const SalesBoardForAdmin = () => {
         }
 
     }
+
     let productCondistion;
     if(productSupply!==null){
 
@@ -201,7 +203,8 @@ const SalesBoardForAdmin = () => {
                                     <th className="text-center">تاریخ شروع</th>
                                     <th className="text-center">تاریخ پایان</th>
 
-                                    {/* <th className="text-center">باقی مانده</th> */}
+                                     <th className="text-center">  درخواستی</th>
+                                     <th className="text-center"> مانده</th>
                                     <th className="text-center">عملیات</th>
                                 </tr>
                             </thead>
@@ -220,9 +223,12 @@ const SalesBoardForAdmin = () => {
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
                                         <td className="text-center">{groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item => item.gpName)).length === 0 ? "عمومی" : [...new Set(groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item, index) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                       <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td> 
+                                        <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                        <td className="text-center">{item.orderedQuantity}</td>
+                                        <td className="text-center">{item.remainedQuantity}</td>
                                         <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>درخواست
                                         </button>) : (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
+
 
 
                                     </tr>

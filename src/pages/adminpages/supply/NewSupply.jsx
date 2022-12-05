@@ -14,6 +14,7 @@ import SimpleReactValidator from "simple-react-validator";
 const NewSupply = () => {
     const [productId, setProductId] = useState(0);
     const [measureUnitId, setMeasureUnitId] = useState(0);
+    const [cottageCode, setCottageCode] = useState(0);
     const [wareHouseId, setWareHouseId] = useState(0);
     const [supplyTypeId, setSupplyTypeId] = useState(0);
     const [supplierId, setSupplierId] = useState(0);
@@ -121,6 +122,7 @@ const NewSupply = () => {
                     wareHouseId,
                     contractNumber,
                     comment,
+                    cottageCode,
                     product: null,
                     supplier: null
                 }
@@ -278,7 +280,7 @@ const NewSupply = () => {
                             </div>
                             <div className="form-group mb-4 textOnInput  ">
                                 <div className='form-row'>
-                                    <div className="col-6">
+                                    <div className="col-4">
                                         <label >مقدار</label>
                                         <input type="text" className="form-control opacityForInput" value={quantity}
                                             onChange={e => {
@@ -288,7 +290,17 @@ const NewSupply = () => {
                                             }} />
                                         {validator.current.message("required", quantity, "required|numeric")}
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-4">
+                                        <label >کد کوتاژ</label>
+                                        <input type="text" className="form-control opacityForInput" value={cottageCode}
+                                            onChange={e => {
+                                                 setCottageCode(Number(e.target.value))
+                                                validator.current.showMessageFor("required");
+
+                                            }} />
+                                        {validator.current.message("required", quantity, "required|numeric")}
+                                    </div>
+                                    <div className="col-4">
                                         <label >شماره قرارداد</label>
                                         <input type="text" className="form-control opacityForInput" value={contractNumber}
                                             onChange={e => {

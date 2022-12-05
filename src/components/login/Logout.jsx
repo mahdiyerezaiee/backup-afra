@@ -16,8 +16,7 @@ const token=localStorage.getItem('token');
 useEffect(()=>{
 
     redirectTologin()
-dispatch(clearUser())
-dispatch(clearUserInfo())
+
 
     
 },[])
@@ -29,7 +28,8 @@ const redirectTologin=()=>{
         localStorage.removeItem('username');
         localStorage.removeItem('mobile')
        localStorage.clear()
-
+       dispatch(clearUser())
+       dispatch(clearUserInfo())
       
         history("/login");
 }

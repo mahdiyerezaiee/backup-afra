@@ -49,7 +49,7 @@ const AddNewUser = () => {
             password,
             active,
             actionBlock,
-            groupId:null
+            groupId: null
 
         }
     }
@@ -145,32 +145,32 @@ const AddNewUser = () => {
                         <div className="form-group  textOnInput col-12 ">
 
                             <div className="form-row">
-                                <div className="col-12 mb-5">
-
-
-                                    <label className="form-check-label mb-3">
-
-                                        <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
-                                        حساب کاربری شخص حقوقی
-                                    </label>
-                                </div>
                                 <div className="col-12 mb-5 d-flex justify-content-between ">
-                                    <div className="col-6">
+                                    <div className="col-4 ">
+
+
+                                        <label className="form-check-label mb-3">
+
+                                            <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
+                                            حقوقی
+                                        </label>
+                                    </div>
+                                    <div className="col-4">
 
                                         <label className="form-check-label mb-3">
 
                                             <input type="checkbox" checked={active} className="form-check-input" onChange={e => setActive(e.target.checked)} />
-                                            فعال / غیرفعال                                    </label>
+                                            فعال                                     </label>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-4">
 
                                         <label className="form-check-label mb-3 text-danger font-weight-bold">
 
                                             <input type="checkbox" checked={actionBlock} className="form-check-input" onChange={e => SetactionBlock(e.target.checked)} />
                                             تعلیق کاربر                                  </label>
                                     </div>
-                                </div>
-                                <div className="col-4 mb-4">
+                                </div>                             
+                                   <div className="col-4 mb-4">
 
                                     <label >شماره موبایل</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="شماره موبایل" value={userName || ""} onChange={
