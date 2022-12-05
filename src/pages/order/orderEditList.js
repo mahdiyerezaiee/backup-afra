@@ -1,4 +1,4 @@
-import {editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
+import {ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
 import {useEffect, useState} from "react";
 import Modal from "react-modal";
 import Select from "react-select";
@@ -49,32 +49,19 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
     const OrderStatusId = (id) => {
         return (OrderStatus.filter(item => item.id === orderStatusId).map(data => ({label: data.name, value: data.id})))
     }
-    const handleEditFormSubmit = async () => {
+    const handleEditFormSubmit = async (e) => {
+        e.preventDefault();
+
         const datas = {
-            "order": {
-                id,
-                "customerId": order.customerId,
+
+                orderId:id,
                 orderStatusId,
-                'paymentStatusId': order.paymentStatusId,
-                paymentMethodId: order.paymentMethodId,
-                shippingStatusId: order.shippingStatusId,
-                "orderTotal": order.orderTotal,
-                "orderTax": order.orderTax,
-                "orderDiscount": order.orderDiscount,
-                orderFinalizedPrice: order.orderFinalizedPrice,
-                "createDate": order.createDate,
-                "extId": order.extId,
-                "paid": false,
-                "comment": null,
-                "customer": null,
-                "extraData": null
-            }
-            //{...order,orderstatusId,actionBlock}
+
         }
         try {
-            const {data, staus} = await editOrder(datas)
+            const {data, staus} = await ChangeOrderStatus(datas)
 
-            if (data.result.message === "Done.") {
+            if (data.result.success === true) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -84,8 +71,9 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
                     draggable: true,
                     progress: undefined
                 });
-                window.location.reload()
             }
+            window.location.reload()
+
             closeModal()
         }
          catch (e) {
@@ -93,6 +81,7 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
             console.log(e)
         }
     }
+
     return (
         <Modal
 
