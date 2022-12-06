@@ -39,10 +39,12 @@ const options = {
         }
     },
     plugins: {
+
         legend: {
             rtl: true,
-            display: true,
+            display: false,
             labels: {
+
                 yPadding: '10',
                 position: 'left',
                 usePointStyle: true,
@@ -80,15 +82,19 @@ const options = {
 
             }
         },
-        
+
     },
 
 
     scales: {
         yAxes: {
+
             barPercentage: 1.6,
             grid: {
-                display: false,
+                // borderDash: [10, 10],
+                drawBorder: false,
+
+                display: true,
                 zeroLineColor: "transparent"
             },
             ticks: {
@@ -107,7 +113,7 @@ const options = {
             barPercentage: 1.6,
             grid: {
                 borderDash: [10, 10],
-                display: true,
+                display: false,
                 zeroLineColor: "transparent"
             },
             ticks: {
@@ -127,7 +133,7 @@ const options = {
 
 
 
-export function ChartLine() {
+export function ChartLineValue() {
     const [datas , setDatas]=useState([])
     const [TypeId , setTypeId]=useState(2)
     useEffect(()=>{
@@ -142,17 +148,21 @@ export function ChartLine() {
         }
         GetReport()
     },[TypeId])
-    const labels = datas.map(item=> item.scheduleName);
+    const labels =datas.map(item=>item.scheduleName)
 
     const data = {
         labels,
         datasets: [
             {
                 fill: true,
-                label: " سفارشات",
-                data: datas.map(item=> item.orderCount),
+                // label: " سفارشات",
+                data: datas.map(item=>item.orderValue),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(255,255,255,0)',
+
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor:'#ffff'
             },
 
 
@@ -164,7 +174,7 @@ export function ChartLine() {
             <div className="widget widget-chart-three">
                 <div className="widget-heading ">
                     <div className="d-inline float-left">
-                        <h5 className="">تعداد سفارشات</h5>
+                        <h5 className="">قیمت سفارشات</h5>
                     </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <a className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
@@ -179,9 +189,9 @@ export function ChartLine() {
                     </a>
 
                     <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                        <a className="dropdown-item" onClick={()=> setTypeId(1)}>1 سال گذشته</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه گذشته</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز گذشته</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</a>
                     </div>
                 </div>
                 </div>
@@ -191,7 +201,7 @@ export function ChartLine() {
                 {/*    <h5 className="">درآمد</h5>*/}
 
                 {/*</div>*/}
-                <div className="widget-content" style={{height: "300px"}}>
+                <div className="widget-content  pt-3 border-top" style={{height: "300px"}}>
 
                 <Line options={options} data={data}/>
             </div>

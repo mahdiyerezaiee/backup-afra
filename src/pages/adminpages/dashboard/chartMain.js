@@ -1,21 +1,20 @@
 import React from 'react';
-import {ChartLine} from "../../../components/chart/chartLine";
-import {ChartPie} from "../../../components/chart/chartPie";
+import {ChartLineCount} from "../../../components/chart/chartLineCount";
+import {ChartLineValue} from "../../../components/chart/chartLineValue";
 
 const ChartMain = () => {
     return (
         <div className=" row sales ">
 
-            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
 
-                <ChartLine/>
+                <ChartLineCount/>
             </div>
-            {/*<div className="col-xl-1 col-lg-12 col-md-12 col-sm-12 col-12 ">*/}
-            {/*</div>*/}
-            {/*<div className="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 ">*/}
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
 
-            {/*    <ChartPie/>*/}
-            {/*</div>*/}
+                <ChartLineValue/>
+            </div>
+
         </div>
     )
 }
