@@ -6,17 +6,20 @@ import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
+import {PriceUnitEnums} from "../../../Enums/PriceUnit";
 
 const EditUserInfo = () => {
     const navigate = useNavigate()
     const params = useParams()
     const [userName, setUserName] = useState('')
+    const [maxValidity, setMaxValidity] = useState(0)
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [nationalCode, setNationalCode] = useState('')
     const [organizationID, setOrganizationID] = useState([])
     const [organizationId, setOrganizationId] = useState(null)
+    const [maxValidityUnitId, setMaxValidityUnitId] = useState(null)
     const [password, setPassword] = useState(null)
     const [passwordConfirm, setPasswordConfirm] = useState(null)
     const [check, setChek] = useState(false);
@@ -48,9 +51,11 @@ const EditUserInfo = () => {
         organizationId,
         password,
         active,
+        maxValidity: Number(maxValidity),
+        maxValidityUnitId,
         actionBlock
     }
-
+    console.log(dataUser)
     const getUserInfo = async () => {
         try {
             const { data, status } = await GetUserData(params.id)
@@ -62,6 +67,8 @@ const EditUserInfo = () => {
             setOrganizationId(data.result.customer.organizationId)
             setActive(data.result.customer.active)
             SetactionBlock(data.result.customer.actionBlock)
+            setMaxValidity(data.result.customer.maxValidity)
+            setMaxValidityUnitId(data.result.customer.maxValidityUnitId)
 
 
         } catch (err) {
@@ -110,6 +117,12 @@ const EditUserInfo = () => {
     }
     const OrganizationItem = () => {
         return (organizationID.filter(item => item.id === organizationId).map(item => ({ label: item.name, value: item.id })))
+    }
+    const PriceUnitItem = () => {
+        return (PriceUnitEnums.map(item => ({ label: item.name, value: item.id })))
+    }
+    const PriceUnit = () => {
+        return (PriceUnitEnums.filter(item => item.id === maxValidityUnitId).map(item => ({ label: item.name, value: item.id })))
     }
 
     const validator = useRef(new SimpleReactValidator({
@@ -233,6 +246,23 @@ const EditUserInfo = () => {
                                         validator.current.showMessageFor("email")
                                     }} />
                                     {validator.current.message("email", email, "email")}
+                                </div>
+                                <div className="col-6 mb-4">
+                                    <label >مقدار اعتبار </label>
+                                    <input type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" value={maxValidity || ""} onChange={e => {
+                                        setMaxValidity(e.target.value)
+                                        validator.current.showMessageFor("required");
+                                    }} />
+                                    {validator.current.message("required", nationalCode, "required|numeric|min:10")}
+                                </div>
+                                <div className="col-6 mb-4">
+                                    <label >واحد قیمت</label>
+                                    <Select
+                                        defaultValue={PriceUnit()}
+                                        placeholder="واحد قیمت"
+                                        options={PriceUnitItem()}
+                                        onChange={e => setMaxValidityUnitId(e.value)}
+                                    />
                                 </div>
 
 

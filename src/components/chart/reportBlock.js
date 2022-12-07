@@ -33,10 +33,10 @@ const ReportBlock = () => {
       getReport()
   },[])
     let repots =   showMore ? ReportEntityStyle.slice( 6 , 11  ) : ReportEntityStyle.slice( 0 ,6  )
-    return(<div className="widget  shadow" >
+    return(<div className="widget  shadow sliderReport" >
         <div className="row " style={{zIndex:"2" , backgroundColor:'white'}}>
-            <div className="col-md-6 col-lg-1 mb-1  " style={{zIndex:"2" , backgroundColor:'white'}} >
-             <button className="border-0 m-auto py-5 bg-transparent edit-btn"   disabled={!showMore } onClick={()=> setShowMore(false)}><IoIosArrowForward size={'3rem'}/></button>
+            <div className="col-md-6 col-lg-1 mb-1  " >
+             <button className="border-0  py-5  float-right bg-transparent edit-btn"   disabled={!showMore } onClick={()=> setShowMore(false)}><IoIosArrowForward size={'3rem'}/></button>
             </div>
 
             {report.map(item=>
@@ -56,7 +56,7 @@ const ReportBlock = () => {
 
                 </div>
             </div>:null) )}
-            <div className="col-md-6 col-lg-1 mb-1  " style={{zIndex:"2" , backgroundColor:'white'}} >
+            <div className="col-md-6 col-lg-1 mb-1  "  >
                 <button className="border-0 m-auto py-5 bg-transparent edit-btn"  disabled={showMore } onClick={()=> setShowMore(true)}>  <IoIosArrowBack size={'3rem'}/></button>
 
             </div>
