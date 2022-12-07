@@ -1,9 +1,11 @@
-import Modal from "react-modal";
-
 import {useEffect, useState} from "react";
-import {ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
-
+import {ChangeOrderStatus, GetOrder} from "../../services/orderService";
 import {toast} from "react-toastify";
+import Modal from "react-modal";
+import Select from "react-select";
+import {PaymentStatusEnums} from "../../Enums/PaymentStatus";
+import {ConditionalPaymentTypes} from "../../Enums/ConditionalPaymentTypes";
+
 const customStyles = {
     content: {
 
@@ -19,16 +21,21 @@ const customStyles = {
     }
 
 }
-const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
+const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
+    const [paymentStatusId, setPaymentStatusId] = useState(0)
+    const [conditionalPaymentTypeId, setConditionalPaymentTypeId] = useState(0)
+
 
     const handleEditFormSubmit =async () => {
         const datas = {
 
-            orderId:id,
-            orderStatusId,
-
+            orderId: id,
+            orderStatusId:3,
+            paymentStatusId,
+            conditionalPaymentTypeId
 
         }
+        console.log(datas)
         try {
             const {data, staus} = await ChangeOrderStatus(datas)
 
@@ -56,6 +63,12 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
             console.log(e)
         }
     }
+    const PaymentStatus = () => {
+        return (PaymentStatusEnums.map(data => ({ label: data.name, value: data.id })))
+    }
+    const ConditionalPayment = () => {
+        return (ConditionalPaymentTypes.map(data => ({ label: data.name, value: data.id })))
+    }
     return(
         <Modal
 
@@ -79,23 +92,55 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
                                            y2="18"></line><line
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div >
-                <div className="card-body p-0" style={{ height: '5rem', width: '20rem' }}>
+                <div className="card-body p-0" style={{ height: '15rem', width: '20rem' }}>
 
                     <div className="row">
 
+                        <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group selectIndex " style={{marginBottom:"4rem"}}>
+                            <div className=" form-control-sm">
+                                <label>وضعیت پرداخت </label>
 
-                            <div className=" col-12 text-center">
-                                {orderStatusId === 12? <span>آیا مطمئن هستید که این درخواست این سفارش را رد کنید</span> : <span>آیا مطمئن هستید که این درخواست این سفارش را تایید کنید</span>}
+                                <Select
 
+                                    placeholder='وضعیت پرداخت'
+                                    options={PaymentStatus()}
+
+
+
+                                    onChange={e => {
+
+                                        setPaymentStatusId(e.value)
+
+                                    }}
+                                />
                             </div>
+                        </div>
+                        <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group  " style={{marginBottom:"3rem"}}>
+                            <div className=" form-control-sm">
+                                <label>شرایط پرداخت </label>
 
+                                <Select
+
+                                    placeholder='وضعیت پرداخت'
+                                    options={ConditionalPayment()}
+
+
+
+                                    onChange={e => {
+
+                                        setConditionalPaymentTypeId(e.value)
+
+                                    }}
+                                />
+                            </div>
+                        </div>
 
 
                     </div>
 
 
 
-            </div>
+                </div>
                 <div className='row '>
 
                     <div className='col-6 '>
@@ -119,4 +164,4 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
 
     )
 }
-export default OrderConfirmation
+export  default  FinancialConfirmation

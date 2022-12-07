@@ -3,7 +3,7 @@ import  Modal  from 'react-modal';
 import { isEmptyObject } from 'jquery';
 import {DeleteAttachments} from "../services/attachmentService";
 import {toast} from "react-toastify";
-
+import {useState} from "react"
 
 const customStyles = {
     content: {
@@ -24,6 +24,16 @@ const customStyles = {
 
 
 const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) => {
+    const [TrackingCode , setTrackingCode] = useState()
+    const [Value , setValue] = useState()
+    const [DueDate , setDueDate] = useState()
+    const [chacked , setchacked] = useState(false)
+    const data ={
+        AttachmentTypeId:2,
+        TrackingCode,
+        Value,
+        DueDate,
+    }
     const handelDelete = async(e) => {
         e.preventDefault()
         try {
@@ -63,6 +73,7 @@ const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) =
         ariaHideApp={false}
     
     >
+
             <div className="d-block clearfix mb-2" onClick={closeModal}><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24" height="24"
@@ -76,7 +87,30 @@ const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) =
                                            y2="18"></line><line
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
     <div className='m-auto'>
-    
+        <div className="row">
+            <div className="col-6">
+                <label>ثبت سند</label>
+                <input type="checkbox" checked={chacked} onClick={e=> setchacked(!chacked)}/>
+            </div>
+            {chacked === true ?
+            <div className="col-12">
+                <div className="row">
+
+                <div className="col-4">
+                    <label>شماره چک</label>
+                    <input type="text" value={TrackingCode} onClick={e=> setTrackingCode(e.target.value)}/>
+                </div> <div className="col-4">
+                <label>مبلغ چک</label>
+                <input type="text" value={Value} onClick={e=> setValue(e.target.value)}/>
+            </div> <div className="col-4">
+                <label>تاریخ چک</label>
+                <input type="text" value={DueDate} onClick={e=> setDueDate(e.target.value)}/>
+            </div>
+
+            </div>
+            </div>
+            : null}
+        </div>
     <div className='m-auto' >
         <img  style={{width:"40rem", height:'25rem'}} src={`http://10.10.20.4/${item.path}`} className="img-fluid m-auto" alt={item.name} />
     </div>

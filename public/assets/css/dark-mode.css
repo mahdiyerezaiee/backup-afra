@@ -168,9 +168,24 @@
 .dark-mode .footer-wrapper{
     background-color:#233649!important;
 
+}.dark-mode .sliderReport .row{
+    color: white;
+    background-color:#0e2338!important;
+
+}
+.dark-mode .sliderReport h1 {
+    color: white!important;
+
+}
+.dark-mode .sliderReport p{
+    color: white!important;
+
+}.dark-mode .sliderReport a{
+    color: white!important;
+
 }
 .dark-mode ::selection{
-    color:  #BDBDD7!important;
+    color: #a2ff00 !important;
 
 }
 .dark-mode .navbar .navbar-item .nav-item form.form-inline input.search-form-control{

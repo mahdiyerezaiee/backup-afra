@@ -8,6 +8,10 @@ export const attachmentUpload=(formData)=>{
         headers:'Content-Type: multipart/form-data'
     });
 }
+export const SetAttachmentType=(params)=>{
+
+    return http.post(`${configure.ForoshApi}/Attachment/Upload` , JSON.stringify(params))
+}
 
 
 export const GetAttachments=(searchParams)=>{
