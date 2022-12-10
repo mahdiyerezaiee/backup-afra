@@ -29,6 +29,10 @@ export const GetDataWithSearchOrder=(url)=>{
 
     return http.get(`${configure.ForoshApi}/Order/GetOrders`,url);
 }
+export const HasOverDuePaymentsByAttachments=()=>{
+
+    return http.get(`${configure.ForoshApi}/Order/HasOverDuePaymentsByAttachments`);
+}
 export const editOrder=(order)=>{
 
     return http.post(`${configure.ForoshApi}/Order/EditOrder`,JSON.stringify(order));

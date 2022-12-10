@@ -1,9 +1,12 @@
 import React from 'react'
 import  Modal  from 'react-modal';
-import { isEmptyObject } from 'jquery';
-import {DeleteAttachments} from "../services/attachmentService";
+import {DeleteAttachments, SetAttachmentType} from "../services/attachmentService";
 import {toast} from "react-toastify";
 import {useState} from "react"
+import InputMask  from "./InputMask";
+import DatePicker, {DateObject} from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 const customStyles = {
     content: {
@@ -24,15 +27,35 @@ const customStyles = {
 
 
 const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) => {
-    const [TrackingCode , setTrackingCode] = useState()
-    const [Value , setValue] = useState()
-    const [DueDate , setDueDate] = useState()
+    const [trackingCode , setTrackingCode] = useState('')
+    const [value , setValue] = useState('')
+    const [dueDate , setDueDate] = useState('')
     const [chacked , setchacked] = useState(false)
-    const data ={
-        AttachmentTypeId:2,
-        TrackingCode,
-        Value,
-        DueDate,
+    const datas ={
+        attachmentId:item.id,
+name:'',
+        attachmentTypeId:2,
+        trackingCode,
+        value,
+        dueDate:new Date(),
+    }
+    const submitAttachment = async () => {
+        try {
+            const {data , status}= await  SetAttachmentType(datas)
+            if (data.result.success ===true) {
+                toast.success("اطلاعات سند ثبت شد", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
+                }}catch (e){
+            console.log(e)
+        }
+
     }
     const handelDelete = async(e) => {
         e.preventDefault()
@@ -59,8 +82,18 @@ const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) =
             console.log(error);
         }
     }
-    console.log(item);
+    const handelStartDate = (value) => {
+        if (value === null) {
+            setDueDate('')
 
+        }
+        //تغییرات روی تاریخ رو اینجا اعمال کنید
+        if (value instanceof DateObject) {
+            setDueDate(value.toDate())
+
+
+        }
+    }
 
     return (
    
@@ -87,32 +120,59 @@ const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) =
                                            y2="18"></line><line
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
     <div className='m-auto'>
-        <div className="row">
+        <div className="row ">
             <div className="col-6">
+                <input   type="checkbox" checked={chacked} onChange={()=> {
+                    setchacked(!chacked)
+                }}/>
                 <label>ثبت سند</label>
-                <input type="checkbox" checked={chacked} onClick={e=> setchacked(!chacked)}/>
+
             </div>
             {chacked === true ?
-            <div className="col-12">
-                <div className="row">
+            <div className="col-12 text-center">
+                <div className="row  text-center form-row textOnInput">
 
                 <div className="col-4">
                     <label>شماره چک</label>
-                    <input type="text" value={TrackingCode} onClick={e=> setTrackingCode(e.target.value)}/>
+                    <input   className="form-control opacityForInput  mb-4" type="text" value={trackingCode} onChange={e=> setTrackingCode(e.target.value)}/>
                 </div> <div className="col-4">
                 <label>مبلغ چک</label>
-                <input type="text" value={Value} onClick={e=> setValue(e.target.value)}/>
-            </div> <div className="col-4">
-                <label>تاریخ چک</label>
-                <input type="text" value={DueDate} onClick={e=> setDueDate(e.target.value)}/>
+                <input  className="form-control opacityForInput  mb-4" type="text" value={value} onChange={e=> setValue(e.target.value)}/>
             </div>
 
+                    <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+
+                        <label style={{
+                            position: 'absolute',
+                            zIndex: '1',
+                            top: '-15px',
+                            right: '10px',
+                            background: 'none',
+                            padding: '0 8px'
+                        }}>موعد چک</label>
+                        <div className='form-group  '>
+                            <DatePicker
+                                calendar={persian}
+
+                                locale={persian_fa}
+                                style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                value={dueDate}
+                                onChange={handelStartDate}
+                            />
+
+                        </div>
+                    </div>
+
+
             </div>
+                <div className="col-12 text-center">
+                    <button className="btn btn-success " onClick={submitAttachment}>ثبت اسناد</button>
+                </div>
             </div>
-            : null}
+            : ""}
         </div>
-    <div className='m-auto' >
-        <img  style={{width:"40rem", height:'25rem'}} src={`http://10.10.20.4/${item.path}`} className="img-fluid m-auto" alt={item.name} />
+    <div className='text-center' >
+        <img  style={{width:chacked === true ?"25rem":"50rem", height:chacked === true ?"12.5rem":'25rem'}} src={`http://10.10.20.4/${item.path}`} className="img-fluid m-auto" alt={item.name} />
     </div>
     
     <div className=' d-block   '>
@@ -121,7 +181,7 @@ const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) =
         </div>
                        
                         <div className='m-1'>
-                            {/*<button onClick={()=>closeModal()} className="btn btn-primary float-right" >بازگشت</button>*/}
+                            <button onClick={()=>closeModal()} className="btn btn-primary float-right" >بازگشت</button>
                         </div>
                     </div>
     </div>

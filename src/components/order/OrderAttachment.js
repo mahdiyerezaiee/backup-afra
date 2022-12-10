@@ -2,7 +2,6 @@ import ImageFileUploader from "../../utils/ImageFileUploader";
 import config from '../../services/config.json'
 
 const OrderAttAchment = ({order,params ,attachments ,handelPreview , modalIsOpenUpload , closeModalForUpload , setIsOpenUpload}) => {
-    console.log(order)
     let newAttachment=attachments.filter(item=>item.deleted===false)
     return(<div>
 
@@ -14,8 +13,15 @@ const OrderAttAchment = ({order,params ,attachments ,handelPreview , modalIsOpen
 
 
                         (newAttachment.map(item =>
-                            <div className="col-md-2 col-sm-12">
-                                <img src={`${config.attachments}${item.path}`} className="img-thumbnail" alt={item.name} onClick={() => handelPreview(item)} />
+                            <div onClick={() => handelPreview(item)} className={item.attachmentTypeId ===2 ?" img col-md-2 col-sm-12" :"  col-md-2 col-sm-12"} >
+                                   <img src={`${config.attachments}${item.path}`} className={item.attachmentTypeId ===2 ?"img-thumbnail border-danger":" img-thumbnail"} alt={item.name}  />
+                                {item.attachmentTypeId ===2 ?  <div className="detial-img">
+                                    <div className="text">
+                                        <p >مقدار چک : { item.value}</p>
+                                        <p >شماره چک : { item.trackingCode}</p>
+                                        <p >موعد چک : { new Date(item.dueDate).toLocaleDateString("fa-IR")}</p></div>
+
+                                </div>:null}
                             </div>
                         )):
                         <div className="text-center col-md-12 ">
