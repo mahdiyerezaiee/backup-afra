@@ -39,7 +39,7 @@ export const DeleteProductSupply=(ProductSupplyId)=>{
 
 export const GetAllProductWithSearch=(searchParams)=>{
 
-    return http.get(`${configure.ForoshApi}/Product/GetProductSupplies`,searchParams)
+    return http.get(`${configure}/Product/GetProductSupplies`,searchParams)
 }
 
 

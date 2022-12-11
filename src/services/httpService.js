@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import config from './config.json'
 import { decodeToken } from './../utils/decodeToken';
 
+let configure=window.globalThis.site_url;
 
 
 const token = localStorage.getItem('token');
@@ -30,7 +30,7 @@ axios.interceptors.response.use(
       }
       axios.interceptors.response.eject()
       
-        axios.post(`${config.ForoshApi}/User/Refresh`, refreshR).then(response=>{
+        axios.post(`${configure}/User/Refresh`, refreshR).then(response=>{
           localStorage.setItem('token', response.data.result.token);
           localStorage.setItem('refresh', response.data.result.refresh);
           axios.defaults.headers.common["Authorization"] = `Bearer ${

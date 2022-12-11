@@ -52,5 +52,5 @@ export const  DeleteSupply=id =>{
 }
 export const GetDataWithSearchSupply=(url)=>{
 
-    return http.get(`${configure.ForoshApi}/Supply/GetSupplys`,url);
+    return http.get(`${configure}/Supply/GetSupplys`,url);
 }
