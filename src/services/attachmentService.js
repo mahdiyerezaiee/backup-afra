@@ -10,7 +10,7 @@ export const attachmentUpload=(formData)=>{
 }
 export const SetAttachmentType=(params)=>{
 
-    return http.post(`${configure.ForoshApi}/Attachment/Upload` , JSON.stringify(params))
+    return http.post(`${configure.ForoshApi}/Attachment/SetAttachmentType` , JSON.stringify(params))
 }
 
 

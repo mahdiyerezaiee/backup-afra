@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import {
     GetDataWithSearchOrder,
     GetOrder,
-    GetOrderDetails
+    GetOrderDetails, HasOverDuePaymentsByAttachments
 } from "../../services/orderService";
 import { useEffect, useState, useRef } from "react";
 import { useMemo } from "react";
@@ -25,6 +25,8 @@ import AddAdressCustomerForOrder from "../../components/common/addAdressCustomer
 import { GetAddress } from "../../services/addressService";
 import OrderEditList from "./orderEditList";
 import {PaymentStatusEnums} from "../../Enums/PaymentStatus";
+import {toast} from "react-toastify";
+
 
 
 const customStyles = {
@@ -59,6 +61,7 @@ const OrderList = () => {
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
     const [open, SetOpen] = useState(false);
+    const [overDue, SetoverDue] = useState(getDefault().overDue?getDefault().overDue:false );
     const [address, SetAddress] = useState({ active: false, id: 0 });
     let Detail = [];
     const [totalCount, setTotalCount] = useState(0);
@@ -324,13 +327,14 @@ const OrderList = () => {
 
 
     }
-    const params = { paymentStatusIds, Id,ExtId,paymentMethodIds, shippingStatusIds, nationalCode, userName, orderStatusIds, StartDate, EndDate, OrderDetailExtId}
+    const params = {  overDue, paymentStatusIds, Id,ExtId,paymentMethodIds, shippingStatusIds, nationalCode, userName, orderStatusIds, StartDate, EndDate, OrderDetailExtId}
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem('params'));
         return items? items:''
 
 
     }
+
     const getDataBySearch = async () => {
         let config = {
 
@@ -341,7 +345,9 @@ const OrderList = () => {
                 OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
                 StartDate
                 , EndDate
-                , ExtId: Number(ExtId),
+                , ExtId: Number(ExtId)
+                , AttachmentsOverDue:overDue,
+
                 paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
@@ -384,7 +390,9 @@ const OrderList = () => {
                 OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
                 StartDate
                 , EndDate
-                , ExtId: Number(ExtId),
+                , ExtId: Number(ExtId)
+                , AttachmentsOverDue:overDue,
+
                 paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
@@ -424,6 +432,7 @@ const OrderList = () => {
                 , EndDate
                 , ExtId: Number(ExtId),
                 paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
+                 AttachmentsOverDue:overDue,
 
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
@@ -454,6 +463,29 @@ const OrderList = () => {
 
 
     }
+    const HasOverDuePaymentsByAttachment = async () => {
+        try {
+            const {data , status}= await HasOverDuePaymentsByAttachments()
+            if (data.success === true) {
+
+                toast.error("موعد سررسید چند سفارش رسیده است", {
+                    theme:"colored",
+                    width:'100%',
+
+                    position: "top-right",
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
+            }
+
+        }catch (e) {
+            console.log(e)
+        }
+    }
     const getOrganization = async () => {
         try {
             const { data, status } = await GetAllOrganisation();
@@ -472,6 +504,7 @@ const OrderList = () => {
         GetOrders()
         sessionStorage.clear()
         getOrganization()
+        HasOverDuePaymentsByAttachment()
     }, [getOrders])
     const showOrder = (id) => {
         Navigate(`/orderDetail/${id}`)
@@ -681,6 +714,7 @@ setDetailAddress([])
 setPaymentStatusId([])
         setPaymentMethodIds([])
         setShippingStatusIds([])
+        SetoverDue(false)
         sessionStorage.clear()
 SetGetOrders(true)
     }
@@ -874,7 +908,17 @@ SetGetOrders(true)
                                     />
                                 </div>
                             </div>
+                            <div className=" col-12 ">
+                                <div className="n-chk d-flex   ">
+                                    <div>
+                                        <label  className="ml-2 mb-0">سررسید شده</label>
 
+                                        <input   type="checkbox" checked={overDue} onChange={()=> {
+                                            SetoverDue(!overDue)
+                                        }}/>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <div className="row float-right ">
                             <div >
@@ -1079,7 +1123,17 @@ SetGetOrders(true)
                                     />
                                 </div>
                             </div>
+                            <div className=" col-12 ">
+                                <div className="n-chk d-flex   ">
+                                    <div>
+                                <label  className="ml-2 mb-0">سررسید شده</label>
 
+                                <input   type="checkbox" checked={overDue} onChange={()=> {
+                                    SetoverDue(!overDue)
+                                }}/>
+                            </div>
+                            </div>
+                            </div>
                         </form>
                         <div className="row float-right ">
                             <div >
@@ -1093,7 +1147,7 @@ SetGetOrders(true)
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds||getDefault().userName||getDefault().paymentStatusIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().EndDate||getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds||getDefault().userName||getDefault().paymentStatusIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>
