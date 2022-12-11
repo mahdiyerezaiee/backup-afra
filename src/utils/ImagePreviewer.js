@@ -121,8 +121,8 @@ name:'',
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
     <div className='m-auto'>
         <div className="row ">
-            <div className="col-6">
-                <input   type="checkbox" checked={chacked} onChange={()=> {
+            <div className="col-6 mb-2 ">
+                <input className='m-1'   type="checkbox" checked={chacked} onChange={()=> {
                     setchacked(!chacked)
                 }}/>
                 <label>ثبت سند</label>
@@ -132,15 +132,15 @@ name:'',
             <div className="col-12 text-center">
                 <div className="row  text-center form-row textOnInput">
 
-                <div className="col-4">
+                <div className="col-3">
                     <label>شماره چک</label>
                     <input   className="form-control opacityForInput  mb-4" type="text" value={trackingCode} onChange={e=> setTrackingCode(e.target.value)}/>
-                </div> <div className="col-4">
+                </div> <div className="col-3">
                 <label>مبلغ چک</label>
                 <input  className="form-control opacityForInput  mb-4" type="text" value={value} onChange={e=> setValue(e.target.value)}/>
             </div>
 
-                    <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                    <div className="col-3">
 
                         <label style={{
                             position: 'absolute',
@@ -163,11 +163,11 @@ name:'',
                         </div>
                     </div>
 
-
-            </div>
-                <div className="col-12 text-center">
+                    <div className="col-3 text-center">
                     <button className="btn btn-success " onClick={submitAttachment}>ثبت اسناد</button>
                 </div>
+            </div>
+               
             </div>
             : ""}
         </div>

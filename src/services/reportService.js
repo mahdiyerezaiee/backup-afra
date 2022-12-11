@@ -1,11 +1,12 @@
 import http from "./httpService";
-import configure from "./config.json";
+
+let configure=window.globalThis.site_url;
 
 export const GetSimplifiedReports=()=>{
 
-    return http.get(`${configure.ForoshApi}/Report/GetSimplifiedReports`);
+    return http.get(`${configure}/Report/GetSimplifiedReports`);
 }
 export const GetPeriodicSalesReport=(TypeId)=>{
 
-    return http.get(`${configure.ForoshApi}/Report/GetPeriodicSalesReport?ScheduleTypeId=${TypeId}`);
+    return http.get(`${configure}/Report/GetPeriodicSalesReport?ScheduleTypeId=${TypeId}`);
 }
