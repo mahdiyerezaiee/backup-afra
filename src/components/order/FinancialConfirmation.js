@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import Select from "react-select";
 import {PaymentStatusEnums} from "../../Enums/PaymentStatus";
 import {ConditionalPaymentTypes} from "../../Enums/ConditionalPaymentTypes";
+import {PaymentFinancialConfirmtion} from "../../Enums/paymentFinancialConfirmtion";
 
 const customStyles = {
     content: {
@@ -22,20 +23,38 @@ const customStyles = {
 
 }
 const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
-    const [paymentStatusId, setPaymentStatusId] = useState(0)
-    const [conditionalPaymentTypeId, setConditionalPaymentTypeId] = useState(0)
-
+    const [StatusId, setId] = useState(0)
+  let paymentStatusId=0
+  let conditionalPaymentTypeId=0
 
     const handleEditFormSubmit =async () => {
+        if (StatusId === 1  ){
+
+            paymentStatusId=3
+            conditionalPaymentTypeId=null
+
+            } if(StatusId === 2){
+            paymentStatusId=6
+            conditionalPaymentTypeId=1
+
+
+            } if(StatusId === 3){
+            paymentStatusId=6
+            conditionalPaymentTypeId=2
+
+
+            }
+
+
         const datas = {
 
             orderId: id,
-            orderStatusId:3,
+            orderStatusId: 3,
             paymentStatusId,
             conditionalPaymentTypeId
 
         }
-        console.log(datas)
+
         try {
             const {data, staus} = await ChangeOrderStatus(datas)
 
@@ -64,11 +83,9 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
         }
     }
     const PaymentStatus = () => {
-        return (PaymentStatusEnums.map(data => ({ label: data.name, value: data.id })))
+        return (PaymentFinancialConfirmtion.map(data => ({ label: data.name, value: data.id })))
     }
-    const ConditionalPayment = () => {
-        return (ConditionalPaymentTypes.map(data => ({ label: data.name, value: data.id })))
-    }
+
     return(
         <Modal
 
@@ -76,9 +93,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
             onRequestClose={closeModal}
             style={customStyles}
             contentLabel="Selected Option"
-            ariaHideApp={false}
-
-        >
+            ariaHideApp={false}>
             <div className="d-block clearfix mb-2" onClick={closeModal}><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24" height="24"
@@ -92,48 +107,23 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
                                            y2="18"></line><line
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div >
-                <div className="card-body p-0" style={{ height: '15rem', width: '20rem' }}>
+                <div className="card-body p-0" style={{ height: '10rem', width: '20rem' }}>
 
                     <div className="row">
 
                         <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group selectIndex " style={{marginBottom:"4rem"}}>
                             <div className=" form-control-sm">
-                                <label>وضعیت پرداخت </label>
+                                <label>نوع تایید</label>
 
                                 <Select
 
-                                    placeholder='وضعیت پرداخت'
+                                    placeholder='نوع تایید'
                                     options={PaymentStatus()}
-
-
-
-                                    onChange={e => {
-
-                                        setPaymentStatusId(e.value)
-
-                                    }}
+                                    onChange={e => {setId(e.value)}}
                                 />
                             </div>
                         </div>
-                        <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group  " style={{marginBottom:"3rem"}}>
-                            <div className=" form-control-sm">
-                                <label>شرایط پرداخت </label>
 
-                                <Select
-
-                                    placeholder='وضعیت پرداخت'
-                                    options={ConditionalPayment()}
-
-
-
-                                    onChange={e => {
-
-                                        setConditionalPaymentTypeId(e.value)
-
-                                    }}
-                                />
-                            </div>
-                        </div>
 
 
                     </div>

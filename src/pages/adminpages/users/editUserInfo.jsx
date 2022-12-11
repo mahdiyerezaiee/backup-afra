@@ -249,7 +249,7 @@ const EditUserInfo = () => {
                                 </div>
                                 <div className="col-6 mb-4">
                                     <label >مقدار اعتبار </label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" value={maxValidity || ""} onChange={e => {
+                                    <input type="text" className="form-control opacityForInput" placeholder="100,000" maxLength="10" value={maxValidity || ""} onChange={e => {
                                         setMaxValidity(e.target.value)
                                         validator.current.showMessageFor("required");
                                     }} />
