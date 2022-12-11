@@ -463,29 +463,6 @@ const OrderList = () => {
 
 
     }
-    const HasOverDuePaymentsByAttachment = async () => {
-        try {
-            const {data , status}= await HasOverDuePaymentsByAttachments()
-            if (data.success === true) {
-
-                toast.error("موعد سررسید چند سفارش رسیده است", {
-                    theme:"colored",
-                    width:'100%',
-
-                    position: "top-right",
-                    autoClose: false,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-            }
-
-        }catch (e) {
-            console.log(e)
-        }
-    }
     const getOrganization = async () => {
         try {
             const { data, status } = await GetAllOrganisation();
@@ -504,7 +481,6 @@ const OrderList = () => {
         GetOrders()
         sessionStorage.clear()
         getOrganization()
-        HasOverDuePaymentsByAttachment()
     }, [getOrders])
     const showOrder = (id) => {
         Navigate(`/orderDetail/${id}`)
