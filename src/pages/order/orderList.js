@@ -907,8 +907,9 @@ SetGetOrders(true)
                                         }}
                                     />
                                 </div>
+                            
                             </div>
-                            <div className=" col-12 ">
+                            <div className=" col-2 ">
                                 <div className="n-chk d-flex   ">
                                     <div>
                                         <label  className="ml-2 mb-0">سررسید شده</label>
@@ -1122,17 +1123,19 @@ SetGetOrders(true)
                                         }}
                                     />
                                 </div>
+                         
                             </div>
-                            <div className=" col-12 ">
-                                <div className="n-chk d-flex   ">
+                           <div className=" col-2 ">
+                                <div className="n-chk d-flex  justify-content-center  ">
                                     <div>
-                                <label  className="ml-2 mb-0">سررسید شده</label>
 
-                                <input   type="checkbox" checked={overDue} onChange={()=> {
-                                    SetoverDue(!overDue)
-                                }}/>
-                            </div>
-                            </div>
+                                        <input   type="checkbox" checked={overDue} onChange={()=> {
+                                            SetoverDue(!overDue)
+                                        }}/>
+                                        <label  className="ml-2 mb-0">سررسید شده</label>
+
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <div className="row float-right ">
