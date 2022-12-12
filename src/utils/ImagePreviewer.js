@@ -7,6 +7,8 @@ import InputMask from "./InputMask";
 import DatePicker, {DateObject} from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import {useRef} from "react";
+import SimpleReactValidator from "simple-react-validator";
 
 const attachmet = window.globalThis.stie_att
 const customStyles = {
@@ -29,8 +31,8 @@ const customStyles = {
 
 const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) => {
     console.log(item)
-    const [trackingCode, setTrackingCode] = useState(item.trackingCode)
-    const [value, setValue] = useState(item.value)
+    const [trackingCode, setTrackingCode] = useState(0)
+    const [value, setValue] = useState(0)
     const [dueDate, setDueDate] = useState(item.dueDate)
     const [chacked, setchacked] = useState(false)
     const datas = {
@@ -41,6 +43,28 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
         value,
         dueDate: new Date(),
     }
+    const validator = useRef(new SimpleReactValidator({
+        validators:{
+
+            numeric:{
+
+                rule: (val, params, validator) => {
+                    return validator.helpers.testRegex(val,/^[u06F0-u06F9]+$/,)&& params.indexOf(val) === -1  ;
+
+                }
+            },
+            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
+                    return val.length >= options[0];
+                }, messageReplace: function messageReplace(message, options) {
+                    return message.replace(':min', options[0]);
+                } }
+        },
+        messages: {
+            required: "پرکردن این فیلد الزامی می باشد",
+            numeric: 'لطفا عدد وارد کنید'
+        }
+        , element: message => <p style={{ color: 'red' }}>{message}</p>
+    }));
     const submitAttachment = async () => {
         try {
             const {data, status} = await SetAttachmentType(datas)
@@ -150,19 +174,28 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
 
 
                         {item.trackingCode || chacked === true ?
-                            <div className="col-12 text-center">
+                            <div className="col-12 text-center p-4">
                                 <div className="row  text-center form-row textOnInput">
 
                                     <div className="col-3">
                                         <label>شماره چک</label>
-                                        <input disabled={item.trackingCode} className="form-control opacityForInput  mb-4"
+                                        <input hidden={item.trackingCode} className="form-control opacityForInput  mb-4"
                                                type="text" value={trackingCode}
-                                               onChange={e => setTrackingCode(e.target.value)}/>
+                                               onChange={e =>{ setTrackingCode(e.target.value)
+                                                   validator.current.showMessageFor("required");
+                                               }} />
+                                        {validator.current.message("required", trackingCode, "required|numeric")}
+                                        {item.trackingCode?<p className="p-3 border">{item.trackingCode}</p>  :null}
+
                                     </div>
                                     <div className="col-3">
                                         <label>مبلغ چک</label>
-                                        <input disabled={item.value} className="form-control opacityForInput  mb-4"
-                                               type="text" value={value} onChange={e => setValue(e.target.value)}/>
+                                        <input hidden={item.value} className="form-control opacityForInput  mb-4"
+                                               type="text" value={value} onChange={e => {setValue(e.target.value)
+                                            validator.current.showMessageFor("required");
+                                        }} />
+                                        {validator.current.message("required", value, "required|numeric")}
+                                        {item.value?<p className="p-3 border">{item.value}</p>  :null}
                                     </div>
 
                                     <div className="col-3">
@@ -175,17 +208,16 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                             background: 'none',
                                             padding: '0 8px'
                                         }}>موعد چک</label>
-                                        <div className='form-group  '>
+                                        {item.dueDate?<p className="p-3 border">{new Date(item.dueDate).toLocaleDateString('fa-IR')}</p>  :<div className='form-group  '>
                                             <DatePicker
                                                 calendar={persian}
-                                                disabled={item.dueDate}
                                                 locale={persian_fa}
                                                 style={{height: '45.39px', width: '100%', textAlign: 'center'}}
                                                 value={dueDate}
                                                 onChange={handelStartDate}
                                             />
 
-                                        </div>
+                                        </div>}
                                     </div>
 
                                     {item.trackingCode ? null : <div className="col-3 text-center">
