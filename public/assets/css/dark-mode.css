@@ -113,7 +113,7 @@
 .dark-mode .textOnInput label:after {background-color:#0e2338 }
 .dark-mode .textOnInput label {background-color:transparent}
 .dark-mode .css-1s2u09g-control{background-color:#0e2338}
-.dark-mode .css-b62m3t-container input{background-color:#233649;
+.dark-mode .css-b62m3t-container input{background-color:transparent;
     color: #BDBDD7;
 }
 .dark-mode .css-2613qy-menu {background-color:#233649!important;
@@ -140,7 +140,7 @@
 }
 .dark-mode input{
     border: 1px solid #3b82f6;
-    background-color: #233649!important;
+    background-color: transparent!important;
     color: #BDBDD7;
 }.dark-mode textarea{
     border: 1px solid #3b82f6;
@@ -156,6 +156,10 @@
     background-color:#233649!important;
 
 }
+.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color:#233649!important;}
+.dark-mode .table-striped tbody tr:nth-of-type(odd):hover {
+    background-color:#0e2338!important;}
 .dark-mode .navbar .navbar-item .nav-item.user-profile-dropdown .dropdown-menu .dropdown-item svg {
     color: #BDBDD7;
 
@@ -274,3 +278,6 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s}
+.dark-mode .orderCustomerInfo{
+    background-color: transparent!important;
+}
