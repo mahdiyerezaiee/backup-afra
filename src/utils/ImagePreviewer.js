@@ -8,6 +8,7 @@ import DatePicker, {DateObject} from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
+const attachmet=window.globalThis.stie_att
 const customStyles = {
     content: {
 
@@ -178,7 +179,7 @@ disabled={item.dueDate}
             : ""}
         </div>
     <div className='text-center' >
-        <img  style={{width:chacked === true ?"25rem":"50rem", height:chacked === true ?"12.5rem":'25rem'}} src={`http://10.10.20.4/${item.path}`} className="img-fluid m-auto" alt={item.name} />
+        <img  style={{width:chacked === true ?"25rem":"50rem", height:chacked === true ?"12.5rem":'25rem'}} src={`${attachmet}${item.path}`} className="img-fluid m-auto" alt={item.name} />
     </div>
     
     <div className=' d-block   '>
