@@ -42,7 +42,7 @@ const AdminPannel = () => {
       <Route path='/login' element={<Login />} />
       <Route path='/verify' element={<CodeForMobile />} />
    
-      <Route path='/logout' element={User===null?<Navigate to='/login' />:<Logout/>} />
+      <Route path='/logout' element={token===null?<Navigate to='/login' />:<Logout/>} />
     </Routes>
 
 
