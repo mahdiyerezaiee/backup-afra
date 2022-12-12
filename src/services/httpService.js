@@ -16,7 +16,9 @@ if (token) {
 }
 const refresh = localStorage.getItem('refresh');
 
-
+const refreshR = {
+  token, refresh
+}
 
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 axios.interceptors.response.use(
@@ -25,9 +27,7 @@ axios.interceptors.response.use(
 
     if (error.response.status === 401) {
 
-      const refreshR = {
-        token, refresh
-      }
+    
       axios.interceptors.response.eject()
       
         axios.post(`${configure}/User/Refresh`, refreshR).then(response=>{
