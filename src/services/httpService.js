@@ -14,18 +14,19 @@ if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   // console.log(token);
 }
+
+axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 const refresh = localStorage.getItem('refresh');
 
 const refreshR = {
   token, refresh
 }
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 axios.interceptors.response.use(
 
   resp => resp, async error => {
 
-    if (error.response.status === 401) {
+    if (error.response.status === 401 && token  ) {
 
     
       axios.interceptors.response.eject()
@@ -64,7 +65,6 @@ axios.interceptors.response.use(
         position: "top-right",
         closeOnClick: true
       });
-      window.location.replace('/logout')
 
 
     }
