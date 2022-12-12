@@ -1,6 +1,8 @@
 import ImageFileUploader from "../../utils/ImageFileUploader";
 import config from '../../services/config.json'
 
+const attachmet=window.globalThis.stie_att
+
 const OrderAttAchment = ({order,params ,attachments ,handelPreview , modalIsOpenUpload , closeModalForUpload , setIsOpenUpload}) => {
     let newAttachment=attachments.filter(item=>item.deleted===false)
     return(<div>
@@ -14,7 +16,7 @@ const OrderAttAchment = ({order,params ,attachments ,handelPreview , modalIsOpen
 
                         (newAttachment.map(item =>
                             <div onClick={() => handelPreview(item)} className={item.attachmentTypeId ===2 ?" img col-md-2 col-sm-12" :"  col-md-2 col-sm-12"} >
-                                   <img src={`${config.attachments}${item.path}`} className={item.attachmentTypeId ===2 ?"img-thumbnail border-danger":" img-thumbnail"} alt={item.name}  />
+                                   <img src={`${attachmet}${item.path}`} className={item.attachmentTypeId ===2 ?"img-thumbnail border-danger":" img-thumbnail"} alt={item.name}  />
                                 {item.attachmentTypeId ===2 ?  <div className="detial-img">
                                     <div className="text">
                                         <p >مقدار چک : { item.value}</p>
