@@ -31,7 +31,6 @@ let newAttachmnet=attachments.filter(item=>item.deleted===false)
     const openModalForUpload=()=>{
 
         setIsOpenUpload(true)
-        console.log(entity);
     }
     const closeModalForUpload=()=>{
         setIsOpenUpload(false)
@@ -46,7 +45,7 @@ let newAttachmnet=attachments.filter(item=>item.deleted===false)
         }
 
     }
-    console.log(attachments);
+
     useEffect(()=>{
         getSupplyCode()
     },[orderDetail])

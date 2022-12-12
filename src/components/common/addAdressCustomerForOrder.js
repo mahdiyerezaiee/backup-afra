@@ -42,7 +42,7 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
     const [receiverId, SetreceiverId] = useState('')
     const [heavyWeightTruck, SetheavyWeightTruck] = useState(false)
     var sum;
-    console.log(orderDetailId);
+
     const getProvince = async () => {
         const { data, status } = await GetAllProvince();
         setProvince(data.result.provinces);

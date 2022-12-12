@@ -2,7 +2,6 @@ const OrderCustomerInfo =({order , product , customerDetail , customerName})=>{
 
 
     let extraD=(order.extraData)?JSON.parse(order.extraData.data):null
-    console.log(extraD);
     return(                <div className=' row col-lg-12 col-md-12 col-sm-12 col-xs-12 p-4 text-dark '>
 
 

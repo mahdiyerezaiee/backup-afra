@@ -41,7 +41,6 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
         getOrder()
         setIsOpen(false);
     }
-    console.log(attachments);
     return(
         <div>
             <div  className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">

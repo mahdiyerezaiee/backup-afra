@@ -90,7 +90,6 @@ const SalesBoardForAdmin = () => {
         await getModalInfo(id)
 
         setIsOpen(true);
-        console.log(productSupplyConditionId)
     }
     const openModalCondition = async (id) => {
         await getModalInfo(id)

@@ -155,7 +155,7 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({
 
                         page.map(row => {
                             prepareRow(row)
-                            console.log(rows)
+
                             return (
                                 <tr {...row.getRowProps(rowProps(row))}>
                                     { // loop over the rows cells

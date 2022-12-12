@@ -2,29 +2,14 @@ import { GetSimplifiedReports } from "../../services/reportService";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs"
-import { IoIosArrowBack } from "react-icons/io"
-import { IoIosArrowForward } from "react-icons/io"
 import { ReportEntityStyle } from "../../Enums/ReportEntityStyle";
 
 const ReportBlock = () => {
-    const [showMore, setShowMore] = useState(false);
-    const defaultStyles = {
-        transition: `opacity 300ms ease-in-out`,
-        opacity: 0,
-    };
-
-    const transitionStyles = {
-        entering: { opacity: 1 },
-        entered: { opacity: 1 },
-        exiting: { opacity: 0 },
-        exited: { opacity: 0 },
-    };
     const [report, setReport] = useState([])
     const getReport = async () => {
         try {
             const { data, status } = await GetSimplifiedReports()
             setReport(data.result.simplifiedReports)
-            console.log(data)
         } catch (e) {
             console.log(e)
         }

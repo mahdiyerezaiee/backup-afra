@@ -39,7 +39,6 @@ validators:{
     }));
    
  
-    console.log(select);
 const submitCaptcha = () => {
     if (SHOW){
     if (validateCaptcha(input) !== true) {
@@ -143,7 +142,6 @@ const submitCaptcha = () => {
     }
 
 
-    console.log(AiOutlineReload)
 
     return (
 

@@ -27,9 +27,10 @@ const customStyles = {
 
 
 const ImagePreviewer = ({ modalIsOpen, closeModal, item, isUser,orderStatus }) => {
-    const [trackingCode , setTrackingCode] = useState('')
-    const [value , setValue] = useState('')
-    const [dueDate , setDueDate] = useState('')
+
+    const [trackingCode , setTrackingCode] = useState(item.trackingCode)
+    const [value , setValue] = useState(item.value)
+    const [dueDate , setDueDate] = useState(item.dueDate)
     const [chacked , setchacked] = useState(false)
     const datas ={
         attachmentId:item.id,
@@ -43,6 +44,7 @@ name:'',
         try {
             const {data , status}= await  SetAttachmentType(datas)
             if (data.result.success ===true) {
+
                 toast.success("اطلاعات سند ثبت شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -52,7 +54,11 @@ name:'',
                     draggable: true,
                     progress: undefined
                 });
-                }}catch (e){
+                window.location.reload()
+
+            }
+        }catch (e){
+
             console.log(e)
         }
 
@@ -121,23 +127,23 @@ name:'',
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
     <div className='m-auto'>
         <div className="row ">
-            <div className="col-6 mb-2 ">
-                <input className='m-1'   type="checkbox" checked={chacked} onChange={()=> {
-                    setchacked(!chacked)
-                }}/>
-                <label>ثبت سند</label>
+            {item.trackingCode ? null  :
+                <div className="col-6 mb-2 ">
 
-            </div>
-            {chacked === true ?
+                    <input className='m-1'   type="checkbox" checked={chacked} onChange={()=> {setchacked(!chacked)}}/>
+                    <label>ثبت سند</label> </div> }
+
+
+            {item.trackingCode || chacked === true ?
             <div className="col-12 text-center">
                 <div className="row  text-center form-row textOnInput">
 
                 <div className="col-3">
                     <label>شماره چک</label>
-                    <input   className="form-control opacityForInput  mb-4" type="text" value={trackingCode} onChange={e=> setTrackingCode(e.target.value)}/>
+                    <input  disabled={item.trackingCode} className="form-control opacityForInput  mb-4" type="text" value={trackingCode} onChange={e=> setTrackingCode(e.target.value)}/>
                 </div> <div className="col-3">
                 <label>مبلغ چک</label>
-                <input  className="form-control opacityForInput  mb-4" type="text" value={value} onChange={e=> setValue(e.target.value)}/>
+                <input disabled={item.value} className="form-control opacityForInput  mb-4" type="text" value={value} onChange={e=> setValue(e.target.value)}/>
             </div>
 
                     <div className="col-3">
@@ -153,7 +159,7 @@ name:'',
                         <div className='form-group  '>
                             <DatePicker
                                 calendar={persian}
-
+disabled={item.dueDate}
                                 locale={persian_fa}
                                 style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
                                 value={dueDate}
@@ -163,9 +169,9 @@ name:'',
                         </div>
                     </div>
 
-                    <div className="col-3 text-center">
+                    {item.trackingCode ? null: <div className="col-3 text-center">
                     <button className="btn btn-success " onClick={submitAttachment}>ثبت اسناد</button>
-                </div>
+                </div>}
             </div>
                
             </div>

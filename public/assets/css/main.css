@@ -2616,7 +2616,7 @@ input[type=number] {
 }
 @keyframes changeRight {
   0% {
-    right:-90px;
+    right:-5px;
   }
   100% {
     right: 0px;
