@@ -625,10 +625,11 @@ const OrderList = () => {
         setPaymentStatusId([])
         setPaymentMethodIds([])
         setShippingStatusIds([])
-        SetoverDue(false)
+        SetoverDue(null)
         sessionStorage.clear()
         SetGetOrders(true)
     }
+    console.log(overDue)
     if (order) {
         const dataForExcel = data.map(item => ({
             'شمراه فاکتور': item.id,
@@ -779,15 +780,23 @@ const OrderList = () => {
                                  style={{marginBottom: "3rem"}}>
                                 <div className=" form-control-sm">
                                     <label> وضعیت سررسید </label>
+                                    {overDue && overDue === null ?
+                                        <Select
 
-                                    <Select
-                                        defaultValue={OverDue().filter(i=> i.value === overDue).map(i=>i)}
-                                        placeholder=' وضعیت سررسید '
                                         options={OverDue()}
                                         onChange={e => {
                                             SetoverDue(e.value)
                                         }}
-                                    />
+                                    /> : <Select
+                                            value={OverDue().filter(i=> i.value === overDue).map(i=>i)}
+
+                                            placeholder=' وضعیت سررسید '
+                                        options={OverDue()}
+                                        onChange={e => {
+                                            SetoverDue(e.value)
+                                        }}
+                                    />}
+
                                 </div>
                             </div>
                             <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex"
@@ -996,14 +1005,22 @@ const OrderList = () => {
                                 <div className=" form-control-sm">
                                     <label> وضعیت سررسید </label>
 
-                                    <Select
-                                        defaultValue={OverDue().filter(i=> i.value === overDue).map(i=>i)}
-                                        placeholder=' وضعیت سررسید '
-                                        options={OverDue()}
-                                        onChange={e => {
-                                            SetoverDue(e.value)
-                                        }}
-                                    />
+                                    {overDue && overDue  === null ?
+                                        <Select
+                                            placeholder=' وضعیت سررسید '
+                                            options={OverDue()}
+                                            isMulti={true}
+                                            onChange={e => {
+                                                SetoverDue(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={OverDue().filter(i=> i.value === overDue).map(i=>i)}
+                                            placeholder=' وضعیت سررسید '
+                                            options={OverDue()}
+                                            onChange={e => {
+                                                SetoverDue(e.value)
+                                            }}
+                                        />}
                                 </div>
                             </div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-3  textOnInput form-group selectIndex"
