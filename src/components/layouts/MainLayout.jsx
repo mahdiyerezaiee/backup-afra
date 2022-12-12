@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Footer from '../common/Footer';
-import MainNav from '../navs/MainNav';
 import SideNavbar from '../navs/SideNavbar';
 import Header from './../common/Header';
 import IdentityPannel from './../IdentityRegister/IdentityPannel';
@@ -76,18 +75,11 @@ import EditProductGroupName from './../../pages/adminpages/product/EditProductGr
 import EditWareHouseTypeName from './../../pages/adminpages/wareHouse/EditWareHouseTypeName';
 import OrderCustomer from '../../pages/customerpages/OrderCustomer';
 import NotFound from "../common/notFound";
-import CustomerOrderDetail from './../../pages/customerpages/CustomerOrderDetail';
 import UpdateShippingReports from "../../pages/adminpages/Shipping/updateShippingReports/updateShippingReports";
 import OrderDetailTest from './../../pages/order/orderDetailtest2';
 import CustomerOrderDetailTest from './../../pages/customerpages/customerOrderDetailTest';
 import UpdateAllShiping from '../../pages/adminpages/Shipping/updateShippingReports/UpdateAllShiping';
 import EditAddress from "../../pages/profile/editAddress";
-
-
-
-
-
-
 
 const MainLayout = (props) => {
 
@@ -113,7 +105,6 @@ const MainLayout = (props) => {
 
   const userInfo = useSelector(state => state.userInfo);
   const id = userInfo.id;
-  console.log(userInfo);
 
   const getRole = async () => {
     try {

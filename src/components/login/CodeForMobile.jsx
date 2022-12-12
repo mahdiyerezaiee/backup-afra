@@ -58,7 +58,7 @@ const CodeForMobile = () => {
             verificationCode: Code,
             phoneNumber: localStorage.getItem('mobile')
         }
-        console.log(Code)
+
         setIssubmit(false);
         try {
 

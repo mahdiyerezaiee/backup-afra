@@ -87,7 +87,7 @@ closeModal()
 
         setFiles(e.target.files[0])
         setFileName(e.target.files[0].name)
-        console.log(e.target.files);
+
     }
 
     return (

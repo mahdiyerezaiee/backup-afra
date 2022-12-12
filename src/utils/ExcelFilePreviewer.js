@@ -39,7 +39,7 @@ if(data[0].allocationId>0){
 let item={"bazargah":data[i]}
             newData.push(item)
         }
-        console.log(newData);
+
         if (window.confirm('آیا از درستی آدرس اطمینان دارید؟؟؟؟؟')) {
      
             const body={

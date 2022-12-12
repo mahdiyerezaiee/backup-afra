@@ -145,7 +145,6 @@ getOrder()
         currency: 'IRR', maximumFractionDigits: 0,
         minimumFractionDigits: 0, });
 
-        console.log(completeDdata);
     return (
         <div>
             <ShippingSelected modalIsOpen={modalIsOpen} closeModal={closeModal} orderDetailId={orderDetailId} Order={order} />

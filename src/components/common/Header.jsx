@@ -38,7 +38,7 @@ const Header = ({collapsed, handelChange}) => {
 
         document.addEventListener("click", checkIfClickedOutside)
 
-        console.log(user);
+
         return () => {
             // Cleanup the event listener
             document.removeEventListener("click", checkIfClickedOutside)

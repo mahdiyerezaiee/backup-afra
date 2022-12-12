@@ -20,7 +20,6 @@ const IdentityPannel = () => {
     useEffect(()=>{
         GetAddresUser()
     },[])
-    console.log(address)
     return (
         <div className='user-progress'>
             <div className='row'>

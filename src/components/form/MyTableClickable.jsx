@@ -28,12 +28,9 @@ const IndeterminateCheckbox = React.forwardRef(
 )
 const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, address,Detail, setPageNumber,PageNumber, ShippingCartInformation ,setPageSize, PageSize,getDataBySearch , total}) => {
     const [cottageCode, setcottageCode] = useState('');
-
     const [Shippings , SetShippings]=useState([])
     const [Shippingcheck , SetShippingCheck]=useState([])
     const [orderId , setOrderId]=useState(0)
-
-
     let FilnalArr = [];
     const getSupplyCode = async () => {
         try {
@@ -49,7 +46,6 @@ const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, ad
 useEffect(()=>{
     getSupplyCode()
 },[Detail])
-
 
 
     const GetShippings = async () => {
@@ -113,14 +109,12 @@ useEffect(()=>{
                     </div>
                 ),
             },
-            {
-                // Build our expander column
+            {// Build our expander column
                 id: "expander", // Make sure it has an ID
                 Header: ({getToggleAllRowsExpandedProps, isAllRowsExpanded}) => (
                     <span {...getToggleAllRowsExpandedProps()}>
 
                       </span>
-
                 ),
                 Cell: ({row}) => (
                     // Use Cell to render an expander for each row.
@@ -166,17 +160,11 @@ useEffect(()=>{
     useEffect(() => {
         getData(selectedFlatRows);
     }, [selectedRowIds])
-    console.log(Detail)
     return (
         <Fragment>
-
-            <div className="table-responsive table-striped"
-                 style={{overflowX: 'auto'}}
-            >
+            <div className="table-responsive table-striped" style={{overflowX: 'auto'}}>
                 <div className='d-block clearfix mt-3 float-right'>
-
                     <PageSizeTable getDataBySearch={getDataBySearch} pageSize={PageSize} setPageSize={setPageSize}/>
-
                 </div>
                 <div className='d-block clearfix mt-3 float-left'>
                     <span className=" py-3" style={{fontSize: 'smaller'}}> اقدام دسته جمعی: </span>
@@ -217,10 +205,7 @@ useEffect(()=>{
                         </select>}
                     <button className='btn-sm btn-light' onClick={() => bulkJob(selectFunc)}>ثبت</button>
                 </div>
-
-                <table id="zero-config" className='table mb-4  ' {...getTableProps()}
-                >
-
+                <table id="zero-config" className='table mb-4  ' {...getTableProps()}>
                     <thead className='text-center'>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -241,7 +226,6 @@ useEffect(()=>{
                     <tbody className='text-center' {...getTableBodyProps()}>
                     { // loop over the rows
                         rows.map((row , i) => {
-
                             prepareRow(row)
                             return (
                                 <Fragment key={i + "_frag"}>
@@ -311,9 +295,7 @@ useEffect(()=>{
 
                                                             </table>
                                                         </div>:null}
-
                                                         {/* {row.original.shippingStatusId===2?null:<Suspense><LazyShippingCom  id={row.original.id}/></Suspense>} */}
-
                                                         {row.original.extId > 0 ?
                                                             <div className=" w-85  table table-responsive ">
 
@@ -367,37 +349,18 @@ useEffect(()=>{
                                                                             <td >
                                                                                 {address.BuyerUniqueId}
                                                                             </td>
-
-
-
-
                                                                         </tr>
 
                                                                     )}
                                                                     </tbody>
                                                                 </table>
-                                                            </div>
-
-
-
-                                                            :null}
-
-
-
-                                                    </div>
-
-                                               :null}
-</td></tr>:null}
-
-                                </Fragment>
+                                                            </div> :null}
+                                                    </div> :null}</td></tr>:null}</Fragment>
                             )
                         })
                     }
-
                     </tbody>
-
                 </table>
-
                 <hr/>
                 <div className='d-block m-2   float-right'>
                <span className=" " style={{fontSize: 'small'}}>
@@ -409,10 +372,7 @@ useEffect(()=>{
               </span>
                 </div>
             </div>
-
             <Pagination setPageNumber={setPageNumber} PageNumber={PageNumber}  getDataBySearch={getDataBySearch} PageSize={PageSize} total={total}/>
-
-
         </Fragment>
     );
 
