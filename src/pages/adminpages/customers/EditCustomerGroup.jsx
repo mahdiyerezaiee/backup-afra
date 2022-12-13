@@ -8,139 +8,181 @@ import { GetGroupsForEntity } from '../../../services/GroupService';
 import { CreateUser, GetUserData } from '../../../services/userService';
 import { setCustomerInfo } from '../../../services/customerService';
 import { template } from 'lodash';
+import Modal from 'react-modal';
 
-const EditCustomerGroup = () => {
+const customStyles = {
+    content: {
+
+        inset: '50% auto auto 50%',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '30px',
+        border: '2px ridge black'
+    }
+
+}
+const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
     const [CustomerG, setCustomerG] = useState([])
     const [userinfo, setUserInfo] = useState({});
     const [groupId, setGroupId] = useState(0);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const params = useParams();
-    const id = params.id;
     const GetCustomerGroup = async () => {
         const { data, status } = await GetGroupsForEntity(1);
         if (status === 200) {
 
-            
+
 
             setCustomerG(data.result.groups);
-            
+
         }
 
     }
 
-    const getUserInfo=async()=>{
+    const getUserInfo = async () => {
         try {
-                    const{data,status}=await GetUserData(id);
-                    if(status===200){
-                        setUserInfo(data.result.customer)
-                        setGroupId(data.result.customer.groupId)
-                    }
+            const { data, status } = await GetUserData(id);
+            if (status === 200) {
+                setUserInfo(data.result.customer)
+                setGroupId(data.result.customer.groupId)
+            }
         } catch (error) {
             console.log(error);
         }
     }
-  
+
     useEffect(() => {
 
         GetCustomerGroup()
+        if(id>0){
         getUserInfo();
-        
+        }
     }, [])
-    
+
     const inputCustomerG = () => {
-        let customer=[...CustomerG , {id:null ,name: 'تعیین نشده'}]
-       
+        let customer = [...CustomerG, { id: null, name: 'تعیین نشده' }]
+
         return (customer.map(data => ({ label: data.name, value: data.id })))
     }
-  
 
-    
+
+
     const handelSubmit = async (event) => {
         event.preventDefault();
-       
-        const body={
+
+        const body = {
             id,
-            userName:userinfo.userName,
-            email:userinfo.email,
-            firstName:userinfo.firstName,
-            lastName:userinfo.lastName,
-            requireInfo:userinfo.requireInfo,
-            createDate:userinfo.createDate,
-            nationalCode:userinfo.nationalCode,
-            organizationId:userinfo.organizationId,
-            password:null,
-            salt:null,
-            sugar:null,
-            islegal:true,
+            userName: userinfo.userName,
+            email: userinfo.email,
+            firstName: userinfo.firstName,
+            lastName: userinfo.lastName,
+            requireInfo: userinfo.requireInfo,
+            createDate: userinfo.createDate,
+            nationalCode: userinfo.nationalCode,
+            organizationId: userinfo.organizationId,
+            password: null,
+            salt: null,
+            sugar: null,
+            islegal: true,
             groupId,
-            active:true
+            active: true
 
         }
         try {
-            
-            const{data,status}=await setCustomerInfo(body);
-            if(status===200){
+
+            const { data, status } = await setCustomerInfo(body);
+            if (status === 200) {
                 toast.success('با موفقیت ثبت شد',
-                {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                })
-                navigate('/userlist')
+                    {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    })
+               closeModal()
             }
-            
+
         } catch (error) {
             console.log(error);
-        } 
+        }
     }
-    let Group=CustomerG.filter(item=>item.id===groupId).map(item=>item.name)
-    let groupName=Group[0]?Group[0]:"تعیین نشده"
+    let Group = CustomerG.filter(item => item.id === groupId).map(item => item.name)
+    let groupName = Group[0] ? Group[0] : "تعیین نشده"
     return (
+        <Modal
 
-        <div className='user-progress' >
-            <div className='row'>
-                <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                    <h5 >تعریف گروه مشتری</h5>
-                    <p>در این بخش می توانید گروه جدید تعریف کنید.</p>
-                </div>
-            </div>
-            <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-4 col-xs-12'>
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Selected Option"
+            ariaHideApp={false}
+
+        >
+
+            <div className="d-block clearfix mb-2" onClick={closeModal}><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24"
+                viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-x close"
+                data-dismiss="alert"><line x1="18" y1="6"
+                    x2="6"
+                    y2="18"></line><line
+                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+            <div>
+                <div className="card-body p-0" style={{ height: '14rem', width: '20rem' }}>
 
 
-                    <form>
-                        <div className='form-group'>
+                    <div className="text-center mb-5">
+                        <h5 className="text-center">  گروه مشتری </h5>
+                    </div>
+                    <div className="form-row mt-4">
+                        <div className="  form-group col-md-12 col-xs-12 textOnInput  selectIndex">
 
-                            <div className="form-group mb-3">
 
-                                <Select
-                                    value={{label:groupName,value:groupId}}
-                                    options={inputCustomerG()}
-                                    onChange={e => {
-                                        setGroupId(e.value)
-                                        
-                                    }}
-                                   
+                            <form>
+                                <div className='form-group'>
 
-                                />
-                            </div>
-                            <div className='row '>
-                                <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <div className="form-group mb-3">
+
+                                        <Select
+                                            value={{ label: groupName, value: groupId }}
+                                            options={inputCustomerG()}
+                                            onChange={e => {
+                                                setGroupId(e.value)
+
+                                            }}
+
+
+                                        />
+                                    </div>
+
                                 </div>
-                                <div className='col-6 '>
-                                    <NavLink to='/userlist' className="btn btn-danger float-right">بازگشت</NavLink>
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+
+                    </div>
+                    <div className='text-center mt-2'>
+
+                        <div className='col-12 '>
+                            <button className="btn btn-success  "
+                                onClick={handelSubmit}>تایید
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
+        </Modal>
 
     )
 }
