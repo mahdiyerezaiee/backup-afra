@@ -10,3 +10,23 @@ export const GetPeriodicSalesReport=(TypeId)=>{
 
     return http.get(`${configure}/Report/GetPeriodicSalesReport?ScheduleTypeId=${TypeId}`);
 }
+export const GetScheduleJobsReport=()=>{
+
+    return http.get(`${configure}/Report/GetScheduleJobsReport`);
+}
+export const GetUsedBarBariReports=(StartDate , EndDate)=>{
+
+    return http.get(`${configure}/Report/GetUsedBarBariReports?StartDate=${StartDate}&EndDate=${EndDate}`);
+}
+export const GetCustomersReports=(StartDate , EndDate)=>{
+
+    return http.get(`${configure}/Report/GetCustomersReports?StartDate=${StartDate}&EndDate=${EndDate}`);
+}
+export const GetOrdersReports=(StartDate , EndDate)=>{
+
+    return http.get(`${configure}/Report/GetOrdersReports?StartDate=${StartDate}&EndDate=${EndDate}`);
+}
+export const GetnProceessAttachments=()=>{
+
+    return http.get(`${configure}/Report/GetInProceessAttachments`);
+}

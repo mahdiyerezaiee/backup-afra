@@ -40,7 +40,7 @@ setId(id)
   },[])
   return(
       <div className="table-responsive p-2">
-        {orderCondition.map(item=> item.productSupplyConditionId !== null ?
+        {orderCondition.map(item=> item.productSupplyConditionId !== null) ?
         <table
             className="table table-bordered table-hover table-striped  mt-2  mb-4">
           <thead>
@@ -124,7 +124,7 @@ setId(id)
               )}
               <tr></tr>
               </tbody>
-            </table> )}
+            </table> }
 
         <OrderProductSupplyConditionEdit closeModal={closeModal} modalIsOpen={modalIsOpen} id={id} Detail={detail} />
       </div>
