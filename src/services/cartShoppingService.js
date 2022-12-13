@@ -18,7 +18,7 @@ export const DeleteItemCart=(deleteid , customerId )=>{
                 Authorization:`Bearer ${localStorage.getItem('token')}`
             },
         data:{
-            productId:deleteid,
+            productSupplyId:deleteid,
             customerId:customerId,
 
         }

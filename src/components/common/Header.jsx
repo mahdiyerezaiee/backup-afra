@@ -69,22 +69,22 @@ const Header = ({collapsed, handelChange}) => {
             console.log(err)
         }
     }
-    
+
     useEffect(() => {
         getCartShopping()
-        
+
     }, [])
 
     const setOrder = async () => {
         const order={
             "customerId":Number( localStorage.getItem('connect'))
-          
+
         }
         try {
             const{data, status}= await SetOrder(order)
-            if (status=== 200){
+            if (status=== 200 && data.result.success===true){
                 getCartShopping()
-                toast.success("درخواست خرید با موفقیت ثبت شد", {
+                toast.success(data.result.message, {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -95,7 +95,20 @@ const Header = ({collapsed, handelChange}) => {
                 });
                 roles.includes(2) ? Navigate('cuoList') : Navigate('orderList')
             }
-           
+            else if (status=== 200 && data.result.success===false){
+                getCartShopping()
+                toast.error(data.result.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
+                roles.includes(2) ? Navigate('cuoList') : Navigate('orderList')
+            }
+
 
         }catch (err){
             console.log(err)
@@ -107,8 +120,8 @@ const Header = ({collapsed, handelChange}) => {
     let formatter = new Intl.NumberFormat('fa-IR', {
         // style: 'currency  ',
         // currency: 'IRR',
-        maximumFractionDigits: 0, 
-  minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
     });
     const paymentMethod = () => {
         return (PaymentStructureEnums.map(data => ({label: data.name, value: data.id})))
@@ -189,7 +202,7 @@ const Header = ({collapsed, handelChange}) => {
                                                 <div className="row shadow">
                                                     <div className="col-12">
                                                         <span className=" float-left mt-1"
-                                                              onClick={() => deleteItemHandler(item.productId)}><svg style={{color:'red'}} width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9.17218 14.8284L12.0006 12M14.829 9.17157L12.0006 12M12.0006 12L9.17218 9.17157M12.0006 12L14.829 14.8284" stroke="red" stroke-linecap="round" stroke-linejoin="round"/> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/> </svg></span></div>
+                                                              onClick={() => deleteItemHandler(item.productSupplyId)}><svg style={{color:'red'}} width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9.17218 14.8284L12.0006 12M14.829 9.17157L12.0006 12M12.0006 12L9.17218 9.17157M12.0006 12L14.829 14.8284" stroke="red" stroke-linecap="round" stroke-linejoin="round"/> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/> </svg></span></div>
                                                     <div className="media col-5 ">
                                                         <div className="user-img">
                                                             <div className="avatar avatar-xl">
