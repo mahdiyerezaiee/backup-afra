@@ -3,6 +3,7 @@ import React, {useMemo, useState , useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {ExportToExcel} from "../../../components/common/ExportToExcel";
 import MyTableBazargah from "../../../components/form/MyTableBazargah";
+import {PriceUnitEnums} from "../../../Enums/PriceUnit";
 
 const ProceessAttachments = () => {
     const Navigate = useNavigate()
@@ -33,7 +34,13 @@ const ProceessAttachments = () => {
         { Header: 'نام باربری', accessor: 'userName' },
         {Header: 'نام سند', accessor: 'name'},
         {Header: 'مبلغ سند', accessor: 'value'},
-        {Header: 'تعداد اسناد', accessor: 'attachmentCount'}
+        {Header: 'تعداد اسناد', accessor: 'attachmentCount'},
+        {Header: 'اعتبار مشتری', accessor: 'maxValidity',Cell: row => {
+                return(row.row.original.maxValidity ?row.row.original.maxValidity : "--")
+            }},
+        {Header: 'واحد اعتبار ', accessor: 'maxValidityUnitId',Cell: row => {
+            return(row.row.original.maxValidityUnitId ?PriceUnitEnums.filter(i=> i.id === row.row.original.maxValidityUnitId).map(i=> i.name) : "--")
+            }},
         ,{Header: 'حداقل تاریخ موعد', accessor: 'minDueDate', Cell: row => {
                 return (new Date(row.row.original.minDueDate).toLocaleDateString("fa-IR"))
             }
