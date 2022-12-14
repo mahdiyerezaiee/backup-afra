@@ -35,7 +35,7 @@ const ProceessAttachments = () => {
 
         { Header: 'شناسه مشتری', accessor: 'customerId' },
         { Header: 'نام کاربری', accessor: 'userName',Cell:row => {
-            return(<span onClick={()=>editInfoHandler(row.row.original.customerId)} className="text-primary">{row.row.original.userName}</span>)
+            return(<button  onClick={()=>editInfoHandler(row.row.original.customerId)} className="bg-transparent border-0">{row.row.original.userName}</button>)
             } },
         {Header: 'نام سند', accessor: 'name'},
         {Header: 'مبلغ سند', accessor: 'value'},
