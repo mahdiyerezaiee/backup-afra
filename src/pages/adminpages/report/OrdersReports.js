@@ -213,7 +213,7 @@ const OrdersReports = () => {
                 'شناسه تخصیص': item.allocationId,
                 'مقدار': item.quantity,
                 'واحد': item.measureUnitId,
-                'تاریخ': item.createDate,
+                'تاریخ':new Date(item.createDate).toLocaleDateString("fa-IR"),
                 'قیمت واحد': item.itemPrice,
                 'قیمت سفارش': item.orderPrice,
                 'نام کاربر': item.customerName,
@@ -239,6 +239,7 @@ const OrdersReports = () => {
         }else {
             return(
                 <div className=" statbox widget-content widget-content-area rounded">
+                    <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
                     <div className='text-center mt-5'>
                         <h5>اطلاعاتی جهت نمایش موجود نیست</h5>

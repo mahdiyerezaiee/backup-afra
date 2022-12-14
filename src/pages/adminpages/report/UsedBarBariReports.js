@@ -230,6 +230,7 @@ const UsedBarBariReport = () => {
 }else {
     return(
         <div className=" statbox widget-content widget-content-area rounded">
+            <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
             <div className='text-center mt-5'>
                 <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
