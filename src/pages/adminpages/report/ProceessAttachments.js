@@ -35,7 +35,7 @@ const ProceessAttachments = () => {
 
         { Header: 'شناسه مشتری', accessor: 'customerId' },
         { Header: 'نام کاربری', accessor: 'userName',Cell:row => {
-            return(<span onClick={()=>editInfoHandler(row.row.original.customerId)} className="text-primary">{row.row.original.userName}</span>)
+            return(<button  onClick={()=>editInfoHandler(row.row.original.customerId)} className="bg-transparent border-0">{row.row.original.userName}</button>)
             } },
         {Header: 'نام سند', accessor: 'name'},
         {Header: 'مبلغ سند', accessor: 'value'},
@@ -81,6 +81,17 @@ const ProceessAttachments = () => {
     ])
     const data = useMemo(() => report)
     if (report && report.length >0 ){
+        const dataForExcel = report.map(item => ({
+            'شناسه مشتری': item.customerId,
+            'نام کاربری': item.userName,
+            'نام سند': item.name,
+            'مبلغ سند': item.value,
+            'تعداد اسناد': item.attachmentCount,
+            'اعتبار مشتری':item.maxValidity,
+            'واحد اعتبار':item.maxValidityUnitId,
+            'حداقل تاریخ موعد': new Date(item.minDueDate).toLocaleDateString("fa-IR"),
+            'حداکثر تاریخ موعد': new Date(item.maxDueDate).toLocaleDateString("fa-IR"),
+        }))
         return(
             <div className=" statbox widget-content widget-content-area rounded">
                 <div>
@@ -89,7 +100,9 @@ const ProceessAttachments = () => {
 
                     {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError}/>*/}
                 </div>
-
+                <div className="d-flex justify-content-end m-2">
+                    <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
+                </div>
             </div>
         )
     }else
