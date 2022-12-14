@@ -101,10 +101,18 @@ const NewSupply = () => {
         return (wareHouses.map(data => ({ label: data.name, value: data.id })));
     }
     const inputProductG = () => {
-        return (products.map(data => ({ label: data.name, value: data.id })))
+        if(products){
+        return (products.map(data => ({ label: data.name, value: data.id }))) }
+        else{
+           return null
+        }
     }
     const inputSuppliers = () => {
-        return (suppliers.map(data => ({ label: data.name, value: data.id })))
+        if(suppliers){
+        return (suppliers.map(data => ({ label: data.name, value: data.id })))}
+        else{
+            return null
+        }
     }
 
     const submit = async (event) => {
