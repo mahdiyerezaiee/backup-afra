@@ -17,7 +17,8 @@ const ReportBlock = () => {
     useEffect(() => {
         getReport()
     }, [])
-    return (<div className="widget  shadow sliderReport" >
+    if (report){
+        return (<div className="widget  shadow sliderReport" >
         <div className="row justify-content-center " style={{ zIndex: "2", backgroundColor: 'white' }}>
 
 
@@ -55,5 +56,20 @@ const ReportBlock = () => {
 
 
     </div >)
+    }else {
+        return (<div className="widget  shadow sliderReport" >
+            <div className="row justify-content-center " style={{ zIndex: "2", backgroundColor: 'white' }}>
+
+
+               <div>
+                   <span className="taxt-center">اطلاعاتی برای نمایش یافت نشد</span>
+               </div>
+
+            </div>
+
+
+        </div >)
+
+    }
 }
 export default ReportBlock

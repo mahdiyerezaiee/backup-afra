@@ -148,6 +148,8 @@ export function ChartLineCount() {
         }
         GetReport()
     },[TypeId])
+
+if (datas && datas.length >0){
     const labels =datas.map(item=>item.scheduleName)
 
     const data = {
@@ -171,14 +173,13 @@ export function ChartLineCount() {
 
         ],
     };
-
     return (
-        <div id="chartArea" className="col-xl-12 layout-spacing">
-            <div className="widget widget-chart-three">
-                <div className="widget-heading">
-                    <div className="d-inline float-left">
-                        <h5 className=""> تعداد سفارشات</h5>
-                    </div>
+    <div id="chartArea" className="col-xl-12 layout-spacing">
+        <div className="widget widget-chart-three">
+            <div className="widget-heading">
+                <div className="d-inline float-left">
+                    <h5 className=""> تعداد سفارشات</h5>
+                </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <a className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -197,18 +198,21 @@ export function ChartLineCount() {
                         <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</a>
                     </div>
                 </div>
-                </div>
-                <div className="btn-group m-2" role="group" aria-label="Basic example">
-                </div>
-                {/*<div className="widget-heading">*/}
-                {/*    <h5 className="">درآمد</h5>*/}
+            </div>
+            <div className="btn-group m-2" role="group" aria-label="Basic example">
+            </div>
+            {/*<div className="widget-heading">*/}
+            {/*    <h5 className="">درآمد</h5>*/}
 
-                {/*</div>*/}
-                <div className="widget-content  pt-3 border-top" style={{height: "300px"}}>
+            {/*</div>*/}
+            <div className="widget-content  pt-3 border-top" style={{height: "300px"}}>
 
                 <Line options={options} data={data}/>
             </div>
-            </div>
         </div>
-    )
+    </div>
+)}else {
+    return null
+}
+
 }

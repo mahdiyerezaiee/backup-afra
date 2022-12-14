@@ -191,8 +191,8 @@ const UsedBarBariReport = () => {
     }
 
     else {
-if (Response){
-    const dataForExcel = Response.map(item => ({
+        if (Response && Response.length >0){
+            const dataForExcel = Response.map(item => ({
 
     'تاریخ بارنامه': item.barDate,
     'شماره بارنامه': item.bar_n,

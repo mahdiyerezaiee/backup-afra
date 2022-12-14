@@ -309,7 +309,7 @@ const data=useMemo(()=>productG);
 const handelForm=()=>{
 navigate('/newproductgroup')
 }
-    if (productG) {
+    if (productG && productG.length >0) {
         const dataForExcel = data.map(item => ({
             'شناسه': item.id,
             'نام گروه': item.name,
