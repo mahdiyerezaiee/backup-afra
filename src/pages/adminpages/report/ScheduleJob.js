@@ -16,9 +16,9 @@ const ScheduleJob = () => {
     },[])
     return(
         <div className="px-3 " style={{height: "330px" , overflowY:"auto"}}>
-<div className="row ">
+<div className=" ">
     {report.map(item=>
-    <div className="col-12 widget widget-chart-three mb-1 py-3">
+    <div className=" bg-light  rounded" style={{padding:"14px 19px",border:" 2px solid #e0e6ed", borderRadius: "8px",marginBottom: "4px"}}>
         <div className="accordion-icon d-inline pr-2"  style={{color:"#1b55e2"}} >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="rgba(27, 85, 226, 0.239216)"
              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -28,9 +28,9 @@ const ScheduleJob = () => {
         </svg>
         </div>
 
-        <span>{item.type} :</span>
+        <span><b>{item.type} :</b></span>
         <span >{item.message}</span>
-        <span style={{fontSize:"10px"}} className="float-right">تاریخ و ساعت :{new  Date(item.createDate).toLocaleString('fa-IR')}</span>
+        <span  className="float-right">{new  Date(item.createDate).toLocaleString('fa-IR')}</span>
     </div>
     )}
 </div>
