@@ -388,7 +388,7 @@ const WareHouseList = () => {
         }])
     const data = useMemo(() => warehouse);
 
-    if(warehouse){
+    if(warehouse && warehouse.length >0){
 
         return (
             <div className='user-progress' >

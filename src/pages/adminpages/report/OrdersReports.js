@@ -200,7 +200,7 @@ const OrdersReports = () => {
     }
 
     else {
-        if (Response){
+        if (Response && Response.length >0){
             const dataForExcel = Response.map(item => ({
                 'شناسه سفارش': item.orderId,
                 'شناسه انبار': item.wareHouseId,

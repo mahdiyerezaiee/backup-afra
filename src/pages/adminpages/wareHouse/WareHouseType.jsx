@@ -268,7 +268,7 @@ const WareHouseType = () => {
         navigate('/newwarehousetype')
     }
 
-    if(WarehouseG){
+    if(WarehouseG && WarehouseG.length >0){
         return (
             <div className='user-progress'>
                 <div className='row'>

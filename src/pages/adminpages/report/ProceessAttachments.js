@@ -75,7 +75,7 @@ const ProceessAttachments = () => {
         }
     ])
     const data = useMemo(() => report)
-    if (report){
+    if (report && report.length >0 ){
         return(
             <div className=" statbox widget-content widget-content-area rounded">
                 <div>

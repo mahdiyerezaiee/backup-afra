@@ -270,7 +270,7 @@ export const CustomersGroup = () => {
     const handelForm=()=>{
         navigate('/newcustomergroup')
     }
-    if(customerg){
+    if(customerg && customerg.length > 0){
 
         return (
             <div className='user-progress'>

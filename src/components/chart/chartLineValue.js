@@ -148,6 +148,7 @@ export function ChartLineValue() {
         }
         GetReport()
     },[TypeId])
+    if (datas && datas.length > 0){
     const labels =datas.map(item=>item.scheduleName)
 
     const data = {
@@ -208,4 +209,7 @@ export function ChartLineValue() {
             </div>
         </div>
     )
+    }else {
+        return null
+    }
 }

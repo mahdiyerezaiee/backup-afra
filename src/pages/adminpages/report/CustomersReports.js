@@ -92,6 +92,7 @@ const CustomerReports = () => {
         { Header: 'شماره ثبت سازمان', accessor: 'organizationRegistrationNumber' ,Cell:row => row.row.original.organizationRegistrationNumber? row.row.original.organizationRegistrationNumber :"--"},
        ]);
     const data = useMemo(() => Response);;
+    console.log(Response)
 
     if (!clicked) {
         if(!loading){
@@ -170,9 +171,9 @@ const CustomerReports = () => {
 
         }
     }
-
     else {
-        if (Response){
+
+        if (Response && Response.length >0){
             const dataForExcel = Response.map(item => ({
                 'ردیف': item.id,
                 'نام کاربری': item.userName,
