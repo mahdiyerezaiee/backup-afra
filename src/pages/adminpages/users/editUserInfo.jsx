@@ -98,7 +98,7 @@ const EditUserInfo = () => {
         } catch (err) {
             console.log(err)
         }
-        navigate('/userlist')
+        navigate(-1)
 
     }
     const getOrganizationId = async () => {
@@ -157,6 +157,10 @@ const EditUserInfo = () => {
         }
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
+    const handelNavigate = (e) => {
+        e.preventDefault()
+        navigate(-1)
+    }
 
     return (
 
@@ -320,7 +324,7 @@ const EditUserInfo = () => {
                                                 <button type="submit" className="btn btn-success " disabled={validator.current.allValid() ? false : true} onClick={submit}>تایید</button>}
                                         </div>
                                         <div className='col-6 '>
-                                            <NavLink to='/userlist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                            <button onClick={handelNavigate} className="btn btn-danger float-right">بازگشت</button>
                                         </div>
                                     </div>
                                 </div>
