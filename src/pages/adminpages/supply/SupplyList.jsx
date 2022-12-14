@@ -246,7 +246,11 @@ const SupplyList = () => {
         return (SupplyTypesEnums.map(data => ({ label: data.name, value: data.id })));
     }
     const inputProductG = () => {
-        return (products.map(data => ({ label: data.name, value: data.id })))
+        if(products){
+        return (products.map(data => ({ label: data.name, value: data.id })))}
+        else{
+            return null
+        }
     }
     const WareHouseG = () => {
         return (wareHouses.map(data => ({ label: data.name, value: data.id })))
@@ -434,7 +438,11 @@ const SupplyList = () => {
         getSupplier()
     }, [getData])
     const SupplierG = () => {
-        return (suppliers.map(data => ({ label: data.name, value: data.id })))
+        if(suppliers){
+        return (suppliers.map(data => ({ label: data.name, value: data.id })))}
+        else{
+            return null
+        }
     }
 
     const editHandler = (id) => {
@@ -783,7 +791,7 @@ defaultValue={params.wareHouseId}
 
                                     <Select
 
-                                        defaultValue={products.filter(i=> i.id === productId).map(data => ({ label: data.name, value: data.id }))[0]}
+                                        defaultValue={products?products.filter(i=> i.id === productId).map(data => ({ label: data.name, value: data.id }))[0]:""}
                                         placeholder='محصول'
                                         options={inputProductG()}
 

@@ -19,7 +19,7 @@ const News = () => {
         <div style={{height: "330px" , overflowY:"auto"}} >
 
                 <div id="iconsAccordion" className="accordion-icons" >
-                    {guessNews.map(item=>
+                    {guessNews?guessNews.map(item=>
 
                             <div className="card" key={item.id}>
 
@@ -51,7 +51,7 @@ const News = () => {
 
                 </div>
 
-                        )}
+                        ):''}
 
             </div>
 
