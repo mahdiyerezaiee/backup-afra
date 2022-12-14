@@ -25,13 +25,18 @@ const ProceessAttachments = () => {
         console.log(e)
     }
   }
+    const editInfoHandler = (id) => {
+        Navigate(`/editInfo/${id}`)
+    }
   useEffect(()=>{
       GetProcessAtt()
   },[])
     const columns = useMemo(() => [
 
         { Header: 'شناسه مشتری', accessor: 'customerId' },
-        { Header: 'نام باربری', accessor: 'userName' },
+        { Header: 'نام کاربری', accessor: 'userName',Cell:row => {
+            return(<span onClick={()=>editInfoHandler(row.row.original.customerId)} className="text-primary">{row.row.original.userName}</span>)
+            } },
         {Header: 'نام سند', accessor: 'name'},
         {Header: 'مبلغ سند', accessor: 'value'},
         {Header: 'تعداد اسناد', accessor: 'attachmentCount'},
