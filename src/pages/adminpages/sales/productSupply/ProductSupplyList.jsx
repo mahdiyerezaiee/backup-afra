@@ -118,7 +118,12 @@ const ProductSupply = () => {
         
     }
 const productForSelect=()=>{
+    if(products){
     return(products.map(data => ({ label: data.name, value: data.id })))
+    }
+    else{
+        return null
+    }
 }
     const paymentMethod = () => {
         return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))

@@ -25,7 +25,7 @@ const NewsHeader = () => {
         <div>
 
             <div className="">
-                {guessNews.slice(0, 5).map(item=>
+                {guessNews?guessNews.slice(0, 5).map(item=>
                     <div className="dropdown-item"  key={item.id} >
 
                     <div className="media-body" key={item.id}>
@@ -49,10 +49,10 @@ const NewsHeader = () => {
                     </div>
                     </div>
 
-                )}
+                ):""}
             </div>
 
-            <NavLink className='text-primary float-right' to='/newsList'>مشاهده همه({guessNews.length}) </NavLink>
+            <NavLink className='text-primary float-right' to='/newsList'>مشاهده همه({guessNews?guessNews.length:0}) </NavLink>
 
 
         </div>
