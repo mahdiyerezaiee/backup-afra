@@ -16,8 +16,10 @@
 
 .pro-sidebar {
   color: #6e82a5;
-  height: 100%;
+  height: calc(100vh - 100px);
   width: 280px;
+  overflow-y: auto!important;
+  overflow-x: hidden!important;
   min-width: 200px;
   text-align: left;
   transition: width, left, right, 0.3s;
@@ -28,7 +30,7 @@
     background: #fafafa;
     height: 100%;
     position: relative;
-    margin-top: 80px;
+    /*margin-top: 80px;*/
     z-index: 101; }
     .pro-sidebar > .pro-sidebar-inner > img.sidebar-bg {
       width: 100%;
@@ -74,6 +76,10 @@
   .pro-sidebar.rtl {
     text-align: right;
     direction: rtl; }
+  .pro-sidebar-content{
+    overflow-y: auto!important;
+    overflow-x: hidden!important;
+  }
   @media (max-width: 480px) {
     .pro-sidebar.xs {
       position: fixed;
@@ -349,7 +355,7 @@
       .pro-sidebar.collapsed .pro-menu > ul > .pro-menu-item.pro-sub-menu > .pro-inner-list-item.has-arrow {
         padding-left: 10px; }
       .pro-sidebar.collapsed .pro-menu > ul > .pro-menu-item.pro-sub-menu > .pro-inner-list-item > .popper-inner {
-        max-height: 100vh;
+        max-height: calc(100% - 100px);
         overflow-y: auto;
         background-color: #fafafa;
         padding-left: 20px;
@@ -428,12 +434,12 @@
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out; }
 
-.react-slidedown.transitioning {
-  overflow-y: hidden; }
+/*.react-slidedown.transitioning {*/
+/*  overflow-y: hidden; }*/
 
 .react-slidedown.closed {
   display: none; }
 .main-Layout{
-  height: 100vh;
+  height: calc(95vh - 90px);
   overflow:scroll;
 }
