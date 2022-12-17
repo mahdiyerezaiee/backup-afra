@@ -15,6 +15,7 @@ import afra from './afra.jpg';
 // import { loginUser } from '../../services/userService';
 import CodeForMobile from './CodeForMobile';
 import LoginWithPassword from "../common/loginWithPassword";
+import { BiArrowBack } from 'react-icons/bi';
 
 
 
@@ -49,7 +50,10 @@ validators:{
         }
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
-
+    const handelBack=(e)=>{
+        e.preventDefault()
+        history('sysplus')
+    }
     const handleSubmit = async (event) => {
         event.preventDefault();
         setClick(true);
@@ -129,9 +133,12 @@ mobileNo=mobile
                             </>:
                             <div className='card-body'>
 
-                            <h4 className='card-title'>
-                            ورود
-                            </h4>
+<div className='row'>
+                <h4 className="col-10">
+                    ورود
+                </h4>
+                {/* <BiArrowBack className="col-2 text-left"  size="20px" title="بازگشت به صفحه اصلی" onClick={handelBack}/> */}
+            </div>
                             <p className='mt-5'>برای استفاده از خدمات هولدینگ افرا، وارد حساب کاربری خود شوید .</p>
 
 

@@ -1,14 +1,11 @@
 import Modal from 'react-modal';
-import { GetShippingCompanies, GetShoppingContractWithCompany } from "../../services/ShippingService";
+import {  GetShoppingContractWithCompany } from "../../services/ShippingService";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { NavLink } from 'react-router-dom';
 import { SyncWithSender } from '../../services/outScopeService';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { BsWindowSidebar } from 'react-icons/bs';
 import { GetAllShippingCompanies } from './../../services/ShippingService';
-import { editOrder, GetOrder } from './../../services/orderService';
+import { editOrder } from './../../services/orderService';
 
 const customStyles = {
     content: {
@@ -25,18 +22,11 @@ const customStyles = {
     }
 
 }
-
-
-
 const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => {
     const [shippingCompany, setShippingCompanys] = useState([]);
     const [shippingCompanyId, setShippingCompanysId] = useState(0);
     const [shippingContract, setShippingContract] = useState([]);
     const [shippingContractId, setShippingContractId] = useState(0);
-    const [order, SetOrder] = useState({})
-    const [close, setClose] = useState(closeModal)
-
-    const navigate = useNavigate();
     const getShippingCompany = async () => {
         try {
             const { data, status } = await GetAllShippingCompanies();
@@ -47,8 +37,6 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             console.log(error);
         }
     }
-
-    console.log(order);
     const getShippingContractCompany = async (id) => {
         try {
             const { data, status } = await GetShoppingContractWithCompany(id);
@@ -73,7 +61,6 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
         }
 
     }
-
     const handelSubmit = async (e) => {
         e.preventDefault();
         const body = {
@@ -81,13 +68,8 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             shippingContractId,
             "byPassContractLimit": false
         }
-
-        
-            
-
-            const { data, status } = await SyncWithSender(body)
-
-            if (status === 200 && data.result.success === true) {
+        const { data, status } = await SyncWithSender(body)
+        if (status === 200 && data.result.success === true) {
                 
                     toast.success('حواله با موفقیت صادر شد', {
                         position: "top-right",
@@ -124,30 +106,16 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                     progress: undefined
                 });
             }
-
-        
-            closeModal()
-
-
-  
-
-    }
-
+            closeModal()}
     return (
-
         <Modal
-
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             style={customStyles}
             contentLabel="Selected Option"
-            ariaHideApp={false}
-
-        >
+            ariaHideApp={false}>
             <div style={{ height: '15rem', width: '20rem' }}>
-
                 <h6>ارسال درخواست</h6>
-
                 <p>در ااین بخش میتونید اطلاعات سفارش را برای باربری ارسال نمایید</p>
                 <div className="form-group mt-4 textOnInput ">
                     <div className='form-row mb-4'>
@@ -195,8 +163,6 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             </div>
 
         </Modal>
-
-
     )
 }
 export default ShippingSelected

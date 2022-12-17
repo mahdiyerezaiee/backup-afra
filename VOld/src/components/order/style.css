@@ -67,3 +67,34 @@
    padding: 0;
 }
 
+.detial-img{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 7%;
+    height: 100%;
+    width: 88%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(46, 46, 47, 0.51);
+}
+.img:hover .detial-img {
+    opacity: 1;
+}
+.text {
+width: 100%;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.text p{
+    color: white;
+
+}

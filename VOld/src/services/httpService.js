@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import config from './config.json'
 import { decodeToken } from './../utils/decodeToken';
 
+let configure=window.globalThis.site_url;
 
 
 const token = localStorage.getItem('token');
@@ -14,23 +14,24 @@ if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   // console.log(token);
 }
-const refresh = localStorage.getItem('refresh');
-
-
 
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+const refresh = localStorage.getItem('refresh');
+
+const refreshR = {
+  token, refresh
+}
+
 axios.interceptors.response.use(
 
   resp => resp, async error => {
 
-    if (error.response.status === 401) {
+    if (error.response.status === 401 && token  ) {
 
-      const refreshR = {
-        token, refresh
-      }
+    
       axios.interceptors.response.eject()
       
-        axios.post(`${config.ForoshApi}/User/Refresh`, refreshR).then(response=>{
+        axios.post(`${configure}/User/Refresh`, refreshR).then(response=>{
           localStorage.setItem('token', response.data.result.token);
           localStorage.setItem('refresh', response.data.result.refresh);
           axios.defaults.headers.common["Authorization"] = `Bearer ${
@@ -60,10 +61,12 @@ axios.interceptors.response.use(
     if (error.response.status === 500) {
 
       console.log(error);
-      toast.error("مشکلی از سمت سرور رخ داده است.", {
+      toast.error("پاسخی از سمت سرور دریافت نشد", {
         position: "top-right",
         closeOnClick: true
       });
+
+
     }
 
 

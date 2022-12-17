@@ -18,6 +18,8 @@ import AdvancedSearch from "../../../components/common/AdvancedSearch";
 import { optionsRole } from "../../../Enums/RolesEnums";
 import QueryString from 'qs';
 import { GetGroupsForEntity } from '../../../services/GroupService';
+import EditCustomerGroup from '../customers/EditCustomerGroup';
+import EditUserRole from './editUserRole';
 
 const UserList = () => {
 
@@ -35,6 +37,9 @@ const UserList = () => {
     const [selectedRows, setSelectedRows] = useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
+    const[modalId,setModalId]=useState(0)
+    const[modalGroupOpen,setmodalGroupOpen]=useState(false)
+    const[modalRoleOpen,setmodalRoleOpen]=useState(false)
     const [getData, setGeData] = useState(false)
     const params = { UserName, FirstName, NationalCode,LastName,userRole}
 
@@ -204,13 +209,22 @@ sessionStorage.clear()
     const navigate = useNavigate()
 
     const editHandler = (id) => {
-        navigate(`/editrole/${id}`)
+        setModalId(id)
+        setmodalRoleOpen(true)
+    }
+    const modalRoleClose=()=>{
+        setmodalRoleOpen(false)
+
     }
     const editInfoHandler = (id) => {
         navigate(`/editInfo/${id}`)
     }
     const editHandlerGroup = (id) => {
-        navigate(`/editcustomergroup/${id}`)
+        setModalId(id)
+        setmodalGroupOpen(true)
+    }
+    const modalGroupClose=()=>{
+        setmodalGroupOpen(false)
     }
     const columns = useMemo(() => [
         { Header: 'شناسه', accessor: 'id' },
@@ -500,6 +514,10 @@ setGeData(true)
             <div
             // className='user-progress'
             >
+                <EditCustomerGroup id={modalId} closeModal={modalGroupClose} modalIsOpen={modalGroupOpen}
+
+                />
+                <EditUserRole id={modalId} closeModal={modalRoleClose} modalIsOpen={modalRoleOpen}/>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 

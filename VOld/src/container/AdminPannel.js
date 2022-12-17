@@ -14,6 +14,7 @@ import PrivateRoute from '../utils/PrivateRoute';
 import { GetUserInfo } from './../services/userService';
 import MainLayout from './../components/layouts/MainLayout';
 import LoginWithPassword from '../components/common/loginWithPassword';
+import SysPlus from '../pages/landingPage/SysPlus';
 
 const MainLazyLoad=lazy(()=>import('./../components/layouts/MainLayout'))
 
@@ -38,11 +39,11 @@ const AdminPannel = () => {
        
         </PrivateRoute>} />
      
-      
+      {/* <Route path='/sysplus' element={<SysPlus/>} /> */}
       <Route path='/login' element={<Login />} />
       <Route path='/verify' element={<CodeForMobile />} />
    
-      <Route path='/logout' element={User===null?<Navigate to='/login' />:<Logout/>} />
+      <Route path='/logout' element={token===null?<Navigate to='/login' />:<Logout/>} />
     </Routes>
 
 

@@ -113,7 +113,7 @@
 .dark-mode .textOnInput label:after {background-color:#0e2338 }
 .dark-mode .textOnInput label {background-color:transparent}
 .dark-mode .css-1s2u09g-control{background-color:#0e2338}
-.dark-mode .css-b62m3t-container input{background-color:#233649;
+.dark-mode .css-b62m3t-container input{background-color:transparent;
     color: #BDBDD7;
 }
 .dark-mode .css-2613qy-menu {background-color:#233649!important;
@@ -140,7 +140,7 @@
 }
 .dark-mode input{
     border: 1px solid #3b82f6;
-    background-color: #233649!important;
+    background-color: transparent!important;
     color: #BDBDD7;
 }.dark-mode textarea{
     border: 1px solid #3b82f6;
@@ -156,6 +156,10 @@
     background-color:#233649!important;
 
 }
+.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color:#233649!important;}
+.dark-mode .table-striped tbody tr:nth-of-type(odd):hover {
+    background-color:#0e2338!important;}
 .dark-mode .navbar .navbar-item .nav-item.user-profile-dropdown .dropdown-menu .dropdown-item svg {
     color: #BDBDD7;
 
@@ -168,9 +172,24 @@
 .dark-mode .footer-wrapper{
     background-color:#233649!important;
 
+}.dark-mode .sliderReport .row{
+    color: white;
+    background-color:#0e2338!important;
+
+}
+.dark-mode .sliderReport h1 {
+    color: white!important;
+
+}
+.dark-mode .sliderReport p{
+    color: white!important;
+
+}.dark-mode .sliderReport a{
+    color: white!important;
+
 }
 .dark-mode ::selection{
-    color:  #BDBDD7!important;
+    color: #a2ff00 !important;
 
 }
 .dark-mode .navbar .navbar-item .nav-item form.form-inline input.search-form-control{
@@ -259,3 +278,6 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s}
+.dark-mode .orderCustomerInfo{
+    background-color: transparent!important;
+}

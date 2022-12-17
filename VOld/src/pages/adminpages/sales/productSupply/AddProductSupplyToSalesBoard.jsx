@@ -119,11 +119,16 @@ const AddProductSupplyToSalesBoard = () => {
 
     }
     const productCombo = () => {
-        return (products.map(data => ({ label: data.name, value: data.id })))
+        if(products){
+        return (products.map(data => ({ label: data.name, value: data.id })))}
+        else{return null}
     }
     const wareCombo = () => {
-
-        return (Productwarehouse.filter(data => data.id !== 0).map(data => ({ label: data.wareHouseName, value: data.id })))
+if(Productwarehouse && Productwarehouse.length>0){
+        return (Productwarehouse.filter(data => data.id !== 0).map(data => ({ label: data.wareHouseName, value: data.id })))}
+else{
+    return null
+}
     }
     const paymentMethod = () => {
         return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))

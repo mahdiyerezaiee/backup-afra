@@ -1,60 +1,60 @@
 import http from "./httpService";
 
-import configure from "./config.json";
+let configure=window.globalThis.site_url;
 
 export const registerUser = user => {
     return http.post(
-        `${configure.ForoshApi}/Account/register`,
+        `${configure}/Account/register`,
         JSON.stringify(user)
     );
 };
 
 
 export const loginUser = user => {
-    return http.post(`${configure.ForoshApi}/User/Login`, JSON.stringify(user));
+    return http.post(`${configure}/User/Login`, JSON.stringify(user));
     
 };
 export const verifyUser = user => {
-    return http.post(`${configure.ForoshApi}/User/Verify`, JSON.stringify(user));
+    return http.post(`${configure}/User/Verify`, JSON.stringify(user));
     
 };
 export const RefreshToken = refresh => {
-    return http.post(`${configure.ForoshApi}/User/Refresh`, JSON.stringify(refresh));
+    return http.post(`${configure}/User/Refresh`, JSON.stringify(refresh));
     
 };
 
 export const GetUserInfo=()=>{
 
-    return http.get(`${configure.ForoshApi}/AuthenticatedUser/GetUserInfo`);
+    return http.get(`${configure}/AuthenticatedUser/GetUserInfo`);
 }
 export const GetUserData=(id)=>{
 
-    return http.get(`${configure.ForoshApi}/AuthenticatedUser/GetUserInfo?userId=${id}`);
+    return http.get(`${configure}/AuthenticatedUser/GetUserInfo?userId=${id}`);
 }
 export const GetUsersRoles=(userId)=>{
 
-    return http.get(`${configure.ForoshApi}/AuthenticatedUser/GetUserRoles?UserId=${userId}`);
+    return http.get(`${configure}/AuthenticatedUser/GetUserRoles?UserId=${userId}`);
 }
 
 export const GetAllUsers=()=>{
 
-    return http.get(`${configure.ForoshApi}/AuthenticatedUser/GetUsers`);
+    return http.get(`${configure}/AuthenticatedUser/GetUsers`);
 }
 export const SetUserRole=(userRole)=>{
-    return http.post(`${configure.ForoshApi}/AuthenticatedUser/SetUserRoles`,JSON.stringify(userRole));
+    return http.post(`${configure}/AuthenticatedUser/SetUserRoles`,JSON.stringify(userRole));
 }
 export const CreateUser=(userData)=>{
-    return http.post(`${configure.ForoshApi}/AuthenticatedUser/CreateUser`,JSON.stringify(userData));
+    return http.post(`${configure}/AuthenticatedUser/CreateUser`,JSON.stringify(userData));
 }
 
 
 export const GetDataWithSearch=(url)=>{
 
-    return http.get(`${configure.ForoshApi}/AuthenticatedUser/GetUsers`,url);
+    return http.get(`${configure}/AuthenticatedUser/GetUsers`,url);
 }
 export const GetForKarbars=(url)=>{
 
-    return http.get(`${configure.ForoshApi}/AuthenticatedUser/GetUsers`,url);
+    return http.get(`${configure}/AuthenticatedUser/GetUsers`,url);
 }
 
 

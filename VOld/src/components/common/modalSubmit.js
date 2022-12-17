@@ -2,7 +2,6 @@ import {useState} from "react";
 
 const ModalSubmit = ({name , modalInfo , submitHandler ,closeModal,quantity, setquantity , formatter, productSupplyConditionId }) => {
     const [check,setCheck]=useState(false)
-    console.log(productSupplyConditionId)
     return(
       <>
           <div className="d-block clearfix mb-2" onClick={closeModal}><svg

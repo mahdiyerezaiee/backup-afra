@@ -6,17 +6,20 @@ import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
+import {PriceUnitEnums} from "../../../Enums/PriceUnit";
 
 const EditUserInfo = () => {
     const navigate = useNavigate()
     const params = useParams()
     const [userName, setUserName] = useState('')
+    const [maxValidity, setMaxValidity] = useState(0)
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [nationalCode, setNationalCode] = useState('')
     const [organizationID, setOrganizationID] = useState([])
     const [organizationId, setOrganizationId] = useState(null)
+    const [maxValidityUnitId, setMaxValidityUnitId] = useState(null)
     const [password, setPassword] = useState(null)
     const [passwordConfirm, setPasswordConfirm] = useState(null)
     const [check, setChek] = useState(false);
@@ -48,9 +51,11 @@ const EditUserInfo = () => {
         organizationId,
         password,
         active,
+        maxValidity: Number(maxValidity),
+        maxValidityUnitId,
         actionBlock
     }
-
+    console.log(dataUser)
     const getUserInfo = async () => {
         try {
             const { data, status } = await GetUserData(params.id)
@@ -62,6 +67,8 @@ const EditUserInfo = () => {
             setOrganizationId(data.result.customer.organizationId)
             setActive(data.result.customer.active)
             SetactionBlock(data.result.customer.actionBlock)
+            setMaxValidity(data.result.customer.maxValidity)
+            setMaxValidityUnitId(data.result.customer.maxValidityUnitId)
 
 
         } catch (err) {
@@ -91,7 +98,7 @@ const EditUserInfo = () => {
         } catch (err) {
             console.log(err)
         }
-        navigate('/userlist')
+        navigate(-1)
 
     }
     const getOrganizationId = async () => {
@@ -111,6 +118,12 @@ const EditUserInfo = () => {
     const OrganizationItem = () => {
         return (organizationID.filter(item => item.id === organizationId).map(item => ({ label: item.name, value: item.id })))
     }
+    const PriceUnitItem = () => {
+        return (PriceUnitEnums.map(item => ({ label: item.name, value: item.id })))
+    }
+    const PriceUnit = () => {
+        return (PriceUnitEnums.filter(item => item.id === maxValidityUnitId).map(item => ({ label: item.name, value: item.id })))
+    }
 
     const validator = useRef(new SimpleReactValidator({
         validators: {
@@ -127,11 +140,13 @@ const EditUserInfo = () => {
 
                 }
             },
-            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
+            min: {
+                message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
                     return val.length >= options[0];
                 }, messageReplace: function messageReplace(message, options) {
                     return message.replace(':min', options[0]);
-                } }
+                }
+            }
         },
         messages: {
             required: "پرکردن این فیلد الزامی می باشد",
@@ -142,6 +157,10 @@ const EditUserInfo = () => {
         }
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
+    const handelNavigate = (e) => {
+        e.preventDefault()
+        navigate(-1)
+    }
 
     return (
 
@@ -162,35 +181,36 @@ const EditUserInfo = () => {
                         <div className="form-group  textOnInput col-12 ">
 
                             <div className="form-row">
-                                <div className="col-12 mb-5">
 
-
-                                    <label className="form-check-label mb-3">
-
-                                        <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
-                                        حساب کاربری شخص حقوقی
-                                    </label>
-                                </div>
                                 <div className="col-12 mb-5 d-flex justify-content-between ">
-                                    <div className="col-6">
+                                    <div className="col-4 ">
+
+
+                                        <label className="form-check-label mb-3">
+
+                                            <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
+                                            حقوقی
+                                        </label>
+                                    </div>
+                                    <div className="col-4">
 
                                         <label className="form-check-label mb-3">
 
                                             <input type="checkbox" checked={active} className="form-check-input" onChange={e => setActive(e.target.checked)} />
-                                            فعال / غیرفعال                                    </label>
+                                            فعال                                     </label>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-4">
 
                                         <label className="form-check-label mb-3 text-danger font-weight-bold">
 
                                             <input type="checkbox" checked={actionBlock} className="form-check-input" onChange={e => SetactionBlock(e.target.checked)} />
-                                           تعلیق کاربر                                  </label>
+                                            تعلیق کاربر                                  </label>
                                     </div>
                                 </div>
                                 <div className="col-4 mb-4">
 
                                     <label >شماره موبایل</label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="شماره موبایل" value={userName||""} onChange={
+                                    <input type="text" className="form-control opacityForInput" placeholder="شماره موبایل" value={userName || ""} onChange={
                                         (e) => {
                                             setUserName(e.target.value);
                                             validator.current.showMessageFor("required");
@@ -230,6 +250,23 @@ const EditUserInfo = () => {
                                         validator.current.showMessageFor("email")
                                     }} />
                                     {validator.current.message("email", email, "email")}
+                                </div>
+                                <div className="col-6 mb-4">
+                                    <label >مقدار اعتبار </label>
+                                    <input type="text" className="form-control opacityForInput" placeholder="100,000" maxLength="10" value={maxValidity || ""} onChange={e => {
+                                        setMaxValidity(e.target.value)
+                                        validator.current.showMessageFor("required");
+                                    }} />
+                                    {validator.current.message("required", nationalCode, "required|numeric|min:10")}
+                                </div>
+                                <div className="col-6 mb-4">
+                                    <label >واحد قیمت</label>
+                                    <Select
+                                        defaultValue={PriceUnit()}
+                                        placeholder="واحد قیمت"
+                                        options={PriceUnitItem()}
+                                        onChange={e => setMaxValidityUnitId(e.value)}
+                                    />
                                 </div>
 
 
@@ -287,7 +324,7 @@ const EditUserInfo = () => {
                                                 <button type="submit" className="btn btn-success " disabled={validator.current.allValid() ? false : true} onClick={submit}>تایید</button>}
                                         </div>
                                         <div className='col-6 '>
-                                            <NavLink to='/userlist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                            <button onClick={handelNavigate} className="btn btn-danger float-right">بازگشت</button>
                                         </div>
                                     </div>
                                 </div>

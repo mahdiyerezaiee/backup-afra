@@ -28,6 +28,9 @@
 .colory-mode .edit-btn svg{
     color: #000000;
 }
+.colory-mode .sliderReport svg{
+    color: #ffffff;
+}
 .colory-mode .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item{
     background-color: white !important;
 
@@ -47,7 +50,7 @@
 
 }
 .colory-mode .user-progress{
-    box-shadow: 0 4px 8px 0 rgb(0 105 255 / 37%), 0 6px 20px 0 rgb(0 105 255 / 37%);
+    /*box-shadow: 0 4px 8px 0 rgb(0 105 255 / 37%), 0 6px 20px 0 rgb(0 105 255 / 37%);*/
 }
 .colory-mode .pro-sidebar .pro-menu .open > .pro-inner-item  {
     background-color: #1E6FD9 ;
@@ -67,7 +70,7 @@
 }
 .colory-mode .widget-content-area{
     background-color: white !important;
-    box-shadow: 0 4px 8px 0 rgb(0 105 255 / 37%), 0 6px 20px 0 rgb(0 105 255 / 37%);
+    /*box-shadow: 0 4px 8px 0 rgb(0 105 255 / 37%), 0 6px 20px 0 rgb(0 105 255 / 37%);*/
 
 }.colory-mode .widget{
      background-color: white !important;
@@ -83,7 +86,7 @@
 
 
 .colory-mode #toggle {
-    background-color: #5e6e82;
+    background-color: #FFFFFF;
 }
 
 .colory-mode .btn_info{
@@ -99,7 +102,7 @@
 
 }
 .colory-mode .offcanvas {
-    background-color:#233649;
+    background-color:#ffffff;
 
 }
 
@@ -111,7 +114,7 @@
 }
 .colory-mode .card{
     /*border: 3px solid #ff8906!important;*/
-    box-shadow: 0 4px 8px 0 rgba(77, 150, 255, 0.47), 0 6px 20px 0 rgba(77, 150, 255, 0.47);
+    /*box-shadow: 0 4px 8px 0 rgba(77, 150, 255, 0.47), 0 6px 20px 0 rgba(77, 150, 255, 0.47);*/
     background-color:white;
 
 }
@@ -127,24 +130,24 @@
 }
 .colory-mode .css-1s2u09g-control:hover{background-color: #ffffff;
     border-color: #03A9f4;
-}.colory-mode .css-1s2u09g-control input{background-color: #ffffff!important;
+}.colory-mode .css-1s2u09g-control input{background-color: transparent!important;
 }
 .colory-mode .css-b62m3t-container input:after{background-color: #ffffff;
     color: #ffffff;
 }
-.colory-mode .css-2613qy-menu {background-color:#233649!important;
+.colory-mode .css-2613qy-menu {background-color:#ffffff!important;
     color: #000000 !important;
 }
 .colory-mode .css-1pahdxg-control {background-color: #ffffff !important;
     color: #000000 !important;
 }
-.colory-mode #react-select-5-listbox{background-color:#233649}
-.colory-mode .css-1paxdxg-control{background-color:#233649}
+.colory-mode #react-select-5-listbox{background-color:#ffffff}
+.colory-mode .css-1paxdxg-control{background-color:#ffffff}
 .colory-mode svg{color:  #1E6FD9;
     background-color: transparent}
-.colory-mode .pro-sidebar.collapsed .pro-menu > ul > .pro-menu-item.pro-sub-menu > .pro-inner-list-item > .popper-inner{background-color:#233649}
+.colory-mode .pro-sidebar.collapsed .pro-menu > ul > .pro-menu-item.pro-sub-menu > .pro-inner-list-item > .popper-inner{background-color:#ffffff}
 .colory-mode ul button{background-color: transparent}
-.colory-mode .rmdp-wrapper {background-color:#233649}
+.colory-mode .rmdp-wrapper {background-color:#ffffff}
 .colory-mode .navbar .navbar-item .nav-item.dropdown .dropdown-menu{background-color:#ffffff}
 .colory-mode .dropdown-item:hover {
 
@@ -163,7 +166,7 @@
     color: #ffffff;
 }
 .colory-mode label{
-    background-color:transparent!important;
+    background-color:white!important;
     color: #03A9f4 !important;
 }
 
@@ -175,17 +178,13 @@
     color: #000000;
 
 }
-.colory-mode .btn-primary{
-    background-color: #5C9DF2 !important;
-    color:  #ffffff!important;
-    border-color:#5C9DF2!important ;
-}
+
 .colory-mode .footer-wrapper{
     background-color:#D6E5FA!important;
 
 }
 .colory-mode ::selection{
-    color:  #ffffff!important;
+    color: #00e1ff !important;
 
 }
 .colory-mode .navbar .navbar-item .nav-item form.form-inline input.search-form-control{
@@ -193,11 +192,11 @@
 border: 1px solid;
 }
 .colory-mode input::placeholder{
-    color:  #ffffff!important;
+    color: #696666 !important;
 
 }
 .colory-mode textarea::placeholder{
-    color:  #ffffff!important;
+    color: #696666!important;
 
 }
 .colory-mode .navbar .navbar-item .nav-item.search-animated svg {
@@ -216,11 +215,11 @@ border: 1px solid;
 
 }
 .colory-mode .publisher{
-    background-color:#233649!important;
+    background-color:#ffffff!important;
 
 }
 .colory-mode .publisher input{
-    border-color:#233649!important ;
+    border-color:#ffffff!important ;
 
 }
 .colory-mode #colorPallet .pallet-icon{
@@ -233,13 +232,13 @@ border: 1px solid;
 }
 
 .colory-mode .css-1insrsq-control {
-    background-color:#233649!important ;
+    background-color:#FFFFFF!important ;
 }
 .colory-mode .css-14el2xx-placeholder{
 color: #050505;
 }
 .colory-mode  .css-qc6sy-singleValue{
-    color: white;
+    color: black;
 }
 .colory-mode .form-control{
     background-color: #ffffff !important ;
@@ -261,7 +260,7 @@ color: #050505;
 }
 .colory-mode .ReactModal__Content{
     background-color:#F0F1F2!important;
-    box-shadow: 0 4px 8px 0 rgba(77, 150, 255, 0.47), 0 6px 20px 0 rgba(77, 150, 255, 0.47);
+    /*box-shadow: 0 4px 8px 0 rgba(77, 150, 255, 0.47), 0 6px 20px 0 rgba(77, 150, 255, 0.47);*/
 }
 .colory-mode .btn-light{
     background-color: #D6E5FA!important ;
@@ -269,7 +268,7 @@ color: #050505;
     border: #D6E5FA!important ;
 }
 .colory-mode .p-colors{
-    box-shadow: 0 4px 8px 0 rgba(77, 150, 255, 0.47), 0 6px 20px 0 rgba(77, 150, 255, 0.47);
+    /*box-shadow: 0 4px 8px 0 rgba(77, 150, 255, 0.47), 0 6px 20px 0 rgba(77, 150, 255, 0.47);*/
     background-color: #ffffff !important ;
     color: #000000;
 }
@@ -285,13 +284,7 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     -webkit-text-fill-color: #000000;
     transition: background-color 5000s ease-in-out 0s}
-.colory-mode .btn-sm {
-    background-color: #9AD911!important;
-}
-.colory-mode .btn-sm:hover {
-    background-color:#9AD911!important;
-    color: white;
-}
+
 .colory-mode .footer-wrapper{
     background-color: #1E6FD9!important;
     color: white!important;

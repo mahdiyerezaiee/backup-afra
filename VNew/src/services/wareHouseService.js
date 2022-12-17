@@ -1,22 +1,24 @@
-import configure from './config.json';
 import http from './httpService';
+
+let configure=window.globalThis.site_url;
+
 
 export const GetAllWareHouses=(url)=>{
 
-    return http.get(`${configure.ForoshApi}/WareHouse/GetWareHouses`, url);
+    return http.get(`${configure}/WareHouse/GetWareHouses`, url);
 }
 export const GetAllWareHouse=(id)=>{
 
-    return http.get(`${configure.ForoshApi}/WareHouse/GetWareHouse?Id=${id}`);
+    return http.get(`${configure}/WareHouse/GetWareHouse?Id=${id}`);
 }
 export const SetWareHouses=(warehouse)=>{
 
-    return http.post(`${configure.ForoshApi}/WareHouse/SetWareHouse`,JSON.stringify(warehouse));
+    return http.post(`${configure}/WareHouse/SetWareHouse`,JSON.stringify(warehouse));
 }
 
 export const GetProductHouses=()=>{
 
-    return http.get(`${configure.ForoshApi}/WareHouse/GetProductWareHouses`);
+    return http.get(`${configure}/WareHouse/GetProductWareHouses`);
 }
 export const DeleteHouses=(warehouseId)=>{
 
@@ -28,5 +30,5 @@ export const DeleteHouses=(warehouseId)=>{
             id:(warehouseId)
         }
         }
-    return http.delete(`${configure.ForoshApi}/WareHouse/DeleteWareHouse`,config);
+    return http.delete(`${configure}/WareHouse/DeleteWareHouse`,config);
 }

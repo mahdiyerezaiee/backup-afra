@@ -8,11 +8,13 @@ import {GetAllProductSupply} from "../../services/productSupplyService";
 import { GetAddress } from '../../services/addressService';
 import {editOrder} from "../../services/orderService";
 import {toast} from "react-toastify";
+import FinancialConfirmation from "./FinancialConfirmation";
 
 
 const OrderAddress = ({ setIsOpenUploadExcel, openModalAddress, details,shipping,orderWeight,TakhsisWeight,getOrder,order }) => {
     const roles = useSelector(state => state.userRole)
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [IsOpen, SetIsOpen] = useState(false);
     const [orderDetailId, setorderDetailId] = useState(0);
     const [completeDdata, SetCompletedData] = useState([])
     const [cottageCode, setcottageCode] = useState('');
@@ -81,6 +83,14 @@ const OrderAddress = ({ setIsOpenUploadExcel, openModalAddress, details,shipping
     const closeModal = () => {
         setIsOpen(false);
     }
+    const openModalFinancialConfirmation = () => {
+
+        SetIsOpen(true);
+    }
+    const closeModalFinancialConfirmation = () => {
+getOrder()
+        SetIsOpen(false);
+    }
 
 
 
@@ -135,10 +145,10 @@ const OrderAddress = ({ setIsOpenUploadExcel, openModalAddress, details,shipping
         currency: 'IRR', maximumFractionDigits: 0,
         minimumFractionDigits: 0, });
 
-        console.log(completeDdata);
     return (
         <div>
             <ShippingSelected modalIsOpen={modalIsOpen} closeModal={closeModal} orderDetailId={orderDetailId} Order={order} />
+            <FinancialConfirmation id={order.id} modalIsOpen={IsOpen} closeModal={closeModalFinancialConfirmation} />
 
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">
                 <label>جزییات سفارش </label>
@@ -257,7 +267,7 @@ const OrderAddress = ({ setIsOpenUploadExcel, openModalAddress, details,shipping
                     </button>
 
                     <button className={order.orderStatusId === 8 ?"btn-primary m-1 btn ":"btn-success m-1 btn "}disabled={(orderWeight<=TakhsisWeight)?true:false} onClick={() => setIsOpenUploadExcel(true)}>آپلود فایل آدرس</button>
-                    {roles.includes(7) || roles.includes(5) || roles.includes(8) ?<button className="btn-success m-1 btn "hidden={order.orderStatusId === 8 ? false : true } onClick={handleEditFormSubmit}>تایید مالی</button>:null}
+                    {roles.includes(7) || roles.includes(5) || roles.includes(8) ?<button className="btn-success m-1 btn "hidden={order.orderStatusId === 8 ? false : true } onClick={openModalFinancialConfirmation}>تایید مالی</button>:null}
                 </div>
 
             </div>

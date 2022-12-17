@@ -1,17 +1,19 @@
 import http from "./httpService";
 
-import config from "./config.json";
+let configure=window.globalThis.site_url;
+
+
 export const getAllWithRole=(roleId)=>{
-    return http.get(`${config.ForoshApi}/AuthenticatedUser/GetUsers?RoleIds=${roleId}`);
+    return http.get(`${configure}/AuthenticatedUser/GetUsers?RoleIds=${roleId}`);
 }
 export const setCustomerInfo=(user)=>{
-    return http.put(`${config.ForoshApi}/AuthenticatedUser/SetUserInfo`,JSON.stringify(user));
+    return http.put(`${configure}/AuthenticatedUser/SetUserInfo`,JSON.stringify(user));
 }
 
 
 
 export const CreateCustomer=(user)=>{
-    return http.put(`${config.ForoshApi}/AuthenticatedUser/CreateUser`,JSON.stringify(user));
+    return http.post(`${configure}/AuthenticatedUser/CreateUser`,JSON.stringify(user));
 }
 
 

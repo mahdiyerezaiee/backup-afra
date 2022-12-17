@@ -118,7 +118,12 @@ const ProductSupply = () => {
         
     }
 const productForSelect=()=>{
+    if(products){
     return(products.map(data => ({ label: data.name, value: data.id })))
+    }
+    else{
+        return null
+    }
 }
     const paymentMethod = () => {
         return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
@@ -662,7 +667,7 @@ setCreateDate('')
                                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                        <p> آیا مطمئنید  عرضه محصول {productSupply.filter(item => item.id === id).map(item => item.product.name)}   </p>
+                        <p> آیا مطمئنید  عرضه محصول {productSupply && productSupply.filter(item => item.id === id).map(item => item.product.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 

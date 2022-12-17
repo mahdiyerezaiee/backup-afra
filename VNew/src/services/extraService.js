@@ -1,7 +1,7 @@
 import http from "./httpService";
 
-import config from "./config.json";
+let configure=window.globalThis.site_url;
 
 export const getExtraData=(id,source)=>{
-    return http.get(`${config.ForoshApi}/ExtraData/GetExtraDatas?Id=${id}&DataSourceId=${source}`);
+    return http.get(`${configure}/ExtraData/GetExtraDatas?Id=${id}&DataSourceId=${source}`);
 }

@@ -4,7 +4,7 @@ import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
 import {GetProductSupplyConditionsCustomer} from "../../services/ProductSupplyConditionService";
 
 const ConditionSalesBordCustomer = ({productSupplyConditions , handelClick, closeModal}) => {
-    console.log(productSupplyConditions)
+
 
     const [customerg, setCustomerg] = useState([])
     const [Condition, setCondition] = useState([])
@@ -22,7 +22,6 @@ const ConditionSalesBordCustomer = ({productSupplyConditions , handelClick, clos
         GetCustomerGroup();
         GetCondition()
     },[productSupplyConditions])
-    console.log(Condition)
     const CustomerG = () => {
         let customer=[...customerg , {id:null ,name: 'عمومی'}]
         return (customer.map(data => ({

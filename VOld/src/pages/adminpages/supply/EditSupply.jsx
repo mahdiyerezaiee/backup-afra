@@ -15,6 +15,8 @@ import { ShippingStatusEnums } from "../../../Enums/ShippingStatusEnums";
 const EditeSupply = () => {
     const [productId, setProductId] = useState(0);
     const [measureUnitId, setMeasureUnitId] = useState(0);
+    const [cottageCode, setCottageCode] = useState('');
+
     const [wareHouseId, setWareHouseId] = useState(0);
     const [supplyTypeId, setSupplyTypeId] = useState(0);
     const [supplierId, setSupplierId] = useState(0);
@@ -39,6 +41,7 @@ const EditeSupply = () => {
             setSupplierId(data.result.supply.supplierId)
             setSupplyTypeId(data.result.supply.supplyTypeId)
             setShippingStatusId(data.result.supply.shippingStatusId)
+            setCottageCode(data.result.supply.cottageCode)
         } catch (err) {
             console.log(err)
         }
@@ -158,6 +161,7 @@ const EditeSupply = () => {
                     quantity,
                     wareHouseId,
                     contractNumber,
+                    cottageCode,
                     comment
                 }
 
@@ -335,24 +339,34 @@ const EditeSupply = () => {
                             </div>
                             <div className="form-group mb-4 textOnInput  ">
                                 <div className='form-row'>
-                                    <div className="col-6">
+                                    <div className="col-4">
                                         <label >مقدار</label>
                                         <input type="text" className="form-control opacityForInput" value={quantity}
-                                            onChange={e => {
-                                                setQuantity(Number(e.target.value))
-                                                validator.current.showMessageFor("required");
+                                               onChange={e => {
+                                                   setQuantity(Number(e.target.value))
+                                                   validator.current.showMessageFor("required");
 
-                                            }} />
+                                               }} />
                                         {validator.current.message("required", quantity, "required|numeric")}
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-4">
+                                        <label >کد کوتاژ</label>
+                                        <input type="text" className="form-control opacityForInput" value={cottageCode}
+                                               onChange={e => {
+                                                   setCottageCode(e.target.value)
+                                                   validator.current.showMessageFor("required");
+
+                                               }} />
+                                        {validator.current.message("required", quantity, "required|numeric")}
+                                    </div>
+                                    <div className="col-4">
                                         <label >شماره قرارداد</label>
                                         <input type="text" className="form-control opacityForInput" value={contractNumber}
-                                            onChange={e => {
-                                                setContractNumber(e.target.value)
-                                                validator.current.showMessageFor("required");
+                                               onChange={e => {
+                                                   setContractNumber(e.target.value)
+                                                   validator.current.showMessageFor("required");
 
-                                            }} />
+                                               }} />
                                         {validator.current.message("required", contractNumber, "required|numeric")}
                                     </div>
 
