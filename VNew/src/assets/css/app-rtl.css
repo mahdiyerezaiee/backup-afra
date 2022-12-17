@@ -1,0 +1,154 @@
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/YekanBakh-Bold.eot');
+    src: url('../fonts/YekanBakh-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/YekanBakh-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/YekanBakh-Thin.eot');
+    src: url('../fonts/YekanBakh-Thin.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/YekanBakh-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/YekanBakh-Regular.eot');
+    src: url('../fonts/YekanBakh-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/YekanBakh-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/YekanBakh-Light.eot');
+    src: url('../fonts/YekanBakh-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/YekanBakh-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/YekanBakh-Heavy.eot');
+    src: url('../fonts/YekanBakh-Heavy.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/YekanBakh-Heavy.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/YekanBakh-Medium.eot');
+    src: url('../fonts/YekanBakh-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/YekanBakh-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+body.rtl,
+body.rtl p,
+body.rtl .landing-page .landing-page-nav .navbar-nav .nav-item>a,
+body.rtl .landing-page .landing-page-nav .navbar-nav .nav-item>.dropdown>a {
+    font-family: yekan;
+}
+
+* {
+    letter-spacing: 0 !important;
+}
+
+.rtl .r-table thead th {
+    text-align: right;
+}
+
+html .rtl .form-check {
+    padding-right: 1.25rem;
+}
+
+html .rtl .form-check-input {
+    margin-right: -1.25rem;
+    margin-left : inherit;
+}
+
+.rtl .input-group>.form-control:not(:first-child),
+.rtl .input-group>.custom-select:not(:first-child) {
+    border-top-right-radius   : 0;
+    border-bottom-right-radius: 0;
+}
+
+.rtl .input-group>.form-control+.form-control,
+.rtl .input-group>.form-control+.custom-select,
+.rtl .input-group>.form-control+.custom-file,
+.rtl .input-group>.form-control-plaintext+.form-control,
+.rtl .input-group>.form-control-plaintext+.custom-select,
+.rtl .input-group>.form-control-plaintext+.custom-file,
+.rtl .input-group>.custom-select+.form-control,
+.rtl .input-group>.custom-select+.custom-select,
+.rtl .input-group>.custom-select+.custom-file,
+.rtl .input-group>.custom-file+.form-control,
+.rtl .input-group>.custom-file+.custom-select,
+.rtl .input-group>.custom-file+.custom-file {
+    margin-left : inherit;
+    margin-right: -1px;
+}
+
+.rtl .pr-4.pl-4 {
+    padding-left : 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+.ReactModalPortal {
+    direction: ltr;
+}
+
+.rtl .dropleft .dropdown-toggle:before {
+    margin-left : .255em;
+    margin-right: inherit;
+}
+.rtl .custom-control-label:after, .rtl .custom-control-label:before {
+    right: -1.5rem;
+    left: auto;
+}
+.rtl .comment-likes {
+    text-align: left;
+}
+.rtl .card button.card-body {
+   text-align: right !important;
+}
+.rtl center ,
+.rtl center > *{
+    text-align: inherit !important; 
+}
+.rtl .app-menu ul li i {
+    margin-left: 10px;
+    margin-right: 0;
+    vertical-align: middle;
+}
+.rtl .react-tagsinput-tag ,
+.react-tagsinput-input ,
+input, button, select, optgroup, textarea {
+    font-family: yekan;
+}
+.rtl .slider-nav .left-arrow i:before{
+    content: '\e606' !important;
+}
+.rtl .slider-nav .right-arrow i:before{
+    content: '\e605' !important;
+}
+.text-bold {
+    font-weight: 900;
+}
