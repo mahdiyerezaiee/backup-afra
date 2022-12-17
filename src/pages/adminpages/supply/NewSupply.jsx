@@ -14,7 +14,7 @@ import SimpleReactValidator from "simple-react-validator";
 const NewSupply = () => {
     const [productId, setProductId] = useState(0);
     const [measureUnitId, setMeasureUnitId] = useState(0);
-    const [cottageCode, setCottageCode] = useState(0);
+    const [cottageCode, setCottageCode] = useState('');
     const [wareHouseId, setWareHouseId] = useState(0);
     const [supplyTypeId, setSupplyTypeId] = useState(0);
     const [supplierId, setSupplierId] = useState(0);
@@ -131,8 +131,7 @@ const NewSupply = () => {
                     contractNumber,
                     comment,
                     cottageCode,
-                    product: null,
-                    supplier: null
+                  
                 }
 
             }
@@ -302,7 +301,7 @@ const NewSupply = () => {
                                         <label >کد کوتاژ</label>
                                         <input type="text" className="form-control opacityForInput" value={cottageCode}
                                             onChange={e => {
-                                                 setCottageCode(Number(e.target.value))
+                                                 setCottageCode(e.target.value)
                                                 validator.current.showMessageFor("required");
 
                                             }} />

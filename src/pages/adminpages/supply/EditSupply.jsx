@@ -15,7 +15,7 @@ import { ShippingStatusEnums } from "../../../Enums/ShippingStatusEnums";
 const EditeSupply = () => {
     const [productId, setProductId] = useState(0);
     const [measureUnitId, setMeasureUnitId] = useState(0);
-    const [cottageCode, setCottageCode] = useState(0);
+    const [cottageCode, setCottageCode] = useState('');
 
     const [wareHouseId, setWareHouseId] = useState(0);
     const [supplyTypeId, setSupplyTypeId] = useState(0);
@@ -353,7 +353,7 @@ const EditeSupply = () => {
                                         <label >کد کوتاژ</label>
                                         <input type="text" className="form-control opacityForInput" value={cottageCode}
                                                onChange={e => {
-                                                   setCottageCode(Number(e.target.value))
+                                                   setCottageCode(e.target.value)
                                                    validator.current.showMessageFor("required");
 
                                                }} />
