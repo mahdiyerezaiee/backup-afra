@@ -41,10 +41,10 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
 
-    const handelBack=(e)=>{
-        e.preventDefault()
-        navigate('sysplus')
-    }
+const handelBack=(e)=>{
+    e.preventDefault()
+    navigate('sysplus')
+}
     const submitCaptcha = () => {
         if (SHOW) {
             if (validateCaptcha(input) !== true) {
@@ -167,7 +167,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                     <label>شماره موبایل</label>
 
                     <input type='text' name='mobile' className='form-control opacityForInput' placeholder='09121234567 ' maxLength="11"
-                           value={value} onChange={onchange} />
+                        value={value} onChange={onchange} />
 
 
 
@@ -179,10 +179,10 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                 <div className=' textOnInput' style={{ direction: 'ltr' }}>
                     <label>رمز عبور</label>
                     <input type='password' name='password' className='form-control opacityForInput' placeholder='******** '
-                           value={password} onChange={e => {
-                        setPassword(e.target.value)
-                        validator.current.showMessageFor("required");
-                    }} />
+                        value={password} onChange={e => {
+                            setPassword(e.target.value)
+                            validator.current.showMessageFor("required");
+                        }} />
 
 
 
