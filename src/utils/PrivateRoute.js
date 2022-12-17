@@ -5,7 +5,7 @@ import React from "react";
 const PrivateRoute= ({ children }) => {
 const token = localStorage.getItem("token")
 
-  return token  ? children : <Navigate to="/sysplus"/>
+  return token  ? children : <Navigate to="/login"/>
  };
 
 export default PrivateRoute;

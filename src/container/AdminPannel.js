@@ -39,7 +39,7 @@ const AdminPannel = () => {
        
         </PrivateRoute>} />
      
-      <Route path='/sysplus' element={<SysPlus/>} />
+      {/* <Route path='/sysplus' element={<SysPlus/>} /> */}
       <Route path='/login' element={<Login />} />
       <Route path='/verify' element={<CodeForMobile />} />
    
