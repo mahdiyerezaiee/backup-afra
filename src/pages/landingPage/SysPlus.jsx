@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import video from "../../assets/img/Home.mp4"
+import "./style.css"
 const SysPlus = () => {
   const navigate=useNavigate()
 
@@ -11,18 +12,19 @@ navigate('/login')
 
   }
   return (
-    <div className='container'>
-      <div>
-      <img src="" className="img-fluid" alt="Responsive image" />
+    <div className='video'>
+    <div className='video-section'>
+        <video  autoPlay loop muted  style={{width: '100%', height: '100%'}}>
+            <source src={video} type="video/mp4" />
+        </video>
 
-      </div>
-    
-    <div className='text-center'>  
-
-    <button className='btn btn-primary'  onClick={handelNavigate}>
-          ورود به سامانه 
-    </button>
     </div>
+        <div className="button-video ">
+            <button className='btn btn-outline-dark ' style={{fontSize:"1rem"}}  onClick={handelNavigate}>
+                ورود به سامانه
+            </button>
+
+        </div>
 
     </div>
   )
