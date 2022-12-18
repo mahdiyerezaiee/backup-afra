@@ -85,6 +85,7 @@ import UsedBarBariReport from "../../pages/adminpages/report/UsedBarBariReports"
 import CustomerReports from "../../pages/adminpages/report/CustomersReports";
 import OrdersReports from "../../pages/adminpages/report/OrdersReports";
 import DetailCustomerAttachment from "../../pages/adminpages/report/DetailCustomerAttachment";
+import AddOrder from "../../pages/order/addOrder";
 const MainLayout = (props) => {
 
   const [isloading, setIsloading] = useState(true);
@@ -233,6 +234,7 @@ const MainLayout = (props) => {
                   <Route path='productSupply' element={<ProductSupply />} />
                   <Route path='newProductsupply' element={<AddProductSupplyToSalesBoard />} />
                   <Route path='orderList' element={<OrderList />} />
+                  <Route path='addOrder' element={<AddOrder />} />
                   <Route path='orderDetail/:id' element={<OrderDetailTest />} />
                   <Route path='bazargah' element={<BazargahList />} />
                   <Route path='cuoList' element={<OrderCustomer />} />
