@@ -622,6 +622,7 @@ const OrderList = () => {
         setStartDate('')
         setEndDate('')
         setExtId('')
+        setOrderDetailExtId('')
         setPaymentStatusId([])
         setPaymentMethodIds([])
         setShippingStatusIds([])
