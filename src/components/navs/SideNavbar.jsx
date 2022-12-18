@@ -180,6 +180,7 @@ let el = document.getElementById("sidebar");
               <SubMenu ref={ref6} open={show.item6 === true? true:false} onClick={() => setShow({...show , item6: !show.item6 , item1: false,item3: false,item4: false,item5: false,item2: false,item8: false,item9: false,item10: false,item7: false,item11: false,item12: false,item14: false,item13: false , item16:false})}  hidden={roles.includes(7)||roles.includes(4) ||roles.includes(3) ? false : true} title='فروش' icon={<FaRegHandshake size='2rem' />}>
                 <MenuItem onClick={handleHeaderClick}><NavLink to="productSupply">عرضه</NavLink></MenuItem>
                 <MenuItem onClick={handleHeaderClick}> <NavLink to="orderList">سفارشات</NavLink></MenuItem>
+                <MenuItem  hidden={roles.includes(7) ? false : true}  onClick={handleHeaderClick}> <NavLink to="addOrder">ثبت سفارش</NavLink></MenuItem>
                 <MenuItem><NavLink to='/bazargah'>  بازارگاه </NavLink></MenuItem>
 
               </SubMenu>

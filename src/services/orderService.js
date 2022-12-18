@@ -56,3 +56,7 @@ export const ordersSpliter=(body)=>{
 
     return http.post(`${configure}/Order/SplitOrderDetails`,JSON.stringify(body))
 }
+export const addOrder =(body)=>{
+
+    return http.post(`${configure}/Order/AddOrder`,JSON.stringify(body))
+}
