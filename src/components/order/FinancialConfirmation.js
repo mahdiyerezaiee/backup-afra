@@ -79,7 +79,9 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
                     progress: undefined
                 });
                 closeModal()
-            }}catch (e) {
+            }
+            closeModal()
+        }catch (e) {
             toast.error('مشکلی در ثبت ویرایش وجود دارد', {
                 position: "top-right",
                 autoClose: 5000,
@@ -90,6 +92,8 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
                 progress: undefined
             });
             console.log(e)
+            closeModal()
+
         }
     }
     const PaymentStatus = () => {
