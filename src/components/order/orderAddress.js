@@ -219,7 +219,7 @@ getOrder()
                                         <td className="text-center">{item.quantity}</td>
                                         {roles.includes(7) || roles.includes(5) || roles.includes(8) ?
                                             <td className="text-center">
-                                                <button onClick={() => openModal(item.id)} className="btn btn-sm btn-primary" hidden={order.paymentStatusId!==3?true:false}
+                                                <button onClick={() => openModal(item.id)} className="btn btn-sm btn-primary" hidden={(order.paymentStatusId===3||order.paymentStatusId===6)?false:true}
                                                         disabled={ item.shippingId!==null ? true:false }
 
                                                 >صدور حواله
