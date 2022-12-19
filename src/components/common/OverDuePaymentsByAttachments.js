@@ -10,7 +10,7 @@ const OverDuePaymentsByAttachments = () => {
     const data = async () => {
       try {
           const {data , status} = await HasOverDuePaymentsByAttachments()
-          if (data.success === true){
+          if (data.result.hasOverDueAttachments === true){
               setChecked(true)
           }
       }catch (e) {
