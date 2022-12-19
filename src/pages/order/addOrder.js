@@ -1,7 +1,7 @@
 import {useState, useRef, useEffect} from "react";
 import {addOrder} from "../../services/orderService";
 import Select from "react-select";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {MeasureUnitSample} from "../../Enums/MeasureUnitSample";
 import SimpleReactValidator from "simple-react-validator";
 import {GetProducts} from "../../services/productService";
@@ -42,19 +42,11 @@ const AddOrder = () => {
     const [productId, setProductId] = useState(0)
     const [measureUnitId, setMeasureUnitId] = useState(0)
     const [quantity, setQuantity] = useState(0)
-    const [modalIsOpen, setIsOpen] = useState(false);
 
     const [productBasePrice, setProductBasePrice] = useState(0)
     const [users, setUsers] = useState([])
     const [organizations, setOrganizations] = useState([])
-    const openModal = (e) => {
-e.preventDefault()
-        setIsOpen(true);
-    }
-    const closeModal = () => {
 
-        setIsOpen(false);
-    }
     useEffect(() => {
         getUser();
         getOrganizations()
@@ -130,6 +122,8 @@ e.preventDefault()
         productSupplyConditionId:null,
         productBasePrice:Number(productBasePrice),
     }
+    const navigate = useNavigate()
+
     const SubmitOrder = async (e) => {
         e.preventDefault()
         try {
@@ -143,7 +137,9 @@ if (data.result.success === true){
         pauseOnHover: false,
         draggable: true,
         progress: undefined
-    });}
+    });
+    navigate("/orderList")
+}
     if (data.result.success === false){
     toast.error(data.result.message , {
         position: "top-right",
@@ -154,7 +150,6 @@ if (data.result.success === true){
         draggable: true,
         progress: undefined
     });}
-    closeModal()
 
         } catch (e) {
             console.log(e)
@@ -236,43 +231,7 @@ const statusOrder = () => {
 
         <div className='row d-flex justify-content-center '>
             <div className='widget box shadow col-md-6 col-xs-12'>
-                <Modal
 
-                    isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
-                    style={customStyles}
-                    contentLabel="Selected Option"
-                    ariaHideApp={false}
-
-                >
-                    <div style={{width: "20rem" ,height:"100%"}}>
-                    <div className=" form-group mb-4 textOnInput col-12 selectIndex" style={{marginBottom: "3rem", zIndex: '2'}}>
-                        <label>وضعیت سفارش</label>
-                        <Select
-
-                            placeholder='نحوه پرداخت'
-                            options={statusOrder()}
-                            onChange={e => {
-                                setOrderStatusId(e.value)
-                            }}
-                        />
-
-
-                    </div>
-
-                    <div className='row justify-content-between align-content-end'>
-                        <div className='col-6 '>
-                            <button  className="btn btn-success float-left  " onClick={SubmitOrder}>تایید
-                            </button>
-                        </div>
-                        <div className='col-6 '>
-                            <button  className="btn btn-danger float-right " onClick={closeModal}>بازگشت
-                            </button>
-
-                        </div>
-                    </div>
-                    </div>
-                </Modal>
                 <form className="col-8">
                     <div className="n-chk d-flex  mb-4">
 
@@ -378,7 +337,7 @@ const statusOrder = () => {
                             </div>
                             <div className="col-6">
 
-                                <label>قیمت پایه</label>
+                                <label>فی</label>
                                 <input type="text" className="form-control opacityForInput  mb-4"
                                        value={productBasePrice} onChange={e => {
                                     setProductBasePrice(e.target.value)
@@ -389,7 +348,19 @@ const statusOrder = () => {
 
 
                             </div>
+                            <div className=" form-group mb-4 textOnInput col-6 selectIndex" style={{marginBottom: "3rem", zIndex: '1'}}>
+                                <label>وضعیت سفارش</label>
+                                <Select
+maxMenuHeight="100px"
+                                    placeholder='نحوه پرداخت'
+                                    options={statusOrder()}
+                                    onChange={e => {
+                                        setOrderStatusId(e.value)
+                                    }}
+                                />
 
+
+                            </div>
 
                             <div className="col-12">
 
@@ -397,10 +368,8 @@ const statusOrder = () => {
                                 <textarea type="text" className="form-control opacityForInput  mb-4"
                                        value={comment} onChange={e => {
                                     setComment(e.target.value)
-                                    validator.current.showMessageFor("required");
 
                                 }}/>
-                                {validator.current.message("required", comment, "required")}
 
 
                             </div>
@@ -418,7 +387,7 @@ const statusOrder = () => {
                     </div>
                     <div className='row justify-content-between'>
                         <div className='col-6 '>
-                            <button  className="btn btn-success float-left " onClick={openModal}>تایید
+                            <button  className="btn btn-success float-left " onClick={SubmitOrder}>تایید
                             </button>
                         </div>
                         <div className='col-6 '>
