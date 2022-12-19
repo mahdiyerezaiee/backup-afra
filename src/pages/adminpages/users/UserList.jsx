@@ -488,7 +488,8 @@ sessionStorage.clear()
     const handelSearchFieldClear = () => {
 
         sessionStorage.clear();
-
+        setPageSize(10)
+        setPageNumber(0)
         setFirstName('');
         setLastName('')
         setUserName('')

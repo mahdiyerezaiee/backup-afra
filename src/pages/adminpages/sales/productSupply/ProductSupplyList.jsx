@@ -80,7 +80,8 @@ const ProductSupply = () => {
         const { data, status } = await GetAllProductWithSearch(config);
         setProductSupply(data.result.productSupplies.values)
         setTotalCount(data.result.productSupplies.totalCount)
-
+        setPageSize(10)
+        setPageNumber(0)
         sessionStorage.setItem('params', JSON.stringify(params));
 
     }
@@ -556,6 +557,8 @@ setCreateDate('')
         setCottageCode('')
         setProducId('')
         setGeData(true)
+        setPageSize(10)
+        setPageNumber(0)
         sessionStorage.clear()
 
     }

@@ -350,6 +350,8 @@ const OrderList = () => {
                 SetAddress({active: false})
                 setOrder(data.result.orderList.values);
                 setTotalCount(data.result.orderList.totalCount)
+                setPageSize(10)
+                setPageNumber(0)
                 sessionStorage.setItem('params', JSON.stringify(params));
 
             }
@@ -627,6 +629,8 @@ const OrderList = () => {
         setPaymentMethodIds([])
         setShippingStatusIds([])
         SetoverDue(null)
+        setPageSize(10)
+        setPageNumber(0)
         sessionStorage.clear()
         SetGetOrders(true)
     }
