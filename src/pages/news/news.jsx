@@ -11,7 +11,7 @@ const News = () => {
             params: {
 
 
-                PageSize:5
+                PageSize:9
 
 
             }
