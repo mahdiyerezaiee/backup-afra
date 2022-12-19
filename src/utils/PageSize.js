@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 
-const PageSizeTable = ({setPageSize , pageSize , getDataBySearch }) => {
+const PageSizeTable = ({setPageSize , pageSize , getDataBySearch,total }) => {
     const pageSizeHandler =async  (data) => {
         setPageSize(data)
 }

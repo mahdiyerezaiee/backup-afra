@@ -395,7 +395,7 @@ setCreateDate('')
     }
     const columns = useMemo(() => [
         { Header: 'شناسه', accessor: 'id' },
-        { Header: ' شماره عرضه', accessor: 'name' },
+        { Header: ' شناسه عرضه', accessor: 'name' },
         { Header: 'محصول', accessor: 'product.name' },
         { Header: 'انبار', accessor: 'wareHouse.wareHouseName' },
         , { Header: 'قیمت', accessor: d=>`${d.price}`, Cell: row => (formater.format(row.row.original.price)) }

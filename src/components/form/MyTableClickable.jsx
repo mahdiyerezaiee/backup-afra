@@ -164,7 +164,7 @@ useEffect(()=>{
         <Fragment>
             <div className="table-responsive table-striped" style={{overflowX: 'auto'}}>
                 <div className='d-block clearfix mt-3 float-right'>
-                    <PageSizeTable getDataBySearch={getDataBySearch} pageSize={PageSize} setPageSize={setPageSize}/>
+                    <PageSizeTable getDataBySearch={getDataBySearch} pageSize={PageSize} total={total} setPageSize={setPageSize}/>
                 </div>
                 <div className='d-block clearfix mt-3 float-left'>
                     <span className=" py-3" style={{fontSize: 'smaller'}}> اقدام دسته جمعی: </span>
@@ -365,7 +365,7 @@ useEffect(()=>{
                 <div className='d-block m-2   float-right'>
                <span className=" " style={{fontSize: 'small'}}>
                   نمایش
-                   {""} {PageSize >= total ? page.length : PageSize} {""}
+                   {""} {PageSize >= total ? total : PageSize} {""}
 
                    آیتم از
                    {""} {total === 0 ? rows.length : total} {""}

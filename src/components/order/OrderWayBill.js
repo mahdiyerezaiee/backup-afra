@@ -98,17 +98,17 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
                         {Shipping ? Shipping.map(item =>
                             <tbody className="text-center">
                             <tr key={item.id}>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"} >{item.id}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{item.orderId ? item.orderId : "--"}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"} >{item.orderDetailId ? item.orderDetailId : "--"}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name)}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{item.plannedQuantity}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{item.shippedQuantity}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name)}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{item.contractCode ? item.contractCode : '--'}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}>{item.companyName ? item.companyName : '--'}</td>
-                                <td bgcolor={(item.extId && item.shippingContractId) ? "lightcoral" : "transparent"}> <svg display={item.extId ? '' : 'none'} onClick={() => openModal(item.extId)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
+                                <td bgcolor= "transparent" >{item.id}</td>
+                                <td bgcolor= "transparent">{item.orderId ? item.orderId : "--"}</td>
+                                <td bgcolor= "transparent" >{item.orderDetailId ? item.orderDetailId : "--"}</td>
+                                <td bgcolor= "transparent">{MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name)}</td>
+                                <td bgcolor= "transparent">{item.plannedQuantity}</td>
+                                <td bgcolor= "transparent">{item.shippedQuantity}</td>
+                                <td bgcolor= "transparent">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
+                                <td bgcolor= "transparent">{DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name)}</td>
+                                <td bgcolor= "transparent">{item.contractCode ? item.contractCode : '--'}</td>
+                                <td bgcolor= "transparent">{item.companyName ? item.companyName : '--'}</td>
+                                <td bgcolor= "transparent"> <svg display={item.extId ? '' : 'none'} onClick={() => openModal(item.extId)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                                     width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                                                                                  fill="none" stroke="#000" strokeLinecap="round"
                                                                                  strokeLinejoin="round" strokeWidth="12" /><line
