@@ -1,26 +1,27 @@
-import configure from './config.json'
 import http from './httpService'
+
+let configure=window.globalThis.site_url;
 
 
 export const GetAllNewsForUsers=()=>{
 
-    return http.get(`${configure.ForoshApi}/News/GetNewss?IsAdmin=false`)
+    return http.get(`${configure}/News/GetNewss?IsAdmin=false`)
 }
 export const GetAllNewsForUsersPage=(url)=>{
 
-    return http.get(`${configure.ForoshApi}/News/GetNewss?IsAdmin=false`,url)
+    return http.get(`${configure}/News/GetNewss?IsAdmin=false`,url)
 }
 export const GetAllNewsForAdmin=()=>{
 
-    return http.get(`${configure.ForoshApi}/News/GetNewss?IsAdmin=true`)
+    return http.get(`${configure}/News/GetNewss?IsAdmin=true`)
 }
 export const GetAllNewsForAdminPage=(url)=>{
 
-    return http.get(`${configure.ForoshApi}/News/GetNewss?IsAdmin=true`, url)
+    return http.get(`${configure}/News/GetNewss?IsAdmin=true`, url)
 }
 export const SetNews=(news)=>{
 
-    return http.post(`${configure.ForoshApi}/News/SetNews`,JSON.stringify(news))
+    return http.post(`${configure}/News/SetNews`,JSON.stringify(news))
 }
 export const DeleteNews=(deleteid)=>{
     let config={headers:
@@ -32,5 +33,5 @@ export const DeleteNews=(deleteid)=>{
     }
     }
 
-    return http.delete(`${configure.ForoshApi}/News/DeleteNews`,config)
+    return http.delete(`${configure}/News/DeleteNews`,config)
 }

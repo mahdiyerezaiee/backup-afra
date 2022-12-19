@@ -1,14 +1,16 @@
 import http from "./httpService";
 import config from "./config.json";
-import configure from "./config.json";
+
+let configure=window.globalThis.site_url;
+
 
 export const AddTOCart=(addToCart)=>{
 
-    return http.post(`${configure.ForoshApi}/Order/AddToCart`,JSON.stringify(addToCart));
+    return http.post(`${configure}/Order/AddToCart`,JSON.stringify(addToCart));
 }
 export const GetShoppingCart=(id)=>{
 
-    return http.get(`${configure.ForoshApi}/Order/GetShoppingCart?CustomerId=${id}`);
+    return http.get(`${configure}/Order/GetShoppingCart?CustomerId=${id}`);
 }
 export const DeleteItemCart=(deleteid , customerId )=>{
     let config={headers:
@@ -16,13 +18,13 @@ export const DeleteItemCart=(deleteid , customerId )=>{
                 Authorization:`Bearer ${localStorage.getItem('token')}`
             },
         data:{
-            productId:deleteid,
+            productSupplyId:deleteid,
             customerId:customerId,
 
         }
 
     }
-    return http.delete(`${configure.ForoshApi}/Order/DeleteCart` , config);
+    return http.delete(`${configure}/Order/DeleteCart` , config);
 }
 export const DeleteItemCarts=( customerId )=>{
     let config={headers:
@@ -36,5 +38,5 @@ export const DeleteItemCarts=( customerId )=>{
         }
 
     }
-    return http.delete(`${configure.ForoshApi}/Order/DeleteCart` , config);
+    return http.delete(`${configure}/Order/DeleteCart` , config);
 }

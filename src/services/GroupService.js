@@ -1,17 +1,19 @@
 import http from './httpService';
-import configure from './config.json';
+
+let configure=window.globalThis.site_url;
+
 
 export const GetGroupsForEntity=(entityTypeId , url)=>{
 
-    return http.get(`${configure.ForoshApi}/Group/GetGroups?EntityTypeId=${entityTypeId}` , url)
+    return http.get(`${configure}/Group/GetGroups?EntityTypeId=${entityTypeId}` , url)
 }
 export const GetGroupById=(groupId)=>{
 
-    return http.get(`${configure.ForoshApi}/Group/GetGroup?Id=${groupId}`)
+    return http.get(`${configure}/Group/GetGroup?Id=${groupId}`)
 }
 export const SetGroup=(group)=>{
 
-    return http.post(`${configure.ForoshApi}/Group/SetGroup`,JSON.stringify(group))
+    return http.post(`${configure}/Group/SetGroup`,JSON.stringify(group))
 }
 export const DeleteGroup=(groupId)=>{
     let config={headers:
@@ -23,5 +25,5 @@ export const DeleteGroup=(groupId)=>{
     }
     }
 
-    return http.delete(`${configure.ForoshApi}/Group/DeleteGroup`,config)
+    return http.delete(`${configure}/Group/DeleteGroup`,config)
 }
