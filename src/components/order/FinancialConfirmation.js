@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
-import {ChangeOrderStatus, GetOrder} from "../../services/orderService";
-import {toast} from "react-toastify";
+import { useEffect, useState } from "react";
+import { ChangeOrderStatus, GetOrder } from "../../services/orderService";
+import { toast } from "react-toastify";
 import Modal from "react-modal";
 import Select from "react-select";
-import {PaymentStatusEnums} from "../../Enums/PaymentStatus";
-import {ConditionalPaymentTypes} from "../../Enums/ConditionalPaymentTypes";
-import {PaymentFinancialConfirmtion} from "../../Enums/paymentFinancialConfirmtion";
+import { PaymentStatusEnums } from "../../Enums/PaymentStatus";
+import { ConditionalPaymentTypes } from "../../Enums/ConditionalPaymentTypes";
+import { PaymentFinancialConfirmtion } from "../../Enums/paymentFinancialConfirmtion";
 
 const customStyles = {
     content: {
@@ -22,28 +22,30 @@ const customStyles = {
     }
 
 }
-const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
+const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
     const [StatusId, setId] = useState(0)
-  let paymentStatusId=0
-  let conditionalPaymentTypeId=0
-
-    const handleEditFormSubmit =async () => {
-        if (StatusId === 1  ){
-
-            paymentStatusId=3
-            conditionalPaymentTypeId=null
-
-            } if(StatusId === 2){
-            paymentStatusId=6
-            conditionalPaymentTypeId=1
+    const [conditionPaymentComment, SetconditionPaymentComment] = useState('')
+    let paymentStatusId = 0
+    let conditionalPaymentTypeId = 0
 
 
-            } if(StatusId === 3){
-            paymentStatusId=6
-            conditionalPaymentTypeId=2
+    const handleEditFormSubmit = async () => {
+        if (StatusId === 1) {
+
+            paymentStatusId = 3
+            conditionalPaymentTypeId = null
+
+        } if (StatusId === 2) {
+            paymentStatusId = 6
+            conditionalPaymentTypeId = 1
 
 
-            }
+        } if (StatusId === 3) {
+            paymentStatusId = 6
+            conditionalPaymentTypeId = 2
+
+
+        }
 
 
         const datas = {
@@ -51,12 +53,13 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
             orderId: id,
             orderStatusId: 3,
             paymentStatusId,
-            conditionalPaymentTypeId
+            conditionalPaymentTypeId,
+            conditionPaymentComment: StatusId === 2 ? conditionPaymentComment : null
 
         }
 
         try {
-            const {data, staus} = await ChangeOrderStatus(datas)
+            const { data, staus } = await ChangeOrderStatus(datas)
 
             if (data.result.success === true) {
                 toast.success(data.result.message, {
@@ -67,8 +70,9 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
                     pauseOnHover: false,
                     draggable: true,
                     progress: undefined
-                });}
-                if (data.result.success === false) {
+                });
+            }
+            if (data.result.success === false) {
                 toast.error(data.result.message, {
                     position: "top-right",
                     autoClose: 5000,
@@ -81,7 +85,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
                 closeModal()
             }
             closeModal()
-        }catch (e) {
+        } catch (e) {
             toast.error('مشکلی در ثبت ویرایش وجود دارد', {
                 position: "top-right",
                 autoClose: 5000,
@@ -100,7 +104,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
         return (PaymentFinancialConfirmtion.map(data => ({ label: data.name, value: data.id })))
     }
 
-    return(
+    return (
         <Modal
 
             isOpen={modalIsOpen}
@@ -117,15 +121,15 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
                 strokeLinejoin="round"
                 className="feather feather-x close"
                 data-dismiss="alert"><line x1="18" y1="6"
-                                           x2="6"
-                                           y2="18"></line><line
-                x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                    x2="6"
+                    y2="18"></line><line
+                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div >
-                <div className="card-body p-0" style={{ height: '10rem', width: '20rem' }}>
+                <div className="mt-4" style={{ height: '14rem', width: '20rem' }}>
 
                     <div className="row">
 
-                        <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group selectIndex " style={{marginBottom:"4rem"}}>
+                        <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group selectIndex " style={{ marginBottom: "4rem" }}>
                             <div className=" form-control-sm">
                                 <label>نوع تایید</label>
 
@@ -133,7 +137,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
 
                                     placeholder='نوع تایید'
                                     options={PaymentStatus()}
-                                    onChange={e => {setId(e.value)}}
+                                    onChange={e => { setId(e.value) }}
                                 />
                             </div>
                         </div>
@@ -143,20 +147,30 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
                     </div>
 
 
+                    {StatusId === 2 ?
+                        <div className="form-group  textOnInput">
+                            <label >توضیحات</label>
 
+                            <textarea type="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={conditionPaymentComment} onChange={e => {
+                                SetconditionPaymentComment(e.target.value)
+
+                            }} />
+
+                        </div>
+                        : null}
                 </div>
-                <div className='row '>
+                <div className='row  '>
 
                     <div className='col-6 '>
-                        <button className="btn btn-success float-left "
-                                onClick={handleEditFormSubmit} >تایید
+                        <button className="btn btn-success  "
+                            onClick={handleEditFormSubmit} >تایید
                         </button>
                     </div>
                     <div className='col-6 '>
-                        <button className="btn btn-danger float-right "
-                                onClick={function (){
-                                    closeModal()
-                                }}>انصراف
+                        <button className="btn btn-danger float-right"
+                            onClick={function () {
+                                closeModal()
+                            }}>انصراف
                         </button>
                     </div>
                 </div>
@@ -168,4 +182,4 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal}) => {
 
     )
 }
-export  default  FinancialConfirmation
+export default FinancialConfirmation
