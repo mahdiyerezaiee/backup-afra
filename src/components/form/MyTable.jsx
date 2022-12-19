@@ -172,7 +172,8 @@ const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setP
                 <div className='d-block m-2   float-right'>
               <span className=" " style={{fontSize: 'small'}}>
                   نمایش
-                  {""} {PageSize >= total ? page.length : PageSize} {""}
+                  {""} {PageSize >= total ? total : PageSize} {""}
+
 
                   آیتم از
                   {""} {total === 0 ? rows.length : total} {""}
