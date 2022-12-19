@@ -410,8 +410,8 @@ setCreateDate('')
             }
         },
         { Header: 'مقدار عرضه', accessor: '', Cell: row => (formater.format(row.row.original.quantity)) },
-        { Header: 'مقدار خریداری شده', accessor: '  ' },
-        { Header: 'مقدار مانده', accessor: '    ' },
+        { Header: 'مقدار خریداری شده', accessor: 'orderedQuantity' },
+        { Header: 'مقدار مانده', accessor: 'remainedQuantity' },
         { Header: 'شماره کوتاژ', accessor: 'cottageCode' },
         {
             Header: 'تاریخ اعتبار', accessor: 'date', Cell: row => {
