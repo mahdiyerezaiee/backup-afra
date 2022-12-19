@@ -22,7 +22,7 @@ const OverDuePaymentsByAttachments = () => {
         data()
     },[])
 
-    if (checked && checked.length >0){
+    if (checked ){
         return(
         <Link to="/orderList" state="fromDashboard" className="text-light">
         <div className="w-100 bg-danger p-2 rounded">

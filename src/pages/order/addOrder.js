@@ -44,7 +44,7 @@ const AddOrder = () => {
     const [quantity, setQuantity] = useState(0)
     const [modalIsOpen, setIsOpen] = useState(false);
 
-    const [priceIncludingTax, setPriceIncludingTax] = useState(0)
+    const [productBasePrice, setProductBasePrice] = useState(0)
     const [users, setUsers] = useState([])
     const [organizations, setOrganizations] = useState([])
     const openModal = (e) => {
@@ -128,7 +128,7 @@ e.preventDefault()
         quantity:Number(quantity),
         productSupplyId:null,
         productSupplyConditionId:null,
-        priceIncludingTax:Number(priceIncludingTax),
+        productBasePrice:Number(productBasePrice),
     }
     const SubmitOrder = async (e) => {
         e.preventDefault()
@@ -378,14 +378,14 @@ const statusOrder = () => {
                             </div>
                             <div className="col-6">
 
-                                <label>قیمت تمام شده</label>
+                                <label>قیمت پایه</label>
                                 <input type="text" className="form-control opacityForInput  mb-4"
-                                       value={priceIncludingTax} onChange={e => {
-                                    setPriceIncludingTax(e.target.value)
+                                       value={productBasePrice} onChange={e => {
+                                    setProductBasePrice(e.target.value)
                                     validator.current.showMessageFor("required");
 
                                 }}/>
-                                {validator.current.message("required", priceIncludingTax, "required|numeric")}
+                                {validator.current.message("required", productBasePrice, "required|numeric")}
 
 
                             </div>
