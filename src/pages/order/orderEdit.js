@@ -34,6 +34,7 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
     const [orderCondition, setOrderCondition] = useState([])
     const [comment, setComment] = useState(null);
 
+   
     const getOrder = async () => {
         try {
             const {data, status} = await GetOrder(id)
@@ -53,6 +54,7 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
             const {data, status} = await GetOrderDetails(id)
             let Order = data.result.orderDetails
             setOrderDetail(data.result.orderDetails)
+            setProductSupplyId(data.result.orderDetails[0].productSupplyId)
             let ids = data.result.orderDetails.map(item=>item.productSupplyId)
 
 
@@ -111,18 +113,22 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
         }
     }
 
-    useEffect(() => {
-        getOrder()
-        getOrderDetail()
-
-    }, [id])
-
+   
+let conditionOrder=[];
+if(orderCondition.length>0){
+conditionOrder=orderCondition
+}
     const OrderStatusID = () => {
         return (OrderStatus.map(data => ({label: data.name, value: data.id})))
     }
     const OrderStatusId = (id) => {
         return (OrderStatus.filter(item => item.id === orderStatusId).map(data => ({label: data.name, value: data.id})))
     }
+    useEffect(() => {
+        getOrder()
+        getOrderDetail()
+
+    }, [id])
     const handleEditFormSubmit = async () => {
         const datas = {
             "order": {
@@ -196,7 +202,7 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
                         <p>دراین بخش می توانید پیش فاکتور را ویرایش یا تایید کنید  .</p>
                     </div>
                     <div className="mt-1">
-                        <OrderConditionEdit orderCondition={orderCondition} getOrderDetail={getOrderDetail} />
+                        <OrderConditionEdit orderCondition={conditionOrder} getOrderDetail={getOrderDetail} Order={order} productSupply={productSupplyId}/>
                         <div className="form-group mb-4 textOnInput">
                             <label >توضیحات</label>
 
