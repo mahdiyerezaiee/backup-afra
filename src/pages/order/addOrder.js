@@ -351,7 +351,7 @@ const statusOrder = () => {
                             <div className=" form-group mb-4 textOnInput col-6 selectIndex" style={{marginBottom: "3rem", zIndex: '1'}}>
                                 <label>وضعیت سفارش</label>
                                 <Select
-maxMenuHeight="100px"
+maxMenuHeight="200px"
                                     placeholder='نحوه پرداخت'
                                     options={statusOrder()}
                                     onChange={e => {
