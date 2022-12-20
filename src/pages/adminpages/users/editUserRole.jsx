@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { optionsRole } from "../../../Enums/RolesEnums";
 import { addUserInfo } from "../../../actions/user";
 import Modal from 'react-modal';
+import {ClipLoader} from "react-spinners";
 
 
 const customStyles = {
@@ -30,6 +31,7 @@ const EditUserRole = ({id,closeModal,modalIsOpen}) => {
     const [editRoles, setEditRoles] = useState([])
     const [roles, setRoles] = useState([]);
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
 
 
     const getrole = async () => {
@@ -87,7 +89,7 @@ if(id>0){
         userId: id
     }
     const setRole = async () => {
-
+setLoading(true)
         const { data, status } = await SetUserRole(userRoles)
         try {
 
@@ -105,7 +107,7 @@ if(id>0){
                     progress: undefined
                 });
 
-
+setLoading(false)
             }
 
         } catch (error) {
@@ -175,8 +177,14 @@ if(id>0){
                     <div className='text-center mt-2'>
 
                         <div className='col-12 '>
-                            <button className="btn btn-success  "
+                            <button disabled={loading} className="btn btn-success  "
                                 onClick={setRole}>تایید
+                                <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                />
                             </button>
                         </div>
 

@@ -2,11 +2,14 @@ import React, { useState ,useEffect} from 'react'
 import { GetOrganisationById, SetOrganisation } from '../../../services/organisationService';
 import { useNavigate, NavLink, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import {ClipLoader} from "react-spinners";
 
 const EditOrganizaion = () => {
     const [companyName, setcompanyName] = useState('');
     const [companyRegister, setcompanyRegister] = useState('');
     const [nationalId, SetnationalId] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const navigate=useNavigate();
     const params=useParams();
 
@@ -27,7 +30,9 @@ try {
         getOrganization()
     },[])
     const handelSubmit = async (event) => {
-event.preventDefault();
+        setLoading(true)
+
+        event.preventDefault();
         const organisation = {
             organization: {
                 id: params.id,
@@ -41,7 +46,7 @@ event.preventDefault();
         try {
             const { data, status } = await SetOrganisation(organisation)
             if (status === 200) {
-
+setLoading(false)
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -118,7 +123,15 @@ event.preventDefault();
 
                         <div className='row justify-content-between'>
                             <div >
-                                <button type="submit" className="btn btn-success " onClick={handelSubmit} >تایید</button>
+                                <button type="submit" className="btn btn-success " onClick={handelSubmit} >
+                                    تایید
+                                    <ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    />
+                                </button>
                             </div>
                             <div >
                                 <NavLink to='/organizationlist' className="btn btn-danger">بازگشت</NavLink>

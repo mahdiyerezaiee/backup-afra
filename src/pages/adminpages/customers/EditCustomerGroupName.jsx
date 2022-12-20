@@ -3,12 +3,14 @@ import { useParams, useNavigate,NavLink } from 'react-router-dom';
 import { GetGroupById } from '../../../services/GroupService';
 import { SetGroup } from './../../../services/GroupService';
 import { toast } from 'react-toastify';
+import {ClipLoader} from "react-spinners";
 
 const EditCustomerGroupName = () => {
 const navigate=useNavigate()
     const params=useParams();
     const[entityTypeId,setEntityTypeId]=useState(0)
     const[name,setName]=useState('')
+    const [loading, setLoading] = useState(false);
 
     const getGroup=async()=>{
 
@@ -28,7 +30,8 @@ useEffect(()=>{
 
 const handelSubmit=async(event)=>{
 
-   
+
+    setLoading(true)
 
       event.preventDefault();
  
@@ -43,6 +46,7 @@ const handelSubmit=async(event)=>{
 
         const {data,status}=await SetGroup(body)
         if(status===200){
+            setLoading(false)
             toast.success('گروه ویرایش  شد',
             {
                 position: "top-right",
@@ -85,7 +89,13 @@ const handelSubmit=async(event)=>{
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <button type="submit" className="btn btn-success float-left" disabled={loading} onClick={handelSubmit} >ثبت
+                                        <ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>

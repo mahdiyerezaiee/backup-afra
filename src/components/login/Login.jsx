@@ -2,20 +2,15 @@ import React, { useState, useRef } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import { useNavigate, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { isEmpty } from 'lodash';
+
 import { loginUser } from '../../services/userService';
 import { toast } from 'react-toastify';
 import './customCss.css';
 import afra from './afra.jpg';
 
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-
-// import { loginUser } from '../../services/userService';
-import CodeForMobile from './CodeForMobile';
 import LoginWithPassword from "../common/loginWithPassword";
 import { BiArrowBack } from 'react-icons/bi';
+import {ClipLoader} from "react-spinners";
 
 
 
@@ -25,16 +20,12 @@ const Login = () => {
     const history = useNavigate();
     const [click, setClick] = useState(false);
     const [show , setShow]=useState(false)
-    //     const user=useSelector(state=>state.user);
     const dispatch = useDispatch();
     const [mobile, setMobile] = useState('');
-    //     const [password, setPssword] = useState('');
-    //     const [, forceUpdate] = useState();
-    //     const [rememberme, setRememberme] = useState();
-    //     const [loading, setLoading] = useState(false);
-    //     console.log(history);
+    const [loading, setLoading] = useState(false);
 
-    const validator = useRef(new SimpleReactValidator({
+
+   const validator = useRef(new SimpleReactValidator({
 validators:{
     min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
         return val.length >= options[0];
@@ -74,6 +65,7 @@ validators:{
 
 
                 const { status, data } = await loginUser(user);
+                setLoading(false)
                 if (status === 200) {
                     toast.success("کد برای تلفن همراه شما ارسال شد", {
                         position: "top-right",
@@ -83,7 +75,9 @@ validators:{
                         pauseOnHover: false,
                         draggable: true,
                         progress: undefined
+
                     });
+                    setLoading(true)
                     localStorage.setItem('mobile', user.phoneNumber)
                     resetForm();
                     
@@ -161,7 +155,15 @@ mobileNo=mobile
 
 
                                     <div className="col-6">
-                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid()? false: true}>تایید و ادامه</button>
+                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid()? false: true}>
+                                            تایید و ادامه
+                                            <ClipLoader
+
+                                                loading={loading}
+                                                color="#ffff"
+                                                size={15}
+                                            />
+                                        </button>
 
                                     </div>
                                     <div className="col-6">

@@ -6,6 +6,7 @@ import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { CreateCustomer, setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
+import {ClipLoader} from "react-spinners";
 
 const AddNewUser = () => {
     const navigate = useNavigate()
@@ -23,6 +24,7 @@ const AddNewUser = () => {
     const [show, setShow] = useState(false)
     const [active, setActive] = useState(false);
     const [actionBlock, SetactionBlock] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const [passwordType, setPasswordType] = useState("password");
 
@@ -65,10 +67,13 @@ const AddNewUser = () => {
     }, [organizationId])
 
     const submit = async (e) => {
+        setLoading(true)
         e.preventDefault()
         try {
             const { data, status } = await CreateCustomer(dataUser)
-
+if (status===200){
+    setLoading(false)
+}
         } catch (err) {
             console.log(err)
         }
@@ -267,7 +272,14 @@ const AddNewUser = () => {
                                         <div className='col-6 '>
                                             {show === true ?
                                                 <button type="submit" className="btn btn-success " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
-                                                <button type="submit" className="btn btn-success " disabled={validator.current.allValid() ? false : true} onClick={submit}>تایید</button>}
+                                                <button type="submit" className="btn btn-success " disabled={!loading ?validator.current.allValid() ? false : true:true} onClick={submit}>تایید
+                                                    <ClipLoader
+
+                                                        loading={loading}
+                                                        color="#ffff"
+                                                        size={15}
+                                                    />
+                                                </button>}
                                         </div>
                                         <div className='col-6 '>
                                             <NavLink to='/userlist' className="btn btn-danger float-right">بازگشت</NavLink>

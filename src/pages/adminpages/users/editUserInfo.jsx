@@ -7,6 +7,7 @@ import Select from "react-select";
 import { setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
 import {PriceUnitEnums} from "../../../Enums/PriceUnit";
+import {ClipLoader} from "react-spinners";
 
 const EditUserInfo = () => {
     const navigate = useNavigate()
@@ -27,6 +28,7 @@ const EditUserInfo = () => {
     const [show, setShow] = useState(false)
     const [active, setActive] = useState(false);
     const [passwordType, setPasswordType] = useState("password");
+    const [loading, setLoading] = useState(false);
 
 
     const togglePassword = (e) => {
@@ -57,6 +59,7 @@ const EditUserInfo = () => {
     }
     console.log(dataUser)
     const getUserInfo = async () => {
+
         try {
             const { data, status } = await GetUserData(params.id)
             setEmail(data.result.customer.email)
@@ -91,10 +94,14 @@ const EditUserInfo = () => {
     }, [organizationId])
 
     const submit = async (e) => {
+        setLoading(true)
+
         e.preventDefault()
         try {
             const { data, status } = await setCustomerInfo(dataUser)
-
+            if (status===200){
+                setLoading(false)
+            }
         } catch (err) {
             console.log(err)
         }
@@ -321,7 +328,14 @@ const EditUserInfo = () => {
                                         <div className='col-6 '>
                                             {show === true ?
                                                 <button type="submit" className="btn btn-success " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
-                                                <button type="submit" className="btn btn-success " disabled={validator.current.allValid() ? false : true} onClick={submit}>تایید</button>}
+                                                <button type="submit" className="btn btn-success " disabled={!loading ?validator.current.allValid() ? false : true:true} onClick={submit}>تایید
+                                                    <ClipLoader
+
+                                                        loading={loading}
+                                                        color="#ffff"
+                                                        size={15}
+                                                    />
+                                                </button>}
                                         </div>
                                         <div className='col-6 '>
                                             <button onClick={handelNavigate} className="btn btn-danger float-right">بازگشت</button>

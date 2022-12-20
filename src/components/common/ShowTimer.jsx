@@ -1,8 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import FadeLoader from "react-spinners/FadeLoader";
+import {useState} from "react";
+import {ClipLoader} from "react-spinners";
 
-export const ShowTimer = ({timer,firstCondition,secondCondition}) => {
+export const ShowTimer = ({timer,firstCondition,secondCondition , loading}) => {
     const [minutes, second] = [Math.floor(timer/60), timer%60];
+
     const navigate=useNavigate();
     let formatSecond=0;
     const handelForm=()=>{
@@ -14,7 +18,15 @@ export const ShowTimer = ({timer,firstCondition,secondCondition}) => {
 
         return (
             <div>
-            <button className='btn btn-primary mt-5 mb-5 float-right' onClick={firstCondition}>ارسال مجدد</button>
+            <button className='btn btn-primary mt-5 mb-5 float-right' onClick={firstCondition}>
+                <ClipLoader
+
+                    loading={loading}
+                    color="#ffff"
+                    size={15}
+                />
+
+                ارسال مجدد</button>
             <button className='btn btn-primary mt-5 mb-5 float-left' disabled={false} onClick={handelForm}> اصلاح شماره </button>
             </div>
         )
@@ -23,7 +35,15 @@ export const ShowTimer = ({timer,firstCondition,secondCondition}) => {
         return (
         <div>
             <p>تا  {`${minutes}:${second}`} امکان ارسال مجدد کد وجود ندارد</p>
-            <button className='btn btn-success mt-5 mb-5 float-right' disabled={false} onClick={secondCondition}>تایید و ادامه</button>
+            <button className='btn btn-success mt-5 mb-5 float-right' disabled={false} onClick={secondCondition}>
+                <ClipLoader
+
+                    loading={loading}
+                    color="#ffff"
+                    size={15}
+                />
+
+                تایید و ادامه</button>
         </div>
         )
     }

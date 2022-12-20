@@ -5,12 +5,14 @@ import { SetAttribute } from './../../../services/attributeService';
 import { toast } from 'react-toastify';
 import { useNavigate,useParams } from 'react-router-dom';
 import { GetGroupById, SetGroup } from './../../../services/GroupService';
+import {ClipLoader} from "react-spinners";
 
 
 
 const NewCustomerGroup = () => {
     const navigate=useNavigate();
-    
+    const [loading, setLoading] = useState(false);
+
     const [name, Setname] = useState('')
    
    
@@ -18,7 +20,7 @@ const NewCustomerGroup = () => {
 
     const handelSubmit = async (event) => {
         event.preventDefault();
- 
+ setLoading(true)
         try {
             const body={
             group:{
@@ -30,6 +32,7 @@ const NewCustomerGroup = () => {
 
         const {data,status}=await SetGroup(body)
         if(status===200){
+            setLoading(false)
             toast.success('گروه جدید ایجاد شد',
             {
                 position: "top-right",
@@ -72,7 +75,14 @@ const NewCustomerGroup = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} > ثبت
+
+                                        <ClipLoader
+
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>

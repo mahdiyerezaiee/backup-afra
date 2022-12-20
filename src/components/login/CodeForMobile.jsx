@@ -20,7 +20,8 @@ import { ShowTimer } from './../common/ShowTimer';
 const CodeForMobile = () => {
     const history = useNavigate();
     const dispatch = useDispatch();
-    
+    const [loading, setLoading] = useState(false);
+
     const [Code, setCode] = useState(0);
     const [isSubmit, setIssubmit] = useState(false);
     const [timer, setTimer] = useState(120);
@@ -32,9 +33,11 @@ const CodeForMobile = () => {
         const user = {
             phoneNumber: mobile
         }
+        setLoading(true)
         const { data, status } = await loginUser(user);
         window.location.reload();
         resetTimer();
+        setLoading(false)
     }
     useEffect(() => {
         timer > 0 && setTimeout(timeOutCallback, 1000);
@@ -65,7 +68,7 @@ const CodeForMobile = () => {
 
 
             const { status, data } = await verifyUser(user);
-
+            setLoading(false)
 
             if (status === 200) {
                
@@ -79,7 +82,7 @@ const CodeForMobile = () => {
                     draggable: true,
                     progress: undefined
                 });
-       
+                setLoading(true)
                 localStorage.setItem('token', data.result.token);
                 localStorage.setItem('refresh', data.result.refresh);
 
@@ -156,7 +159,7 @@ const CodeForMobile = () => {
                                 />
                                 <hr />
 
-                                <ShowTimer timer={timer} firstCondition={otpCodeResender} secondCondition={handelSubmit} />
+                                <ShowTimer loading={loading} timer={timer} firstCondition={otpCodeResender} secondCondition={handelSubmit} />
 
                             </form>
                         </div>

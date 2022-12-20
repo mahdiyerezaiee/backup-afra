@@ -2,13 +2,17 @@ import React, { useState } from 'react'
 import { SetOrganisation } from '../../../services/organisationService';
 import { useNavigate,NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import {ClipLoader} from "react-spinners";
 
 const NewOrganizaion = () => {
     const [companyName, setcompanyName] = useState('');
     const [companyRegister, setcompanyRegister] = useState('');
     const [nationalId, SetnationalId] = useState('');
     const navigate=useNavigate();
+    const [loading, setLoading] = useState(false);
+
     const handelSubmit = async (event) => {
+        setLoading(true)
 event.preventDefault();
         const organisation = {
             organization: {
@@ -33,7 +37,7 @@ event.preventDefault();
                     draggable: true,
                     progress: undefined
                 });
-
+setLoading(false)
                 navigate('/organizationlist')
 
             }
@@ -100,7 +104,16 @@ event.preventDefault();
 
                         <div className='row justify-content-between'>
                             <div >
-                                <button type="submit" className="btn btn-success " onClick={handelSubmit} >تایید</button>
+                                <button type="submit" disabled={loading} className="btn btn-success " onClick={handelSubmit} >
+                                    تایید
+
+                                    <ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    />
+                                    </button>
                             </div>
                             <div >
                                 <NavLink to='/organizationlist' className="btn btn-danger">بازگشت</NavLink>

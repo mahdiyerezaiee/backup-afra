@@ -11,6 +11,8 @@ import { MeasureUnitSample } from "../../../Enums/MeasureUnitSample";
 import { GetAllWareHouses } from "../../../services/wareHouseService";
 import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
 import {GetGroupsForEntity} from "../../../services/GroupService";
+import {ClipLoader} from "react-spinners";
+
 
 
 const NewProduct = () => {
@@ -30,6 +32,8 @@ const NewProduct = () => {
     const [wareHouseId, setwareHouseId] = useState(0);
     const [productG, setProductG] = useState([])
     const [attValue, setAttValue] = useState('')
+    const [loading, setLoading] = useState(false);
+
     const GetGroup =async () => {
       try {
           const {data , status}= await GetGroupsForEntity(2)
@@ -156,10 +160,12 @@ const NewProduct = () => {
     }, []);
 
     const submit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
             const { data, status } = await SetProduct(product);
-            if (status === 200) { 
+            if (status === 200) {
+                setLoading(false)
                 productId = (data.result.product.id); 
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
@@ -248,44 +254,7 @@ const NewProduct = () => {
                             {validator.current.message("required", englishName, "required")}
 
                         </div>
-                        {/* <div className="form-group mb-4 textOnInput">
-                            <label>قیمت</label>
-                            <input type="text" className="form-control opacityForInput" value={price} onChange={e => {
-                                setPrice(e.target.value)
-                                validator.current.showMessageFor("required");
 
-                            }} />
-                            {validator.current.message("required", price, "required|numeric")}
-
-                        </div> */}
-
-
-                        {/* <div className="form-group mb-4 textOnInput">
-                            <div className='form-row'>
-                                <div className="col-6">
-                                    <label>حداقل سفارش</label>
-                                    <input type="text" className="form-control opacityForInput"
-                                        value={minSellableAmount} onChange={e => {
-                                            setMinSellableAmount(e.target.value)
-                                            validator.current.showMessageFor("required");
-
-                                        }} />
-                                    {validator.current.message("required", minSellableAmount, "required|numeric")}
-
-                                </div>
-                                <div className="col-6">
-                                    <label>حداکثر سفارش</label>
-                                    <input type="text" className="form-control opacityForInput"
-                                        value={maxSellableAmount} onChange={e => {
-                                            setMaxSellableAmount(e.target.value)
-                                            validator.current.showMessageFor("required");
-
-                                        }} />
-                                    {validator.current.message("required", maxSellableAmount, "required|numeric")}
-
-                                </div>
-                            </div>
-                        </div> */}
                         <div className="form-group mb-4 textOnInput">
                             <div className='form-row'>
                                 <div className="col-6">
@@ -305,22 +274,7 @@ const NewProduct = () => {
 
 
                                 </div>
-                                {/* <div className="col-6 " >
-                                    <label>انبار</label>
 
-                                    <Select
-                                        placeholder={validator.current.showMessageFor("required") ? "Normal text placeholder" : <span className="text-danger">خالی است </span>}
-                                        options={inputWarehouses()}
-                                        onChange={e => {
-                                            setwareHouseId(e.value)
-                                            validator.current.showMessageFor("required");
-
-                                        }}
-                                    />
-                                    {validator.current.message("required", inputWarehouses, "required")}
-
-
-                                </div> */}
                                 <div className="col-6" >
                                     <label>گروه کالا</label>
 
@@ -350,7 +304,12 @@ const NewProduct = () => {
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left " onClick={submit}>تایید</button>
+                                <button type="submit" disabled={loading} className="btn btn-success float-left " onClick={submit}>تایید  <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                             </div>
                             <div className='col-6 '>
                                 <NavLink to='/productList' className="btn btn-danger float-right">بازگشت</NavLink>

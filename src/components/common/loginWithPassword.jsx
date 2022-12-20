@@ -10,11 +10,16 @@ import { addUser } from '../../actions/user';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from "react-simple-captcha";
 import { AiOutlineReload } from "react-icons/ai"
 import {BiArrowBack} from 'react-icons/bi'
+import FadeLoader from "react-spinners/FadeLoader";
+import {ClipLoader} from "react-spinners";
 const LoginWithPassword = ({ value, onchange, setShows }) => {
     const [input, setInput] = useState('')
     const [valid, setValid] = useState(true)
     const [SHOW, setShow] = useState(false)
     const [, forceUpdate] = useState();
+
+    const [loading, setLoading] = useState(false);
+
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const select = useSelector(state => state.userInfo)
@@ -65,6 +70,8 @@ const handelBack=(e)=>{
         }
     }
     const handleSubmit = async (event) => {
+        setLoading(true)
+
         const user = {
 
             phoneNumber: value,
@@ -101,7 +108,7 @@ const handelBack=(e)=>{
                         });
 
                         navigate('/dashboard')
-
+setLoading(false)
 
                     }
 
@@ -210,7 +217,17 @@ const handelBack=(e)=>{
                 </div>
                 <div className='row'>
                     <div className="col-5">
-                        <button className='btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid() ? false : true} onClick={handleSubmit}>تایید</button>
+                        <button className='btn btn-success mt-5  mb-5 float-left' disabled={ !loading ? validator.current.allValid() ? false : true:true} onClick={handleSubmit}>
+                            تایید
+
+                            <ClipLoader
+
+                                loading={loading}
+                                color="#ffff"
+                                size={15}
+                            />
+
+                        </button>
                     </div>
                     <div className="col-7">
                         <button className=' btn btn-primary  mt-5 mb-5 float-right' onClick={() => setShows(true)}>ورود با رمز یکبار مصرف</button>

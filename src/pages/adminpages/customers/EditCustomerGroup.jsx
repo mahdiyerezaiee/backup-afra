@@ -9,6 +9,7 @@ import { CreateUser, GetUserData } from '../../../services/userService';
 import { setCustomerInfo } from '../../../services/customerService';
 import { template } from 'lodash';
 import Modal from 'react-modal';
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -29,6 +30,8 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
     const [CustomerG, setCustomerG] = useState([])
     const [userinfo, setUserInfo] = useState({});
     const [groupId, setGroupId] = useState(0);
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
     const params = useParams();
     const GetCustomerGroup = async () => {
@@ -72,6 +75,7 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
 
 
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
 
         const body = {
@@ -96,6 +100,7 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
 
             const { data, status } = await setCustomerInfo(body);
             if (status === 200) {
+                setLoading(false)
                 toast.success('با موفقیت ثبت شد',
                     {
                         position: "top-right",
@@ -174,9 +179,14 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
                     <div className='text-center mt-2'>
 
                         <div className='col-12 '>
-                            <button className="btn btn-success  "
+                            <button  disabled={loading} className="btn btn-success  "
                                 onClick={handelSubmit}>تایید
-                            </button>
+                                <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                         </div>
 
                     </div>

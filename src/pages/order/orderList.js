@@ -77,7 +77,7 @@ const OrderList = () => {
     const [nationalCode, setNationalCode] = useState(getDefault().nationalCode)
     const [orderStatusIds, setOrderStatusIds] = useState(getDefault().orderStatusIds)
     const [paymentMethodIds, setPaymentMethodIds] = useState(getDefault().paymentMethodIds)
-    const [paymentStatusIds, setPaymentStatusId] = useState(getDefault().paymentMethodIds)
+    const [paymentStatusIds, setPaymentStatusId] = useState(getDefault().paymentStatusIds)
     const [shippingStatusIds, setShippingStatusIds] = useState(getDefault().shippingStatusIds)
     const [order, setOrder] = useState([])
     const [DetailAddress, setDetailAddress] = useState([]);
