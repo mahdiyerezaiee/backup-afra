@@ -23,8 +23,8 @@ import EditUserRole from './editUserRole';
 
 const UserList = () => {
 
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount, setTotalCount] = useState(0);
     const [UserName, setUserName] = useState(getDefault().UserName)
     const [FirstName, setFirstName] = useState(getDefault().FirstName)
@@ -45,6 +45,14 @@ const UserList = () => {
 
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem('params'));
+        return items? items:''
+
+
+    }
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
         return items? items:''
 
 
@@ -77,7 +85,7 @@ const UserList = () => {
             LastName:params.LastName,
             NationalCode:params.NationalCode,
             PageNumber:0,
-            PageSize:10
+            PageSize
 
 
         }
@@ -94,9 +102,10 @@ const UserList = () => {
         if (status === 200){
         setUsers(data.result.users.values);
         setTotalCount(data.result.users.totalCount)
-setPageSize(10)
+
             setPageNumber(0)
         sessionStorage.setItem('params', JSON.stringify(params));
+            sessionStorage.setItem('param', JSON.stringify(param));
         }
     }
 
@@ -120,7 +129,7 @@ setPageSize(10)
         };
         const { data, status } = await GetDataWithSearch(config);
         setUsers(data.result.users.values);
-        sessionStorage.setItem('params', JSON.stringify(params));
+        sessionStorage.setItem('param', JSON.stringify(param));
 
     }
 
@@ -488,7 +497,7 @@ sessionStorage.clear()
     const handelSearchFieldClear = () => {
 
         sessionStorage.clear();
-        setPageSize(10)
+
         setPageNumber(0)
         setFirstName('');
         setLastName('')
@@ -575,7 +584,7 @@ setGeData(true)
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().UserName|| getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().UserName || getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
 
                 <div className=" statbox widget-content widget-content-area">
 

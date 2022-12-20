@@ -26,8 +26,8 @@ const customStyles = {
     }
 };
 const NewsAdmin = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
     const navigate = useNavigate()
     const user = useSelector(state => state.userInfo);
@@ -38,6 +38,14 @@ const[id,setId]=useState(0)
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const getDataBySearch = async () => {
         let config = {
 
@@ -60,6 +68,7 @@ const[id,setId]=useState(0)
             const { data, status } = await GetAllNewsForAdminPage(config);
             setNews(data.result.news.values)
             setTotalCount(data.result.news.totalCount)
+            sessionStorage.setItem('param', JSON.stringify(param));
 
         }catch (e) {
             console.log(e)

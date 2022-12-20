@@ -28,8 +28,8 @@ const ProductGroup = () => {
         }
     };
 const navigate=useNavigate();
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
     const [productG, setProductG] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -38,6 +38,14 @@ const navigate=useNavigate();
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     let config = {
 
         headers: { 'Content-Type': 'application/json' },
@@ -61,6 +69,7 @@ const navigate=useNavigate();
 
         const { data, status } = await GetGroupsForEntity(2,config);
         setProductG(data.result.groups)
+        sessionStorage.setItem('param', JSON.stringify(param));
 
 
     }

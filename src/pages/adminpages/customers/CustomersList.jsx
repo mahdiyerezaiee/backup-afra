@@ -14,8 +14,8 @@ import {GetDataWithSearch, GetForKarbars} from "../../../services/userService";
 
 
 const CustomersList = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
 
     const [users, setUsers] = useState([]);
@@ -25,7 +25,14 @@ const CustomersList = () => {
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
 
+    const param = { PageSize , PageNumber}
 
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const getDataBySearch = async () => {
         let config = {
 
@@ -47,6 +54,7 @@ const CustomersList = () => {
         try {
             const { data, status } = await GetForKarbars(config);
             setUsers(data.result.users.values);
+            sessionStorage.setItem('param', JSON.stringify(param));
         }catch (e) {
             console.log(e)
         }
@@ -80,35 +88,6 @@ const CustomersList = () => {
         }
     }
     const DeleteSelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < arrayOfData.length; i++) {
-        //
-        //     try {
-        //         const{data,status}=await DeleteGroup(arrayOfData[i].id)
-        //         if(data.result.success ===true){
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess ( successCount+=1)
-        //         } if(data.result.success ===false){
-        //             SetOpen(true)
-        //
-        //             SetStateError (errorCount+=1)
-        //         }
-        //
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //
-        //
-        //     }
-        //
-        //
-        // }
 
     }
     const copySelectedItem=async()=>{

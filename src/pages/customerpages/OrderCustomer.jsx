@@ -40,8 +40,8 @@ const customStyles = {
 }
 const OrderCustomer = () => {
 
-  const [PageNumber, setPageNumber] = useState(0)
-  const [PageSize, setPageSize] = useState(10)
+  const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+  const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
   const [orderId, setOrderId] = useState(0)
   let FilnalArr = [];
   const roles = useSelector(state => state.userRole)
@@ -78,7 +78,14 @@ const OrderCustomer = () => {
   const[entity,setEntity]=useState(0)
   const [paymentStatusIds, setPaymentStatusId] = useState(getDefault().paymentMethodIds)
 
+  const param = { PageSize , PageNumber}
 
+  function getPage() {
+    let items = JSON.parse(sessionStorage.getItem('param'));
+    return items? items:''
+
+
+  }
 
   
   const bindAdress = async (arr) => {
@@ -367,7 +374,7 @@ const OrderCustomer = () => {
         ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
         OrderDetailExtId,
         PageNumber:0,
-        PageSize:10
+        PageSize
       }
       ,
       paramsSerializer: params => {
@@ -381,9 +388,10 @@ const OrderCustomer = () => {
     try {
       const { data, status } = await GetDataWithSearchOrder(config);
       if (status === 200) {
+        setPageNumber(0)
         setOrder(data.result.orderList.values);
         setTotalCount(data.result.orderList.totalCount)
-
+        sessionStorage.setItem('param', JSON.stringify(param));
         sessionStorage.setItem('params', JSON.stringify(params));
 
       }
@@ -417,8 +425,8 @@ const OrderCustomer = () => {
         PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
         ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
         OrderDetailExtId,
-        PageNumber:0,
-        PageSize:10
+        PageNumber,
+        PageSize
       }
       ,
       paramsSerializer: params => {
@@ -492,6 +500,7 @@ const OrderCustomer = () => {
       if (status === 200) {
         SetAddress({active: false})
         setOrder(data.result.orderList.values);
+        sessionStorage.setItem('param', JSON.stringify(param));
       }
 
     } catch (err) {
@@ -607,6 +616,7 @@ const OrderCustomer = () => {
   const data = useMemo(() => order);
 
   const handelSearchFieldClear =  () => {
+    setPageNumber(0)
     setOrderStatusIds([])
     SetAddress({active: false})
     setId('')

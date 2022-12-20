@@ -35,8 +35,9 @@ const customStyles = {
     }
 };
 const ProductList = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+
     const [totalCount, setTotalCount] = useState(0);
     const [product, setProduct] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -53,6 +54,14 @@ const ProductList = () => {
 
 
     const [open, SetOpen] = useState(false);
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const params = { Name, EnglishName, groupIds}
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem('params'));
@@ -241,7 +250,7 @@ const ProductList = () => {
                 isAdmin: true,
                 active: false,
                 PageNumber:0,
-                PageSize:10,
+                PageSize,
 
             },
             paramsSerializer: params => {
@@ -259,6 +268,7 @@ const ProductList = () => {
                 setProduct(data.result.products.values)
                 setTotalCount(data.result.products.totalCount)
                 sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
         } catch (error) {
@@ -293,7 +303,7 @@ const ProductList = () => {
             if (status === 200) {
 
                 setProduct(data.result.products.values)
-                sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
         } catch (error) {
@@ -503,7 +513,7 @@ setGeData(false)
     const data = useMemo(() => product);
     const handelSearchFieldClear = () => {
         sessionStorage.clear();
-
+setPageNumber(0)
         setName('')
         setEnglishName('')
         SetGroupId([])

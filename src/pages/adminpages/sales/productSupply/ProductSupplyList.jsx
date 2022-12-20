@@ -38,8 +38,9 @@ const customStyles = {
 };
 
 const ProductSupply = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+
     const [totalCount , setTotalCount]=useState(0) ;
     const [productSupply, setProductSupply] = useState([]);
     const[ProductId,setProducId]=useState(getDefault().ProductId);
@@ -53,7 +54,14 @@ const ProductSupply = () => {
     const [CreateDate, setCreateDate] = useState(getDefault().CreateDate)
     const[CottageCode,setCottageCode]=useState(getDefault().CottageCode);
     const [getData, setGeData] = useState(false)
+    const param = { PageSize , PageNumber}
 
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const params = { CreateDate, CottageCode, ProductId}
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem('params'));
@@ -70,7 +78,7 @@ const ProductSupply = () => {
                 CottageCode,
                 ProductId,
                 PageNumber:0,
-                PageSize:10,
+                PageSize,
                 IsAdmin: true,
                 Active: false
 
@@ -80,9 +88,9 @@ const ProductSupply = () => {
         const { data, status } = await GetAllProductWithSearch(config);
         setProductSupply(data.result.productSupplies.values)
         setTotalCount(data.result.productSupplies.totalCount)
-        setPageSize(10)
         setPageNumber(0)
         sessionStorage.setItem('params', JSON.stringify(params));
+        sessionStorage.setItem('param', JSON.stringify(param));
 
     }
     const getDataByPage=async()=>{
@@ -103,7 +111,7 @@ const ProductSupply = () => {
         };
         const {data,status}=await GetAllProductWithSearch(config);
         setProductSupply(data.result.productSupplies.values)
-        sessionStorage.setItem('params', JSON.stringify(params));
+        sessionStorage.setItem('param', JSON.stringify(param));
 
     }
     const getProduct=async()=>{
@@ -557,7 +565,7 @@ setCreateDate('')
         setCottageCode('')
         setProducId('')
         setGeData(true)
-        setPageSize(10)
+
         setPageNumber(0)
         sessionStorage.clear()
 

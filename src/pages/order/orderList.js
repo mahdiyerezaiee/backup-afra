@@ -48,8 +48,9 @@ const customStyles = {
 const OrderList = () => {
     const location = useLocation();
 
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+
     const [orderId, setOrderId] = useState(0)
     let FilnalArr = [];
     const roles = useSelector(state => state.userRole)
@@ -82,6 +83,14 @@ const OrderList = () => {
     const [DetailAddress, setDetailAddress] = useState([]);
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const bindAdress = async (arr) => {
         if (arr.length > 1) {
             for (let i = 0; i < arr.length; i++) {
@@ -335,7 +344,7 @@ const OrderList = () => {
                 NationalCode: nationalCode,
                 OrderDetailExtId,
                 PageNumber: 0,
-                PageSize: 10
+                PageSize
             }
             ,
             paramsSerializer: params => {
@@ -350,9 +359,9 @@ const OrderList = () => {
                 SetAddress({active: false})
                 setOrder(data.result.orderList.values);
                 setTotalCount(data.result.orderList.totalCount)
-                setPageSize(10)
                 setPageNumber(0)
                 sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
 
@@ -391,7 +400,7 @@ const OrderList = () => {
             if (status === 200) {
                 SetAddress({active: false})
                 setOrder(data.result.orderList.values);
-                sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
 
@@ -629,12 +638,11 @@ const OrderList = () => {
         setPaymentMethodIds([])
         setShippingStatusIds([])
         SetoverDue(null)
-        setPageSize(10)
+
         setPageNumber(0)
         sessionStorage.clear()
         SetGetOrders(true)
     }
-    console.log(overDue)
     if (order) {
         const dataForExcel = data.map(item => ({
             'شمراه فاکتور': item.id,

@@ -14,14 +14,22 @@ const TicketList = () => {
   const user=useSelector(state=>state.userInfo);
 
 const Navigate=useNavigate()
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
   const [ticket , setTicket]=useState([])
     const[selectedRows,setSelectedRows]=useState([])
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const close = () => {
         SetOpen(false);
     }
@@ -50,9 +58,11 @@ const Navigate=useNavigate()
             if(roles.includes(7) || roles.includes(5) ||roles.includes(8)){
                 const {data , status}= await GetSupportRequesstsAdmin(config)
                 setTicket(data.result.supportRequests.values)
+                sessionStorage.setItem('param', JSON.stringify(param));
             }else {
                 const {data , status}= await GetSupportRequesstsUser(user.id , config)
                 setTicket(data.result.supportRequests.values)
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
         } catch (error) {

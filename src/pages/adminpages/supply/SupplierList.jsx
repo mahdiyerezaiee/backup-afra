@@ -31,8 +31,8 @@ const SupplierList = () => {
             border: '2px ridge black'
         }
     };
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
     const navigate = useNavigate()
     const [suppliers, setSuppliers] = useState([])
@@ -42,6 +42,14 @@ const SupplierList = () => {
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const close = () => {
         SetOpen(false);
     }
@@ -280,6 +288,7 @@ const SupplierList = () => {
             const {data, status} = await GetAllSuppliers(config);
             if (status === 200) {
                 setSuppliers(data.result.suppliers.values)            }
+            sessionStorage.setItem('param', JSON.stringify(param));
 
         } catch (err) {
             console.log(err)

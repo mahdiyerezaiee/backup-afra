@@ -40,8 +40,9 @@ const SupplyList = () => {
         }
     };
     const navigate = useNavigate()
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState( 10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+
     const [totalCount, setTotalCount] = useState(0);
     const [supplies, setSupplies] = useState([]);
     const [wareHouses, SetWareHouse] = useState([]);
@@ -62,6 +63,14 @@ const SupplyList = () => {
     const [suppliers, setSuppliers] = useState([])
 
     const [open, SetOpen] = useState(false);
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const params = { supplierId, supplyTypeIds, shippingStatusIds, productId, wareHouseId, contractNumber}
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem('params'));
@@ -341,7 +350,7 @@ const SupplyList = () => {
                 WareHouseId: params.wareHouseId,
                 ContractNumber: params.contractNumber,
                 PageNumber: 0,
-                PageSize: 10
+                PageSize
 
 
             }
@@ -360,6 +369,7 @@ const SupplyList = () => {
                 setSupplies(data.result.supplies.values);
                 setTotalCount(data.result.supplies.totalCount)
                 sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
             }
 
         } catch (err) {
@@ -396,7 +406,7 @@ const SupplyList = () => {
             const { data, status } = await GetDataWithSearchSupply(config);
             if (status === 200) {
                 setSupplies(data.result.supplies.values);
-                sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
 

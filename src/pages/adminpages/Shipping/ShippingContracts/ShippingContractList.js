@@ -27,8 +27,9 @@ const customStyles = {
     }
 };
 const ShoppingContractList = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+
     const [totalCount, setTotalCount] = useState(0);
     const [ShippingContract, setShippingContract] = useState([]);
     const [ShippingCompanies, setShippingCompanies] = useState([]);
@@ -46,6 +47,14 @@ const ShoppingContractList = () => {
 
 
     const [open, SetOpen] = useState(false);
+    const param = { PageSize ,PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
     const close = () => {
         SetOpen(false);
     }
@@ -75,30 +84,7 @@ const ShoppingContractList = () => {
         }
     }
     const DeleteSelectedItem = async () => {
-        // const arrayOfData = getSelectedData(selectedRows);
-        // let successCount = 0;
-        // let errorCount = 0;
-        // for (let i = 0; i < arrayOfData.length; i++) {
-        //
-        //     try {
-        //         const { data, status } = await DeleteshippingCompany(arrayOfData[i].id)
-        //         if (status === 200) {
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess(successCount += 1)
-        //         }
-        //
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError(errorCount += 1)
-        //
-        //     }
-        //
-        //
-        // }
+
 
     }
     const copySelectedItem = async () => {
@@ -222,7 +208,7 @@ const ShoppingContractList = () => {
                 CompanyCode,
 
                 PageNumber:0,
-                PageSize:10,
+                PageSize,
 
 
             },
@@ -237,10 +223,11 @@ const ShoppingContractList = () => {
         try {
             const { data, status } = await GetShoppingContracts(config)
             if (status === 200) {
-
+setPageNumber(0)
                 setShippingContract(data.result.shippingContracts.values)
                 setTotalCount(data.result.shippingContracts.totalCount)
                 sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
         } catch (error) {
@@ -276,7 +263,7 @@ const ShoppingContractList = () => {
             if (status === 200) {
 
                 setShippingContract(data.result.shippingContracts.values)
-                sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
         } catch (error) {
@@ -398,25 +385,6 @@ setGeData(false)
                             </svg>
                         </button>
 
-
-                        {/*<button onClick={() => openModal(row.row.original.id)}*/}
-                        {/*    className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip"*/}
-                        {/*    data-placement="top" title="حذف">*/}
-                        {/*    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"*/}
-                        {/*        viewBox="0 0 24 24" fill="none"*/}
-                        {/*        stroke="currentColor" strokeWidth="2" strokeLinecap="round"*/}
-                        {/*        strokeLinejoin="round"*/}
-                        {/*        className="feather feather-trash-2">*/}
-                        {/*        <polyline points="3 6 5 6 21 6"></polyline>*/}
-                        {/*        <path*/}
-                        {/*            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>*/}
-                        {/*        <line x1="10" y1="11" x2="10" y2="17"></line>*/}
-                        {/*        <line x1="14" y1="11" x2="14" y2="17"></line>*/}
-
-                        {/*    </svg>*/}
-                        {/*</button>*/}
-
-
                     </ul>
                 )
             }
@@ -424,7 +392,7 @@ setGeData(false)
     ])
     const data = useMemo(() => ShippingContract);
     const handelSearchFieldClear = async () => {
-
+setPageNumber(0)
         setCompanyName('')
         setCompanyCode('')
         setContractNumber('')
@@ -439,15 +407,8 @@ setGeData(false)
             'تاریخ ایجاد': new Date(item.createDate).toLocaleTimeString('fa-IR')
         }))
 
-
-        // [{ label: 'شناسه', key: 'id' },
-        // { label: 'نام', key: 'name' },
-        //{ label: 'قیمت', key: 'price' },
-        //{label:'نام انگلیسی',key:'englishName'}];
         return (
-            <div
-            // className='user-progress'
-            >
+            <div>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 

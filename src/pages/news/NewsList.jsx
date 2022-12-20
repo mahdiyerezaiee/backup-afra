@@ -24,8 +24,8 @@ const customStyles = {
     }
 };
 const NewsList = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
     const [guessNews, setGuessNews] = useState([])
     const [selectedRows, setSelectedRows] = useState([])
@@ -36,6 +36,14 @@ const NewsList = () => {
     const openModal = (id) => {
         setIsOpen(true);
         setId(id)
+
+    }
+    const param = { PageSize , PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
 
     }
     const getBulkJob = (selected) => {
@@ -89,6 +97,7 @@ const NewsList = () => {
         };
         const { data, status } = await GetAllNewsForUsersPage(config);
         setGuessNews(data.result.news.values)
+        sessionStorage.setItem('param', JSON.stringify(param));
 
     }
     const getNews = async () => {

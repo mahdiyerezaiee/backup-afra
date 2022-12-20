@@ -27,8 +27,9 @@ const customStyles = {
     }
 };
 const OrganizationList = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+
     const [totalCount, setTotalCount] = useState(0);
     const [organization, setOrganization] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -49,6 +50,15 @@ const OrganizationList = () => {
 
 
     }
+    const param = { PageSize ,PageNumber}
+
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
+
 
 
     let config = {
@@ -77,6 +87,8 @@ const OrganizationList = () => {
         const { data, status } = await GetAllOrganisationCode(config);
 
         setOrganization(data.result.organizationLists.values);
+        sessionStorage.setItem('param', JSON.stringify(param));
+
 
     }
     const close = () => {
@@ -95,7 +107,7 @@ const OrganizationList = () => {
                     Name:params.Name,
                     NationalId:params.NationalId,
                     RegistrationNumber:params.RegistrationNumber,
-                    PageSize:10,
+                    PageSize,
                     PageNumber:0,
 
 
@@ -114,6 +126,7 @@ const OrganizationList = () => {
             setOrganization(data.result.organizationLists.values);
         setTotalCount(data.result.organizationLists.totalCount)
             sessionStorage.setItem('params', JSON.stringify(params));
+            sessionStorage.setItem('param', JSON.stringify(param));
 
 
 

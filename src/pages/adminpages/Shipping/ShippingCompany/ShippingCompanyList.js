@@ -1,19 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { CSVLink } from 'react-csv';
 import { useEffect, useState } from "react";
-import { useTable } from "react-table";
-
 import { useMemo } from "react";
 import MyTable from "../../../../components/form/MyTable";
-
-import { toast } from "react-toastify";
-// import { GetAttribute, GetAttributeValues } from "../../../services/attributeService";
 import Modal from "react-modal";
 import { ExportToExcel } from "../../../../components/common/ExportToExcel";
-// import { DeleteOrganization, SetOrganisation } from "../../../services/organisationService";
 import ModalGroupWork from "../../../../components/common/ModalGroupWork";
 import AdvancedSearch from '.././../../../components/common/AdvancedSearch';
-import Select from 'react-select';
 import QueryString from "qs";
 import { GetShippingCompanies, SetShippingCompany } from "../../../../services/ShippingService";
 import { GetGroupsForEntity } from "../../../../services/GroupService";
@@ -36,8 +28,8 @@ const customStyles = {
     }
 };
 const ShoppingCompanyList = () => {
-    const [PageNumber, setPageNumber] = useState(0)
-    const [PageSize, setPageSize] = useState(10)
+    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount, setTotalCount] = useState(0);
     const [shippingCompany, setShippingCompanys] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -51,7 +43,14 @@ const ShoppingCompanyList = () => {
     const [Code, setCode] = useState(getDefault().Code)
     const [isclearable, setIscreable] = useState(true)
     const [getData, setGeData] = useState(false)
+    const param = { PageSize , PageNumber}
 
+    function getPage() {
+        let items = JSON.parse(sessionStorage.getItem('param'));
+        return items? items:''
+
+
+    }
 
     const [open, SetOpen] = useState(false);
     const close = () => {
@@ -93,30 +92,6 @@ const ShoppingCompanyList = () => {
         }
     }
     const DeleteSelectedItem = async () => {
-        // const arrayOfData = getSelectedData(selectedRows);
-        // let successCount = 0;
-        // let errorCount = 0;
-        // for (let i = 0; i < arrayOfData.length; i++) {
-        //
-        //     try {
-        //         const { data, status } = await DeleteshippingCompany(arrayOfData[i].id)
-        //         if (status === 200) {
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess(successCount += 1)
-        //         }
-        //
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError(errorCount += 1)
-        //
-        //     }
-        //
-        //
-        // }
 
     }
     const copySelectedItem = async () => {
@@ -239,7 +214,7 @@ const ShoppingCompanyList = () => {
                 Name,
                 Code,
                 PageNumber:0,
-                PageSize:10,
+                PageSize,
 
                 
 
@@ -256,10 +231,11 @@ const ShoppingCompanyList = () => {
         try {
             const { data, status } = await GetShippingCompanies(config)
             if (status === 200) {
-
+setPageNumber(0)
                 setShippingCompanys(data.result.shippingCompanies.values)
                 setTotalCount(data.result.shippingCompanies.totalCount)
                 sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
         } catch (error) {
@@ -294,7 +270,7 @@ const ShoppingCompanyList = () => {
             if (status === 200) {
 
                 setShippingCompanys(data.result.shippingCompanies.values)
-                sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem('param', JSON.stringify(param));
 
             }
         } catch (error) {
@@ -351,33 +327,10 @@ const ShoppingCompanyList = () => {
     const editHandler = (id) => {
         navigate(`/editshippingCompany/${id}`)
     }
-    // const deletHandler = async () => {
-    //     try {
-    //         const { data, status } = await DeleteshippingCompany(id)
-    //         if (data.result.success === true) {
-    //             toast.success("کالا با موفقیت حذف شد", {
-    //                 position: "top-right",
-    //                 closeOnClick: true
-    //             });
-    //             setIsOpen(false)
-    //             getshippingCompanys()
-    //         } if (data.result.success === false) {
-    //
-    //             toast.error("این کالا به یک یا چند عرضه اختصاص داده شده است", {
-    //                 position: "top-right",
-    //                 closeOnClick: true
-    //             });
-    //         }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
     const navigate = useNavigate()
     const formHandler = () => {
         navigate("/newshippingcompany")
     }
-
-
     const columns = useMemo(() => [
         { Header: 'شناسه', accessor: 'id' },
         { Header: 'نام شرکت', accessor: 'name' }
@@ -399,24 +352,6 @@ const ShoppingCompanyList = () => {
                                     d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                             </svg>
                         </button>
-
-
-                        {/*<button onClick={() => openModal(row.row.original.id)} className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="حذف">*/}
-                        {/*    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"*/}
-                        {/*        viewBox="0 0 24 24" fill="none"*/}
-                        {/*        stroke="currentColor" strokeWidth="2" strokeLinecap="round"*/}
-                        {/*        strokeLinejoin="round"*/}
-                        {/*        className="feather feather-trash-2">*/}
-                        {/*        <polyline points="3 6 5 6 21 6"></polyline>*/}
-                        {/*        <path*/}
-                        {/*            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>*/}
-                        {/*        <line x1="10" y1="11" x2="10" y2="17"></line>*/}
-                        {/*        <line x1="14" y1="11" x2="14" y2="17"></line>*/}
-
-                        {/*    </svg>*/}
-                        {/*</button>*/}
-
-
                     </ul>
                 )
             }
@@ -424,7 +359,7 @@ const ShoppingCompanyList = () => {
     ])
     const data = useMemo(() => shippingCompany);
     const handelSearchFieldClear = async () => {
-
+setPageNumber(0)
         setName('')
         setCode('')
       sessionStorage.clear()
@@ -438,13 +373,8 @@ const ShoppingCompanyList = () => {
             'کد': item.code,
             'تاریخ ایجاد': new Date(item.createDate).toLocaleTimeString('fa-IR')
         }))
-
-
-
         return (
-            <div
-            // className='user-progress'
-            >
+            <div>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 '>
 
