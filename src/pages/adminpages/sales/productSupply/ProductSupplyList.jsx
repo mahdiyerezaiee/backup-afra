@@ -397,7 +397,7 @@ setCreateDate('')
 }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setCreateDate(value.toDate())
+            setCreateDate(new Date(value.toDate().setHours(3,30,0,0)))
           
 
         }

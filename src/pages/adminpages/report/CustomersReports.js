@@ -49,7 +49,7 @@ const CustomerReports = () => {
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setStartDate(value.toDate().toJSON())
+            setStartDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
         }
     }
     const handelEndDate = (value) => {
@@ -58,7 +58,7 @@ const CustomerReports = () => {
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setEndDate(value.toDate().toJSON())
+            setEndDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
         }
     }
     const handelSubmit = async (event) => {
