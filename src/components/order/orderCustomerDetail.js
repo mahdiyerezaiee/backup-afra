@@ -25,16 +25,8 @@ const OrderCustomerDetail = ({orderDetail ,order , attachments, handelPreview}) 
     const [cottageCode, setcottageCode] = useState('');
     const [idEdit, setIdEdit] = useState(0);
     const [modalIsOpenEdit, setIsOpenEdit] = useState(false);
-    const [modalIsOpenUpload, setIsOpenUpload] = useState(false);
-    const[entity,setEntity]=useState(0)
 let newAttachmnet=attachments.filter(item=>item.deleted===false)
-    const openModalForUpload=()=>{
 
-        setIsOpenUpload(true)
-    }
-    const closeModalForUpload=()=>{
-        setIsOpenUpload(false)
-    }
     const getSupplyCode = async () => {
         try {
             const {data , status}= await GetAllProductSupply(orderDetail[0].productSupplyId)

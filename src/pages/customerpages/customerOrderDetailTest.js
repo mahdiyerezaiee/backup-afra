@@ -17,10 +17,8 @@ import OrderWayBill from "../../components/order/OrderWayBill";
 import OrderAttachment from "../../components/order/OrderAttachment";
 import OrderInfo from "../../components/order/orderInfo";
 import OrderCustomerInfo from "../../components/order/OrderCustomerInfo";
-import OrderAdminDetail from "../../components/order/OrderAdminDetail";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { DeliveryMethods } from './../../Enums/DeliveryMethodsEnums';
-import {OrderStatus} from "../../Enums/OrderStatusEnums";
 import OrderCustomerDetail from "../../components/order/orderCustomerDetail";
 import { OrderStatusEnumsProgressBar } from './../../Enums/OrderStatusEnumsProgressBar';
 

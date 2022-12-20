@@ -20,7 +20,6 @@ import OrderCustomerInfo from "../../components/order/OrderCustomerInfo";
 import OrderAdminDetail from "../../components/order/OrderAdminDetail";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { DeliveryMethods } from './../../Enums/DeliveryMethodsEnums';
-import {OrderStatus} from "../../Enums/OrderStatusEnums";
 import { OrderStatusEnumsProgressBar } from './../../Enums/OrderStatusEnumsProgressBar';
 
 
