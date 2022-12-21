@@ -83,8 +83,8 @@ const OrderList = () => {
     const [DetailAddress, setDetailAddress] = useState([]);
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
-    const[SortColumn,setSortColumn]=useState(null)
-    const[SortingDirectionId,setSortingDirectionId]=useState(null)
+    const [SortColumn, setSortColumn] = useState(null)
+    const [SortingDirectionId, setSortingDirectionId] = useState(null)
     const param = { PageSize, PageNumber }
 
     function getPage() {
@@ -356,7 +356,7 @@ const OrderList = () => {
                 PageSize,
                 SortColumn,
                 SortingDirectionId
-                
+
             }
             ,
             paramsSerializer: params => {
@@ -425,172 +425,172 @@ const OrderList = () => {
         return {
 
             onClick: (e) => {
-                
-                
 
-                switch (e.target.innerText.replace('🔼','').replace('🔽','')) {
-                    
+
+
+                switch (e.target.innerText.replace('🔼', '').replace('🔽', '')) {
+
                     case 'شماره سفارش':
 
-                    if(e.target.children[0].innerText===''){
-                        setSortColumn('id')
-                        setSortingDirectionId(1)
-                        e.target.children[0].innerText ='🔼'
-                        getDataBySearch()
-                    }
-                    
-                    else if(e.target.children[0].innerText==='🔼'){
-                        console.log('hiiii');
-                        setSortColumn('id')
-                        setSortingDirectionId(2)
-                        e.target.children[0].innerText ='🔽'
-                        getDataBySearch()
+                        if (e.target.children[0].innerText === '') {
+                            setSortColumn('id')
+                            setSortingDirectionId(1)
+                            e.target.children[0].innerText = '🔼'
+                            getDataBySearch()
+                        }
 
-                    }
-                    else if(e.target.children[0].innerText==='🔽'){
+                        else if (e.target.children[0].innerText === '🔼') {
+                            console.log('hiiii');
+                            setSortColumn('id')
+                            setSortingDirectionId(2)
+                            e.target.children[0].innerText = '🔽'
+                            getDataBySearch()
 
-                        setSortColumn(null)
-                        setSortingDirectionId(null)
-                        e.target.children[0].innerText =''
-                        getDataBySearch()
+                        }
+                        else if (e.target.children[0].innerText === '🔽') {
 
-                    }
+                            setSortColumn(null)
+                            setSortingDirectionId(null)
+                            e.target.children[0].innerText = ''
+                            getDataBySearch()
+
+                        }
                         break;
                     case 'تاریخ':
-                        
-                    if(e.target.children[0].innerText===''){
-                        setSortColumn('CreateDate')
-                        setSortingDirectionId(1)
-                        e.target.children[0].innerText ='🔼'
-                        getDataBySearch()
 
-                    }
-                    else if(e.target.children[0].innerText==='🔼'){
+                        if (e.target.children[0].innerText === '') {
+                            setSortColumn('CreateDate')
+                            setSortingDirectionId(1)
+                            e.target.children[0].innerText = '🔼'
+                            getDataBySearch()
 
-                        setSortColumn('CreateDate')
-                        setSortingDirectionId(2)
-                        e.target.children[0].innerText ='🔽'
-                        getDataBySearch()
+                        }
+                        else if (e.target.children[0].innerText === '🔼') {
 
-                    }
-                    else if(e.target.children[0].innerText==='🔽'){
+                            setSortColumn('CreateDate')
+                            setSortingDirectionId(2)
+                            e.target.children[0].innerText = '🔽'
+                            getDataBySearch()
 
-                        setSortColumn(null)
-                        setSortingDirectionId(null)
-                        e.target.children[0].innerText =''
-                        getDataBySearch()
+                        }
+                        else if (e.target.children[0].innerText === '🔽') {
 
-                    }
+                            setSortColumn(null)
+                            setSortingDirectionId(null)
+                            e.target.children[0].innerText = ''
+                            getDataBySearch()
+
+                        }
                         break;
 
                     case 'مبلغ-ریال':
 
-                    if(e.target.children[0].innerText===''){
-                        setSortColumn('OrderFinalizedPrice')
-                        setSortingDirectionId(1)
-                        e.target.children[0].innerText ='🔼'
-                        getDataBySearch()
+                        if (e.target.children[0].innerText === '') {
+                            setSortColumn('OrderFinalizedPrice')
+                            setSortingDirectionId(1)
+                            e.target.children[0].innerText = '🔼'
+                            getDataBySearch()
 
-                    }
-                    else if(e.target.children[0].innerText==='🔼'){
+                        }
+                        else if (e.target.children[0].innerText === '🔼') {
 
-                        setSortColumn('OrderFinalizedPrice')
-                        setSortingDirectionId(2)
-                        e.target.children[0].innerText ='🔽'
-                        getDataBySearch()
+                            setSortColumn('OrderFinalizedPrice')
+                            setSortingDirectionId(2)
+                            e.target.children[0].innerText = '🔽'
+                            getDataBySearch()
 
-                    }
-                    else if(e.target.children[0].innerText==='🔽'){
+                        }
+                        else if (e.target.children[0].innerText === '🔽') {
 
-                        setSortColumn(null)
-                        setSortingDirectionId(null)
-                        e.target.children[0].innerText =''
-                        getDataBySearch()
+                            setSortColumn(null)
+                            setSortingDirectionId(null)
+                            e.target.children[0].innerText = ''
+                            getDataBySearch()
 
-                    }
+                        }
                         break;
                     case 'وضعیت سفارش':
 
-                      
-                    if(e.target.children[0].innerText===''){
-                        setSortColumn('OrderStatusId')
-                        setSortingDirectionId(1)
-                        e.target.children[0].innerText ='🔼'
-                        getDataBySearch()
-                    }
-                    else if(e.target.children[0].innerText==='🔼'){
 
-                        setSortColumn('OrderStatusId')
-                        setSortingDirectionId(2)
-                        e.target.children[0].innerText ='🔽'
-                        getDataBySearch()
+                        if (e.target.children[0].innerText === '') {
+                            setSortColumn('OrderStatusId')
+                            setSortingDirectionId(1)
+                            e.target.children[0].innerText = '🔼'
+                            getDataBySearch()
+                        }
+                        else if (e.target.children[0].innerText === '🔼') {
 
-                    }
-                    else if(e.target.children[0].innerText==='🔽'){
+                            setSortColumn('OrderStatusId')
+                            setSortingDirectionId(2)
+                            e.target.children[0].innerText = '🔽'
+                            getDataBySearch()
 
-                        setSortColumn(null)
-                        setSortingDirectionId(null)
-                        e.target.children[0].innerText =''
-                        getDataBySearch()
+                        }
+                        else if (e.target.children[0].innerText === '🔽') {
 
-                    }
+                            setSortColumn(null)
+                            setSortingDirectionId(null)
+                            e.target.children[0].innerText = ''
+                            getDataBySearch()
+
+                        }
                         break;
                     case 'وضعیت پرداخت':
 
-                      
-                    if(e.target.children[0].innerText===''){
-                        setSortColumn('PaymentStatusId')
-                        setSortingDirectionId(1)
-                        e.target.children[0].innerText ='🔼'
-                        getDataBySearch()
 
-                    }
-                    else if(e.target.children[0].innerText==='🔼'){
+                        if (e.target.children[0].innerText === '') {
+                            setSortColumn('PaymentStatusId')
+                            setSortingDirectionId(1)
+                            e.target.children[0].innerText = '🔼'
+                            getDataBySearch()
 
-                        setSortColumn('PaymentStatusId')
-                        setSortingDirectionId(2)
-                        e.target.children[0].innerText ='🔽'
-                        getDataBySearch()
+                        }
+                        else if (e.target.children[0].innerText === '🔼') {
 
-                    }
-                    else if(e.target.children[0].innerText==='🔽'){
+                            setSortColumn('PaymentStatusId')
+                            setSortingDirectionId(2)
+                            e.target.children[0].innerText = '🔽'
+                            getDataBySearch()
 
-                        setSortColumn(null)
-                        setSortingDirectionId(null)
-                        e.target.children[0].innerText =''
-                        getDataBySearch()
+                        }
+                        else if (e.target.children[0].innerText === '🔽') {
 
-                    }
-                       
+                            setSortColumn(null)
+                            setSortingDirectionId(null)
+                            e.target.children[0].innerText = ''
+                            getDataBySearch()
+
+                        }
+
                         break;
                     case 'وضعیت ارسال':
 
-                    if(e.target.children[0].innerText===''){
-                        setSortColumn('ShippingStatusId')
-                        setSortingDirectionId(1)
-                        e.target.children[0].innerText ='🔼'
-                        getDataBySearch()
+                        if (e.target.children[0].innerText === '') {
+                            setSortColumn('ShippingStatusId')
+                            setSortingDirectionId(1)
+                            e.target.children[0].innerText = '🔼'
+                            getDataBySearch()
 
-                    }
-                    else if(e.target.children[0].innerText==='🔼'){
+                        }
+                        else if (e.target.children[0].innerText === '🔼') {
 
-                        setSortColumn('ShippingStatusId')
-                        setSortingDirectionId(2)
-                        e.target.children[0].innerText ='🔽'
-                        getDataBySearch()
+                            setSortColumn('ShippingStatusId')
+                            setSortingDirectionId(2)
+                            e.target.children[0].innerText = '🔽'
+                            getDataBySearch()
 
-                    }
-                    else if(e.target.children[0].innerText==='🔽'){
+                        }
+                        else if (e.target.children[0].innerText === '🔽') {
 
-                        setSortColumn(null)
-                        setSortingDirectionId(null)
-                        e.target.children[0].innerText =''
-                        getDataBySearch()
+                            setSortColumn(null)
+                            setSortingDirectionId(null)
+                            e.target.children[0].innerText = ''
+                            getDataBySearch()
 
-                    }
+                        }
                         break;
 
-                  
+
                 }
 
 
@@ -677,7 +677,7 @@ const OrderList = () => {
             Header: 'خریدار', accessor: d => {
                 let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.name)
 
-                return (` ${d.customer.firstName} ,    ${d.customer.lastName} , ${OName}`)
+                return (` ${d.customer.firstName} ,    ${d.customer.lastName} ,`)
             }
             , Cell: row => {
                 let fName = row.row.original.customer.firstName;
@@ -687,16 +687,14 @@ const OrderList = () => {
 
                     OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.name)
                 }
-                let fullname = `${fName ? fName : ''} ${lName ? lName : ''} ${OName ? OName : ''}`;
+                let fullname = `${fName ? fName : '--'} ${lName ? lName : ''} `;
                 return (fullname)
             }
-        },
-        { Header: 'شماره همراه', accessor: 'customer.userName' },
-        {
-            Header: 'شماره / شناسه ملی', accessor: d => {
+        }, {
+            Header: 'کد ملی', accessor: d => {
                 let Ncode = d.customer.nationalCode;
                 let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.nationalId)
-                return (`${Ncode}`, `${OName}`)
+                return (`${Ncode}`)
 
             }, Cell: row => {
                 let Ncode = row.row.original.customer.nationalCode;
@@ -705,10 +703,48 @@ const OrderList = () => {
 
                     OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.nationalId)
                 }
-                let code = `${Ncode ? Ncode : ''} ${OName ? OName : ''}`
+                let code = `${Ncode ? Ncode : '--'} `
                 return (code)
             }
+        }, {
+            Header: 'سازمان', accessor: d => {
+                let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.name)
+
+                return (` ${d.OName} `)
+            }
+            , Cell: row => {
+
+                let OName;
+                if (row.row.original.customer.organizationId > 0) {
+
+                    OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.name)
+                }
+                let fullname = `${OName ? OName : '--'}  `;
+                return (fullname)
+            }
+        }, {
+            Header: 'شناسه ملی', accessor: d => {
+                let Ncode = d.customer.nationalCode;
+                let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.nationalId)
+                return (`${OName}`)
+
+            }, Cell: row => {
+                let Ncode = row.row.original.customer.nationalCode;
+                let OName;
+                if (row.row.original.customer.organizationId > 0) {
+
+                    OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.nationalId)
+                }
+                let code = ` ${OName ? OName : '--'}`
+                return (code)
+            }
+        }, {
+            Header: 'نحوه پرداخت', accessor: 'paymentMethodId', Cell: row => {
+                return (PaymentStructureEnums.filter(item => item.id === row.row.original.paymentMethodId).map(item => item.name))
+            }
         },
+        { Header: 'شماره همراه', accessor: 'customer.userName' },
+        ,
         {
             Header: 'وضعیت ارسال', accessor: 'shippingStatusId', Cell: row => {
                 return (ShippingStatusEnums.filter(item => item.id === row.row.original.shippingStatusId).map(item => item.name))
@@ -720,11 +756,7 @@ const OrderList = () => {
             }
         }
         ,
-        {
-            Header: 'نحوه پرداخت', accessor: 'paymentMethodId', Cell: row => {
-                return (PaymentStructureEnums.filter(item => item.id === row.row.original.paymentMethodId).map(item => item.name))
-            }
-        },
+
         {
             Header: 'وضعیت پرداخت', accessor: 'paymentStatusId', Cell: row => {
                 return (PaymentStatusEnums.filter(item => item.id === row.row.original.paymentStatusId).map(item => item.name))

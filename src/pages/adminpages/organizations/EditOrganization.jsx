@@ -57,7 +57,7 @@ setLoading(false)
                     progress: undefined
                 });
 
-                navigate('/organizationlist')
+                navigate(-1)
 
             }
         } catch (error) {
@@ -134,7 +134,7 @@ setLoading(false)
                                 </button>
                             </div>
                             <div >
-                                <NavLink to='/organizationlist' className="btn btn-danger">بازگشت</NavLink>
+                                <NavLink to={-1} className="btn btn-danger">بازگشت</NavLink>
                             </div>
                         </div>
 

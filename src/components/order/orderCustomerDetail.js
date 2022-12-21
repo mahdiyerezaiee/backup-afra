@@ -124,7 +124,7 @@ window.location.reload()
             >
 
 
-                <InvoiceCreator orderId={idEdit} closeModal={closeModalEdit}/>
+                <InvoiceCreator orderId={idEdit} closeModal={closeModalEdit} customerId={order.customerId}/>
             </Modal>
         </div>)
 }

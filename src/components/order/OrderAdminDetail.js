@@ -114,7 +114,7 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
             >
 
 
-                <InvoiceCreator orderId={idEdit} closeModal={closeModalinvoice}/>
+                <InvoiceCreator orderId={idEdit} closeModal={closeModalinvoice}   customerId={order.customerId}/>
             </Modal>
             <OrderConfirmation id={order.id} modalIsOpen={modalIsOpen} closeModal={closeModal} orderStatusId={id}/>
             <OrderEdit id={idEdit} closeModal={closeModalEdit} modalIsOpen={modalIsOpenEdit} />

@@ -151,12 +151,12 @@ const AddresForm = () => {
                             <div className="form-group col-md-4">
 
                                 <label > موبایل</label>
-                                <input type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=> {
+                                <input type="text" className="form-control" id="inputZip" maxLength='11' value={receiverMobile}  onChange={e=> {
                                     setreceiverMobile(e.target.value)
                                     validator.current.showMessageFor("required");
 
                                 }} />
-                                {validator.current.message("required", postalCode, "required|numeric|min:11")}
+                                {validator.current.message("required", postalCode, "numeric|min:11")}
 
                             </div>
                             <div className="form-group col-md-4">

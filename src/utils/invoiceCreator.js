@@ -1,6 +1,6 @@
 
 import './style.css';
-import {GetAllOrganisationCode} from "../services/organisationService";
+import {GetAllOrganisation, GetAllOrganisationCode} from "../services/organisationService";
 import {GetAddress} from "../services/addressService";
 import {GetOrder, GetOrderDetails} from "../services/orderService";
 import {MeasureUnitSample} from "../Enums/MeasureUnitSample";
@@ -10,13 +10,12 @@ import Pdf from "react-to-pdf";
 
 
 
-const InvoiceCreator = ({orderId , closeModal }) => {
+const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
 
     const ref = createRef()
 
     const [order, setOrder] = useState({});
     const [customer, SetCustomer] = useState({});
-
     const [orderDetail, setOrderDetail] = useState([])
 
     const [organizations, SetOrganisations] = useState([]);
@@ -30,23 +29,19 @@ const InvoiceCreator = ({orderId , closeModal }) => {
         precision:1,
         hotfixes:'1'
     };
-    useEffect(()=>{
-        getOrder(orderId)
-        GetOrderDetail()
-        getOrganization()
-        getAddress()
 
-    },[])
     const getOrder = async (id) => {
         try {
             const { data, status } = await GetOrder(id)
             setOrder(data.result.order)
             SetCustomer(data.result.order.customer)
+
         } catch (error) {
             console.log(error);
         }
 
     }
+    console.log(customerId);
     useEffect(()=>{
         function adjustZoom() {
             var   documentWidth= window.innerWidth;
@@ -66,6 +61,7 @@ const InvoiceCreator = ({orderId , closeModal }) => {
         adjustZoom();
         window.addEventListener("resize", adjustZoom);
     },[order.length > 0])
+
     const GetOrderDetail = async () => {
         try {
 
@@ -81,7 +77,7 @@ const InvoiceCreator = ({orderId , closeModal }) => {
     }
     const getOrganization = async () => {
         try {
-            const {data, status} = await GetAllOrganisationCode();
+            const {data, status} = await GetAllOrganisation();
             if (status === 200) {
 
                 SetOrganisations(data.result.organizationLists.values)
@@ -96,24 +92,40 @@ const InvoiceCreator = ({orderId , closeModal }) => {
     const getAddress=async()=>{
         try {
 
-            const {data,status}=await GetAddress(1,customer.id)
+            const {data,status}=await GetAddress(1,customerId)
             SetAddress(data.result.addresses)
         } catch (error) {
             console.log(error);
         }
 
     }
+    useEffect(()=>{
+        getOrder(orderId)
+        GetOrderDetail()
+        getOrganization()
+        getAddress()
+
+    },[])
+    console.log(Address);
 
     const Fullname=()=>{
 
         let fName =customer.firstName;
         let lName = customer.lastName;
         let OName;
-        if (customer.organizationId > 0) {
+        let fullname ;
+        if (customer.organizationId !==null) {
 
             OName = organizations.filter(item => item.id === customer.organizationId).map(item => item.name)
+            fullname= `${OName ? OName : ''}`;
+        
         }
-        let fullname = `${fName ? fName : ''} ${lName ? lName : ''} ${OName ? OName : ''}`;
+        else{
+            fullname= `${fName ? fName : ''} ${lName ? lName : ''}`;
+        
+        }
+   
+        
         return (fullname)
 
 
@@ -121,15 +133,21 @@ const InvoiceCreator = ({orderId , closeModal }) => {
     const Code=()=>{
         let Ncode = customer.nationalCode;
         let OName;
-        if (customer.organizationId > 0) {
+        let code=''
+        if (customer.organizationId !== null) {
 
             OName = organizations.filter(item => item.id ===customer.organizationId).map(item => item.nationalId)
+          return( code = `${OName ? OName : ''}`)
         }
-        let code = `${Ncode ? Ncode : ''} ${OName ? OName : ''}`
-        return (code)
+        else{
+           return( code = `${Ncode ? Ncode : ''} ${OName ? OName : ''}`)
+
+        }
+       
 
 
     }
+    console.log(organizations);
     return (
         <>
 

@@ -246,7 +246,7 @@ useEffect(()=>{
                                     </tr>
                                     {  row.id === show.id && show.active === true?
 <tr >
-    <td colSpan={15}   className="fadeInt   m-3    " >
+    <td colSpan={17}   className="fadeInt   m-3    " >
                                     {row.id === show.id && show.active === true ?
 
                                                     <div className="  shadow rounded p-2  " >
