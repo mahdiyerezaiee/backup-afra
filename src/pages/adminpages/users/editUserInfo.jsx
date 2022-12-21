@@ -50,7 +50,7 @@ const EditUserInfo = () => {
         firstName,
         lastName,
         nationalCode,
-        organizationId,
+        organizationId:check?organizationId:null,
         password,
         active,
         maxValidity: Number(maxValidity),

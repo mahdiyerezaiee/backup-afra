@@ -357,7 +357,7 @@ sessionStorage.clear()
 
 
         }, {
-            Header: 'گروه ', accessor: ' ', Cell: row => {
+            Header: 'گروه ', accessor: 'groupId', Cell: row => {
                 const [CustomerG, setCustomerG] = useState([])
 
                 const GetCustomerGroup = async () => {
@@ -374,9 +374,6 @@ sessionStorage.clear()
 
                     GetCustomerGroup()
                 }, [])
-
-
-
 
                 if (!row.row.original.groupId) {
                     return ('تعیین نشده')
@@ -524,15 +521,14 @@ setGeData(true)
             <div
             // className='user-progress'
             >
-                <EditCustomerGroup id={modalId} closeModal={modalGroupClose} modalIsOpen={modalGroupOpen}
-
-                />
+               
                 <EditUserRole id={modalId} closeModal={modalRoleClose} modalIsOpen={modalRoleOpen}/>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 
                     </div>
                 </div>
+                <EditCustomerGroup id={modalId} closeModal={modalGroupClose} modalIsOpen={modalGroupOpen} refresh={getUsers}/>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
                     <AdvancedSearch>
 

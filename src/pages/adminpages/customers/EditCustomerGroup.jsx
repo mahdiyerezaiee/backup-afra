@@ -26,7 +26,7 @@ const customStyles = {
     }
 
 }
-const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
+const EditCustomerGroup = ({ id, closeModal, modalIsOpen,refresh }) => {
     const [CustomerG, setCustomerG] = useState([])
     const [userinfo, setUserInfo] = useState({});
     const [groupId, setGroupId] = useState(0);
@@ -45,11 +45,14 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
         }
 
     }
-
+let userId;
+if(id>0){
+    userId=id
+}
     const getUserInfo = async () => {
        
         try {
-            const { data, status } = await GetUserData(id);
+            const { data, status } = await GetUserData(userId);
             if (status === 200) {
                 setUserInfo(data.result.customer)
                 setGroupId(data.result.customer.groupId)
@@ -63,9 +66,9 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
     useEffect(() => {
 
         GetCustomerGroup()
-        if(id>0){
+        
         getUserInfo();
-        }
+        
     }, [id])
 
     const inputCustomerG = () => {
@@ -76,9 +79,10 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
 
 
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
+    
+        closeModal()
 
         const body = {
             id,
@@ -113,12 +117,13 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
                         draggable: true,
                         progress: undefined
                     })
-               closeModal()
             }
 
         } catch (error) {
             console.log(error);
         }
+        refresh()
+
     }
     let Group = CustomerG.filter(item => item.id === groupId).map(item => item.name)
     let groupName = Group[0] ? Group[0] : "تعیین نشده"
