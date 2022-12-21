@@ -47,6 +47,7 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
     }
 
     const getUserInfo = async () => {
+       
         try {
             const { data, status } = await GetUserData(id);
             if (status === 200) {
@@ -56,6 +57,7 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
         } catch (error) {
             console.log(error);
         }
+    
     }
 
     useEffect(() => {
@@ -64,7 +66,7 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen }) => {
         if(id>0){
         getUserInfo();
         }
-    }, [])
+    }, [id])
 
     const inputCustomerG = () => {
         let customer = [...CustomerG, { id: null, name: 'تعیین نشده' }]
