@@ -26,7 +26,7 @@ const IndeterminateCheckbox = React.forwardRef(
         )
     }
 )
-const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, address,Detail, setPageNumber,PageNumber, ShippingCartInformation ,setPageSize, PageSize,getDataBySearch , total}) => {
+const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, address,Detail, setPageNumber,PageNumber, ShippingCartInformation ,setPageSize, PageSize,getDataBySearch , total,clickableHeader}) => {
     const [cottageCode, setcottageCode] = useState('');
     const [Shippings , SetShippings]=useState([])
     const [Shippingcheck , SetShippingCheck]=useState([])
@@ -46,6 +46,7 @@ const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, ad
 useEffect(()=>{
     getSupplyCode()
 },[Detail])
+
 
 
     const GetShippings = async () => {
@@ -210,7 +211,7 @@ useEffect(()=>{
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')}
+                                <th className='text-nowrap' {...clickableHeader(column)}>{column.render("Header")}
                                     <span>
                         {column.isSorted
                             ? column.isSortedDesc
