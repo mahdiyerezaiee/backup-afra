@@ -1,34 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import { GetAttribute } from '../../../services/attributeService';
+import React, {  useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { SetAttribute } from './../../../services/attributeService';
 import { toast } from 'react-toastify';
-import { useNavigate,useParams } from 'react-router-dom';
-import { GetGroupById, SetGroup } from './../../../services/GroupService';
+import { useNavigate } from 'react-router-dom';
+import {  SetGroup } from '../../../services/GroupService';
+import {ClipLoader} from "react-spinners";
 
 
 
 const NewWareHouseType = () => {
     const navigate=useNavigate();
-    
+    const [loading, setLoading] = useState(false);
     const [name, Setname] = useState('')
-   
-   
-
-
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
- 
         try {
             const body={
             group:{
                 id:0,
                 entityTypeId:4,
-                name
+                name}
             }
-        }
-
-        const {data,status}=await SetGroup(body)
+            const {data,status}=await SetGroup(body)
         if(status===200){
             toast.success('گروه جدید ایجاد شد',
             {
@@ -42,6 +35,8 @@ const NewWareHouseType = () => {
             })
             navigate('/warehousetypes')
         }
+            setLoading(false)
+
         } catch (error) {
             console.log(error);
         }
@@ -70,8 +65,14 @@ const NewWareHouseType = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
-                                </div>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >
+                                        ثبت
+                                        <ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>                                </div>
                                 <div className='col-6 '>
                                     <NavLink to='/warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>

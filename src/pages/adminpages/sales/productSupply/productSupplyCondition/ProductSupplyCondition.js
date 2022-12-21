@@ -13,6 +13,7 @@ import {toast} from "react-toastify";
 import ProductSupplyConditionReadOnly from "./ProductSupplyConditionRead";
 import ProductSupplyConditionEdit from "./ProductSupplyConditionEdit";
 import Modal from 'react-modal';
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -38,6 +39,7 @@ const ProductSupplyCondition = ({quantity}) => {
     const [active, setActive] = useState(true)
     const [special, setSpecial] = useState(false)
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [show, setShow] = useState(false)
     const [condition, setCondition] = useState([])
@@ -140,6 +142,7 @@ const ProductSupplyCondition = ({quantity}) => {
         }
     }
     const handleAddFormSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
 
 
@@ -159,7 +162,7 @@ const ProductSupplyCondition = ({quantity}) => {
                 GetProductSupplyC()
 
             }
-
+setLoading(false)
         } catch (err) {
             console.log(err)
         }
@@ -190,13 +193,13 @@ const ProductSupplyCondition = ({quantity}) => {
 
     const handleEditFormSubmit = async (event) => {
 
-
+setLoading(true)
         try {
             const {data, status} = await SetProductSupplyConditions(editedContact)
             console.log(data)
             if (data.result.message === "ProductSupplyCondition saved completed") {
                 GetProductSupplyC()
-
+setLoading(false)
             }
 
         } catch (err) {
@@ -374,6 +377,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                         paymentMethodId={paymentMethodId}
                     editFormData={contact}
                     indext={index}
+                        loading={loading}
                     handleEditFormChange={handleEditFormChange}
                     handleCancelClick={handleCancelClick}
                         setSpecial={setSpecial}
@@ -548,8 +552,13 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
 
                                 <div className='col-6 '>
                                     <button className="btn btn-success float-left "
-                                          disabled={paymentMethodId === 0 ? true : false && additionalTypeId === 0 ? true : false && customerGroupId === 0 ? true : false }  onClick={handleAddFormSubmit}>تایید
-                                    </button>
+                                          disabled={loading?true:false||paymentMethodId === 0 ? true : false && additionalTypeId === 0 ? true : false && customerGroupId === 0 ? true : false }  onClick={handleAddFormSubmit}>تایید
+                                        <ClipLoader
+
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <button className="btn btn-danger float-right "

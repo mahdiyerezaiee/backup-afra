@@ -9,6 +9,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import Select from 'react-select';
 
 import SimpleReactValidator from "simple-react-validator";
+import {ClipLoader} from "react-spinners";
 
 
 const NewSupply = () => {
@@ -24,6 +25,8 @@ const NewSupply = () => {
     const [quantity, setQuantity] = useState('');
     const [contractNumber, setContractNumber] = useState('');
     const [comment, setComment] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const getProducts = async () => {
@@ -116,6 +119,8 @@ const NewSupply = () => {
     }
 
     const submit = async (event) => {
+        setLoading(true)
+
         event.preventDefault();
         try {
             const supply = {
@@ -148,6 +153,8 @@ const NewSupply = () => {
                 });
                 navigate('/supply')
             }
+            setLoading(false)
+
         } catch (error) {
             console.log(error)
         }
@@ -165,15 +172,6 @@ const NewSupply = () => {
                 <div className='widget box shadow col-lg-6 col-md-8 col-xs-12'>
                     <form  className='col'>
                         <div className="n-chk d-flex  mb-4">
-
-                            {/* <div>
-                                <label className="mr-2"> فعال  </label>
-
-                                <input type="checkbox" defaultChecked={active} onChange={e => setActive(e.checked)} />
-
-                            </div> */}
-
-
                         </div>
                         <div className="form-group  textOnInput selectIndex">
                             <div className='form-row mb-4'>
@@ -190,10 +188,7 @@ const NewSupply = () => {
                                           }}
                                         onChange={e => {
                                             setProductId(e.value)
-
                                             validator.current.showMessageFor("required");
-                                            
-
                                         }}
                                     />
                                     {productId === 0 ? <span className="text-danger">یک محصول انتخاب کنید</span> : ''}
@@ -341,8 +336,18 @@ const NewSupply = () => {
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
                                 {validator.current.allValid()
-                                    ? <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " onClick={submit}>تایید</button>
-                                    : <button disabled={true} type="submit" className="btn btn-success float-left " onClick={submit}>تایید</button>}
+                                    ? <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " onClick={submit}>تایید<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
+                                    : <button disabled={true} type="submit" className="btn btn-success float-left " onClick={submit}>تایید<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>  }
 
                             </div>
                             <div className='col-6 '>

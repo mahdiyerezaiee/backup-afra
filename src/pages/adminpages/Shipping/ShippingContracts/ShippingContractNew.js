@@ -8,6 +8,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import {GetAllShippingCompanies, SetShippingCompany, SetShoppingContract} from "../../../../services/ShippingService";
 import {MeasureUnitSample} from "../../../../Enums/MeasureUnitSample";
 import Select from "react-select";
+import {ClipLoader} from "react-spinners";
 
 
 const NewShippingContract = () => {
@@ -17,7 +18,7 @@ const[shippingCompany,SetShippingCompany]=useState([]);
 const[shippingCompanyId,SetshippingCompanyId]=useState();
     const [measureUnitId, setMeasureUnitId] = useState(0)
     const [quantity, setQuantity] = useState(0)
-
+    const [loading, setLoading] = useState(false);
 
     const ShippingContract = 
     {shippingContract:{
@@ -74,6 +75,7 @@ const[shippingCompanyId,SetshippingCompanyId]=useState();
         return (MeasureUnitSample.map(data => ({label: data.name, value: data.id})));
     }
     const submit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
             const {data, status} = await SetShoppingContract(ShippingContract);
@@ -96,7 +98,7 @@ const[shippingCompanyId,SetshippingCompanyId]=useState();
             console.log(error);
         }
 
-
+setLoading(false)
     };
 
 
@@ -196,8 +198,12 @@ const[shippingCompanyId,SetshippingCompanyId]=useState();
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left " onClick={submit}>تایید
-                                </button>
+                                <button disabled={loading} type="submit" className="btn btn-success float-left " onClick={submit}>تایید <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                             </div>
                             <div className='col-6 '>
                                 <NavLink to='/ShippingContract'

@@ -1,22 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom';
 import Select from 'react-select';
-import {NavLink} from 'react-router-dom';
-
-import {GetProducts, getEditProduct} from './../../../../services/productService';
-import {GetProductWareHouses} from './../../../../services/prodcutWarehouse';
-
+import {GetProducts, getEditProduct} from '../../../../services/productService';
+import {GetProductWareHouses} from '../../../../services/prodcutWarehouse';
 import DatePicker, {DateObject} from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
-
-import {GetAllProductSupply, SetProductSupply} from './../../../../services/productSupplyService';
+import {GetAllProductSupply, SetProductSupply} from '../../../../services/productSupplyService';
 import {toast} from 'react-toastify';
 import {useRef} from "react";
 import SimpleReactValidator from "simple-react-validator";
-
 import ProductSupplyCondition from "./productSupplyCondition/ProductSupplyCondition";
-// import './style.css'
+import {ClipLoader} from "react-spinners";
 
 
 const ProductSupplyEdit = () => {
@@ -40,11 +35,7 @@ const ProductSupplyEdit = () => {
     const[createDate,setCreateDate]=useState(new Date());
     const [active, setActive] = useState(true);
     const [cottageCode, setcottageCode] = useState('');
-
-
-
-
-
+    const [loading, setLoading] = useState(false);
 
     const getProductSupply = async () => {
         try {
@@ -146,7 +137,7 @@ const ProductSupplyEdit = () => {
         }
 
     }
-    console.log(measureUnitId);
+
     const productCombo = () => {
         return (products.map(data => ({label: data.name, value: data.id})))
     }
@@ -154,7 +145,7 @@ const ProductSupplyEdit = () => {
         return (products.filter(item => item.id === productId).map(data => ({label: data.name, id: data.id})))
     }
     let productValue=product()
-    console.log(productValue);
+
     const wareCombo = () => {
 
         return (Productwarehouse.filter(data => data.id !== 0).map(data => ({
@@ -184,6 +175,7 @@ const ProductSupplyEdit = () => {
 
 
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         const getwareId = () => {
             return Productwarehouse.filter(data => data.id !== 0).map(data => data.id)[0]
@@ -236,6 +228,7 @@ const ProductSupplyEdit = () => {
 
                 forceUpdate(1);
             }
+            setLoading(false)
         } catch (error) {
             console.log(error);
         }
@@ -257,18 +250,6 @@ const ProductSupplyEdit = () => {
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-6 col-xs-12'>
                     <form>
-                        {/*<div className="n-chk d-flex  mb-4">*/}
-
-                        {/*    <div>*/}
-                        {/*        <label className="mr-2"> فعال </label>*/}
-
-                        {/*        <input type="checkbox" defaultChecked={active}*/}
-                        {/*               onChange={e => setActive(e.checked)}/>*/}
-
-                        {/*    </div>*/}
-
-
-                        {/*</div>*/}
                         <div className="form-group mt-1 mb-3 textOnInput selectIndex">
                             <div className='form-row'>
 
@@ -431,9 +412,12 @@ const ProductSupplyEdit = () => {
 
 
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left "
-                                        onClick={handelSubmit}>تایید
-                                </button>
+                                <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                             </div>
                             <div className='col-6 '>
                                 <button onClick={handelNavigate}

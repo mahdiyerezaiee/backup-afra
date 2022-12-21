@@ -6,6 +6,7 @@ import Select from "react-select";
 import { PaymentStatusEnums } from "../../Enums/PaymentStatus";
 import { ConditionalPaymentTypes } from "../../Enums/ConditionalPaymentTypes";
 import { PaymentFinancialConfirmtion } from "../../Enums/paymentFinancialConfirmtion";
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -27,9 +28,11 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
     const [conditionPaymentComment, SetconditionPaymentComment] = useState('')
     let paymentStatusId = 0
     let conditionalPaymentTypeId = 0
+    let [loading, setLoading] = useState(false);
 
 
     const handleEditFormSubmit = async () => {
+        setLoading(true)
         if (StatusId === 1) {
 
             paymentStatusId = 3
@@ -99,6 +102,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
             closeModal()
 
         }
+        setLoading(false)
     }
     const PaymentStatus = () => {
         return (PaymentFinancialConfirmtion.map(data => ({ label: data.name, value: data.id })))
@@ -163,8 +167,13 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
 
                     <div className='col-6 '>
                         <button className="btn btn-success  "
-                            onClick={handleEditFormSubmit} >تایید
-                        </button>
+                           disabled={loading} onClick={handleEditFormSubmit} >تایید
+                            <ClipLoader
+
+                                loading={loading}
+                                color="#ffff"
+                                size={15}
+                            /></button>
                     </div>
                     <div className='col-6 '>
                         <button className="btn btn-danger float-right"

@@ -28,6 +28,7 @@ const customStyles = {
 }
 
 const SalesBoardForAdmin = () => {
+    const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.userInfo);
     const userRole = useSelector(state => state.userRole);
     const [Customerg, setCustomerg] = useState([])
@@ -117,6 +118,7 @@ const SalesBoardForAdmin = () => {
 
 
     const submitHandler = async (e) => {
+        setLoading(true)
         e.preventDefault()
         try {
             const { data, status } = await AddTOCart(addToCart)
@@ -124,7 +126,7 @@ const SalesBoardForAdmin = () => {
         } catch (err) {
             console.log(err)
         }
-
+setLoading(false)
     }
 
     let productCondistion;
@@ -173,7 +175,7 @@ const SalesBoardForAdmin = () => {
                             ariaHideApp={false}
 
                         >
-                            <ModalSubmit productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={modalInfo} closeModal={closeModal} name={name} quantity={quantity} submitHandler={submitHandler}
+                            <ModalSubmit loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={modalInfo} closeModal={closeModal} name={name} quantity={quantity} submitHandler={submitHandler}
                                 setquantity={setquantity} />
                         </Modal>
                         <Modal

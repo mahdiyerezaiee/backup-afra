@@ -3,10 +3,12 @@ import {useSelector} from "react-redux";
 import {setSupportRequessts, SetSupportRequestMessage} from "../../services/TicketService";
 import {NavLink, useNavigate} from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
+import {ClipLoader} from "react-spinners";
 
 const NewTicket = () => {
     const user = useSelector(state => state.userInfo);
-   
+    const [loading, setLoading] = useState(false);
+
 
     const Navigate=useNavigate()
 
@@ -35,6 +37,7 @@ const NewTicket = () => {
             title,
     creatorId:user.id,
     onlineChat: false,
+            createDate :new Date()
         }
 
 }
@@ -46,6 +49,7 @@ const NewTicket = () => {
                 supportRequestId,
                 creatorId:user.id,
                 message,
+                createDate:new Date()
             }
 
         }
@@ -57,9 +61,12 @@ const NewTicket = () => {
         }
     }
     const sendTicketHandler = async () => {
+        setLoading(true)
+
         const {data , status} = await setSupportRequessts(sendTicket)
         if (status === 200) { supportRequestId=(data.result.supportRequestId); }
-        
+        setLoading(false)
+
         await sendMessage()
     }
     const submit = (e) => {
@@ -106,8 +113,12 @@ const NewTicket = () => {
                         </div>
                         <div className='row'>
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left"  onClick={submit} >تایید</button>
-                            </div>
+                                <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>                            </div>
                             <div className='col-6 '>
                                 <NavLink to='/ticket' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>

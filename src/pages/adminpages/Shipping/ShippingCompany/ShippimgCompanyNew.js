@@ -1,5 +1,6 @@
 import react, { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+import {ClipLoader} from "react-spinners";
 
 import { toast } from 'react-toastify';
 
@@ -11,6 +12,7 @@ import { SetShippingCompany } from "../../../../services/ShippingService";
 const NewShippingCompany = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('')
+    const [loading, setLoading] = useState(false);
 
     const [code, setCode] = useState(0)
     const [check, setChek] = useState(true);
@@ -57,6 +59,7 @@ const NewShippingCompany = () => {
 
 
     const submit = async (event) => {
+       setLoading(true)
         event.preventDefault();
         try {
             const { data, status } = await SetShippingCompany(ShippingCompany);
@@ -84,7 +87,7 @@ const NewShippingCompany = () => {
         }
 
 
-
+setLoading(false)
     };
 
 
@@ -148,7 +151,12 @@ const NewShippingCompany = () => {
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left " onClick={submit}>تایید</button>
+                                <button disabled={loading} type="submit" className="btn btn-success float-left " onClick={submit}>تایید <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                             </div>
                             <div className='col-6 '>
                                 <NavLink to='/shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>

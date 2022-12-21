@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { NavLink, useParams } from "react-router-dom";
 import Select from 'react-select'
-import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
-import { GetAttributeValues } from './../../../services/attributeService';
-import { GetGroupsForEntity } from './../../../services/GroupService';
+import {  SetAttributeValues } from "../../../services/attributeService";
+import { GetAttributeValues } from '../../../services/attributeService';
+import { GetGroupsForEntity } from '../../../services/GroupService';
+import {ClipLoader} from "react-spinners";
 
 const EditWareHouse = () => {
     const params = useParams()
@@ -17,11 +18,7 @@ const EditWareHouse = () => {
     const [groupId, setGroupId] = useState(0);
     const [attributeIdHajm, setattributeIdHajm] = useState(0);
     const [attributeIdadd, setattributeIdadd] = useState(0);
-
-
-
-   
-
+    const [loading, setLoading] = useState(false);
     const [attValuehajm, setAttValueHajm] = useState('')
     const id = params.id
     const navigator = useNavigate();
@@ -71,18 +68,7 @@ const EditWareHouse = () => {
             console.log(error);
         }
     }
-    // const getWareType = async () => {
-    //     try {
-    //         const { data, status } = await GetAttributeValues(1005, params.id);
-    //         if (status === 200) {
-    //             setCurrentType(Number(data.result.attributeValue.value))
-    //             setattributeIdType(data.result.attributeValue.id)
-    //         }
-    //     } catch (error) {
 
-    //     }
-
-    // }
     const getWareAddress = async () => {
         try {
             const { data, status } = await GetAttributeValues(1007, params.id);
@@ -147,6 +133,7 @@ const EditWareHouse = () => {
     }
 
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
             const { data, status } = await SetWareHouses(test);
@@ -165,6 +152,7 @@ const EditWareHouse = () => {
                 setAttributevalueforHajm();
                 navigator('/warehouselist')
             }
+            setLoading(false)
         } catch (error) {
             console.log(error);
         }
@@ -235,7 +223,12 @@ const EditWareHouse = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>

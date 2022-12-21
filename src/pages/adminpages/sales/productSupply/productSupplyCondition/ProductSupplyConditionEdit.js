@@ -5,8 +5,9 @@ import { PaymentStructureEnums } from "../../../../../Enums/PaymentStructureEnum
 import { AdditionalTypeId } from "../../../../../Enums/AdditionalTypeIdEnums";
 import Modal from 'react-modal';
 import ProductSupplyConditionReadOnly from "./ProductSupplyConditionRead";
+import {ClipLoader} from "react-spinners";
 
-const ProductSupplyConditionEdit = ({ paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index }) => {
+const ProductSupplyConditionEdit = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index }) => {
     const [customerg, setCustomerg] = useState([])
     const [cu, SetCu] = useState(0)
     const [modalIsOpen, setIsOpen] = useState(true);
@@ -243,9 +244,14 @@ setpaymentMethodId(editFormData.paymentMethodId)
                             <div className='row '>
 
                                 <div className='col-6 '>
-                                    <button className="btn btn-success float-left "
+                                    <button disabled={loading} className="btn btn-success float-left "
                                         onClick={handleEditFormSubmit} >تایید
-                                    </button>
+                                        <ClipLoader
+
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <button className="btn btn-danger float-right "

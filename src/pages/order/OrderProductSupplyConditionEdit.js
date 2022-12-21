@@ -192,9 +192,9 @@ const OrderProductSupplyConditionEdit = ({modalIsOpen , closeModal,id , Detail})
                                 </tbody>
                             </table>
                             <div  className="row  m-auto ">
-                                <button className="col-4 btn-sm btn-success" onClick={submit}>ثبت </button>
-                                <button className="col-4 btn-sm btn-danger " onClick={()=> closeModal()}>لغو </button>
-                                <button className=" col-4 btn-sm btn-info  " onClick={()=> editHandler(id)}> افزودن شرط جدید</button>
+                                <button className="col-4 btn-sm btn-success"disabled={loading} onClick={submit}>ثبت </button>
+                                <button className="col-4 btn-sm btn-danger " disabled={loading} onClick={()=> closeModal()}>لغو </button>
+                                <button className=" col-4 btn-sm btn-info  "disabled={loading} onClick={()=> editHandler(id)}> افزودن شرط جدید</button>
 
                             </div>
 

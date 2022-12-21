@@ -2,14 +2,17 @@ import React,{ useState } from 'react'
 import { useNavigate,NavLink } from 'react-router-dom';
 import { SetSupplier } from '../../../services/supplyService';
 import { toast } from 'react-toastify';
+import {ClipLoader} from "react-spinners";
 
 
 
 const NewSupplier = () => {
     const[name,Setname]=useState();
     const navigate=useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
             const supplier={
@@ -34,6 +37,7 @@ const NewSupplier = () => {
               
                 navigate('/supplierList')
             }
+            setLoading(false)
         } catch (error) {
             console.log(error);
         }
@@ -62,8 +66,12 @@ const NewSupplier = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
-                                </div>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>                                   </div>
                                 <div className='col-6 '>
                                     <NavLink to='/supplierList' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>

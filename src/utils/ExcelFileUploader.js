@@ -7,6 +7,7 @@ import { GetPreviewAddress } from '../services/orderService';
 import { Fragment } from 'react';
 import ExcelFilePreviewer from './ExcelFilePreviewer';
 import file from "../pages/order/addressFile.xlsx";
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -37,6 +38,7 @@ const closeModalIsOpenUploadExcel = () => {
 }
 
     const handelSubmit =async (e) => {
+
         e.preventDefault()
         const formData = new FormData()
         formData.append('Files', files)
@@ -140,7 +142,12 @@ closeModal()
                 <div className='row'>
 
                     <div className='col-6 '>
-                        <button disabled={files.length<1?true:false} onClick={handelSubmit} className="btn btn-success float-left " >بارگزاری</button>
+                        <button disabled={loading || files.length<1?true:false} onClick={handelSubmit} className="btn btn-success float-left " >بارگزاری<ClipLoader
+
+                            loading={loading}
+                            color="#ffff"
+                            size={15}
+                        /></button>
                     </div>
                     <div className='col-6 '>
                         <button  onClick={closeModal}   className="btn btn-danger float-right ">انصراف</button>

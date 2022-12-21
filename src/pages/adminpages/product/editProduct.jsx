@@ -1,5 +1,5 @@
 import { NavLink, useParams,useNavigate } from "react-router-dom";
-import { GetAllProducts, getEditProduct, SetProduct } from "../../../services/productService";
+import {  getEditProduct, SetProduct } from "../../../services/productService";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import SimpleReactValidator from "simple-react-validator";
@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 import Select from "react-select";
 import { MeasureUnitSample } from "../../../Enums/MeasureUnitSample";
 import { GetAllWareHouses } from "../../../services/wareHouseService";
-import { GetProductWareHouses, SetProductWareHouses } from "../../../services/prodcutWarehouse";
+import { GetProductWareHouses } from "../../../services/prodcutWarehouse";
 import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
-import { GetAttributeValues } from './../../../services/attributeService';
-import {disabled} from "react-widgets/PropTypes";
+import { GetAttributeValues } from '../../../services/attributeService';
 import ProductWareHouseEdit from "../../../components/common/productWareHouseEdit";
 import {GetGroupsForEntity} from "../../../services/GroupService";
+import {ClipLoader} from "react-spinners";
 
 const EditProduct = () => {
     const params = useParams()
@@ -30,12 +30,11 @@ const EditProduct = () => {
     const [minSellableAmount, setMinSellableAmount] = useState('')
     const [maxSellableAmount, setMaxSellableAmount] = useState('')
     const [measureUnitId, setMeasureUnitId] = useState('')
-    const [measureUnit, setMeasureUnit] = useState(0);
-    const [wareHouseId, setwareHouseId] = useState(0);
     const [productG, setProductG] = useState([])
     const[attributeValue,setattributeValue]=useState({})
     const [isSubmit , setIsSubmit]=useState(false)
     let attvalue;
+    const [loading, setLoading] = useState(false);
 
     const[attValues,setattValues]=useState(0)
 
@@ -115,6 +114,7 @@ const EditProduct = () => {
         }
     }
     const submit = async (event) => {
+        setLoading(true)
         event.preventDefault();
 
         try {
@@ -125,6 +125,7 @@ const EditProduct = () => {
                 await updateAttrte();
                 if (status === 200) {
                     setIsSubmit(true)
+
                     toast.success('تغییرات با موفیت ثبت شد', {
                         position: "top-right",
                         autoClose: 5000,
@@ -135,6 +136,7 @@ const EditProduct = () => {
                         progress: undefined
                     });
                     navigator('/productList')
+
                 }
 
             } else {
@@ -143,6 +145,7 @@ const EditProduct = () => {
 
                 forceUpdate(1);
             }
+            setLoading(false)
 
         } catch (error) {
             console.log(error);
@@ -263,35 +266,7 @@ const EditProduct = () => {
                                 </div>
                         </div>
                         </div>
-                        {/* <div className="form-group mb-4 textOnInput">
-                            <label>قیمت</label>
-                            <input type="text" className="form-control opacityForInput" value={price} onChange={e => {
-                                setPrice(e.target.value)
-                                validator.current.showMessageFor("required");}} />
-                            {validator.current.message("required", price, "required|numeric")}
-                        </div>
-                        <div className="form-group mb-4 textOnInput">
-                            <div className='form-row'>
-                                <div className="col-6">
-                                    <label>حداقل وزن فروش</label>
-                                    <input type="text" className="form-control opacityForInput"
-                                           value={minSellableAmount} onChange={e => {
-                                        setMinSellableAmount(e.target.value)
-                                        validator.current.showMessageFor("required");
-                                           }} />
-                                    {validator.current.message("required", minSellableAmount, "required|numeric")}
-                                </div>
-                                <div className="col-6">
-                                    <label>حداکثر وزن فروش</label>
-                                    <input type="text" className="form-control opacityForInput"
-                                           value={maxSellableAmount} onChange={e => {
-                                        setMaxSellableAmount(e.target.value)
-                                        validator.current.showMessageFor("required");
-                                           }} />
-                                    {validator.current.message("required", maxSellableAmount, "required|numeric")}
-                                </div>
-                            </div>
-                        </div> */}
+
                         <div className="form-group mb-4 textOnInput">
                             <div className='form-row'>
                                 <div className="col-6">
@@ -304,20 +279,7 @@ const EditProduct = () => {
                                     />
                                     {measureUnitId === 0 ? (<p className="text-danger"> لطفایک واحد  را انتخاب کنید </p>) : (<p></p>)}
                                 </div>
-                                {/*<div className="col-4">*/}
-                                {/*    <label>انبار</label>*/}
-                                {/*    {wareHouseId === 0 ?*/}
-                                {/*    <Select*/}
-                                {/*        value = { {label: WAREHOUSESEITEM, id: WAREHOUSESEID}}*/}
-                                {/*        options={inputWarehouses()}*/}
-                                {/*        onChange={e =>setwareHouseId(e.value)}*/}
-                                {/*    />:*/}
-                                {/*        <Select*/}
-                                {/*            options={inputWarehouses()}*/}
-                                {/*            onChange={e =>setwareHouseId(e.value)}*/}
-                                {/*        />}*/}
-                                {/*    {wareHouseId === 0 ? (<p className="text-danger"> لطفایک واحد  را انتخاب کنید </p>) : (<p></p>)}*/}
-                                {/*</div>*/}
+
                                 <div className="col-6 " >
                                     <label>گروه کالا</label>
                                     <Select
@@ -331,8 +293,12 @@ const EditProduct = () => {
                         </div>
                         <div className='row '>
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left " onClick={submit}>تایید
-                                </button>
+                                <button type="submit" disabled={loading} className="btn btn-success float-left " onClick={submit}>تایید  <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                             </div>
                             <div className='col-6 '>
                                 <NavLink to='/productList' className="btn btn-danger float-right">بازگشت</NavLink>

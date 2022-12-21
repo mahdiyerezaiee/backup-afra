@@ -3,12 +3,14 @@ import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { GetGroupById } from '../../../services/GroupService';
 import { SetGroup } from './../../../services/GroupService';
 import { toast } from 'react-toastify';
+import {ClipLoader} from "react-spinners";
 
 const EditProductGroupName = () => {
     const navigate = useNavigate()
     const params = useParams();
     const [entityTypeId, setEntityTypeId] = useState(0)
     const [name, setName] = useState('')
+    const [loading, setLoading] = useState(false);
 
     const getGroup = async () => {
 
@@ -28,7 +30,7 @@ const EditProductGroupName = () => {
 
     const handelSubmit = async (event) => {
 
-
+setLoading(true)
 
         event.preventDefault();
 
@@ -55,7 +57,18 @@ const EditProductGroupName = () => {
                     })
                 navigate('/productgroup')
             }
+            setLoading(false)
         } catch (error) {
+            toast.error('مشکلی در ویرایش گروه پیش امده است',
+                {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                })
             console.log(error);
         }
 
@@ -85,7 +98,12 @@ const EditProductGroupName = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/productgroup' className="btn btn-danger float-right">بازگشت</NavLink>

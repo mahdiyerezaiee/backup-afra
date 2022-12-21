@@ -4,9 +4,10 @@ import { SetWareHouses } from '../../../services/wareHouseService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { GetAttribute, SetAttributeValues } from '../../../services/attributeService';
+import {  SetAttributeValues } from '../../../services/attributeService';
 import Select from 'react-select'
-import { GetGroupsForEntity } from './../../../services/GroupService';
+import { GetGroupsForEntity } from '../../../services/GroupService';
+import {ClipLoader} from "react-spinners";
 
 const NewWareHouse = () => {
     const [name, Setname] = useState('');
@@ -14,6 +15,8 @@ const NewWareHouse = () => {
     const [groupId, setGroupId] = useState({})
     const [attValuehajm, setAttValueHajm] = useState('')
     const [Addres, setAddres] = useState('');
+    const [loading, setLoading] = useState(false);
+
     let wareId = 0;
     const navigate = useNavigate();
     const test = {
@@ -84,6 +87,7 @@ const NewWareHouse = () => {
         }
     }
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
             const { data, status } = await SetWareHouses(test);
@@ -104,6 +108,7 @@ const NewWareHouse = () => {
                 setAttributevalueforHajm();
                 navigate('/warehouselist')
             }
+            setLoading(false)
         } catch (error) {
             console.log(error);
         }
@@ -170,7 +175,12 @@ const NewWareHouse = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>

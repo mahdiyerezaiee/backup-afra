@@ -9,6 +9,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import {useRef} from "react";
 import SimpleReactValidator from "simple-react-validator";
+import {ClipLoader} from "react-spinners";
 
 const attachmet = window.globalThis.stie_att
 const customStyles = {
@@ -35,6 +36,8 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
     const [value, setValue] = useState(0)
     const [dueDate, setDueDate] = useState(item.dueDate)
     const [chacked, setchacked] = useState(false)
+    let [loading, setLoading] = useState(false);
+
     const datas = {
         attachmentId: item.id,
         name: '',
@@ -66,6 +69,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
     const submitAttachment = async () => {
+        setLoading(true)
         try {
             const {data, status} = await SetAttachmentType(datas)
             if (data.result.success === true) {
@@ -86,9 +90,11 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
 
             console.log(e)
         }
+        setLoading(false)
 
     }
     const handelDelete = async (e) => {
+        setLoading(true)
         e.preventDefault()
         try {
 
@@ -112,6 +118,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
 
             console.log(error);
         }
+        setLoading(false)
     }
     const handelStartDate = (value) => {
         if (value === null) {
@@ -221,8 +228,14 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                     </div>
 
                                     {item.trackingCode ? null : <div className="col-3 text-center">
-                                        <button className="btn btn-success  float-right" onClick={submitAttachment}>ثبت سند
+                                        <button disabled={loading} className="btn btn-success  float-right" onClick={submitAttachment}>ثبت سند
                                             مالی
+                                            <ClipLoader
+
+                                                loading={loading}
+                                                color="#ffff"
+                                                size={15}
+                                            />
                                         </button>
                                     </div>}
                                 </div>
@@ -233,9 +246,14 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                     : null}
                 <div className=' d-block   '>
                     <div className='m-1'>
-                        <button hidden={isUser && orderStatus >= 3} onClick={handelDelete}
+                        <button disabled={chacked||loading} hidden={isUser && orderStatus >= 3} onClick={handelDelete}
                                 className="btn btn-danger float-left">حذف
-                        </button>
+                            <ClipLoader
+
+                                loading={loading}
+                                color="#ffff"
+                                size={15}
+                            /></button>
                     </div>
 
                     <div className='m-1'>

@@ -68,7 +68,7 @@ sendMessages()
                             <Card border={ item.creatorId === Number(userName) ?"primary":"success"} text="dark" color="dark" className="d-block"  >
 
                                 <Card.Header className="p-2 " ><Card.Text>{item.creatorName}</Card.Text>
-                                    <time style={{float:'left' , color: 'black'}}>{  new Date(item.createDate.toString()).toLocaleString('fa-IR')}</time></Card.Header>
+                                    <time style={{float:'left' , color: 'black'}}>{  new Date(item.createDate).toLocaleDateString('fa-IR')}</time></Card.Header>
                                 <hr style={{color: item.creatorId === Number(userName) ?"primary": "forestgreen", borderTop: item.creatorId === Number(userName) ? '2px solid blue':'2px solid forestgreen'}}/>
                                 <Card.Body>
                                     <Card.Text>

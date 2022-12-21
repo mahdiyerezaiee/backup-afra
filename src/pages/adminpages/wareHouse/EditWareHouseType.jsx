@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { GetAttribute } from '../../../services/attributeService';
 import { NavLink } from 'react-router-dom';
-import { SetAttribute } from './../../../services/attributeService';
 import { toast } from 'react-toastify';
 import { useNavigate,useParams } from 'react-router-dom';
-import { GetGroupById, SetGroup } from './../../../services/GroupService';
+import { GetGroupById, SetGroup } from '../../../services/GroupService';
+import {ClipLoader} from "react-spinners";
 
 
 
@@ -12,7 +11,8 @@ const EditWareHouseType = () => {
     const navigate=useNavigate();
     const params=useParams();
     const [name, Setname] = useState('')
-   
+    const [loading, setLoading] = useState(false);
+
     const getGroup=async()=>{
 
         try {
@@ -31,6 +31,7 @@ const EditWareHouseType = () => {
    },[])
 
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
  
         try {
@@ -56,6 +57,7 @@ const EditWareHouseType = () => {
             })
             navigate('/EditWareHouseTypeName')
         }
+        setLoading(false)
         } catch (error) {
             console.log(error);
         }
@@ -84,7 +86,12 @@ const EditWareHouseType = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>

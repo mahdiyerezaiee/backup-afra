@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
 
 import {toast} from "react-toastify";
+import {ClipLoader} from "react-spinners";
 const customStyles = {
     content: {
 
@@ -20,8 +21,10 @@ const customStyles = {
 
 }
 const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
+    const [loading, setLoading] = useState(false);
 
     const handleEditFormSubmit =async () => {
+        setLoading(true)
         const datas = {
 
             orderId:id,
@@ -55,6 +58,7 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
             });
             console.log(e)
         }
+        setLoading(false)
     }
     return(
         <Modal
@@ -101,7 +105,12 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
                     <div className='col-6 '>
                         <button className="btn btn-success float-left "
                                 onClick={handleEditFormSubmit} >تایید
-                        </button>
+                            <ClipLoader
+
+                                loading={loading}
+                                color="#ffff"
+                                size={15}
+                            /></button>
                     </div>
                     <div className='col-6 '>
                         <button className="btn btn-danger float-right "

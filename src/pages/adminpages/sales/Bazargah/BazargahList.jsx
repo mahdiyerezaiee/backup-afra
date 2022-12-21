@@ -51,136 +51,16 @@ const getSelectedData=(data)=>{
         }
     }
     const DeleteSelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < arrayOfData.length; i++) {
-        //
-        //     try {
-        //         const{data,status}=await DeleteGroup(arrayOfData[i].id)
-        //         if(data.result.success ===true){
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess ( successCount+=1)
-        //         } if(data.result.success ===false){
-        //             SetOpen(true)
-        //
-        //             SetStateError (errorCount+=1)
-        //         }
-        //
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //
-        //
-        //     }
-        //
-        //
-        // }
 
     }
     const copySelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
-        //
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < copyData.length; i++) {
-        //
-        //
-        //     try {
-        //         let payload={
-        //             'group':copyData[i]
-        //         }
-        //         const{data,status}=await SetGroup(payload)
-        //         if(status===200){
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess ( successCount+=1)
-        //         }
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //     }
-        //
-        //
-        // }
 
 
     }
     const enableSelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // const copyData= arrayOfData.map(item=>{return{...item,active:true}})
-        //
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < copyData.length; i++) {
-        //
-        //
-        //     try {
-        //         let payload={
-        //             'group':copyData[i]
-        //         }
-        //
-        //         const{data,status}=await SetGroup(payload)
-        //         if(status===200){
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess ( successCount+=1)
-        //         }
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //     }
-        //
-        // }
-        //
 
     }
     const disableSelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // const copyData= arrayOfData.map(item=>{return{...item,active:false}})
-        //
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < copyData.length; i++) {
-        //
-        //
-        //     try {
-        //
-        //         let payload={
-        //             'group':copyData[i]
-        //         }
-        //         const{data,status}=await SetGroup(payload)
-        //         SetOpen(true)
-        //         if(status===200){
-        //
-        //             SetStateSuccess( successCount+=1)
-        //
-        //         }
-        //
-        //         console.log(open)
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //
-        //     }finally {
-        //
-        //     }
-        //
-        //
-        // }
-        //
 
     }
 

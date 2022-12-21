@@ -2,20 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { NavLink } from 'react-router-dom';
-import CheckBox from './../../../../components/form/CheckBox';
-import { GetProducts, getEditProduct } from './../../../../services/productService';
-import { GetProductWareHouses } from './../../../../services/prodcutWarehouse';
+import { GetProducts, getEditProduct } from '../../../../services/productService';
+import { GetProductWareHouses } from '../../../../services/prodcutWarehouse';
 import { PaymentStructureEnums } from '../../../../Enums/PaymentStructureEnums'
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
-import { MeasureUnitSample } from './../../../../Enums/MeasureUnitSample';
-import { GetAttribute } from '../../../../services/attributeService';
-import { SetProductSupply } from './../../../../services/productSupplyService';
+import { SetProductSupply } from '../../../../services/productSupplyService';
 import { toast } from 'react-toastify';
 import { useRef } from "react";
 import SimpleReactValidator from "simple-react-validator";
-// import './style.css'
+import {ClipLoader} from "react-spinners";
+
 
 
 const AddProductSupplyToSalesBoard = () => {
@@ -33,12 +31,12 @@ const AddProductSupplyToSalesBoard = () => {
     const [measureUnitId, setmeasureUnitId] = useState(0);
     const [productWareHouseId, setproductWareHouseId] = useState(0);
     const [endDate, setendDate] = useState(new Date())
-
     const [active, setActive] = useState(true);
     const [cottageCode, setcottageCode] = useState('');
     const [valuecheck1, setvaluechek1] = useState('');
     const [valuecheck2, setvaluechek2] = useState('');
     const [valuecheck3, setvaluechek3] = useState('');
+    const [loading, setLoading] = useState(false);
 
 
     const GetCustomerGroup = async () => {
@@ -153,6 +151,8 @@ else{
             att = `1002:${valuecheck1},${valuecheck2},${valuecheck3}`
         }
         const handelSubmit = async (event) => {
+            setLoading(true)
+
             event.preventDefault();
             const getwareId = () => {
                 return Productwarehouse.filter(data => data.id !== 0).map(data => data.id)[0]
@@ -207,6 +207,8 @@ else{
 
                     forceUpdate(1);
                 }
+                setLoading(false)
+
             } catch (error) {
                 console.log(error);
             }
@@ -373,8 +375,12 @@ else{
 
                             <div className='row justify-content-between'>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left " onClick={handelSubmit} >تایید</button>
-                                </div>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>                                </div>
                                 <div className='col-6 '>
                                     <NavLink to='/productSupply' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>

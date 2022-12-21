@@ -1,14 +1,16 @@
 import React,{useState,useEffect} from 'react'
 import { useParams, useNavigate,NavLink } from 'react-router-dom';
 import { GetGroupById } from '../../../services/GroupService';
-import { SetGroup } from './../../../services/GroupService';
+import { SetGroup } from '../../../services/GroupService';
 import { toast } from 'react-toastify';
+import {ClipLoader} from "react-spinners";
 
 const EditWareHouseTypeName = () => {
 const navigate=useNavigate()
     const params=useParams();
     const[entityTypeId,setEntityTypeId]=useState(0)
     const[name,setName]=useState('')
+    const [loading, setLoading] = useState(false);
 
     const getGroup=async()=>{
 
@@ -28,7 +30,7 @@ useEffect(()=>{
 
 const handelSubmit=async(event)=>{
 
-   
+   setLoading(true)
 
       event.preventDefault();
  
@@ -55,6 +57,7 @@ const handelSubmit=async(event)=>{
             })
             navigate('/warehousetypes')
         }
+        setLoading(false)
         } catch (error) {
             console.log(error);
         }
@@ -85,8 +88,12 @@ const handelSubmit=async(event)=>{
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
-                                </div>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>                                </div>
                                 <div className='col-6 '>
                                     <NavLink to='/warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>

@@ -1,7 +1,9 @@
 import {useState} from "react";
+import {ClipLoader} from "react-spinners";
 
-const ModalSubmit = ({name , modalInfo , submitHandler ,closeModal,quantity, setquantity , formatter, productSupplyConditionId }) => {
+const ModalSubmit = ({ loading,name , modalInfo , submitHandler ,closeModal,quantity, setquantity , formatter, productSupplyConditionId }) => {
     const [check,setCheck]=useState(false)
+
     return(
       <>
           <div className="d-block clearfix mb-2" onClick={closeModal}><svg
@@ -44,12 +46,22 @@ const ModalSubmit = ({name , modalInfo , submitHandler ,closeModal,quantity, set
                       </p>
                   </div>:""}
                   <h5 className="text-center ">قیمت کل :   {formatter.format(modalInfo.price * quantity)}</h5>
-                  {modalInfo.comment ? <button disabled={  quantity >=  modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.maxSellableAmount) && check  ? false : true}
+                  {modalInfo.comment ? <button disabled={  loading ?true : quantity >=  modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.maxSellableAmount) && check  ? false : true}
                                                className="btn btn-success  float-left" onClick={submitHandler}>اضافه به سبدخرید
-                      </button>:
-                      <button disabled={  quantity >=  modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.maxSellableAmount)  ? false : true}
+                          <ClipLoader
+
+                              loading={loading}
+                              color="#ffff"
+                              size={15}
+                          /></button>:
+                      <button disabled={  loading ?true :quantity >=  modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.maxSellableAmount)  ? false : true}
                               className="btn btn-success  float-left" onClick={submitHandler}>اضافه به سبدخرید
-                      </button>
+                          <ClipLoader
+
+                              loading={loading}
+                              color="#ffff"
+                              size={15}
+                          /></button>
                   }
 
 

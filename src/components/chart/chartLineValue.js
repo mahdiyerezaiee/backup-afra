@@ -135,7 +135,7 @@ const options = {
 
 export function ChartLineValue() {
     const [datas , setDatas]=useState([])
-    const [TypeId , setTypeId]=useState(2)
+    const [TypeId , setTypeId]=useState(3)
     useEffect(()=>{
         const GetReport = async () => {
             try {

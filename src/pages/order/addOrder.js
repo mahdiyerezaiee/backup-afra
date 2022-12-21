@@ -15,6 +15,8 @@ import {toast} from "react-toastify";
 import {GetGroupsForEntity} from "../../services/GroupService";
 import Modal from 'react-modal';
 import {OrderStatus} from "../../Enums/OrderStatusEnums";
+import {ClipLoader} from "react-spinners";
+
 
 const customStyles = {
     content: {
@@ -42,6 +44,7 @@ const AddOrder = () => {
     const [productId, setProductId] = useState(0)
     const [measureUnitId, setMeasureUnitId] = useState(0)
     const [quantity, setQuantity] = useState(0)
+    const [loading, setLoading] = useState(false);
 
     const [productBasePrice, setProductBasePrice] = useState(0)
     const [users, setUsers] = useState([])
@@ -125,6 +128,7 @@ const AddOrder = () => {
     const navigate = useNavigate()
 
     const SubmitOrder = async (e) => {
+        setLoading(true)
         e.preventDefault()
         try {
             const {data, status} = await addOrder(order)
@@ -150,7 +154,7 @@ if (data.result.success === true){
         draggable: true,
         progress: undefined
     });}
-
+setLoading(false)
         } catch (e) {
             console.log(e)
         }
@@ -387,8 +391,13 @@ maxMenuHeight="200px"
                     </div>
                     <div className='row justify-content-between'>
                         <div className='col-6 '>
-                            <button  className="btn btn-success float-left " onClick={SubmitOrder}>تایید
-                            </button>
+                            <button  disabled={loading} className="btn btn-success float-left " onClick={SubmitOrder}>تایید
+                                <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                         </div>
                         <div className='col-6 '>
                             <NavLink to='/orderList' className="btn btn-danger float-right">بازگشت</NavLink>

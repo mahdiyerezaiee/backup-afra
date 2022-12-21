@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import Select from "react-select";
 import {OrderStatus} from "../../Enums/OrderStatusEnums";
 import {toast} from "react-toastify";
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -23,6 +24,7 @@ const customStyles = {
 const OrderEditList = ({id, modalIsOpen, closeModal}) => {
 
     const [order, setOrder] = useState([])
+    const [loading, setLoading] = useState(false);
 
     const [orderStatusId, setOrderStatusId] = useState(0)
 
@@ -50,6 +52,7 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
         return (OrderStatus.filter(item => item.id === orderStatusId).map(data => ({label: data.name, value: data.id})))
     }
     const handleEditFormSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault();
 
         const datas = {
@@ -72,6 +75,8 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
                     progress: undefined
                 });
             }
+            setLoading(false)
+
             window.location.reload()
 
             closeModal()
@@ -134,8 +139,14 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
 
                         <div className='col-12 '>
                             <button className="btn btn-success  "
-                                    onClick={handleEditFormSubmit}>تایید
-                            </button>
+                                disabled={loading}    onClick={handleEditFormSubmit}>تایید
+                                <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
+
                         </div>
 
                     </div>

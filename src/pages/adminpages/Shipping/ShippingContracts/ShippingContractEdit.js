@@ -9,11 +9,12 @@ import {GetAllShippingCompanies, GetShoppingContract, SetShippingCompany, SetSho
 import {MeasureUnitSample} from "../../../../Enums/MeasureUnitSample";
 import Select from "react-select";
 import {getEditProduct} from "../../../../services/productService";
+import {ClipLoader} from "react-spinners";
 
 
 const EditShippingContract = () => {
     const params = useParams()
-
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [contractNumber, setContractNumber] = useState('')
     const[shippingCompany,SetShippingCompany]=useState([]);
@@ -99,6 +100,7 @@ const ShoppingContract =
         );
     }
     const submit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
             const {data, status} = await SetShoppingContract(ShoppingContract);
@@ -120,7 +122,7 @@ const ShoppingContract =
         } catch (error) {
             console.log(error);
         }
-
+setLoading(false)
 
     };
     let MeasureId = MeasureUnitSample.filter(item => item.id === measureUnitId).map(item => item.name)
@@ -221,8 +223,12 @@ const ShoppingContract =
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left " onClick={submit}>تایید
-                                </button>
+                                <button disabled={loading} type="submit" className="btn btn-success float-left " onClick={submit}>تایید <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                             </div>
                             <div className='col-6 '>
                                 <NavLink to='/ShippingContract'

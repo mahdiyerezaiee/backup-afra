@@ -5,10 +5,12 @@ import { SetAttribute } from './../../../services/attributeService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { SetGroup } from './../../../services/GroupService';
+import {ClipLoader} from "react-spinners";
 
 
 const NewProductGroup = () => {
     const navigate=useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const [name, Setname] = useState('')
    
@@ -16,6 +18,7 @@ const NewProductGroup = () => {
    
 
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
  
         try {
@@ -41,6 +44,7 @@ const NewProductGroup = () => {
             })
             navigate('/productgroup')
         }
+        setLoading(false)
         } catch (error) {
             console.log(error);
         }
@@ -69,7 +73,12 @@ const NewProductGroup = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" onClick={handelSubmit} >ثبت</button>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/productgroup' className="btn btn-danger float-right">بازگشت</NavLink>

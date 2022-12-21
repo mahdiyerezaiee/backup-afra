@@ -31,7 +31,7 @@ const SalesBoardForCustomer = () => {
     const user = useSelector(state => state.userInfo);
     const userRole = useSelector(state => state.userRole);
 
-
+    const [loading, setLoading] = useState(false);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
@@ -125,6 +125,7 @@ const SalesBoardForCustomer = () => {
 
 
     const submitHandler = async (e) => {
+        setLoading(true)
         e.preventDefault()
         try {
             const { data, status } = await AddTOCart(addToCart)
@@ -132,7 +133,7 @@ const SalesBoardForCustomer = () => {
         } catch (err) {
             console.log(err)
         }
-
+setLoading(false)
     }
 
     if (productSupply !== null) {
@@ -154,7 +155,7 @@ const SalesBoardForCustomer = () => {
                             ariaHideApp={false}
 
                         >
-                            <ModalSubmit productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={modalInfo} closeModal={closeModal} name={name} quantity={quantity} submitHandler={submitHandler}
+                            <ModalSubmit  loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={modalInfo} closeModal={closeModal} name={name} quantity={quantity} submitHandler={submitHandler}
                                 setquantity={setquantity} />
                         </Modal>
                         <Modal

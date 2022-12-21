@@ -10,12 +10,14 @@ import Select from 'react-select';
 
 import SimpleReactValidator from "simple-react-validator";
 import { ShippingStatusEnums } from "../../../Enums/ShippingStatusEnums";
+import {ClipLoader} from "react-spinners";
 
 
 const EditeSupply = () => {
     const [productId, setProductId] = useState(0);
     const [measureUnitId, setMeasureUnitId] = useState(0);
     const [cottageCode, setCottageCode] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const [wareHouseId, setWareHouseId] = useState(0);
     const [supplyTypeId, setSupplyTypeId] = useState(0);
@@ -148,6 +150,7 @@ const EditeSupply = () => {
     }
 
     const submit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
             const supply = {
@@ -179,6 +182,7 @@ const EditeSupply = () => {
                 });
                 navigate('/supply')
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
         }
@@ -393,8 +397,18 @@ const EditeSupply = () => {
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
                                 {validator.current.allValid()
-                                    ? <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " onClick={submit}>تایید</button>
-                                    : <button disabled={true} type="submit" className="btn btn-success float-left " onClick={submit}>تایید</button>}
+                                    ? <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " onClick={submit}>تایید<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
+                                    : <button disabled={true} type="submit" className="btn btn-success float-left " onClick={submit}>تایید<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>  }
 
                             </div>
                             <div className='col-6 '>

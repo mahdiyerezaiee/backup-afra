@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { useState } from 'react';
 import { attachmentUpload } from '../services/attachmentService';
 import { toast } from 'react-toastify';
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -24,12 +25,9 @@ const customStyles = {
 const ImageFileUploader = ({ EntityTypesId, EntityId, modalIsOpen, closeModal,comment }) => {
     const [files, setFiles] = useState('')
     const [filename, setFileName] = useState('انتخاب فایل')
-
-
-
-
-
+    let [loading, setLoading] = useState(false);
     const handelSubmit =async (e) => {
+        setLoading(true)
         e.preventDefault()
         const formData = new FormData()
         formData.append('Files', files)
@@ -58,7 +56,7 @@ closeModal()
 
 
 closeModal()
-
+setLoading(false)
 window.location.reload()
 
     }
@@ -125,7 +123,13 @@ closeModal()
                 <div className='row mt-5 '>
 
                     <div className='col-12'>
-                        <button disabled={files.length<1?true:false} onClick={handelSubmit} className="btn btn-primary " >ارسال</button>
+                        <button disabled={loading || files.length<1?true:false}  onClick={handelSubmit} className="btn btn-primary " >
+                            ارسال<ClipLoader
+
+                            loading={loading}
+                            color="#ffff"
+                            size={15}
+                        /></button>
                     </div>
                    
                 </div>

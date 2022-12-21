@@ -3,12 +3,14 @@ import {useState, useEffect, useCallback} from "react";
 import {GetAllNewsForAdmin, GetAllNewsForUsers, SetNews} from "../../../services/newsService";
 import {toast} from "react-toastify";
 import {Navigate, NavLink, useNavigate, useParams} from "react-router-dom";
+import {ClipLoader} from "react-spinners";
 
 const EditNews = () => {
     const user = useSelector(state => state.userInfo);
     const params = useParams()
     const navigate = useNavigate()
     const [newss, setNewss] = useState([])
+    const [loading, setLoading] = useState(false);
 
     const [message, setMessage] = useState('');
     const [title, setTitle] = useState('');
@@ -56,6 +58,7 @@ useEffect(()=>{
     }
 
     const addNews = async () => {
+        setLoading(true)
         try {
             const {data, status} = await SetNews(setNews)
             if (status === 200) {
@@ -75,7 +78,7 @@ useEffect(()=>{
             console.log(error)
         }
         navigate('/user-news')
-
+setLoading(false)
     }
     const submit = (e) => {
         e.preventDefault()
@@ -117,8 +120,12 @@ useEffect(()=>{
                         </div>
                         <div className='row'>
                             <div className='col-6 '>
-                                <button type="submit" className="btn btn-success float-left" onClick={submit}>تایید
-                                </button>
+                                <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                             </div>
                             <div className='col-6 '>
                                 <NavLink to='/user-news' className="btn btn-danger float-right">بازگشت</NavLink>

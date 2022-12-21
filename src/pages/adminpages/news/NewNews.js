@@ -4,10 +4,11 @@ import {SetNews} from "../../../services/newsService";
 import {toast} from "react-toastify";
 import Select from "react-select";
 import {NavLink,useNavigate} from "react-router-dom";
+import {ClipLoader} from "react-spinners";
 
 const NewNews = () => {
     const user=useSelector(state=>state.userInfo);
-
+    const [loading, setLoading] = useState(false);
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
     const [active , setActive]=useState(true)
@@ -22,6 +23,7 @@ const setNews = {
     }
 }
 const addNews = async ()=>{
+        setLoading(true)
    try {
        const {data , status}= await SetNews(setNews)
     if (status === 200) {
@@ -42,6 +44,7 @@ const addNews = async ()=>{
 } catch (error) {
         console.log(error)
     }
+    setLoading(false)
 }
 const submit=(e)=>{
         e.preventDefault()
@@ -81,10 +84,15 @@ return(
                     </div>
                     <div className='row'>
                         <div className='col-6 '>
-                            <button type="submit" className="btn btn-success float-left" onClick={submit} >تایید</button>
+                            <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
+
+                                loading={loading}
+                                color="#ffff"
+                                size={15}
+                            /></button>
                         </div>
                         <div className='col-6 '>
-                            <NavLink to='/user-news' className="btn btn-success float-right">بازگشت</NavLink>
+                            <NavLink to='/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
                         </div>
                     </div>
 

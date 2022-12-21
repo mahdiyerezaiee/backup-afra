@@ -5,6 +5,7 @@ import {OrderStatus} from "../../Enums/OrderStatusEnums";
 import {toast} from "react-toastify";
 import {GetProductSupplyConditions} from "../../services/ProductSupplyConditionService";
 import OrderConditionEdit from "./OrderConditionEdit";
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -33,6 +34,7 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
     const [productSupplyId, setProductSupplyId] = useState(0)
     const [orderCondition, setOrderCondition] = useState([])
     const [comment, setComment] = useState(null);
+    const [loading, setLoading] = useState(false);
 
    
     const getOrder = async () => {
@@ -130,6 +132,7 @@ conditionOrder=orderCondition
 
     }, [id])
     const handleEditFormSubmit = async () => {
+    setLoading(true)
         const datas = {
             "order": {
                 id,
@@ -167,6 +170,8 @@ conditionOrder=orderCondition
 
             }
             closeModal()
+            setLoading(false)
+
         }
         catch (e) {
 
@@ -216,8 +221,14 @@ conditionOrder=orderCondition
 
                         <div className='col-6 '>
                             <button className="btn btn-success float-left "
-                                    onClick={handleEditFormSubmit}>تایید
-                            </button>
+                                  disabled={loading}  onClick={handleEditFormSubmit}>تایید
+
+                                <ClipLoader
+
+                                    loading={loading}
+                                    color="#ffff"
+                                    size={15}
+                                /></button>
                         </div>
                         <div className='col-6 '>
 

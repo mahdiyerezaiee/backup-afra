@@ -8,6 +8,7 @@ import { orderSpliter } from "../../services/orderService";
 import SimpleReactValidator from "simple-react-validator";
 import { GetOrderDetails } from './../../services/orderService';
 import file from "../../pages/order/addressFile.xlsx";
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -25,6 +26,7 @@ const customStyles = {
 
 }
 const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, orderId, orderMeasuerId }) => {
+    let [loading, setLoading] = useState(false);
 
     const [fullAddress, setFulAddress] = useState('');
     const [postalCode, setpostalCode] = useState('');
@@ -63,6 +65,7 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
     }
 
     const handelSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
 
         try {
@@ -121,6 +124,7 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
         } catch (error) {
             console.log(error)
         }
+        setLoading(false)
     }
 
     const validator = useRef(new SimpleReactValidator({
@@ -363,18 +367,15 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
 
                             </div>
 
-                            {/*<div className="form-group">*/}
-                            {/*    <div className="form-check pl-0">*/}
-                            {/*        <div className="custom-control custom-checkbox checkbox-info">*/}
-
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-
                             <div className='row justify-content-between'>
 
                                 <div className='col-6 '>
-                                    <button disabled={ostanId === 0 || !validator.current.allValid()} type="submit" className="btn btn-primary" onClick={handelSubmit}>تایید</button>
+                                    <button disabled={loading || ostanId === 0 || !validator.current.allValid()} type="submit" className="btn btn-primary" onClick={handelSubmit}>تایید<ClipLoader
+
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
                                 </div>
 
 

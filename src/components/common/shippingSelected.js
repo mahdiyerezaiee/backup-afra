@@ -6,6 +6,7 @@ import { SyncWithSender } from '../../services/outScopeService';
 import { toast } from 'react-toastify';
 import { GetAllShippingCompanies } from './../../services/ShippingService';
 import { editOrder } from './../../services/orderService';
+import {ClipLoader} from "react-spinners";
 
 const customStyles = {
     content: {
@@ -27,6 +28,8 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     const [shippingCompanyId, setShippingCompanysId] = useState(0);
     const [shippingContract, setShippingContract] = useState([]);
     const [shippingContractId, setShippingContractId] = useState(0);
+    let [loading, setLoading] = useState(false);
+
     const getShippingCompany = async () => {
         try {
             const { data, status } = await GetAllShippingCompanies();
@@ -62,6 +65,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
 
     }
     const handelSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault();
         const body = {
             orderDetailId,
@@ -106,6 +110,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                     progress: undefined
                 });
             }
+            setLoading(false)
             closeModal()}
     return (
         <Modal
@@ -154,8 +159,12 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
 
                 <div className='row '>
                     <div className='col-6'>
-                        <button type="submit" onClick={handelSubmit} className="btn btn-primary float-left" >ارسال</button>
-                    </div>
+                        <button type="submit" disabled={loading} onClick={handelSubmit} className="btn btn-primary float-left" >ارسال<ClipLoader
+
+                            loading={loading}
+                            color="#ffff"
+                            size={15}
+                        /></button></div>
                     <div className='col-6'>
                         <button type="submit" onClick={() => closeModal()} className="btn btn-danger float-right" >بازگشت</button>
                     </div>
