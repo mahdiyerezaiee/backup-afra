@@ -153,7 +153,7 @@ const UserProfile = () => {
         </div>
       </div>
 
-      {organizm ?
+      {organizm && user.organizationId?
         <div className="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
 
           <div className="user-profile layout-spacing">
