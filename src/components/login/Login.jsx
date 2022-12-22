@@ -23,6 +23,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const [mobile, setMobile] = useState('');
     const [loading, setLoading] = useState(false);
+    
 
 
    const validator = useRef(new SimpleReactValidator({
@@ -47,6 +48,7 @@ validators:{
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true)
         setClick(true);
         const user = {
 
@@ -155,7 +157,7 @@ mobileNo=mobile
 
 
                                     <div className="col-6">
-                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid()? false: true}>
+                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid() && !loading? false: true}>
                                             تایید و ادامه
                                             <ClipLoader
 

@@ -83,8 +83,8 @@ const OrderList = () => {
     const [DetailAddress, setDetailAddress] = useState([]);
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
-    const [SortColumn, setSortColumn] = useState(null)
-    const [SortingDirectionId, setSortingDirectionId] = useState(null)
+    let SortColumn=null
+    let SortingDirectionId=null
     const param = { PageSize, PageNumber }
 
     function getPage() {
@@ -374,8 +374,9 @@ const OrderList = () => {
                 setPageNumber(0)
                 sessionStorage.setItem('params', JSON.stringify(params));
                 sessionStorage.setItem('param', JSON.stringify(param));
-
+            
             }
+            
 
         } catch (err) {
             console.log(err)
@@ -425,32 +426,42 @@ const OrderList = () => {
         return {
 
             onClick: (e) => {
+                var siblings=[];
+                
+               
+                console.log(SortColumn);
+                console.log(SortingDirectionId);
 
-
+                // console.log(e.target);
+                // siblings = e.target.parentNode.getElementsByTagName('th');
+                // console.log(siblings);
+                // for(let i = 0;i<siblings.length;i++){
+                //     siblings[i].innerText = siblings[i].innerText.replace('🔼', '').replace('🔽', '');
+                // }
 
                 switch (e.target.innerText.replace('🔼', '').replace('🔽', '')) {
 
                     case 'شماره سفارش':
 
                         if (e.target.children[0].innerText === '') {
-                            setSortColumn('id')
-                            setSortingDirectionId(1)
+                            SortColumn='id'
+                            SortingDirectionId=1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
                         }
 
                         else if (e.target.children[0].innerText === '🔼') {
                             console.log('hiiii');
-                            setSortColumn('id')
-                            setSortingDirectionId(2)
+                            SortColumn='id'
+                            SortingDirectionId=2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            setSortColumn(null)
-                            setSortingDirectionId(null)
+                            SortColumn=null
+                            SortingDirectionId=null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -459,24 +470,23 @@ const OrderList = () => {
                     case 'تاریخ':
 
                         if (e.target.children[0].innerText === '') {
-                            setSortColumn('CreateDate')
-                            setSortingDirectionId(1)
+                            SortColumn='CreateDate'
+                            SortingDirectionId=1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            setSortColumn('CreateDate')
-                            setSortingDirectionId(2)
+                            SortColumn='CreateDate'
+                            SortingDirectionId=2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
-
-                            setSortColumn(null)
-                            setSortingDirectionId(null)
+                            SortColumn=null
+                            SortingDirectionId=null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -486,24 +496,24 @@ const OrderList = () => {
                     case 'مبلغ-ریال':
 
                         if (e.target.children[0].innerText === '') {
-                            setSortColumn('OrderFinalizedPrice')
-                            setSortingDirectionId(1)
+                            SortColumn='OrderFinalizedPrice'
+                            SortingDirectionId=1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            setSortColumn('OrderFinalizedPrice')
-                            setSortingDirectionId(2)
+                            SortColumn='OrderFinalizedPrice'
+                            SortingDirectionId=2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            setSortColumn(null)
-                            setSortingDirectionId(null)
+                            SortColumn=null
+                            SortingDirectionId=null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -513,23 +523,23 @@ const OrderList = () => {
 
 
                         if (e.target.children[0].innerText === '') {
-                            setSortColumn('OrderStatusId')
-                            setSortingDirectionId(1)
+                            SortColumn='OrderStatusId'
+                            SortingDirectionId=1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            setSortColumn('OrderStatusId')
-                            setSortingDirectionId(2)
+                            SortColumn='OrderStatusId'
+                            SortingDirectionId=2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            setSortColumn(null)
-                            setSortingDirectionId(null)
+                           SortColumn=null
+                            SortingDirectionId=null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -539,24 +549,24 @@ const OrderList = () => {
 
 
                         if (e.target.children[0].innerText === '') {
-                            setSortColumn('PaymentStatusId')
-                            setSortingDirectionId(1)
+                            SortColumn='PaymentStatusId'
+                            SortingDirectionId=1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            setSortColumn('PaymentStatusId')
-                            setSortingDirectionId(2)
+                            SortColumn='PaymentStatusId'
+                            SortingDirectionId=2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            setSortColumn(null)
-                            setSortingDirectionId(null)
+                            SortColumn=null
+                            SortingDirectionId=null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -566,24 +576,24 @@ const OrderList = () => {
                     case 'وضعیت ارسال':
 
                         if (e.target.children[0].innerText === '') {
-                            setSortColumn('ShippingStatusId')
-                            setSortingDirectionId(1)
+                            SortColumn='ShippingStatusId'
+                            SortingDirectionId=1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            setSortColumn('ShippingStatusId')
-                            setSortingDirectionId(2)
+                           SortColumn='ShippingStatusId'
+                            SortingDirectionId=2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            setSortColumn(null)
-                            setSortingDirectionId(null)
+                            SortColumn=null
+                            SortingDirectionId=null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
