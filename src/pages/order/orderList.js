@@ -781,7 +781,7 @@ const OrderList = () => {
         },
         {
             Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
-                <span onClick={() => showOrder(row.row.original.id)}>
+                <button className="border-0 bg-transparent non-hover edit-btn" onClick={() => showOrder(row.row.original.id)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                         width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                             fill="none" stroke="#000" strokeLinecap="round"
@@ -794,7 +794,7 @@ const OrderList = () => {
                             strokeLinejoin="round" strokeWidth="12" /><path
                             d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
                             strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>
-                </span>
+                </button>
             </div>
             )
         },

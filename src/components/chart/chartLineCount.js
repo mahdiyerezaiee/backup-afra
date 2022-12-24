@@ -133,21 +133,7 @@ const options = {
 
 
 
-export function ChartLineCount() {
-    const [datas , setDatas]=useState([])
-    const [TypeId , setTypeId]=useState(3)
-    useEffect(()=>{
-        const GetReport = async () => {
-            try {
-                const {data , status}= await GetPeriodicSalesReport(TypeId)
-                setDatas(data.result.ordersPerSchedule)
-            }catch (e) {
-                console.log(e)
-            }
-
-        }
-        GetReport()
-    },[TypeId])
+export function ChartLineCount({datas , setTypeId }) {
 
 if (datas && datas.length >0){
     const labels =datas.map(item=>item.scheduleName)
