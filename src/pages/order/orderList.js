@@ -400,7 +400,9 @@ const OrderList = () => {
                 NationalCode: nationalCode,
                 OrderDetailExtId,
                 PageNumber,
-                PageSize
+                PageSize,  SortColumn,
+                SortingDirectionId
+
             }
             ,
             paramsSerializer: params => {

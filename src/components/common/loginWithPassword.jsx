@@ -108,7 +108,6 @@ const handelBack=(e)=>{
                         });
 
                         navigate('/dashboard')
-setLoading(false)
 
                     }
 
@@ -127,6 +126,7 @@ setLoading(false)
 
                     }
 
+                    setLoading(false)
 
 
 
