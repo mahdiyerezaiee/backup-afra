@@ -75,6 +75,7 @@ const OrderList = () => {
     const [EndDate, setEndDate] = useState(getDefault().EndDate)
     const [ExtId, setExtId] = useState(getDefault().ExtId ? getDefault().ExtId : null)
     const [nationalCode, setNationalCode] = useState(getDefault().nationalCode)
+    const [organizationNationalId, setOrganizationNationalId] = useState(getDefault().organizationNationalId)
     const [orderStatusIds, setOrderStatusIds] = useState(getDefault().orderStatusIds)
     const [paymentMethodIds, setPaymentMethodIds] = useState(getDefault().paymentMethodIds)
     const [paymentStatusIds, setPaymentStatusId] = useState(getDefault().paymentStatusIds)
@@ -318,6 +319,7 @@ const OrderList = () => {
 
     }
     const params = {
+        organizationNationalId,
         overDue,
         paymentStatusIds,
         Id,
@@ -351,6 +353,7 @@ const OrderList = () => {
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
+                OrganizationNationalId:organizationNationalId,
                 OrderDetailExtId,
                 PageNumber: 0,
                 PageSize,
@@ -398,6 +401,8 @@ const OrderList = () => {
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
+                OrganizationNationalId:organizationNationalId,
+
                 OrderDetailExtId,
                 PageNumber,
                 PageSize,  SortColumn,
@@ -431,8 +436,7 @@ const OrderList = () => {
                 var siblings=[];
                 
                
-                console.log(SortColumn);
-                console.log(SortingDirectionId);
+
 
                 // console.log(e.target);
                 // siblings = e.target.parentNode.getElementsByTagName('th');
@@ -629,6 +633,8 @@ const OrderList = () => {
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
+                OrganizationNationalId:organizationNationalId,
+
                 OrderDetailExtId,
                 PageNumber,
                 PageSize
@@ -881,6 +887,7 @@ const OrderList = () => {
         setPaymentStatusId([])
         setPaymentMethodIds([])
         setShippingStatusIds([])
+        setOrganizationNationalId('')
         SetoverDue(null)
         sessionStorage.clear()
 
@@ -969,6 +976,11 @@ const OrderList = () => {
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
                                 maxLength="11" value={nationalCode}
                                 onChange={e => setNationalCode(e.target.value)} /></div>
+                        <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                            <label> شناسه ملی</label>
+                            <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
+                                maxLength="11" value={organizationNationalId}
+                                onChange={e => setOrganizationNationalId(e.target.value)} /></div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                             <label> شناسه خرید بازارگاه</label>
 
@@ -1088,7 +1100,7 @@ const OrderList = () => {
                     </div>
                 </AdvancedSearch>
             </div>
-            {getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
+            {getDefault().organizationNationalId  ||getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
                 <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
             <div className=" statbox widget-content widget-content-area rounded">
                 <div>
@@ -1184,7 +1196,11 @@ const OrderList = () => {
                                     maxLength="11" value={nationalCode}
                                     onChange={e => setNationalCode(e.target.value)} />
                             </div>
-
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> شناسه ملی</label>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
+                                       maxLength="11" value={organizationNationalId}
+                                       onChange={e => setOrganizationNationalId(e.target.value)} /></div>
 
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه خرید بازارگاه</label>
@@ -1319,7 +1335,7 @@ const OrderList = () => {
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
+                {getDefault().organizationNationalId ||getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
                     <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
