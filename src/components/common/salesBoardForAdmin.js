@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+
 import { GetAllProductSupply, GetAllProductSupplyBord } from "../../services/productSupplyService";
 import Modal from 'react-modal';
 import { useSelector } from "react-redux";
 import { AddTOCart } from "../../services/cartShoppingService";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { GetAllProductSupplyBordAdmin } from './../../services/productSupplyService';
-import ConditionSalesBord from "./conditionSalesBordCustomer";
+
 import ModalSubmit from "./modalSubmit";
 import { GetGroupsForEntity } from './../../services/GroupService';
 import ConditionSalesBordAdmin from "./conditionSalesBordAdmin";
+
 
 const customStyles = {
     content: {
@@ -31,40 +32,76 @@ const SalesBoardForAdmin = () => {
     const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.userInfo);
     const userRole = useSelector(state => state.userRole);
-    const [Customerg, setCustomerg] = useState([])
+    const [Customerg, setCustomerg] = useState(getDataProductSupply().Customerg)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
 
-    const [productSupply, setProductSupply] = useState([]);
+
+    const [productSupply, setProductSupply] = useState(getDataProductSupply().productSupply);
     const [modalInfo, setModalInfo] = useState([])
     const [quantity, setquantity] = useState(0)
     const [name, setName] = useState([]);
     const [productSupplyConditionId, setProductSupplyConditionId] = useState(0);
-
-    const getProductSupply = async () => {
-        try {
-            const { data, status } = await GetAllProductSupplyBordAdmin();
-
-            setProductSupply(data.result.productSupplies.values)
-
-        } catch (error) {
-            console.log(error);
-        }
+    const d = new Date();
+    d.setTime(d.getTime() +  (60 * 1000));
+    let expires =  d.toUTCString();
+    const dataProductSupply = {
+        expiresAt: expires,
+        productSupply,
+        Customerg,
     }
-    const GetCustomerGroup = async () => {
-        const { data, status } = await GetGroupsForEntity(1);
-        if (status === 200) {
 
 
-            setCustomerg(data.result.groups);
-        }
+    function getDataProductSupply() {
+        let items = JSON.parse(sessionStorage.getItem('dataProductSupply'));
+        return items ? items : ''
+
 
     }
+
+
     useEffect(() => {
-        getProductSupply();
-        GetCustomerGroup();
+        const getProductSupply = async () => {
+            try {
+
+                const { data, status } = await GetAllProductSupplyBordAdmin();
+
+                setProductSupply(data.result.productSupplies.values)
+
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        const GetCustomerGroup = async () => {
+            const { data, status } = await GetGroupsForEntity(1);
+            if (status === 200) {
+
+
+                setCustomerg(data.result.groups);
+
+            }
+
+        }
+        if (getDataProductSupply().expiresAt < new Date().toUTCString()){
+
+            sessionStorage.removeItem("dataProductSupply")
+
+
+        }if (!getDataProductSupply().expiresAt ){
+            sessionStorage.setItem('dataProductSupply', JSON.stringify(dataProductSupply));
+
+            getProductSupply();
+            GetCustomerGroup();
+            sessionStorage.setItem('dataProductSupply', JSON.stringify(dataProductSupply));
+
+
+        }
+
     }, [])
+
+
     let formatter = new Intl.NumberFormat('fa-IR', {
         style: 'currency',
         currency: 'IRR', maximumFractionDigits: 0,

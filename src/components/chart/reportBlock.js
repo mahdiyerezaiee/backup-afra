@@ -5,17 +5,48 @@ import { BsFillArrowLeftCircleFill } from "react-icons/bs"
 import { ReportEntityStyle } from "../../Enums/ReportEntityStyle";
 
 const ReportBlock = () => {
-    const [report, setReport] = useState([])
+    const [report, setReport] = useState(getDataReportBlock().report?getDataReportBlock().report:[])
+    let d = new Date();
+    d.setTime(d.getTime() +  (60 * 1000));
+    let expires =  d.toUTCString();
+
+    const dataReportBlock = {
+        expiresAt: expires,
+        report
+    }
+    function getDataReportBlock() {
+        let items = JSON.parse(sessionStorage.getItem('dataReportBlock'));
+        return items ? items : ''
+
+
+    }
     const getReport = async () => {
         try {
             const { data, status } = await GetSimplifiedReports()
             setReport(data.result.simplifiedReports)
+            sessionStorage.setItem('dataReportBlock', JSON.stringify(dataReportBlock));
+
         } catch (e) {
             console.log(e)
         }
     }
+
     useEffect(() => {
-        getReport()
+
+        if (getDataReportBlock().expiresAt < new Date().toUTCString()){
+
+            sessionStorage.removeItem("dataReportBlock")
+
+
+        }
+        if (!getDataReportBlock().expiresAt){
+
+            getReport()
+            sessionStorage.setItem('dataReportBlock', JSON.stringify(dataReportBlock));
+
+
+        }
+
     }, [])
     if (report){
         return (<div className="widget  shadow sliderReport" >

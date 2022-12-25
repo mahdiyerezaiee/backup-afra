@@ -109,11 +109,11 @@ setLoading(false)
 
                         </div>
                         <div className="form-group mb-4 textOnInput ">
-                            <label >شماره ثبت</label>
+                            <label >کد اقتصادی</label>
                             <input type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e) => {
                                 setcompanyRegister(e.target.value)
 
-                            }} placeholder="شماره ثبت" />
+                            }} placeholder="کد اقتصادی" />
 
 
                         </div>

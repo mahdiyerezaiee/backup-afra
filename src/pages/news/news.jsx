@@ -3,35 +3,63 @@ import {GetAllNewsForUsers, GetAllNewsForUsersPage} from "../../services/newsSer
 import QueryString from "qs";
 
 const News = () => {
-  const [guessNews , setGuessNews]= useState([])
-    const getNews =async () => {
-        let config = {
+  const [guessNews , setGuessNews]= useState( getDataNews().guessNews?getDataNews().guessNews: [])
+    let d = new Date();
+    d.setTime(d.getTime() +  (60 * 1000));
+    let expires =  d.toUTCString();
 
-            headers: { 'Content-Type': 'application/json' },
-            params: {
+    const dataNews = {
+        expiresAt: expires,
+        guessNews
+    }
+    function getDataNews() {
+        let items = JSON.parse(sessionStorage.getItem('dataNews'));
+        return items ? items : ''
 
-
-                PageSize:9
-
-
-            }
-            ,
-            paramsSerializer:params=>{
-
-                return QueryString.stringify(params)
-            }
-
-        };
-      try {
-          const {data , status}=await GetAllNewsForUsersPage(config);
-          setGuessNews(data.result.news.values)
-      }catch (err){
-          console.log(err)
-      }
 
     }
+
     useEffect(()=>{
-        getNews()
+        const getNews =async () => {
+            let config = {
+
+                headers: { 'Content-Type': 'application/json' },
+                params: {
+
+
+                    PageSize:9
+
+
+                }
+                ,
+                paramsSerializer:params=>{
+
+                    return QueryString.stringify(params)
+                }
+
+            };
+            try {
+                const {data , status}=await GetAllNewsForUsersPage(config);
+                setGuessNews(data.result.news.values)
+
+            }catch (err){
+                console.log(err)
+            }
+
+        }
+        if (getDataNews().expiresAt < new Date().toUTCString()){
+
+            sessionStorage.removeItem("dataNews")
+
+
+        }
+        if (!getDataNews().expiresAt){
+
+            getNews()
+            sessionStorage.setItem('dataNews', JSON.stringify(dataNews));
+
+
+        }
     },[])
     if (guessNews){
         return(

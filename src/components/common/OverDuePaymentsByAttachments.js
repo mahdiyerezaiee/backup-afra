@@ -6,20 +6,55 @@ import {BsArrowLeftCircle} from "react-icons/bs"
 const OverDuePaymentsByAttachments = () => {
     const navigate = useNavigate()
 
-  const [checked , setChecked]= useState(false)
-    const data = async () => {
-      try {
-          const {data , status} = await HasOverDuePaymentsByAttachments()
-          if (data.result.hasOverDueAttachments === true){
-              setChecked(true)
-          }
-      }catch (e) {
-          console.log(e)
-      }
+  const [checked , setChecked]= useState(getDataOverDuePaymentsByAttachments().checked)
+    let d = new Date();
+    d.setTime(d.getTime() +  (60 * 1000));
+    let expires =  d.toUTCString();
+
+    const dataOverDuePaymentsByAttachments = {
+        expiresAt: expires,
+        checked
+    }
+    function getDataOverDuePaymentsByAttachments() {
+        let items = JSON.parse(sessionStorage.getItem('dataOverDuePaymentsByAttachments'));
+        return items ? items : false
+
 
     }
+
+    const data = async () => {
+        try {
+            const {data , status} = await HasOverDuePaymentsByAttachments()
+            if (data.result.hasOverDueAttachments === true){
+                setChecked(true)
+                dataOverDuePaymentsByAttachments.checked=true
+                setChecked(dataOverDuePaymentsByAttachments.checked)
+                sessionStorage.setItem('dataOverDuePaymentsByAttachments', JSON.stringify(dataOverDuePaymentsByAttachments));
+
+            }
+
+        }catch (e) {
+            console.log(e)
+        }
+
+    }
+
     useEffect(()=>{
-        data()
+
+        if (getDataOverDuePaymentsByAttachments().expiresAt < new Date().toUTCString()){
+
+            sessionStorage.removeItem("dataOverDuePaymentsByAttachments")
+
+
+        }
+        if (!getDataOverDuePaymentsByAttachments().expiresAt){
+
+            data()
+            sessionStorage.setItem('dataOverDuePaymentsByAttachments', JSON.stringify(dataOverDuePaymentsByAttachments));
+
+
+        }
+
     },[])
 
     if (checked ){

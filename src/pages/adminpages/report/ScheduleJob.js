@@ -2,17 +2,41 @@ import {GetScheduleJobsReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
 import {GrUpdate} from "react-icons/gr"
 const ScheduleJob = () => {
-  const [report , setReport] = useState([])
-    const GetData =async () => {
-      try {
-          const {data , status} = await GetScheduleJobsReport()
-          setReport(data.result.scheduledJobs)
-      }catch (e) {
-          console.log(e)
-      }
+  const [report , setReport] = useState(getDataScheduleJob().report?getDataScheduleJob().report:[])
+    let d = new Date();
+    d.setTime(d.getTime() +  (60 * 1000));
+    let expires =  d.toUTCString();
+    const dataScheduleJob = {
+        expiresAt: expires,
+        report
     }
+    function getDataScheduleJob() {
+        let items = JSON.parse(sessionStorage.getItem('dataScheduleJob'));
+        return items ? items : ''
+
+
+    }
+
     useEffect(()=>{
-        GetData()
+        const GetData =async () => {
+            try {
+                const {data , status} = await GetScheduleJobsReport()
+                setReport(data.result.scheduledJobs)
+                sessionStorage.setItem('dataScheduleJob', JSON.stringify(dataScheduleJob));
+
+            }catch (e) {
+                console.log(e)
+            }
+
+        }
+        if (getDataScheduleJob().expiresAt < new Date().toUTCString()){
+            sessionStorage.removeItem("dataScheduleJob")
+
+
+        }if (!getDataScheduleJob().expiresAt){
+GetData()
+
+        }
     },[])
     return(
         <div className="px-3 " style={{height: "330px" , overflowY:"auto"}}>

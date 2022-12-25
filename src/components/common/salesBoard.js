@@ -36,19 +36,33 @@ const SalesBoardForCustomer = () => {
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
 
-    const [productSupply, setProductSupply] = useState([]);
+    const [productSupply, setProductSupply] = useState(getDataProductSupplyCustomer().productSupply);
     const [modalInfo, setModalInfo] = useState([])
     const [quantity, setquantity] = useState(0)
     const [name, setName] = useState([]);
-    const [groupInfo, setGroupInfo] = useState({})
+    const [groupInfo, setGroupInfo] = useState(getDataProductSupplyCustomer().groupInfo)
     const [productSupplyConditionId, setProductSupplyConditionId] = useState(0);
+    const d = new Date();
+    d.setTime(d.getTime() +  (60 * 1000));
+    let expires =  d.toUTCString();
+    const dataProductSupplyCustomer = {
+        expiresAt: expires,
+        productSupply,
+        groupInfo,
+    }
+    function getDataProductSupplyCustomer() {
+        let items = JSON.parse(sessionStorage.getItem('dataProductSupplyCustomer'));
+        return items ? items : ''
+
+
+    }
 
     const getProductSupply = async () => {
         try {
             const { data, status } = await GetAllProductSupplyBord();
 
             setProductSupply(data.result.productSupplies.values)
-
+dataProductSupplyCustomer.productSupply=data.result.productSupplies.values
         } catch (error) {
             console.log(error);
         }
@@ -60,7 +74,7 @@ const SalesBoardForCustomer = () => {
                 const { data, status } = await GetGroupById(user.groupId)
                 if (status === 200) {
                     setGroupInfo(data.result.group)
-
+dataProductSupplyCustomer.groupInfo=data.result.group
                 }
             } catch (error) {
                 console.log(error);
@@ -69,8 +83,20 @@ const SalesBoardForCustomer = () => {
 
     }
     useEffect(() => {
-        getProductSupply();
-        GroupbyId()
+        if (getDataProductSupplyCustomer().expiresAt < new Date().toUTCString()){
+
+            sessionStorage.removeItem("dataProductSupplyCustomer")
+
+
+        }if (!getDataProductSupplyCustomer().expiresAt ){
+
+            getProductSupply();
+            GroupbyId()
+            sessionStorage.setItem('dataProductSupplyCustomer', JSON.stringify(dataProductSupplyCustomer));
+
+
+        }
+
     }, [])
     let formatter = new Intl.NumberFormat('fa-IR', {
         style: 'currency',
