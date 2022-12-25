@@ -22,6 +22,7 @@ const ScheduleJob = () => {
             try {
                 const {data , status} = await GetScheduleJobsReport()
                 setReport(data.result.scheduledJobs)
+                dataScheduleJob.report=data.result.scheduledJobs
                 sessionStorage.setItem('dataScheduleJob', JSON.stringify(dataScheduleJob));
 
             }catch (e) {

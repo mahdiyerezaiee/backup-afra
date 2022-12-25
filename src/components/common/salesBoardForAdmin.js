@@ -32,13 +32,13 @@ const SalesBoardForAdmin = () => {
     const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.userInfo);
     const userRole = useSelector(state => state.userRole);
-    const [Customerg, setCustomerg] = useState(getDataProductSupply().Customerg)
+    const [Customerg, setCustomerg] = useState(getDataProductSupply().Customerg?getDataProductSupply().Customerg:[])
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
 
 
-    const [productSupply, setProductSupply] = useState(getDataProductSupply().productSupply);
+    const [productSupply, setProductSupply] = useState(getDataProductSupply().productSupply?getDataProductSupply().productSupply:[]);
     const [modalInfo, setModalInfo] = useState([])
     const [quantity, setquantity] = useState(0)
     const [name, setName] = useState([]);
@@ -49,7 +49,7 @@ const SalesBoardForAdmin = () => {
     const dataProductSupply = {
         expiresAt: expires,
         productSupply,
-        Customerg,
+Customerg
     }
 
 
@@ -68,7 +68,8 @@ const SalesBoardForAdmin = () => {
                 const { data, status } = await GetAllProductSupplyBordAdmin();
 
                 setProductSupply(data.result.productSupplies.values)
-
+dataProductSupply.productSupply=data.result.productSupplies.values
+                sessionStorage.setItem('dataProductSupply', JSON.stringify(dataProductSupply));
 
             } catch (error) {
                 console.log(error);
@@ -80,7 +81,7 @@ const SalesBoardForAdmin = () => {
 
 
                 setCustomerg(data.result.groups);
-
+dataProductSupply.Customerg=data.result.groups
             }
 
         }
@@ -90,7 +91,6 @@ const SalesBoardForAdmin = () => {
 
 
         }if (!getDataProductSupply().expiresAt ){
-            sessionStorage.setItem('dataProductSupply', JSON.stringify(dataProductSupply));
 
             getProductSupply();
             GetCustomerGroup();
@@ -167,7 +167,8 @@ setLoading(false)
     }
 
     let productCondistion;
-    if(productSupply!==null){
+    console.log(productSupply)
+    if(productSupply!== null){
 
      productCondistion = productSupply.map(item => item.productSupplyConditions)
     }

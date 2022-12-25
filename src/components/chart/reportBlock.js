@@ -24,6 +24,7 @@ const ReportBlock = () => {
         try {
             const { data, status } = await GetSimplifiedReports()
             setReport(data.result.simplifiedReports)
+            dataReportBlock.report=data.result.simplifiedReports
             sessionStorage.setItem('dataReportBlock', JSON.stringify(dataReportBlock));
 
         } catch (e) {

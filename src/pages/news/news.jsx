@@ -41,6 +41,8 @@ const News = () => {
             try {
                 const {data , status}=await GetAllNewsForUsersPage(config);
                 setGuessNews(data.result.news.values)
+                dataNews.guessNews=data.result.news.values
+                sessionStorage.setItem('dataNews', JSON.stringify(dataNews));
 
             }catch (err){
                 console.log(err)

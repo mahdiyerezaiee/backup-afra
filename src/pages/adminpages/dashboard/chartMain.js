@@ -28,7 +28,8 @@ const ChartMain = () => {
                 const {data , status}= await GetPeriodicSalesReport(TypeId)
 
                 setDatas(data.result.ordersPerSchedule)
-
+dataReport.datas=data.result.ordersPerSchedule
+                sessionStorage.setItem('dataReport', JSON.stringify(dataReport));
 
             }catch (e) {
                 console.log(e)
