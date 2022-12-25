@@ -26,6 +26,10 @@ export const GetShippingCompanies=(url)=>{
 
     return http.get(`${configure}/Shipping/GetShippingCompanies`, url);
 }
+export const GetShipping=(url)=>{
+
+    return http.get(`${configure}/Shipping/GetShippings`, url);
+}
 export const GetAllShippingCompanies=(url)=>{
 
     return http.get(`${configure}/Shipping/GetShippingCompanies?PageSize=1000000`);

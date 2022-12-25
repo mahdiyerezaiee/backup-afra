@@ -186,6 +186,7 @@ let el = document.getElementById("sidebar");
               </SubMenu>
 
               <SubMenu title="گزارشات" hidden={roles.includes(7) ? false : true} icon={<TbReport size={'2rem'} />} ref={ref16} open={show.item16 === true? true:false} onClick={() => setShow({...show , item16: !show.item16, item1: false,item3: false,item4: false,item5: false,item6: false,item8: false,item9: false,item10: false,item2: false,item11: false,item12: false,item14: false,item13: false ,item7: false})}>
+                <MenuItem onClick={handleHeaderClick}  ><NavLink to='/ShippingReport'></NavLink>حواله های باربری </MenuItem>
                 <MenuItem onClick={handleHeaderClick}  ><NavLink to='/UsedBarBariReports'></NavLink> بارگیری </MenuItem>
                 <MenuItem onClick={handleHeaderClick}  > <NavLink to='/CustomersReports'></NavLink>  مشتریان</MenuItem>
                 <MenuItem onClick={handleHeaderClick}  > <NavLink to='/OrdersReports'></NavLink> سفارشات</MenuItem>

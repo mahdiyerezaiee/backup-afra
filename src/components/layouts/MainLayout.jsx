@@ -86,6 +86,7 @@ import CustomerReports from "../../pages/adminpages/report/CustomersReports";
 import OrdersReports from "../../pages/adminpages/report/OrdersReports";
 import DetailCustomerAttachment from "../../pages/adminpages/report/DetailCustomerAttachment";
 import AddOrder from "../../pages/order/addOrder";
+import ShippingList from "../../pages/adminpages/Shipping/ShippingList";
 const MainLayout = (props) => {
 
   const [isloading, setIsloading] = useState(true);
@@ -283,6 +284,7 @@ const MainLayout = (props) => {
                   <Route path='reportfromsql' element={<QlickViewReport />} />
                   <Route path='setting' element={<Setting />} />
                    {/* Report */}
+                  <Route path='ShippingReport' element={<ShippingList />} />
                   <Route path='ProceessAttachments' element={<ProceessAttachments />} />
                   <Route path='customerAttachment/:id' element={<DetailCustomerAttachment />} />
                   <Route path='UsedBarBariReports' element={<UsedBarBariReport />} />
