@@ -298,6 +298,10 @@ const OrganizationList = () => {
 
 
     const getOrganizationName = async () => {
+        if (getData){
+            sessionStorage.clear()
+
+        }
         try {
             let parameter = {
 
@@ -330,7 +334,6 @@ const OrganizationList = () => {
     }
 
     useEffect(() => {
-        sessionStorage.clear();
 
         getOrganizationName();
 
@@ -414,12 +417,13 @@ const OrganizationList = () => {
     const data = useMemo(() => organization);
 
     const handelSearchFieldClear = async () => {
+        setGeData(true)
+getOrganizationName()
         setName("")
 
         setRegistrationNumber("")
         setNationalId("")
         sessionStorage.clear();
-setGeData(true)
 
 
 

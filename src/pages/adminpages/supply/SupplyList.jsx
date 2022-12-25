@@ -302,6 +302,11 @@ const SupplyList = () => {
         setIsOpen(false);
     }
     const getSupplies = async () => {
+        if (getData){
+            sessionStorage.clear()
+
+        }
+
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
@@ -443,7 +448,6 @@ const SupplyList = () => {
 
         getSupplies();
         getWareHouse();
-        sessionStorage.clear()
 
         getSupplier()
     }, [getData])
@@ -575,7 +579,8 @@ const SupplyList = () => {
     ])
     const data = useMemo(() => supplies)
     const handelSearchFieldClear =async () => {
-
+setGeData(true)
+        getSupplies()
         SetContractNumber('')
         SetProductId('')
         SetSupplierId('')
@@ -583,7 +588,6 @@ const SupplyList = () => {
         SetShippingStatusIds([])
         SetWareHouseId('')
 
-       setGeData(true)
         sessionStorage.clear()
 
     }

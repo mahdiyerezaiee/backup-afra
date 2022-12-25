@@ -329,6 +329,10 @@ const productForSelect=()=>{
     }
 
     const getProductSupply = async () => {
+        if (getData){
+            sessionStorage.clear()
+
+        }
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
@@ -355,10 +359,8 @@ const productForSelect=()=>{
         }
     }
     useEffect(() => {
-        sessionStorage.clear()
 
         getProductSupply();
-        sessionStorage.clear()
 
         getProduct();
     }, [getData])
@@ -560,7 +562,8 @@ setCreateDate('')
 
     const data = useMemo(() => productSupply);
     const handelSearchFieldClear=async()=>{
-
+setGeData(true)
+        getProductSupply()
         setCreateDate('')
         setCottageCode('')
         setProducId('')

@@ -475,6 +475,9 @@ CottageCode,
 
     }
     const getShipping = async () => {
+        if (getOrders){
+            sessionStorage.clear()
+        }
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
@@ -510,7 +513,6 @@ CottageCode,
       }
     }
     useEffect(()=>{
-        sessionStorage.removeItem("params")
 
         getShipping()
     },[getOrders])
@@ -556,6 +558,8 @@ CottageCode,
     ])
     const data = useMemo(() => shipping);
     const handelSearchFieldClear = () => {
+        SetGetOrders(true)
+getShipping()
         setCottageCode("")
 
         setCreateEndtDate('')
@@ -563,8 +567,7 @@ CottageCode,
 
         setPageNumber(0)
         setOrderId('')
-        SetGetOrders(true)
-
+sessionStorage.clear()
     }
     if (shipping) {
         const dataForExcel = data.map(item => ({

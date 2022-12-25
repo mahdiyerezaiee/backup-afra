@@ -611,6 +611,10 @@ const OrderList = () => {
 
     }
     const GetOrders = async () => {
+        if (getOrders){
+            sessionStorage.clear()
+
+        }
         let config = {
             headers: { 'Content-Type': 'application/json' },
             params: {
@@ -640,6 +644,7 @@ const OrderList = () => {
                 SetGetOrders(false)
                 setOrder(data.result.orderList.values);
                 setTotalCount(data.result.orderList.totalCount)
+
             }
         } catch (err) {
             console.log(err)
@@ -659,7 +664,6 @@ const OrderList = () => {
     });
     useEffect(() => {
         GetOrders()
-        sessionStorage.removeItem("params")
         getOrganization()
     }, [getOrders])
 
@@ -862,6 +866,9 @@ const OrderList = () => {
         }
     }
     const handelSearchFieldClear = () => {
+        SetGetOrders(true)
+        GetOrders()
+
         setOrderStatusIds([])
         SetAddress({ active: false })
         setUserName('')
@@ -875,10 +882,9 @@ const OrderList = () => {
         setPaymentMethodIds([])
         setShippingStatusIds([])
         SetoverDue(null)
+        sessionStorage.clear()
 
         setPageNumber(0)
-
-        SetGetOrders(true)
     }
     if (order) {
         const dataForExcel = data.map(item => ({

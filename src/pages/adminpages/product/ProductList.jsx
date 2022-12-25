@@ -319,7 +319,10 @@ const ProductList = () => {
         setIsOpen(false);
     }
     const getProducts = async () => {
+        if (getData){
+            sessionStorage.clear()
 
+        }
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
@@ -357,7 +360,6 @@ setGeData(false)
     useEffect(() => {
 
         getProducts();
-        sessionStorage.clear();
 
         GetProductGroup();
     }, [getData])
@@ -512,13 +514,13 @@ setGeData(false)
         }])
     const data = useMemo(() => product);
     const handelSearchFieldClear = () => {
-        sessionStorage.clear();
-setPageNumber(0)
+        setGeData(true)
+getProducts()
+        setPageNumber(0)
         setName('')
         setEnglishName('')
         SetGroupId([])
         sessionStorage.clear();
-setGeData(true)
 
 
 

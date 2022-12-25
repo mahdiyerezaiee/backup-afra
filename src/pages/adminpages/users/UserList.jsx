@@ -182,6 +182,10 @@ const UserList = () => {
         }
     };
     const getUsers = async () => {
+        if (getData){
+            sessionStorage.clear()
+
+        }
         try {
             const { data, staus } = await GetDataWithSearch(configs);
             setGeData(false)
@@ -207,7 +211,6 @@ const UserList = () => {
     }
 
     useEffect(() => {
-sessionStorage.clear()
         getUsers();
         getOrganizationName();
 
@@ -492,8 +495,8 @@ sessionStorage.clear()
         }
     ])
     const handelSearchFieldClear = () => {
-
-        sessionStorage.clear();
+        setGeData(true)
+getUsers()
 
         setPageNumber(0)
         setFirstName('');
@@ -501,7 +504,6 @@ sessionStorage.clear()
         setUserName('')
         setNationalCode('')
         setUserRole([])
-setGeData(true)
         sessionStorage.clear();
 
 
