@@ -68,7 +68,7 @@ const CodeForMobile = () => {
 
 
             const { status, data } = await verifyUser(user);
-            setLoading(false)
+            setLoading(true)
 
             if (status === 200) {
                
@@ -82,7 +82,7 @@ const CodeForMobile = () => {
                     draggable: true,
                     progress: undefined
                 });
-                setLoading(true)
+                setLoading(false)
                 localStorage.setItem('token', data.result.token);
                 localStorage.setItem('refresh', data.result.refresh);
 
@@ -102,6 +102,8 @@ const CodeForMobile = () => {
         }
 
         catch (error) {
+            setLoading(true)
+
             toast.error("کد وارد شده اشتباه است", {
                 position: "top-right",
                 autoClose: 5000,
@@ -112,7 +114,7 @@ const CodeForMobile = () => {
                 progress: undefined
             });
             setIssubmit(false)
-
+setLoading(false)
         }
     }
     const handleChang = (num) => {
@@ -159,7 +161,7 @@ const CodeForMobile = () => {
                                 />
                                 <hr />
 
-                                <ShowTimer loading={loading} timer={timer} firstCondition={otpCodeResender} secondCondition={handelSubmit} />
+                                <ShowTimer  loading={loading} timer={timer} firstCondition={otpCodeResender} secondCondition={handelSubmit} />
 
                             </form>
                         </div>

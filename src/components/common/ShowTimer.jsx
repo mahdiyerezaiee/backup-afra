@@ -4,7 +4,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import {useState} from "react";
 import {ClipLoader} from "react-spinners";
 
-export const ShowTimer = ({timer,firstCondition,secondCondition , loading}) => {
+export const ShowTimer = ({timer,firstCondition,secondCondition , loading }) => {
     const [minutes, second] = [Math.floor(timer/60), timer%60];
 
     const navigate=useNavigate();
@@ -18,7 +18,7 @@ export const ShowTimer = ({timer,firstCondition,secondCondition , loading}) => {
 
         return (
             <div>
-            <button className='btn btn-primary mt-5 mb-5 float-right' onClick={firstCondition}>
+            <button className='btn btn-primary mt-5 mb-5 float-right' disabled={loading} onClick={firstCondition}>
                 <ClipLoader
 
                     loading={loading}
@@ -35,7 +35,7 @@ export const ShowTimer = ({timer,firstCondition,secondCondition , loading}) => {
         return (
         <div>
             <p>تا  {`${minutes}:${second}`} امکان ارسال مجدد کد وجود ندارد</p>
-            <button className='btn btn-success mt-5 mb-5 float-right' disabled={false} onClick={secondCondition}>
+            <button className='btn btn-success mt-5 mb-5 float-right' disabled={loading} onClick={secondCondition}>
                 <ClipLoader
 
                     loading={loading}
