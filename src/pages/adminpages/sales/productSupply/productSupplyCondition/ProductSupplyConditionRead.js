@@ -64,7 +64,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
             <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
             <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.price}</td>
             <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{ CustomerG().filter(i => i.id === contact.customerGroupId).map(contacts => contacts.label)[0]}</td>
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.active === true ? (
+            <td  style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.active === true ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                      className="feather feather-check  " onClick={(event) => activeHandler(event, contact)}

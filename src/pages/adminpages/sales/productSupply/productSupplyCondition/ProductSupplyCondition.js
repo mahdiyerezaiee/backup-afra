@@ -215,8 +215,24 @@ setLoading(false)
 
         setEditContactId(null);
     };
-    const activeHandler = async (event , condition) => {
-        setId(condition.id);
+    const setActiveHandler = async (editedContact) => {
+        try {
+
+            const {data, status} = await SetProductSupplyConditions(editedContact)
+            if (status === 200) {
+                GetProductSupplyC()
+
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const activeHandler =  (event , condition) => {
+        event.preventDefault();
+        let ids = condition.id
+        setId(ids);
         const formValues = {
             minSellableAmount: condition.minSellableAmount,
             maxSellableAmount: condition.maxSellableAmount,
@@ -247,7 +263,7 @@ setLoading(false)
                 installmentStartDate: new Date(),
                 comment: editFormData.comment,
                 active,
-                special,
+                special:editFormData.special,
                 additionalAmount: editFormData.additionalAmount,
                 additionalTypeId:editFormData.additionalTypeId,
                 orderDetails: null,
@@ -257,22 +273,14 @@ setLoading(false)
             }
         };
 
-        try {
-
-            const {data, status} = await SetProductSupplyConditions(editedContact)
-            if (status === 200) {
-                GetProductSupplyC()
-
-            }
-
-        } catch (err) {
-            console.log(err)
-        }
+            setActiveHandler(editedContact)
     setId(null);
 
 }
 
+
     };
+
     const handleEditClick = (event, condition) => {
         event.preventDefault();
         setEditContactId(condition.id);
@@ -290,7 +298,7 @@ setLoading(false)
             additionalTypeId:condition.additionalTypeId,
             customerGroupId:condition.customerGroupId,
         };
-
+        console.log(formValues)
         setEditFormData(formValues);
     };
     const handleCancelClick = () => {
