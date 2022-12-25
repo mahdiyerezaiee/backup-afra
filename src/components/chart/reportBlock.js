@@ -43,7 +43,6 @@ const ReportBlock = () => {
         if (!getDataReportBlock().expiresAt){
 
             getReport()
-            sessionStorage.setItem('dataReportBlock', JSON.stringify(dataReportBlock));
 
 
         }

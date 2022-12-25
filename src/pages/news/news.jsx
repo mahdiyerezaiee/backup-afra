@@ -58,7 +58,6 @@ const News = () => {
         if (!getDataNews().expiresAt){
 
             getNews()
-            sessionStorage.setItem('dataNews', JSON.stringify(dataNews));
 
 
         }

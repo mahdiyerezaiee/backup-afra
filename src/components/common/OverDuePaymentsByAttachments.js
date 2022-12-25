@@ -50,7 +50,6 @@ const OverDuePaymentsByAttachments = () => {
         if (!getDataOverDuePaymentsByAttachments().expiresAt){
 
             data()
-            sessionStorage.setItem('dataOverDuePaymentsByAttachments', JSON.stringify(dataOverDuePaymentsByAttachments));
 
 
         }

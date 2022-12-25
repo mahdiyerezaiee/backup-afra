@@ -94,7 +94,6 @@ dataProductSupply.Customerg=data.result.groups
 
             getProductSupply();
             GetCustomerGroup();
-            sessionStorage.setItem('dataProductSupply', JSON.stringify(dataProductSupply));
 
 
         }
