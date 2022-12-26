@@ -59,16 +59,32 @@
 
 }
 .dark-mode .user-progress{
-    background-color:#1a1c2d!important;
+    background-color:#060818!important;
     border-radius: 10px;
 }
 .dark-mode .widget-content-area{
+    background-color:#060818!important;
+    box-shadow: none!important;
+    border-radius: 10px;
+
+
+}.dark-mode .statbox{
     background-color:#1a1c2d!important;
     box-shadow: none!important;
     border-radius: 10px;
 
 
-}.dark-mode .widget{
+}
+.dark-mode .rmdp-container{
+    background-color:#1b2e4b!important;
+}
+.dark-mode .ProductSupplyCondition{
+    background-color:#1b2e4b!important;
+}
+.dark-mode .ProductSupplyCondition-add{
+    background-color:transparent!important;
+}
+.dark-mode .widget{
      background-color:#1a1c2d!important;
 box-shadow: none!important;
  }
