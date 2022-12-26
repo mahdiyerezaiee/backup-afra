@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {GetGroupsForEntity} from "../../services/GroupService";
-import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
-import {GetProductSupplyConditionsCustomer} from "../../services/ProductSupplyConditionService";
+import React, { useEffect, useState } from "react";
+import { GetGroupsForEntity } from "../../services/GroupService";
+import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
+import { GetProductSupplyConditionsCustomer } from "../../services/ProductSupplyConditionService";
 
-const ConditionSalesBordCustomer = ({productSupplyConditions , handelClick, closeModal}) => {
+const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, closeModal }) => {
 
 
     const [customerg, setCustomerg] = useState([])
@@ -11,19 +11,21 @@ const ConditionSalesBordCustomer = ({productSupplyConditions , handelClick, clos
     const GetCustomerGroup = async () => {
         const { data, status } = await GetGroupsForEntity(1);
         if (status === 200) {
-            setCustomerg(data.result.groups);}
+            setCustomerg(data.result.groups);
+        }
     }
     const GetCondition = async () => {
         const { data, status } = await GetProductSupplyConditionsCustomer(productSupplyConditions);
         if (status === 200) {
-            setCondition(data.result.productSupplyConditions.values);}
+            setCondition(data.result.productSupplyConditions.values);
+        }
     }
-    useEffect(()=>{
+    useEffect(() => {
         GetCustomerGroup();
         GetCondition()
-    },[productSupplyConditions])
+    }, [productSupplyConditions])
     const CustomerG = () => {
-        let customer=[...customerg , {id:null ,name: 'عمومی'}]
+        let customer = [...customerg, { id: null, name: 'عمومی' }]
         return (customer.map(data => ({
             label: data.name,
             value: data.id
@@ -48,54 +50,56 @@ const ConditionSalesBordCustomer = ({productSupplyConditions , handelClick, clos
                 strokeLinejoin="round"
                 className="feather feather-x close"
                 data-dismiss="alert"><line x1="18" y1="6"
-                                           x2="6"
-                                           y2="18"></line><line
-                x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                    x2="6"
+                    y2="18"></line><line
+                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <h5 className="text-center mb-3">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
             <table
                 className="table table-bordered table-hover table-striped  mt-2  mb-4">
                 <thead>
-                <tr style={{fontSize:'10px'}}>
+                    <tr style={{ fontSize: '10px' }}>
 
-                    <th style={{fontSize:'10px'}} className="text-center">ردیف</th>
-                    <th style={{fontSize:'10px'}} className="text-center">نوع پرداخت</th>
-                    <th style={{fontSize:'10px'}} className="text-center">تعداد اقساط</th>
-                    <th style={{fontSize:'10px'}} className="text-center">بازه</th>
-                    <th style={{fontSize:'10px'}}  className="text-center">فی</th>
+                        <th style={{ fontSize: '10px' }} className="text-center">ردیف</th>
+                        <th style={{ fontSize: '10px' }} className="text-center">نوع پرداخت</th>
+                        <th style={{ fontSize: '10px' }} className="text-center">تعداد اقساط</th>
+                        <th style={{ fontSize: '10px' }} className="text-center">بازه</th>
+                        <th style={{ fontSize: '10px' }} className="text-center">فی</th>
 
-                    <th style={{fontSize:'10px'}} className="text-center">گروه مشتریان</th>
-                    <th style={{fontSize:'10px'}}  className="text-center">عملیات</th>
-                </tr>
+                        <th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>
+                        <th style={{ fontSize: '10px' }} className="text-center">توضیحات</th>
+                        <th style={{ fontSize: '10px' }} className="text-center">عملیات</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {Condition?Condition.map((contact , index)=>
+                    {Condition ? Condition.map((contact, index) =>
 
-                    <tr className='text-center'>
-            <td>{index +1 }</td>
+                        <tr className='text-center'>
+                            <td>{index + 1}</td>
 
-            <td>
-                <p className="mb-0">{PaymentId(contact.paymentMethodId)}</p>
-            </td>
+                            <td>
+                                <p className="mb-0">{PaymentId(contact.paymentMethodId)}</p>
+                            </td>
 
-            <td>{contact.paymentMethodId === 4 ? contact.installmentOccureCount:"-"}</td>
-            <td>{contact.paymentMethodId === 4 ? contact.installmentPeriod:"-"}</td>
-
-
-            <td>{contact.price}</td>
-            <td>{CustomerG().filter(i=> i.value === contact.customerGroupId).map(contacts=> contacts.label)}</td>
+                            <td>{contact.paymentMethodId === 4 ? contact.installmentOccureCount : "-"}</td>
+                            <td>{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
 
 
-            <td className="text-center">
-                <ul className="table-controls">
+                            <td>{contact.price}</td>
+                            <td>{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>
 
-                    <li><a className="btn btn-success"  data-toggle="tooltip" data-placement="top"
-                          onClick={()=> handelClick(productSupplyConditions , contact.id)} >
-                       ثبت درخواست                           </a></li>
+                            <td title={contact.comment}>{contact.comment ? contact.comment.substring(0, 10) + "..." : ""}</td>
 
-                </ul>
-            </td>
-                    </tr>
-            ):<tr className="text-center "><td colSpan='7' className="text-danger">این عرضه برای شما قابل درخواست نمی باشد</td></tr>}
+                            <td className="text-center">
+                                <ul className="table-controls">
+
+                                    <li><a className="btn btn-success" data-toggle="tooltip" data-placement="top"
+                                        onClick={() => handelClick(productSupplyConditions, contact.id)} >
+                                        ثبت درخواست                           </a></li>
+
+                                </ul>
+                            </td>
+                        </tr>
+                    ) : <tr className="text-center "><td colSpan='7' className="text-danger">این عرضه برای شما قابل درخواست نمی باشد</td></tr>}
 
                 </tbody>
             </table>
