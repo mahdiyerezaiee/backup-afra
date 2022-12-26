@@ -1,11 +1,21 @@
 .dark-mode {
     color: #BDBDD7;
-    background-color:#233649!important;
+    background-color:#060818!important;
 
+}
+.dark-mode  *{
+    border: transparent!important;
+}
+
+.dark-mode  .btn-success{
+    border: 1px solid forestgreen!important;
+    background: none;
+    color: forestgreen!important;
 }
 .dark-mode .header {
     color: #BDBDD7;
-    background-color:#0e2338 !important;
+    background-color:#060818 !important;
+    border-bottom:3px solid #142138!important;
 
 }
 .dark-mode span{
@@ -49,17 +59,22 @@
 
 }
 .dark-mode .user-progress{
-    background-color:#0e2338!important;
+    background-color:#1a1c2d!important;
+    border-radius: 10px;
 }
 .dark-mode .widget-content-area{
-    background-color:#0e2338!important;
+    background-color:#1a1c2d!important;
+    box-shadow: none!important;
+    border-radius: 10px;
+
 
 }.dark-mode .widget{
-     background-color:#0e2338!important;
-
+     background-color:#1a1c2d!important;
+box-shadow: none!important;
  }
 .dark-mode .pro-sidebar .pro-sidebar-inner{
-    background-color:#0e2338!important;
+    background-color:#060818!important;
+    border-left:3px solid #142138!important;
 
 }
 .dark-mode .navbar .navbar-item .nav-item.dropdown a svg{
@@ -78,11 +93,11 @@
     color: #BDBDD7;
 }
 .dark-mode .nav-bg {
-    background-color:#0e2338;
+    background-color:#0e1726;
 
 }
 .dark-mode .nav-bg-md {
-    background-color:#0e2338;
+    background-color:#0e1726;
 
 }
 .dark-mode .offcanvas {
@@ -97,9 +112,8 @@
     color: #BDBDD7!important;
 }
 .dark-mode .card{
-    /*border: 3px solid #ff8906!important;*/
     box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
-    background-color:#233649;
+    background-color:#1a1c2d;
 
 }
 .dark-mode .auth{
@@ -110,9 +124,9 @@
 .form-control{
     background-color: transparent;
 }
-.dark-mode .textOnInput label:after {background-color:#0e2338 }
+.dark-mode .textOnInput label:after {background-color:#1b2e4b }
 .dark-mode .textOnInput label {background-color:transparent}
-.dark-mode .css-1s2u09g-control{background-color:#0e2338}
+.dark-mode .css-1s2u09g-control{background-color:#1b2e4b}
 .dark-mode .css-b62m3t-container input{background-color:transparent;
     color: #BDBDD7;
 }
@@ -159,22 +173,37 @@
 .dark-mode .table-striped tbody tr:nth-of-type(odd) {
     background-color:#233649!important;}
 .dark-mode .table-striped tbody tr:nth-of-type(odd):hover {
-    background-color:#0e2338!important;}
+    background-color:#0e1726!important;}
 .dark-mode .navbar .navbar-item .nav-item.user-profile-dropdown .dropdown-menu .dropdown-item svg {
     color: #BDBDD7;
 
 }
 .dark-mode .btn-primary{
-    background-color: #3b82f6!important;
-    color:  #BDBDD7!important;
-    border-color:#3b82f6!important ;
+    background-color: transparent!important;
+    color:  #3b82f6!important;
+    border: 1px solid #3b82f6!important ;
+}
+.dark-mode .btn-danger{
+    background-color: transparent!important;
+    color:  red!important;
+    border: 1px solid red!important ;
+}
+.dark-mode .btn-danger:hover{
+    background-color: transparent!important;
+    color:  red!important;
+    border: 1px solid red!important ;
+}
+.dark-mode .btn-primary:hover{
+    background-color: transparent!important;
+    color:  #3b82f6!important;
+    border: 1px solid #3b82f6!important ;
 }
 .dark-mode .footer-wrapper{
-    background-color:#233649!important;
+    background-color:#0e1726!important;
 
 }.dark-mode .sliderReport .row{
     color: white;
-    background-color:#0e2338!important;
+    background-color:#1a1c2d!important;
 
 }
 .dark-mode .sliderReport h1 {
@@ -224,7 +253,7 @@ border: 1px solid;
 
 }
 .dark-mode .publisher input{
-    border-color:#233649!important ;
+    border-color:#1b2e4b!important ;
 
 }
 .dark-mode #colorPallet .pallet-icon{
@@ -241,7 +270,7 @@ color: white;
     color: white;
 }
 .dark-mode .form-control{
-    background-color:#0e2338!important ;
+    background-color:#1b2e4b!important ;
 
 }
 .dark-mode .cart-shop {
@@ -255,15 +284,20 @@ color: white;
     background-color: rgb(26 46 66)!important;
 }
 .dark-mode .ReactModal__Content{
-    background-color:#0e2338!important;
+    background-color:#0e1726!important;
 }
 .dark-mode .btn-light{
-    background-color: #0e2338!important ;
+    background-color: #0e1726!important ;
     color: white;
-    border: #0e2338!important ;
+    border: white!important ;
+}
+.dark-mode .btn-light:hover{
+    background-color: #0e1726!important ;
+    color: white;
+    border: white!important ;
 }
 .dark-mode .p-colors{
-    background-color: #0e2338!important ;
+    background-color: #0e1726!important ;
     color: white;
 }
 .dark-mode
@@ -282,7 +316,19 @@ select:-webkit-autofill:focus {
     background-color: transparent!important;
 }
 .dark-mode .cronJob{
-    background-color:#233649!important ;
+    background-color:#1a1c2d!important ;
 
+
+}
+.dark-mode .OrderCustomerInfo{
+    background-color:#233649!important ;
+    color: #f8f8f8;
+}
+.dark-mode .Attachment{
+    background-color:#0e1726!important ;
+
+}
+.dark-mode .Attachment path{
+    background-color:#ffffff!important ;
 
 }

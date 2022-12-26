@@ -27,7 +27,7 @@ ChartJS.register(
 const options = {
     responsive: true,
     maintainAspectRatio: false,
-
+backgroundColor: "blue",
     elements: {
         point: {
             radius: 0,
@@ -145,15 +145,17 @@ if (datas && datas.length >0){
                 fill: true,
                 // label: " سفارشات",
                 data: datas.map(item=>item.orderCount),
-                borderColor: '#4d8bb4',
-                backgroundColor: 'rgba(255,255,255,0)',
+                borderColor: 'rgb(27, 85, 226)',
+                backgroundColor: "rgb(27, 85, 226 ,0.2)",
                 pointStyle: 'circle',
                 pointRadius: 5,
                 pointHoverRadius: 7,
-                pointBackgroundColor:'#ffff',
-                shadowBlur:4,
-                shadowOffsetX: 3,
-                shadowOffsetY: 10,
+                pointBorderColor:"#ffffff",
+                pointBackgroundColor:'rgb(27, 85, 226)',
+                shadowColor : '#E56590',
+               shadowBlur : 10,
+                shadowOffsetX : 0,
+                shadowOffsetY : 4,
             },
 
 

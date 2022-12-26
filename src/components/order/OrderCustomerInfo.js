@@ -5,7 +5,7 @@ const OrderCustomerInfo =({order , product , customerDetail , customerName})=>{
     return(                <div className=' row col-lg-12 col-md-12 col-sm-12 col-xs-12 p-4 text-dark '>
 
 
-            < div className=" col-lg-3 rounded border  border-dark m-auto p-2 " style={{background:'#f7fdff'}} >
+            < div className=" OrderCustomerInfo col-lg-3 rounded border  border-dark m-auto p-2 " style={{background:'#f7fdff'}} >
                 <div className='  col-lg-12 col-md-4 col-sm-12 col-xs-12 '>
                     <b className="float-right">شماره سفارش : {order.id}</b>
                     <b className="float-start"> تاریخ : {new Date(order.createDate).toLocaleDateString('fa-IR')}</b>
@@ -17,7 +17,7 @@ const OrderCustomerInfo =({order , product , customerDetail , customerName})=>{
                 <div className='  col-lg-12 col-md-4 col-sm-12 col-xs-12  '>
                 </div>
             </div>
-            < div className="col-lg-3 rounded border  border-dark m-auto p-2" style={{background:'#f7fdff'}} >
+            < div className=" OrderCustomerInfo col-lg-3 rounded border  border-dark m-auto p-2" style={{background:'#f7fdff'}} >
 
                 <div className='  col-lg-12 col-md-4 col-sm-12 col-xs-12 text-center ' >
                     <b> نام کالا :{product.name }</b>
@@ -28,7 +28,7 @@ const OrderCustomerInfo =({order , product , customerDetail , customerName})=>{
 
 
             </div>
-            < div className="col-lg-3 rounded border  border-dark  m-auto p-2 " style={{background:'#f7fdff'}}>
+            < div className=" OrderCustomerInfo col-lg-3 rounded border  border-dark  m-auto p-2 " style={{background:'#f7fdff'}}>
 
                 <div className='  col-lg-12 col-md-4 col-sm-12 col-xs-12  '>
                     <b>تلفن خریدار : {customerDetail.userName}</b>
