@@ -126,7 +126,7 @@ const ProductSupplyCondition = ({quantity}) => {
     const body = {
         productSupplyCondition: {
             minSellableAmount: Number(addFormData.minSellableAmount),
-            maxSellableAmount: Number(addFormData.maxSellableAmount),
+            maxSellableAmount: quantity,
             paymentMethodId,
             productSupplyId: Number(params.id),
             installmentPeriod: addFormData.installmentPeriod,
@@ -352,7 +352,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
     }
 
     return (
-        <div className=" rounded  " style={{border:" 1px solid #bfc9d4"}}>
+        <div className=" rounded ProductSupplyCondition " style={{border:" 1px solid #bfc9d4"}}>
             {condition ===null?  (<span className="d-block text-center p-5">هیچ شرطی یافت نشد</span>) :(
             <div className="table-responsive p-2">
                 <table
@@ -415,7 +415,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
 
 
 
-                <a   style={{marginTop:'-1.2rem', marginLeft:'.6rem' , background:'white'}} className=" border-0      float-right " data-title="افزودن شرط"  onClick={()=>openModal()}>
+                <a   style={{marginTop:'-1.2rem', marginLeft:'.6rem' , background:'white'}} className=" ProductSupplyCondition-add border-0      float-right " data-title="افزودن شرط"  onClick={()=>openModal()}>
                     <svg  style={{width:'24px', height:'38px'}} xmlns="http://www.w3.org/2000/svg"  fill="currentColor"
                          className="bi bi-plus-circle" viewBox="0 0 17 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
