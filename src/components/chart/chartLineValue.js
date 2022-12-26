@@ -145,12 +145,13 @@ export function ChartLineValue({datas , setTypeId}) {
                 fill: true,
                 // label: " سفارشات",
                 data: datas.map(item=>item.orderValue),
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(255,255,255,0)',
+                borderColor: 'rgb(231, 81, 90)',
+                backgroundColor: 'rgb(231, 81, 90,0.2)',
 
                 pointRadius: 5,
                 pointHoverRadius: 7,
-                pointBackgroundColor:'#ffff'
+                pointBorderColor:"#ffffff",
+                pointBackgroundColor:'rgb(231, 81, 90)'
             },
 
 

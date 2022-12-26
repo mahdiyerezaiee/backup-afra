@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
 import { loginUser } from "../../services/userService";
@@ -7,9 +7,8 @@ import { toast } from "react-toastify";
 import afra from "../login/afra.jpg";
 import { decodeToken } from '../../utils/decodeToken';
 import { addUser } from '../../actions/user';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from "react-simple-captcha";
 import { AiOutlineReload } from "react-icons/ai"
-import {BiArrowBack} from 'react-icons/bi'
+import Captcha from "react-captcha-code";
 import FadeLoader from "react-spinners/FadeLoader";
 import {ClipLoader} from "react-spinners";
 const LoginWithPassword = ({ value, onchange, setShows }) => {
@@ -17,6 +16,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
     const [valid, setValid] = useState(true)
     const [SHOW, setShow] = useState(false)
     const [, forceUpdate] = useState();
+    const [captcha, setCaptcha] = useState("");
 
     const [loading, setLoading] = useState(false);
 
@@ -25,9 +25,23 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
     const select = useSelector(state => state.userInfo)
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
-    useEffect(() => {
-        loadCaptchaEnginge(6, 'lightgray', 'black', 'numbers');
-    }, [])
+    const captchaRef=useRef()
+    const handelCaptchaChange=useCallback((code)=>{
+        setCaptcha(code)
+    })
+
+    const captchaChek=()=>{
+
+        if(SHOW){
+            if(captcha===input){
+                setValid(true)
+            }
+            else{
+                setValid(false)
+            }
+        }
+
+    }
     const validator = useRef(new SimpleReactValidator({
         validators: {
             min: {
@@ -46,28 +60,13 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
 
-const handelBack=(e)=>{
-    e.preventDefault()
-    navigate('sysplus')
-}
-    const submitCaptcha = () => {
-        if (SHOW) {
-            if (validateCaptcha(input) !== true) {
-                setShow(true)
-                setValid(false)
-                toast.error("کپچا اشتباه ثبت شده", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-            }
-
-            setInput("")
-        }
+    const handelBack=(e)=>{
+        e.preventDefault()
+        navigate('sysplus')
+    }
+    const handelRefreshCaptcha=(e)=>{
+        e.preventDefault()
+        captchaRef.current.refresh()
     }
     const handleSubmit = async (event) => {
         setLoading(true)
@@ -78,8 +77,8 @@ const handelBack=(e)=>{
             password
         }
         event.preventDefault();
-        submitCaptcha()
-        if (valid && validator.current.allValid()) {
+        // submitCaptcha()
+        if ( valid && validator.current.allValid()) {
             try {
 
 
@@ -174,7 +173,7 @@ const handelBack=(e)=>{
                     <label>شماره موبایل</label>
 
                     <input type='text' name='mobile' className='form-control opacityForInput' placeholder='09121234567 ' maxLength="11"
-                        value={value} onChange={onchange} />
+                           value={value} onChange={onchange} />
 
 
 
@@ -186,10 +185,10 @@ const handelBack=(e)=>{
                 <div className=' textOnInput' style={{ direction: 'ltr' }}>
                     <label>رمز عبور</label>
                     <input type='password' name='password' className='form-control opacityForInput' placeholder='******** '
-                        value={password} onChange={e => {
-                            setPassword(e.target.value)
-                            validator.current.showMessageFor("required");
-                        }} />
+                           value={password} onChange={e => {
+                        setPassword(e.target.value)
+                        validator.current.showMessageFor("required");
+                    }} />
 
 
 
@@ -202,9 +201,11 @@ const handelBack=(e)=>{
                         <input className='form-control opacityForInput' value={input} onChange={e => setInput(e.target.value)} />
 
                     </div>
-                    <div className="col-6">
-                        <LoadCanvasTemplate reloadColor="black" reloadText={`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/> <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/> </svg>`} />
+                    <div className="row" >
+                        {/* <LoadCanvasTemplate reloadColor="black" reloadText={`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/> <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/> </svg>`} /> */}
+                        <button className="border-0" style={{backgroundColor:'#ff000000'}} onClick={handelRefreshCaptcha}><AiOutlineReload size={30} color='#888ea8'/></button>
 
+                        <Captcha height='30' fontSize={25} width='130' onChange={handelCaptchaChange} ref={captchaRef} />
                     </div>
 
 

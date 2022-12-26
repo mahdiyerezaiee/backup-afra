@@ -2428,15 +2428,31 @@ body::-webkit-scrollbar-thumb {
 *::-webkit-scrollbar
 {
   width: 10px;
-  background: #f1f1f1;
+  /*background: #f1f1f1;*/
+  border-radius: 10px
+
 }
 
 *::-webkit-scrollbar-thumb
 {
+  border-radius: 10px;
+  background: rgba(136, 136, 136, 0.43);
+opacity: 0;
+  visibility: hidden;
+
+
+}
+*:hover
+*::-webkit-scrollbar-thumb{
+  opacity: 1;
+  transition: visibility 2s ease-in-out;
+  visibility: visible;
+
+}
+*::-webkit-scrollbar-thumb:hover
+{
   /*border-radius: 10px;*/
-  background: #888;
-
-
+  background: rgba(136, 136, 136, 0.43);
 }
 
 .theme{

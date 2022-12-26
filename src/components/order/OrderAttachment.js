@@ -36,7 +36,7 @@ const OrderAttAchment = ({order,params ,attachments ,handelPreview , modalIsOpen
             </div>
             <div className='  '>
 
-                <button disabled={order.orderStatusId === 1} style={{marginTop:'-.8rem', marginLeft:'.6rem' , background:'white'}} className=" border-0    float-right " title="افزودن تصویر"  onClick={()=>setIsOpenUpload(true)}>
+                <button disabled={order.orderStatusId === 1} style={{marginTop:'-.8rem', marginLeft:'.6rem' , background:'white'}} className=" border-0 Attachment   float-right " title="افزودن تصویر"  onClick={()=>setIsOpenUpload(true)}>
                     <svg  style={{width:'24px', height:'38px'}} xmlns="http://www.w3.org/2000/svg"  fill=""
                           className="bi bi-plus-circle" viewBox="0 0 17 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>

@@ -16,15 +16,9 @@ useEffect(()=>{
     if (mode === 'dark'){
         body.classList.add('dark-mode')
 
-        body.classList.remove('colory-mode')
 
-    } if(mode === 'colory'){
+    } if (mode === 'light') {
         body.classList.remove('dark-mode')
-
-        body.classList.add('colory-mode')
-    }if (mode === 'light') {
-        body.classList.remove('dark-mode')
-        body.classList.remove('colory-mode')
 
     }
     localStorage.setItem('mode', mode); // mode saved to local storage
@@ -60,7 +54,6 @@ useEffect(()=>{
           <div>
               <div className='theme bg-light border border-dark' onClick={()=>setMode('light')}></div>
               <div className='theme bg-dark border border-light' onClick={()=>setMode('dark')}></div>
-              <div className='theme  border border-light' style={{backgroundImage:'linear-gradient(to right, rgba(4, 96, 216, 1),rgba(239, 241, 242, 1))'}} onClick={()=>setMode('colory')}></div>
               </div>
                        <span>تغییر فونت سایز</span>
 
