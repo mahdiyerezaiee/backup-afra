@@ -53,13 +53,13 @@ const ReportBlock = () => {
         <div className="row justify-content-center " style={{ zIndex: "2", backgroundColor: 'white' }}>
 
 
-            {report.map(item =>
+            {report.map((item , index) =>
 
                 ReportEntityStyle.map(i => i.id === item.entityTypeId ?
 
-                    <>
+                    < div className="col-md-6 col-lg-2 mb-3 mr-2 " key={i.id}>
 
-                        <div className="col-md-6 col-lg-2 mb-3 mr-2  " style={{ zIndex: '1', position: 'relative', animation:  "changeRight 1s "  }} >
+                        <div   className="" style={{ zIndex: '1', position: 'relative', animation:  "changeRight 1s "  }} >
                             <NavLink to={i.path}>
                                 <div className="rounded p-2 mb-1 mt-2" style={{
                                     backgroundColor: `${i.color}`,
@@ -80,7 +80,7 @@ const ReportBlock = () => {
                         </div>
 
 
-                    </>
+                    </div>
                     :null) )}
 
         </div>

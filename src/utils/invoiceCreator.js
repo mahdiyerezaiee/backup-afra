@@ -41,7 +41,7 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
         }
 
     }
-    console.log(customerId);
+
     useEffect(()=>{
         function adjustZoom() {
             var   documentWidth= window.innerWidth;
@@ -106,7 +106,7 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
         getAddress()
 
     },[])
-    console.log(Address);
+
 
     const Fullname=()=>{
 
@@ -147,7 +147,10 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
 
 
     }
-    console.log(organizations);
+    var formatter = new Intl.NumberFormat('fa-IR', {
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0, });
     return (
         <>
 
@@ -275,13 +278,13 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
                                         <td>{item.product.name}</td>
                                         <td>{item.quantity}</td>
                                         <td>{MeasureUnitSample.filter(i=> i.id === order.measureUnitId).map(i=> i.name)}</td>
-                                        <td>{item.price / item.quantity}</td>
-                                        <td>{item.price}</td>
+                                        <td>{formatter.format(item.price / item.quantity)}</td>
+                                        <td>{formatter.format(item.price)}</td>
                                         <td>0</td>
-                                        <td>{item.priceIncludingTax}</td>
+                                        <td>{formatter.format(item.priceIncludingTax)}</td>
                                         <td>0</td>
                                         <td>0</td>
-                                        <td>{item.priceIncludingTax}</td>
+                                        <td>{formatter.format(item.priceIncludingTax)}</td>
 
                                     </tr>
                                 )}
@@ -289,7 +292,7 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
                                     <td colspan="8"> جمع</td>
                                     <td>{order.orderDiscount}</td>
                                     <td>{order.orderTax}</td>
-                                    <td>{order.orderFinalizedPrice}</td>
+                                    <td>{formatter.format(order.orderFinalizedPrice)}</td>
                                 </tr>
                                 </tbody>
                             </table>

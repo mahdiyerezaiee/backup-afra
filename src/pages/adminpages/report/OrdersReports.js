@@ -79,8 +79,7 @@ const OrdersReports = () => {
         SetClicked(false)
     }
     let formatter = new Intl.NumberFormat('fa-IR', {
-        style: 'currency',
-        currency: 'IRR',
+
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
 
@@ -111,8 +110,8 @@ const OrdersReports = () => {
             }
         },
         { Header: 'تاریخ', accessor: 'createDate',Cell:row => new Date(row.row.original.createDate).toLocaleDateString('fa-IR')},
-        { Header: 'قیمت واحد', accessor: 'itemPrice' },
-        { Header: 'قیمت سفارش', accessor: 'orderPrice' },
+        { Header: 'قیمت واحد', accessor: 'itemPrice',Cell:row => formatter.format(row.row.original.itemPrice) },
+        { Header: 'قیمت سفارش', accessor: 'orderPrice',Cell:row => formatter.format(row.row.original.orderPrice) },
         { Header: 'نام کاربر', accessor: 'customerName' ,Cell:row => row.row.original.customerName? row.row.original.customerName :"--" },
         { Header: 'کد ملی  کاربر', accessor: 'customerNationalCode',Cell:row => row.row.original.customerNationalCode? row.row.original.customerNationalCode :"--" },
         { Header: 'نام سازمان', accessor: 'organizationName',Cell:row => row.row.original.organizationName? row.row.original.organizationName :"--" },

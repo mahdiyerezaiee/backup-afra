@@ -80,7 +80,7 @@ const OverDuePaymentsByAttachments = () => {
         </div>
     </div>
         </Link>)}else {
-        return(null)
+        return null
     }
 
 }

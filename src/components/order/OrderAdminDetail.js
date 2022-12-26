@@ -63,6 +63,10 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
         getOrder()
         setIsOpen(false);
     }
+    var formatter = new Intl.NumberFormat('fa-IR', {
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+    });
     return(
         <div>
             <div  className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">
@@ -86,9 +90,9 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
                                 <td className="text-center">{cottageCode}</td>
                                 <td className="text-center">{item.product.name}</td>
                                 <td className="text-center">{item.quantity}</td>
-                                <td className="text-center">{item.basePrice}</td>
+                                <td className="text-center">{formatter.format(item.basePrice)}</td>
                                 <td className="text-center">{PaymentStructureEnums.filter(i=> i.id === order.paymentMethodId).map(i=> i.name)[0]}</td>
-                                <td className="text-center">{item.price}</td>
+                                <td className="text-center">{formatter.format(item.price)}</td>
                             </tr>
                         )}
                         </tbody>

@@ -132,7 +132,10 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
 
         }
     }
-
+    var formatter = new Intl.NumberFormat('fa-IR', {
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+    });
     return (
 
         <Modal
@@ -202,7 +205,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                             validator.current.showMessageFor("required");
                                         }} />
                                         {validator.current.message("required", value, "required|numeric")}
-                                        {item.value?<p className="p-3 border">{item.value}</p>  :null}
+                                        {item.value?<p className="p-3 border">{formatter.format(item.value)}</p>  :null}
                                     </div>
 
                                     <div className="col-3">

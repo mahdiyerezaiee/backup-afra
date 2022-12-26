@@ -31,6 +31,13 @@ const ProceessAttachments = () => {
   useEffect(()=>{
       GetProcessAtt()
   },[])
+    let formatter = new Intl.NumberFormat('fa-IR', {
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+
+
+    });
     const columns = useMemo(() => [
 
         { Header: 'شناسه مشتری', accessor: 'customerId' },
@@ -38,7 +45,7 @@ const ProceessAttachments = () => {
             return(<button  onClick={()=>editInfoHandler(row.row.original.customerId)} className="bg-transparent border-0">{row.row.original.userName}</button>)
             } },
         {Header: 'نام سند', accessor: 'name'},
-        {Header: 'مبلغ سند', accessor: 'value'},
+        {Header: 'مبلغ سند', accessor: 'value',Cell:row => formatter.format(row.row.original.value)},
         {Header: 'تعداد اسناد', accessor: 'attachmentCount'},
         {Header: 'اعتبار مشتری', accessor: 'maxValidity',Cell: row => {
                 return(row.row.original.maxValidity ?row.row.original.maxValidity : "--")

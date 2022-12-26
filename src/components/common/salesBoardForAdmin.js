@@ -166,7 +166,7 @@ setLoading(false)
     }
 
     let productCondistion;
-    console.log(productSupply)
+
     if(productSupply!== null){
 
      productCondistion = productSupply.map(item => item.productSupplyConditions)

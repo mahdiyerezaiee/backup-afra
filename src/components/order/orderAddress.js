@@ -141,8 +141,9 @@ getOrder()
         getDetails()
         getSupplyCode()
     }, [details])
-    var formatter = new Intl.NumberFormat('fa-IR', { style: 'currency',
-        currency: 'IRR', maximumFractionDigits: 0,
+    var formatter = new Intl.NumberFormat('fa-IR', {
+
+        maximumFractionDigits: 0,
         minimumFractionDigits: 0, });
 
     return (
@@ -178,7 +179,7 @@ getOrder()
                                     <td className="text-center">{item.product.name}</td>
                                     <td className="text-center">{item.quantity}</td>
                                     <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
-                                    <td className="text-center">{item.price}</td>
+                                    <td className="text-center">{formatter.format(item.price)}</td>
 
                                 </tr>
                             )

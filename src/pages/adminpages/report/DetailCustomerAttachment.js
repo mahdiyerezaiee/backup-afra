@@ -47,7 +47,13 @@ const {data , status} = await GetAttachments(config)
   const closeModal = () => {
     setIsOpen(false);
   }
-  console.log(data)
+  let formatter = new Intl.NumberFormat('fa-IR', {
+
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+
+
+  });
   return(<div>
 
     <div  className="statbox widget-content widget-content-area rounded">
@@ -57,12 +63,12 @@ const {data , status} = await GetAttachments(config)
           {data && data.length > 0?
 
 
-              (data.map(item =>
-                  <div onClick={() => handelPreview(item)} className={item.attachmentTypeId ===2 ?" img col-md-2 col-sm-12" :"  col-md-2 col-sm-12"} >
+              (data.map((item , index) =>
+                  <div key={index} onClick={() => handelPreview(item)} className={item.attachmentTypeId ===2 ?" img col-md-2 col-sm-12" :"  col-md-2 col-sm-12"} >
                     <img src={`${attachmet}${item.path}`} className={item.attachmentTypeId ===2 ?"img-thumbnail border-danger":" img-thumbnail"} alt={item.name}  />
                     {item.attachmentTypeId ===2 ?  <div className="detial-img">
                       <div className="text">
-                        <p >مقدار چک : { item.value}</p>
+                        <p >مبلغ چک : {formatter.format(item.value) }</p>
                         <p >شماره چک : { item.trackingCode}</p>
                         <p >موعد چک : { new Date(item.dueDate).toLocaleDateString("fa-IR")}</p></div>
 
