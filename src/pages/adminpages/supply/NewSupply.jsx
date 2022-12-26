@@ -131,7 +131,7 @@ const NewSupply = () => {
                     supplierId,
                     productId,
                     measureUnitId,
-                    quantity,
+                    quantity:Number(quantity && quantity.replaceAll("," , "")),
                     wareHouseId,
                     contractNumber,
                     comment,
@@ -159,7 +159,11 @@ const NewSupply = () => {
             console.log(error)
         }
     }
+    var formatter = new Intl.NumberFormat('en-US', {
 
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0, });
     return (
         <div className='user-progress ' >
             <div className='row'>
@@ -284,13 +288,13 @@ const NewSupply = () => {
                                 <div className='form-row'>
                                     <div className="col-4">
                                         <label >مقدار</label>
-                                        <input type="text" className="form-control opacityForInput" value={quantity}
+                                        <input type="text" className=" value form-control opacityForInput" value={formatter.format(quantity)}
                                             onChange={e => {
-                                                setQuantity(Number(e.target.value))
+                                                setQuantity(e.target.value.replaceAll("," ,""))
                                                 validator.current.showMessageFor("required");
 
                                             }} />
-                                        {validator.current.message("required", quantity, "required|numeric")}
+                                        {validator.current.message("required", quantity, "required")}
                                     </div>
                                     <div className="col-4">
                                         <label >کد کوتاژ</label>

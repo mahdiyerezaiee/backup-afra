@@ -177,7 +177,7 @@ getOrder()
                                     <td className="text-center">{item.id}</td>
                                     <td className="text-center">{cottageCode}</td>
                                     <td className="text-center">{item.product.name}</td>
-                                    <td className="text-center">{item.quantity}</td>
+                                    <td className="text-center">{formatter.format(item.quantity)}</td>
                                     <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                     <td className="text-center">{formatter.format(item.price)}</td>
 
@@ -217,7 +217,7 @@ getOrder()
                                         <td className="text-center">{item.postalCode?item.postalCode:item.ReceiverZip}</td>
                                         <td className="text-center">{item.receiverMobile?item.receiverMobile:item.receiverTel}</td>
                                         <td className="text-center">{item.ReceiverId}</td>
-                                        <td className="text-center">{item.quantity}</td>
+                                        <td className="text-center">{formatter.format(item.quantity)}</td>
                                         {roles.includes(7) || roles.includes(5) || roles.includes(8) ?
                                             <td className="text-center">
                                                 <button onClick={() => openModal(item.id)} className="btn btn-sm btn-primary" hidden={(order.paymentStatusId===3||order.paymentStatusId===6)?false:true}

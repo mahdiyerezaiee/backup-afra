@@ -31,7 +31,6 @@ const customStyles = {
 
 
 const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) => {
-    console.log(item)
     const [trackingCode, setTrackingCode] = useState(0)
     const [value, setValue] = useState(0)
     const [dueDate, setDueDate] = useState(item.dueDate)
@@ -200,8 +199,8 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                     </div>
                                     <div className="col-3">
                                         <label>مبلغ چک</label>
-                                        <input hidden={item.value} className="form-control opacityForInput  mb-4"
-                                               type="text" value={value} onChange={e => {setValue(e.target.value)
+                                        <input hidden={item.value} className=" formater form-control opacityForInput  mb-4"
+                                               type="text" value={formatter.format(value)} onChange={e => {setValue(e.target.value.replaceAll(",",''))
                                             validator.current.showMessageFor("required");
                                         }} />
                                         {validator.current.message("required", value, "required|numeric")}

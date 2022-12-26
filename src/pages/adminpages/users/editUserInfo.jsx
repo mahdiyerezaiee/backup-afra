@@ -9,6 +9,7 @@ import "./style.css"
 import {PriceUnitEnums} from "../../../Enums/PriceUnit";
 import {ClipLoader} from "react-spinners";
 
+
 const EditUserInfo = () => {
     const navigate = useNavigate()
     const params = useParams()
@@ -29,7 +30,7 @@ const EditUserInfo = () => {
     const [active, setActive] = useState(false);
     const [passwordType, setPasswordType] = useState("password");
     const [loading, setLoading] = useState(false);
-
+    const [groupId, setGroupId] = useState(null)
 
     const togglePassword = (e) => {
         e.preventDefault()
@@ -53,11 +54,11 @@ const EditUserInfo = () => {
         organizationId:check?organizationId:null,
         password,
         active,
-        maxValidity: Number(maxValidity),
+        maxValidity,
         maxValidityUnitId,
-        actionBlock
+        actionBlock,
+        groupId
     }
-    console.log(dataUser)
     const getUserInfo = async () => {
 
         try {
@@ -72,7 +73,7 @@ const EditUserInfo = () => {
             SetactionBlock(data.result.customer.actionBlock)
             setMaxValidity(data.result.customer.maxValidity)
             setMaxValidityUnitId(data.result.customer.maxValidityUnitId)
-
+            setGroupId(data.result.customer.groupId)
 
         } catch (err) {
             console.log(err)
@@ -168,6 +169,11 @@ const EditUserInfo = () => {
         e.preventDefault()
         navigate(-1)
     }
+    var formatter = new Intl.NumberFormat('en-US', {
+
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0, });
 
     return (
 
@@ -260,8 +266,8 @@ const EditUserInfo = () => {
                                 </div>
                                 <div className="col-6 mb-4">
                                     <label >مقدار اعتبار </label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="100,000" maxLength="10" value={maxValidity || ""} onChange={e => {
-                                        setMaxValidity(e.target.value)
+                                    <input type="text" className=" formater form-control opacityForInput" placeholder="100,000" maxLength="10" value={formatter.format(maxValidity)} onChange={e => {
+                                        setMaxValidity(e.target.value.replaceAll(",",""))
                                         validator.current.showMessageFor("required");
                                     }} />
                                     {validator.current.message("required", nationalCode, "required|numeric|min:10")}

@@ -215,6 +215,11 @@ else{
 
 
         }
+    var formatter = new Intl.NumberFormat('en-US', {
+
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0, });
         return (
             <div className='user-progress' >
                 <div className='row'>
@@ -316,9 +321,9 @@ else{
                                     </div>
                                     <div className="col-6">
                                         <label >مقدار عرضه</label>
-                                        <input type="text" className="form-control opacityForInput" value={quantity}
+                                        <input type="text" className="form-control opacityForInput" value={formatter.format(quantity)}
                                             onChange={e => {
-                                                setQuantity(Number(e.target.value))
+                                                setQuantity(Number(e.target.value.replaceAll("," ,"")))
                                                 validator.current.showMessageFor("required");
 
                                             }} />
@@ -331,9 +336,9 @@ else{
 
                                     <div className="col-6">
                                         <label >قیمت</label>
-                                        <input type="text" className="form-control opacityForInput" value={price}
+                                        <input type="text" className="form-control opacityForInput" value={formatter.format(price)}
                                             onChange={e => {
-                                                setPrice(Number(e.target.value))
+                                                setPrice(Number(e.target.value.replaceAll(",","")))
                                                 validator.current.showMessageFor("required");
 
                                             }} />

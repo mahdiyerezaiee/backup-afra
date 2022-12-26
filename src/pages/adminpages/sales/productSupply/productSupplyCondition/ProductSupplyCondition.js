@@ -111,14 +111,14 @@ const ProductSupplyCondition = ({quantity}) => {
    
     const handleAddFormChange = (event) => {
         const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value;
+        const fieldValue = event.target.value.replaceAll(",",'');
         const newFormData = {...addFormData};
         newFormData[fieldName] = fieldValue;
         setAddFormData(newFormData);
     };
     const handleEditFormChange = (event) => {
         const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value;
+        const fieldValue = event.target.value.replaceAll(",",'');
         const newFormData = {...editFormData};
         newFormData[fieldName] = fieldValue;
         setEditFormData(newFormData);
@@ -350,6 +350,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
         })))
 
     }
+
     return (
         <div className=" rounded  " style={{border:" 1px solid #bfc9d4"}}>
             {condition ===null?  (<span className="d-block text-center p-5">هیچ شرطی یافت نشد</span>) :(

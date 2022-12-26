@@ -78,6 +78,10 @@ const SupplyList = () => {
 
 
     }
+    var formatter = new Intl.NumberFormat('fa-IR', {
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+    });
     const close = () => {
         SetOpen(false);
     }
@@ -487,7 +491,7 @@ const SupplyList = () => {
         },
 
         {
-            Header: 'مقدار', accessor: 'quantity'
+            Header: 'مقدار', accessor: 'quantity' , Cell:row => formatter.format(row.row.original.quantity)
         }, {
             Header: 'واحد', accessor: 'Mesures', Cell: row => {
 

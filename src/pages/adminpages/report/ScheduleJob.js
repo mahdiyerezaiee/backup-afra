@@ -43,7 +43,7 @@ GetData()
         <div className="px-3 ltr " style={{height: "330px" , overflowY:"auto",direction:"ltr"}}>
 <div className=" ">
     {report.map((item , index)=>
-    <div key={index} className="   rounded cronJob" style={{backgroundColor:"white",padding:"14px 19px",border:" 2px solid #e0e6ed", borderRadius: "8px",marginBottom: "4px"}}>
+    <div key={index} className="   rounded cronJob" style={{direction:"rtl",backgroundColor:"white",padding:"14px 19px",border:" 2px solid #e0e6ed", borderRadius: "8px",marginBottom: "4px"}}>
         <div className="accordion-icon d-inline pr-2"  style={{color:"#1b55e2"}} >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="rgba(27, 85, 226, 0.239216)"
              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"

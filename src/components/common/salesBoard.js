@@ -105,8 +105,8 @@ dataProductSupplyCustomer.groupInfo=data.result.group
     });
 
     let formatter2 = new Intl.NumberFormat('fa-IR', {
-        style: 'currency',
-        currency: 'IRR'
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
     });
     const getModalInfo = async (id) => {
         const { data, status } = await GetAllProductSupply(id)
@@ -204,7 +204,7 @@ setLoading(false)
                                     <th className="text-center">محصول</th>
                                     <th className="text-center">قیمت</th>
                                     <th className="text-center">واحد</th>
-                                    <th className="text-center">تعداد</th>
+                                    <th className="text-center">مقدار عرضه</th>
                                     <th className="text-center">توضیحات</th>
 
                                     <th className="text-center">تاریخ شروع</th>
@@ -224,11 +224,11 @@ setLoading(false)
                                         <td className="text-center">{item.product.name}</td>
                                         <td className="text-center">{formatter.format(item.price)}</td>
                                         <td className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnitId).map(e => e.name)}</td>
-                                        <td className="text-center">{item.quantity}</td>
+                                        <td className="text-center">{formatter2.format(item.quantity)}</td>
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td> 
-                                        <td className="text-center">{item.remainedQuantity}</td>
+                                        <td className="text-center">{formatter2.format(item.remainedQuantity)}</td>
                                         <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>ثبت درخواست
                                             </button>) : (<button  className=" btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
 

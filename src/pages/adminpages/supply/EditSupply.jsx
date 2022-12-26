@@ -187,7 +187,11 @@ const EditeSupply = () => {
             console.log(error)
         }
     }
+    var formatter = new Intl.NumberFormat('en-US', {
 
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0, });
     return (
         <div className='user-progress ' >
             <div className='row'>
@@ -345,9 +349,9 @@ const EditeSupply = () => {
                                 <div className='form-row'>
                                     <div className="col-4">
                                         <label >مقدار</label>
-                                        <input type="text" className="form-control opacityForInput" value={quantity}
+                                        <input type="text" className=" value form-control opacityForInput" value={formatter.format(quantity)}
                                                onChange={e => {
-                                                   setQuantity(Number(e.target.value))
+                                                   setQuantity(e.target.value.replaceAll(",",''))
                                                    validator.current.showMessageFor("required");
 
                                                }} />

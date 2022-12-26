@@ -18,6 +18,7 @@ import {OrderStatus} from "../../Enums/OrderStatusEnums";
 import {ClipLoader} from "react-spinners";
 
 
+
 const customStyles = {
     content: {
 height:"50%",
@@ -55,6 +56,7 @@ const AddOrder = () => {
         getOrganizations()
 
     }, [])
+
     const getUser = async () => {
 
         let configs = {
@@ -125,8 +127,8 @@ const AddOrder = () => {
         productSupplyConditionId:null,
         productBasePrice:Number(productBasePrice),
     }
+    console.log(order)
     const navigate = useNavigate()
-
     const SubmitOrder = async (e) => {
         setLoading(true)
         e.preventDefault()
@@ -158,6 +160,7 @@ setLoading(false)
         } catch (e) {
             console.log(e)
         }
+
     }
     const validator = useRef(new SimpleReactValidator({
         validators: {
@@ -229,8 +232,11 @@ setLoading(false)
 const statusOrder = () => {
         return (OrderStatus.map(data => ({label: data.name, value: data.id})))
     }
+    var formatter = new Intl.NumberFormat('en-US', {
 
 
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0, });
     return (
 
         <div className='row d-flex justify-content-center '>
@@ -330,25 +336,25 @@ const statusOrder = () => {
                             <div className="col-6">
 
                                 <label>مقدار</label>
-                                <input type="text" className="form-control opacityForInput  mb-4" value={quantity}
+                                <input type="text" className="  form-control opacityForInput  mb-4" value={formatter.format(quantity)}
                                        onChange={e => {
-                                           setQuantity(e.target.value)
+                                           setQuantity(e.target.value.replaceAll(",",""))
                                            validator.current.showMessageFor("required");
                                        }}/>
-                                {validator.current.message("required", quantity, "required|numeric")}
+                                {validator.current.message("required", quantity, "required")}
 
 
                             </div>
                             <div className="col-6">
 
                                 <label>فی</label>
-                                <input type="text" className="form-control opacityForInput  mb-4"
-                                       value={productBasePrice} onChange={e => {
-                                    setProductBasePrice(e.target.value)
+                                <input type="text" className="  form-control opacityForInput  mb-4"
+                                       value={formatter.format(productBasePrice)} onChange={e => {
+                                    setProductBasePrice(e.target.value.replaceAll(",",''))
                                     validator.current.showMessageFor("required");
 
                                 }}/>
-                                {validator.current.message("required", productBasePrice, "required|numeric")}
+                                {validator.current.message("required", productBasePrice, "required")}
 
 
                             </div>

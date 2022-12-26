@@ -74,6 +74,11 @@ setpaymentMethodId(editFormData.paymentMethodId)
     const openModal = async (id) => {
         setIsOpen(true);
     }
+    var formatter = new Intl.NumberFormat('en-US', {
+
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0, });
     return (
 
         <div >
@@ -213,14 +218,14 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                     <label>حداقل سفارش</label>
                                     <input type="text" className="form-control opacityForInput"
                                         name="minSellableAmount"
-                                        defaultValue={editFormData.minSellableAmount}
+                                        defaultValue={ formatter.format(editFormData.minSellableAmount)}
                                         onChange={handleEditFormChange}
                                     />
                                 </div>
                                 <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                     <label>حداکثر سفارش</label>
                                     <input type="text" className="form-control opacityForInput"
-                                        name="maxSellableAmount" defaultValue={editFormData.maxSellableAmount}
+                                        name="maxSellableAmount" defaultValue={formatter.format(editFormData.maxSellableAmount)}
                                         onChange={handleEditFormChange}
                                     />
                                 </div>
