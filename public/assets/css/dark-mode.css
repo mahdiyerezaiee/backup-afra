@@ -281,3 +281,8 @@ select:-webkit-autofill:focus {
 .dark-mode .orderCustomerInfo{
     background-color: transparent!important;
 }
+.dark-mode .cronJob{
+    background-color:#233649!important ;
+
+
+}
