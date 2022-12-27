@@ -10,6 +10,7 @@ import ConditionSalesBord from "./conditionSalesBordCustomer";
 import ModalSubmit from "./modalSubmit";
 import { GetGroupById } from "../../services/GroupService";
 import ConditionSalesBordCustomer from "./conditionSalesBordCustomer";
+import SalesBoardForAdmin from "./salesBoardForAdmin";
 
 const customStyles = {
     content: {
@@ -30,7 +31,6 @@ const customStyles = {
 const SalesBoardForCustomer = () => {
     const user = useSelector(state => state.userInfo);
     const userRole = useSelector(state => state.userRole);
-
     const [loading, setLoading] = useState(false);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
@@ -50,39 +50,39 @@ const SalesBoardForCustomer = () => {
         productSupply,
         groupInfo,
     }
+    console.log(user)
     function getDataProductSupplyCustomer() {
         let items = JSON.parse(sessionStorage.getItem('dataProductSupplyCustomer'));
         return items ? items : ''
-
-
     }
-
     const getProductSupply = async () => {
         try {
             const { data, status } = await GetAllProductSupplyBord();
 
             setProductSupply(data.result.productSupplies.values)
-dataProductSupplyCustomer.productSupply=data.result.productSupplies.values
+            dataProductSupplyCustomer.productSupply=data.result.productSupplies.values
+
         } catch (error) {
             console.log(error);
         }
-    }
-    const GroupbyId = async () => {
-        if (user.groupId !== null) {
+        if (user ) {
 
             try {
                 const { data, status } = await GetGroupById(user.groupId)
-                if (status === 200) {
                     setGroupInfo(data.result.group)
-dataProductSupplyCustomer.groupInfo=data.result.group
-                }
+                    dataProductSupplyCustomer.groupInfo=data.result.group
+
+
             } catch (error) {
                 console.log(error);
             }
         }
+        sessionStorage.setItem('dataProductSupplyCustomer', JSON.stringify(dataProductSupplyCustomer));
 
     }
+
     useEffect(() => {
+
         if (getDataProductSupplyCustomer().expiresAt < new Date().toUTCString()){
 
             sessionStorage.removeItem("dataProductSupplyCustomer")
@@ -91,13 +91,12 @@ dataProductSupplyCustomer.groupInfo=data.result.group
         }if (!getDataProductSupplyCustomer().expiresAt ){
 
             getProductSupply();
-            GroupbyId()
-            sessionStorage.setItem('dataProductSupplyCustomer', JSON.stringify(dataProductSupplyCustomer));
 
 
         }
 
-    }, [])
+    }, [user])
+    console.log(groupInfo)
     let formatter = new Intl.NumberFormat('fa-IR', {
         style: 'currency',
         currency: 'IRR', maximumFractionDigits: 0, 
@@ -168,7 +167,7 @@ setLoading(false)
             <div className=" statbox widget-content widget-content-area" >
                 <div className="row " >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2 " >
-                    <h4 className="text-center" style={{color:'#027f00'}}>کالای قابل عرضه به گروه مشتریان ( {!groupInfo.name  ?  "عمومی" : groupInfo.name} )</h4>
+                    <h4 className="text-center" style={{color:'#027f00'}}>کالای قابل عرضه به گروه مشتریان ( {!dataProductSupplyCustomer.groupInfo    ?  "عمومی" : dataProductSupplyCustomer.groupInfo && dataProductSupplyCustomer.groupInfo.name} )</h4>
                     </div>
                 </div>
                 <div className="   ">
@@ -196,7 +195,7 @@ setLoading(false)
 
                         </Modal>
 
-                        <table className="table mb-4 " >
+                        <table className="table mb-4 SalesBoard " >
                             <thead>
                                 <tr>
                                     <th className="text-center">شناسه</th>
@@ -215,7 +214,7 @@ setLoading(false)
                                 </tr>
                             </thead>
                             <tbody>
-                                {productSupply.slice(0, showMore? productSupply.length : 5).map((item) =>
+                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item) =>
 
 
                                     <tr key={item.id}>
@@ -239,7 +238,7 @@ setLoading(false)
                         </table>
 
 
-                        {productSupply.length <= 5 ? null:  <a
+                        {productSupply && productSupply.length <= 5 ? null:  <a
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center text-danger text-m"
                             onClick={() => setShowMore(!showMore)}
                             style={{fontSize:'medium', fontWeight:'bold'}}

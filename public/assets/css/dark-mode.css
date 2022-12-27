@@ -6,7 +6,17 @@
 .dark-mode  *{
     border: transparent!important;
 }
-
+.dark-mode * td {
+    padding: 10px 0 10px 0px!important;
+    border-bottom: 1px dashed grey!important;
+    border-top: none!important;
+}
+.dark-mode .alert span{
+    color: #ffffff!important;
+}
+.dark-mode .alert a{
+    color: #ffffff!important;
+}
 .dark-mode  .btn-success{
     border: 1px solid forestgreen!important;
     background: none;
@@ -140,7 +150,7 @@ box-shadow: none!important;
 .form-control{
     background-color: transparent;
 }
-.dark-mode .textOnInput label:after {background-color:#1b2e4b }
+.dark-mode .textOnInput label:after {background-color:transparent }
 .dark-mode .textOnInput label {background-color:transparent}
 .dark-mode .css-1s2u09g-control{background-color:#1b2e4b}
 .dark-mode .css-b62m3t-container input{background-color:transparent;
@@ -347,4 +357,17 @@ select:-webkit-autofill:focus {
 .dark-mode .Attachment path{
     background-color:#ffffff!important ;
 
+}
+.dark-mode .textOnInputForGrp label:after{
+    background: transparent;
+}
+.dark-mode .textOnInputForGrp label{
+    background: transparent;
+}
+.dark-mode #toggle {
+    background-color: #5e6e82;
+}
+.dark-mode .toggle-inner {
+    width: 90px;
+    background-image: url("../img/moon.svg");
 }

@@ -58,13 +58,13 @@ const OverDuePaymentsByAttachments = () => {
 
     if (checked ){
         return(
-        <Link to="/orderList" state="fromDashboard" className="text-light">
-        <div className="w-100 bg-danger p-2 rounded">
+        <Link to="/orderList" state="fromDashboard" className="text-light alert" >
+        <div className="w-100 bg-danger p-2 rounded" >
         <div className="row">
             <div className="col-lg-6 ">
                 <div className="float-left">
                     <FiAlertOctagon size='2rem' className="m-2"/>
-                <span>
+                <span style={{color:"white"}}>
                     موعد سررسید چند سفارش رسیده
                 </span>
                 </div>
@@ -72,7 +72,7 @@ const OverDuePaymentsByAttachments = () => {
             <div className="col-lg-6 m-auto">
 
                 <div className="float-right ">
-                    <Link to="/orderList" state="fromDashboard" className="text-light">  مشاهده بیشتر</Link>
+                    <Link to="/orderList" state="fromDashboard" className="text-light" >  مشاهده بیشتر</Link>
                     <BsArrowLeftCircle size="1.5rem" className="mx-2" style={{position: 'relative',animation: "changeRight 1s infinite"}}/>
 
                 </div>

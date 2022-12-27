@@ -13,12 +13,16 @@ const Setting = () => {
     }
 useEffect(()=>{
     const body = document.body
+    const toggle = document.querySelector('.toggle-inner')
+
     if (mode === 'dark'){
         body.classList.add('dark-mode')
 
+        toggle.classList.add('toggle-active')
 
     } if (mode === 'light') {
         body.classList.remove('dark-mode')
+        toggle.classList.add('toggle-active')
 
     }
     localStorage.setItem('mode', mode); // mode saved to local storage
@@ -44,39 +48,30 @@ useEffect(()=>{
     localStorage.setItem('font', font); // mode saved to local storage
 
 },[font])
-
+    const toggleTheme = () => {
+        if (mode === "light") {
+            setMode("dark");
+            //SET THEME IN LOCALSTORAGE
+            //window.localStorage.setItem("theme", "dark");
+        } else {
+            setFont("light");
+            //SET THEME IN LOCALSTORAGE
+            //window.localStorage.setItem("theme", "light");
+        }
+    };
 
     return (
         <div className="App">
 
-            <span>تغییر تم</span>
 
-          <div>
-              <div className='theme bg-light border border-dark' onClick={()=>setMode('light')}></div>
-              <div className='theme bg-dark border border-light' onClick={()=>setMode('dark')}></div>
-              </div>
-                       <span>تغییر فونت سایز</span>
+            <div
+                id="toggle"
+                onClick={() => mode === "light" ? setMode("dark") : setMode("light")}
+            >
+                <div className="toggle-inner"/>
 
-          <div>
-              {font === 'small' ? <div className='border-bottom border-danger d-inline border-width-4px '>
-              <div className='theme      ' onClick={()=>setFont('small')}>
-               <div className="m-auto text-center siz   h6">  A </div></div>
-              </div>:<div className="d-inline"><div className='theme      ' onClick={()=>setFont('small')}>
-                  <div className="m-auto text-center siz   h6">  A </div></div></div> }
-              {font === 'medium' ? <div className='border-bottom border-danger d-inline border-width-4px '>
+            </div>
 
-              <div className='theme     text-center ' onClick={()=>setFont('medium')}>
-                  <div className="m-auto text-center siz   h4">  A </div></div>
-              </div>:<div className="d-inline"><div className='theme     text-center ' onClick={()=>setFont('medium')}>
-                  <div className="m-auto text-center siz   h4">  A </div></div></div> }
-              {font === 'large' ? <div className='border-bottom border-danger d-inline border-width-4px'>
-                  <div className='theme     text-center h2' onClick={()=>setFont('large')}>
-                  <div className="m-auto text-center siz   h2">  A </div></div>
-              </div>:<div className="d-inline"> <div className='theme     text-center h2' onClick={()=>setFont('large')}>
-                  <div className="m-auto text-center siz   h2">  A </div></div></div> }
-
-
-        </div>
         </div>
     );
 }

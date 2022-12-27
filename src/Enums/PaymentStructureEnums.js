@@ -3,7 +3,8 @@ export const PaymentStructureEnums=[
     {name:'نقدی',id:2},
     {name:'نسیه',id:4},
     {name:'توافقی ',id:6},
- 
+    {name:'متنوع ',id:7},
+
 ]
 
 

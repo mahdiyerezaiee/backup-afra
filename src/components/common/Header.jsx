@@ -9,7 +9,8 @@ import Setting from "../../pages/setting/setting";
 import {SetOrder} from "../../services/orderService";
 import NewsHeader from "../../pages/news/newsHeader";
 import { toast } from 'react-toastify';
-
+import {GiHamburgerMenu} from "react-icons/gi"
+import {BiX} from "react-icons/bi"
 import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
 import {ClipLoader} from "react-spinners";
 
@@ -146,23 +147,17 @@ const Header = ({collapsed, handelChange}) => {
 
                 <div className="block ">
 
-                    <Switch
-                        height={16}
-                        width={30}
-                        checkedIcon={false}
-                        uncheckedIcon={false}
-                        onChange={handelChange}
-                        checked={collapsed}
-                        onColor="#219de9"
-                        offColor="#bbbbbb"
-                    />
 
+<GiHamburgerMenu size="2rem" onClick={handelChange}/>
                 </div>
 
                 <ul className="navbar-item flex-row search-ul">
 
                 </ul>
                 <ul className="navbar-item flex-row navbar-dropdown">
+                    <li className="nav-item m-auto">
+                        <Setting/>
+                    </li>
                     <li className="nav-item dropdown message-dropdown">
                         <div ref={ref}>
                             <a className="nav-link dropdown-toggle" id="messageDropdown"
@@ -389,23 +384,10 @@ const Header = ({collapsed, handelChange}) => {
                             </div>
                         </div>
                     </li>
+
                 </ul>
             </header>
-            <aside id="colorPallet" className="color-pallet " onClick={() => setTheme(!theme)}
-                   style={(theme === true ? {left: '0'} : {})}>
-                <div className="pallet-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                         className="feather feather-settings">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path
-                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                </div>
-                <div className="p-colors">
-                    <Setting/>
-                </div>
-            </aside>
+
         </div>
 
     )

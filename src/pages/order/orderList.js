@@ -838,7 +838,8 @@ const OrderList = () => {
     const formatTrProps = (state = {}) => {
         if (modalIsOpenEdit === false) {
             return {
-                onClick: async () => {
+                onClick: async (e) => {
+                    e.preventDefault()
                     setDetailAddress([])
                     setOrderId(state.original.id)
                     try {

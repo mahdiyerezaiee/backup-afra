@@ -40,25 +40,36 @@ GetData()
         }
     },[])
     return(
-        <div className="px-3 ltr " style={{height: "330px" , overflowY:"auto",direction:"ltr"}}>
-<div className=" ">
-    {report.map((item , index)=>
-    <div key={index} className="   rounded cronJob" style={{direction:"rtl",backgroundColor:"white",padding:"14px 19px",border:" 2px solid #e0e6ed", borderRadius: "8px",marginBottom: "4px"}}>
-        <div className="accordion-icon d-inline pr-2"  style={{color:"#1b55e2"}} >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="rgba(27, 85, 226, 0.239216)"
-             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-             className="feather feather-airplay">
-            <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
-            <polygon points="12 15 17 21 7 21 12 15"></polygon>
-        </svg>
-        </div>
+        <div className="px-3 ltr " style={{height: "330px" }}>
+            <div className="widget widget-activity-four">
 
-        <span><b>{item.type} :</b></span>
-        <span >{item.message}</span>
-        <span  className="float-right">{new  Date(item.createDate).toLocaleString('fa-IR')}</span>
+                <div className="widget-heading">
+                    <h5 className="">فعالیت های اخیر</h5>
+                </div>
+
+                <div className="widget-content">
+
+                    <div className="mt-container mx-auto">
+                        <div className="timeline-line">
+    {report.map((item , index)=>
+    // <div key={index} className="   rounded cronJob" style={{direction:"rtl",backgroundColor:"white",padding:"14px 19px",border:" 2px solid #e0e6ed", borderRadius: "8px",marginBottom: "4px"}}>
+        <div className={item.type === "باربری" ? "item-timeline timeline-primary" : item.type === "بازارگاه" ? "item-timeline timeline-danger" : "item-timeline  timeline-warning"}>
+            <div className="t-dot" data-original-title="" title="">
+            </div>
+            <div className="t-text">
+
+                <p><span style={{fontSize:"15px"}}><b>{item.type} :</b></span>{item.message}</p>
+        <span  className="">
+            {new  Date(item.createDate) === new  Date() ?new  Date(item.createDate).toLocaleTimeString('fa-IR'):new  Date(item.createDate).toLocaleString('fa-IR') === new  Date().toLocaleString('fa-IR') ?"همین الان" :new  Date(item.createDate).toLocaleString('fa-IR')   }
+        </span>
     </div>
+    </div>
+    // </div>
     )}
-</div>
+        </div>
+        </div>
+        </div>
+        </div>
         </div>
     )
 }

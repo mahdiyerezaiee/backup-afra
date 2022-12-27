@@ -152,7 +152,6 @@ if (datas && datas.length >0){
                 pointHoverRadius: 7,
                 pointBorderColor:"#ffffff",
                 pointBackgroundColor:'rgb(27, 85, 226)',
-                shadowColor : '#E56590',
                shadowBlur : 10,
                 shadowOffsetX : 0,
                 shadowOffsetY : 4,
