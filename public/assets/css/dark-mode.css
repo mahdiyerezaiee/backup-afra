@@ -368,6 +368,6 @@ select:-webkit-autofill:focus {
     background-color: #5e6e82;
 }
 .dark-mode .toggle-inner {
-    width: 90px;
+    width: 45px;
     background-image: url("../img/moon.svg");
 }
