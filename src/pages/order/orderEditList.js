@@ -1,10 +1,12 @@
-import {ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
-import {useEffect, useState} from "react";
+import { ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails } from "../../services/orderService";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Select from "react-select";
-import {OrderStatus} from "../../Enums/OrderStatusEnums";
-import {toast} from "react-toastify";
-import {ClipLoader} from "react-spinners";
+import { OrderStatus } from "../../Enums/OrderStatusEnums";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { PaymentStatusEnums } from './../../Enums/PaymentStatus';
+import { ShippingStatusEnums } from './../../Enums/ShippingStatusEnums';
 
 const customStyles = {
     content: {
@@ -21,19 +23,25 @@ const customStyles = {
     }
 
 }
-const OrderEditList = ({id, modalIsOpen, closeModal}) => {
+const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
 
     const [order, setOrder] = useState([])
     const [loading, setLoading] = useState(false);
 
     const [orderStatusId, setOrderStatusId] = useState(0)
+    const [paymentStatusId, setpaymentStatusId] = useState(0)
+    const [shippingStatusId, setshippingStatusId] = useState(0)
 
 
     const getOrder = async () => {
         try {
-            const {data, status} = await GetOrder(id)
+            const { data, status } = await GetOrder(id)
             setOrder(data.result.order)
             setOrderStatusId(data.result.order.orderStatusId)
+            setpaymentStatusId(data.result.order.paymentStatusId)
+            setshippingStatusId(data.result.order.shippingStatusId)
+
+
 
         } catch (err) {
             console.log(err)
@@ -45,11 +53,25 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
 
     }, [id])
 
+    console.log({ ...order, paymentStatusId, orderStatusId, shippingStatusId });
+
     const OrderStatusID = () => {
-        return (OrderStatus.map(data => ({label: data.name, value: data.id})))
+        return (OrderStatus.map(data => ({ label: data.name, value: data.id })))
+    }
+    const PaymentStatusID = () => {
+        return (PaymentStatusEnums.map(data => ({ label: data.name, value: data.id })))
+    }
+    const PaymentStatusId = (id) => {
+        return (PaymentStatusEnums.filter(item => item.id === paymentStatusId).map(data => ({ label: data.name, value: data.id })))
+    }
+    const ShippingStatusID = () => {
+        return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
+    }
+    const ShippingStatusId = (id) => {
+        return (ShippingStatusEnums.filter(item => item.id === shippingStatusId).map(data => ({ label: data.name, value: data.id })))
     }
     const OrderStatusId = (id) => {
-        return (OrderStatus.filter(item => item.id === orderStatusId).map(data => ({label: data.name, value: data.id})))
+        return (OrderStatus.filter(item => item.id === orderStatusId).map(data => ({ label: data.name, value: data.id })))
     }
     const handleEditFormSubmit = async (e) => {
         setLoading(true)
@@ -57,12 +79,11 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
 
         const datas = {
 
-                orderId:id,
-                orderStatusId,
+            "order": { ...order, paymentStatusId, orderStatusId, shippingStatusId,customer:null,extraData:null }
 
         }
         try {
-            const {data, staus} = await ChangeOrderStatus(datas)
+            const { data, staus } = await editOrder(datas)
 
             if (data.result.success === true) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
@@ -81,8 +102,9 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
 
             closeModal()
         }
-         catch (e) {
-            
+        catch (e) {
+            setLoading(false)
+
             console.log(e)
         }
     }
@@ -106,18 +128,18 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
                 strokeLinejoin="round"
                 className="feather feather-x close"
                 data-dismiss="alert"><line x1="18" y1="6"
-                                           x2="6"
-                                           y2="18"></line><line
-                x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                    x2="6"
+                    y2="18"></line><line
+                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div>
-                <div className="card-body p-0" style={{height: '14rem', width: '20rem'}}>
+                <div className="card-body p-0" style={{ height: '14rem', width: '40rem' }}>
 
-                 
+
                     <div className="text-center mb-5">
-                                    <h5 className="text-center">تغییر وضعیت سفارش </h5>
-                            </div>
-                    <div className="form-row mt-4">
-                        <div className="  form-group col-md-12 col-xs-12 textOnInput  selectIndex">
+                        <h5 className="text-center">تغییر وضعیت سفارش </h5>
+                    </div>
+                    <div className="form-row mt-4 textOnInputForGrp selectIndex">
+                        <div className="  form-group col-md-4 col-xs-4  textOnInput">
 
                             <label>وضعیت سفارش </label>
 
@@ -126,8 +148,39 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
                                 value={OrderStatusId()}
                                 placeholder="وضعیت سفارش"
                                 options={OrderStatusID()}
-                              
+
                                 onChange={e => setOrderStatusId(e.value)}
+                                maxMenuHeight="120px"
+                            />
+
+                        </div>
+                        <div className="  form-group col-md-4 col-xs-4    selectIndex">
+
+                            <label>وضعیت پرداخت </label>
+
+
+                            <Select
+                            
+                                value={PaymentStatusId()}
+                                placeholder="وضعیت پرداخت"
+                                options={PaymentStatusID()}
+
+                                onChange={e => setpaymentStatusId(e.value)}
+                                maxMenuHeight="120px"
+                            />
+
+                        </div>
+                        <div className="  form-group col-md-4 col-xs-4   ">
+
+                            <label>وضعیت ارسال </label>
+
+
+                            <Select
+                                value={ShippingStatusId()}
+                                placeholder="وضعیت ارسال"
+                                options={ShippingStatusID()}
+
+                                onChange={e => setshippingStatusId(e.value)}
                                 maxMenuHeight="120px"
                             />
 
@@ -135,11 +188,11 @@ const OrderEditList = ({id, modalIsOpen, closeModal}) => {
 
 
                     </div>
-                    <div className='row mt-4'>
+                    <div className='row mt-4 text-center'>
 
                         <div className='col-12 '>
                             <button className="btn btn-success  "
-                                disabled={loading}    onClick={handleEditFormSubmit}>تایید
+                                disabled={loading} onClick={handleEditFormSubmit}>تایید
                                 <ClipLoader
 
                                     loading={loading}
