@@ -152,18 +152,18 @@ box-shadow: none!important;
 }
 .dark-mode .textOnInput label:after {background-color:transparent }
 .dark-mode .textOnInput label {background-color:transparent}
-.dark-mode .css-1s2u09g-control{background-color:#1b2e4b}
+.dark-mode .css-1s2u09g-control{background-color:#233649}
 .dark-mode .css-b62m3t-container input{background-color:transparent;
     color: #BDBDD7;
 }
 .dark-mode .css-2613qy-menu {background-color:#233649!important;
     color: #BDBDD7!important;
 }
-.dark-mode .css-1pahdxg-control {background-color:#233649!important;
+.dark-mode .css-t3ipsp-control {background-color:#233649!important;
     color: #BDBDD7!important;
 }
-.dark-mode #react-select-5-listbox{background-color:#233649}
-.dark-mode .css-1paxdxg-control{background-color:#233649}
+.dark-mode #react-select-6-live-region{background-color:#1b2e4b!important}
+.dark-mode .css-13cymwt-control{background-color:#1b2e4b!important}
 .dark-mode svg{color: white;
     background-color: transparent}
 .dark-mode .pro-sidebar.collapsed .pro-menu > ul > .pro-menu-item.pro-sub-menu > .pro-inner-list-item > .popper-inner{background-color:#233649}
@@ -370,4 +370,7 @@ select:-webkit-autofill:focus {
 .dark-mode .toggle-inner {
     width: 45px;
     background-image: url("../img/moon.svg");
+}
+.dark-mode .table-striped:hover{
+    background: transparent!important;
 }

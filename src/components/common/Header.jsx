@@ -146,9 +146,9 @@ const Header = ({collapsed, handelChange}) => {
                 </ul>
 
                 <div className="block ">
-
-
-<GiHamburgerMenu size="2rem" onClick={handelChange}/>
+                    {collapsed ? <GiHamburgerMenu size="2rem" onClick={handelChange}/>
+                        : <BiX size="2rem" onClick={handelChange}/>
+                    }
                 </div>
 
                 <ul className="navbar-item flex-row search-ul">

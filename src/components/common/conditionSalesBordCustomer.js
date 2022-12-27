@@ -55,7 +55,7 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <h5 className="text-center mb-3">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
             <table
-                className="table table-bordered table-hover table-striped  mt-2  mb-4">
+                className="table table-bordered  table-striped  mt-2  mb-4">
                 <thead>
                     <tr style={{ fontSize: '10px' }}>
 
