@@ -88,82 +88,54 @@ import DetailCustomerAttachment from "../../pages/adminpages/report/DetailCustom
 import AddOrder from "../../pages/order/addOrder";
 import ShippingList from "../../pages/adminpages/Shipping/ShippingList";
 const MainLayout = (props) => {
-
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
-
   const refreshPage = () => {
-
     window.location.reload();
-
   }
-
-
   const dispatch = useDispatch();
   async function fetchApi() {
     const { data, status } = await GetUserInfo();
     if (status === 200) {
       dispatch(addUserInfo(data.result.customer));
     }
-
-
   }
-
   const userInfo = useSelector(state => state.userInfo);
   const id = userInfo.id;
-
   const getRole = async () => {
     try {
-
-
       const { data, status } = await GetUsersRoles(localStorage.getItem('connect'));
       if (status === 200) {
-
         dispatch(addUserRoles(data.result.userRoleIds));
         setIsloading(false);
-
       }
-
     } catch (error) {
       refreshPage();
       console.log(error)
     }
-
   }
 
   useEffect(() => {
-
     fetchApi();
     getRole();
-
-
-  }, [])
-
+    }, [])
 
   const [collapsed, setCollapsed] = useState(true);
-
   const handleCollapsedChange = (checked) => {
-    setCollapsed(checked);
+    setCollapsed(!collapsed);
   };
 
   return (
     <Fragment>
 
-
       <Header collapsed={collapsed} handelChange={handleCollapsedChange} />
-
       <div className="main-container" id="container">
-
         <SideNavbar collapsed={collapsed} loading={isloading} />
-
         <div id="content" className="main-content main-Layout">
           <div className="layout-px-spacing">
-
             <div className="row layout-top-spacing">
               <div className="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-
                 <Routes>
-
                   <Route path="404" element={<NotFound />} />
                   <Route path="*" element={<Navigate to="/404" replace />} />
                   {/* dashboard */}

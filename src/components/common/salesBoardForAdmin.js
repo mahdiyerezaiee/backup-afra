@@ -36,8 +36,6 @@ const SalesBoardForAdmin = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
-
-
     const [productSupply, setProductSupply] = useState(getDataProductSupply().productSupply?getDataProductSupply().productSupply:[]);
     const [modalInfo, setModalInfo] = useState([])
     const [quantity, setquantity] = useState(0)
@@ -49,51 +47,42 @@ const SalesBoardForAdmin = () => {
     const dataProductSupply = {
         expiresAt: expires,
         productSupply,
-Customerg
+        Customerg,
     }
-
-
     function getDataProductSupply() {
         let items = JSON.parse(sessionStorage.getItem('dataProductSupply'));
         return items ? items : ''
 
 
     }
+    const getProductSupply = async () => {
+        const { data, status } = await GetGroupsForEntity(1);
+        setCustomerg(data.result.groups);
+        dataProductSupply.Customerg = data.result.groups
+        try {
+            const { data, status } = await GetAllProductSupplyBordAdmin();
+            setProductSupply(data.result.productSupplies.values)
+            dataProductSupply.productSupply=data.result.productSupplies.values
 
+        } catch (error) {
+            console.log(error);
+        }
+        sessionStorage.setItem('dataProductSupply', JSON.stringify(dataProductSupply));
+
+    }
 
     useEffect(() => {
-        const getProductSupply = async () => {
-            try {
 
-                const { data, status } = await GetAllProductSupplyBordAdmin();
-
-                setProductSupply(data.result.productSupplies.values)
-dataProductSupply.productSupply=data.result.productSupplies.values
-                sessionStorage.setItem('dataProductSupply', JSON.stringify(dataProductSupply));
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        const GetCustomerGroup = async () => {
-            const { data, status } = await GetGroupsForEntity(1);
-            if (status === 200) {
-
-
-                setCustomerg(data.result.groups);
-dataProductSupply.Customerg=data.result.groups
-            }
-
-        }
         if (getDataProductSupply().expiresAt < new Date().toUTCString()){
 
             sessionStorage.removeItem("dataProductSupply")
 
 
-        }if (!getDataProductSupply().expiresAt ){
+        }
+        if (!getDataProductSupply().expiresAt ){
 
             getProductSupply();
-            GetCustomerGroup();
+
 
 
         }
@@ -226,7 +215,7 @@ setLoading(false)
 
                         </Modal>
 
-                        <table className="table mb-4" >
+                        <table className="table mb-4 " >
                             <thead>
                                 <tr>
                                     <th className="text-center">شناسه</th>
@@ -249,7 +238,7 @@ setLoading(false)
                                 {productSupply.slice(0, showMore ? productSupply.length : 5).map((item) =>
 
 
-                                    <tr key={item.id}>
+                                    <tr key={item.id} className="SalesBoard">
                                         <td className="text-center">{item.id}</td>
                                         <td className="text-center">{item.cottageCode}</td>
 
@@ -258,7 +247,7 @@ setLoading(false)
                                         <td className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnit).map(e => e.name)}</td>
                                         <td className="text-center">{formatter2.format(item.quantity)}</td>
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
-                                        <td className="text-center">{groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item => item.gpName)).length === 0 ? "عمومی" : [...new Set(groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item, index) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
+                                        <td className="text-center">{ groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item => item.gpName)) === null? "عمومی" : [...new Set(groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item, index) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{formatter2.format(item.orderedQuantity)}</td>
