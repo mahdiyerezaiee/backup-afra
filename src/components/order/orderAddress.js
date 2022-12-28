@@ -1,8 +1,7 @@
 import file from "../../pages/order/addressFile.xlsx";
 import { useSelector } from "react-redux";
 import { getExtraData } from '../../services/extraService';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState, useMemo } from "react";
 import ShippingSelected from "../common/shippingSelected";
 import { GetAllProductSupply } from "../../services/productSupplyService";
 import { GetAddress } from '../../services/addressService';
@@ -12,6 +11,9 @@ import FinancialConfirmation from "./FinancialConfirmation";
 import { GetProductSupplyConditions } from './../../services/ProductSupplyConditionService';
 import AddAdressCustomerForOrder from './../common/addAdressCustomerForOrder';
 import ExcelFileUploader from './../../utils/ExcelFileUploader';
+import { PaymentStructureEnums } from './../../Enums/PaymentStructureEnums';
+import TakhsisTable from "../form/TakhsisTable";
+import ColumnFilter from './../form/ColumnFilter';
 
 
 const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
@@ -231,6 +233,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         getDetails()
         getSupplyCode()
         getOrderDetailCondition()
+
     }, [details])
     var formatter = new Intl.NumberFormat('fa-IR', {
 
@@ -239,9 +242,40 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     });
 
 
-    console.log(orderCondition.filter(x => x.extId === null));
+    let condition = [...orderCondition]
 
+    console.log(completeDdata);
+    const columns = useMemo(() => [
+        { Header: '#', accessor: 'id', Filter: ColumnFilter },
+        { Header: 'نام تحویل گیرنده', accessor: 'receiverName', Filter: ColumnFilter },
+        { Header: 'کد ملی', accessor: 'ReceiverId', Filter: ColumnFilter },
+        { Header: 'آدرس', accessor: 'fullAddress', Filter: ColumnFilter },
+        { Header: 'شماره هماهنگی', accessor: 'receiverTel', Filter: ColumnFilter },
+        { Header: 'کد پستی', accessor: 'postalCode', Filter: ColumnFilter },
+        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: ColumnFilter },
+        { Header: 'وزن', accessor: 'quantity', Filter: ColumnFilter },
+        { Header: 'قیمت تمام شده', accessor: 'price', Filter: ColumnFilter },
+        {
+            Header: 'بازه پرداخت', accessor: '', Cell: rows => {
+                return (null)
 
+            }, Filter: ColumnFilter
+        },
+        { Header: 'شناسه تخصیص', accessor: 'AllocationId', Filter: ColumnFilter },
+        { Header: 'شناسه یکتا', accessor: 'ReceiverUniqueId', Filter: ColumnFilter },
+        { Header: 'تریلی', accessor: 'ShipTruckTypet', Filter: ColumnFilter },
+        {
+            Header: 'عملیات', accessor: '  ', Cell: rows => {
+                return (<button onClick={() => openModal(rows.row.original.id)} className="btn btn-sm btn-primary" hidden={(order.paymentStatusId === 3 || order.paymentStatusId === 6) ? false : true}
+                    disabled={rows.row.original.shippingId !== null ? true : false}
+
+                >صدور حواله
+                </button>)
+
+            }, disableFilters: true
+        }
+    ])
+    const data = useMemo(() => completeDdata.filter(item => item.extId !== null))
     return (
         <div>
             <ShippingSelected modalIsOpen={modalIsOpen} closeModal={closeModal} orderDetailId={orderDetailId} Order={order} />
@@ -250,18 +284,19 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">
                 <label>جزییات سفارش </label>
 
-                <div className="form-group   textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '4rem' }}>
-                    <label> فاقد تخصیص </label>
+                {orderCondition && orderCondition.filter(x => x.extId === null).length > 0 ?
+                    (<div className="form-group   textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '4rem' }}>
+                        <label> فاقد تخصیص </label>
 
 
-                    {orderCondition && orderCondition.filter(x => x.extId === null).length > 0 ?
-                        (<table className="table table-bordered table-hover table-striped  mt-2  mb-4">
+
+                        <table className="table table-bordered table-hover table-striped  mt-2  mb-4">
                             <thead className='text-center'>
                                 <tr className="">
                                     <th> #</th>
                                     <th> کالا</th>
                                     <th>قیمت پایه</th>
-                                    <th>وزن خرید</th>
+                                    <th>وزن </th>
                                     <th> قیمت کل</th>
 
                                     <th> عرضه</th>
@@ -274,7 +309,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                                 </tr>
                             </thead>
                             <tbody>
-                                {orderCondition.filter(x => x.extId === null).map(item =>
+                                {condition.filter(x => x.extId === null).map(item =>
                                     <tr className="" key={item.id}>
 
                                         <td className="text-center">{item.id}</td>
@@ -282,9 +317,10 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                                         <td className="text-center">{item.basePrice}</td>
                                         <td className="text-center">{formatter.format(item.quantity)}</td>
                                         <td className="text-center">{formatter.format(item.price)}</td>
-                                        <td className="text-center"></td>
-                                        <td className="text-center">{item.productSupplyId}</td>
-                                        <td className="text-center">{cottageCode}</td>
+                                        <td className="text-center">{item.productSupplyId ? item.productSupplyId : '--'}</td>
+                                        <td className="text-center">{item.paymentMethodId ? PaymentStructureEnums.filter(x => x.id === item.paymentMethodId).map(q => q.name) : '--'}</td>
+                                        <td className="text-center">{item.paymentMethodId === 4 ? `${item.installmentOccureCount} قسط ${item.installmentPeriod} روزه` : '--'}</td>
+                                        <td className="text-center">{cottageCode ? cottageCode : '--'}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                         <td td className="text-center m-1"><button hidden={(orderWeight <= TakhsisWeight) ? true : false} onClick={() => openModalAddress(item.id, item.measureUnitId)} className=" border-0 bg-success " title="افزودن آدرس" >
                                             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill=""
@@ -306,49 +342,24 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                                 )
                                 }
                             </tbody>
-                        </table>) : ''}
+                        </table>
 
-                </div>
-                <div className="form-group mb-4  textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '3rem' }}>
-                    <label>  تخصیص یافته </label>
+                    </div>) : ''}
+                {completeDdata && completeDdata.filter(x => x.extId !== null).length > 0 ?
+                    (<div className="form-group mb-4  textOnInput col-lg-12 rounded border  border-dark    " style={{ marginTop: '3rem' }}>
+                        <label>  تخصیص یافته </label>
 
-                    {/* :
-
-
-                                    </tr>:
-                                        <tr className="" key={item.id}>
-
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center text-primary">وزن باقی مانده</td>
-                                            <td className="text-center text-danger" style={{fontSize:'17px'}}>{item.quantity}</td>
-                                            {roles.includes(7) || roles.includes(5) || roles.includes(8) ?
-                                                <td className="text-center"  bgcolor="white" style={{border:'none'}}>
-
-                                                </td> : ''}
-
-
-                                        </tr>
-
-
-                                )
-                                }
-                                </tbody>
-                            </table>
-                        )} */}
+                        <TakhsisTable columns={columns} data={data} />
 
 
 
 
 
 
-                </div>
+
+
+
+                    </div>) : ''}
                 <div className=" text-end  p-2" style={{ textAlign: 'left' }}>
 
                     {roles.includes(7) || roles.includes(5) || roles.includes(8) ? <button className="btn-success m-1 btn " hidden={order.orderStatusId === 8 ? false : true} onClick={openModalFinancialConfirmation}>تایید مالی</button> : null}
