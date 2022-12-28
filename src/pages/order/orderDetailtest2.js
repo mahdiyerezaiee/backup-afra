@@ -338,7 +338,6 @@ const OrderDetailTest = () => {
                         <NavLink className="text-light" to='/orderList'>بازگشت</NavLink>
                     </button>
                 </div>
-                <AddAdressCustomerForOrder isOpenAddress={isOpenAddress} closeModal={closeModalAddress} orderDetailId={orderDetailId} orderMeasuerId={measureUnitId} />
                 <ExcelFileUploader modalIsOpen={modalIsOpenUploadExcel} closeModal={closeModalIsOpenUploadExcel}
                     EntityId={orderDetailId} EntityTypesId={11}
                     comment={'لطفا فایل اکسل مطابق نمونه اطلاعات ارسال را بارگزاری کنید'} />
