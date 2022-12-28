@@ -28,7 +28,7 @@ const TakhsisTable = ({ columns, data }) => {
                 style={{ overflowX: 'auto' }}
             >
 
-                <table className='table m-1 ' {...getTableProps()}
+                <table className='table m-1 table-striped ' {...getTableProps()}
                 // style={{ transform:'rotateX(180deg)'}}
                 >
 

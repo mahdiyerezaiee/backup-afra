@@ -298,7 +298,6 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                                     <th>قیمت پایه</th>
                                     <th>وزن </th>
                                     <th> قیمت کل</th>
-
                                     <th> عرضه</th>
                                     <th>نحوه پرداخت</th>
                                     <th>بازه پرداخت</th>
