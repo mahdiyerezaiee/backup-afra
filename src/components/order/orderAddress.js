@@ -273,7 +273,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">
                 <label>جزییات سفارش </label>
 
-                {condition && condition.length > 0 ?
+                {condition && condition.filter(x => x.extId === null).length > 0 ?
                     (<div className="form-group   textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '4rem' }}>
                         <label> فاقد تخصیص </label>
 
