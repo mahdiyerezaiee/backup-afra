@@ -39,10 +39,12 @@ const TakhsisTable = ({ columns, data }) => {
                                     {
                                         headerGroup.headers.map(column => (
                                             <th {...column.getHeaderProps()}>
+
                                                 {
                                                     column.render('Header')
                                                 }
-                                                <div>{column.canFilter ? column.render('Filter') : null}</div>
+                                                <p>{column.canFilter ? column.render('Filter') : null}</p>
+
                                             </th>
                                         ))
                                     }

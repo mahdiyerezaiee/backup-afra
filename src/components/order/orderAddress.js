@@ -200,24 +200,44 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
     console.log(completeDdata);
     const columns = useMemo(() => [
-        { Header: '#', accessor: 'id', Filter: ColumnFilter },
-        { Header: 'نام تحویل گیرنده', accessor: 'receiverName', Filter: ColumnFilter },
-        { Header: 'کد ملی', accessor: 'ReceiverId', Filter: ColumnFilter },
-        { Header: 'آدرس', accessor: 'fullAddress', Filter: ColumnFilter },
-        { Header: 'شماره هماهنگی', accessor: 'receiverTel', Filter: ColumnFilter },
-        { Header: 'کد پستی', accessor: 'postalCode', Filter: ColumnFilter },
-        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: ColumnFilter },
-        { Header: 'وزن', accessor: 'quantity', Filter: ColumnFilter },
-        { Header: 'قیمت تمام شده', accessor: 'price', Filter: ColumnFilter },
+        { Header: '#', accessor: 'id', disableFilters: true },
+        { Header: 'نام تحویل گیرنده', accessor: 'receiverName', disableFilters: true },
+        { Header: 'کد ملی', accessor: 'ReceiverId', disableFilters: true },
+        { Header: 'آدرس', accessor: 'fullAddress',Cell:rows=>{
+
+return(
+    <p title={rows.row.original.fullAddress}>{rows.row.original.fullAddress.substring(0,20)}</p>
+)
+
+
+        },disableFilters: true},
+        { Header: 'شماره هماهنگی', accessor: 'receiverTel', disableFilters: true },
+        { Header: 'کد پستی', accessor: 'postalCode', disableFilters: true },
+        { Header: 'قیمت پایه', accessor: 'basePrice', Filter:ColumnFilter },
+        { Header: 'وزن', accessor: 'quantity', disableFilters: true },
+        { Header: 'قیمت تمام شده', accessor: 'price',Cell:rows=>{
+            return(
+                formatter.format(rows.row.original.price)
+            )
+        }, disableFilters: true},
         {
             Header: 'بازه پرداخت', accessor: '', Cell: rows => {
-                return (null)
+                return (condition.filter(x=>x.id===rows.row.original.id).paymentMethodId===4?condition.filter(x=>x.id===rows.row.original.id).map(y=> `${y.installmentOccureCount} قسط ${y.installmentPeriod} روزه` ):'--')
 
-            }, Filter: ColumnFilter
+            }, disableFilters: true
         },
-        { Header: 'شناسه تخصیص', accessor: 'AllocationId', Filter: ColumnFilter },
-        { Header: 'شناسه یکتا', accessor: 'ReceiverUniqueId', Filter: ColumnFilter },
-        { Header: 'تریلی', accessor: 'ShipTruckTypet', Filter: ColumnFilter },
+        { Header: 'شناسه تخصیص', accessor: 'AllocationId', disableFilters: true},
+        { Header: 'شناسه یکتا', accessor: 'ReceiverUniqueId', disableFilters: true },
+        { Header: 'تریلی', accessor: 'ShipTruckTypet',Cell:rows=>{
+          if(rows.row.original.ShipTruckTypet===1){
+
+            return('بله')
+          }
+          else{
+            return('خیر')
+          }
+        
+        }, disableFilters: true },
         {
             Header: 'عملیات', accessor: '  ', Cell: rows => {
                 return (<button onClick={() => openModal(rows.row.original.id)} className="btn btn-sm btn-primary" hidden={(order.paymentStatusId === 3 || order.paymentStatusId === 6) ? false : true}
