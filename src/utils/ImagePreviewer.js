@@ -32,7 +32,7 @@ const customStyles = {
 
 const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) => {
     const [trackingCode, setTrackingCode] = useState(0)
-    const [Chechvalue, setCheckValue] = useState(null)
+    const [value, setValue] = useState(0)
     const [dueDate, setDueDate] = useState(item.dueDate)
     const [chacked, setchacked] = useState(false)
     let [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
         name: '',
         attachmentTypeId: 2,
         trackingCode,
-        value:Chechvalue,
+        value,
         dueDate: new Date(),
     }
     const validator = useRef(new SimpleReactValidator({
@@ -71,8 +71,9 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
         setLoading(true)
         try {
             const {data, status} = await SetAttachmentType(datas)
-            if (data.result.success === true) {
+            closeModal()
 
+            if (status === 200) {
                 toast.success("اطلاعات سند ثبت شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -200,11 +201,11 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                     <div className="col-3">
                                         <label>مبلغ چک</label>
                                         <input hidden={item.value} className="  form-control opacityForInput  mb-4"
-                                               type="number" value={Chechvalue} onChange={e => {setCheckValue(e.target.value)
+                                               type="text" value={value} onChange={e => {setValue(e.target.value)
                                             validator.current.showMessageFor("required");
                                         }} />
-                                        {validator.current.message("required", Chechvalue, "required|numeric")}
-                                        {item.Chechvalue?<p className="p-3 border">{formatter.format(item.Chechvalue)}</p>  :null}
+                                        {validator.current.message("required", value, "required|numeric")}
+                                        {item.value?<p className="p-3 border">{formatter.format(item.value)}</p>  :null}
                                     </div>
 
                                     <div className="col-3">

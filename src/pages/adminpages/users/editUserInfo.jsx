@@ -94,7 +94,7 @@ const EditUserInfo = () => {
 
 
     }, [organizationId])
-
+console.log(maxValidityUnitId);
     const submit = async (e) => {
         setLoading(true)
 
@@ -140,7 +140,7 @@ const EditUserInfo = () => {
         return (PriceUnitEnums.map(item => ({ label: item.name, value: item.id })))
     }
     const PriceUnit = () => {
-        return (PriceUnitEnums.filter(item => item.id === maxValidityUnitId).map(item => ({ label: item.name, value: item.id })))
+        return (PriceUnitEnums.filter(item => item.id === maxValidityUnitId).map(item => ({ label: item.name, value: item.id }))[0])
     }
 
     const validator = useRef(new SimpleReactValidator({
@@ -285,7 +285,7 @@ const EditUserInfo = () => {
                                 <div className="col-6 mb-4">
                                     <label >واحد قیمت</label>
                                     <Select
-                                        defaultValue={PriceUnit()}
+                                        value={PriceUnit()}
                                         placeholder="واحد قیمت"
                                         options={PriceUnitItem()}
                                         onChange={e => setMaxValidityUnitId(e.value)}
