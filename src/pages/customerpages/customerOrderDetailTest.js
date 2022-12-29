@@ -319,7 +319,7 @@ const OrderDetailTest = () => {
                             </>
                             :
                             (
-                                <><OrderAddress order={order} openModalAddress={openModalAddress} setIsOpenUploadExcel={setIsOpenUploadExcel} details={detailAddress} shipping={Shipping}/>
+                                <><OrderAddress openModalAddress={openModalAddress} setIsOpenUploadExcel={setIsOpenUploadExcel} details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} />
                                     <OrderWayBill loading={loading} Shipping={Shipping} ShippingContracts={ShippingContracts} dataForExcel={dataForExcel} update={update}/>
                                     {attachments ? (<OrderAttachment  order={order} params={params} attachments={attachments}
                                                                      closeModalForUpload={closeModalForUpload}

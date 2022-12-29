@@ -43,7 +43,7 @@ const TakhsisTable = ({ columns, data }) => {
                                                 {
                                                     column.render('Header')
                                                 }
-                                                <p>{column.canFilter ? column.render('Filter') : null}</p>
+                                                {column.canFilter ? column.render('Filter') : null}
 
                                             </th>
                                         ))

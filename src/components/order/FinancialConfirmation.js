@@ -65,7 +65,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
             const { data, staus } = await ChangeOrderStatus(datas)
 
             if (data.success === true) {
-                toast.success(data.result.message, {
+                toast.success('تایید با موفقیت انجام شد', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,

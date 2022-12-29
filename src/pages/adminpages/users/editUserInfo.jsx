@@ -46,7 +46,7 @@ const EditUserInfo = () => {
     }
     const dataUser = {
 
-        id: params.id,
+        id:Number( params.id),
         userName,
         email,
         firstName,
@@ -63,7 +63,7 @@ const EditUserInfo = () => {
     const getUserInfo = async () => {
 
         try {
-            const { data, status } = await GetUserData(params.id)
+            const { data, status } = await GetUserData(Number(params.id))
             setEmail(data.result.customer.email)
             setUserName(data.result.customer.userName)
             setFirstName(data.result.customer.firstName)
@@ -276,7 +276,7 @@ console.log(maxValidityUnitId);
                                 </div>
                                 <div className="col-6 mb-4">
                                     <label >مقدار اعتبار </label>
-                                    <input type="text" className=" formater form-control opacityForInput" placeholder="100,000" maxLength="10" value={formatter.format(maxValidity)} onChange={e => {
+                                    <input type="text" className=" formater form-control opacityForInput" placeholder="100,000"  value={formatter.format(maxValidity)} onChange={e => {
                                         setMaxValidity(e.target.value.replaceAll(",",""))
                                         validator.current.showMessageFor("required");
                                     }} />
