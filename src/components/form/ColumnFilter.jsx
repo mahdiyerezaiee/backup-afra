@@ -6,7 +6,7 @@ const ColumnFilter = ({ column,data }) => {
     return (
         <span>
            
-            <input style={{border:'none' ,borderRadius:'20%',boxSizing:'content-box' ,width:'80%' ,height:'15px'}} value={ filterValue ||  '' }
+            <input style={{border:'none' ,borderRadius:'20%',boxSizing:'content-box' ,width:'60px' ,height:'15px'}} value={ filterValue ||  '' }
                 onChange={e => setFilter(e.target.value)} />
         </span>
     )

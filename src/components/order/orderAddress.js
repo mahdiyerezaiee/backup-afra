@@ -18,7 +18,7 @@ import ColumnFilter from './../form/ColumnFilter';
 
 const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
     const roles = useSelector(state => state.userRole)
-    let FilnalArr = [];
+    const [orderCondition, setOrderCondition] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
     const [OrderDetail, setOrderDetail] = useState([])
     const [IsOpen, SetIsOpen] = useState(false);
@@ -31,9 +31,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
 
     const [cottageCode, setcottageCode] = useState('');
-    const [orderCondition, setOrderCondition] = useState([])
    
     const getSupplyCode = async () => {
+
         try {
             const { data, status } = await GetAllProductSupply(details[0].productSupplyId)
             setcottageCode(data.result.productSupply.cottageCode)
@@ -43,18 +43,21 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         }
 
     }
+
     const getOrderDetailCondition = async () => {
+    let Arr = [];
+
+
         try {
 
             let Order = details
-            setOrderDetail(details)
-            setProductSupplyId(details.productSupplyId)
+            
+            
             let ids = details.map(item => item.productSupplyId)
 
 
             let productSupplyConditionIds = details.map(item => item.productSupplyConditionId)
-            console.log(ids);
-            console.log(productSupplyConditionIds);
+       
             if (productSupplyConditionIds.length > 0) {
                 let conditions = [];
                 for (let i = 0; i < ids.length; i++) {
@@ -74,12 +77,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                     }
                 }
 
-                console.log(conditions);
                 for (let i = 0; i < Order.length; i++) {
 
 
-                    //   let ff = conditions.filter(item => item.id === Order[i].productSupplyConditionId)
-                    //   console.log(ff);
                     const merged = conditions.map(item =>
                     ({
                         conditionId: item.id,
@@ -95,9 +95,11 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
                     let obj = { ...Order[i], ...merged[i] }
 
-                    FilnalArr.push(obj)
+                    Arr.push(obj)
                 }
-                setOrderCondition(FilnalArr)
+                
+
+                setOrderCondition(Arr)
             }
             else {
                 setOrderCondition(Order)
@@ -106,8 +108,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
             console.log(err)
         }
     }
+    let condition = [...orderCondition]
 
-
+   
     const openModal = (id) => {
         setorderDetailId(id)
         setIsOpen(true);
@@ -139,7 +142,6 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     const closeModalIsOpenUploadExcel = () => {
         setIsOpenUploadExcel(false)
     }
-    console.log(measureUnitId);
     const getDetails = async () => {
         let finalArr = [];
         try {
@@ -183,12 +185,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         }
     }
 
-    useEffect(() => {
-        getDetails()
-        getSupplyCode()
-        getOrderDetailCondition()
-
-    }, [details])
+   
     var formatter = new Intl.NumberFormat('fa-IR', {
 
         maximumFractionDigits: 0,
@@ -196,9 +193,6 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     });
 
 
-    let condition = [...orderCondition]
-
-    console.log(completeDdata);
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id', disableFilters: true },
         { Header: 'نام تحویل گیرنده', accessor: 'receiverName', disableFilters: true },
@@ -250,6 +244,13 @@ return(
         }
     ])
     const data = useMemo(() => completeDdata.filter(item => item.extId !== null))
+    useEffect(() => {
+        getDetails()
+        getSupplyCode()
+        getOrderDetailCondition()
+
+    }, [getOrder])
+
     return (
         <div>
             <ShippingSelected modalIsOpen={modalIsOpen} closeModal={closeModal} orderDetailId={orderDetailId} Order={order} />
@@ -258,7 +259,7 @@ return(
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">
                 <label>جزییات سفارش </label>
 
-                {orderCondition && orderCondition.filter(x => x.extId === null).length > 0 ?
+                {condition && condition.length > 0 ?
                     (<div className="form-group   textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '4rem' }}>
                         <label> فاقد تخصیص </label>
 
@@ -283,7 +284,7 @@ return(
                             </thead>
                             <tbody>
                                 {condition.filter(x => x.extId === null).map(item =>
-                                    <tr className="" key={item.id}>
+                                    <tr key={item.id}>
 
                                         <td className="text-center">{item.id}</td>
                                         <td className="text-center">{item.product.name}</td>
@@ -295,7 +296,7 @@ return(
                                         <td className="text-center">{item.paymentMethodId === 4 ? `${item.installmentOccureCount} قسط ${item.installmentPeriod} روزه` : '--'}</td>
                                         <td className="text-center">{cottageCode ? cottageCode : '--'}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
-                                        <td td className="text-center m-1"><button hidden={(orderWeight <= TakhsisWeight) ? true : false} onClick={() => openModalAddress(item.id, item.measureUnitId)} className=" border-0 bg-success " title="افزودن آدرس" >
+                                        <td className="text-center m-1"><button hidden={(orderWeight <= TakhsisWeight) ? true : false} onClick={() => openModalAddress(item.id, item.measureUnitId)} className=" border-0 bg-success " title="افزودن آدرس" >
                                             <svg style={{ color: 'white' }} width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                 className="bi bi-plus-circle" viewBox="0 0 17 16">
                                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -305,9 +306,9 @@ return(
 
                                         </button>
 
-                                            <button className={order.orderStatusId === 8 ? "bg-primary m-1 border-0 " : "bg-success m-1 border-0 "} disabled={(orderWeight <= TakhsisWeight) ? true : false} onClick={() => setIsOpenUploadExcel(true)} title='افزودن آدرس با اکسل'>
+                                            <button className={order.orderStatusId === 8 ? "bg-primary m-1 border-0 " : "bg-success m-1 border-0 "} disabled={(orderWeight <= TakhsisWeight) ? true : false} onClick={() => openModalExcelAddress(item.id)} title='افزودن آدرس با اکسل'>
 
-                                                <svg style={{ color: 'white' }} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-explicit" viewBox="0 0 16 16"> <path d="M6.826 10.88H10.5V12h-5V4.002h5v1.12H6.826V7.4h3.457v1.073H6.826v2.408Z" /> <path d="M2.5 0A2.5 2.5 0 0 0 0 2.5v11A2.5 2.5 0 0 0 2.5 16h11a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 13.5 0h-11ZM1 2.5A1.5 1.5 0 0 1 2.5 1h11A1.5 1.5 0 0 1 15 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 13.5v-11Z" /> </svg>
+                                                <svg style={{ color: 'white' }} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-explicit" viewBox="0 0 16 16"> <path d="M6.826 10.88H10.5V12h-5V4.002h5v1.12H6.826V7.4h3.457v1.073H6.826v2.408Z" /> <path d="M2.5 0A2.5 2.5 0 0 0 0 2.5v11A2.5 2.5 0 0 0 2.5 16h11a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 13.5 0h-11ZM1 2.5A1.5 1.5 0 0 1 2.5 1h11A1.5 1.5 0 0 1 15 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 13.5v-11Z" /> </svg>
                                             </button>
                                         </td>
 

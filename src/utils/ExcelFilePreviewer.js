@@ -48,7 +48,7 @@ let item={"bazargah":data[i]}
           try {
             const response = await ordersSpliter(body)
 
-            if (response.status == 200 && response.data.result.success === true) {
+            if (response.status == 200 ) {
 
                 toast.success(response.data.result.message, {
                     position: "top-right",
@@ -65,15 +65,7 @@ let item={"bazargah":data[i]}
 
             }
             else {
-                toast.error(response.data.result.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
+                
             }
             closeModal()
             scondeModalClose()
@@ -85,15 +77,7 @@ let item={"bazargah":data[i]}
            catch (err) {
         
             setStateError(err.response.data.result.errors)
-            toast.error('فایل اکسل  مشکل دارد', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
+           
 
           closeModal()
           scondeModalClose()
@@ -135,8 +119,8 @@ let item={"bazargah":data[i]}
                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div className='m-auto'>
 
-                <div className="table-responsive  " style={{ display: "block", overflowY: 'scroll', overflowX: 'hidden', height: '280px', width: "100%" }} >
-                    <table className="table table-bordered table-hover table-striped  mt-2  mb-4"  >
+                <div  style={{ display: "block", overflowY: 'scroll', overflowX: 'hidden', height: '280px', width: "100%" }} >
+                    <table className="table table-bordered table-hover table-striped  mt-2  mb-4"   >
                         <thead>
                             <tr>
                                 <th>شناسه خرید</th>
@@ -156,7 +140,7 @@ let item={"bazargah":data[i]}
                         </thead>
 
                         {isData?
-                            <tbody>
+                            <tbody  >
                                 {
                                     data.map(item =>
 
