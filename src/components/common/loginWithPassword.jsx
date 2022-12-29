@@ -84,9 +84,10 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
 
 
                 const { status, data } = await loginUser(user);
-                if (status === 200) {
+                console.log(data);
+                if (data.success===true) {
 
-                    if (data.result.success === true) {
+                     
                         setValid(true)
                         localStorage.setItem('mobile', user.phoneNumber)
                         localStorage.setItem('token', data.result.token);
@@ -113,7 +114,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
 
                     else {
                         setShow(true)
-                        toast.error(`${data.result.message}`, {
+                        toast.error(`${data.error.message}`, {
                             position: "top-right",
                             autoClose: 5000,
                             hideProgressBar: false,
@@ -127,23 +128,19 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
 
                     setLoading(false)
 
+                    
 
-
-                }
+                
             }
 
 
 
             catch (error) {
-                toast.error("خطایی از سمت سرور رخ داده است", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
+                setShow(true)
+               
+                console.log(error);
+                setLoading(false)
+
 
             }
 

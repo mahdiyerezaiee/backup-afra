@@ -31,7 +31,7 @@ const NewCustomerGroup = () => {
         }
 
         const {data,status}=await SetGroup(body)
-        if(status===200){
+        if(data.success===200){
             setLoading(false)
             toast.success('گروه جدید ایجاد شد',
             {

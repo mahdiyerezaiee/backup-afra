@@ -140,6 +140,7 @@ export function ChartLineValue() {
         const GetReport = async () => {
             try {
                 const {data , status}= await GetPeriodicSalesReport(TypeId)
+                
                 setDatas(data.result.ordersPerSchedule)
             }catch (e) {
                 console.log(e)

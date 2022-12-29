@@ -15,10 +15,14 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
         }
     }
     const GetCondition = async () => {
+       try {
         const { data, status } = await GetProductSupplyConditionsCustomer(productSupplyConditions);
-        if (status === 200) {
+        if (data.success===true) {
             setCondition(data.result.productSupplyConditions.values);
         }
+       } catch (error) {
+        
+       } 
     }
     useEffect(() => {
         GetCustomerGroup();

@@ -86,7 +86,7 @@ const Header = ({collapsed, handelChange}) => {
         }
         try {
             const{data, status}= await SetOrder(order)
-            if (status=== 200 && data.result.success===true){
+            if (data.success===true){
                 getCartShopping()
                 toast.success(data.result.message, {
                     position: "top-right",
@@ -99,19 +99,7 @@ const Header = ({collapsed, handelChange}) => {
                 });
                 roles.includes(2) ? Navigate('cuoList') : Navigate('orderList')
             }
-            else if (status=== 200 && data.result.success===false){
-                getCartShopping()
-                toast.error(data.result.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-                roles.includes(2) ? Navigate('cuoList') : Navigate('orderList')
-            }
+            
 
 
         }catch (err){

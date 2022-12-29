@@ -92,7 +92,7 @@ const AddresForm = () => {
         try {
             
             const {data,status}=await SetAddress(body);
-            if(status===200){
+            if(data.success===true){
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
                         autoClose: 5000,

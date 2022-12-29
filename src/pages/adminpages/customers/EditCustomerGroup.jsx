@@ -105,7 +105,7 @@ if(id>0){
         try {
 
             const { data, status } = await setCustomerInfo(body);
-            if (status === 200) {
+            if (data.success===true) {
                 setLoading(false)
                 toast.success('با موفقیت ثبت شد',
                     {

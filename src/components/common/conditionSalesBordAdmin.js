@@ -9,7 +9,7 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
     const [customerg, setCustomerg] = useState([])
     const GetCustomerGroup = async () => {
         const { data, status } = await GetGroupsForEntity(1);
-        if (status === 200) {
+        if (data.success===true) {
             setCustomerg(data.result.groups);
         }
     }

@@ -134,8 +134,8 @@ const AddOrder = () => {
         e.preventDefault()
         try {
             const {data, status} = await addOrder(order)
-if (data.result.success === true){
-    toast.success(data.result.message + `شناسه سفارش ${data.result.orderId }`, {
+if (data.success === true){
+    toast.success((' سفارش با موفقیت ثب شد' ), {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -146,16 +146,7 @@ if (data.result.success === true){
     });
     navigate("/orderList")
 }
-    if (data.result.success === false){
-    toast.error(data.result.message , {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined
-    });}
+  
 setLoading(false)
         } catch (e) {
             console.log(e)

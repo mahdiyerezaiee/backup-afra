@@ -32,53 +32,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
     const [cottageCode, setcottageCode] = useState('');
     const [orderCondition, setOrderCondition] = useState([])
-    const handleEditFormSubmit = async () => {
-        const datas = {
-            "order": {
-                id: order.id,
-                "customerId": order.customerId,
-                orderStatusId: 3,
-                'paymentStatusId': 3,
-                paymentMethodId: order.paymentMethodId,
-                shippingStatusId: order.shippingStatusId,
-                "orderTotal": order.orderTotal,
-                "orderTax": order.orderTax,
-                "orderDiscount": order.orderDiscount,
-                orderFinalizedPrice: order.orderFinalizedPrice,
-                "createDate": order.createDate,
-                "extId": order.extId,
-                "paid": false,
-                "comment": null,
-                "customer": null,
-                "extraData": null
-            }
-        }
-        try {
-            const { data, staus } = await editOrder(datas)
-            if (data.result.message === "Done.") {
-                toast.success("ویرایش با موفقعیت انجام شد", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-            }
-        } catch (e) {
-            toast.error('مشکلی در ثبت ویرایش وجود دارد', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
-        }
-        window.location.reload()
-    }
+   
     const getSupplyCode = async () => {
         try {
             const { data, status } = await GetAllProductSupply(details[0].productSupplyId)

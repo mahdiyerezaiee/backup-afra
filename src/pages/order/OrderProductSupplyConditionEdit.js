@@ -6,6 +6,7 @@ import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
 import {useNavigate} from "react-router-dom";
 import {editOrderDetail} from "../../services/orderService";
 import FadeLoader from "react-spinners/FadeLoader";
+import { toast } from 'react-toastify';
 
 
 
@@ -59,7 +60,16 @@ const OrderProductSupplyConditionEdit = ({modalIsOpen , closeModal,id , Detail})
 
 
             setTimeout(()=> {
-                if (data.result.message === "Done.") {
+                if (data.success===true) {
+                    toast.success('jyddvhj با موفقیت ثبت شد', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    });
                     closeModal()
 
                     setLoading(false)

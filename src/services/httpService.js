@@ -61,7 +61,7 @@ axios.interceptors.response.use(
     if (error.response.status === 500) {
 
       console.log(error);
-      toast.error("پاسخی از سمت سرور دریافت نشد", {
+      toast.error(error.response.data.error.message, {
         position: "top-right",
         closeOnClick: true
       });

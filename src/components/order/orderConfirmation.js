@@ -35,7 +35,7 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
         try {
             const {data, staus} = await ChangeOrderStatus(datas)
 
-            if (data.result.success === true) {
+            if (data.success === true) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -47,16 +47,11 @@ const OrderConfirmation = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
                 });
                 closeModal()
             }}catch (e) {
-            toast.error('مشکلی در ثبت ویرایش وجود دارد', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
+           
+
             console.log(e)
+            closeModal()
+
         }
         setLoading(false)
     }

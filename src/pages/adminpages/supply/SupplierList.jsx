@@ -212,7 +212,7 @@ const SupplierList = () => {
     const deletHandler = async () => {
         try {
             const { data, status } = await DeleteSupplier(id)
-            if (data.result.success === true)
+            if (data.success === true)
             {
                 toast.success("تامین کننده با موفقیت حذف شد", {
                     position: "top-right",
@@ -220,13 +220,6 @@ const SupplierList = () => {
                 });
                 setIsOpen(false)
                 getSuppliers()
-            }if (data.result.success === false)
-            {
-
-                toast.error("این تامین به یک یا چند -- اختصاص داده شده است", {
-                    position: "top-right",
-                    closeOnClick: true
-                });
             }
         } catch (err) {
             setIsOpen(false)

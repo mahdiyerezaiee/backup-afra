@@ -64,7 +64,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
         try {
             const { data, staus } = await ChangeOrderStatus(datas)
 
-            if (data.result.success === true) {
+            if (data.success === true) {
                 toast.success(data.result.message, {
                     position: "top-right",
                     autoClose: 5000,
@@ -75,29 +75,12 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
                     progress: undefined
                 });
             }
-            if (data.result.success === false) {
-                toast.error(data.result.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-                closeModal()
-            }
+            
+            
+                
             closeModal()
         } catch (e) {
-            toast.error('مشکلی در ثبت ویرایش وجود دارد', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
+            
             console.log(e)
             closeModal()
 

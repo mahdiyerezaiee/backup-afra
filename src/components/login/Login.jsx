@@ -86,7 +86,7 @@ validators:{
                 if (!getDataLogin().expiresAt){
                     const { status, data } = await loginUser(user);
                     setLoading(false)
-                    if (status === 200) {
+                    if (data.success===true) {
                         toast.success("کد برای تلفن همراه شما ارسال شد", {
                             position: "top-right",
                             autoClose: 5000,
@@ -106,6 +106,7 @@ validators:{
                         history('/verify', { replace: true });
 
                     }
+                    
                     sessionStorage.setItem('dataLogin', JSON.stringify(dataLogin));
 
 
@@ -125,15 +126,7 @@ validators:{
 
         }
         catch (error) {
-            toast.error("خطایی از سمت سرور رخ داده است", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
+        
             setClick(false);
         }
     }

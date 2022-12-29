@@ -53,7 +53,7 @@ const CodeForMobile = () => {
 
 
     const handelSubmit = async (event) => {
-        
+
         if (event) {
             event.preventDefault();
         }
@@ -70,8 +70,8 @@ const CodeForMobile = () => {
             const { status, data } = await verifyUser(user);
             setLoading(true)
 
-            if (status === 200) {
-               
+            if (data.success === true) {
+
 
                 toast.success("ورود موفقیت آمیز بود", {
                     position: "top-right",
@@ -89,14 +89,17 @@ const CodeForMobile = () => {
                 const detoken = decodeToken(data.result.token);
                 localStorage.setItem('connect', detoken.ID)
 
-            
+
                 dispatch(addUser(detoken));
-                
+
+
+                history('/dashboard');
+
 
             }
+            
 
 
-            history('/dashboard');
 
 
         }
@@ -104,27 +107,19 @@ const CodeForMobile = () => {
         catch (error) {
             setLoading(true)
 
-            toast.error("کد وارد شده اشتباه است", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
+         
             setIssubmit(false)
-setLoading(false)
+            setLoading(false)
         }
     }
     const handleChang = (num) => {
-       
+
         setCode(num);
-        num.length===5?setIssubmit(true):setIssubmit(false)
+        num.length === 5 ? setIssubmit(true) : setIssubmit(false)
 
     }
 
-    if (Code.length>4 && isSubmit) {
+    if (Code.length > 4 && isSubmit) {
 
         handelSubmit();
     }
@@ -157,11 +152,11 @@ setLoading(false)
                                     separator={<span> </span>}
                                     onChange={handleChang}
 
-                                    
+
                                 />
                                 <hr />
 
-                                <ShowTimer  loading={loading} timer={timer} firstCondition={otpCodeResender} secondCondition={handelSubmit} />
+                                <ShowTimer loading={loading} timer={timer} firstCondition={otpCodeResender} secondCondition={handelSubmit} />
 
                             </form>
                         </div>

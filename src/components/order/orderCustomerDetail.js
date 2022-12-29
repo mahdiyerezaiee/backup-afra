@@ -57,7 +57,7 @@ let newAttachmnet=attachments.filter(item=>item.deleted===false)
         try {
             const{data,status}=await editOrder(body)
 
-            if(status===200){
+            if(data.success===true){
                 toast.success("درخواست با موفقیت ارسال شد", {
                     position: "top-right",
                     autoClose: 5000,

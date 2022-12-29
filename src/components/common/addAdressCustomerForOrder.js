@@ -92,11 +92,11 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
             }
 
             const { data, status } = await orderSpliter(body);
-            if (status === 200 && data.result.success === true) {
+            if ( data.success === true) {
 
 
 
-                toast.success(data.result.message, {
+                toast.success('آدرس با موفقیت ثبت شد', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -109,17 +109,7 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
                 window.location.reload()
             }
 
-            else {
-                toast.error(" وزن وارد شده   بیشتر از باقیمانده  سفارش میباشد ", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-            }
+            
 
         } catch (error) {
             console.log(error)

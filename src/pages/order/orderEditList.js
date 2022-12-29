@@ -85,7 +85,7 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
         try {
             const { data, staus } = await editOrder(datas)
 
-            if (data.result.success === true) {
+            if (data.success === true) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
                     position: "top-right",
                     autoClose: 5000,

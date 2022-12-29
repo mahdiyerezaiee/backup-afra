@@ -73,7 +73,9 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             "byPassContractLimit": false
         }
         const { data, status } = await SyncWithSender(body)
-        if (status === 200 && data.result.success === true) {
+       try {
+        
+       if ( data.success === true) {
                 
                     toast.success('حواله با موفقیت صادر شد', {
                         position: "top-right",
@@ -98,20 +100,14 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                     window.location.reload()
                 }
             
-            else {
-
-                toast.error(data.result.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-            }
+         
             setLoading(false)
-            closeModal()}
+            closeModal()
+        } catch (error) {
+            setLoading(false)
+            closeModal()
+        }
+    }
     return (
         <Modal
             isOpen={modalIsOpen}

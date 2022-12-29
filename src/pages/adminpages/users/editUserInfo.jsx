@@ -8,6 +8,7 @@ import { setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
 import {PriceUnitEnums} from "../../../Enums/PriceUnit";
 import {ClipLoader} from "react-spinners";
+import { toast } from 'react-toastify';
 
 
 const EditUserInfo = () => {
@@ -101,6 +102,15 @@ const EditUserInfo = () => {
         try {
             const { data, status } = await setCustomerInfo(dataUser)
             if (status===200){
+                toast.success('کاربر با موفقیت ثبت شد', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
                 setLoading(false)
             }
         } catch (err) {
