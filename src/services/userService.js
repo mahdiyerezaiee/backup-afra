@@ -12,7 +12,6 @@ export const registerUser = user => {
 
 export const loginUser = user => {
     return http.post(`${configure}/User/Login`, JSON.stringify(user));
-    
 };
 export const verifyUser = user => {
     return http.post(`${configure}/User/Verify`, JSON.stringify(user));

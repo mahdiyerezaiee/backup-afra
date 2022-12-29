@@ -84,8 +84,8 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
 
 
                 const { status, data } = await loginUser(user);
-                console.log(data);
-                if (data.success===true) {
+                console.log(data,status);
+                if (status===200) {
 
                      
                         setValid(true)

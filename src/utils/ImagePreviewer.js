@@ -32,7 +32,7 @@ const customStyles = {
 
 const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) => {
     const [trackingCode, setTrackingCode] = useState(0)
-    const [value, setValue] = useState(0)
+    const [Chechvalue, setCheckValue] = useState(null)
     const [dueDate, setDueDate] = useState(item.dueDate)
     const [chacked, setchacked] = useState(false)
     let [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
         name: '',
         attachmentTypeId: 2,
         trackingCode,
-        value,
+        value:Chechvalue,
         dueDate: new Date(),
     }
     const validator = useRef(new SimpleReactValidator({
@@ -199,12 +199,12 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                     </div>
                                     <div className="col-3">
                                         <label>مبلغ چک</label>
-                                        <input hidden={item.value} className=" formater form-control opacityForInput  mb-4"
-                                               type="text" value={formatter.format(value)} onChange={e => {setValue(e.target.value.replaceAll(",",''))
+                                        <input hidden={item.value} className="  form-control opacityForInput  mb-4"
+                                               type="number" value={Chechvalue} onChange={e => {setCheckValue(e.target.value)
                                             validator.current.showMessageFor("required");
                                         }} />
-                                        {validator.current.message("required", value, "required|numeric")}
-                                        {item.value?<p className="p-3 border">{formatter.format(item.value)}</p>  :null}
+                                        {validator.current.message("required", Chechvalue, "required|numeric")}
+                                        {item.Chechvalue?<p className="p-3 border">{formatter.format(item.Chechvalue)}</p>  :null}
                                     </div>
 
                                     <div className="col-3">

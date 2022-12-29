@@ -61,10 +61,19 @@ axios.interceptors.response.use(
     if (error.response.status === 500) {
 
       console.log(error);
-      toast.error(error.response.data.error.message, {
-        position: "top-right",
-        closeOnClick: true
-      });
+      if (error.response.data.error.errorCode >= 400 && error.response.data.error.errorCode <= 499){
+        
+        toast.warning(error.response.data.error.message, {
+          position: "top-right",
+          closeOnClick: true
+        });
+      }
+      else{
+        toast.error('سرور پاسخگو نیست', {
+          position: "top-right",
+          closeOnClick: true
+        });
+      }
 
 
     }
