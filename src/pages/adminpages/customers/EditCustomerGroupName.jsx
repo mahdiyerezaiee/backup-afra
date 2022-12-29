@@ -45,7 +45,7 @@ const handelSubmit=async(event)=>{
         }
 
         const {data,status}=await SetGroup(body)
-        if(status===200){
+        if(data.success===true){
             setLoading(false)
             toast.success('گروه ویرایش  شد',
             {

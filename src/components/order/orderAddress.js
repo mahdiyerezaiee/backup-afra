@@ -1,78 +1,110 @@
 import file from "../../pages/order/addressFile.xlsx";
 import { useSelector } from "react-redux";
 import { getExtraData } from '../../services/extraService';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState, useMemo } from "react";
 import ShippingSelected from "../common/shippingSelected";
-import {GetAllProductSupply} from "../../services/productSupplyService";
+import { GetAllProductSupply } from "../../services/productSupplyService";
 import { GetAddress } from '../../services/addressService';
-import {editOrder} from "../../services/orderService";
-import {toast} from "react-toastify";
+import { editOrder } from "../../services/orderService";
+import { toast } from "react-toastify";
 import FinancialConfirmation from "./FinancialConfirmation";
+import { GetProductSupplyConditions } from './../../services/ProductSupplyConditionService';
+import AddAdressCustomerForOrder from './../common/addAdressCustomerForOrder';
+import ExcelFileUploader from './../../utils/ExcelFileUploader';
+import { PaymentStructureEnums } from './../../Enums/PaymentStructureEnums';
+import TakhsisTable from "../form/TakhsisTable";
+import ColumnFilter from './../form/ColumnFilter';
 
 
-const OrderAddress = ({ setIsOpenUploadExcel, openModalAddress, details,shipping,orderWeight,TakhsisWeight,getOrder,order }) => {
+const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
     const roles = useSelector(state => state.userRole)
+    let FilnalArr = [];
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [OrderDetail, setOrderDetail] = useState([])
     const [IsOpen, SetIsOpen] = useState(false);
+    const [measureUnitId, setmeasureUnitId] = useState(0)
     const [orderDetailId, setorderDetailId] = useState(0);
     const [completeDdata, SetCompletedData] = useState([])
+    const [productSupplyId, setProductSupplyId] = useState(0)
+    const [isOpenAddress, setIsOpenAddress] = useState(false)
+    const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
+
+
     const [cottageCode, setcottageCode] = useState('');
-    const handleEditFormSubmit =async () => {
-        const datas ={
-            "order": {
-                id:order.id,
-                "customerId": order.customerId,
-                orderStatusId:3,
-                'paymentStatusId':3,
-                paymentMethodId:order.paymentMethodId,
-                shippingStatusId:order.shippingStatusId,
-                "orderTotal": order.orderTotal,
-                "orderTax": order.orderTax,
-                "orderDiscount": order.orderDiscount,
-                orderFinalizedPrice:order.orderFinalizedPrice,
-                "createDate": order.createDate,
-                "extId":order.extId,
-                "paid": false,
-                "comment": null,
-                "customer": null,
-                "extraData":null
-            }
-        }
-        try {
-            const {data , staus}= await editOrder(datas)
-            if (data.result.message==="Done.") {
-                toast.success("ویرایش با موفقعیت انجام شد", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-            }}catch (e) {
-            toast.error('مشکلی در ثبت ویرایش وجود دارد', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
-        }
-        window.location.reload()
-    }
+    const [orderCondition, setOrderCondition] = useState([])
+   
     const getSupplyCode = async () => {
         try {
-            const {data , status}= await GetAllProductSupply(details[0].productSupplyId)
+            const { data, status } = await GetAllProductSupply(details[0].productSupplyId)
             setcottageCode(data.result.productSupply.cottageCode)
 
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
 
+    }
+    const getOrderDetailCondition = async () => {
+        try {
+
+            let Order = details
+            setOrderDetail(details)
+            setProductSupplyId(details.productSupplyId)
+            let ids = details.map(item => item.productSupplyId)
+
+
+            let productSupplyConditionIds = details.map(item => item.productSupplyConditionId)
+            console.log(ids);
+            console.log(productSupplyConditionIds);
+            if (productSupplyConditionIds.length > 0) {
+                let conditions = [];
+                for (let i = 0; i < ids.length; i++) {
+                    if (productSupplyConditionIds[i] !== null) {
+                        const { data, status } = await GetProductSupplyConditions(ids[i]);
+                        let condition = data.result.productSupplyConditions.values
+
+                        const element = condition.filter(item => item.id === productSupplyConditionIds[i])[0]
+
+
+
+                        conditions.push(element)
+                    }
+                    else {
+                        const noData = { conditionId: null }
+                        conditions.push(noData)
+                    }
+                }
+
+                console.log(conditions);
+                for (let i = 0; i < Order.length; i++) {
+
+
+                    //   let ff = conditions.filter(item => item.id === Order[i].productSupplyConditionId)
+                    //   console.log(ff);
+                    const merged = conditions.map(item =>
+                    ({
+                        conditionId: item.id,
+                        installmentOccureCount: item.installmentOccureCount,
+                        installmentPeriod: item.installmentPeriod,
+                        paymentMethodId: item.paymentMethodId,
+                        additionalAmount: item.additionalAmount,
+                        additionalTypeId: item.additionalTypeId,
+
+
+                    }))
+
+
+                    let obj = { ...Order[i], ...merged[i] }
+
+                    FilnalArr.push(obj)
+                }
+                setOrderCondition(FilnalArr)
+            }
+            else {
+                setOrderCondition(Order)
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
 
@@ -88,42 +120,56 @@ const OrderAddress = ({ setIsOpenUploadExcel, openModalAddress, details,shipping
         SetIsOpen(true);
     }
     const closeModalFinancialConfirmation = () => {
-getOrder()
+        getOrder()
         SetIsOpen(false);
     }
+    const closeModalAddress = () => {
 
-
-
+        setIsOpenAddress(false);
+    }
+    const openModalAddress = (id, measureId) => {
+        setorderDetailId(id)
+        setmeasureUnitId(measureId)
+        setIsOpenAddress(true);
+    }
+    const openModalExcelAddress = (id) => {
+        setorderDetailId(id)
+        setIsOpenUploadExcel(true);
+    }
+    const closeModalIsOpenUploadExcel = () => {
+        setIsOpenUploadExcel(false)
+    }
+    console.log(measureUnitId);
     const getDetails = async () => {
         let finalArr = [];
         try {
             for (let i = 0; i < details.length; i++) {
 
                 const { data, status } = await getExtraData(Number(details[i].extId), 1)
-                const response=await GetAddress(11,Number(details[i].id))
+                const response = await GetAddress(11, Number(details[i].id))
 
-                let addresses=response.data.result.addresses[0]
+                let addresses = response.data.result.addresses[0]
 
-                if(addresses){
+                if (addresses) {
 
                     const rename = (({ id: AddressId, ...addresses }) => ({ AddressId, ...addresses }))
 
-                    addresses= rename(addresses)
+                    addresses = rename(addresses)
 
                 }
 
-                let extraData=(data.result.extraData)
-                if(extraData){
+                let extraData = (data.result.extraData)
+                if (extraData) {
                     let extraD = JSON.parse(data.result.extraData.data)
 
                     const rename = (({ Id: extraDataId, ...extraD }) => ({ extraDataId, ...extraD }))
                     let newExtraData = rename(extraD)
 
-                    let newArr = { ...details[i], ...newExtraData,...addresses }
-                    newArr={...newArr,hasShipp:false}
+                    let newArr = { ...details[i], ...newExtraData, ...addresses }
+                    newArr = { ...newArr, hasShipp: false }
                     finalArr.push(newArr)
                 }
-                else{
+                else {
 
                     let newArr = { ...details[i] }
                     finalArr.push(newArr)
@@ -140,12 +186,70 @@ getOrder()
     useEffect(() => {
         getDetails()
         getSupplyCode()
+        getOrderDetailCondition()
+
     }, [details])
     var formatter = new Intl.NumberFormat('fa-IR', {
 
         maximumFractionDigits: 0,
-        minimumFractionDigits: 0, });
+        minimumFractionDigits: 0,
+    });
 
+
+    let condition = [...orderCondition]
+
+    console.log(completeDdata);
+    const columns = useMemo(() => [
+        { Header: '#', accessor: 'id', disableFilters: true },
+        { Header: 'نام تحویل گیرنده', accessor: 'receiverName', disableFilters: true },
+        { Header: 'کد ملی', accessor: 'ReceiverId', disableFilters: true },
+        { Header: 'آدرس', accessor: 'fullAddress',Cell:rows=>{
+
+return(
+    <p title={rows.row.original.fullAddress}>{rows.row.original.fullAddress.substring(0,20)}</p>
+)
+
+
+        },disableFilters: true},
+        { Header: 'شماره هماهنگی', accessor: 'receiverTel', disableFilters: true },
+        { Header: 'کد پستی', accessor: 'postalCode', disableFilters: true },
+        { Header: 'قیمت پایه', accessor: 'basePrice', Filter:ColumnFilter },
+        { Header: 'وزن', accessor: 'quantity', disableFilters: true },
+        { Header: 'قیمت تمام شده', accessor: 'price',Cell:rows=>{
+            return(
+                formatter.format(rows.row.original.price)
+            )
+        }, disableFilters: true},
+        {
+            Header: 'بازه پرداخت', accessor: '', Cell: rows => {
+                return (condition.filter(x=>x.id===rows.row.original.id).paymentMethodId===4?condition.filter(x=>x.id===rows.row.original.id).map(y=> `${y.installmentOccureCount} قسط ${y.installmentPeriod} روزه` ):'--')
+
+            }, disableFilters: true
+        },
+        { Header: 'شناسه تخصیص', accessor: 'AllocationId', disableFilters: true},
+        { Header: 'شناسه یکتا', accessor: 'ReceiverUniqueId', disableFilters: true },
+        { Header: 'تریلی', accessor: 'ShipTruckTypet',Cell:rows=>{
+          if(rows.row.original.ShipTruckTypet===1){
+
+            return('بله')
+          }
+          else{
+            return('خیر')
+          }
+        
+        }, disableFilters: true },
+        {
+            Header: 'عملیات', accessor: '  ', Cell: rows => {
+                return (<button onClick={() => openModal(rows.row.original.id)} className="btn btn-sm btn-primary" hidden={(order.paymentStatusId === 3 || order.paymentStatusId === 6) ? false : true}
+                    disabled={rows.row.original.shippingId !== null ? true : false}
+
+                >صدور حواله
+                </button>)
+
+            }, disableFilters: true
+        }
+    ])
+    const data = useMemo(() => completeDdata.filter(item => item.extId !== null))
     return (
         <div>
             <ShippingSelected modalIsOpen={modalIsOpen} closeModal={closeModal} orderDetailId={orderDetailId} Order={order} />
@@ -154,126 +258,92 @@ getOrder()
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">
                 <label>جزییات سفارش </label>
 
-                <div className="table-responsive p-2">
-                    { details && details[0].extId === null  ?
-                        (<table className="table table-bordered table-hover table-striped  mt-2  mb-4">
-                            <thead className='text-center'>
-                            <tr className="">
-                                <th> عرضه</th>
-                                <th> شناسه جزییات سفارش</th>
-                                <th>کوتاژ</th>
-                                <th> کالا</th>
-                                <th>وزن خرید</th>
-                                <th> تاریخ</th>
-                                <th> فی</th>
+                {orderCondition && orderCondition.filter(x => x.extId === null).length > 0 ?
+                    (<div className="form-group   textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '4rem' }}>
+                        <label> فاقد تخصیص </label>
 
-                            </tr>
+
+
+                        <table className="table table-bordered table-hover table-striped  mt-2  mb-4">
+                            <thead className='text-center'>
+                                <tr className="">
+                                    <th> #</th>
+                                    <th> کالا</th>
+                                    <th>قیمت پایه</th>
+                                    <th>وزن </th>
+                                    <th> قیمت کل</th>
+                                    <th> عرضه</th>
+                                    <th>نحوه پرداخت</th>
+                                    <th>بازه پرداخت</th>
+                                    <th>کوتاژ</th>
+                                    <th> تاریخ</th>
+                                    <th>عملیات</th>
+
+                                </tr>
                             </thead>
                             <tbody>
-                            {completeDdata.map(item =>
-                                <tr className="" key={item.id}>
-
-                                    <td className="text-center">{item.productSupplyId}</td>
-                                    <td className="text-center">{item.id}</td>
-                                    <td className="text-center">{cottageCode}</td>
-                                    <td className="text-center">{item.product.name}</td>
-                                    <td className="text-center">{formatter.format(item.quantity)}</td>
-                                    <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
-                                    <td className="text-center">{formatter.format(item.price)}</td>
-
-                                </tr>
-                            )
-                            }
-                            </tbody>
-                        </table>)
-                        :(                     <table className="table table-bordered table-hover table-striped  mt-2  mb-4">
-                                <thead className='text-center'>
-                                <tr className="">
-                                    <th> شناسه سیستم</th>
-                                    <th>شناسه تخصیص</th>
-                                    <th> نام تحویل گیرنده</th>
-                                    <th> شناسه یکتا</th>
-                                    <th> تریلی</th>
-                                    <th> آدرس تحویل</th>
-                                    <th> کد پستی تحویل</th>
-                                    <th> شماره هماهنگی تحویل</th>
-                                    <th> کد ملی تحویل</th>
-                                    <th> وزن تخصیص</th>
-                                    {roles.includes(7) || roles.includes(5) || roles.includes(8) ? <th>عملیات</th> : ''}
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {completeDdata.map(item =>
-                                    item.extId ?
+                                {condition.filter(x => x.extId === null).map(item =>
                                     <tr className="" key={item.id}>
 
                                         <td className="text-center">{item.id}</td>
-                                        <td className="text-center">{item.AllocationId}</td>
-                                        <td className="text-center">{item.receiverName}</td>
-                                        <td className="text-center">{item.ReceiverUniqueId}</td>
-                                        <td className="text-center">{item.ShipTruckTypet === 1 ? 'بله' : 'خیر'}</td>
-                                        <td className="text-center"
-                                            title={item.fullAddress}>{item.fullAddress ? item.fullAddress.substring(0, 30) + "..." : ""}</td>
-                                        <td className="text-center">{item.postalCode?item.postalCode:item.ReceiverZip}</td>
-                                        <td className="text-center">{item.receiverMobile?item.receiverMobile:item.receiverTel}</td>
-                                        <td className="text-center">{item.ReceiverId}</td>
+                                        <td className="text-center">{item.product.name}</td>
+                                        <td className="text-center">{item.basePrice}</td>
                                         <td className="text-center">{formatter.format(item.quantity)}</td>
-                                        {roles.includes(7) || roles.includes(5) || roles.includes(8) ?
-                                            <td className="text-center">
-                                                <button onClick={() => openModal(item.id)} className="btn btn-sm btn-primary" hidden={(order.paymentStatusId===3||order.paymentStatusId===6)?false:true}
-                                                        disabled={ item.shippingId!==null ? true:false }
+                                        <td className="text-center">{formatter.format(item.price)}</td>
+                                        <td className="text-center">{item.productSupplyId ? item.productSupplyId : '--'}</td>
+                                        <td className="text-center">{item.paymentMethodId ? PaymentStructureEnums.filter(x => x.id === item.paymentMethodId).map(q => q.name) : '--'}</td>
+                                        <td className="text-center">{item.paymentMethodId === 4 ? `${item.installmentOccureCount} قسط ${item.installmentPeriod} روزه` : '--'}</td>
+                                        <td className="text-center">{cottageCode ? cottageCode : '--'}</td>
+                                        <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
+                                        <td td className="text-center m-1"><button hidden={(orderWeight <= TakhsisWeight) ? true : false} onClick={() => openModalAddress(item.id, item.measureUnitId)} className=" border-0 bg-success " title="افزودن آدرس" >
+                                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill=""
+                                                className="bi bi-plus-circle" viewBox="0 0 17 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path
+                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                            </svg>
 
-                                                >صدور حواله
-                                                </button>
-                                            </td> : ''}
+                                        </button>
 
+                                            <button className={order.orderStatusId === 8 ? "bg-primary m-1 border-0 " : "bg-success m-1 border-0 "} disabled={(orderWeight <= TakhsisWeight) ? true : false} onClick={() => setIsOpenUploadExcel(true)} title='افزودن آدرس با اکسل'>
 
-                                    </tr>:
-                                        <tr className="" key={item.id}>
+                                                <svg style={{ color: 'black' }} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-explicit" viewBox="0 0 16 16"> <path d="M6.826 10.88H10.5V12h-5V4.002h5v1.12H6.826V7.4h3.457v1.073H6.826v2.408Z" /> <path d="M2.5 0A2.5 2.5 0 0 0 0 2.5v11A2.5 2.5 0 0 0 2.5 16h11a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 13.5 0h-11ZM1 2.5A1.5 1.5 0 0 1 2.5 1h11A1.5 1.5 0 0 1 15 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 13.5v-11Z" /> </svg>
+                                            </button>
+                                        </td>
 
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center"  bgcolor="white" style={{border:'none'}}></td>
-                                            <td className="text-center text-primary">وزن باقی مانده</td>
-                                            <td className="text-center text-danger" style={{fontSize:'17px'}}>{item.quantity}</td>
-                                            {roles.includes(7) || roles.includes(5) || roles.includes(8) ?
-                                                <td className="text-center"  bgcolor="white" style={{border:'none'}}>
-
-                                                </td> : ''}
-
-
-                                        </tr>
-
-
+                                    </tr>
                                 )
                                 }
-                                </tbody>
-                            </table>
-                        )}
+                            </tbody>
+                        </table>
+
+                    </div>) : ''}
+                {completeDdata && completeDdata.filter(x => x.extId !== null).length > 0 ?
+                    (<div className="form-group mb-4  textOnInput col-lg-12 rounded border  border-dark    " style={{ marginTop: '3rem' }}>
+                        <label>  تخصیص یافته </label>
+
+                        <TakhsisTable columns={columns} data={data} />
 
 
-                    <div className='d-block  '>
 
 
-                    </div>
-                </div>
+
+
+
+
+
+                    </div>) : ''}
                 <div className=" text-end  p-2" style={{ textAlign: 'left' }}>
-                    <button hidden={(orderWeight<=TakhsisWeight)?true:false}  className=" btn-success  btn  m-1 " onClick={openModalAddress} title="افزودن آدرس" >
-                        افزودن آدرس
-                    </button>
 
-                    <button className={order.orderStatusId === 8 ?"btn-primary m-1 btn ":"btn-success m-1 btn "}disabled={(orderWeight<=TakhsisWeight)?true:false} onClick={() => setIsOpenUploadExcel(true)}>آپلود فایل آدرس</button>
-                    {roles.includes(7) || roles.includes(5) || roles.includes(8) ?<button className="btn-success m-1 btn "hidden={order.orderStatusId === 8 ? false : true } onClick={openModalFinancialConfirmation}>تایید مالی</button>:null}
+                    {roles.includes(7) || roles.includes(5) || roles.includes(8) ? <button className="btn-success m-1 btn " hidden={order.orderStatusId === 8 ? false : true} onClick={openModalFinancialConfirmation}>تایید مالی</button> : null}
                 </div>
 
             </div>
 
-
+            <AddAdressCustomerForOrder isOpenAddress={isOpenAddress} closeModal={closeModalAddress} orderDetailId={orderDetailId} orderMeasuerId={measureUnitId} />
+            <ExcelFileUploader modalIsOpen={modalIsOpenUploadExcel} closeModal={closeModalIsOpenUploadExcel}
+                EntityId={orderDetailId} EntityTypesId={11}
+                comment={'لطفا فایل اکسل مطابق نمونه اطلاعات ارسال را بارگزاری کنید'} />
         </div>
     )
 }

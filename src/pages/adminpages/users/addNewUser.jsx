@@ -6,7 +6,8 @@ import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { CreateCustomer, setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import { toast } from 'react-toastify';
 
 const AddNewUser = () => {
     const navigate = useNavigate()
@@ -71,13 +72,26 @@ const AddNewUser = () => {
         e.preventDefault()
         try {
             const { data, status } = await CreateCustomer(dataUser)
-if (status===200){
-    setLoading(false)
-}
+            if (status === 200) {
+              
+
+                    toast.success('کاربر با موفقیت ثبت شد', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    });
+                
+                setLoading(false)
+            }
         } catch (err) {
             console.log(err)
         }
         navigate('/userlist')
+      
 
     }
     const getOrganizationId = async () => {
@@ -174,8 +188,8 @@ if (status===200){
                                             <input type="checkbox" checked={actionBlock} className="form-check-input" onChange={e => SetactionBlock(e.target.checked)} />
                                             تعلیق کاربر                                  </label>
                                     </div>
-                                </div>                             
-                                   <div className="col-4 mb-4">
+                                </div>
+                                <div className="col-4 mb-4">
 
                                     <label >شماره موبایل</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="شماره موبایل" value={userName || ""} onChange={
@@ -272,7 +286,7 @@ if (status===200){
                                         <div className='col-6 '>
                                             {show === true ?
                                                 <button type="submit" className="btn btn-success " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
-                                                <button type="submit" className="btn btn-success " disabled={!loading ?validator.current.allValid() ? false : true:true} onClick={submit}>تایید
+                                                <button type="submit" className="btn btn-success " disabled={!loading ? validator.current.allValid() ? false : true : true} onClick={submit}>تایید
                                                     <ClipLoader
 
                                                         loading={loading}

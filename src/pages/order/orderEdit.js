@@ -156,7 +156,7 @@ conditionOrder=orderCondition
         try {
             const {data, staus} = await editOrder(datas)
 
-            if (data.result.message === "Done.") {
+            if (data.success === true) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
                     position: "top-right",
                     autoClose: 5000,

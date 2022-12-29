@@ -61,7 +61,7 @@ useEffect(()=>{
         setLoading(true)
         try {
             const {data, status} = await SetNews(setNews)
-            if (status === 200) {
+            if (data.success === 200) {
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
                     autoClose: 5000,

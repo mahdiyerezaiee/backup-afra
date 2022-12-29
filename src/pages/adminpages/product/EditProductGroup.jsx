@@ -61,16 +61,7 @@ const EditProductGroup = () => {
             setLoading(false)
 
         } catch (error) {
-            toast.error('مشکلی در ویرایش گروه پیش امده است',
-                {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                })
+           
             console.log(error);
         }
     

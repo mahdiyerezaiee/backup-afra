@@ -93,7 +93,7 @@ const PersonIdetity = () => {
         try {
 
             const { data, status } = await setCustomerInfo(user);
-            if (status === 200) {
+            if (data.success) {
 
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
@@ -113,15 +113,7 @@ navigate('/identitypannel')
 
         } catch (error) {
 
-            toast.error("اطلاعات با موفقیت ثبت شد", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            });
+           
         }
     }
 

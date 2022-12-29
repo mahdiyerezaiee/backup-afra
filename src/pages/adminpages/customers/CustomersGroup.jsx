@@ -8,6 +8,7 @@ import  Modal  from 'react-modal';
 import ModalGroupWork from "../../../components/common/ModalGroupWork";
 import {setCustomerInfo} from "../../../services/customerService";
 import MyTableBazargah from "../../../components/form/MyTableBazargah";
+import { toast } from 'react-toastify';
 
 
 export const CustomersGroup = () => {
@@ -217,13 +218,27 @@ export const CustomersGroup = () => {
     const deletHandler =async () => {
         try {
             const {data , status}= await DeleteGroup(id)
-            if (status===200)
+            if (data.success==true)
             {
                 setIsOpen(false)
                 GetCustomerGroup();
+               
+
+                    toast.success('گروه حذف شد', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    });
+                
             }
         }catch (err){
             console.log(err)
+            setIsOpen(false)
+
         }
     }
     const columns=useMemo(()=>[
