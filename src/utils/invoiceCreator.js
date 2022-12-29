@@ -288,7 +288,7 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
 
                                     </tr>
                                 )}
-                                <tr>
+                                <tr className='border'>
                                     <td colspan="8"> جمع</td>
                                     <td>{order.orderDiscount}</td>
                                     <td>{order.orderTax}</td>
