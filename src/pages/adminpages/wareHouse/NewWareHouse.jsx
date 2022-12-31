@@ -126,7 +126,7 @@ const NewWareHouse = () => {
                 <div className='widget box shadow col-md-5 col-xs-12'>
 
 
-                    <form className='col-6'> 
+                    <form className='col-lg-6 col-sm-12'>
                         <div className='form-group'>
 
                             <div className=" mb-4 textOnInput">
@@ -174,7 +174,7 @@ const NewWareHouse = () => {
 
                             </div>
                             <div className='row '>
-                                <div className='col-6 '>
+                                <div className='col-lg-6 col-sm-12'>
                                     <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
 
                                         loading={loading}
@@ -182,7 +182,7 @@ const NewWareHouse = () => {
                                         size={15}
                                     /></button>
                                 </div>
-                                <div className='col-6 '>
+                                <div className='col-lg-6 col-sm-12 '>
                                     <NavLink to='/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>

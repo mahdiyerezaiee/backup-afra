@@ -174,10 +174,10 @@ const EditWareHouse = () => {
             </div>
         </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-5'>
+                <div className='widget box shadow col-md-5 col-xs-12'>
 
 
-                    <form className="col-8">
+                    <form className='col-lg-6 col-sm-12'>
                         <div className='form-group'>
 
                             <div className=" mb-4 textOnInput">
@@ -222,7 +222,7 @@ const EditWareHouse = () => {
                                 }} />
                             </div>
                             <div className='row '>
-                                <div className='col-6 '>
+                                <div className='col-lg-6 col-sm-12 '>
                                     <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
 
                                         loading={loading}
@@ -230,7 +230,7 @@ const EditWareHouse = () => {
                                         size={15}
                                     /></button>
                                 </div>
-                                <div className='col-6 '>
+                                <div className='col-lg-6 col-sm-12 '>
                                     <NavLink to='/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>

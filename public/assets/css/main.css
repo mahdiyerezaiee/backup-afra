@@ -2539,6 +2539,28 @@ button{
   padding: 0;
   margin: 0;
 }
+  .otpInput input{
+    width: 2rem!important;
+    height: 2rem!important;
+    margin: 10px!important;
+    border-radius: 4px
+  }
+  div .widget-activity-four{
+    margin-top: 1rem!important;
+  }
+  .card{
+    padding: 10px;
+  }
+  span{font-size: smaller!important;}
+  p{font-size: smaller!important;}
+  a{font-size: smaller!important;}
+ .form-group label{font-size: smaller!important;}
+ .box-big  {
+   margin: 0!important;
+ }
+.btn{
+  width: 100%!important;
+}
 }
 /*tr:hover {*/
 /*  -webkit-transform:scale(1.010);*/
@@ -2733,4 +2755,10 @@ overflow-y: hidden!important;
 }
 #toggle .toggle-active {
   margin-left: 20px;
+}
+.otpInput input{
+  width: 3rem;
+  height: 3rem;
+  margin: 0 1rem;
+  border-radius: 4px
 }

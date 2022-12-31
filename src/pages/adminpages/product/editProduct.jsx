@@ -248,7 +248,7 @@ const EditProduct = () => {
                         </div>
                         <div className="form-group mb-4 textOnInput  align-content-between">
                             <div className='form-row'>
-                                <div className="col-6">
+                                <div className="col-lg-6 col-sm-12  mt-3">
                             <label>نام کالا</label>
                             <input type="text" className="form-control opacityForInput" placeholder="کنجاله ، ذرت و..."
                                    value={name} onChange={e => {
@@ -256,7 +256,7 @@ const EditProduct = () => {
                                 validator.current.showMessageFor("required");}} />
                             {validator.current.message("required", name, "required|alpha")}
                                 </div>
-                                <div className="col-6">
+                                <div className="col-lg-6 col-sm-12 mt-3">
                             <label>کد بازارگاه</label>
                             <input type="text" className="form-control opacityForInput" placeholder="... Corn Seed "
                                    value={englishName} onChange={e => {
@@ -269,7 +269,7 @@ const EditProduct = () => {
 
                         <div className="form-group mb-4 textOnInput">
                             <div className='form-row'>
-                                <div className="col-6">
+                                <div className="col-lg-6 col-sm-12 mt-3">
                                     <label>واحد</label>
                                     <Select
 
@@ -280,7 +280,7 @@ const EditProduct = () => {
                                     {measureUnitId === 0 ? (<p className="text-danger"> لطفایک واحد  را انتخاب کنید </p>) : (<p></p>)}
                                 </div>
 
-                                <div className="col-6 " >
+                                <div className="col-lg-6 col-sm-12 mt-3" >
                                     <label>گروه کالا</label>
                                     <Select
                                         placeholder="گروه کالا ..."
