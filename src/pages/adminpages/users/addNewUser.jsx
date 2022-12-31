@@ -150,12 +150,12 @@ const AddNewUser = () => {
         <div className='user-progress' >
             <div className='row'>
                 <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                    <h5> ویرایش کاربر </h5>
-                    <p>در این بخش می توانید اطلاعات کاربر را ویرایش کنید</p>
+                    <h5> تعریف کاربر </h5>
+                    <p>در این بخش می توانید کاربر جدید کنید</p>
 
                 </div>
             </div>
-            <div className='row d-flex justify-content-center col-12'>
+            <div className='box-big row d-flex justify-content-center'>
                 <div className='widget box shadow col-md-6 col-xs-12'>
 
 
@@ -165,7 +165,7 @@ const AddNewUser = () => {
 
                             <div className="form-row">
                                 <div className="col-12 mb-5 d-flex justify-content-between ">
-                                    <div className="col-4 ">
+                                    <div className="col-lg-4 col-md-6 col-sm-11 ">
 
 
                                         <label className="form-check-label mb-3">
@@ -174,14 +174,14 @@ const AddNewUser = () => {
                                             حقوقی
                                         </label>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-lg-4 col-md-6 col-sm-11">
 
                                         <label className="form-check-label mb-3">
 
                                             <input type="checkbox" checked={active} className="form-check-input" onChange={e => setActive(e.target.checked)} />
                                             فعال                                     </label>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-lg-4 col-md-6 col-sm-11">
 
                                         <label className="form-check-label mb-3 text-danger font-weight-bold">
 
@@ -189,7 +189,7 @@ const AddNewUser = () => {
                                             تعلیق کاربر                                  </label>
                                     </div>
                                 </div>
-                                <div className="col-4 mb-4">
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                     <label >شماره موبایل</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="شماره موبایل" value={userName || ""} onChange={
@@ -199,7 +199,7 @@ const AddNewUser = () => {
                                         }} />
                                     {validator.current.message("required", userName, "required|numeric|min:11")}
                                 </div>
-                                <div className="col-4 mb-4">
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                     <label >نام</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="نام" value={firstName || ""} onChange={
@@ -209,7 +209,7 @@ const AddNewUser = () => {
                                         }} />
                                     {validator.current.message("required", firstName, "required|alpha")}
                                 </div>
-                                <div className="col-4 mb-4" >
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-4" >
                                     <label >نام خانوادگی</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={e => {
                                         setLastName(e.target.value)
@@ -217,7 +217,7 @@ const AddNewUser = () => {
                                     }} />
                                     {validator.current.message("required", lastName, "required|alpha")}
                                 </div>
-                                <div className="col-6 mb-4">
+                                <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >کد ملی</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" value={nationalCode || ""} onChange={e => {
                                         setNationalCode(e.target.value)
@@ -225,7 +225,7 @@ const AddNewUser = () => {
                                     }} />
                                     {validator.current.message("required", nationalCode, "required|numeric|min:10")}
                                 </div>
-                                <div className="col-6 mb-4">
+                                <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >ایمیل</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={e => {
                                         setEmail(e.target.value)
@@ -237,7 +237,7 @@ const AddNewUser = () => {
 
 
                                 {check === true ?
-                                    <div className="col-6 mb-4">
+                                    <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                         <label >شرکت</label>
                                         <Select
                                             value={OrganizationItem()}
@@ -283,10 +283,10 @@ const AddNewUser = () => {
                                 </div>
                                 <div className="col-12">
                                     <div className='row'>
-                                        <div className='col-6 '>
+                                        <div className='col-lg-6 col-md-6 col-sm-11 '>
                                             {show === true ?
-                                                <button type="submit" className="btn btn-success " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
-                                                <button type="submit" className="btn btn-success " disabled={!loading ? validator.current.allValid() ? false : true : true} onClick={submit}>تایید
+                                                <button type="submit" className="btn btn-success  " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
+                                                <button type="submit" className="btn btn-success  " disabled={!loading ? validator.current.allValid() ? false : true : true} onClick={submit}>تایید
                                                     <ClipLoader
 
                                                         loading={loading}
@@ -295,7 +295,7 @@ const AddNewUser = () => {
                                                     />
                                                 </button>}
                                         </div>
-                                        <div className='col-6 '>
+                                        <div className='col-lg-6 col-md-6 col-sm-11 '>
                                             <NavLink to='/userlist' className="btn btn-danger float-right">بازگشت</NavLink>
                                         </div>
                                     </div>

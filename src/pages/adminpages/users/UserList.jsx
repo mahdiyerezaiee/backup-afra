@@ -556,7 +556,7 @@ getUsers()
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی" value={NationalCode} onChange={e => setNationalCode(e.target.value)} />
                             </div>
-                            <div className="col-4  selectIndex">
+                            <div className="col-lg-4 col-md-6  col-sm-12 mb-4  selectIndex">
                                 <label> نقش کاربر</label>
                                 <Select
                                     value={userRole}
@@ -649,7 +649,7 @@ getUsers()
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی" value={NationalCode} onChange={e => setNationalCode(e.target.value)} />
                             </div>
-                            <div className="col-4  selectIndex">
+                            <div className="col-lg-4 col-md-6  col-sm-12  co selectIndex">
                                 <label> نقش کاربر</label>
                                 <Select
                                     value={userRole}

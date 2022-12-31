@@ -162,7 +162,7 @@ const getSelectedData=(data)=>{
                     </div>
                 </div>
                 <div className='row d-flex justify-content-center '>
-                    <div className='widget box shadow col-4'>
+                    <div className='widget box shadow col-lg-4 col-md-6 col-sm-11'>
 
 
                         <form >

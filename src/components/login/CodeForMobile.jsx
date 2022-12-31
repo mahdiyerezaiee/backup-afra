@@ -145,13 +145,13 @@ const CodeForMobile = () => {
                                 <OtpInput
 
                                     containerStyle={{ display: 'flex' }}
-                                    inputStyle={{ width: '3rem', height: '3rem', margin: '0 1rem', borderRadius: '4px' }}
+                                    inputStyle={{}}
                                     value={Code}
                                     numInputs={5}
                                     shouldAutoFocus={true}
                                     separator={<span> </span>}
                                     onChange={handleChang}
-
+className="otpInput"
 
                                 />
                                 <hr />

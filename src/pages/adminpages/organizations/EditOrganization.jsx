@@ -69,12 +69,12 @@ setLoading(false)
         <div className='user-progress' >
             <div className='row'>
                 <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                    <h5 >تعریف سازمان جدید </h5>
+                    <h5 >ویرایش سازمان  </h5>
                     <p>در این بخش می توانیداطلاعات سازمان را ویرایش کنید.</p>
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-5'>
+                <div className='widget box shadow col-lg-5 col-sm-12'>
 
                     <form className='form col' >
                         <div className="n-chk">

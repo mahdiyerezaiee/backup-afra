@@ -195,8 +195,8 @@ console.log(maxValidityUnitId);
 
                 </div>
             </div>
-            <div className='row d-flex justify-content-center col-12'>
-                <div className='widget box shadow col-md-6 col-xs-12'>
+            <div className=' box-big row d-flex justify-content-center '>
+                <div className='widget box shadow col-md-6 col-sm-12'>
 
 
                     <form  >
@@ -206,7 +206,7 @@ console.log(maxValidityUnitId);
                             <div className="form-row">
 
                                 <div className="col-12 mb-5 d-flex justify-content-between ">
-                                    <div className="col-4 ">
+                                    <div className="col-lg-4 col-md-6 col-sm-11 ">
 
 
                                         <label className="form-check-label mb-3">
@@ -215,14 +215,14 @@ console.log(maxValidityUnitId);
                                             حقوقی
                                         </label>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-lg-4 col-md-6 col-sm-11">
 
                                         <label className="form-check-label mb-3">
 
                                             <input type="checkbox" checked={active} className="form-check-input" onChange={e => setActive(e.target.checked)} />
                                             فعال                                     </label>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-lg-4 col-md-6 col-sm-11">
 
                                         <label className="form-check-label mb-3 text-danger font-weight-bold">
 
@@ -230,7 +230,7 @@ console.log(maxValidityUnitId);
                                             تعلیق کاربر                                  </label>
                                     </div>
                                 </div>
-                                <div className="col-4 mb-4">
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                     <label >شماره موبایل</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="شماره موبایل" value={userName || ""} onChange={
@@ -240,7 +240,7 @@ console.log(maxValidityUnitId);
                                         }} />
                                     {validator.current.message("required", userName, "required|numeric|min:11")}
                                 </div>
-                                <div className="col-4 mb-4">
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                     <label >نام</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="نام" value={firstName || ""} onChange={
@@ -250,7 +250,7 @@ console.log(maxValidityUnitId);
                                         }} />
                                     {validator.current.message("required", firstName, "required|alpha")}
                                 </div>
-                                <div className="col-4 mb-4" >
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-4" >
                                     <label >نام خانوادگی</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={e => {
                                         setLastName(e.target.value)
@@ -258,7 +258,7 @@ console.log(maxValidityUnitId);
                                     }} />
                                     {validator.current.message("required", lastName, "required|alpha")}
                                 </div>
-                                <div className="col-6 mb-4">
+                                <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >کد ملی</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" value={nationalCode || ""} onChange={e => {
                                         setNationalCode(e.target.value)
@@ -266,7 +266,7 @@ console.log(maxValidityUnitId);
                                     }} />
                                     {validator.current.message("required", nationalCode, "required|numeric|min:10")}
                                 </div>
-                                <div className="col-6 mb-4">
+                                <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >ایمیل</label>
                                     <input type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={e => {
                                         setEmail(e.target.value)
@@ -274,7 +274,7 @@ console.log(maxValidityUnitId);
                                     }} />
                                     {validator.current.message("email", email, "email")}
                                 </div>
-                                <div className="col-6 mb-4">
+                                <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >مقدار اعتبار </label>
                                     <input type="text" className=" formater form-control opacityForInput" placeholder="100,000"  value={formatter.format(maxValidity)} onChange={e => {
                                         setMaxValidity(e.target.value.replaceAll(",",""))
@@ -282,7 +282,7 @@ console.log(maxValidityUnitId);
                                     }} />
                                     {validator.current.message("required", nationalCode, "required|numeric|min:10")}
                                 </div>
-                                <div className="col-6 mb-4">
+                                <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >واحد قیمت</label>
                                     <Select
                                         value={PriceUnit()}
@@ -295,7 +295,7 @@ console.log(maxValidityUnitId);
 
 
                                 {check === true ?
-                                    <div className="col-6 mb-4">
+                                    <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                         <label >شرکت</label>
                                         <Select
                                             value={OrganizationItem()}
@@ -306,7 +306,7 @@ console.log(maxValidityUnitId);
                                 <div className='col-12 textOnInputForGrp '><input type='checkbox' checked={show} onChange={showHandler} /> تغییر رمز عبور </div>
 
 
-                                <div className="input-group col-5 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
+                                <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                     <label >رمز عبور</label>
                                     <input type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" value={password || ""} onChange={e => {
                                         setPassword(e.target.value)
@@ -318,7 +318,7 @@ console.log(maxValidityUnitId);
                                     </div>
                                 </div>
                                 <div className="col-1"></div>
-                                <div className="input-group col-5 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
+                                <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                     <label >تکراررمز عبور</label>
                                     <input type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" value={passwordConfirm || ""} onChange={e => {
                                         setPasswordConfirm(e.target.value)
@@ -341,10 +341,10 @@ console.log(maxValidityUnitId);
                                 </div>
                                 <div className="col-12">
                                     <div className='row'>
-                                        <div className='col-6 '>
+                                        <div className='col-lg-6 col-md-6 col-sm-12 mb-1 '>
                                             {show === true ?
-                                                <button type="submit" className="btn btn-success " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
-                                                <button type="submit" className="btn btn-success " disabled={!loading ?validator.current.allValid() ? false : true:true} onClick={submit}>تایید
+                                                <button type="submit" className="btn btn-success  " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
+                                                <button type="submit" className="btn btn-success  " disabled={!loading ?validator.current.allValid() ? false : true:true} onClick={submit}>تایید
                                                     <ClipLoader
 
                                                         loading={loading}
@@ -353,8 +353,8 @@ console.log(maxValidityUnitId);
                                                     />
                                                 </button>}
                                         </div>
-                                        <div className='col-6 '>
-                                            <button onClick={handelNavigate} className="btn btn-danger float-right">بازگشت</button>
+                                        <div className='col-lg-6 col-md-6 col-sm-12 mb-1'>
+                                            <button onClick={handelNavigate} className="btn btn-danger   float-right">بازگشت</button>
                                         </div>
                                     </div>
                                 </div>
