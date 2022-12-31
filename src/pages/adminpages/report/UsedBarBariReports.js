@@ -124,7 +124,7 @@ const UsedBarBariReport = () => {
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
-                        <div className='widget box shadow col-4'>
+                        <div className='widget box shadow col-lg-4 col-sm-12'>
 
 
                             <form >

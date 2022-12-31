@@ -447,7 +447,7 @@ const CustomerOrderDetail = () => {
                                 <table className='table mb-0 '>
                                     <thead className="text-center">
                                     <tr className="">
-                                        <th>شناسه</th>
+                                        <th>#</th>
                                         <th>شناسه جزییات سفارش</th>
 
                                         <th>واحد</th>

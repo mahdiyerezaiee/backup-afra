@@ -247,7 +247,7 @@ setTicket(data.result.supportRequests.values)
     Navigate(`/message/${id}/${title}`)
   }
   const columns = useMemo(()=> [
-    { Header: 'شناسه', accessor: 'id' },
+    { Header: '#', accessor: 'id' },
     { Header: 'نام', accessor: 'creatorName' }
     , { Header: 'عنوان', accessor: 'title' },
       { Header: 'نمایش پیام ', accessor: '',Cell: row => (

@@ -43,7 +43,7 @@ const ShippingsOrder = ({ id }) => {
 
                     <thead style={{ color: 'white' }}>
                         <tr>
-                            <th bgcolor='#247881'>  شناسه</th>
+                            <th bgcolor='#247881'>  #</th>
                             <th bgcolor='#247881'> شناسه سفارش</th>
                             <th bgcolor='#247881'>شناسه جزییات سفارش</th>
                             <th bgcolor='#247881'> واحد</th>

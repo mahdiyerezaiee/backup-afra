@@ -80,7 +80,7 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
                     <table className="table table-bordered table-hover table-striped  mt-2  mb-4">
                         <thead className="text-center">
                         <tr>
-                            <th >شناسه</th>
+                            <th >#</th>
                             <th > شناسه سفارش</th>
                             <th>شناسه جزییات سفارش</th>
                             <th > واحد</th>

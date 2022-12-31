@@ -402,7 +402,7 @@ setGeData(false)
 
     });
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'نام', accessor: 'name' }
         , { Header: 'کد بازارگاه', accessor: 'englishName' }
         , {

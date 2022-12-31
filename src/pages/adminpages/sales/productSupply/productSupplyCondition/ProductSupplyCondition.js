@@ -354,9 +354,9 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
     return (
         <div className=" rounded ProductSupplyCondition " style={{border:" 1px solid #bfc9d4"}}>
             {condition ===null?  (<span className="d-block text-center p-5">هیچ شرطی یافت نشد</span>) :(
-            <div className="table-responsive p-2">
+            <div className=" ProductSupplyCondition-table table table-bordered table-hover table-striped  p-2">
                 <table
-                    className="table table-bordered table-hover table-striped  mt-2  mb-4">
+                    className="  mt-2  mb-4">
                     <thead>
                     <tr style={{fontSize:'10px'}}>
 

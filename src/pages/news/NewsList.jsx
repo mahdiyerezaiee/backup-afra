@@ -116,7 +116,7 @@ const NewsList = () => {
         navigate(`/news/${id}`)
     }
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'عنوان', accessor: 'title' }
 
         , { Header: 'تاریخ', accessor: ' ', Cell: row => (new Date(row.row.original.createDate).toLocaleTimeString('fa-IR')) }

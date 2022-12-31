@@ -67,6 +67,27 @@
     }
     }
     @media (max-width: 600px) {
+        .multi-stepss > li:before {
+            content: "";
+            content: "✓;";
+            content: "𐀃";
+            content: "𐀄";
+            content: "✓";
+            display: inline;
+            margin: 0 auto 16px;
+             background-color: transparent!important;
+             width: 12px!important;
+             height: 12px!important;
+            line-height: 17px!important;
+            text-align: center;
+            font-weight: bold;
+             border-width: 0px!important;
+            border-style: solid;
+            border-color: transparent!important;
+             border-radius: 50%;
+             color: inherit!important;
+            float: right!important;
+        }
         .Pagination {
             font-size: 8px;
             padding: 0;
@@ -95,6 +116,11 @@
         }
         .multi-stepss{
            display: inline-grid!important;
+            margin: 0!important;
+            padding: 0!important;
+        }
+        br{
+            display: none;
         }
     }
     .info-border {

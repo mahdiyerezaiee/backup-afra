@@ -233,14 +233,14 @@ const statusOrder = () => {
         <div className='row d-flex justify-content-center '>
             <div className='widget box shadow col-md-6 col-xs-12'>
 
-                <form className="col-8">
+                <form className="col-lg-8 col-sm-12">
                     <div className="n-chk d-flex  mb-4">
 
                     </div>
 
                     <div className="form-group mb-4 textOnInput ">
                         <div className='form-row'>
-                            <div className="col-6 selectIndex" style={{zIndex: '3'}}>
+                            <div className="col-lg-6 col-md-6 col-sm-11  selectIndex" style={{zIndex: '3'}}>
                                 <label>مشتری</label>
 
                                 <Select
@@ -256,7 +256,7 @@ const statusOrder = () => {
 
                             </div>
 
-                            <div className="col-6 mb-4 selectIndex" style={{zIndex: '3'}}>
+                            <div className="col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex" style={{zIndex: '3'}}>
 
                                 <label>نام کالا</label>
 
@@ -292,7 +292,7 @@ const statusOrder = () => {
 
 
 
-                            <div className="col-6" style={{marginBottom: "3rem", zIndex: '2'}}>
+                            <div className="col-lg-6 col-md-6 col-sm-11 " style={{marginBottom: "3rem", zIndex: '2'}}>
                                 <label>نحوه پرداخت</label>
                                 <Select
 
@@ -319,12 +319,12 @@ const statusOrder = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-6">
+                            <div className="col-lg-6 col-md-6 col-sm-11 ">
 
                                 <label>واحد</label>
                                 <input className="form-control opacityForInput  mb-4" disabled={true} value={Mesures()}/>
                             </div>
-                            <div className="col-6">
+                            <div className="col-lg-6 col-md-6 col-sm-11 ">
 
                                 <label>مقدار</label>
                                 <input type="text" className="  form-control opacityForInput  mb-4" value={formatter.format(quantity)}
@@ -336,7 +336,7 @@ const statusOrder = () => {
 
 
                             </div>
-                            <div className="col-6">
+                            <div className="col-lg-6 col-md-6 col-sm-11 ">
 
                                 <label>فی</label>
                                 <input type="text" className="  form-control opacityForInput  mb-4"
@@ -349,7 +349,7 @@ const statusOrder = () => {
 
 
                             </div>
-                            <div className=" form-group mb-4 textOnInput col-6 selectIndex" style={{marginBottom: "3rem", zIndex: '1'}}>
+                            <div className=" form-group mb-4 textOnInput col-lg-6 col-md-6 col-sm-11  selectIndex" style={{marginBottom: "3rem", zIndex: '1'}}>
                                 <label>وضعیت سفارش</label>
                                 <Select
 maxMenuHeight="200px"
@@ -387,7 +387,7 @@ maxMenuHeight="200px"
                         </div>
                     </div>
                     <div className='row justify-content-between'>
-                        <div className='col-6 '>
+                        <div className='col-lg-6 col-md-6 col-sm-11  '>
                             <button  disabled={loading} className="btn btn-success float-left " onClick={SubmitOrder}>تایید
                                 <ClipLoader
 
@@ -396,7 +396,7 @@ maxMenuHeight="200px"
                                     size={15}
                                 /></button>
                         </div>
-                        <div className='col-6 '>
+                        <div className='col-lg-6 col-md-6 col-sm-11  '>
                             <NavLink to='/orderList' className="btn btn-danger float-right">بازگشت</NavLink>
                         </div>
                     </div>

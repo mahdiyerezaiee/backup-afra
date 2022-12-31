@@ -273,7 +273,7 @@ const deletHandler =async () => {
     }
 }
 const columns=useMemo(()=>[
-    { Header: 'شناسه', accessor: 'id' },
+    { Header: '#', accessor: 'id' },
     { Header: 'نام', accessor: 'name' },
    { Header: 'عملیات', accessor: '11', Cell: row =>
     {

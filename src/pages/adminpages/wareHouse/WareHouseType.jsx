@@ -224,7 +224,7 @@ const WareHouseType = () => {
         }
     }
     const columns=useMemo(()=>[
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'نوع', accessor: 'name' }, { Header: 'عملیات', accessor: '11', Cell: row =>
             {
 

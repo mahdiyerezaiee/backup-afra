@@ -198,7 +198,7 @@ setLoading(false)
                         <table className="table mb-4 SalesBoard " >
                             <thead>
                                 <tr>
-                                    <th className="text-center">شناسه</th>
+                                    <th className="text-center">#</th>
                                     <th className="text-center">شماره کوتاژ</th>
                                     <th className="text-center">محصول</th>
                                     <th className="text-center">قیمت</th>

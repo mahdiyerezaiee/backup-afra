@@ -116,7 +116,7 @@ const getSelectedData=(data)=>{
     });
 
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         {Header:'تاریخ',accessor:'date'},
         { Header: 'کوتاژ', accessor: 'goodTag' },
         { Header: 'کالا', accessor: 'productName' },

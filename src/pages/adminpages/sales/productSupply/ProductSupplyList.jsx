@@ -405,7 +405,7 @@ setCreateDate('')
         }
     }
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: ' شناسه عرضه', accessor: 'name' },
         { Header: 'محصول', accessor: 'product.name' },
         { Header: 'انبار', accessor: 'wareHouse.wareHouseName' },

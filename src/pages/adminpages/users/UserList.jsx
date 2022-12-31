@@ -239,7 +239,7 @@ const UserList = () => {
         setmodalGroupOpen(false)
     }
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'نام کاربری', accessor: 'userName' }
         ,
         {

@@ -112,14 +112,14 @@ const NewTicket = () => {
 
                         </div>
                         <div className='row'>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 '>
                                 <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
                                     size={15}
                                 /></button>                            </div>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 '>
                                 <NavLink to='/ticket' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
