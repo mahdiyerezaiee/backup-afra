@@ -145,7 +145,7 @@ const CodeForMobile = () => {
                                 <OtpInput
 
                                     containerStyle={{ display: 'flex' }}
-                                    inputStyle={{}}
+                                    inputStyle={{  width: "3rem"}}
                                     value={Code}
                                     numInputs={5}
                                     shouldAutoFocus={true}

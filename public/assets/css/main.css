@@ -2495,7 +2495,7 @@ left: -214px;
 
   left: 8rem;
   background-color: white;
-  transition: opacity 0.8s ease 0s;
+  transition: left 0.8s ease 0s;
   border: 1px solid #c5c5c5;
   border-radius: 3px;
 
@@ -2524,7 +2524,7 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-text-fill-color: black;
   transition: background-color 5000s ease-in-out 0s}
-@media only screen and (max-width: 600px) {
+@media  (max-width: 600px) {
   .paginating-mobail button{
 
     font-size: 11px;
@@ -2539,10 +2539,10 @@ button{
   padding: 0;
   margin: 0;
 }
-  .otpInput input{
+.otpInput input{
     width: 2rem!important;
     height: 2rem!important;
-    margin: 10px!important;
+    margin: 7px!important;
     border-radius: 4px
   }
   div .widget-activity-four{
@@ -2573,6 +2573,40 @@ button{
   width: 13rem!important;
   overflow-x: auto;
 }
+  .ReactModal__Content{
+    position: absolute;
+    inset: 37% auto auto 40%!important;
+    border: 2px ridge black;
+    background: rgb(255, 255, 255);
+    overflow: auto; border-radius: 5%;
+    outline: none; padding: 20px;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 76%!important;
+   }
+  .ReactModal__Content .card-body{
+    width: 100%!important;
+    height: 100%!important;
+   }
+  .ReactModal__Content .widget{
+    width: 100%!important;
+    height: 50%!important;
+   }
+  .ReactModal__Content form{
+    width: 60%!important;
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+   }
+  .ReactModal__Content input{
+    width: 80%!important;
+   }
+  .ReactModal__Content .custom-file{
+    width: 70%!important;
+   }
+  .ReactModal__Content .btn{
+    width: 80%!important;
+   }
 }
 .ProductSupplyCondition-table{
   width: 100%;

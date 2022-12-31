@@ -10,15 +10,12 @@ const DashbordAdmin = () => {
   return(
       <div >
           <OverDuePaymentsByAttachments/>
-          <hr/>
           <ReportBlock/>
-          <hr/>
-          <ChartMain/>
-          <hr/>
+
+          <ChartMain />
 
           <SalesBoardForAdmin/>
-        <hr/>
-<div className="row">
+<div className="row mt-3">
     <div className="col-lg-6 col-sm-12"> <News/></div>
     <div className="col-lg-6 col-sm-12"><ScheduleJob/></div>
 </div>

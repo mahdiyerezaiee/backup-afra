@@ -53,7 +53,7 @@ dataReport.datas=data.result.ordersPerSchedule
 
 
     return (
-        <div className=" row sales ">
+        <div className=" row sales mt-3 ">
 
             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
 
