@@ -13,7 +13,7 @@ import AddAdressCustomerForOrder from './../common/addAdressCustomerForOrder';
 import ExcelFileUploader from './../../utils/ExcelFileUploader';
 import { PaymentStructureEnums } from './../../Enums/PaymentStructureEnums';
 import TakhsisTable from "../form/TakhsisTable";
-import ColumnFilter from './../form/ColumnFilter';
+import SelectColumnFilter from "../form/ColumnFilter";
 
 
 const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
@@ -209,7 +209,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         },
         { Header: 'شماره هماهنگی', accessor: 'receiverTel', disableFilters: true },
         { Header: 'کد پستی', accessor: 'postalCode', disableFilters: true },
-        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: ColumnFilter },
+        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: SelectColumnFilter },
         { Header: 'وزن', accessor: 'quantity', disableFilters: true },
         {
             Header: 'قیمت تمام شده', accessor: 'price', Cell: rows => {
