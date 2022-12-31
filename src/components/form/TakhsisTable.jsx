@@ -1,12 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useTable, useFilters } from 'react-table';
-
-import PageSizeTable from "../../utils/PageSize";
-import Pagination from "../../utils/pagination";
+import { useTable, useFilters ,  useGlobalFilter, useAsyncDebounce } from 'react-table';
 
 
 
 const TakhsisTable = ({ columns, data }) => {
+
+
 
 
     const {
@@ -15,9 +14,19 @@ const TakhsisTable = ({ columns, data }) => {
         headerGroups,
         rows,
         prepareRow,
+        state,
+        visibleColumns,
+        preGlobalFilteredRows,
+        setGlobalFilter,
+    } = useTable(
+        {
+            columns,
+            data,
 
-
-    } = useTable({ columns, data }, useFilters)
+        },
+        useFilters, // useFilters!
+        useGlobalFilter // useGlobalFilter!
+    )
 
     return (
         <Fragment>
@@ -36,6 +45,7 @@ const TakhsisTable = ({ columns, data }) => {
                         {
                             headerGroups.map(headerGroup => (
                                 <tr {...headerGroup.getHeaderGroupProps()}>
+
                                     {
                                         headerGroup.headers.map(column => (
                                             <th {...column.getHeaderProps()}>
@@ -46,39 +56,22 @@ const TakhsisTable = ({ columns, data }) => {
                                                 {column.canFilter ? column.render('Filter') : null}
 
                                             </th>
-                                        ))
-                                    }
+                                        ))}
                                 </tr>
-                            ))
-                        }
+                            ))}
                     </thead>
-                    <tbody className='text-center' {...getTableBodyProps()}>
-                        { // loop over the rows
-
-                            rows.map(row => {
-                                prepareRow(row)
-
-                                return (
-                                    <tr  {...row.getRowProps()}>
-
-                                        { // loop over the rows cells
-
-                                            row.cells.map(cell =>
-
-                                            (<td  {...cell.getCellProps()}>
-                                                {cell.render('Cell')}
-                                            </td>)
-
-                                            )
-                                        }
-
-                                    </tr>
-                                )
-                            })
-                        }
-
+                    <tbody {...getTableBodyProps()}>
+                    {rows.map((row, i) => {
+                        prepareRow(row)
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map(cell => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                })}
+                            </tr>
+                        )
+                    })}
                     </tbody>
-
                 </table>
                 <hr />
                 <div className='d-block m-2   float-right'>
@@ -106,5 +99,20 @@ const TakhsisTable = ({ columns, data }) => {
     );
 
 }
+// Define a custom filter filter function!
+function filterGreaterThan(rows, id, filterValue) {
+    return rows.filter(row => {
+        const rowValue = row.values[id]
+        return rowValue >= filterValue
+    })
+}
+
+// This is an autoRemove method on the filter function that
+// when given the new filter value and returns true, the filter
+// will be automatically removed. Normally this is just an undefined
+// check, but here, we want to remove the filter if it's not a number
+filterGreaterThan.autoRemove = val => typeof val !== 'number'
+
+
 
 export default TakhsisTable

@@ -1,15 +1,37 @@
 import './styleInput.css'
+import Select from "react-select";
+import {useMemo} from "react";
 
-const ColumnFilter = ({ column,data }) => {
-    const { filterValue, setFilter } = column
-   
+
+ function SelectColumnFilter({column: { filterValue, setFilter, preFilteredRows, id },}) {
+    // Calculate the options for filtering
+    // using the preFilteredRows
+     console.log(preFilteredRows)
+    const options = useMemo(() => {
+        const options = new Set()
+        preFilteredRows.forEach(row => {
+            options.add(row.values[id])
+        })
+        return [...options.values()]
+    }, [id, preFilteredRows])
+     console.log(filterValue)
+    // Render a multi-select box
     return (
-        <span>
-           
-            <input style={{border:'none' ,borderRadius:'20%',boxSizing:'content-box' ,width:'60px' ,height:'15px'}} value={ filterValue ||  '' }
-                onChange={e => setFilter(e.target.value)} />
-        </span>
+        <select
+            value={filterValue}
+            onChange={e => {
+                setFilter(e.target.value || undefined)
+            }}
+        >
+            <option value="">همه</option>
+            {options.map((option, i) => (
+                <option key={i} value={option}>
+                    {option}
+                </option>
+            ))}
+        </select>
     )
 }
 
-export default ColumnFilter
+
+export default SelectColumnFilter
