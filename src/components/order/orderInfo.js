@@ -7,7 +7,7 @@ const OrderInfo = ({orderWeight,TakhsisWeight,havalehWeight,barbariWeight}) => {
         minimumFractionDigits: 0,
     });
     return(
-      <div className=' row col-lg-12 col-md-12 col-sm-12 col-xs-12 p-4  '>
+      <div className=' row col-lg-12 col-md-12 col-sm-12 col-xs-12 p-4  ' style={{margin:"0"}}>
 
 
           < div className="form-group mb-4 textOnInput col-lg-2 rounded border  border-dark m-auto p-2 text-center orderCustomerInfo" >

@@ -295,7 +295,7 @@ const WareHouseList = () => {
 
     });
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'نام', accessor: 'name' },
         {
             Header: 'گروه انبار', accessor: d=>{

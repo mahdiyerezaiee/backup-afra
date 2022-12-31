@@ -181,7 +181,7 @@ const NewSupply = () => {
                             <div className='form-row mb-4'>
                                
 
-                                <div className="col-4">
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                 <label>نام کالا</label>
                                     <Select placeholder='انتخاب'
                                         className='opacityForInput border-danger '
@@ -198,7 +198,7 @@ const NewSupply = () => {
                                     {productId === 0 ? <span className="text-danger">یک محصول انتخاب کنید</span> : ''}
 
                                 </div>
-                                <div className="col-4">
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                     <label>واحد</label>
 
                                     <Select placeholder='انتخاب '
@@ -218,7 +218,7 @@ const NewSupply = () => {
                                     {measureUnitId === 0 ? <span className="text-danger">یک واحد انتخاب کنید</span> : ''}
 
                                 </div>
-                                <div className="col-4">
+                                <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                     <label> انبار</label>
 
                                     <Select placeholder='انتخاب '
@@ -241,7 +241,7 @@ const NewSupply = () => {
                             </div>
                             <div className="form-group mb-4 textOnInput ">
                                 <div className='form-row '>
-                                    <div className="col-6">
+                                    <div className="col-lg-6 col-md-6 col-sm-11 mb-3">
                                         <label>تامین کننده</label>
                                         <Select placeholder='انتخاب '
                                             className='opacityForInput border-danger'
@@ -260,7 +260,7 @@ const NewSupply = () => {
                                         {supplierId === 0 ? <span className="text-danger">یک تامین کننده را انتخاب کنید</span> : ''}
 
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-lg-6 col-md-6 col-sm-11 mb-3">
                                     <label>نوع تامین</label>
 
                                         <Select placeholder='انتخاب'
@@ -286,7 +286,7 @@ const NewSupply = () => {
                             </div>
                             <div className="form-group mb-4 textOnInput  ">
                                 <div className='form-row'>
-                                    <div className="col-4">
+                                    <div className="col-lg-4 col-md-6 col-sm-11 mb-3 mb-">
                                         <label >مقدار</label>
                                         <input type="text" className=" value form-control opacityForInput" value={formatter.format(quantity)}
                                             onChange={e => {
@@ -296,7 +296,7 @@ const NewSupply = () => {
                                             }} />
                                         {validator.current.message("required", quantity, "required")}
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-lg-4 col-md-6 col-sm-11 mb-3 ">
                                         <label >کد کوتاژ</label>
                                         <input type="text" className="form-control opacityForInput" value={cottageCode}
                                             onChange={e => {
@@ -306,7 +306,7 @@ const NewSupply = () => {
                                             }} />
                                         {validator.current.message("required", quantity, "required|numeric")}
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-lg-4 col-md-6 col-sm-11 mb-3 ">
                                         <label >شماره قرارداد</label>
                                         <input type="text" className="form-control opacityForInput" value={contractNumber}
                                             onChange={e => {
@@ -338,7 +338,7 @@ const NewSupply = () => {
                             </div>
                         </div>
                         <div className='row justify-content-between'>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 col-md-6 col-sm-11 '>
                                 {validator.current.allValid()
                                     ? <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " onClick={submit}>تایید<ClipLoader
 
@@ -354,7 +354,7 @@ const NewSupply = () => {
                                     /></button>  }
 
                             </div>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 col-md-6 col-sm-11 '>
                                 <NavLink to='/supply' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>

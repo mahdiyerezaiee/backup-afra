@@ -2,7 +2,7 @@ const OrderCustomerInfo =({order , product , customerDetail , customerName})=>{
 
 
     let extraD=(order.extraData)?JSON.parse(order.extraData.data):null
-    return(                <div className=' row col-lg-12 col-md-12 col-sm-12 col-xs-12 p-4 text-dark '>
+    return(                <div className=' row col-lg-12 col-md-12 col-sm-12 col-xs-12 p-4 text-dark ' style={{margin:"0"}}>
 
 
             < div className=" OrderCustomerInfo col-lg-3 rounded border  border-dark m-auto p-2 " style={{background:'#f7fdff'}} >

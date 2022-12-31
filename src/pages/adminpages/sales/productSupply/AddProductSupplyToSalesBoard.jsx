@@ -379,14 +379,14 @@ else{
 
 
                             <div className='row justify-content-between'>
-                                <div className='col-6 '>
+                                <div className='col-lg-6 col-sm-12  '>
                                     <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
                                         size={15}
                                     /></button>                                </div>
-                                <div className='col-6 '>
+                                <div className='col-lg-6 col-sm-12 '>
                                     <NavLink to='/productSupply' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>

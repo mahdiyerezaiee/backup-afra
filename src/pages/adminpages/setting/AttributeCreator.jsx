@@ -89,11 +89,11 @@ const AttributeCreator = () => {
 
                         </div>
                         <div className='row'>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 '>
                                 <button type="submit" className="btn btn-success float-left" onClick={submit} >تایید</button>
                             </div>
-                            <div className='col-6 '>
-                                <NavLink to='/dashbordAdmin' className="btn btn-danger float-right">بازگشت</NavLink>
+                            <div className='col-lg-6 '>
+                                <NavLink to='/dashboard' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 

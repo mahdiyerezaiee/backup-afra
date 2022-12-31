@@ -1,16 +1,13 @@
 import {useEffect, useState} from "react";
 import {GetShipping, GetShippingCompanies, SetShippingCompany} from "../../../services/ShippingService";
-import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+
 import {useMemo} from "react";
 import AdvancedSearch from "../../../components/common/AdvancedSearch";
-import Modal from "react-modal";
 import MyTable from "../../../components/form/MyTable";
 import ModalGroupWork from "../../../components/common/ModalGroupWork";
 import {ExportToExcel} from "../../../components/common/ExportToExcel";
 import QueryString from "qs";
-import {GetDataWithSearchOrder} from "../../../services/orderService";
-import {ShippingStatusEnums} from "../../../Enums/ShippingStatusEnums";
+
 import {DeliveryMethods} from "../../../Enums/DeliveryMethodsEnums";
 import {MeasureUnitSample} from "../../../Enums/MeasureUnitSample";
 import DatePicker, {DateObject} from "react-multi-date-picker";
@@ -518,7 +515,7 @@ CottageCode,
     },[getOrders])
 
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'شناسه سفارش', accessor: 'orderId' }
         ,{ Header: 'تاریخ', accessor: 'createDate'  , Cell: row => {
 
@@ -571,6 +568,29 @@ sessionStorage.clear()
     }
     if (shipping) {
         const dataForExcel = data.map(item => ({
+
+            'شناسه ': item.id,
+            'شناسه سفارش': item.orderId,
+            'تاریخ': (new Date(item.createDate).toLocaleDateString('fa-IR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            })),
+            'کد کوتاژ': item.cottageCode,
+            'حواله شده': item.plannedQuantity,
+            'ارسال شده':item.shippedQuantity,
+            'واحد': (MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name))[0],
+            'وضعیت ارسال':( item.shipped === true ?"ارسال شده" : "-"),
+            'تاریخ ارسال':(new Date(item.shippingDate).toLocaleDateString('fa-IR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        })),
+            'نحوه ارسال': (DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(item => item.name))[0],
+            'شناسه قرارداد باربری': item.shippingContractId,
+            'نام برباری': item.companyName,
+            'شماه قرارداد': item.contractCode,
+
         }))
         return (
             <div>

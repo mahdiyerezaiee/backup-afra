@@ -191,7 +191,7 @@ setLoading(false)
                     </div>
                 </div>
                 <div className="   ">
-                    <div className="table-responsive overflow-hidden">
+                    <div className=" w-100 " style={{overflowX:"auto"}}>
                         <Modal
                             isOpen={modalIsOpen}
                             onRequestClose={closeModal}

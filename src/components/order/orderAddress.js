@@ -277,9 +277,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                     (<div className="form-group   textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '4rem' }}>
                         <label> فاقد تخصیص </label>
 
+<div className="table-responsive" style={{overflowX:"auto"}}>
 
-
-                        <table className="table table-bordered table-hover table-striped  mt-2  mb-4">
+                        <table  className="table    table-striped  mt-2  mb-4">
                             <thead className='text-center'>
                                 <tr className="">
                                     <th> #</th>
@@ -331,7 +331,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                                 }
                             </tbody>
                         </table>
-
+</div>
                     </div>) : ''}
                 {completeDdata && completeDdata.filter(x => x.extId !== null).length > 0 ?
                     (<div className="form-group mb-4  textOnInput col-lg-12 rounded border  border-dark    " style={{ marginTop: '3rem' }}>

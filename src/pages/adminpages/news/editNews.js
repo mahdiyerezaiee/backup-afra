@@ -93,7 +93,7 @@ setLoading(false)
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-4'>
+                <div className='widget box shadow col-lg-4'>
 
 
                     <form className="col">
@@ -119,7 +119,7 @@ setLoading(false)
                                       onChange={e => setMessage(e.target.value)} rows="10"/>
                         </div>
                         <div className='row'>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 '>
                                 <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
 
                                     loading={loading}
@@ -127,7 +127,7 @@ setLoading(false)
                                     size={15}
                                 /></button>
                             </div>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 '>
                                 <NavLink to='/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>

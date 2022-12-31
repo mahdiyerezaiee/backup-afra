@@ -293,7 +293,7 @@ const SupplierList = () => {
     }
     const columns = useMemo(() => [
 
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'نام تامین کننده', accessor: 'name' },
         {
             Header: 'عملیات', accessor: '11', Cell: row => {

@@ -287,7 +287,7 @@ const[id,setId]=useState(0)
         navigate("/newNews")
     }
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'عنوان', accessor: 'title' }
         , {
             Header: 'متن پیام', accessor: '', Cell: row => (

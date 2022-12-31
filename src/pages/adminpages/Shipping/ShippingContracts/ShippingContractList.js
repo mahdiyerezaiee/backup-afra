@@ -340,7 +340,7 @@ setGeData(false)
 
 
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'شماره قرارداد', accessor: 'contractNumber' },
         {
             Header: 'نام شرکت', accessor: 'shippingCompanyId', Cell: rows => {

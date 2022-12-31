@@ -2558,9 +2558,29 @@ button{
  .box-big  {
    margin: 0!important;
  }
-.btn{
-  width: 100%!important;
+
+  .btn-danger{
+  font-size: 10px!important;
+    width: 100%!important;
+
+  }
+  .btn-success{
+  font-size: 10px!important;
+    width: 100%!important;
+
+  }
+.ProductSupplyCondition-table{
+  width: 13rem!important;
+  overflow-x: auto;
 }
+}
+.ProductSupplyCondition-table{
+  width: 100%;
+  overflow-x: auto;
+}
+.ProductSupplyCondition-table table{
+  width: 100%;
+  overflow-x: auto;
 }
 /*tr:hover {*/
 /*  -webkit-transform:scale(1.010);*/

@@ -359,7 +359,7 @@ const ProductSupplyEdit = () => {
                         <div className="form-group mb-1 textOnInput  ">
                             <div className='form-row'>
 
-                                <div className="col-md-6 col-xs-12">
+                                <div className="col-md-6 col-sm-6 ">
                                     <label>قیمت</label>
                                     <input type="text" className="form-control opacityForInput" value={formatter.format(price)}
                                            onChange={e => {
@@ -369,7 +369,7 @@ const ProductSupplyEdit = () => {
                                            }}/>
                                     {validator.current.message("required", price, "required|numeric")}
                                 </div>
-                                <div className=" col-6 ">
+                                <div className=" col-lg-6 col-sm-6 ">
                                     <div className=" mb-2 " style={{position: 'relative'}}>
                                         <label style={{
                                             position: 'absolute',
@@ -417,7 +417,7 @@ const ProductSupplyEdit = () => {
 
 
 
-                            <div className='col-6 '>
+                            <div className='col-lg-6 col-sm-12 '>
                                 <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
 
                                     loading={loading}
@@ -425,7 +425,7 @@ const ProductSupplyEdit = () => {
                                     size={15}
                                 /></button>
                             </div>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 col-sm-12 '>
                                 <button onClick={handelNavigate}
                                         className="btn btn-danger float-right">بازگشت</button>
                             </div>

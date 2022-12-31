@@ -115,7 +115,7 @@ setLoading(false)
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
 
-                    <form className="col-8">
+                    <form className="col-lg-8 col-sm-12">
 
                         <div className="form-group mb-4 textOnInput  align-content-between">
 
@@ -197,7 +197,7 @@ setLoading(false)
                             </div>
                         </div>
                         <div className='row justify-content-between'>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 '>
                                 <button disabled={loading} type="submit" className="btn btn-success float-left " onClick={submit}>تایید <ClipLoader
 
                                     loading={loading}
@@ -205,7 +205,7 @@ setLoading(false)
                                     size={15}
                                 /></button>
                             </div>
-                            <div className='col-6 '>
+                            <div className='col-lg-6 '>
                                 <NavLink to='/ShippingContract'
                                          className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>

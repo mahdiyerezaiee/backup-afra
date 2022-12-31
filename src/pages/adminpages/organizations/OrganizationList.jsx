@@ -370,7 +370,7 @@ const OrganizationList = () => {
     }
 
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'نام سازمان', accessor: 'name' }
         , { Header: 'شناسه ملی', accessor: 'nationalId' }, {
             Header: 'شماره ثبت', accessor: 'registrationNumber'
