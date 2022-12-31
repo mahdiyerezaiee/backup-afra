@@ -31,6 +31,7 @@ const Header = ({collapsed, handelChange}) => {
     };
 
     useEffect(() => {
+
         const checkIfClickedOutside = e => {
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
@@ -119,6 +120,10 @@ const Header = ({collapsed, handelChange}) => {
     const paymentMethod = () => {
         return (PaymentStructureEnums.map(data => ({label: data.name, value: data.id})))
     }
+    let days = ['یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
+    let d = new Date()
+    let dayName = days[d.getDay()]
+
     return (
 
 
@@ -138,7 +143,7 @@ const Header = ({collapsed, handelChange}) => {
                         : <BiX size="2rem" onClick={handelChange}/>
                     }
                 </div>
-
+<div className="mr-1 ml-1">{""}{ dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>
                 <ul className="navbar-item flex-row search-ul">
 
                 </ul>
@@ -162,7 +167,7 @@ const Header = ({collapsed, handelChange}) => {
                             </a>
                         </div>
                         <div onClick={handleHeaderClick} className="  row cart-shop2 ql-direction-rtl "
-                             style={{width: '20rem',borderRadius:'3%', top: show == true ? "4rem" : "-60rem", opacity:show == true ? "1" : "0"}}>
+                             style={{width: '20rem',borderRadius:'3%', top:"5rem",left: show == true ? "0rem" : "-60rem", opacity:show == true ? "1" : "0"}}>
                             <div className="col-12 px-2" >
                                 <div className="row">
                                     <span className=" col-6 float-left bold py-2" style={{fontSize: 'smaller'}}>{cartShopping.length} محصول</span>
@@ -180,49 +185,76 @@ const Header = ({collapsed, handelChange}) => {
                                                                    y2="18"></line><line
                                         x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                                 </div>
-                                {Array.from({length: 10} && cartShopping.map((item, i) =>
+                                <div style={{height:"calc(72vh - 100px)"}}>
+                                {cartShopping.length !==0 ?
 
-                                        show && (
+                                        Array.from({length: 10} && cartShopping.map((item, i) =>
 
-                                            <a className="dropdown-item border-bottom border-light p-2 my-2 mt-3 "
-                                               key={item.id}>
-                                                <div className="row shadow">
-                                                    <div className="col-12">
+                                                show && (
+
+                                                    <a className="dropdown-item border-bottom border-light p-2 my-2 mt-3 "
+                                                       key={item.id}>
+                                                        <div className="row shadow">
+                                                            <div className="col-12">
                                                         <span className=" float-left mt-1"
-                                                              onClick={() => deleteItemHandler(item.productSupplyId)}><svg style={{color:'red'}} width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9.17218 14.8284L12.0006 12M14.829 9.17157L12.0006 12M12.0006 12L9.17218 9.17157M12.0006 12L14.829 14.8284" stroke="red" stroke-linecap="round" stroke-linejoin="round"/> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/> </svg></span></div>
-                                                    <div className="media col-5 ">
-                                                        <div className="user-img">
-                                                            <div className="avatar avatar-xl">
+                                                              onClick={() => deleteItemHandler(item.productSupplyId)}><svg
+                                                            style={{color: 'red'}} width="24" height="24"
+                                                            stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"> <path
+                                                            d="M9.17218 14.8284L12.0006 12M14.829 9.17157L12.0006 12M12.0006 12L9.17218 9.17157M12.0006 12L14.829 14.8284"
+                                                            stroke="red" stroke-linecap="round"
+                                                            stroke-linejoin="round"/> <path
+                                                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                                            stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round"/> </svg></span></div>
+                                                            <div className="media col-5 ">
+                                                                <div className="user-img">
+                                                                    <div className="avatar avatar-xl">
                                                                 <span className="avatar-title rounded-circle">
                                                                     {/* <img className="img-fluid" style={{width:"100px" , height:'100px'}} src="/assets/img/000000.png"/> */}
                                                                 </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="media-body col-6  mt-3">
+                                                                    <div className="">
+                                                                        <h5 className="usr-name text-primary">{item.product.name}</h5>
+                                                                        <p style={{
+                                                                            fontSize: 'x-small',
+                                                                            color: 'lightgrey'
+                                                                        }}> موجود در انبار</p>
+
+                                                                        <p className="">مقدار:{item.quantity}<span
+                                                                            className="mx-1">{MeasureUnit(item.measureUnitId)}</span>
+                                                                        </p>
+
+                                                                        <p> قیمت:{formatter.format(item.price)} ریال</p>
+                                                                    </div>
+
+                                                                </div>
+
+
                                                             </div>
-                                                        </div>
-                                                        <div className="media-body col-6  mt-3">
-                                                            <div className="">
-                                                                <h5 className="usr-name text-primary">{item.product.name}</h5>
-                                                                <p style={{fontSize:'x-small' , color:'lightgrey'}}> موجود در انبار</p>
-
-                                                                <p className="">مقدار:{item.quantity}<span className="mx-1">{MeasureUnit(item.measureUnitId)}</span>
-                                                                </p>
-
-                                                                <p> قیمت:{formatter.format(item.price)} ریال</p>
-                                                            </div>
 
                                                         </div>
 
+                                                    </a>
+
+                                                )
+                                        ))
+
+:<a className="dropdown-item border-bottom border-light p-2 my-2 mt-3 ">
+
+                                            <div className="col-12"></div>
+                                            <div className="media col-5 p-5 ">
+                                                <span> کالایی در سبد خرید موجود نیست</span>
+
+                                            </div>
 
 
-                                                    </div>
 
-                                                </div>
-
-                                            </a>
-
-                                        )
-                                ))}
-
-
+                                    </a>
+                                }
+                                </div>
                             </div>
 
                             <div className=" col-12 shadow p-3 rounded">

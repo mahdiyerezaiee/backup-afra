@@ -116,7 +116,7 @@ closeModal()
                                            y2="18"></line><line
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
-            <div style={{ height: '15rem', width: '20rem' }}>
+            <div className="card-body" style={{ height: '15rem', width: '20rem' }}>
 
                
 
@@ -141,7 +141,7 @@ closeModal()
                 </div>
                 <div className='row'>
 
-                    <div className='col-6 '>
+                    <div className='col-lg-6  col-sm-6'>
                         <button disabled={loading || files.length<1?true:false} onClick={handelSubmit} className="btn btn-success float-left " >بارگزاری<ClipLoader
 
                             loading={loading}
@@ -149,7 +149,7 @@ closeModal()
                             size={15}
                         /></button>
                     </div>
-                    <div className='col-6 '>
+                    <div className='col-lg-6 '>
                         <button  onClick={closeModal}   className="btn btn-danger float-right ">انصراف</button>
                     </div>
                    

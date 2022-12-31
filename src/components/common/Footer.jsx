@@ -7,7 +7,7 @@ const Footer= () => {
                 <p className=""> © کپی رایت</p>
             </div>
             <div className="footer-section f-section-2">
-                <span className="copyright"> تهیه شده توسط : <a href="https://imanpa.ir/store/"> واحد IT گروه هولدینگ افرا</a> </span></div>
+                <span className="copyright"> تهیه شده توسط :   گروه توسعه هولدینگ افرا </span></div>
         </div>
         </footer>
     )

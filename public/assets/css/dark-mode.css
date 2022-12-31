@@ -289,7 +289,7 @@ border: 1px solid;
 .dark-mode .css-1insrsq-control {
     background-color:#233649!important ;
 }
-.dark-mode .css-14el2xx-placeholder{
+.dark-mode .css-1dimb5e-singleValue{
 color: white;
 }
 .dark-mode  .css-qc6sy-singleValue{
@@ -373,4 +373,8 @@ select:-webkit-autofill:focus {
 }
 .dark-mode .table-striped:hover{
     background: transparent!important;
+}
+.dark-mode .cart-shop2 {
+    background-color:  #0e1726!important ;
+    color: #FFFFFF!important;
 }
