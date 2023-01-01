@@ -201,13 +201,13 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({
 
             <div className='d-flex justify-content-center'>
 
-                <button className=' btn     m-1' onClick={() => gotoPage(0)} disabled={!canPreviousPage} data-title='صفحه اول'>صفحه اول</button>
-                <button className='   btn   m-1' data-title='صفحه قبلی' onClick={() => previousPage()} disabled={!canPreviousPage}> قبلی</button>
+                <button className=' btn Pagination    m-1' onClick={() => gotoPage(0)} disabled={!canPreviousPage} data-title='صفحه اول'>صفحه اول</button>
+                <button className='   btn Pagination  m-1' data-title='صفحه قبلی' onClick={() => previousPage()} disabled={!canPreviousPage}> قبلی</button>
                 <strong className='m-2'>
                     {pageIndex + 1} از {pageOptions.length}
                 </strong>{'  '}
-                <button className='   btn   m-1' data-title='صفحه بعدی' onClick={() => nextPage()} disabled={!canNextPage}> بعدی</button>
-                <button className='  btn   m-1' onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} data-title='صفحه اول'>صفحه آخر</button>
+                <button className='   btn  Pagination m-1' data-title='صفحه بعدی' onClick={() => nextPage()} disabled={!canNextPage}> بعدی</button>
+                <button className='  btn Pagination  m-1' onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} data-title='صفحه اول'>صفحه آخر</button>
 
             </div>
 

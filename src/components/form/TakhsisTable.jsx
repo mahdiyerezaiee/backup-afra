@@ -48,7 +48,7 @@ const TakhsisTable = ({ columns, data }) => {
 
                                     {
                                         headerGroup.headers.map(column => (
-                                            <th {...column.getHeaderProps()}>
+                                            <th  className="text-center" {...column.getHeaderProps()}>
 
                                                 {
                                                     column.render('Header')
@@ -66,7 +66,7 @@ const TakhsisTable = ({ columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map(cell => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    return <td  className="text-center" {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )
