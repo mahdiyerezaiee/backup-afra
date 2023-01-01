@@ -51,7 +51,7 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
     useEffect(() => {
         getOrder()
 
-    }, [id])
+    }, [modalIsOpen])
 
     console.log({ ...order, paymentStatusId, orderStatusId, shippingStatusId });
 
