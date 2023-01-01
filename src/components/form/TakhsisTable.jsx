@@ -33,7 +33,7 @@ const TakhsisTable = ({ columns, data }) => {
 
             {/*<GlobalFilter filter={globalfilter} setFilter={setGlobalFilter} />*/}
 
-            <div className="table-responsive "
+            <div className="table-responsive p-2 "
                 style={{ overflowX: 'auto' }}
             >
 

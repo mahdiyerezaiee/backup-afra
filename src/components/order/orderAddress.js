@@ -277,7 +277,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                     (<div className="form-group   textOnInput col-lg-12 rounded border  border-dark   " style={{ marginTop: '4rem' }}>
                         <label> فاقد تخصیص </label>
 
-<div className="table-responsive" style={{overflowX:"auto"}}>
+<div className=" p-2 table-responsive" style={{overflowX:"auto"}}>
 
                         <table  className="table    table-striped  mt-2  mb-4">
                             <thead className='text-center'>
@@ -335,9 +335,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                     </div>) : ''}
                 {completeDdata && completeDdata.filter(x => x.extId !== null).length > 0 ?
                     (<div className="form-group mb-4  textOnInput col-lg-12 rounded border  border-dark    " style={{ marginTop: '3rem' }}>
-                        <label>  تخصیص یافته </label>
+                        <label >  تخصیص یافته </label>
 
-                        <TakhsisTable columns={columns} data={data} />
+                        <TakhsisTable  columns={columns} data={data} />
 
 
 
