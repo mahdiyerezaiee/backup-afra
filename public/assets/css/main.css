@@ -10,12 +10,13 @@
 */
 @import url('font.css');
 html {
-  min-height: 100%;
+  min-height:-webkit-fill-available;
   direction: rtl; }
 
 body {
   color: #888ea8;
-  height: calc(90vh - 100px);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   font-size: 0.875rem;
   background: #f1f2f3;
   overflow-x: hidden;
@@ -2492,14 +2493,26 @@ left: -214px;
 .cart-shop2{
   padding: 10px;
   position: fixed;
-
+  height:calc(99vh - 100px);
   left: 8rem;
   background-color: white;
   transition: left 0.8s ease 0s;
   border: 1px solid #c5c5c5;
-  border-radius: 3px;
+
+  border-bottom-right-radius:3px ;
+  border-top-right-radius:3px ;
 
 
+}
+.newsItem{
+  border: 1px solid grey;
+  border-radius: 10px;
+margin-bottom: 10px;
+  height: 14vh;
+}
+.footer-car-shop{
+  position: absolute;
+  bottom: 0;
 }
 .ReactModal__Overlay{
   z-index: 10;
@@ -2575,7 +2588,7 @@ button{
 }
   .ReactModal__Content{
     position: absolute;
-    inset: 37% auto auto 40%!important;
+    inset: 46% auto auto 50%!important;
     border: 2px ridge black;
     background: rgb(255, 255, 255);
     overflow-y: auto;
@@ -2659,6 +2672,26 @@ button{
   }
   .OrderCustomerInfo{
     margin-bottom: 20px!important;
+  }
+  .footer-car-shop{
+    position: absolute;
+    bottom: 10%;
+  }
+  .cart-shop2{
+    padding: 10px;
+    position: fixed;
+    height:calc(95vh - 100px)!important;
+    left: 8rem;
+    background-color: white;
+    transition: left 0.8s ease 0s;
+    border: 1px solid #c5c5c5;
+
+
+
+  }
+  .newsItem{
+    border: 1px solid grey;
+    height: 12vh;
   }
 }
 .ProductSupplyCondition-table{
@@ -2821,12 +2854,12 @@ opacity: 0;
 * th:first-child{
   border: 1px solid transparent!important;
   border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  /*border-bottom-right-radius: 10px;*/
 }
 * th:last-child{
   border: 1px solid transparent!important;
   border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  /*border-bottom-left-radius: 10px;*/
 }
 .table thead tr{
   background: rgba(50, 50, 255, 0.17);

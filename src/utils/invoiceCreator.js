@@ -6,6 +6,7 @@ import {GetOrder, GetOrderDetails} from "../services/orderService";
 import {MeasureUnitSample} from "../Enums/MeasureUnitSample";
 import {useEffect, useState , createRef} from "react";
 import Pdf from "react-to-pdf";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 
@@ -13,10 +14,11 @@ import Pdf from "react-to-pdf";
 const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
 
     const ref = createRef()
-
+const params = useParams()
     const [order, setOrder] = useState({});
     const [customer, SetCustomer] = useState({});
     const [orderDetail, setOrderDetail] = useState([])
+    const navigate = useNavigate();
 
     const [organizations, SetOrganisations] = useState([]);
 
@@ -29,10 +31,13 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
         precision:1,
         hotfixes:'1'
     };
-
-    const getOrder = async (id) => {
+    const handelNavigate = (e) => {
+        e.preventDefault()
+        navigate(-1)
+    }
+    const getOrder = async () => {
         try {
-            const { data, status } = await GetOrder(id)
+            const { data, status } = await GetOrder(params.id)
             setOrder(data.result.order)
             SetCustomer(data.result.order.customer)
 
@@ -46,12 +51,12 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
         function adjustZoom() {
             var   documentWidth= window.innerWidth;
             var   documentHeight= window.innerHeight;
-            var zoomHeight = documentHeight / (25.7 * 47.795276);
-            var zoomWidth= documentWidth / (31.7 * 47.795276);
+            var zoomHeight = documentHeight / (31.7 * 35.795276);
+            var zoomWidth= documentWidth / (31.7 * 35.795276);
             var zoomLevel = Math.min(zoomHeight ,zoomWidth);
             // stop zooming when book fits page
             if (zoomLevel >= 1) return;
-            document.getElementsByClassName('ReactModal__Content')[0].style.transform= "scale(" + zoomLevel + ")";
+            document.getElementsByClassName('a4')[0].style.transform= "scale(" + zoomLevel + ")";
 
 
         }
@@ -65,7 +70,7 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
     const GetOrderDetail = async () => {
         try {
 
-            const { data, status } = await GetOrderDetails(orderId);
+            const { data, status } = await GetOrderDetails(params.id);
             if (status === 200) {
                 setOrderDetail(data.result.orderDetails)
             }
@@ -89,24 +94,40 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
     }
 
 
+
+
+    useEffect(()=>{
+        const getAddress=async()=>{
+            try {
+
+                const {data,status}=await GetAddress(1,order.customerId)
+                SetAddress(data.result.addresses)
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+        getOrder()
+        GetOrderDetail()
+        getOrganization()
+        getAddress()
+
+    },[params.id])
+useEffect(()=>{
     const getAddress=async()=>{
         try {
 
-            const {data,status}=await GetAddress(1,customerId)
+            const {data,status}=await GetAddress(1,order.customerId)
             SetAddress(data.result.addresses)
         } catch (error) {
             console.log(error);
         }
 
     }
-    useEffect(()=>{
-        getOrder(orderId)
-        GetOrderDetail()
-        getOrganization()
-        getAddress()
 
-    },[])
 
+    getAddress()
+},[order])
 
     const Fullname=()=>{
 
@@ -151,23 +172,13 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
 
         maximumFractionDigits: 0,
         minimumFractionDigits: 0, });
+
     return (
         <>
+        <div id="body" className='a4  rounded-5'  >
 
-        <div id="body" className='a4  rounded-5' style={{backgroundColor:'white' ,borderRadius:'50px' , borderColor:'black' , border:"4px solid"}} >
 
-            <div className="text-start"  style={{width:'100%', fontSize:'12px', marginLeft:"50px" , marginBottom:'-50px'}} onClick={closeModal}><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="50" height="50"
-                viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-x close"
-                data-dismiss="alert"><line x1="18" y1="6"
-                                           x2="6"
-                                           y2="18"></line><line
-                x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+
             <div  ref={ref} className=" page" >
 
                 <div style={{ textAlign: 'end', marginLeft: '3.5%', fontSize: 'small', lineHeight: '1%', marginTop: '5%' }}>
@@ -252,10 +263,10 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
                     </div>
                     <div>
                         <div className="EmptycoloredBox"></div>
-                        <div>
+                        <div className="w-100">
 
                             <table
-                                className="table table-bordered table-responsive-md table-responsive-sm text-sm-center small h-auto ">
+                                className="w-100 table table-bordered  text-sm-center small h-auto " style={{width:"100%"}}>
                                 <thead>
                                 <tr>
                                     <td>ردیف</td>
@@ -359,18 +370,23 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
 
 
             </div>
-            <Pdf targetRef={ref} filename="code-example.pdf" options={options} y={-1} scale={1}>
-                {({toPdf}) =><> <button onClick={function (){
-                    document.getElementsByClassName('ReactModal__Content')[0].style.transform= "scale(1 )";
+            <div className="row">
+            <button onClick={handelNavigate}
+                    className="btn btn-danger col-lg-6  float-right mb-2 ">بازگشت</button>
+            <Pdf targetRef={ref} filename="code-example.pdf" options={options} y={-1} scale={1} >
+                {({toPdf}) =><> <button  onClick={function (){
+                    document.getElementsByClassName('a4')[0].style.transform= "scale(1 )";
 
                     toPdf()
                     setOrder([])
                     closeModal()
 
-                }} className="btn btn-info  float-right m-1 ">دریافت فایل
+                }} className="btn btn-info  float-left  col-lg-6  mb-2  float-left" >دریافت فایل
                     پی دی اف </button>
+
                     <br/>
-<h4 className='text-danger w-75 text-center mb-4'>مشتری گرامی : لطفا پس از دانلود فایل پیش فاکتور ، اقدام به  چاپ آن نمایید ، سپس بوسیله مهر و امضا  لازمه پیش فاکتور را را تایید نموده  و در آخر تصویر اسکن شده آن  را از بخش آپلود فایل برای ما ارسال نمایید </h4>
+
+<h4 className='col-12 text-danger w-75 text-center mb-4'>مشتری گرامی : لطفا پس از دانلود فایل پیش فاکتور ، اقدام به  چاپ آن نمایید ، سپس بوسیله مهر و امضا  لازمه پیش فاکتور را را تایید نموده  و در آخر تصویر اسکن شده آن  را از بخش آپلود فایل برای ما ارسال نمایید </h4>
 
 
                     </>
@@ -378,6 +394,7 @@ const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
                     }
                     
             </Pdf>
+            </div>
         </div>
         </>
     )
