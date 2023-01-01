@@ -17,11 +17,13 @@ import {ClipLoader} from "react-spinners";
 
 const Header = ({collapsed, handelChange}) => {
     const ref = useRef()
+    const refNews = useRef()
     const Navigate=useNavigate()
     const user = useSelector(state => state.userInfo);
     const [cartShopping, setCartShopping] = useState([])
     const [theme, setTheme] = useState(false)
     const [show, setShow] = useState(false)
+    const [showNews, setShowNews] = useState(false)
     const roles = useSelector(state => state.userRole);
     const [loading, setLoading] = useState(false);
 
@@ -38,6 +40,10 @@ const Header = ({collapsed, handelChange}) => {
             if (show && ref.current && !ref.current.contains(e.target)) {
                 setShow(false)
             }
+            if (showNews && refNews.current && !refNews.current.contains(e.target)) {
+                setShowNews(false)
+            }
+
         }
 
         document.addEventListener("click", checkIfClickedOutside)
@@ -48,6 +54,27 @@ const Header = ({collapsed, handelChange}) => {
             document.removeEventListener("click", checkIfClickedOutside)
         }
     }, [show])
+    useEffect(() => {
+
+        const checkIfClickedOutside = e => {
+            // If the menu is open and the clicked target is not within the menu,
+            // then close the menu
+            if (show && ref.current && !ref.current.contains(e.target)) {
+                setShow(false)
+            }
+            if (showNews && refNews.current && !refNews.current.contains(e.target)) {
+                setShowNews(false)
+            }
+        }
+
+        document.addEventListener("click", checkIfClickedOutside)
+
+
+        return () => {
+            // Cleanup the event listener
+            document.removeEventListener("click", checkIfClickedOutside)
+        }
+    }, [showNews])
     const getCartShopping = async () => {
         const {data, status} = await GetShoppingCart(Number( localStorage.getItem('connect')))
 
@@ -166,8 +193,8 @@ const Header = ({collapsed, handelChange}) => {
 
                             </a>
                         </div>
-                        <div onClick={handleHeaderClick} className="  row cart-shop2 ql-direction-rtl "
-                             style={{width: '20rem',borderRadius:'3%', top:"5rem",left: show == true ? "0rem" : "-60rem", opacity:show == true ? "1" : "0"}}>
+                        <div onClick={handleHeaderClick} className="  row cart-shop2 ql-direction-rtl  "
+                             style={{  width: '20rem',borderRadius:'3%', top:"80px",left: show == true ? "1rem" : "-60rem", opacity:show == true ? "1" : "0"}}>
                             <div className="col-12 px-2" >
                                 <div className="row">
                                     <span className=" col-6 float-left bold py-2" style={{fontSize: 'smaller'}}>{cartShopping.length} محصول</span>
@@ -185,14 +212,14 @@ const Header = ({collapsed, handelChange}) => {
                                                                    y2="18"></line><line
                                         x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                                 </div>
-                                <div style={{height:"calc(50vh - 100px)"}}>
+                                <div >
                                 {cartShopping.length !==0 ?
 
                                         Array.from({length: 10} && cartShopping.map((item, i) =>
 
                                                 show && (
 
-                                                    <a className="dropdown-item border-bottom border-light p-2 my-2 mt-3 "
+                                                    <a className=" animated dropdown-item border-bottom border-light p-2 my-2 mt-3 "
                                                        key={item.id}>
                                                         <div className="row shadow">
                                                             <div className="col-12">
@@ -245,7 +272,7 @@ const Header = ({collapsed, handelChange}) => {
 :<a className="dropdown-item border-bottom border-light p-2 my-2 mt-3 ">
 
                                             <div className="col-12"></div>
-                                            <div className="media col-5 p-5 ">
+                                            <div className="media col-5 p-2 ">
                                                 <span> کالایی در سبد خرید موجود نیست</span>
 
                                             </div>
@@ -257,7 +284,7 @@ const Header = ({collapsed, handelChange}) => {
                                 </div>
                             </div>
 
-                            <div className=" col-12 shadow p-3 rounded">
+                            <div className="footer-car-shop col-12 shadow p-3 rounded  " >
                             <span className="float-right " onClick={deleteHandler}> <svg style={{color:'red'}}
                                                                                          xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                                                          viewBox="0 0 24 24" fill="none"
@@ -283,7 +310,10 @@ const Header = ({collapsed, handelChange}) => {
                                             size={15}
                                         /></button>
 
-                                    <button className="btn btn-primary float-right mt-3" onClick={() => setShow(oldState => !oldState)} >ادامه خرید</button>
+                                    <button className="btn btn-primary float-right mt-3" onClick={() => {
+                                        setShow(oldState => !oldState)
+                                        setShowNews(false)
+                                    } } >ادامه خرید</button>
                                 </p>
                             </div>
                         </div>
@@ -291,8 +321,12 @@ const Header = ({collapsed, handelChange}) => {
                     </li>
 
                     <li className="nav-item dropdown notification-dropdown">
-                        <a className="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
+                        <div ref={refNews}>
+                            <a className="nav-link dropdown-toggle" id="messageDropdown"
+                               onClick={() => {
+                                   setShowNews(oldState => !oldState)
+                                   setShow(false)
+                               }}>
                             <svg style={{
                                 width: "24",
                                 height: "24",
@@ -306,14 +340,14 @@ const Header = ({collapsed, handelChange}) => {
                                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                             </svg>
+                            </a>
                             <span className="badge badge-success"></span>
-                        </a>
-                        <div className="dropdown-menu position-absolute animated fadeInUp"
-                             aria-labelledby="notificationDropdown">
-                            <div className="notification-scroll">
-
-                                <NewsHeader/>
-                            </div>
+                        </div>
+                          <div  className="  row cart-shop2 ql-direction-rtl  "
+                            style={{  width: '20rem',borderRadius:'3%', top:"80px",left: showNews == true ? "1rem" : "-60rem", opacity:showNews == true ? "1" : "0"}}>
+                              { showNews && (
+                                  <NewsHeader/>
+                                  )}
                         </div>
                     </li>
 

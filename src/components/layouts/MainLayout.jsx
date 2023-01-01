@@ -87,6 +87,7 @@ import OrdersReports from "../../pages/adminpages/report/OrdersReports";
 import DetailCustomerAttachment from "../../pages/adminpages/report/DetailCustomerAttachment";
 import AddOrder from "../../pages/order/addOrder";
 import ShippingList from "../../pages/adminpages/Shipping/ShippingList";
+import InvoiceCreator from "../../utils/invoiceCreator";
 const MainLayout = (props) => {
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
@@ -262,6 +263,8 @@ const MainLayout = (props) => {
                   <Route path='UsedBarBariReports' element={<UsedBarBariReport />} />
                   <Route path='CustomersReports' element={<CustomerReports />} />
                   <Route path='OrdersReports' element={<OrdersReports />} />
+                  {/* InvoiceCreator*/}
+                  <Route path='invoice/:id' element={<InvoiceCreator />} />
 
                 </Routes>
               </div>

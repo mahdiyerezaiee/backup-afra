@@ -22,11 +22,11 @@ const NewsHeader = () => {
       navigate(`news/${id}`)
     }
     return(
-        <div>
+        <div style={{width:"100%" ,textAlign:"center" }}>
 
             <div className="">
                 {guessNews?guessNews.slice(0, 5).map(item=>
-                    <div className="dropdown-item"  key={item.id} >
+                    <div className="dropdown-item border-dark newsItem "  key={item.id} >
 
                     <div className="media-body" key={item.id}>
 
@@ -34,7 +34,7 @@ const NewsHeader = () => {
                             <section className="mb-0 mt-0">
                                 <div role="menu" className="collapsed" data-toggle="collapse"
                                      data-target={`#iconAccordion${item.id}`} aria-expanded="true" aria-controls="iconAccordionOne">
-                                    <div className="accordion-icon">
+                                    <div className="  accordion-icon">
                                                                       </div>
                                     <span> اطلاعیه شماره: <b>{item.id}</b>
                                         <br/>تاریخ:<b>{new Date(item.createDate).toLocaleDateString("fa-IR")}</b> </span>
@@ -52,7 +52,7 @@ const NewsHeader = () => {
                 ):""}
             </div>
 
-            <NavLink className='text-primary float-right' to='/newsList'>مشاهده همه({guessNews?guessNews.length:0}) </NavLink>
+            <NavLink className='text-primary ' to='/newsList'>مشاهده همه({guessNews?guessNews.length:0}) </NavLink>
 
 
         </div>

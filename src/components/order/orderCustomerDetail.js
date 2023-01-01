@@ -9,6 +9,7 @@ import {OrderStatus} from "../../Enums/OrderStatusEnums";
 import { editOrder } from './../../services/orderService';
 import { toast } from 'react-toastify';
 import config from "../../services/config.json"
+import {Link} from "react-router-dom";
 
 const customStyles = {
     content: {
@@ -110,22 +111,11 @@ window.location.reload()
 
                 <div className=" buttons   text-end  p-2 mt-4" >
 
-                    <button className={newAttachmnet.length > 0?  "btn-primary   btn m-1" : order.orderStatusId === 4 ?"btn-success   btn m-1" : "btn-primary   btn m-1"} hidden={order.orderStatusId ===  1 } onClick={()=>openModalEdit(order.id)} disabled={  order.orderStatusId >  5  }>دریافت پیش فاکتور</button>
+                    <Link  to={`/invoice/${order.id}`} className={newAttachmnet.length > 0?  "btn-primary   btn m-1" : order.orderStatusId === 4 ?"btn-success   btn m-1" : "btn-primary   btn m-1"} hidden={order.orderStatusId ===  1 }  disabled={  order.orderStatusId >  5  }>دریافت پیش فاکتور</Link>
                     <button className="btn-success  m-1 btn " hidden={newAttachmnet.length > 0?false:true} disabled={order.orderStatusId ===  5   } onClick={handelSubmit}>درخواست بررسی اسناد ارائه شده </button>
                 </div>
             </div>
-            <Modal
-                isOpen={modalIsOpenEdit}
-                onRequestClose={closeModalEdit}
-                style={customStyles}
-                contentLabel="Selected Option"
-                ariaHideApp={false}
 
-            >
-
-
-                <InvoiceCreator orderId={idEdit} closeModal={closeModalEdit} customerId={order.customerId}/>
-            </Modal>
         </div>)
 }
 export default OrderCustomerDetail

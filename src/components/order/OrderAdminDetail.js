@@ -5,6 +5,7 @@ import OrderEdit from "../../pages/order/orderEdit";
 import OrderConfirmation from "./orderConfirmation";
 import Modal from "react-modal";
 import InvoiceCreator from "../../utils/invoiceCreator";
+import {Link} from "react-router-dom";
 const customStyles = {
     content: {
         position:'fixed',
@@ -103,23 +104,12 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
 
                     <button className="btn-danger   btn m-1" onClick={()=>{openModal(13)}}>رد درخواست </button>
                     <button className={ order.orderStatusId === 5?"btn-primary   btn m-1 ":"btn-success   btn m-1 "} onClick={()=>openModalEdit(order.id)}>صدور پیش فاکتور </button>
-                    <button className= "btn-primary   btn m-1" hidden={order.orderStatusId ===  1 } onClick={()=>openModalinvoice(order.id)} disabled={  order.orderStatusId >  5  }>دریافت پیش فاکتور</button>
+                    <Link  to={`/invoice/${order.id}`} className= "btn-primary   btn m-1" hidden={order.orderStatusId ===  1 } disabled={  order.orderStatusId >  5  }>دریافت پیش فاکتور</Link>
 
                     <button className="btn-success  m-1 btn "hidden={order.orderStatusId===5?false:true} onClick={()=>{openModal(8)}}>تایید درخواست </button>
                 </div>
             </div>
-            <Modal
-                isOpen={modalIsOpeninvoice}
-                onRequestClose={closeModalinvoice}
-                style={customStyles}
-                contentLabel="Selected Option"
-                ariaHideApp={false}
 
-            >
-
-
-                <InvoiceCreator orderId={idEdit} closeModal={closeModalinvoice}   customerId={order.customerId}/>
-            </Modal>
             <OrderConfirmation id={order.id} modalIsOpen={modalIsOpen} closeModal={closeModal} orderStatusId={id}/>
             <OrderEdit id={idEdit} closeModal={closeModalEdit} modalIsOpen={modalIsOpenEdit} />
 
