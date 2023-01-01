@@ -167,7 +167,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
             </div>
             <div className='m-auto'>
 
-                <div className='text-center'>
+                <div className='text-center img-previewer'>
                     <img style={{
                         width: chacked === true ? "25rem" : "50rem",
                         height: chacked === true ? "12.5rem" : '25rem'
@@ -187,7 +187,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                             <div className="col-12 text-center p-4">
                                 <div className="row  text-center form-row textOnInput">
 
-                                    <div className="col-3">
+                                    <div className="col-lg-3">
                                         <label>شماره چک</label>
                                         <input hidden={item.trackingCode} className="form-control opacityForInput  mb-4"
                                                type="text" value={trackingCode}
@@ -195,20 +195,20 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                                    validator.current.showMessageFor("required");
                                                }} />
                                         {validator.current.message("required", trackingCode, "required|numeric")}
-                                        {item.trackingCode?<p className="p-3 border">{item.trackingCode}</p>  :null}
+                                        {item.trackingCode?<p className=" img-caption p-3 border">{item.trackingCode}</p>  :null}
 
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-lg-3">
                                         <label>مبلغ چک</label>
                                         <input hidden={item.value} className="  form-control opacityForInput  mb-4"
                                                type="text" value={value} onChange={e => {setValue(e.target.value)
                                             validator.current.showMessageFor("required");
                                         }} />
                                         {validator.current.message("required", value, "required|numeric")}
-                                        {item.value?<p className="p-3 border">{formatter.format(item.value)}</p>  :null}
+                                        {item.value?<p className=" img-caption p-3 border">{formatter.format(item.value)}</p>  :null}
                                     </div>
 
-                                    <div className="col-3">
+                                    <div className="col-lg-3">
 
                                         <label style={{
                                             position: 'absolute',
@@ -218,7 +218,7 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                                             background: 'none',
                                             padding: '0 8px'
                                         }}>موعد چک</label>
-                                        {item.dueDate?<p className="p-3 border">{new Date(item.dueDate).toLocaleDateString('fa-IR')}</p>  :<div className='form-group  '>
+                                        {item.dueDate?<p className=" img-caption p-3 border">{new Date(item.dueDate).toLocaleDateString('fa-IR')}</p>  :<div className='form-group  '>
                                             <DatePicker
                                                 calendar={persian}
                                                 locale={persian_fa}

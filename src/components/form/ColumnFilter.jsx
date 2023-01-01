@@ -18,13 +18,15 @@ import {useMemo} from "react";
     // Render a multi-select box
     return (
         <select
-            className="border-0 rounded "
+            required
+            className="border-0 rounded bg-transparent text-primary "
             value={filterValue}
             onChange={e => {
                 setFilter(e.target.value || undefined)
             }}
+            // style={{minWidth:"10px" , maxWidth:"auto"}}
         >
-            <option value="">همه</option>
+            <option style={{width:"0px"}} value="">&nbsp;</option>
             {options.map((option, i) => (
                 <option key={i} value={option}>
                     {option}
