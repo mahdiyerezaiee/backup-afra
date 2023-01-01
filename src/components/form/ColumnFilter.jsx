@@ -18,6 +18,7 @@ import {useMemo} from "react";
     // Render a multi-select box
     return (
         <select
+            className="border-0 rounded "
             value={filterValue}
             onChange={e => {
                 setFilter(e.target.value || undefined)
