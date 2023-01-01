@@ -43,11 +43,11 @@ axios.interceptors.response.use(
         }).catch(err=>{
 
 
-          if(err.response.data.errorCode===500){
+          
             localStorage.clear()
             localStorage.setItem('error',JSON.stringify(err.response))
             window.location.replace('/logout')
-          }
+          
         });
 
 
