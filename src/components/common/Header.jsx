@@ -144,10 +144,10 @@ const Header = ({collapsed, handelChange}) => {
                     }
                 </div>
 <div className="mr-1 ml-1">{""}{ dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>
-                <ul className="navbar-item flex-row search-ul">
+                <ul className="navbar-item flex-row search-ul ">
 
                 </ul>
-                <ul className="navbar-item flex-row navbar-dropdown">
+                <ul className="navbar-item flex-row navbar-dropdown ">
                     <li className="nav-item m-auto">
                         <Setting/>
                     </li>
@@ -185,7 +185,7 @@ const Header = ({collapsed, handelChange}) => {
                                                                    y2="18"></line><line
                                         x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                                 </div>
-                                <div style={{height:"calc(72vh - 100px)"}}>
+                                <div style={{height:"calc(50vh - 100px)"}}>
                                 {cartShopping.length !==0 ?
 
                                         Array.from({length: 10} && cartShopping.map((item, i) =>

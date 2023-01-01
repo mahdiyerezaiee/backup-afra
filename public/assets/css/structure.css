@@ -1120,7 +1120,7 @@ code {
 
 @media (max-width: 767px) {
   .navbar .navbar-item.search-ul {
-    margin: 0 auto 0 16px; }
+    margin: 0 auto 0 0px; }
   .navbar .navbar-item .nav-item .form-inline.search {
     opacity: 0;
     transition: opacity 200ms, top 200ms;

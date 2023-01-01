@@ -2578,7 +2578,9 @@ button{
     inset: 37% auto auto 40%!important;
     border: 2px ridge black;
     background: rgb(255, 255, 255);
-    overflow: auto; border-radius: 5%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 5%;
     outline: none; padding: 20px;
     margin-right: -50%;
     transform: translate(-50%, -50%);
@@ -2588,12 +2590,16 @@ button{
     width: 100%!important;
     height: 100%!important;
    }
+  .ReactModal__Content .card-body form{
+    width: 100%!important;
+    height: 100%!important;
+   }
   .ReactModal__Content .widget{
     width: 100%!important;
     height: 50%!important;
    }
   .ReactModal__Content form{
-    width: 60%!important;
+    width: 100%!important;
     height: 350px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -2605,7 +2611,8 @@ button{
     width: 70%!important;
    }
   .ReactModal__Content .btn{
-    width: 80%!important;
+    width: 100%!important;
+
    }
 }
 .ProductSupplyCondition-table{
