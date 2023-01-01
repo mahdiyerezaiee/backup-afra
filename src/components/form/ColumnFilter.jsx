@@ -6,7 +6,7 @@ import {useMemo} from "react";
  function SelectColumnFilter({column: { filterValue, setFilter, preFilteredRows, id },}) {
     // Calculate the options for filtering
     // using the preFilteredRows
-     console.log(preFilteredRows)
+
     const options = useMemo(() => {
         const options = new Set()
         preFilteredRows.forEach(row => {
@@ -14,7 +14,7 @@ import {useMemo} from "react";
         })
         return [...options.values()]
     }, [id, preFilteredRows])
-     console.log(filterValue)
+
     // Render a multi-select box
     return (
         <select

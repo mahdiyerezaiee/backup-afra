@@ -2105,10 +2105,10 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   content: " ";
   background-color: rgb(255, 255, 255);
   width: 100%;
-  height: 5px;
+  height: 8px;
   position: absolute;
   left: 0px;
-  bottom: 10px;
+  bottom: 6px;
   z-index: -2;
 }
   label {
