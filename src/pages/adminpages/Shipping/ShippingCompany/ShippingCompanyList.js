@@ -332,7 +332,7 @@ setPageNumber(0)
         navigate("/newshippingcompany")
     }
     const columns = useMemo(() => [
-        { Header: 'شناسه', accessor: 'id' },
+        { Header: '#', accessor: 'id' },
         { Header: 'نام شرکت', accessor: 'name' }
         , { Header: 'شماره کد', accessor: 'code' }
         , {

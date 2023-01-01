@@ -537,12 +537,17 @@ CottageCode,
             } }
         ,{ Header: 'تاریخ ارسال', accessor: 'shippingDate'   , Cell: row => {
 
+            if(row.row.original.shippingDate!==null){
                 return (new Date(row.row.original.shippingDate).toLocaleDateString('fa-IR', {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit'
                 }))
-            }}
+            }
+            else{
+                return('--')
+
+            }}}
         ,{ Header: 'نحوه ارسال', accessor: 'deliveryMethodId', Cell: row => {
                 return (DeliveryMethods.filter(item => item.id === row.row.original.deliveryMethodId).map(item => item.name))
             }}
