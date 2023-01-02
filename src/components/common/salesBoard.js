@@ -11,6 +11,7 @@ import ModalSubmit from "./modalSubmit";
 import { GetGroupById } from "../../services/GroupService";
 import ConditionSalesBordCustomer from "./conditionSalesBordCustomer";
 import SalesBoardForAdmin from "./salesBoardForAdmin";
+import { Link } from 'react-router-dom';
 
 const customStyles = {
     content: {
@@ -238,13 +239,13 @@ setLoading(false)
                         </table>
 
 
-                        {productSupply && productSupply.length <= 5 ? null:  <a
+                        {productSupply && productSupply.length <= 5 ? null:  <Link
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center text-danger text-m"
                             onClick={() => setShowMore(!showMore)}
                             style={{fontSize:'medium', fontWeight:'bold'}}
                         >
                             کلیک برای نمایش {showMore ? "کمتر" : "بیشتر"} ...
-                        </a>}
+                        </Link>}
 
                     </div>
                 </div>
