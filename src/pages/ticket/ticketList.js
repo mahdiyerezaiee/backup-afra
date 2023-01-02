@@ -4,7 +4,7 @@ import {GetSupportRequesstsAdmin, GetSupportRequesstsUser, setSupportRequessts} 
 import {useMemo} from "react";
 import {SetProduct} from "../../services/productService";
 import MyTable from "../../components/form/MyTable";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import ModalGroupWork from "../../components/common/ModalGroupWork";
 import QueryString from "qs";
 import {GetShoppingContracts} from "../../services/ShippingService";
@@ -277,7 +277,7 @@ setTicket(data.result.supportRequests.values)
             {/*</button>*/}
 
 
-            <a href="#" data-toggle="tooltip" data-placement="top" title="حذف">
+            <Link href="#" data-toggle="tooltip" data-placement="top" title="حذف">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                    viewBox="0 0 24 24" fill="none"
                    stroke="currentColor" strokeWidth="2" strokeLinecap="round"
@@ -290,7 +290,7 @@ setTicket(data.result.supportRequests.values)
                 <line x1="14" y1="11" x2="14" y2="17"></line>
 
               </svg>
-            </a>
+            </Link>
 
 
           </ul>

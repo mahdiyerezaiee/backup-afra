@@ -10,6 +10,7 @@ import { GetAllProductSupplyBordAdmin } from './../../services/productSupplyServ
 import ModalSubmit from "./modalSubmit";
 import { GetGroupsForEntity } from './../../services/GroupService';
 import ConditionSalesBordAdmin from "./conditionSalesBordAdmin";
+import { Link } from 'react-router-dom';
 
 
 const customStyles = {
@@ -263,13 +264,13 @@ setLoading(false)
                             </tbody>
                         </table>
 
-                        {productSupply.length <= 5 ? null : <a
+                        {productSupply.length <= 5 ? null : <Link
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center text-danger text-m"
                             onClick={() => setShowMore(!showMore)}
                             style={{ fontSize: 'medium', fontWeight: 'bold' }}
                         >
                             کلیک برای نمایش {showMore ? "کمتر" : "بیشتر"} ...
-                        </a>}
+                        </Link>}
 
 
                     </div>

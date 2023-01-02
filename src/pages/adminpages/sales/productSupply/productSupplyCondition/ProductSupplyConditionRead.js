@@ -4,6 +4,7 @@ import {GetGroupsForEntity} from "../../../../../services/GroupService";
 import {PaymentStructureEnums} from "../../../../../Enums/PaymentStructureEnums";
 import {AdditionalTypeId} from "../../../../../Enums/AdditionalTypeIdEnums";
 import Modal from 'react-modal';
+import { Link } from "react-router-dom";
 
 const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick, handleDeleteClick, index}) => {
     const [customerg, setCustomerg] = useState([])
@@ -85,7 +86,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
                 className="text-center">
                 <ul className="table-controls">
 
-                    <li><a onClick={(event) => handleEditClick(event, contact)} data-toggle="tooltip"
+                    <li><Link onClick={(event) => handleEditClick(event, contact)} data-toggle="tooltip"
                            data-placement="top"
                            data-title="ویرایش">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -93,8 +94,8 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
                              strokeLinejoin="round" className="feather feather-edit-2">
                             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                         </svg>
-                    </a></li>
-                    <li><a onClick={() => handleDeleteClick(contact.id)} data-toggle="tooltip" data-placement="top"
+                    </Link></li>
+                    <li><Link onClick={() => handleDeleteClick(contact.id)} data-toggle="tooltip" data-placement="top"
                            data-title="حذف">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
@@ -105,7 +106,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
                             <line x1="10" y1="11" x2="10" y2="17"></line>
                             <line x1="14" y1="11" x2="14" y2="17"></line>
                         </svg>
-                    </a></li>
+                    </Link></li>
                 </ul>
             </td>
 
