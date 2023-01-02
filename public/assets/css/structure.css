@@ -1057,8 +1057,11 @@ code {
           Sidebar
       =============
   */
-  #content {
-    margin-right: 13px; }
+   #content {
+    margin-right: 90px;
+    -webkit-transition: .3s ease all;
+    transition: .3s ease all;
+  }
   #sidebar .theme-brand {
     border-radius: 0; }
   .sidebar-closed #sidebar .theme-brand {
@@ -1211,10 +1214,18 @@ code {
     .navbar .navbar-item .nav-item form.form-inline input.search-form-control {
       padding-top: 8px; } }
 @media (max-width: 600px) {
+  #content {
+    margin-right: 13px; }
   .layout-px-spacing {
     padding: 0px 10px 30px 10px !important;}
   #content {
     margin-left: 0px!important;
      }
   .auth{width: 288px!important;}
+  .auth img{ display: none!important;}
+  .auth .btn-primary{
+padding: 7px!important;
+    font-size: 10px;
+width: 120px;
+  }
 }

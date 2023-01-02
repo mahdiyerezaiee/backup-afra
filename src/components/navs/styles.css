@@ -165,7 +165,25 @@
           left: auto;
           right: 0; } }
   @media (max-width: 992px) {
+    .pro-sidebar{
+      color: #6e82a5;
+      height: calc(100vh - 30px);
+      width: 280px;
+      overflow-y: hidden!important;
+      overflow-x: hidden!important;
+      min-width: 200px;
+      text-align: left;
+      transition: width, left, right, 0.3s;
+      position: relative;
+      box-shadow: 3px -13px 8px 0px rgb(0 0 0);
+      z-index: 1009;
+    }
+    .pro-sidebar > .pro-sidebar-inner {
+      background: #fafafa;
 
+overflow: hidden!important;
+      margin-top: 80px;
+      z-index: 101; }
     .pro-sidebar.lg {
       position: fixed;
       left: -270px; }
