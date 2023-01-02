@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GetGroupsForEntity } from "../../services/GroupService";
 import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
 import { GetProductSupplyConditionsCustomer } from "../../services/ProductSupplyConditionService";
+import { Link } from 'react-router-dom';
 
 const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeModal }) => {
 
@@ -83,9 +84,9 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
                             <td className="text-center">
                                 <ul className="table-controls">
 
-                                    <li><a className="btn btn-success" data-toggle="tooltip" data-placement="top"
+                                    <li><Link className="btn btn-success" data-toggle="tooltip" data-placement="top"
                                         onClick={() => handelClick(productSupplyConditions.id, contact.id)} >
-                                        ثبت درخواست                           </a></li>
+                                        ثبت درخواست                           </Link></li>
 
                                 </ul>
                             </td>

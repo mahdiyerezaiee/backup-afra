@@ -12,6 +12,7 @@ import {
 import {Line} from 'react-chartjs-2';
 import {GetPeriodicSalesReport} from "../../services/reportService";
 import {useEffect, useState} from "react";
+import { Link } from 'react-router-dom';
 
 ChartJS.register(
     CategoryScale,
@@ -166,7 +167,7 @@ export function ChartLineValue({datas , setTypeId}) {
                         <h5 className="">قیمت سفارشات</h5>
                     </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
-                    <a className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
+                    <Link className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -175,12 +176,12 @@ export function ChartLineValue({datas , setTypeId}) {
                             <circle cx="19" cy="12" r="1"></circle>
                             <circle cx="5" cy="12" r="1"></circle>
                         </svg>
-                    </a>
+                    </Link>
 
                     <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                        <a className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</a>
+                        <Link className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</Link>
+                        <Link className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</Link>
+                        <Link className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</Link>
                     </div>
                 </div>
                 </div>

@@ -30,7 +30,7 @@ event.preventDefault();
                            
                         </div>
                         <div className='form-group'>
-                        <span >برای دریافت شماره شبا <a href="#">اینجا</a> کلیک کنید.</span>
+                        <span >برای دریافت شماره شبا <Link href="#">اینجا</Link> کلیک کنید.</span>
                         </div>
                         <div className='form-group'>
                         <div className='row justify-content-between'>
