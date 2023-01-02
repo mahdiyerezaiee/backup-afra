@@ -116,7 +116,7 @@ const FinancialConfirmation = ({ id, modalIsOpen, closeModal }) => {
 
                     <div className="row">
 
-                        <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group selectIndex " style={{ marginBottom: "4rem" }}>
+                        <div className="col-lg-12 col-md-12  col-sm-12    textOnInput form-group  " style={{ marginBottom: "4rem" }}>
                             <div className=" form-control-sm">
                                 <label>نوع تایید</label>
 

@@ -931,14 +931,7 @@ const OrderList = () => {
                     <form className='form-row textOnInput'>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
-                            <label style={{
-                                position: 'absolute',
-                                zIndex: '1',
-                                top: '-15px',
-                                right: '10px',
-                                background: 'none',
-                                padding: '0 8px'
-                            }}>از تاریخ </label>
+                            <label className="date-piker-form" >از تاریخ </label>
                             <div className='form-group  '>
                                 <DatePicker
                                     calendar={persian}
@@ -951,14 +944,7 @@ const OrderList = () => {
                             </div>
                         </div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
-                            <label style={{
-                                position: 'absolute',
-                                zIndex: '1',
-                                top: '-15px',
-                                right: '10px',
-                                background: 'none',
-                                padding: '0 8px'
-                            }}>تا تاریخ </label>
+                            <label className="date-piker-form"  >تا تاریخ </label>
                             <div className='form-group  '>
                                 <DatePicker
                                     calendar={persian}
@@ -996,7 +982,7 @@ const OrderList = () => {
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
                                 value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
                         </div>
-                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex"
+                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
                             <div className=" form-control-sm">
                                 <label>وضعیت سفارش</label>
@@ -1069,7 +1055,7 @@ const OrderList = () => {
 
                             </div>
                         </div>
-                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex"
+                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
                             <div className=" form-control-sm">
                                 <label> نحوه پرداخت </label>
@@ -1088,16 +1074,18 @@ const OrderList = () => {
                         </div>
 
                     </form>
-                    <div className="row float-right ">
-                        <div>
+                    <div className="  filter-btn ">
+                    <div className=" row  ">
+                        <div className="col-6 ">
                             <button onClick={handelSearchFieldClear}
-                                className=" text-center btn-small btn-danger mr-1">حذف فیلتر
+                                className="  btn-sm btn-danger ">حذف فیلتر
                             </button>
                         </div>
-                        <div>
+                        <div className="col-6">
                             <button onClick={getDataBySearch}
-                                className=" text-center btn-small mr-1 btn-primary">جستجو
+                                className="  btn-sm  btn-primary">جستجو
                             </button>
+                        </div>
                         </div>
                     </div>
                 </AdvancedSearch>
@@ -1143,14 +1131,7 @@ const OrderList = () => {
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
-                                <label style={{
-                                    position: 'absolute',
-                                    zIndex: '1',
-                                    top: '-15px',
-                                    right: '10px',
-                                    background: 'none',
-                                    padding: '0 8px'
-                                }}>از تاریخ </label>
+                                <label className="date-piker-form"  >از تاریخ </label>
                                 <div className='form-group  '>
                                     <DatePicker
                                         calendar={persian}
@@ -1165,14 +1146,7 @@ const OrderList = () => {
                             </div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
-                                <label style={{
-                                    position: 'absolute',
-                                    zIndex: '1',
-                                    top: '-15px',
-                                    right: '10px',
-                                    background: 'none',
-                                    padding: '0 8px'
-                                }}>تا تاریخ </label>
+                                <label className="date-piker-form"  >تا تاریخ </label>
                                 <div className='form-group  '>
                                     <DatePicker
                                         calendar={persian}
@@ -1276,7 +1250,7 @@ const OrderList = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex"
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                                 style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label> وضعیت سررسید </label>
@@ -1321,20 +1295,19 @@ const OrderList = () => {
 
                             </div>
                         </form>
-                        <div className="row float-right ">
-                            <div>
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
                                 <button onClick={handelSearchFieldClear}
-                                    className=" text-center btn-small btn-danger mr-1">حذف فیلتر
+                                        className="  btn-sm btn-danger ">حذف فیلتر
                                 </button>
-
                             </div>
-                            <div>
+                            <div className="col-6">
                                 <button onClick={getDataBySearch}
-                                    className=" text-center btn-small mr-1 btn-primary">جستجو
+                                        className="  btn-sm  btn-primary">جستجو
                                 </button>
-
                             </div>
-                        </div>
+                        </div></div>
                     </AdvancedSearch>
                 </div>
                 {getDefault().organizationNationalId ||getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?

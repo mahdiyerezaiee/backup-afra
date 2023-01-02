@@ -242,7 +242,7 @@ else{
 
 
                             </div>
-                            <div className="form-group mb-3 textOnInput selectIndex">
+                            <div className="form-group mb-3 textOnInput ">
                                 <div className='form-row'>
 
                                     <div className="col-6">
@@ -278,7 +278,7 @@ else{
 
                                     </div>
 
-                                    <div className="col-6 selectIndex">
+                                    <div className="col-6 ">
                                     <label>انبار</label>
 
                                         <Select

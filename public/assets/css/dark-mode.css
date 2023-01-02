@@ -378,3 +378,114 @@ select:-webkit-autofill:focus {
     background-color:  #0e1726!important ;
     color: #FFFFFF!important;
 }
+.dark-mode .containBox{
+    margin: 0 auto!important;
+    /*margin-left: 2.5%;*/
+    /*margin-right: 2.5%;*/
+    width: 95%!important;
+    height: auto!important;
+color: black!important;
+    border: 1px solid black!important;
+
+}
+.dark-mode .containBox span{
+
+color: black!important;
+
+
+}
+.dark-mode .containBox p{
+
+color: black!important;
+
+
+}.dark-mode .page p{
+
+color: black!important;
+
+
+}
+.dark-mode .page h5{
+
+color: black!important;
+
+
+}
+
+.dark-mode .coloredBox{
+    color: black!important;
+
+    font-size: small;
+    max-height: 30px;
+    text-align: center;
+    border: 1px solid black!important;
+    background-color: lightgray!important;
+    vertical-align: super;
+
+}
+
+.dark-mode .EmptycoloredBox{
+    color: black!important;
+
+    text-align: center;
+    border: 1px solid black!important;
+    background-color: lightgray!important;
+
+    vertical-align: super;
+    height: 30px;
+
+
+}
+.dark-mode .containBox .table td {
+    color: black!important;
+
+    border-bottom:1px solid black!important;
+    border-left:1px solid black!important;
+    border-right:1px solid black!important;
+
+}
+.dark-mode .a4 {
+    color: black!important;
+
+    padding: 0;
+    background: transparent;
+    transform-origin: top center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dark-mode * {
+    box-sizing: border-box;
+}
+
+.dark-mode .end-part-invoice .small .col-10{
+    border: 1px solid black!important;
+}
+
+.dark-mode .end-part-invoice .small .col-6{
+    border: 1px solid black!important;
+}
+.dark-mode .end-part-invoice .small .col-3{
+    border: 1px solid black!important;
+}
+.dark-mode .end-part-invoice .small .col-2 {
+    border: 1px solid black!important;
+}
+
+.dark-mode.page {
+    color: black!important;
+
+    font-size: 12px;
+    height: 21cm;
+    width: 29.7cm;
+    margin: 1cm 0;
+    background: white!important;
+    box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2)!important;
+    border: 1px #d3d3d3 solid!important;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

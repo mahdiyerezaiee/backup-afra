@@ -563,7 +563,7 @@ getProducts()
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد بازارگاه" value={EnglishName} onChange={e => setEnglishName(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-4 col-md-4 col-sm-12  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-4 col-md-4 col-sm-12  textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>گروه کالا </label>
 
@@ -585,15 +585,18 @@ getProducts()
 
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
-                            </div>
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
+                            </div></div>
                         </div>
                         <br />
                     </AdvancedSearch>
@@ -682,7 +685,7 @@ getProducts()
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد بازارگاه" value={EnglishName} onChange={e => setEnglishName(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>گروه کالا </label>
 
@@ -704,16 +707,19 @@ getProducts()
 
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
                             </div>
-                        </div>
+                        </div></div>
                         <br />
 
                     </AdvancedSearch>

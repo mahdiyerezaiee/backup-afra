@@ -15,8 +15,6 @@ const News = () => {
     function getDataNews() {
         let items = JSON.parse(sessionStorage.getItem('dataNews'));
         return items ? items : ''
-
-
     }
 
     useEffect(()=>{
@@ -25,18 +23,13 @@ const News = () => {
 
                 headers: { 'Content-Type': 'application/json' },
                 params: {
-
-
                     PageSize:9
-
-
                 }
                 ,
                 paramsSerializer:params=>{
 
                     return QueryString.stringify(params)
                 }
-
             };
             try {
                 const {data , status}=await GetAllNewsForUsersPage(config);
@@ -52,19 +45,15 @@ const News = () => {
         if (getDataNews().expiresAt < new Date().toUTCString()){
 
             sessionStorage.removeItem("dataNews")
-
-
         }
         if (!getDataNews().expiresAt){
 
             getNews()
-
-
         }
     },[])
     if (guessNews){
         return(
-        <div style={{height: "330px" , overflowY:"auto"}} >
+        <div className="dashbord-news" style={{}} >
 
             <div id="iconsAccordion" className="accordion-icons" >
                 {guessNews?guessNews.map(item=>

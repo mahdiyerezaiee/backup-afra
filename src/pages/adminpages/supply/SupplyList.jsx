@@ -621,7 +621,7 @@ setGeData(true)
                                     value={contractNumber} onChange={e => SetContractNumber(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>محصول</label>
 
@@ -637,7 +637,7 @@ defaultValue={products.filter(i=> i.id === productId).map(data => ({ label: data
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>تامین کننده</label>
 
@@ -653,7 +653,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>نوع تامین</label>
 
@@ -673,7 +673,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت ارسال </label>
 
@@ -713,16 +713,19 @@ defaultValue={params.wareHouseId}
                             </div>
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
                             </div>
-                        </div>
+                        </div></div>
                     </AdvancedSearch>
                 </div>
                 { getDefault().shippingStatusIds||getDefault().wareHouseId||getDefault().contractNumber || getDefault().productId||getDefault().supplierId || getDefault().supplyTypeIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
@@ -803,7 +806,7 @@ defaultValue={params.wareHouseId}
                                     value={contractNumber} onChange={e => SetContractNumber(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>محصول</label>
 
@@ -819,7 +822,7 @@ defaultValue={params.wareHouseId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group selectIndex " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group  " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>تامین کننده</label>
 
@@ -835,7 +838,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}} >
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{marginBottom:"3rem"}} >
                                 <div className=" form-control-sm">
                                     <label>نوع تامین</label>
 
@@ -855,7 +858,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت ارسال </label>
 
@@ -895,15 +898,18 @@ defaultValue={params.wareHouseId}
                             </div>
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
-                            </div>
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
+                            </div> </div>
                         </div>
                     </AdvancedSearch>
                 </div>

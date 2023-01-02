@@ -457,7 +457,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                 </div>
 
                                 <div className="form-row">
-                                    <div className="  form-group col-md-6 col-xs-12 textOnInput  selectIndex" >
+                                    <div className="  form-group col-md-6 col-xs-12 textOnInput  " >
 
                                         <label>نوع پرداخت</label>
 
@@ -471,7 +471,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
 
                                     </div>
 
-                                    <div className="  form-group col-md-6 col-xs-12 textOnInput  selectIndex"
+                                    <div className="  form-group col-md-6 col-xs-12 textOnInput  seectIndex"
                                          style={{zIndex: '4'}}>
 
                                         <label>نوع افزایش</label>
@@ -522,7 +522,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                     </div>
 
 
-                                    <div className="form-group col-md-6 col-xs-12 textOnInput selectIndex  "
+                                    <div className="form-group col-md-6 col-xs-12 textOnInput   "
                                          style={{zIndex: '3'}}>
                                         <label>گروه مشتریان</label>
                                         <Select

@@ -34,6 +34,8 @@ const params = useParams()
     const handelNavigate = (e) => {
         e.preventDefault()
         navigate(-1)
+        document.getElementsByClassName('main-Layout')[0].style.overflow="auto"
+
     }
     const getOrder = async () => {
         try {
@@ -56,15 +58,20 @@ const params = useParams()
             var zoomLevel = Math.min(zoomHeight ,zoomWidth);
             // stop zooming when book fits page
             if (zoomLevel >= 1) return;
-            document.getElementsByClassName('a4')[0].style.transform= "scale(" + zoomLevel + ")";
+
+                document.getElementsByClassName('a4')[0].style.transform= "scale(" + zoomLevel + ")";
+
+
+
+
+
 
 
         }
-
-
-
+        document.getElementsByClassName("main-Layout")[0].scrollTo(0,0);
         adjustZoom();
         window.addEventListener("resize", adjustZoom);
+
     },[order.length > 0])
 
     const GetOrderDetail = async () => {
@@ -315,7 +322,7 @@ useEffect(()=>{
                         شماره حساب بانک</p>
                     <p>کشاورزی 995251962 و شبا IR150160000000000995251962 واریز نمایید.</p>
                 </div>
-                <div style={{ marginTop: '100px', marginLeft: '2.5%', marginRight: '2.5%' }}  >
+                <div className="end-part-invoice" style={{ marginTop: '100px', marginLeft: '2.5%', marginRight: '2.5%' }}  >
                     <div className="row   small "  >
                         <div className="col-6" style={{ border: ' 1px solid black' }}>
                             <div className="row">
@@ -372,7 +379,8 @@ useEffect(()=>{
             </div>
             <div className="row">
             <button onClick={handelNavigate}
-                    className="btn btn-danger col-lg-6  float-right mb-2 ">بازگشت</button>
+                    className="btn btn-danger col-lg-5  float-right mb-2 ">بازگشت</button>
+                <div className="col-lg-2"/>
             <Pdf targetRef={ref} filename="code-example.pdf" options={options} y={-1} scale={1} >
                 {({toPdf}) =><> <button  onClick={function (){
                     document.getElementsByClassName('a4')[0].style.transform= "scale(1 )";
@@ -381,7 +389,7 @@ useEffect(()=>{
                     setOrder([])
                     closeModal()
 
-                }} className="btn btn-info  float-left  col-lg-6  mb-2  float-left" >دریافت فایل
+                }} className="btn btn-info  float-left  col-lg-5  mb-2  float-left" >دریافت فایل
                     پی دی اف </button>
 
                     <br/>

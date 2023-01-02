@@ -621,7 +621,7 @@ setGeData(true)
 
 
 
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1  textOnInput form-group selectIndex">
+                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1  textOnInput form-group ">
                                 <div className=" form-control-sm">
                                     <label> کالا </label>
 
@@ -640,16 +640,19 @@ setGeData(true)
 
 
                         </form>
-                        <div className="row float-right ">
-                        <div >
-                            <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
-                        </div>
-                        <div >
-                            <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
-                        </div>
-                    </div>
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
+                            </div>
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
+                            </div>
+                        </div> </div>
                     <br />
 
                     </AdvancedSearch>
@@ -747,7 +750,7 @@ setGeData(true)
 
 
 
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1  textOnInput form-group selectIndex">
+                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1  textOnInput form-group ">
                                 <div className=" form-control-sm">
                                     <label> کالا </label>
 
@@ -766,16 +769,19 @@ setGeData(true)
 
 
                         </form>
-                        <div className="row float-right ">
-                        <div >
-                            <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
-                        </div>
-                        <div >
-                            <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
-                        </div>
-                    </div>
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
+                            </div>
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
+                            </div>
+                        </div> </div>
                     <br />
 
                     </AdvancedSearch>
