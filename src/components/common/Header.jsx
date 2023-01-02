@@ -194,7 +194,7 @@ const Header = ({collapsed, handelChange}) => {
                             </a>
                         </div>
                         <div onClick={handleHeaderClick} className="  row cart-shop2 ql-direction-rtl  "
-                             style={{  width: '20rem',borderRadius:'3%', top:"80px",left: show == true ? "1rem" : "-60rem", opacity:show == true ? "1" : "0"}}>
+                             style={{ left: show == true ? "1rem" : "-60rem", opacity:show == true ? "1" : "0"}}>
                             <div className="col-12 px-2" >
                                 <div className="row">
                                     <span className=" col-6 float-left bold py-2" style={{fontSize: 'smaller'}}>{cartShopping.length} محصول</span>
@@ -344,7 +344,7 @@ const Header = ({collapsed, handelChange}) => {
                             <span className="badge badge-success"></span>
                         </div>
                           <div  className="  row cart-shop2 ql-direction-rtl  "
-                            style={{  width: '20rem',borderRadius:'3%', top:"80px",left: showNews == true ? "1rem" : "-60rem", opacity:showNews == true ? "1" : "0"}}>
+                            style={{  left: showNews == true ? "1rem" : "-60rem", opacity:showNews == true ? "1" : "0"}}>
                               { showNews && (
                                   <NewsHeader/>
                                   )}

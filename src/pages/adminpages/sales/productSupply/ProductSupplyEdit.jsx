@@ -256,7 +256,7 @@ const ProductSupplyEdit = () => {
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-6 col-xs-12'>
                     <form>
-                        <div className="form-group mt-1 mb-3 textOnInput selectIndex">
+                        <div className="form-group mt-1 mb-3 textOnInput ">
                             <div className='form-row'>
 
                                 <div className="col-md-6 col-xs-12 mb-4">
@@ -296,7 +296,7 @@ const ProductSupplyEdit = () => {
 
                                 </div>
 
-                                <div className="col-md-6 col-xs-12 selectIndex mb-4">
+                                <div className="col-md-6 col-xs-12  mb-4">
                                     <label>انبار</label>
                                     <Select
 

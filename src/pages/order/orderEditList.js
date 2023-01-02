@@ -138,7 +138,7 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
                     <div className="text-center mb-5">
                         <h5 className="text-center">تغییر وضعیت سفارش </h5>
                     </div>
-                    <div className="form-row mt-4 textOnInputForGrp selectIndex">
+                    <div className="form-row mt-4 textOnInputForGrp ">
                         <div className="  form-group col-md-4 col-xs-4  textOnInput">
 
                             <label>وضعیت سفارش </label>

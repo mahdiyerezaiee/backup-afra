@@ -9,18 +9,20 @@
 	===============================
 */
 @import url('font.css');
+
 html {
-  min-height:-webkit-fill-available;
+  height:-webkit-fill-available;
   direction: rtl; }
 
 body {
+
   color: #888ea8;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
+  /*min-height: -webkit-fill-available;*/
   font-size: 0.875rem;
   background: #f1f2f3;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   letter-spacing: 0.0312rem;
   font-family: 'Quicksand', sans-serif; }
 
@@ -203,7 +205,9 @@ span.red {
 .form-group label, label {
   font-size: 15px;
   color: #acb0c3;
-  letter-spacing: 1px; }
+  letter-spacing: 1px;
+  background: white;
+}
 
 /*  Disable forms     */
 .custom-control-input:disabled ~ .custom-control-label {
@@ -229,6 +233,11 @@ span.red {
   .form-control::-webkit-input-placeholder, .form-control::-ms-input-placeholder, .form-control::-moz-placeholder {
     color: #acb0c3;
     font-size: 15px; }
+  .css-1jqq78o-placeholder{
+    color: #d3d3d3!important;
+    font-size: 15px!important;
+    font-weight: normal!important;
+  }
   .form-control:focus::-webkit-input-placeholder, .form-control:focus::-ms-input-placeholder, .form-control:focus::-moz-placeholder {
     color: #d3d3d3;
     font-size: 15px; }
@@ -2099,7 +2108,7 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
     top: -15px;
     right: 15px;
     padding: 2px;
-   background: transparent;
+   background: white;
    z-index: 1;
   }
 .textOnInput label::after {
@@ -2491,16 +2500,18 @@ left: -214px;
 
 }
 .cart-shop2{
+  width: 20rem;
+  top:80px;
   padding: 10px;
   position: fixed;
-  height:calc(99vh - 100px);
+  height:calc(97.5vh - 100px);
   left: 8rem;
   background-color: white;
   transition: left 0.8s ease 0s;
   border: 1px solid #c5c5c5;
 
-  border-bottom-right-radius:3px ;
-  border-top-right-radius:3px ;
+  border-bottom-right-radius:10px ;
+  border-top-right-radius:10px ;
 
 
 }
@@ -2537,7 +2548,24 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-text-fill-color: black;
   transition: background-color 5000s ease-in-out 0s}
+.css-1nmdiq5-menu{
+  position: fixed;
+  z-index: 10000000000000!important;
+
+}
 @media  (max-width: 600px) {
+
+  .a4 {
+    margin-top: 100px;}
+  .a4 .btn{
+
+    font-size: 25px!important;
+  }
+  .css-1nmdiq5-menu{
+position: fixed;
+    z-index: 10000000000000!important;
+
+  }
   .paginating-mobail button{
 
     font-size: 11px;
@@ -2567,7 +2595,7 @@ button{
   span{font-size: smaller!important;}
   p{font-size: smaller!important;}
   a{font-size: smaller!important;}
- .form-group label{font-size: smaller!important;}
+ /*.form-group label{font-size: smaller!important;}*/
  .box-big  {
    margin: 0!important;
  }
@@ -2693,7 +2721,17 @@ button{
     border: 1px solid grey;
     height: 12vh;
   }
+  .filter-btn .row{
+    width: 100%!important;
+    float: none!important;
+margin:0 auto;
+  }
+  .filter-btn .btn-sm{
+    width: 100%;
+  }
 }
+
+
 .ProductSupplyCondition-table{
   width: 100%;
   overflow-x: auto;
@@ -2911,4 +2949,42 @@ select{
 }
 select:valid {
   width: auto;
+}
+.sales .layout-spacing{
+  padding: 0;
+  margin-bottom: 10px;
+}
+.scheduleJob{
+  height: 310px;
+  padding: 0;
+
+}
+.dashbord-news{
+  margin-bottom: 10px;
+padding-bottom: 10px;
+  padding-left: 0;
+  padding-right: 0;
+  height: 330px ;
+  overflow-y:auto
+}
+.date-piker-form {
+  position: absolute ;
+  z-index: 1;
+  top: -15px;
+  right: 10px;
+  background: white!important;
+  padding: 0px 8px;
+}
+
+.filter-btn{
+display: block;
+}
+.filter-btn .row{
+  width: 20%;
+  float: left;
+
+}
+
+.filter-btn .btn-sm{
+  width: 100%;
 }

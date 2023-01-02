@@ -349,7 +349,7 @@ const statusOrder = () => {
 
 
                             </div>
-                            <div className=" form-group mb-4 textOnInput col-lg-6 col-md-6 col-sm-11  selectIndex" style={{marginBottom: "3rem", zIndex: '1'}}>
+                            <div className=" form-group mb-4 textOnInput col-lg-6 col-md-6 col-sm-11  " style={{marginBottom: "3rem", zIndex: '1'}}>
                                 <label>وضعیت سفارش</label>
                                 <Select
 maxMenuHeight="200px"

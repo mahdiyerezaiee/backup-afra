@@ -116,7 +116,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                             </div>
 
                             <div className="form-row">
-                                <div className="  form-group col-md-6 col-xs-12 textOnInput  selectIndex">
+                                <div className="  form-group col-md-6 col-xs-12 textOnInput  ">
 
                                     <label>نوع پرداخت</label>
 
@@ -131,7 +131,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
                                 </div>
 
-                                <div className="  form-group col-md-6 col-xs-12 textOnInput  selectIndex"
+                                <div className="  form-group col-md-6 col-xs-12 textOnInput  "
                                     style={{ zIndex: '4' }}>
 
                                     <label>نوع افزایش</label>
@@ -185,7 +185,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                     />
                                 </div>
 
-                                <div className="form-group col-md-6 col-xs-12 textOnInput selectIndex  "
+                                <div className="form-group col-md-6 col-xs-12 textOnInput   "
                                     style={{ zIndex: '3' }}>
                                     <label>گروه مشتریان</label>
                                     {cu === 0 ?

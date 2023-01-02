@@ -472,16 +472,19 @@ getOrganizationName()
 
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button className=" text-center btn-small mr-1 btn-primary" onClick={getWithSearchParams}>جستجو</button>
-
+                            <div className="col-6">
+                                <button onClick={getWithSearchParams}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
                             </div>
-                        </div>
+                        </div></div>
                         <br />
                     </AdvancedSearch>
                 </div>
@@ -585,15 +588,18 @@ getOrganizationName()
 
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button onClick={getWithSearchParams} className=" text-center btn-small mr-1 btn-primary" >جستجو</button>
-
-                            </div>
+                            <div className="col-6">
+                                <button onClick={getWithSearchParams}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
+                            </div></div>
                         </div>
                         <br />
                     </AdvancedSearch>

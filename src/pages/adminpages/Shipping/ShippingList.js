@@ -669,16 +669,19 @@ sessionStorage.clear()
 
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
                             </div>
-                        </div>
+                        </div></div>
                         <br />
                     </AdvancedSearch>
                 </div>
@@ -780,16 +783,19 @@ sessionStorage.clear()
 
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
                             </div>
-                            <div >
-                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                </button>
                             </div>
-                        </div>
+                        </div> </div>
                         <br />
                     </AdvancedSearch>
 

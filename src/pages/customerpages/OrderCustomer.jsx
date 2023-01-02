@@ -793,7 +793,7 @@ if(order){
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
                                        value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت سفارش</label>
 
@@ -873,16 +873,19 @@ if(order){
                             </div>
 
                         </form>
-                        <div className="row float-right ">
-                            <div >
-                                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
-                            </div>
-                            <div >
-                                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
-                            </div>
+                      <div className="  filter-btn ">
+                        <div className=" row  ">
+                          <div className="col-6 ">
+                          <button onClick={handelSearchFieldClear}
+                                  className="  btn-sm btn-danger ">حذف فیلتر
+                          </button>
                         </div>
+                        <div className="col-6">
+                          <button onClick={getDataBySearch}
+                                  className="  btn-sm  btn-primary">جستجو
+                          </button>
+                        </div>
+                      </div></div>
                     </AdvancedSearch>
                 </div>
                 {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
@@ -1070,16 +1073,19 @@ else{
               </div>
 
             </form>
-            <div className="row float-right ">
-              <div >
-                <button onClick={handelSearchFieldClear} className=" text-center btn-small btn-danger mr-1">حذف فیلتر</button>
-
+            <div className="  filter-btn ">
+              <div className=" row  ">
+                <div className="col-6 ">
+                <button onClick={handelSearchFieldClear}
+                        className="  btn-sm btn-danger ">حذف فیلتر
+                </button>
               </div>
-              <div >
-                <button onClick={getDataBySearch} className=" text-center btn-small mr-1 btn-primary">جستجو</button>
-
+              <div className="col-6">
+                <button onClick={getDataBySearch}
+                        className="  btn-sm  btn-primary">جستجو
+                </button>
               </div>
-            </div>
+            </div>  </div>
           </AdvancedSearch>
         </div>
         {getDefault().EndDate|| getDefault().ExtId||getDefault().Id || getDefault().OrderDetailExtId||getDefault().StartDate||getDefault().orderStatusIds||getDefault().paymentMethodIds|| getDefault().shippingStatusIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}

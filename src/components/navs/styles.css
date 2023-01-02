@@ -28,7 +28,7 @@
   z-index: 1009; }
   .pro-sidebar > .pro-sidebar-inner {
     background: #fafafa;
-    height:  calc(97vh - 100px);
+    height:  calc(100vh - 100px);
     position: relative;
     overflow-y: auto!important;
     overflow-x: hidden!important;
@@ -478,7 +478,7 @@
 .react-slidedown.closed {
   display: none; }
 .main-Layout{
-  height: calc(95vh - 90px);
+  height: calc(100vh - 100px);
   overflow-y:scroll;
   overflow-x: hidden;
 }

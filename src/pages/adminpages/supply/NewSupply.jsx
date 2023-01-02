@@ -177,7 +177,7 @@ const NewSupply = () => {
                     <form  className='col'>
                         <div className="n-chk d-flex  mb-4">
                         </div>
-                        <div className="form-group  textOnInput selectIndex">
+                        <div className="form-group  textOnInput ">
                             <div className='form-row mb-4'>
                                
 

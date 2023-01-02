@@ -599,7 +599,7 @@ const CustomerOrderDetail = () => {
 
         </div>
         <div className=" text-right">
-        <button className="btn-small btn-primary" onClick={()=>setIsOpenUpload(true)}>
+        <button className="btn-sm btn-primary" onClick={()=>setIsOpenUpload(true)}>
             بارگزاری فایل 
          </button>
     <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={params.id} EntityTypesId={10} comment={'لطفا فایل  مورد نظر را بارگزاری کنید.'}/>

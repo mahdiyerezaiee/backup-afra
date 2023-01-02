@@ -40,7 +40,7 @@ GetData()
         }
     },[])
     return(
-        <div className="px-3 ltr " style={{height: "330px" }}>
+        <div className=" ltr scheduleJob " >
             <div className="widget widget-activity-four">
 
                 <div className="widget-heading">
