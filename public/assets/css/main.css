@@ -1720,15 +1720,74 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   100% {
     left: 0;
   } }
-* .widget-content{
-  animation: fadein 2s ;
+.alert{
+    animation: drop-in 1200ms ease 500ms backwards ;
+  }
+.sliderReport{
+    animation:drop-in 1200ms ease 500ms backwards ;
+  }
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px);
+  }
 }
-* .user-progress{
-  animation:fadein 1s ;
+
+.reveal {
+  position: relative;
+  opacity: 0;
 }
-* .widget{
-  animation:fadein 1s ;
+
+.reveal.active {
+  opacity: 1;
 }
+.active.fade-bottom {
+  animation: fade-bottom 1200ms ease 500ms backwards ;
+}
+.active.fade-left {
+  animation: fade-left 1200ms ease 500ms backwards;
+
+}
+.active.fade-right {
+  animation: fade-right 1200ms ease 500ms backwards;
+
+}
+@keyframes fade-bottom {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .input-group > .form-control {
     flex: 1 1 auto;
@@ -2532,7 +2591,7 @@ left: -214px;
   height:calc(97.5vh - 100px);
   left: 8rem;
   background-color: white;
-  transition: all 2s ;
+  transition: all 1s ;
   border: 1px solid #c5c5c5;
   border-bottom-right-radius:10px ;
   border-top-right-radius:10px ;
