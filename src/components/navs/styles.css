@@ -17,10 +17,10 @@
 .pro-sidebar {
   color: #6e82a5;
   height: calc(100vh - 100px);
-  width: 180px;
+  width: 230px;
   /*overflow-y: auto!important;*/
   /*overflow-x: hidden!important;*/
-  min-width: 180px;
+  min-width: 230px;
   text-align: left;
   transition: width, left, right, 0.3s;
   position: relative;

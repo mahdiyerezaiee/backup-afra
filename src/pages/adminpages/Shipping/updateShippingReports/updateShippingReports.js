@@ -41,136 +41,19 @@ const UpdateShippingReports = () => {
     }
 
     const DeleteSelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < arrayOfData.length; i++) {
-        //
-        //     try {
-        //         const{data,status}=await DeleteGroup(arrayOfData[i].id)
-        //         if(data.result.success ===true){
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess ( successCount+=1)
-        //         } if(data.result.success ===false){
-        //             SetOpen(true)
-        //
-        //             SetStateError (errorCount+=1)
-        //         }
-        //
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //
-        //
-        //     }
-        //
-        //
-        // }
 
     }
     const copySelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
-        //
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < copyData.length; i++) {
-        //
-        //
-        //     try {
-        //         let payload={
-        //             'group':copyData[i]
-        //         }
-        //         const{data,status}=await SetGroup(payload)
-        //         if(status===200){
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess ( successCount+=1)
-        //         }
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //     }
-        //
-        //
-        // }
+
 
 
     }
     const enableSelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // const copyData= arrayOfData.map(item=>{return{...item,active:true}})
-        //
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < copyData.length; i++) {
-        //
-        //
-        //     try {
-        //         let payload={
-        //             'group':copyData[i]
-        //         }
-        //
-        //         const{data,status}=await SetGroup(payload)
-        //         if(status===200){
-        //             SetOpen(true)
-        //
-        //             SetStateSuccess ( successCount+=1)
-        //         }
-        //
-        //
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //     }
-        //
-        // }
-        //
+
 
     }
     const disableSelectedItem=async()=>{
-        // const arrayOfData=getSelectedData(selectedRows);
-        // const copyData= arrayOfData.map(item=>{return{...item,active:false}})
-        //
-        // let successCount=0;
-        // let errorCount=0;
-        // for (let i = 0; i < copyData.length; i++) {
-        //
-        //
-        //     try {
-        //
-        //         let payload={
-        //             'group':copyData[i]
-        //         }
-        //         const{data,status}=await SetGroup(payload)
-        //         SetOpen(true)
-        //         if(status===200){
-        //
-        //             SetStateSuccess( successCount+=1)
-        //
-        //         }
-        //
-        //         console.log(open)
-        //     } catch (error) {
-        //         SetOpen(true)
-        //
-        //         SetStateError (errorCount+=1)
-        //
-        //     }finally {
-        //
-        //     }
-        //
-        //
-        // }
-        //
+
 
     }
 
@@ -275,51 +158,6 @@ const data=useMemo(()=>report)
 const handelFrom=()=>{
     setClicked(false)
 }
-const dataForExcel = data.map(item => ({
-    'companyCode': item.companyCode,
-    'barDel': item.barDel,
-    'barDate': item.barDate,
-    'bar_n': item.bar_n,
-    'bar_n_s': item.bar_n_s,
-    'havNum':item.havNum,
-    'dTel': item.dTel,
-    'wH1': item.wH1,
-    'wH2': item.wH2,
-    'netT': item.netT,
-    'kaCode':item.kaCode,
-    'kra1': item.kra1,
-    'kra2':item.kra2,
-    'pish': item.pish,
-    'barArzesh': item.barArzesh,
-    'daryafti': item.daryafti,
-    'ghComp': item.ghComp,
-    'comp': item.comp,
-    'ghPaia':item.ghPaia,
-    'paia': item.paia,
-    'afzode': item.afzode,
-    'barBim': item.barBim,
-    'barBimAfzode': item.barBimAfzode,
-    'tambar': item.tambar,
-    'bor':item.bor,  
-    'dName': item.dName,
-    'dFam': item.dFam,
-    'tplk': item.tplk,
-    'barTime': item.barTime,
-    'plName':item.plName,
-    'hazTakh': item.hazTakh,
-    'bargiriMab': item.bargiriMab,
-    'azA2': item.azA2,
-    'bus': item.bus,
-    'ka_E_Code': item.ka_E_Code,
-    'tarGetName':item.tarGetName,
-    'mbkhaal': item.mbkhaal,
-    'ghErtebat': item.ghErtebat,
-    'kaGrp': item.kaGrp,
-    'barAdd': item.barAdd,
-    'grpName': item.grpName,
-    'storedInDb':(item.storedInDb===true?'ثبت شده':'ثبت نشده'),
-    
-}))
 
 if(!clicked){
     if (loading===false) {
@@ -391,31 +229,88 @@ if(!clicked){
     }
 }
 else {
+if (report) {
+    const dataForExcel = data.map(item => ({
+        'companyCode': item.companyCode,
+        'barDel': item.barDel,
+        'barDate': item.barDate,
+        'bar_n': item.bar_n,
+        'bar_n_s': item.bar_n_s,
+        'havNum':item.havNum,
+        'dTel': item.dTel,
+        'wH1': item.wH1,
+        'wH2': item.wH2,
+        'netT': item.netT,
+        'kaCode':item.kaCode,
+        'kra1': item.kra1,
+        'kra2':item.kra2,
+        'pish': item.pish,
+        'barArzesh': item.barArzesh,
+        'daryafti': item.daryafti,
+        'ghComp': item.ghComp,
+        'comp': item.comp,
+        'ghPaia':item.ghPaia,
+        'paia': item.paia,
+        'afzode': item.afzode,
+        'barBim': item.barBim,
+        'barBimAfzode': item.barBimAfzode,
+        'tambar': item.tambar,
+        'bor':item.bor,
+        'dName': item.dName,
+        'dFam': item.dFam,
+        'tplk': item.tplk,
+        'barTime': item.barTime,
+        'plName':item.plName,
+        'hazTakh': item.hazTakh,
+        'bargiriMab': item.bargiriMab,
+        'azA2': item.azA2,
+        'bus': item.bus,
+        'ka_E_Code': item.ka_E_Code,
+        'tarGetName':item.tarGetName,
+        'mbkhaal': item.mbkhaal,
+        'ghErtebat': item.ghErtebat,
+        'kaGrp': item.kaGrp,
+        'barAdd': item.barAdd,
+        'grpName': item.grpName,
+        'storedInDb':(item.storedInDb===true?'ثبت شده':'ثبت نشده'),
+
+    }))
 
     return (
-        <div className=" statbox widget-content widget-content-area ">
+    <div className=" statbox widget-content widget-content-area ">
         <div>
-        <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
-           
-          
+            <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
+
+
             <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}   rowProps={row => ({
-               
+
                 style: {
                     backgroundColor: row.values.ثبت === 'ثبت شده'? 'lightgreen': '#ff00003b',
 
                     cursor: "pointer"
                 }
             })} bulkJob={getBulkJob}/>
-                       
+
 
             {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
         </div>
         <div className="d-flex justify-content-end">
-                        <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
-                    </div>
+            <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
         </div>
+    </div>
 
+)}else {
+    return(
+        <div className=" statbox widget-content widget-content-area rounded">
+            <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
+
+            <div className='text-center mt-5'>
+                <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+            </div>
+        </div>
     )
+}
+
 
 }
 }

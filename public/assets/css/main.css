@@ -66,6 +66,53 @@ select.form-custom::-ms-expand {
   .custom-file-input:focus ~ .custom-file-label::after {
     border: none;
     border-right: 1px solid #ced4da; }
+.filter-btn{
+  display: block;
+}
+.filter-btn .row{
+  width: 20%;
+  float: left;
+
+}
+
+
+
+.containerT {
+  overflow: auto;
+  height: 400px;
+
+}
+ table {
+   border-spacing: 0;
+   width: 100%;
+
+ }
+
+.fixed_header thead tr {
+position: sticky;
+  top: 0;
+  background: rgb(220 220 255)!important;
+  z-index: 1000;
+  border: 1px solid rgb(220 220 255)!important;
+
+}
+
+
+.fixed_header th {
+  height: 0;
+  /*line-height: 0;*/
+  /*padding-top: 0;*/
+  /*padding-bottom: 0;*/
+  color:transparent;
+  /*border: 1px solid rgb(220 220 255);*/
+  white-space: nowrap;
+}
+
+
+
+.filter-btn .btn-sm{
+  width: 100%;
+}
 
 .lead a.btn.btn-primary.btn-lg {
   margin-top: 15px;
@@ -2636,247 +2683,70 @@ select:-webkit-autofill:focus {
   z-index: 10000000000000!important;
 
 }
-@media  (max-width: 600px) {
+@media only screen and (max-width: 922px) {
 
   .a4 {
     margin-top: 100px;}
   .a4 .btn{
 
-    font-size: 25px!important;
+    font-size: 25px ;
   }
   .css-1nmdiq5-menu{
-position: fixed;
-    z-index: 10000000000000!important;
-
-  }
-  .paginating-mobail button{
-
-    font-size: 11px;
-    border: none!important;
-    padding: 9px;
-  }
-
-.table-controls{
-  width: 70px;
-}
-button{
-  padding: 0;
-  margin: 0;
-}
-.otpInput input{
-    width: 2rem!important;
-    height: 2rem!important;
-    margin: 7px!important;
-    border-radius: 4px
-  }
-  div .widget-activity-four{
-    margin-top: 1rem!important;
-  }
-  .card{
-    padding: 10px;
-  }
-  span{font-size: smaller!important;}
-  p{font-size: smaller!important;}
-  a{font-size: smaller!important;}
- /*.form-group label{font-size: smaller!important;}*/
- .box-big  {
-   margin: 0!important;
- }
-
-  .btn-danger{
-  font-size: 10px!important;
-    width: 100%!important;
-
-  }
-  .btn-success{
-  font-size: 10px!important;
-    width: 100%!important;
-
-  }
-.ProductSupplyCondition-table{
-  width: 13rem!important;
-  overflow-x: auto;
-}
-  .ReactModal__Content{
-    position: absolute;
-    inset: 46% auto auto 50%!important;
-    border: 2px ridge black;
-    background: rgb(255, 255, 255);
-    overflow-y: auto;
-    overflow-x: hidden;
-    border-radius: 5%;
-    outline: none; padding: 20px;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    width: 76%!important;
-   }
-  .ReactModal__Content .card-body{
-    width: 100%!important;
-    height: 100%!important;
-   }
-  .ReactModal__Content .card-body form{
-    width: 100%!important;
-    height: 100%!important;
-   }
-  .ReactModal__Content .widget{
-    width: 100%!important;
-    height: 50%!important;
-   }
-  .ReactModal__Content form{
-    width: 100%!important;
-    height: 350px;
-    overflow-y: auto;
-    overflow-x: hidden;
-   }
-  .ReactModal__Content input{
-    width: 80%!important;
-   }
-  .ReactModal__Content .custom-file{
-    width: 70%!important;
-   }
-  .ReactModal__Content .btn{
-    width: 100%!important;
-
-   }
-  .img-previewer img{
-    width: 25rem!important;
-    height: 12rem!important;
-  }
-  .img-caption{
-
-    display: block;
-    clear: both;
-    /*height: 12rem!important;*/
-  }
-  .orderCustomerInfo  label::after {
-    content: " ";
-    background-color: rgb(255, 255, 255);
-    width: 100%;
-    height: 5px;
-    position: absolute;
-    left: 0px;
-    bottom: 2px!important;
-    z-index: -2;
-  }
-  .form-group  label::after {
-    content: " ";
-    background-color: rgb(255, 255, 255);
-    width: 100%;
-    height: 5px;
-    position: absolute;
-    left: 0px;
-    bottom: 2px!important;
-    z-index: -2;
-  }
-  .textOnInput label::after {
-    content: " ";
-    background-color: rgb(255, 255, 255);
-    width: 100%;
-    height: 5px;
-    position: absolute;
-    left: 0px;
-    bottom: 12px;
-    z-index: -2;
-  }
-  .orderCustomerInfo{
-    margin-bottom: 20px!important;
-  }
-  .OrderCustomerInfo{
-    margin-bottom: 20px!important;
-  }
-  .footer-car-shop{
-    position: absolute;
-    bottom: 10%;
-  }
-  .cart-shop2{
-    padding: 10px;
     position: fixed;
-    height:calc(95vh - 100px)!important;
-    left: 8rem;
-    background-color: white;
-    transition: left 0.8s ease 0s;
-    border: 1px solid #c5c5c5;
-
-
-
-  }
-  .newsItem{
-    border: 1px solid grey;
-    height: 12vh;
-  }
-  .filter-btn .row{
-    width: 100%!important;
-    float: none!important;
-margin:0 auto;
-  }
-  .filter-btn .btn-sm{
-    width: 100%;
-  }
-}
-@media  (max-width: 900px) {
-
-  .a4 {
-    margin-top: 100px;}
-  .a4 .btn{
-
-    font-size: 25px!important;
-  }
-  .css-1nmdiq5-menu{
-position: fixed;
-    z-index: 10000000000000!important;
+    z-index: 10000000000000 ;
 
   }
   .paginating-mobail button{
 
     font-size: 11px;
-    border: none!important;
+    border: none ;
     padding: 9px;
   }
 
-.table-controls{
-  width: 70px;
-}
-button{
-  padding: 0;
-  margin: 0;
-}
-.otpInput input{
-    width: 2rem!important;
-    height: 2rem!important;
-    margin: 7px!important;
+  .table-controls{
+    width: 70px;
+  }
+  button{
+    padding: 0;
+    margin: 0;
+  }
+  .otpInput input{
+    width: 2rem ;
+    height: 2rem ;
+    margin: 7px ;
     border-radius: 4px
   }
   div .widget-activity-four{
-    margin-top: 1rem!important;
+    margin-top: 1rem ;
   }
   .card{
     padding: 10px;
   }
-  span{font-size: smaller!important;}
-  p{font-size: smaller!important;}
-  a{font-size: smaller!important;}
- /*.form-group label{font-size: smaller!important;}*/
- .box-big  {
-   margin: 0!important;
- }
+  span{font-size: smaller ;}
+  p{font-size: smaller ;}
+  a{font-size: smaller ;}
+  /*.form-group label{font-size: smaller ;}*/
+  .box-big  {
+    margin: 0 ;
+  }
 
   .btn-danger{
-  font-size: 10px!important;
-    width: 100%!important;
+    font-size: 10px;
+    width: 100%;
 
   }
   .btn-success{
-  font-size: 10px!important;
-    width: 100%!important;
+    font-size: 10px;
+    width: 100%;
 
   }
-.ProductSupplyCondition-table{
-  width: 13rem!important;
-  overflow-x: auto;
-}
+  .ProductSupplyCondition-table{
+    width: 13rem;
+    overflow-x: auto;
+  }
   .ReactModal__Content{
     position: absolute;
-    inset: 46% auto auto 50%!important;
+    inset: 46% auto auto 50%;
     border: 2px ridge black;
     background: rgb(255, 255, 255);
     overflow-y: auto;
@@ -2885,26 +2755,28 @@ button{
     outline: none; padding: 20px;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 500px!important;
-   }
+    width: 500px;
+  }
   .ReactModal__Content .card-body{
-    width: 100%!important;
-    height: 100%!important;
-   }
+    width: 100%;
+    height: 100%;
+  }
   .ReactModal__Content .card-body form{
-    width: 100%!important;
-    height: 100%!important;
-   }
+    width: 100%;
+    height: 100%;
+  }
   .ReactModal__Content .widget{
     width: 100%!important;
-    height: 100%!important;
-   }
+    height: 100%;
+    overflow: hidden;
+
+  }
   .ReactModal__Content form{
-    width:500px!important;
+    width:auto;
     /*height: 400px;*/
     overflow-y: auto;
     overflow-x: hidden;
-   }
+  }
   /*.ReactModal__Content input{*/
   /*  width: 80%!important;*/
   /* }*/
@@ -2916,8 +2788,8 @@ button{
 
   /* }*/
   .img-previewer img{
-    width: 25rem!important;
-    height: 12rem!important;
+    width: 25rem;
+    height: 12rem;
   }
   .img-caption{
 
@@ -2932,7 +2804,7 @@ button{
     height: 5px;
     position: absolute;
     left: 0px;
-    bottom: 2px!important;
+    bottom: 2px;
     z-index: -2;
   }
   .form-group  label::after {
@@ -2942,7 +2814,7 @@ button{
     height: 5px;
     position: absolute;
     left: 0px;
-    bottom: 2px!important;
+    bottom: 2px;
     z-index: -2;
   }
   .textOnInput label::after {
@@ -2956,10 +2828,10 @@ button{
     z-index: -2;
   }
   .orderCustomerInfo{
-    margin-bottom: 20px!important;
+    margin-bottom: 20px;
   }
   .OrderCustomerInfo{
-    margin-bottom: 20px!important;
+    margin-bottom: 20px;
   }
   .footer-car-shop{
     position: absolute;
@@ -2968,7 +2840,7 @@ button{
   .cart-shop2{
     padding: 10px;
     position: fixed;
-    height:calc(90vh - 100px)!important;
+    height:calc(90vh - 100px);
     left: 8rem;
     background-color: white;
     transition: left 0.8s ease 0s;
@@ -2982,8 +2854,187 @@ button{
     height: 12vh;
   }
   .filter-btn .row{
-    width: 50%!important;
-    float: left!important;
+    width: 50%;
+    float: left;
+    margin:0 auto;
+  }
+  .filter-btn .btn-sm{
+    width: 100%;
+  }
+}
+
+@media only screen and  (max-width: 600px) {
+
+  .a4 {
+    margin-top: 100px;}
+  .a4 .btn{
+
+    font-size: 25px ;
+  }
+  .css-1nmdiq5-menu{
+position: fixed;
+    z-index: 10000000000000 ;
+
+  }
+  .paginating-mobail button{
+
+    font-size: 11px;
+    border: none ;
+    padding: 9px;
+  }
+
+.table-controls{
+  width: 70px;
+}
+button{
+  padding: 0;
+  margin: 0;
+}
+.otpInput input{
+    width: 2rem ;
+    height: 2rem ;
+    margin: 7px ;
+    border-radius: 4px
+  }
+  div .widget-activity-four{
+    margin-top: 1rem ;
+  }
+  .card{
+    padding: 10px;
+  }
+  span{font-size: smaller ;}
+  p{font-size: smaller ;}
+  a{font-size: smaller ;}
+ /*.form-group label{font-size: smaller ;}*/
+ .box-big  {
+   margin: 0 ;
+ }
+
+  .btn-danger{
+  font-size: 10px ;
+    width: 100% ;
+
+  }
+  .btn-success{
+  font-size: 10px ;
+    width: 100% ;
+
+  }
+.ProductSupplyCondition-table{
+  width: 13rem ;
+  overflow-x: auto;
+}
+  .ReactModal__Content{
+    position: absolute;
+    inset: 46% auto auto 50% ;
+    border: 2px ridge black;
+    background: rgb(255, 255, 255);
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 5%;
+    outline: none; padding: 20px;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 76% ;
+   }
+  .ReactModal__Content .card-body{
+    width: 100% ;
+    height: 100% ;
+   }
+  .ReactModal__Content .card-body form{
+    width: 100% ;
+    height: 100% ;
+   }
+  .ReactModal__Content .widget{
+    width: 100%!important;
+    height: 50% ;
+    overflow: hidden;
+   }
+  .ReactModal__Content form{
+    width: auto ;
+    height: 350px;
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
+   }
+  .ReactModal__Content input{
+    width: 80% ;
+   }
+  .ReactModal__Content .custom-file{
+    width: 70% ;
+   }
+  .ReactModal__Content .btn{
+    width: 100% ;
+
+   }
+  .img-previewer img{
+    width: 25rem ;
+    height: 12rem ;
+  }
+  .img-caption{
+
+    display: block;
+    clear: both;
+    /*height: 12rem ;*/
+  }
+  .orderCustomerInfo  label::after {
+    content: " ";
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    left: 0px;
+    bottom: 2px ;
+    z-index: -2;
+  }
+  .form-group  label::after {
+    content: " ";
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    left: 0px;
+    bottom: 2px ;
+    z-index: -2;
+  }
+  .textOnInput label::after {
+    content: " ";
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    left: 0px;
+    bottom: 12px;
+    z-index: -2;
+  }
+  .orderCustomerInfo{
+    margin-bottom: 20px ;
+  }
+  .OrderCustomerInfo{
+    margin-bottom: 20px ;
+  }
+  .footer-car-shop{
+    position: absolute;
+    bottom: 10%;
+  }
+  .cart-shop2{
+    padding: 10px;
+    position: fixed;
+    height:calc(95vh - 100px) ;
+    left: 8rem;
+    background-color: white;
+    transition: left 0.8s ease 0s;
+    border: 1px solid #c5c5c5;
+
+
+
+  }
+  .newsItem{
+    border: 1px solid grey;
+    height: 12vh;
+  }
+  .filter-btn .row{
+    width: 100%;
+    float: none;
 margin:0 auto;
   }
   .filter-btn .btn-sm{
@@ -3146,16 +3197,16 @@ opacity: 0;
 * th{
   padding: 10px !important;
 
-  border: 1px solid transparent!important;
+  /*border: 1px solid transparent!important;*/
 
 }
 * th:first-child{
-  border: 1px solid transparent!important;
+  /*border: 1px solid transparent!important;*/
   border-top-right-radius: 10px;
   /*border-bottom-right-radius: 10px;*/
 }
 * th:last-child{
-  border: 1px solid transparent!important;
+  border: transparent!important;
   border-top-left-radius: 10px;
   /*border-bottom-left-radius: 10px;*/
 }
@@ -3236,15 +3287,4 @@ padding-bottom: 10px;
   padding: 0px 8px;
 }
 
-.filter-btn{
-display: block;
-}
-.filter-btn .row{
-  width: 20%;
-  float: left;
 
-}
-
-.filter-btn .btn-sm{
-  width: 100%;
-}
