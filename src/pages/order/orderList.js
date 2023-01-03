@@ -89,7 +89,7 @@ const OrderList = () => {
     const param = { PageSize, PageNumber }
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items ? items : ''
 
 
@@ -334,7 +334,7 @@ const OrderList = () => {
         OrderDetailExtId
     }
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem('params'));
+        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
         return items ? items : ''
     }
 
@@ -375,8 +375,8 @@ const OrderList = () => {
                 setOrder(data.result.orderList.values);
                 setTotalCount(data.result.orderList.totalCount)
                 setPageNumber(0)
-                sessionStorage.setItem('params', JSON.stringify(params));
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
             
             }
             
@@ -420,7 +420,7 @@ const OrderList = () => {
             if (status === 200) {
                 SetAddress({ active: false })
                 setOrder(data.result.orderList.values);
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
 

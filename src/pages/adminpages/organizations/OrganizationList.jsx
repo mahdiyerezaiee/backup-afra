@@ -45,7 +45,7 @@ const OrganizationList = () => {
 
     const params = { Name, NationalId, RegistrationNumber}
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem('params'));
+        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
         return items? items:''
 
 
@@ -53,7 +53,7 @@ const OrganizationList = () => {
     const param = { PageSize ,PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -87,7 +87,7 @@ const OrganizationList = () => {
         const { data, status } = await GetAllOrganisationCode(config);
 
         setOrganization(data.result.organizationLists.values);
-        sessionStorage.setItem('param', JSON.stringify(param));
+        sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
 
     }
@@ -125,8 +125,8 @@ const OrganizationList = () => {
             const { data, status } = await GetAllOrganisationCode(parameter);
             setOrganization(data.result.organizationLists.values);
         setTotalCount(data.result.organizationLists.totalCount)
-            sessionStorage.setItem('params', JSON.stringify(params));
-            sessionStorage.setItem('param', JSON.stringify(param));
+            sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
+            sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
 
 

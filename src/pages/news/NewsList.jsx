@@ -41,7 +41,7 @@ const NewsList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -97,7 +97,7 @@ const NewsList = () => {
         };
         const { data, status } = await GetAllNewsForUsersPage(config);
         setGuessNews(data.result.news.values)
-        sessionStorage.setItem('param', JSON.stringify(param));
+        sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
     }
     const getNews = async () => {

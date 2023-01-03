@@ -28,7 +28,7 @@ const CustomersList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -54,7 +54,7 @@ const CustomersList = () => {
         try {
             const { data, status } = await GetForKarbars(config);
             setUsers(data.result.users.values);
-            sessionStorage.setItem('param', JSON.stringify(param));
+            sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
         }catch (e) {
             console.log(e)
         }

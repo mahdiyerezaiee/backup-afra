@@ -50,7 +50,7 @@ const ShippingList = () => {
         CreateStartDate,
     }
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem('params'));
+        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
         return items ? items : ''
     }
     const close = () => {
@@ -106,7 +106,7 @@ CottageCode,
                 setTotalCount(data.result.shippings.totalCount)
                 setPageNumber(0)
 
-                sessionStorage.setItem('params', JSON.stringify(params));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
 
             }
 
@@ -147,7 +147,7 @@ CottageCode,
             if (status === 200) {
 
                 setShipping(data.result.shippings.values)
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {
@@ -281,7 +281,7 @@ CottageCode,
 
     }
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items ? items : ''
 
 
