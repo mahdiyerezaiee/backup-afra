@@ -76,8 +76,8 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
         <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 ">
             <label>اطلاعات حواله </label>
             {loading === false ?
-                <div className="table-responsive p-2">
-                    <table className="table table-bordered table-hover table-striped  mt-2  mb-4">
+                <div className="containerT p-2">
+                    <table className="table m-1 table-striped  fixed_header  ">
                         <thead className="text-center">
                         <tr>
                             <th >#</th>
@@ -95,8 +95,9 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
 
                         </tr>
                         </thead>
+                        <tbody className="text-center">
                         {Shipping ? Shipping.map(item =>
-                            <tbody className="text-center">
+
                             <tr key={item.id}>
                                 <td bgcolor= "transparent" >{item.id}</td>
                                 <td bgcolor= "transparent">{item.orderId ? item.orderId : "--"}</td>
@@ -124,9 +125,9 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
 
                             </tr>
 
-                            </tbody>
                         ) : <tr className='text-center'></tr>}
 
+                        </tbody>
 
                     </table>
 

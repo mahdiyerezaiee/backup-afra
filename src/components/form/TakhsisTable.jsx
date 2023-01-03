@@ -33,11 +33,11 @@ const TakhsisTable = ({ columns, data }) => {
 
             {/*<GlobalFilter filter={globalfilter} setFilter={setGlobalFilter} />*/}
 
-            <div className="table-responsive p-2 "
-                style={{ overflowX: 'auto' }}
+            <div className=" containerT  p-2 "
+// style={{overflowX:"auto"}}
             >
 
-                <table className='table m-1 table-striped ' {...getTableProps()}
+                <table className='table m-1 table-striped  fixed_header ' {...getTableProps()}
                 // style={{ transform:'rotateX(180deg)'}}
                 >
 

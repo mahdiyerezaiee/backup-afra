@@ -489,3 +489,8 @@ color: black!important;
     flex-direction: column;
     justify-content: center;
 }
+.dark-mode .fixed_header thead tr {
+
+    background: #1e1f50!important;
+border: transparent!important;
+}
