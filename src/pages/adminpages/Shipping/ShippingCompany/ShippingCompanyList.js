@@ -46,7 +46,7 @@ const ShoppingCompanyList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -199,7 +199,7 @@ const ShoppingCompanyList = () => {
     const groups = getGroupForCompbo();
     const params = { Name, Code}
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem('params'));
+        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
         return items? items:''
 
 
@@ -234,8 +234,8 @@ const ShoppingCompanyList = () => {
 setPageNumber(0)
                 setShippingCompanys(data.result.shippingCompanies.values)
                 setTotalCount(data.result.shippingCompanies.totalCount)
-                sessionStorage.setItem('params', JSON.stringify(params));
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {
@@ -270,7 +270,7 @@ setPageNumber(0)
             if (status === 200) {
 
                 setShippingCompanys(data.result.shippingCompanies.values)
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {

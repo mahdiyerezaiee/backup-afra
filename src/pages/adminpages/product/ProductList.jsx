@@ -57,14 +57,14 @@ const ProductList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
     }
     const params = { Name, EnglishName, groupIds}
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem('params'));
+        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
         return items? items:''
 
 
@@ -267,8 +267,8 @@ const ProductList = () => {
 
                 setProduct(data.result.products.values)
                 setTotalCount(data.result.products.totalCount)
-                sessionStorage.setItem('params', JSON.stringify(params));
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {
@@ -303,7 +303,7 @@ const ProductList = () => {
             if (status === 200) {
 
                 setProduct(data.result.products.values)
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {
