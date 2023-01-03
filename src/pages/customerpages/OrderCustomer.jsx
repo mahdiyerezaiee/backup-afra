@@ -81,7 +81,7 @@ const OrderCustomer = () => {
   const param = { PageSize , PageNumber}
 
   function getPage() {
-    let items = JSON.parse(sessionStorage.getItem('param'));
+    let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
     return items? items:''
 
 
@@ -351,7 +351,7 @@ const OrderCustomer = () => {
   }
   const params = { paymentStatusIds, Id,ExtId,paymentMethodIds, shippingStatusIds, orderStatusIds, StartDate, EndDate, OrderDetailExtId}
   function getDefault() {
-    let items = JSON.parse(sessionStorage.getItem('params'));
+    let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
     return items? items:''
 
 
@@ -391,8 +391,8 @@ const OrderCustomer = () => {
         setPageNumber(0)
         setOrder(data.result.orderList.values);
         setTotalCount(data.result.orderList.totalCount)
-        sessionStorage.setItem('param', JSON.stringify(param));
-        sessionStorage.setItem('params', JSON.stringify(params));
+        sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+        sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
 
       }
 
@@ -500,7 +500,7 @@ const OrderCustomer = () => {
       if (status === 200) {
         SetAddress({active: false})
         setOrder(data.result.orderList.values);
-        sessionStorage.setItem('param', JSON.stringify(param));
+        sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
       }
 
     } catch (err) {

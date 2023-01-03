@@ -44,7 +44,7 @@ const UserList = () => {
     const params = { UserName, FirstName, NationalCode,LastName,userRole}
 
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem('params'));
+        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
         return items? items:''
 
 
@@ -52,7 +52,7 @@ const UserList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -104,8 +104,8 @@ const UserList = () => {
         setTotalCount(data.result.users.totalCount)
 
             setPageNumber(0)
-        sessionStorage.setItem('params', JSON.stringify(params));
-            sessionStorage.setItem('param', JSON.stringify(param));
+        sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
+            sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
         }
     }
 
@@ -129,7 +129,7 @@ const UserList = () => {
         };
         const { data, status } = await GetDataWithSearch(config);
         setUsers(data.result.users.values);
-        sessionStorage.setItem('param', JSON.stringify(param));
+        sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
     }
 

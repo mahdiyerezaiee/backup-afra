@@ -50,7 +50,7 @@ const ShoppingContractList = () => {
     const param = { PageSize ,PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -191,7 +191,7 @@ const ShoppingContractList = () => {
     }
     const params = { CompanyName, ContractNumber,CompanyCode}
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem('params'));
+        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
         return items? items:''
 
 
@@ -226,8 +226,8 @@ const ShoppingContractList = () => {
 setPageNumber(0)
                 setShippingContract(data.result.shippingContracts.values)
                 setTotalCount(data.result.shippingContracts.totalCount)
-                sessionStorage.setItem('params', JSON.stringify(params));
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {
@@ -263,7 +263,7 @@ setPageNumber(0)
             if (status === 200) {
 
                 setShippingContract(data.result.shippingContracts.values)
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {

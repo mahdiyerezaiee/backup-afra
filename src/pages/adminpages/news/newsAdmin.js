@@ -41,7 +41,7 @@ const[id,setId]=useState(0)
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -68,7 +68,7 @@ const[id,setId]=useState(0)
             const { data, status } = await GetAllNewsForAdminPage(config);
             setNews(data.result.news.values)
             setTotalCount(data.result.news.totalCount)
-            sessionStorage.setItem('param', JSON.stringify(param));
+            sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
         }catch (e) {
             console.log(e)

@@ -41,7 +41,7 @@ const navigate=useNavigate();
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -69,7 +69,7 @@ const navigate=useNavigate();
 
         const { data, status } = await GetGroupsForEntity(2,config);
         setProductG(data.result.groups)
-        sessionStorage.setItem('param', JSON.stringify(param));
+        sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
 
     }

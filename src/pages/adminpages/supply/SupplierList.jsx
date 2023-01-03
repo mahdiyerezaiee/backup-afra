@@ -45,7 +45,7 @@ const SupplierList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -281,7 +281,7 @@ const SupplierList = () => {
             const {data, status} = await GetAllSuppliers(config);
             if (status === 200) {
                 setSuppliers(data.result.suppliers.values)            }
-            sessionStorage.setItem('param', JSON.stringify(param));
+            sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
         } catch (err) {
             console.log(err)

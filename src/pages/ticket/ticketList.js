@@ -25,7 +25,7 @@ const Navigate=useNavigate()
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem('param'));
+        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
         return items? items:''
 
 
@@ -58,11 +58,11 @@ const Navigate=useNavigate()
             if(roles.includes(7) || roles.includes(5) ||roles.includes(8)){
                 const {data , status}= await GetSupportRequesstsAdmin(config)
                 setTicket(data.result.supportRequests.values)
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
             }else {
                 const {data , status}= await GetSupportRequesstsUser(user.id , config)
                 setTicket(data.result.supportRequests.values)
-                sessionStorage.setItem('param', JSON.stringify(param));
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
         } catch (error) {
@@ -238,6 +238,7 @@ setTicket(data.result.supportRequests.values)
     }
   }
   useEffect(()=>{
+
     getTicket()
   },[])
   const newTicket = () => {
