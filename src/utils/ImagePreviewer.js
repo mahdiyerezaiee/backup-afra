@@ -35,7 +35,14 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
     const [value, setValue] = useState(0)
     const [dueDate, setDueDate] = useState(item.dueDate)
     const [chacked, setchacked] = useState(false)
+    const [open, setClose] = useState(false)
     let [loading, setLoading] = useState(false);
+const openModelDelete = () => {
+  setClose(true)
+}
+const closeModelDelete = () => {
+  setClose(false)
+}
 
     const datas = {
         attachmentId: item.id,
@@ -249,7 +256,8 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                     : null}
                 <div className=' d-block   '>
                     <div className='m-1'>
-                        <button disabled={chacked||loading} hidden={isUser && orderStatus >= 3} onClick={handelDelete}
+                        <button disabled={chacked||loading} hidden={isUser && orderStatus >= 3} onClick={()=>openModelDelete()
+                        }
                                 className="btn btn-danger float-left">حذف
                             <ClipLoader
 
@@ -264,7 +272,33 @@ const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) =>
                     </div>
                 </div>
             </div>
+            <Modal
 
+                isOpen={open}
+                onRequestClose={closeModelDelete}
+                style={customStyles}
+                contentLabel="Selected Option"
+                ariaHideApp={false}
+
+            >
+                <div>آیا مایلید تصویر را حذف کنید؟</div>
+                <div className=' d-block   '>
+                    <div className='m-1'>
+                        <button disabled={chacked||loading} hidden={isUser && orderStatus >= 3} onClick={handelDelete}
+                                className="btn btn-success float-left">حذف
+                            <ClipLoader
+
+                                loading={loading}
+                                color="#ffff"
+                                size={15}
+                            /></button>
+                    </div>
+
+                    <div className='m-1'>
+                        <button onClick={() => closeModelDelete()} className="btn btn-danger float-right">خیر</button>
+                    </div>
+                </div>
+        </Modal>
 
         </Modal>
     )
