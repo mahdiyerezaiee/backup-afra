@@ -273,8 +273,8 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
     if (loading){
         return (
-            <div style={{position:'fixed',background:"#f1f2f3" , inset:"0px", zIndex:"4"}}>
-                <div style={{position:"absolute", inset:"55% auto auto 50%", marginRight:"-50%", transform:"translate(-50%,-50%)"}}>
+            <div className="loadingAddress" >
+                <div  className="boxloadingAddress">
             <p>دریافت اطلاعات ...</p>
             <FadeLoader loading={loading} color={"#ccc"}/>
                 </div>
