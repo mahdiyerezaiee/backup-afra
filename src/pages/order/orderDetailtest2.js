@@ -21,6 +21,7 @@ import OrderAdminDetail from "../../components/order/OrderAdminDetail";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { DeliveryMethods } from './../../Enums/DeliveryMethodsEnums';
 import { OrderStatusEnumsProgressBar } from './../../Enums/OrderStatusEnumsProgressBar';
+import FadeLoader from "react-spinners/FadeLoader";
 
 
 const OrderDetailTest = () => {
@@ -185,15 +186,21 @@ const OrderDetailTest = () => {
 
     }
     const returnHavaleSum = () => {
+
         var sum = 0
 
         if (Shipping) {
+
             Shipping.forEach(item => sum += item.plannedQuantity)
+
         }
+
         return sum
+
     }
 
     const returnBarbariSum = () => {
+
         var sum = 0
 
         if (Shipping) {
@@ -206,6 +213,7 @@ const OrderDetailTest = () => {
 
 
     const getOrderDetail = async () => {
+
         try {
             const { data, status } = await GetOrderDetails(params.id)
             if (status === 200) {
@@ -223,6 +231,7 @@ const OrderDetailTest = () => {
         } catch (err) {
             console.log(err)
         }
+
     }
     useEffect(() => {
         getOrder()
@@ -231,7 +240,6 @@ const OrderDetailTest = () => {
         getOrganizationName();
         ShippingContract()
         handelGetAttachment()
-
 
     }, [])
     const handelPreview = (item) => {
@@ -303,6 +311,7 @@ const OrderDetailTest = () => {
 
 
     const number = OrderStatusEnumsProgressBar.filter(item => item.id === order.orderStatusId).map(item => item.number)[0]
+
     return (
         <Fragment>
             <div className='user-progress'>

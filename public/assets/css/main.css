@@ -79,7 +79,8 @@ select.form-custom::-ms-expand {
 
 .containerT {
   overflow: auto;
-  height: 400px;
+  max-height: 400px;
+  min-height: 100px;
 
 }
  table {

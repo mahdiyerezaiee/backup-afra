@@ -15,13 +15,16 @@ import {useMemo} from "react";
         return [...options.values()]
     }, [id, preFilteredRows])
 
+
     // Render a multi-select box
     return (
         <select
             required
             className="border-0 rounded bg-transparent text-primary "
-            value={filterValue}
+            value={sessionStorage.getItem("filterValuePirce")}
             onChange={e => {
+                sessionStorage.setItem("filterValuePirce" , e.target.value)
+
                 setFilter(e.target.value || undefined)
             }}
             // style={{minWidth:"10px" , maxWidth:"auto"}}
