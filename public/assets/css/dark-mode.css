@@ -490,7 +490,11 @@ color: black!important;
     justify-content: center;
 }
 .dark-mode .fixed_header thead tr {
+    box-shadow: 0px -10px  #1a1c2d;
 
     background: #1e1f50!important;
 border: transparent!important;
+}
+.dark-mode .loadingAddress{
+    background: #1a1c2d!important;
 }
