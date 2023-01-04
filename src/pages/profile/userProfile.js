@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUserAddress, GetUserInfo } from "../../services/userService";
-import { addUserAddress, addUserInfo } from "../../actions/user";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { GetAddress, GetAllProvince } from "../../services/addressService";
@@ -9,8 +8,8 @@ import { ImUser } from "react-icons/im"
 import { GetAllOrganisation } from "../../services/organisationService";
 const UserProfile = () => {
   const Navigate = useNavigate()
+  const user = useSelector(state => state.user);
 
-  const user = useSelector(state => state.userInfo);
   const [address, setAddress] = useState([]);
   const [province, setProvince] = useState([]);
   const [organization, setOrganization] = useState([]);
@@ -32,7 +31,7 @@ const UserProfile = () => {
 
   }, [])
   async function fetchApi() {
-    const { data, status } = await GetAddress(1, user.id);
+    const { data, status } = await GetAddress(1, Number(localStorage.getItem('connect')));
     setAddress(data.result.addresses);
   }
   const navitage = () => {

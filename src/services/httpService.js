@@ -1,24 +1,24 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
-import { decodeToken } from './../utils/decodeToken';
+import { decodeToken } from '../utils/decodeToken';
 
 let configure=window.globalThis.site_url;
 
 
-const token = localStorage.getItem('token');
 axios.defaults.headers.get["Content-Type"] = "application/json";
 axios.defaults.headers.delete["Content-Type"] = "application/json";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.put["Content-Type"] = "application/json";
-if (token) {
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  // console.log(token);
-}
+
+
+const token = localStorage.getItem('token');
+
 
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 const refresh = localStorage.getItem('refresh');
 
+console.log(token);
 const refreshR = {
   token
   , refresh

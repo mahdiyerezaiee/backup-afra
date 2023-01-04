@@ -31,8 +31,8 @@ const customStyles = {
 
 const SalesBoardForAdmin = () => {
     const [loading, setLoading] = useState(false);
-    const user = useSelector(state => state.userInfo);
-    const userRole = useSelector(state => state.userRole);
+    const user = useSelector(state => state.user);
+    const userRole = useSelector(state => state.roles);
     const [Customerg, setCustomerg] = useState(getDataProductSupply().Customerg?getDataProductSupply().Customerg:[])
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
@@ -253,8 +253,8 @@ setLoading(false)
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{formatter2.format(item.orderedQuantity)}</td>
                                         <td className="text-center">{formatter2.format(item.remainedQuantity)}</td>
-                                        <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>درخواست
-                                        </button>) : (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
+                                        <td className="text-center">{item.productSupplyConditions.length <0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>درخواست
+                                        </button>) : (<button className="btn btn-success" disabled={userRole.includes(1) ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
 
 
 

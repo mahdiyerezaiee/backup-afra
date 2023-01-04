@@ -1,0 +1,50 @@
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { LoginModelWithPass } from "../../../models/loginModel";
+import { decodeToken } from './../../../utils/decodeToken';
+
+const initialState :LoginModelWithPass={
+ 
+
+}
+
+const loginSlice=createSlice({
+
+    name:'login',
+    initialState,
+    reducers:{
+
+        loginWithPassword:(state , action:PayloadAction<LoginModelWithPass>)=>{
+console.log(action.payload);
+
+           return{
+            ...action.payload
+
+
+           }
+          
+            
+           
+        },
+        logOutReducesr:()=>{
+
+           return {}
+        }
+        
+        
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+})
+export const {loginWithPassword,logOutReducesr}=loginSlice.actions
+export default loginSlice.reducer

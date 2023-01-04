@@ -5,7 +5,6 @@ import Select from "react-select";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { optionsRole } from "../../../Enums/RolesEnums";
-import { addUserInfo } from "../../../actions/user";
 import Modal from 'react-modal';
 import {ClipLoader} from "react-spinners";
 

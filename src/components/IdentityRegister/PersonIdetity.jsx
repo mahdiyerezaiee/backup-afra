@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { GetOrganisationCode, SetOrganisation } from './../../services/organisationService';
 import { setCustomerInfo } from '../../services/customerService';
 import { GetUserInfo } from './../../services/userService';
-import { addUserInfo } from '../../actions/user';
 
 
 const PersonIdetity = () => {
@@ -106,7 +105,6 @@ const PersonIdetity = () => {
                 });
                 const { data, status } = await GetUserInfo();
 
-                dispatch(addUserInfo(data.result.customer));
 navigate('/identitypannel')
             }
 

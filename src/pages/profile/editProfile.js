@@ -4,14 +4,13 @@ import SimpleReactValidator from "simple-react-validator";
 import {setCustomerInfo} from "../../services/customerService";
 import {toast} from "react-toastify";
 import {GetUserInfo} from "../../services/userService";
-import {addUserInfo} from "../../actions/user";
 import {GetAllProvince, SetAddress} from "../../services/addressService";
 import Select from "react-select";
 import {useNavigate} from "react-router-dom";
 
 const EditProfile = () => {
 const navigate = useNavigate()
-    const userinfo = useSelector(state => state.userInfo);
+    const userinfo = useSelector(state => state.user);
 
     const [firstName, setfirstName] = useState(userinfo.firstName);
     const [lastName, setlastName] = useState(userinfo.lastName);
@@ -102,7 +101,6 @@ const navigate = useNavigate()
                 });
                 const {data, status} = await GetUserInfo();
 
-                dispatch(addUserInfo(data.result.customer));
 
             }
            
