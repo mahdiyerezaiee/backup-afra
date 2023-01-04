@@ -17,7 +17,7 @@ import SelectColumnFilter from "../form/ColumnFilter";
 
 
 const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
-    const roles = useSelector(state => state.userRole)
+    const roles = useSelector(state => state.roles)
     const [orderCondition, setOrderCondition] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
     const [OrderDetail, setOrderDetail] = useState([])

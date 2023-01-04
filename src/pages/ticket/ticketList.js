@@ -10,8 +10,8 @@ import QueryString from "qs";
 import {GetShoppingContracts} from "../../services/ShippingService";
 
 const TicketList = () => {
-  const roles = useSelector(state => state.userRole)
-  const user=useSelector(state=>state.userInfo);
+  const roles = useSelector(state => state.roles)
+  const user=useSelector(state=>state.user);
 
 const Navigate=useNavigate()
     const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)

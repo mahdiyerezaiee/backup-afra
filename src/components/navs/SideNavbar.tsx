@@ -132,12 +132,13 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
                 {/* <SubMenu ref={ref8} open={show.item8 === true? true:false} onClick={() => setShow({...show , item8: !show.item8 , item1: false,item3: false,item4: false,item5: false,item6: false,item2: false,item9: false,item10: false,item7: false,item11: false,item12: false,item14: false,item13: false})} hidden={roles.includes(7)||roles.includes(5) ? false : true} icon={<FaCashRegister size='2rem' />} label='حسابداری'>
 
               </SubMenu> */}
-                <SubMenu hidden={roles.includes(7) || roles.includes(5) || roles.includes(8) ? false : true} icon={<FaCashRegister size='2rem' />} label='حسابداری'></SubMenu>
-                <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) ? false : true} icon={<BsReceiptCutoff size={'2rem'} />}> <NavLink to="cuoList">سفارش ها</NavLink></MenuItem>
+                <MenuItem hidden={roles.includes(7) || roles.includes(5) || roles.includes(8) ? false : true} icon={<FaCashRegister size='2rem' />} >حسابداری</MenuItem>
+                
+                <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) ? false : true} routerLink={<Link to='cuoList'/>} icon={<BsReceiptCutoff size={'2rem'} /> }>سفارش ها</MenuItem>
+                
 
 
-                <SubMenu hidden={roles.includes(2) ? false : true} icon={<FaCashRegister size='2rem' />} label='صورت حساب'>
-                </SubMenu>
+                <MenuItem hidden={roles.includes(2) ? false : true} icon={<FaCashRegister size='2rem' />} > w,vj pshf </MenuItem>
                 <SubMenu ref={ref12} open={show.item12 === true ? true : false} onClick={() => setShow({ ...show, item12: !show.item12, item16: false, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item13: false, item14: false })} hidden={(roles.includes(2) || roles.includes(7) || roles.includes(8)) || roles.includes(5) ? false : true} icon={<MdSupportAgent size='2rem' />} label="پشتیبانی" >
                     <MenuItem onClick={handleHeaderClick} hidden={roles.includes(7) || roles.includes(8) || roles.includes(5) ? false : true}><NavLink to="user-news" >اطلاعیه و اعلان ها</NavLink></MenuItem>
 

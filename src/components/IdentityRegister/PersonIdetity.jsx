@@ -17,7 +17,7 @@ const PersonIdetity = () => {
     const [userData, setUserData] = useState({});
     const [Click, setClick] = useState(false);
     const [check, setChek] = useState(false);
-    const userinfo = useSelector(state => state.userInfo);
+    const userinfo = useSelector(state => state.user);
     const dispatch = useDispatch();
     const [nationalId, SetnationalId] = useState('');
     const [formDisable, setformDisable] = useState(true);

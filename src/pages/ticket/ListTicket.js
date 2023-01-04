@@ -6,8 +6,8 @@ import ChatBox from "./chatBox";
 import QueryString from "qs";
 
 const ListTicket = () => {
-  const roles = useSelector(state => state.userRole)
-  const user=useSelector(state=>state.userInfo);
+  const roles = useSelector(state => state.roles)
+  const user=useSelector(state=>state.user);
   const Navigate=useNavigate()
   const [PageNumber, setPageNumber] = useState( 0)
 

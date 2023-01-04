@@ -7,7 +7,7 @@ import {Button, Card} from "react-bootstrap";
 const ChatBox = (id) => {
     let userName = localStorage.getItem("connect")
     // console.log(id)
-    const user = useSelector(state => state.userInfo);
+    const user = useSelector(state => state.user);
     const [newMessage ,setNewMessage]=useState("")
     const [getmessage , setGetMessage] = useState([])
 

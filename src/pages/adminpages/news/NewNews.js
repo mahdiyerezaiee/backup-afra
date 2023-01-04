@@ -7,7 +7,7 @@ import {NavLink,useNavigate} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 
 const NewNews = () => {
-    const user=useSelector(state=>state.userInfo);
+    const user=useSelector(state=>state.user);
     const [loading, setLoading] = useState(false);
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');

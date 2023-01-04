@@ -9,7 +9,7 @@ import {GetAddress} from "../../services/addressService";
 import {HiArrowLeft} from "react-icons/hi"
 import  "../../utils/style.css"
 const IdentityPannel = () => {
-    const user=useSelector(state=>state.userInfo);
+    const user=useSelector(state=>state.user);
 
     const [address , setAddress] = useState()
     const GetAddresUser= async ()=>{
