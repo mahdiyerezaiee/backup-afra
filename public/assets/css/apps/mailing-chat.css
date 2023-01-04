@@ -8,6 +8,13 @@
 			@Import	Mixins
 	===============================
 */
+.btn-chat{
+  display: inline-block;
+  position: absolute;
+  bottom: 9%;
+  left: 1%;
+}
+
 .wrapper {
   position: relative;
   right: 50%;
@@ -23,7 +30,7 @@
   -webkit-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
   -moz-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
   box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
-  height: calc(100vh - 213px); }
+  height: calc( 90vh - 213px); }
   .chat-system .hamburger {
     display: none; }
   .chat-system .user-list-box {
@@ -63,7 +70,7 @@
       margin: auto;
       width: 100%;
       overflow: auto;
-      height: calc(100vh - 287px); }
+      height: calc( 90vh - 287px); }
       .chat-system .user-list-box .people .person {
         position: relative;
         width: 100%;
@@ -127,7 +134,7 @@
   background-image: url(../../img/bg.png);
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
-  height: calc(100vh - 214px); }
+  height: calc( 90vh - 214px); }
   .chat-system .chat-box .chat-not-selected {
     display: flex;
     height: 100%;
@@ -150,7 +157,7 @@
     display: none;
     position: absolute;
     width: 100%;
-    height: calc(100vh - 213px);
+    height: calc( 90vh - 213px);
     z-index: 4 !important;
     opacity: 0;
     transition: all 0.5s ease-in-out;
@@ -232,7 +239,7 @@
     display: none;
     position: absolute;
     width: 100%;
-    height: calc(100vh - 213px);
+    height: calc( 90vh - 213px);
     z-index: 4 !important;
     opacity: 0;
     transition: all 0.5s ease-in-out;
@@ -390,12 +397,13 @@
       position: relative;
       margin: auto;
       width: 100%;
-      height: calc(100% - 79px);
+      height:auto;
       overflow: auto; }
       .chat-system .chat-box .chat-box-inner .chat-conversation-box .chat {
         position: relative;
-        display: none;
-        overflow: hidden;
+        /*display: none;*/
+        overflow-y: auto;
+        overflow-x: hidden;
         padding: 30px 40px 0;
         -webkit-justify-content: flex-end;
         justify-content: flex-end;
@@ -451,7 +459,10 @@
               -webkit-animation-duration: 1.5s;
               animation-duration: 1.5s; }
   .chat-system .chat-box .chat-footer {
-    display: none; }
+    /*display: none; */
+    }
+
+
     .chat-system .chat-box .chat-footer.chat-active {
       display: block;
       padding: 6px 10px;
@@ -621,6 +632,11 @@
       width: 83px; } }
 
 @media (max-width: 767px) {
+  .chat{
+    height: calc(80vh - 260px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
   .chat-system .hamburger {
     padding: 7px 10px 7px 10px;
     font-size: 20px;
@@ -634,18 +650,41 @@
     z-index: 78;
     background-color: #515365;
     border-radius: 50%; }
+  .chat-system .user-list-box .people {
+    height: calc(80vh - 260px);
+
+  }
+
+  .chat-system .chat-box {
+    position: relative;
+    width: 100%;
+    height: 616px;
+    background-image: url(../../img/bg.png);
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+    height: calc( 90vh - 214px); }
   .chat-system .user-list-box {
     position: absolute;
     z-index: 40;
     right: -341px;
     width: 255px; }
     .chat-system .user-list-box.user-list-box-show {
+
       position: absolute;
       z-index: 34;
       right: 15px;
+      height: calc(80vh - 260px);
+
       border-radius: 0; }
   .chat-system .chat-box {
-    width: 100%; }
+    width: 100%;
+    height: calc(80vh - 260px);
+
+  }
+  .chat-system{
+    height: calc(80vh - 260px);
+
+  }
     .chat-system .chat-box .overlay-video-call .video-caller {
       height: 75px;
       width: 110px; } }

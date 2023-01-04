@@ -2486,7 +2486,7 @@ button, input, optgroup, select, textarea {
 }
 
 .chat{
-  height: calc(100vh - 260px);
+  height: calc(90vh - 260px);
   overflow-y: auto;
   overflow-x: hidden;
 }

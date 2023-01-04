@@ -88,6 +88,7 @@ import DetailCustomerAttachment from "../../pages/adminpages/report/DetailCustom
 import AddOrder from "../../pages/order/addOrder";
 import ShippingList from "../../pages/adminpages/Shipping/ShippingList";
 import InvoiceCreator from "../../utils/invoiceCreator";
+import Ticket from "../../pages/ticket/ticket_v2";
 const MainLayout = (props) => {
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
@@ -224,6 +225,7 @@ const MainLayout = (props) => {
                   {/* Ticket */}
 
 
+                  <Route path='ticket' element={<Ticket />} />
                   <Route path='ticket' element={<TicketList />} />
                   <Route path='newTicket' element={<NewTicket />} />
                   <Route path='message/:id/:title' element={<Message />} />
