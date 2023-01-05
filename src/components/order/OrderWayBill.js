@@ -73,10 +73,10 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
     }
     if (Shipping){ return (<div>
 
-        <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 ">
+        <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 "  >
             <label>اطلاعات حواله </label>
             {loading === false ?
-                <div className="containerT p-2">
+                <div className="containerT p-2 ">
                     <table className="table m-1 table-striped  fixed_header  ">
                         <thead className="text-center">
                         <tr>
