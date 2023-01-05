@@ -57,7 +57,7 @@ const UsedBarBariReport = () => {
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setEndDate( new Date(value.toDate().setHours(3,30,0,0)).toJSON())
+            setEndDate( new Date(value.toDate().setHours(27,30,0,0)).toJSON())
 
         }
     }

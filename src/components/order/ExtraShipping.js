@@ -72,9 +72,9 @@ const ExtraShipping = ({id ,modalIsOpen,closeModal }) => {
             >
 
 
-                <div className=" rounded  " style={{border:" 1px solid #bfc9d4" , width:'fit-content'}} >
+                <div className=" rounded  " style={{border:" 1px solid #bfc9d4" , width:'fit-content',}} >
 
-                    <div className="table-responsive p-2 table-fixed" style={{  display:"block", overflowY:'scroll', overflowX:'hidden',height:'350px', width:"100%"}}>
+                    <div className=" p-2 table-fixed" style={{  display:"block", overflowY:'scroll', overflowX:'hidden',height:'350px', width:"100%"}}>
                         <table
                             className="table table-bordered table-hover table-striped  mt-2  mb-4"  >
                             <thead >
