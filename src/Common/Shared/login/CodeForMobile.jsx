@@ -5,7 +5,7 @@ import { SetUserRole, verifyUser } from '../../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../services/userService';
-import { decodeToken } from '../../../utils/decodeToken';
+import { decodeToken } from '../../../Utils/decodeToken';
 import './customCss.css';
 import afra from './afra.jpg';
 import Countdown from 'react-countdown';

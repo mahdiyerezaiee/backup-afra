@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { LoginModelWithPass } from "../../../Common/models/loginModel";
-import { decodeToken } from './../../../utils/decodeToken';
+import { decodeToken } from '../../../Utils/decodeToken';
 
 const initialState :LoginModelWithPass={
  

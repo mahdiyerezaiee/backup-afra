@@ -4,7 +4,7 @@ import {GetAllProductSupply} from "../../../services/productSupplyService";
 import OrderEdit from "../../../pages/order/orderEdit";
 import OrderConfirmation from "./orderConfirmation";
 import Modal from "react-modal";
-import InvoiceCreator from "../../../utils/invoiceCreator";
+import InvoiceCreator from "../../../Utils/invoiceCreator";
 import {Link} from "react-router-dom";
 const customStyles = {
     content: {

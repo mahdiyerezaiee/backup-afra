@@ -7,7 +7,7 @@ import { Link, Routes,Route } from 'react-router-dom';
 import {useSelector} from "react-redux";
 import {GetAddress} from "../../services/addressService";
 import {HiArrowLeft} from "react-icons/hi"
-import  "../../utils/style.css"
+import  "../../Utils/style.css"
 const IdentityPannel = () => {
     const user=useSelector(state=>state.user);
 

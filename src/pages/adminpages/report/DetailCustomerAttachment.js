@@ -2,8 +2,8 @@ import {useParams} from "react-router-dom";
 import {GetAttachments} from "../../../services/attachmentService";
 import QueryString from "qs";
 import {useEffect, useState} from "react";
-import ImageFileUploader from "../../../utils/ImageFileUploader";
-import ImagePreviewer from "../../../utils/ImagePreviewer";
+import ImageFileUploader from "../../../Utils/ImageFileUploader";
+import ImagePreviewer from "../../../Utils/ImagePreviewer";
 
 const DetailCustomerAttachment = () => {
   const attachmet=window.globalThis.stie_att

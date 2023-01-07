@@ -1,4 +1,4 @@
-import ImageFileUploader from "../../../utils/ImageFileUploader";
+import ImageFileUploader from "../../../Utils/ImageFileUploader";
 import config from '../../../services/config.json'
 
 const attachmet=window.globalThis.stie_att

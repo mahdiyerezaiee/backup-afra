@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import FinancialConfirmation from "./FinancialConfirmation";
 import { GetProductSupplyConditions } from '../../../services/ProductSupplyConditionService';
 import AddAdressCustomerForOrder from '../common/addAdressCustomerForOrder';
-import ExcelFileUploader from '../../../utils/ExcelFileUploader';
+import ExcelFileUploader from '../../../Utils/ExcelFileUploader';
 import { PaymentStructureEnums } from '../../Enums/PaymentStructureEnums';
 import TakhsisTable from "../form/TakhsisTable";
 import SelectColumnFilter from "../form/ColumnFilter";

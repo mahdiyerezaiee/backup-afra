@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useRef, useState, useCallback } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
-import { loginUser } from "../../../services/userService";
+import { loginUser } from "../../services/userService";
 import { toast } from "react-toastify";
-import afra from "./afra.jpg";
-import { decodeToken } from '../../../Utils/decodeToken';
+import afra from "../login/afra.jpg";
+import { decodeToken } from '../../Utils/decodeToken';
 import { AiOutlineReload } from "react-icons/ai"
 import Captcha from "react-captcha-code";
 import FadeLoader from "react-spinners/FadeLoader";

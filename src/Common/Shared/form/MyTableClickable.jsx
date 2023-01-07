@@ -3,8 +3,8 @@ import {useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect, useEx
 import {GetAllProductSupply} from "../../../services/productSupplyService";
 import {GetShoppings} from "../../../services/ShippingService";
 import ShippingSelected from "../common/shippingSelected";
-import PageSizeTable from "../../../utils/PageSize";
-import Pagination from "../../../utils/pagination";
+import PageSizeTable from "../../../Utils/PageSize";
+import Pagination from "../../../Utils/pagination";
 
 const LazyShippingCom=React.lazy(()=>import( "../common/ShippingsOrder"))
 

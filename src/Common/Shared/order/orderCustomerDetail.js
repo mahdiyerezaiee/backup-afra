@@ -2,9 +2,9 @@ import {useEffect, useState} from "react";
 import {GetAllProductSupply} from "../../../services/productSupplyService";
 import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
 import './style.css'
-import InvoiceCreator from "../../../utils/invoiceCreator";
+import InvoiceCreator from "../../../Utils/invoiceCreator";
 import Modal from "react-modal";
-import ImageFileUploader from "../../../utils/ImageFileUploader";
+import ImageFileUploader from "../../../Utils/ImageFileUploader";
 import {OrderStatus} from "../../Enums/OrderStatusEnums";
 import { editOrder } from '../../../services/orderService';
 import { toast } from 'react-toastify';

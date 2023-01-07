@@ -11,10 +11,10 @@ import Pdf from "react-to-pdf";
 import {GetAddress} from "../../services/addressService";
 import {GetShoppingContracts, GetShoppings} from "../../services/ShippingService";
 import {DeliveryMethods} from "../../Common/Enums/DeliveryMethodsEnums";
-import ImagePreviewer from './../../utils/ImagePreviewer';
+import ImagePreviewer from '../../Utils/ImagePreviewer';
 import { GetAttachments } from "../../services/attachmentService";
 import  QueryString  from 'qs';
-import ImageFileUploader from './../../utils/ImageFileUploader';
+import ImageFileUploader from '../../Utils/ImageFileUploader';
 
 
 

@@ -1,8 +1,8 @@
 import React, { Fragment,useEffect,useState } from 'react'
 import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } from 'react-table';
 
-import PageSizeTable from "../../../utils/PageSize";
-import Pagination from "../../../utils/pagination";
+import PageSizeTable from "../../../Utils/PageSize";
+import Pagination from "../../../Utils/pagination";
 const IndeterminateCheckbox = React.forwardRef(
     ({ indeterminate, ...rest }, ref) => {
         const defaultRef = React.useRef()

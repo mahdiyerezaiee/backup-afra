@@ -13,7 +13,7 @@ import { GetShoppingContracts, GetShoppings } from "../../services/ShippingServi
 import { DeliveryMethods } from "../../Common/Enums/DeliveryMethodsEnums";
 import QueryString from 'qs';
 import { GetAttachments } from "../../services/attachmentService";
-import ImagePreviewer from "../../utils/ImagePreviewer";
+import ImagePreviewer from "../../Utils/ImagePreviewer";
 
 
 

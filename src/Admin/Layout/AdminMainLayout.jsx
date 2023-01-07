@@ -86,7 +86,7 @@ import OrdersReports from "../../pages/adminpages/report/OrdersReports";
 import DetailCustomerAttachment from "../../pages/adminpages/report/DetailCustomerAttachment";
 import AddOrder from "../../pages/order/addOrder";
 import ShippingList from "../../pages/adminpages/Shipping/ShippingList";
-import InvoiceCreator from "../../utils/invoiceCreator";
+import InvoiceCreator from "../../Utils/invoiceCreator";
 import Ticket from "../../pages/ticket/ticket_v2";
 import { addUser } from '../../store/Slice/user/userSlice';
 import { userRoles } from '../../store/Slice/user/userRole/userRoleSlice';

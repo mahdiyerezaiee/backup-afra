@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Router, Routes,Navigate, HashRouter } from 'react
 import { useSelector, useDispatch } from 'react-redux';
 import AdminPannel from './AdminPannel';
 import Login from '../Common/Shared/login/Login';
-import { decodeToken } from '../utils/decodeToken';
+import { decodeToken } from '../Utils/decodeToken';
 import { RefreshToken } from '../services/userService';
 import CodeForMobile from '../Common/Shared/login/CodeForMobile';
 import SubmitInfo from '../Common/Shared/login/SubmitInfo';
