@@ -21,7 +21,6 @@ import { useProSidebar } from 'react-pro-sidebar';
 const Header = ({ collapsed, handelChange }) => {
     const ref = useRef()
     const { collapseSidebar } = useProSidebar();
-
     const refNews = useRef()
     const Navigate = useNavigate()
     const user = useSelector(state => state.user);
