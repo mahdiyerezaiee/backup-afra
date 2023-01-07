@@ -216,7 +216,7 @@ const UserList = () => {
 
     }, [getData])
     const addNewUserHandler = () => {
-        navigate('/adduser')
+        navigate('/admin/adduser')
     }
     const navigate = useNavigate()
 
@@ -229,7 +229,7 @@ const UserList = () => {
 
     }
     const editInfoHandler = (id) => {
-        navigate(`/editInfo/${id}`)
+        navigate(`/admin/editInfo/${id}`)
     }
     const editHandlerGroup = (id) => {
         setModalId(id)

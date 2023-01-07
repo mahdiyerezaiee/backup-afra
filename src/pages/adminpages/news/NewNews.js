@@ -36,7 +36,7 @@ const addNews = async ()=>{
             draggable: true,
             progress: undefined
         });
-        navigator('/user-news')
+        navigator('/admin/user-news')
 
 
     }
@@ -92,7 +92,7 @@ return(
                             /></button>
                         </div>
                         <div className='col-lg-6 '>
-                            <NavLink to='/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
+                            <NavLink to='user-news' className="btn btn-danger float-right">بازگشت</NavLink>
                         </div>
                     </div>
 

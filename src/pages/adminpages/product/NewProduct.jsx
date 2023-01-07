@@ -139,7 +139,7 @@ const NewProduct = () => {
                     draggable: true,
                     progress: undefined
                 });
-                navigate('/productList')
+                navigate('/admin/productList')
 
             }
 
@@ -176,7 +176,7 @@ const NewProduct = () => {
                     draggable: true,
                     progress: undefined
                 });
-                navigate('/productList')
+                navigate('/admin/productList')
                 
                }
 
@@ -312,7 +312,7 @@ const NewProduct = () => {
                                 /></button>
                             </div>
                             <div className='col-6 '>
-                                <NavLink to='/productList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='productList' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 

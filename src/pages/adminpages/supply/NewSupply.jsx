@@ -151,7 +151,7 @@ const NewSupply = () => {
                     draggable: true,
                     progress: undefined
                 });
-                navigate('/supply')
+                navigate('/admin/supply')
             }
             setLoading(false)
 
@@ -355,7 +355,7 @@ const NewSupply = () => {
 
                             </div>
                             <div className='col-lg-6 col-md-6 col-sm-11 '>
-                                <NavLink to='/supply' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='supply' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
                     </form>

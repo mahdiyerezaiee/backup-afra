@@ -150,7 +150,7 @@ const EditWareHouse = () => {
                
                 setAddressForWare();
                 setAttributevalueforHajm();
-                navigator('/warehouselist')
+                navigator('/admin/warehouselist')
             }
             setLoading(false)
         } catch (error) {
@@ -231,7 +231,7 @@ const EditWareHouse = () => {
                                     /></button>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 '>
-                                    <NavLink to='/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>

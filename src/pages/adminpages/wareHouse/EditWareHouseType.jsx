@@ -55,7 +55,7 @@ const EditWareHouseType = () => {
                 draggable: true,
                 progress: undefined
             })
-            navigate('/EditWareHouseTypeName')
+            navigate('/admin/EditWareHouseTypeName')
         }
         setLoading(false)
         } catch (error) {
@@ -94,7 +94,7 @@ const EditWareHouseType = () => {
                                     /></button>
                                 </div>
                                 <div className='col-6 '>
-                                    <NavLink to='/warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>

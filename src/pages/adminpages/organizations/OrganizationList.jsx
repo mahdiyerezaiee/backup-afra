@@ -339,12 +339,12 @@ const OrganizationList = () => {
 
     }, [getData])
     const addNewOrganizationHandler = () => {
-        navigate('/addorganization')
+        navigate('/admin/addorganization')
     }
     const navigate = useNavigate()
 
     const editHandler = (id) => {
-        navigate(`/editorganization/${id}`)
+        navigate(`/admin/editorganization/${id}`)
     }
     const deletHandler = async () => {
         try {

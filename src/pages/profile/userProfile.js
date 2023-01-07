@@ -35,13 +35,13 @@ const UserProfile = () => {
     setAddress(data.result.addresses);
   }
   const navitage = () => {
-    Navigate("/editProfile")
+    Navigate("/admin/editProfile")
   }
   const navigateOrganization = () => {
-    Navigate(`/editorganization/${user.organizationId}`)
+    Navigate(`/admin/editorganization/${user.organizationId}`)
   }
   const navitageAddress = (id) => {
-    Navigate(`/editAddress/${id}`)
+    Navigate(`/admin/editAddress/${id}`)
   }
   const getOrganiz = async () => {
 

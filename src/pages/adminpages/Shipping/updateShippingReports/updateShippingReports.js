@@ -204,7 +204,7 @@ if(!clicked){
                             <div className='row justify-content-between mt-5 mb-1'>
 
                                 <div className='col-6 '>
-                                    <NavLink to='/orderList' className="btn btn-danger float-left">بازگشت</NavLink>
+                                    <NavLink to='orderList' className="btn btn-danger float-left">بازگشت</NavLink>
                                 </div>
                                 <div className='col-6 '>
                                     <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit}>تایید</button>

@@ -43,7 +43,7 @@ const NewCustomerGroup = () => {
                 draggable: true,
                 progress: undefined
             })
-            navigate('/customergroup')
+            navigate('/admin/customergroup')
         }
         } catch (error) {
             console.log(error);
@@ -85,7 +85,7 @@ const NewCustomerGroup = () => {
                                         /></button>
                                 </div>
                                 <div className='col-6 '>
-                                    <NavLink to='/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='customergroup' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>

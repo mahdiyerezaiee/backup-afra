@@ -87,7 +87,7 @@ const EditShippingCompany = () => {
                     draggable: true,
                     progress: undefined
                 });
-                navigate('/shippingcompanyList')
+                navigate('/admin/shippingcompanyList')
 
             }
 
@@ -171,7 +171,7 @@ setLoading(false)
                                     size={15}
                                 /></button>                            </div>
                             <div className='col-6 '>
-                                <NavLink to='/shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 

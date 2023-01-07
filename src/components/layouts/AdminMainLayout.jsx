@@ -2,81 +2,81 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Footer from '../common/Footer';
 import SideNavbar from '../navs/SideNavbar';
-import Header from './../common/Header';
-import IdentityPannel from './../IdentityRegister/IdentityPannel';
-import AddresForm from './../IdentityRegister/AddresForm';
-import PersonIdetity from './../IdentityRegister/PersonIdetity';
-import PersonBankAccount from './../IdentityRegister/PersonBankAccount';
-import { GetUserInfo, GetUsersRoles } from './../../services/userService';
+import Header from '../common/Header';
+import IdentityPannel from '../IdentityRegister/IdentityPannel';
+import AddresForm from '../IdentityRegister/AddresForm';
+import PersonIdetity from '../IdentityRegister/PersonIdetity';
+import PersonBankAccount from '../IdentityRegister/PersonBankAccount';
+import { GetUserInfo, GetUsersRoles } from '../../services/userService';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductList from '../../pages/adminpages/product/ProductList';
-import NewProduct from './../../pages/adminpages/product/NewProduct';
+import NewProduct from '../../pages/adminpages/product/NewProduct';
 import NewWareHouse from '../../pages/adminpages/wareHouse/NewWareHouse';
 import WareHouseList from '../../pages/adminpages/wareHouse/WareHouseList';
-import UserList from './../../pages/adminpages/users/UserList';
+import UserList from '../../pages/adminpages/users/UserList';
 
-import UserProfile from './../../pages/profile/userProfile';
-import EditProfile from './../../pages/profile/editProfile';
+import UserProfile from '../../pages/profile/userProfile';
+import EditProfile from '../../pages/profile/editProfile';
 import EditProduct from "../../pages/adminpages/product/editProduct";
 import EditWareHouse from "../../pages/adminpages/wareHouse/EditWareHouse";
-import AttributeCreator from './../../pages/adminpages/setting/AttributeCreator';
+import AttributeCreator from '../../pages/adminpages/setting/AttributeCreator';
 import NewsAdmin from "../../pages/adminpages/news/newsAdmin";
 import NewNews from "../../pages/adminpages/news/NewNews"
 import EditNews from "../../pages/adminpages/news/editNews"
-import ProductGroup from './../../pages/adminpages/product/ProductGroup';
+import ProductGroup from '../../pages/adminpages/product/ProductGroup';
 import NewProductGroup from '../../pages/adminpages/product/NewProductGroup';
-import EditUserRole from './../../pages/adminpages/users/editUserRole';
-import ProductSupply from './../../pages/adminpages/sales/productSupply/ProductSupplyList';
-import AddProductSupplyToSalesBoard from './../../pages/adminpages/sales/productSupply/AddProductSupplyToSalesBoard';
-import TicketList from './../../pages/ticket/ticketList';
-import NewTicket from './../../pages/ticket/newTicket';
-import Message from './../../pages/ticket/message';
-import { CustomersGroup } from './../../pages/adminpages/customers/CustomersGroup';
-import CustomersList from './../../pages/adminpages/customers/CustomersList';
-import NewCustomerGroup from './../../pages/adminpages/customers/NewCustomerGroup';
-import QlickViewReport from './../../pages/adminpages/transport/QlickViewReport';
-import BazargahList from './../../pages/adminpages/sales/Bazargah/BazargahList';
-import Setting from './../../pages/setting/setting';
-import Dashboard from './../common/Dashboard';
+import EditUserRole from '../../pages/adminpages/users/editUserRole';
+import ProductSupply from '../../pages/adminpages/sales/productSupply/ProductSupplyList';
+import AddProductSupplyToSalesBoard from '../../pages/adminpages/sales/productSupply/AddProductSupplyToSalesBoard';
+import TicketList from '../../pages/ticket/ticketList';
+import NewTicket from '../../pages/ticket/newTicket';
+import Message from '../../pages/ticket/message';
+import { CustomersGroup } from '../../pages/adminpages/customers/CustomersGroup';
+import CustomersList from '../../pages/adminpages/customers/CustomersList';
+import NewCustomerGroup from '../../pages/adminpages/customers/NewCustomerGroup';
+import QlickViewReport from '../../pages/adminpages/transport/QlickViewReport';
+import BazargahList from '../../pages/adminpages/sales/Bazargah/BazargahList';
+import Setting from '../../pages/setting/setting';
+import Dashboard from '../common/Dashboard';
 
 import ProductSupplyEdit from '../../pages/adminpages/sales/productSupply/ProductSupplyEdit';
-import EditUserInfo from './../../pages/adminpages/users/editUserInfo';
-import AddNewUser from './../../pages/adminpages/users/addNewUser';
-import EditCustomerGroup from './../../pages/adminpages/customers/EditCustomerGroup';
-import OrderList from './../../pages/order/orderList';
-import OrderDetail from './../../pages/order/orderDetail';
-import NewsPage from './../../pages/news/newsPage';
-import SupplierList from './../../pages/adminpages/supply/SupplierList';
-import NewSupplier from './../../pages/adminpages/supply/NewSupplier';
-import EditSupplier from './../../pages/adminpages/supply/EditSupplier';
+import EditUserInfo from '../../pages/adminpages/users/editUserInfo';
+import AddNewUser from '../../pages/adminpages/users/addNewUser';
+import EditCustomerGroup from '../../pages/adminpages/customers/EditCustomerGroup';
+import OrderList from '../../pages/order/orderList';
+import OrderDetail from '../../pages/order/orderDetail';
+import NewsPage from '../../pages/news/newsPage';
+import SupplierList from '../../pages/adminpages/supply/SupplierList';
+import NewSupplier from '../../pages/adminpages/supply/NewSupplier';
+import EditSupplier from '../../pages/adminpages/supply/EditSupplier';
 import NewSupply from '../../pages/adminpages/supply/NewSupply';
 import NewsList from "../../pages/news/NewsList";
-import SupplyList from './../../pages/adminpages/supply/SupplyList';
-import GroupCreator from './../../pages/adminpages/setting/GroupCreator';
+import SupplyList from '../../pages/adminpages/supply/SupplyList';
+import GroupCreator from '../../pages/adminpages/setting/GroupCreator';
 import EditeSupply from '../../pages/adminpages/supply/EditSupply';
 import EditProductGroup from '../../pages/adminpages/product/EditProductGroup';
 import OrganizationList from '../../pages/adminpages/organizations/OrganizationList';
-import NewOrganizaion from './../../pages/adminpages/organizations/NewOrganizaion';
-import EditOrganizaion from './../../pages/adminpages/organizations/EditOrganization';
+import NewOrganizaion from '../../pages/adminpages/organizations/NewOrganizaion';
+import EditOrganizaion from '../../pages/adminpages/organizations/EditOrganization';
 import WareHouseType from '../../pages/adminpages/wareHouse/WareHouseType';
 import NewWareHouseType from '../../pages/adminpages/wareHouse/NewWareHouseType';
 import EditWareHouseType from '../../pages/adminpages/wareHouse/EditWareHouseType';
 import EditCustomer from "../../pages/adminpages/customers/EditCustomer";
-import Logout from './../login/Logout';
+import Logout from '../login/Logout';
 import ShippingCompanyList from "../../pages/adminpages/Shipping/ShippingCompany/ShippingCompanyList";
 import NewShippingCompany from "../../pages/adminpages/Shipping/ShippingCompany/ShippimgCompanyNew";
 import ShippingContractList from "../../pages/adminpages/Shipping/ShippingContracts/ShippingContractList";
 import NewShippingContract from "../../pages/adminpages/Shipping/ShippingContracts/ShippingContractNew";
 import EditShippingContract from "../../pages/adminpages/Shipping/ShippingContracts/ShippingContractEdit";
-import EditShippingCompany from './../../pages/adminpages/Shipping/ShippingCompany/ShippingCompanyEdit';
-import EditCustomerGroupName from './../../pages/adminpages/customers/EditCustomerGroupName';
-import EditProductGroupName from './../../pages/adminpages/product/EditProductGroupName';
-import EditWareHouseTypeName from './../../pages/adminpages/wareHouse/EditWareHouseTypeName';
+import EditShippingCompany from '../../pages/adminpages/Shipping/ShippingCompany/ShippingCompanyEdit';
+import EditCustomerGroupName from '../../pages/adminpages/customers/EditCustomerGroupName';
+import EditProductGroupName from '../../pages/adminpages/product/EditProductGroupName';
+import EditWareHouseTypeName from '../../pages/adminpages/wareHouse/EditWareHouseTypeName';
 import OrderCustomer from '../../pages/customerpages/OrderCustomer';
 import NotFound from "../common/notFound";
 import UpdateShippingReports from "../../pages/adminpages/Shipping/updateShippingReports/updateShippingReports";
-import OrderDetailTest from './../../pages/order/orderDetailtest2';
-import CustomerOrderDetailTest from './../../pages/customerpages/customerOrderDetailTest';
+import OrderDetailTest from '../../pages/order/orderDetailtest2';
+import CustomerOrderDetailTest from '../../pages/customerpages/customerOrderDetailTest';
 import UpdateAllShiping from '../../pages/adminpages/Shipping/updateShippingReports/UpdateAllShiping';
 import EditAddress from "../../pages/profile/editAddress";
 import ProceessAttachments from "../../pages/adminpages/report/ProceessAttachments";
@@ -91,7 +91,7 @@ import Ticket from "../../pages/ticket/ticket_v2";
 import { addUser } from '../../store/Slice/user/userSlice';
 import { userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
 
-const MainLayout = (props) => {
+const AdminMainLayout = (props) => {
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
   const refreshPage = () => {
@@ -146,11 +146,11 @@ const MainLayout = (props) => {
               <div className="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                 <Routes>
                   <Route path="404" element={<NotFound />} />
-                  <Route path="*" element={<Navigate to="/404" replace />} />
+                  <Route path="*" element={<Navigate to="404" replace />} />
                   {/* dashboard */}
 
-                  <Route path='dashboard' element={<Dashboard />} />
-                  <Route path='/' element={<Navigate to="dashboard" replace />} />
+                  <Route path='/' element={<Dashboard />} />
+                  <Route path='/' element={<Navigate to="/" replace />} />
 
 
                   {/* useORCustomer  Oganizations*/}
@@ -290,4 +290,4 @@ const MainLayout = (props) => {
 
   )
 }
-export default MainLayout;
+export default AdminMainLayout;

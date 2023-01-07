@@ -11,7 +11,7 @@ const ProceessAttachments = () => {
 
     const [report ,setReport] = useState([])
     const showDetial = (id) => {
-     Navigate(`/customerAttachment/${id}`)
+     Navigate(`/admin/customerAttachment/${id}`)
     }
     const getBulkJob=(selected)=>{
 
@@ -26,7 +26,7 @@ const ProceessAttachments = () => {
     }
   }
     const editInfoHandler = (id) => {
-        Navigate(`/editInfo/${id}`)
+        Navigate(`/admin/editInfo/${id}`)
     }
   useEffect(()=>{
       GetProcessAtt()

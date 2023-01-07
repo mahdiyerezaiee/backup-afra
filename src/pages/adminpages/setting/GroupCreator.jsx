@@ -73,7 +73,7 @@ const GroupCreator = () => {
                                 <button type="submit" className="btn btn-success float-left" onClick={submit} >تایید</button>
                             </div>
                             <div className='col-lg-6 '>
-                                <NavLink to='/dashboard' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='/admin' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 

@@ -209,7 +209,7 @@ const WareHouseType = () => {
         GetWareHouseGroup();
     },[])
     const editHandler = (id) => {
-        navigate(`/EditWareHouseTypeName/${id}`)
+        navigate(`/admin/EditWareHouseTypeName/${id}`)
     }
     const deletHandler =async () => {
         try {
@@ -265,7 +265,7 @@ const WareHouseType = () => {
     ])
     const data=useMemo(()=>WarehouseG);
     const handelForm=()=>{
-        navigate('/newwarehousetype')
+        navigate('/admin/newwarehousetype')
     }
 
     if(WarehouseG && WarehouseG.length >0){

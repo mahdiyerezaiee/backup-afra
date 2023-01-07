@@ -325,11 +325,11 @@ setPageNumber(0)
     }, [getData])
 
     const editHandler = (id) => {
-        navigate(`/editshippingCompany/${id}`)
+        navigate(`/admin/editshippingCompany/${id}`)
     }
     const navigate = useNavigate()
     const formHandler = () => {
-        navigate("/newshippingcompany")
+        navigate("/admin/newshippingcompany")
     }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },

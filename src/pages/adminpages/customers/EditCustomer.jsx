@@ -77,7 +77,7 @@ const EditCustomer = () => {
         }catch (err){
             console.log(err)
         }
-        navigate('/customerlist')
+        navigate('/admin/customerlist')
 
     }
     const getOrganizationId = async () => {
@@ -248,7 +248,7 @@ const EditCustomer = () => {
                                                 <button type="submit" className="btn btn-success " disabled={ validator.current.allValid()? false: true}  onClick={submit}>تایید</button>}
                                         </div>
                                         <div className='col-6 '>
-                                            <NavLink to='/customerlist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                            <NavLink to='customerlist' className="btn btn-danger float-right">بازگشت</NavLink>
                                         </div>
                                     </div>
                                 </div>
