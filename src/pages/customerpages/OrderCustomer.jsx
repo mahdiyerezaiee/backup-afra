@@ -44,7 +44,7 @@ const OrderCustomer = () => {
   const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
   const [orderId, setOrderId] = useState(0)
   let FilnalArr = [];
-  const roles = useSelector(state => state.userRole)
+  const roles = useSelector(state => state.roles)
   const Navigate = useNavigate()
   const [selectedRows, setSelectedRows] = useState([])
   const [modalIsOpen, setIsOpen] = useState(false);

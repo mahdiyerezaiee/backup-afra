@@ -1,7 +1,6 @@
 import React,{useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { clearUser,clearUserInfo, clearUserRoles } from '../../actions/user';
 import Login from './Login';
 
 
@@ -28,8 +27,7 @@ const redirectTologin=()=>{
         localStorage.removeItem('username');
         localStorage.removeItem('mobile')
        localStorage.clear()
-       dispatch(clearUser())
-       dispatch(clearUserInfo())
+  
       
         history("/login");
 }

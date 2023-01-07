@@ -30,8 +30,8 @@ const customStyles = {
 }
 
 const SalesBoardForCustomer = () => {
-    const user = useSelector(state => state.userInfo);
-    const userRole = useSelector(state => state.userRole);
+    const user = useSelector(state => state.user);
+    const userRole = useSelector(state => state.roles);
     const [loading, setLoading] = useState(false);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);

@@ -14,18 +14,22 @@ import { BiX } from "react-icons/bi"
 import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
 import { ClipLoader } from "react-spinners";
 import { Link } from 'react-router-dom';
+import { useProSidebar } from 'react-pro-sidebar';
+
 
 
 const Header = ({ collapsed, handelChange }) => {
     const ref = useRef()
+    const { collapseSidebar } = useProSidebar();
+
     const refNews = useRef()
     const Navigate = useNavigate()
-    const user = useSelector(state => state.userInfo);
+    const user = useSelector(state => state.user);
     const [cartShopping, setCartShopping] = useState([])
     const [theme, setTheme] = useState(false)
     const [show, setShow] = useState(false)
     const [showNews, setShowNews] = useState(false)
-    const roles = useSelector(state => state.userRole);
+    const roles = useSelector(state => state.roles);
     const [loading, setLoading] = useState(false);
 
     const handleHeaderClick = (event) => {
@@ -167,8 +171,8 @@ const Header = ({ collapsed, handelChange }) => {
                 </ul>
 
                 <div className="block ">
-                    {collapsed ? <GiHamburgerMenu size="2rem" onClick={handelChange} />
-                        : <BiX size="2rem" onClick={handelChange} />
+                {collapsed ? <GiHamburgerMenu size="2rem" onClick={() => collapseSidebar()} />
+                        : <BiX size="2rem" onClick={() => collapseSidebar()} />
                     }
                 </div>
                 <div className="mr-1 ml-1">{""}{dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>

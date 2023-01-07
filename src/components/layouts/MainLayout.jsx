@@ -8,7 +8,6 @@ import AddresForm from './../IdentityRegister/AddresForm';
 import PersonIdetity from './../IdentityRegister/PersonIdetity';
 import PersonBankAccount from './../IdentityRegister/PersonBankAccount';
 import { GetUserInfo, GetUsersRoles } from './../../services/userService';
-import { addUserInfo, addUserRoles } from '../../actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductList from '../../pages/adminpages/product/ProductList';
 import NewProduct from './../../pages/adminpages/product/NewProduct';
@@ -89,6 +88,9 @@ import AddOrder from "../../pages/order/addOrder";
 import ShippingList from "../../pages/adminpages/Shipping/ShippingList";
 import InvoiceCreator from "../../utils/invoiceCreator";
 import Ticket from "../../pages/ticket/ticket_v2";
+import { addUser } from '../../store/Slice/user/userSlice';
+import { userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
+
 const MainLayout = (props) => {
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
@@ -99,27 +101,32 @@ const MainLayout = (props) => {
   async function fetchApi() {
     const { data, status } = await GetUserInfo();
     if (status === 200) {
-      dispatch(addUserInfo(data.result.customer));
+      dispatch(addUser(data.result.customer));
     }
   }
-  const userInfo = useSelector(state => state.userInfo);
-  const id = userInfo.id;
-  const getRole = async () => {
+  
+  const userId = localStorage.getItem('connect')
+  const getUserRole = async () => {
+
+
+    const { data, status } = await GetUsersRoles(Number(userId))
     try {
-      const { data, status } = await GetUsersRoles(localStorage.getItem('connect'));
       if (status === 200) {
-        dispatch(addUserRoles(data.result.userRoleIds));
-        setIsloading(false);
+
+         dispatch(userRoles(data.result.userRoleIds))
+
+
       }
     } catch (error) {
-      refreshPage();
-      console.log(error)
-    }
-  }
+      console.log(error);
 
+    }
+
+
+  }
   useEffect(() => {
     fetchApi();
-    getRole();
+    getUserRole();
     }, [])
 
   const [collapsed, setCollapsed] = useState(true);

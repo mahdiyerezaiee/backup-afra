@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 
 const EditAddress = () => {
     const params =useParams()
-    const user=useSelector(state=>state.userInfo);
+    const user=useSelector(state=>state.user);
     const navigate=useNavigate()
     const [province, setProvince] = useState([]);
     const[provinceId,setProvinceId]=useState(0);

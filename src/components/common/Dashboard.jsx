@@ -7,7 +7,7 @@ import DashbordAdmin from './../../pages/adminpages/dashboard/dashbordAdmin';
 
 
 const Dashboard = () => {
-    const roles=useSelector(state => state.userRole);
+    const roles=useSelector(state => state.roles);
 
   if (roles.includes(1)) {
     return (

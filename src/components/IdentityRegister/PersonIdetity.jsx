@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { GetOrganisationCode, SetOrganisation } from './../../services/organisationService';
 import { setCustomerInfo } from '../../services/customerService';
 import { GetUserInfo } from './../../services/userService';
-import { addUserInfo } from '../../actions/user';
 
 
 const PersonIdetity = () => {
@@ -18,7 +17,7 @@ const PersonIdetity = () => {
     const [userData, setUserData] = useState({});
     const [Click, setClick] = useState(false);
     const [check, setChek] = useState(false);
-    const userinfo = useSelector(state => state.userInfo);
+    const userinfo = useSelector(state => state.user);
     const dispatch = useDispatch();
     const [nationalId, SetnationalId] = useState('');
     const [formDisable, setformDisable] = useState(true);
@@ -106,7 +105,6 @@ const PersonIdetity = () => {
                 });
                 const { data, status } = await GetUserInfo();
 
-                dispatch(addUserInfo(data.result.customer));
 navigate('/identitypannel')
             }
 

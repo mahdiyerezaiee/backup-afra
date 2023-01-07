@@ -7,7 +7,7 @@ import afra from './afra.jpg'
 const SubmitInfo=()=>
 
 {
-    const customer=useSelector(state=>state.customer);
+    const customer=useSelector(state=>state.user);
     const dispatch=useDispatch();
     const[firstName,setfirstName]=useState('');
     const[lastName,setlastName]=useState('');

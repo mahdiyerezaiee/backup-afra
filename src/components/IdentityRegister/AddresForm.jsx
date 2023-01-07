@@ -39,7 +39,7 @@ const AddresForm = () => {
         }
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
-    const userinfo = useSelector(state => state.userinfo);
+    const userinfo = useSelector(state => state.user);
     const [fullAddress, setFulAddress] = useState('');
     const [postalCode, setpostalCode] = useState('');
     const [receiverTel, setreceiverTel] = useState('');

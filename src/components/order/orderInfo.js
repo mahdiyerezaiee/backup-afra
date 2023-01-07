@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 
 const OrderInfo = ({orderWeight,TakhsisWeight,havalehWeight,barbariWeight}) => {
-    const roles = useSelector(state => state.userRole)
+    const roles = useSelector(state => state.roles)
     var formatter = new Intl.NumberFormat("en", {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,

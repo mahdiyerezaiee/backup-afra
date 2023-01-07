@@ -6,7 +6,7 @@ import {Navigate, NavLink, useNavigate, useParams} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 
 const EditNews = () => {
-    const user = useSelector(state => state.userInfo);
+    const user = useSelector(state => state.user);
     const params = useParams()
     const navigate = useNavigate()
     const [newss, setNewss] = useState([])

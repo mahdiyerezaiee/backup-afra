@@ -7,7 +7,7 @@ import {Card ,Button} from "react-bootstrap";
 const Message = () => {
     let userName = localStorage.getItem("connect")
 
-    const user = useSelector(state => state.userInfo);
+    const user = useSelector(state => state.user);
 const [newMessage ,setNewMessage]=useState("")
     const params = useParams()
     const [getmessage , setGetMessage] = useState([])

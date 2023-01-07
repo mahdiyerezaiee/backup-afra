@@ -6,7 +6,7 @@ import SimpleReactValidator from "simple-react-validator";
 import {ClipLoader} from "react-spinners";
 
 const NewTicket = () => {
-    const user = useSelector(state => state.userInfo);
+    const user = useSelector(state => state.user);
     const [loading, setLoading] = useState(false);
 
 

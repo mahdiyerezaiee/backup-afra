@@ -30,7 +30,7 @@ const NewsAdmin = () => {
     const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
     const navigate = useNavigate()
-    const user = useSelector(state => state.userInfo);
+    const user = useSelector(state => state.user);
     const [modalIsOpen, setIsOpen] = useState(false);
 const[id,setId]=useState(0)
     const [news, setNews] = useState([])

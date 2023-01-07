@@ -6,7 +6,6 @@ import { loginUser } from "../../services/userService";
 import { toast } from "react-toastify";
 import afra from "../login/afra.jpg";
 import { decodeToken } from '../../utils/decodeToken';
-import { addUser } from '../../actions/user';
 import { AiOutlineReload } from "react-icons/ai"
 import Captcha from "react-captcha-code";
 import FadeLoader from "react-spinners/FadeLoader";
@@ -95,7 +94,6 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
 
                         const detoken = decodeToken(data.result.token);
                         localStorage.setItem('connect', detoken.ID);
-                        dispatch(addUser(detoken));
 
                         toast.success("ورود موفقیت آمیز بود", {
                             position: "top-right",
