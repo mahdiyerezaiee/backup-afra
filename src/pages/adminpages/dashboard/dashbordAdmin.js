@@ -35,7 +35,7 @@ const DashbordAdmin = () => {
           <div className=" ">
               <ReportBlock/>
           </div>
-          <div className="reveal fade-right">
+          <div className="active fade-right">
               <ChartMain />
           </div>
           <div className="reveal fade-bottom">
