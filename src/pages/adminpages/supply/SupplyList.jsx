@@ -9,15 +9,15 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { SupplyTypesEnums } from '../../../Common/Enums/SupplyTypesEnums';
 import Modal from 'react-modal';
-import MyTable from '../../../Common/Shared/form/MyTable';
+import MyTable from '../../../Common/Shared/Form/MyTable';
 
 
 import { DeleteProduct, GetAllProducts, getEditProduct, SetProduct } from "../../../services/productService";
 import { toast } from "react-toastify";
 import { GetAllWareHouses } from "../../../services/wareHouseService";
 import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
-import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
-import AdvancedSearch from "../../../Common/Shared/common/AdvancedSearch";
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
+import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
 import Select from "react-select";
 import { GetDataWithSearchOrder } from "../../../services/orderService";
 import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";

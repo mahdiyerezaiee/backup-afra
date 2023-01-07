@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import Footer from '../../Common/Shared/common/Footer';
+import Footer from '../../Common/Shared/Common/Footer';
 import SideNavbar from '../Nav/SideNavbar';
-import Header from '../../Common/Shared/common/Header';
+import Header from '../../Common/Shared/Common/Header';
 import IdentityPannel from '../../Client/IdentityRegister/IdentityPannel';
 import AddresForm from '../../Client/IdentityRegister/AddresForm';
 import PersonIdetity from '../../Client/IdentityRegister/PersonIdetity';
@@ -37,7 +37,7 @@ import NewCustomerGroup from '../../pages/adminpages/customers/NewCustomerGroup'
 import QlickViewReport from '../../pages/adminpages/transport/QlickViewReport';
 import BazargahList from '../../pages/adminpages/sales/Bazargah/BazargahList';
 import Setting from '../../pages/setting/setting';
-import Dashboard from '../../Common/Shared/common/Dashboard';
+import Dashboard from '../../Common/Shared/Common/Dashboard';
 
 import ProductSupplyEdit from '../../pages/adminpages/sales/productSupply/ProductSupplyEdit';
 import EditUserInfo from '../../pages/adminpages/users/editUserInfo';
@@ -62,7 +62,7 @@ import WareHouseType from '../../pages/adminpages/wareHouse/WareHouseType';
 import NewWareHouseType from '../../pages/adminpages/wareHouse/NewWareHouseType';
 import EditWareHouseType from '../../pages/adminpages/wareHouse/EditWareHouseType';
 import EditCustomer from "../../pages/adminpages/customers/EditCustomer";
-import Logout from '../../Common/Shared/login/Logout';
+import Logout from '../../Common/Shared/Login/Logout';
 import ShippingCompanyList from "../../pages/adminpages/Shipping/ShippingCompany/ShippingCompanyList";
 import NewShippingCompany from "../../pages/adminpages/Shipping/ShippingCompany/ShippimgCompanyNew";
 import ShippingContractList from "../../pages/adminpages/Shipping/ShippingContracts/ShippingContractList";
@@ -73,7 +73,7 @@ import EditCustomerGroupName from '../../pages/adminpages/customers/EditCustomer
 import EditProductGroupName from '../../pages/adminpages/product/EditProductGroupName';
 import EditWareHouseTypeName from '../../pages/adminpages/wareHouse/EditWareHouseTypeName';
 import OrderCustomer from '../../pages/customerpages/OrderCustomer';
-import NotFound from "../../Common/Shared/common/notFound";
+import NotFound from "../../Common/Shared/Common/notFound";
 import UpdateShippingReports from "../../pages/adminpages/Shipping/updateShippingReports/updateShippingReports";
 import OrderDetailTest from '../../pages/order/orderDetailtest2';
 import CustomerOrderDetailTest from '../../pages/customerpages/customerOrderDetailTest';

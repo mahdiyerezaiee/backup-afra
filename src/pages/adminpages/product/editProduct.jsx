@@ -10,7 +10,7 @@ import { GetAllWareHouses } from "../../../services/wareHouseService";
 import { GetProductWareHouses } from "../../../services/prodcutWarehouse";
 import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
 import { GetAttributeValues } from '../../../services/attributeService';
-import ProductWareHouseEdit from "../../../Common/Shared/common/productWareHouseEdit";
+import ProductWareHouseEdit from "../../../Common/Shared/Common/productWareHouseEdit";
 import {GetGroupsForEntity} from "../../../services/GroupService";
 import {ClipLoader} from "react-spinners";
 

@@ -2,10 +2,10 @@ import {useEffect, useState} from "react";
 import {GetShipping, GetShippingCompanies, SetShippingCompany} from "../../../services/ShippingService";
 
 import {useMemo} from "react";
-import AdvancedSearch from "../../../Common/Shared/common/AdvancedSearch";
-import MyTable from "../../../Common/Shared/form/MyTable";
-import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
-import {ExportToExcel} from "../../../Common/Shared/common/ExportToExcel";
+import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
+import MyTable from "../../../Common/Shared/Form/MyTable";
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
+import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
 import QueryString from "qs";
 
 import {DeliveryMethods} from "../../../Common/Enums/DeliveryMethodsEnums";

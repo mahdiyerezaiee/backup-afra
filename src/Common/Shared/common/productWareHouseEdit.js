@@ -1,7 +1,7 @@
 import {GetProductWareHouses, SetProductWareHouses} from "../../../services/prodcutWarehouse";
 import {useEffect} from "react";
 import {useMemo, useState} from "react";
-import MyTable from "../form/MyTable";
+import MyTable from "../Form/MyTable";
 import {useRef} from "react";
 
 const ProductWareHouse = ({id, submit}) => {

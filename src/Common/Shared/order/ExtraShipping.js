@@ -1,7 +1,7 @@
 import {getExtraData} from "../../../services/extraService";
 import Modal from 'react-modal';
 import {useEffect, useState} from "react";
-import {ExportToExcel} from "../common/ExportToExcel";
+import {ExportToExcel} from "../Common/ExportToExcel";
 
 const customStyles = {
     content: {

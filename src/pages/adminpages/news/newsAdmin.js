@@ -5,11 +5,11 @@ import {GetForKarbars, GetUsersRoles, SetUserRole} from "../../../services/userS
 import Select from "react-select";
 import { setCustomerInfo } from "../../../services/customerService";
 import { useNavigate } from "react-router-dom";
-import MyTable from "../../../Common/Shared/form/MyTable";
+import MyTable from "../../../Common/Shared/Form/MyTable";
 import { useSelector } from "react-redux";
 import Modal from "react-modal";
 import {toast} from "react-toastify";
-import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
 const customStyles = {
     content: {

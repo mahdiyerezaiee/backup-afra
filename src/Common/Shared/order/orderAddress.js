@@ -2,18 +2,18 @@ import file from "../../../pages/order/addressFile.xlsx";
 import { useSelector } from "react-redux";
 import { getExtraData } from '../../../services/extraService';
 import { useEffect, useState, useMemo } from "react";
-import ShippingSelected from "../common/shippingSelected";
+import ShippingSelected from "../Common/shippingSelected";
 import { GetAllProductSupply } from "../../../services/productSupplyService";
 import { GetAddress } from '../../../services/addressService';
 import { editOrder } from "../../../services/orderService";
 import { toast } from "react-toastify";
 import FinancialConfirmation from "./FinancialConfirmation";
 import { GetProductSupplyConditions } from '../../../services/ProductSupplyConditionService';
-import AddAdressCustomerForOrder from '../common/addAdressCustomerForOrder';
+import AddAdressCustomerForOrder from '../Common/addAdressCustomerForOrder';
 import ExcelFileUploader from '../../../Utils/ExcelFileUploader';
 import { PaymentStructureEnums } from '../../Enums/PaymentStructureEnums';
-import TakhsisTable from "../form/TakhsisTable";
-import SelectColumnFilter from "../form/ColumnFilter";
+import TakhsisTable from "../Form/TakhsisTable";
+import SelectColumnFilter from "../Form/ColumnFilter";
 import FadeLoader from "react-spinners/FadeLoader";
 
 

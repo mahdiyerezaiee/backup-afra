@@ -3,15 +3,15 @@ import {GetAllWareHouses, DeleteHouses, SetWareHouses} from '../../../services/w
 import { useNavigate } from 'react-router-dom';
 import {ModalHeader, Table} from 'react-bootstrap';
 import { useMemo } from "react";
-import MyTable from "../../../Common/Shared/form/MyTable";
+import MyTable from "../../../Common/Shared/Form/MyTable";
 import { GetAttribute, GetAttributeValues } from '../../../services/attributeService'
 import { DeleteNews } from "../../../services/newsService";
 import Modal from "react-modal";
 import { GetGroupsForEntity } from './../../../services/GroupService';
 import {toast} from "react-toastify";
 import {DeleteSupplier, SetSupplier} from "../../../services/supplyService";
-import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
-import MyTableBazargah from "../../../Common/Shared/form/MyTableBazargah";
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
+import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 
 const customStyles = {
     content: {

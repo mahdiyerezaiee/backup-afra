@@ -18,12 +18,12 @@ import  Modal  from 'react-modal';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
-import ModalGroupWork from '../../Common/Shared/common/ModalGroupWork';
-import { ExportToExcel } from '../../Common/Shared/common/ExportToExcel';
+import ModalGroupWork from '../../Common/Shared/Common/ModalGroupWork';
+import { ExportToExcel } from '../../Common/Shared/Common/ExportToExcel';
 import InvoiceCreator from "../../Utils/invoiceCreator";
 import ImageFileUploader from "../../Utils/ImageFileUploader";
-import TableOrderCustomer from '../../Common/Shared/form/TableOrderCustomer';
-import AdvancedSearch from "../../Common/Shared/common/AdvancedSearch";
+import TableOrderCustomer from '../../Common/Shared/Form/TableOrderCustomer';
+import AdvancedSearch from "../../Common/Shared/Common/AdvancedSearch";
 import {PaymentStatusEnums} from "../../Common/Enums/PaymentStatus";
 import Select from "react-select";
 

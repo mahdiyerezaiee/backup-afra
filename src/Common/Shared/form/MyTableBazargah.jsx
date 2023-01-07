@@ -2,7 +2,7 @@ import React, { Fragment,useEffect,useState } from 'react'
 import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } from 'react-table';
 import CheckBox from './CheckBox';
 import GlobalFilter from './GlobalFilter';
-import ModalGroupWork from "../common/ModalGroupWork";
+import ModalGroupWork from "../Common/ModalGroupWork";
 import {disabled} from "react-widgets/PropTypes";
 
 

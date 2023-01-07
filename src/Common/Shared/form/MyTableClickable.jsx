@@ -2,11 +2,11 @@ import React, {Fragment, useEffect, useState ,Suspense} from 'react'
 import {useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect, useExpanded} from 'react-table';
 import {GetAllProductSupply} from "../../../services/productSupplyService";
 import {GetShoppings} from "../../../services/ShippingService";
-import ShippingSelected from "../common/shippingSelected";
+import ShippingSelected from "../Common/shippingSelected";
 import PageSizeTable from "../../../Utils/PageSize";
 import Pagination from "../../../Utils/pagination";
 
-const LazyShippingCom=React.lazy(()=>import( "../common/ShippingsOrder"))
+const LazyShippingCom=React.lazy(()=>import( "../Common/ShippingsOrder"))
 
 
 

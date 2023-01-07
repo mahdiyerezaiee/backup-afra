@@ -7,8 +7,8 @@ import Select from 'react-select'
 import { GetAllShippingCompanies } from './../../../../services/ShippingService';
 import { toast } from 'react-toastify';
 import InputMask from "../../../../Utils/InputMask";
-import MyTableBazargah from '../../../../Common/Shared/form/MyTableBazargah';
-import { ExportToExcel } from "../../../../Common/Shared/common/ExportToExcel";
+import MyTableBazargah from '../../../../Common/Shared/Form/MyTableBazargah';
+import { ExportToExcel } from "../../../../Common/Shared/Common/ExportToExcel";
 
 
 

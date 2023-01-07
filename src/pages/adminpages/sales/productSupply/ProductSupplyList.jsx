@@ -7,14 +7,14 @@ import {
     GetAllProductWithSearch,
     SetProductSupply
 } from './../../../../services/productSupplyService';
-import MyTable from '../../../../Common/Shared/form/MyTable';
+import MyTable from '../../../../Common/Shared/Form/MyTable';
 import { MeasureUnitSample } from "../../../../Common/Enums/MeasureUnitSample";
-import { ExportToExcel } from "../../../../Common/Shared/common/ExportToExcel";
+import { ExportToExcel } from "../../../../Common/Shared/Common/ExportToExcel";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import ModalGroupWork from "../../../../Common/Shared/common/ModalGroupWork";
+import ModalGroupWork from "../../../../Common/Shared/Common/ModalGroupWork";
 import React from "react";
-import AdvancedSearch from '../../../../Common/Shared/common/AdvancedSearch';
+import AdvancedSearch from '../../../../Common/Shared/Common/AdvancedSearch';
 import { PaymentStructureEnums } from "../../../../Common/Enums/PaymentStructureEnums";
 import  Select  from 'react-select';
 import DatePicker, { DateObject } from 'react-multi-date-picker';

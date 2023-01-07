@@ -1,7 +1,7 @@
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { DeliveryMethods } from "../../Enums/DeliveryMethodsEnums";
 import FadeLoader from "react-spinners/FadeLoader";
-import { ExportToExcel } from "../common/ExportToExcel";
+import { ExportToExcel } from "../Common/ExportToExcel";
 import { useState, useEffect } from "react";
 import ExtraShipping from "./ExtraShipping";
 import { GetShippingCompany, GetShoppingContract } from "../../../services/ShippingService";

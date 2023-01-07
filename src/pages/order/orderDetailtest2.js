@@ -8,7 +8,7 @@ import { GetShoppingContracts, GetShoppings } from "../../services/ShippingServi
 import QueryString from 'qs';
 import { GetAttachments } from "../../services/attachmentService";
 import ImagePreviewer from "../../Utils/ImagePreviewer";
-import AddAdressCustomerForOrder from "../../Common/Shared/common/addAdressCustomerForOrder";
+import AddAdressCustomerForOrder from "../../Common/Shared/Common/addAdressCustomerForOrder";
 import ExcelFileUploader from "../../Utils/ExcelFileUploader";
 import { UpdateShippingReport } from "../../services/outScopeService";
 import ProgressBar from "../../Utils/progressBar";

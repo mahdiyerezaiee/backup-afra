@@ -9,7 +9,7 @@ import { decodeToken } from '../../../Utils/decodeToken';
 import './customCss.css';
 import afra from './afra.jpg';
 import Countdown from 'react-countdown';
-import { ShowTimer } from '../common/ShowTimer';
+import { ShowTimer } from '../Common/ShowTimer';
 
 
 

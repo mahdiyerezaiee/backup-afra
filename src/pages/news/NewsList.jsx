@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import {GetAllNewsForUsers, GetAllNewsForUsersPage} from "../../services/newsService";
 import Modal from "react-modal";
-import MyTable from "../../Common/Shared/form/MyTable";
+import MyTable from "../../Common/Shared/Form/MyTable";
 import { GetAttribute, GetAttributeValues } from "../../services/attributeService";
 import { SetProduct } from "../../services/productService";
 import { useNavigate } from "react-router-dom";

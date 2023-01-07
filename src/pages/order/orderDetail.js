@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { ShippingStatusEnums } from "../../Common/Enums/ShippingStatusEnums";
 import { MeasureUnitSample } from "../../Common/Enums/MeasureUnitSample";
 import { GetAllOrganisationCode } from "../../services/organisationService";
-import { ExportToExcel } from "../../Common/Shared/common/ExportToExcel";
+import { ExportToExcel } from "../../Common/Shared/Common/ExportToExcel";
 import Pdf from "react-to-pdf";
 import { GetAddress } from "../../services/addressService";
 import { GetShoppingContracts, GetShoppings } from "../../services/ShippingService";
