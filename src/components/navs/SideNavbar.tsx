@@ -142,7 +142,7 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
                 <SubMenu ref={ref12} open={show.item12 === true ? true : false} onClick={() => setShow({ ...show, item12: !show.item12, item16: false, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item13: false, item14: false })} hidden={(roles.includes(2) || roles.includes(7) || roles.includes(8)) || roles.includes(5) ? false : true} icon={<MdSupportAgent size='2rem' />} label="پشتیبانی" >
                     <MenuItem onClick={handleHeaderClick} hidden={roles.includes(7) || roles.includes(8) || roles.includes(5) ? false : true}><NavLink to="user-news" >اطلاعیه و اعلان ها</NavLink></MenuItem>
 
-                    <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-plus-square" />} ><NavLink to='ticket'>لیست تیکت ها</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='ticket'>لیست تیکت ها</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) || roles.includes(1) ? false : true} icon={<i className="fa fa-align-justify" />} ><NavLink to='newTicket'>ثبت تیکت جدید </NavLink></MenuItem>
 
                 </SubMenu>
@@ -150,8 +150,8 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
                 <SubMenu ref={ref13} open={show.item13 === true ? true : false} onClick={() => setShow({ ...show, item13: !show.item13, item1: false, item16: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item12: false, item14: false })} hidden={roles.includes(7) || roles.includes(8) ? false : true} label='تنظیمات' icon={<IoSettingsOutline size='2rem' />}>
 
                     <SubMenu onClick={handleHeaderClick} label='تعاریف'>
-                        <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-align-justify" />}> <NavLink to='createAttribute'>دسته بندی</NavLink></MenuItem>
-                        <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-align-justify" />}> <NavLink to='creategroup'>گروه بندی</NavLink></MenuItem>
+                        <MenuItem onClick={handleHeaderClick} > <NavLink to='createAttribute'>دسته بندی</NavLink></MenuItem>
+                        <MenuItem onClick={handleHeaderClick} > <NavLink to='creategroup'>گروه بندی</NavLink></MenuItem>
 
                     </SubMenu>
 

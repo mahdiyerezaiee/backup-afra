@@ -28,6 +28,8 @@
   position: relative;
   box-shadow: 3px -13px 8px 0px rgb(0 0 0);
   z-index: 1009; }
+.css-ewdv3l {background-color:#ffffff!important;}
+
 .css-dip3t8 {
   background-color: #ffffff!important;
   height:  calc(100vh - 100px);
@@ -408,7 +410,9 @@ overflow: hidden!important;
     opacity: 0; }
   .ps-sidebar-root.ps-collapsed  .css-vj11vy > ul > .ps-menuitem-root  > .ps-submenu-content{
     background-color: #fafafa;
-    z-index: 111; }
+    z-index: 111;
+  overflow-x: hidden!important;
+  }
   .ps-sidebar-root.ps-collapsed  .css-vj11vy > ul > .ps-menuitem-root ::before {
     content: '';
     display: inline-block;
@@ -430,12 +434,12 @@ overflow: hidden!important;
     .ps-sidebar-root.ps-collapsed  .css-vj11vy > ul > .ps-menuitem-root .ps-submenu-root > .ps-submenu-content{
       height: auto !important;
       position: fixed;
-      visibility: hidden;
       min-width: 220px;
       max-width: 270px;
       background-color: transparent;
       max-height: 100%;
-      padding-left: 3px; }
+      padding-left: 3px;
+    overflow-x: hidden!important;}
       .ps-sidebar-root.ps-collapsed  .css-vj11vy > ul > .ps-menuitem-root .ps-submenu-root > .pro-inner-list-item.has-arrow {
         padding-left: 10px; }
       .ps-sidebar-root.ps-collapsed  .css-vj11vy > ul > .ps-menuitem-root .ps-submenu-root > .ps-submenu-content> .popper-inner {
