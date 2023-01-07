@@ -3,7 +3,7 @@ import { GetAttribute } from '../../../services/attributeService';
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import MyTable from '../../../Common/Shared/Form/MyTable';
-import {DeleteGroup, GetGroupsForEntity, SetGroup} from './../../../services/GroupService';
+import {DeleteGroup, GetGroupsForEntity, SetGroup} from '../../../services/GroupService';
 import  Modal  from 'react-modal';
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import {setCustomerInfo} from "../../../services/customerService";

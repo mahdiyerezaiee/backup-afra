@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import DashbordCustomer from '../../../pages/customerpages/dashbord/dashbordCustomer';
 import DashbordGuess from '../../../pages/guesspages/dashbord/dashbordGuess';
-import DashbordAdmin from '../../../pages/adminpages/dashboard/dashbordAdmin';
+import DashbordAdmin from '../../../pages/adminpages/Dashboard/dashbordAdmin';
 
 
 

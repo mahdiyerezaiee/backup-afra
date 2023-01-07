@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useMemo } from "react";
 import MyTable from "../../../Common/Shared/Form/MyTable";
 import { setCustomerInfo } from "../../../services/customerService";
-import { getAllWithRole } from './../../../services/customerService';
+import { getAllWithRole } from '../../../services/customerService';
 import { ExportToExcel } from '../../../Common/Shared/Common/ExportToExcel';
 import {DeleteGroup, GetGroupsForEntity, SetGroup} from '../../../services/GroupService';
 import {GetAllOrganisation} from "../../../services/organisationService";

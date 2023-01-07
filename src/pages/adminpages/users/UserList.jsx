@@ -18,7 +18,7 @@ import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
 import { optionsRole } from "../../../Common/Enums/RolesEnums";
 import QueryString from 'qs';
 import { GetGroupsForEntity } from '../../../services/GroupService';
-import EditCustomerGroup from '../customers/EditCustomerGroup';
+import EditCustomerGroup from '../Customers/EditCustomerGroup';
 import EditUserRole from './editUserRole';
 
 const UserList = () => {
