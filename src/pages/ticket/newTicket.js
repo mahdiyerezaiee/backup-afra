@@ -73,7 +73,7 @@ const NewTicket = () => {
         e.preventDefault()
 
         sendTicketHandler()
-        Navigate("/ticket")
+        Navigate("/admin/ticket")
     }
     return(
         <div className='user-progress' >
@@ -120,7 +120,7 @@ const NewTicket = () => {
                                     size={15}
                                 /></button>                            </div>
                             <div className='col-lg-6 '>
-                                <NavLink to='/ticket' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='ticket' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 

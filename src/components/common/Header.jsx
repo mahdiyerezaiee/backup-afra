@@ -130,7 +130,7 @@ const Header = ({ collapsed, handelChange }) => {
                     draggable: true,
                     progress: undefined
                 });
-                roles.includes(2) ? Navigate('cuoList') : Navigate('orderList')
+                roles.includes(2) ? Navigate('/admin/cuoList') : Navigate('/admin/orderList')
             }
 
 
@@ -164,7 +164,7 @@ const Header = ({ collapsed, handelChange }) => {
             <header className="header navbar navbar-expand-sm">
                 <ul className="navbar-item flex-row">
                     <li className="nav-item theme-logo">
-                        <NavLink to="/dashboard">
+                        <NavLink to="/admin">
                             <img src="/assets/img/afralogo.png" className="navbar-logo" alt="logo" />
                         </NavLink>
                     </li>
@@ -381,7 +381,7 @@ const Header = ({ collapsed, handelChange }) => {
                                 </div>
                             </div>
                             <div className="dropdown-item">
-                                <NavLink to="/userProfile">
+                                <NavLink to="userProfile">
                                     <svg style={{
                                         width: "24",
                                         height: "24",

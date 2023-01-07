@@ -5,7 +5,7 @@ const Ticket = () => {
   const Navigate=useNavigate()
 
   const newTicket = () => {
-    Navigate("/newTicket")
+    Navigate("/admin/newTicket")
   }
   return(
       <div className="chat-section layout-top-spacing">

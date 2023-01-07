@@ -366,11 +366,11 @@ const productForSelect=()=>{
     }, [getData])
 
     const editHandler = (id) => {
-        navigate(`/editproductsupply/${id}`)
+        navigate(`/admin/editproductsupply/${id}`)
     }
     const navigate = useNavigate()
     const formHandler = () => {
-        navigate("/newProductsupply")
+        navigate("/admin/newProductsupply")
     }
     const openModal = (id) => {
         setIsOpen(true);

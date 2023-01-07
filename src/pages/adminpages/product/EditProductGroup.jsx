@@ -56,7 +56,7 @@ const EditProductGroup = () => {
                 draggable: true,
                 progress: undefined
             })
-            navigate('/productgroup')
+            navigate('/admin/productgroup')
         }
             setLoading(false)
 
@@ -97,7 +97,7 @@ const EditProductGroup = () => {
                                     /></button>
                                 </div>
                                 <div className='col-6 '>
-                                    <NavLink to='/productgroup' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='productgroup' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>

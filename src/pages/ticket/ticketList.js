@@ -242,10 +242,10 @@ setTicket(data.result.supportRequests.values)
     getTicket()
   },[])
   const newTicket = () => {
-    Navigate("/newTicket")
+    Navigate("/admin/newTicket")
   }
   const showMessage = (id , title) => {
-    Navigate(`/message/${id}/${title}`)
+    Navigate(`/admin/message/${id}/${title}`)
   }
   const columns = useMemo(()=> [
     { Header: '#', accessor: 'id' },

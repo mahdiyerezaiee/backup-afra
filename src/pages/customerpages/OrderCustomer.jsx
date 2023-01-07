@@ -469,7 +469,7 @@ const OrderCustomer = () => {
     minimumFractionDigits: 0, });
 
   const showOrder = (id) => {
-    Navigate(`/cuoDetail/${id}`)
+    Navigate(`/admin/cuoDetail/${id}`)
   }
   const getDataByPage = async () => {
     let userName = localStorage.getItem("mobile")
