@@ -1,9 +1,9 @@
 import {GetnProceessAttachments} from "../../../services/reportService";
 import React, {useMemo, useState , useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {ExportToExcel} from "../../../components/common/ExportToExcel";
-import MyTableBazargah from "../../../components/form/MyTableBazargah";
-import {PriceUnitEnums} from "../../../Enums/PriceUnit";
+import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
+import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
+import {PriceUnitEnums} from "../../../Common/Enums/PriceUnit";
 
 const ProceessAttachments = () => {
     const Navigate = useNavigate()

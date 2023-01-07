@@ -1,8 +1,8 @@
 import Select from "react-select";
 import React, {useRef, useState, useEffect} from "react";
 import {GetGroupsForEntity} from "../../../../../services/GroupService";
-import {PaymentStructureEnums} from "../../../../../Enums/PaymentStructureEnums";
-import {AdditionalTypeId} from "../../../../../Enums/AdditionalTypeIdEnums";
+import {PaymentStructureEnums} from "../../../../../Common/Enums/PaymentStructureEnums";
+import {AdditionalTypeId} from "../../../../../Common/Enums/AdditionalTypeIdEnums";
 import {
     DeleteProductSupplyCondition,
     GetProductSupplyConditions,

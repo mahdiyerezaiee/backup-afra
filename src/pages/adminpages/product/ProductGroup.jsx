@@ -2,14 +2,14 @@ import React, { useState,useEffect} from 'react'
 import { GetAttribute } from '../../../services/attributeService';
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
-import MyTable from './../../../components/form/MyTable';
+import MyTable from '../../../Common/Shared/Form/MyTable';
 import {DeleteGroup, GetGroupsForEntity, SetGroup} from './../../../services/GroupService';
 import  Modal  from 'react-modal';
-import { ExportToExcel } from '../../../components/common/ExportToExcel';
+import { ExportToExcel } from '../../../Common/Shared/Common/ExportToExcel';
 import {DeleteHouses, SetWareHouses} from "../../../services/wareHouseService";
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
-import MyTableBazargah from "../../../components/form/MyTableBazargah";
+import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 
 
 const ProductGroup = () => {

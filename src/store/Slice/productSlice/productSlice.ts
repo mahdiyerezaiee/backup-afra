@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {NewProduct }from '../../../models/product'
+import {NewProduct }from '../../../Common/models/product'
 const initialState : NewProduct={
     name: '',
     englishName: '',

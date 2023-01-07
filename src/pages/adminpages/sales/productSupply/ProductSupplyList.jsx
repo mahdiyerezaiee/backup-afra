@@ -7,15 +7,15 @@ import {
     GetAllProductWithSearch,
     SetProductSupply
 } from './../../../../services/productSupplyService';
-import MyTable from './../../../../components/form/MyTable';
-import { MeasureUnitSample } from "../../../../Enums/MeasureUnitSample";
-import { ExportToExcel } from "../../../../components/common/ExportToExcel";
+import MyTable from '../../../../Common/Shared/Form/MyTable';
+import { MeasureUnitSample } from "../../../../Common/Enums/MeasureUnitSample";
+import { ExportToExcel } from "../../../../Common/Shared/Common/ExportToExcel";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import ModalGroupWork from "../../../../components/common/ModalGroupWork";
+import ModalGroupWork from "../../../../Common/Shared/Common/ModalGroupWork";
 import React from "react";
-import AdvancedSearch from './../../../../components/common/AdvancedSearch';
-import { PaymentStructureEnums } from "../../../../Enums/PaymentStructureEnums";
+import AdvancedSearch from '../../../../Common/Shared/Common/AdvancedSearch';
+import { PaymentStructureEnums } from "../../../../Common/Enums/PaymentStructureEnums";
 import  Select  from 'react-select';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"

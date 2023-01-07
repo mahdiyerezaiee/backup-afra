@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useMemo } from "react";
-import MyTable from "../../../../components/form/MyTable";
+import MyTable from "../../../../Common/Shared/Form/MyTable";
 import Modal from "react-modal";
-import { ExportToExcel } from "../../../../components/common/ExportToExcel";
-import ModalGroupWork from "../../../../components/common/ModalGroupWork";
-import AdvancedSearch from '.././../../../components/common/AdvancedSearch';
+import { ExportToExcel } from "../../../../Common/Shared/Common/ExportToExcel";
+import ModalGroupWork from "../../../../Common/Shared/Common/ModalGroupWork";
+import AdvancedSearch from '../../../../Common/Shared/Common/AdvancedSearch';
 import QueryString from "qs";
 import { GetAllShippingCompanies, SetShippingCompany, SetShoppingContract } from "../../../../services/ShippingService";
-import { MeasureUnitSample } from "../../../../Enums/MeasureUnitSample";
+import { MeasureUnitSample } from "../../../../Common/Enums/MeasureUnitSample";
 import { GetShoppingContracts } from './../../../../services/ShippingService';
 
 

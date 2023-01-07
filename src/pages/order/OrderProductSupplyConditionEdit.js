@@ -2,7 +2,7 @@ import Modal from 'react-modal';
 import {GetProductSupplyConditions} from "../../services/ProductSupplyConditionService";
 import {useState , useEffect} from "react";
 import {GetGroupsForEntity} from "../../services/GroupService";
-import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
+import {PaymentStructureEnums} from "../../Common/Enums/PaymentStructureEnums";
 import {useNavigate} from "react-router-dom";
 import {editOrderDetail} from "../../services/orderService";
 import FadeLoader from "react-spinners/FadeLoader";

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { GetAllProducts } from '../../../services/productService';
 import { GetAllWareHouses } from '../../../services/wareHouseService';
-import { MeasureUnitSample } from '../../../Enums/MeasureUnitSample';
+import { MeasureUnitSample } from '../../../Common/Enums/MeasureUnitSample';
 import { GetAllSuppliers, SetSupply } from '../../../services/supplyService';
-import { SupplyTypesEnums } from '../../../Enums/SupplyTypesEnums';
+import { SupplyTypesEnums } from '../../../Common/Enums/SupplyTypesEnums';
 import { toast } from 'react-toastify';
 import { useNavigate, NavLink } from 'react-router-dom';
 import Select from 'react-select';

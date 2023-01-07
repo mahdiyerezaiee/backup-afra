@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetAllProductSupply } from "../../services/productSupplyService";
-import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
-import { AdditionalTypeId } from "../../Enums/AdditionalTypeIdEnums";
+import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
+import { AdditionalTypeId } from "../../Common/Enums/AdditionalTypeIdEnums";
 import OrderProductSupplyConditionEdit from "./OrderProductSupplyConditionEdit";
 
 const OrderConditionEdit = ({ orderCondition, getOrderDetail, Order, productSupply }) => {

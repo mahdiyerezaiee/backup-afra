@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { GetAttribute } from '../../../services/attributeService';
 import { NavLink } from 'react-router-dom';
-import { SetAttribute } from './../../../services/attributeService';
+import { SetAttribute } from '../../../services/attributeService';
 import { toast } from 'react-toastify';
 import { useNavigate,useParams } from 'react-router-dom';
-import { GetGroupById, SetGroup } from './../../../services/GroupService';
+import { GetGroupById, SetGroup } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
 
 

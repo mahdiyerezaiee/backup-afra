@@ -3,11 +3,11 @@ import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import { NavLink } from 'react-router-dom';
 import FadeLoader from 'react-spinners/FadeLoader'
-import MyTableBazargah  from "../../../components/form/MyTableBazargah";
+import MyTableBazargah  from "../../../Common/Shared/Form/MyTableBazargah";
 import { GetOrdersReports} from "../../../services/reportService";
-import {ExportToExcel} from "../../../components/common/ExportToExcel";
+import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {MeasureUnitSample} from "../../../Enums/MeasureUnitSample";
+import {MeasureUnitSample} from "../../../Common/Enums/MeasureUnitSample";
 
 
 const OrdersReports = () => {

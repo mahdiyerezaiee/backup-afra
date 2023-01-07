@@ -6,9 +6,9 @@ import FadeLoader from "react-spinners/FadeLoader";
 import Select from 'react-select'
 import { GetAllShippingCompanies } from './../../../../services/ShippingService';
 import { toast } from 'react-toastify';
-import InputMask from "../../../../utils/InputMask";
-import MyTableBazargah from './../../../../components/form/MyTableBazargah';
-import { ExportToExcel } from "../../../../components/common/ExportToExcel";
+import InputMask from "../../../../Utils/InputMask";
+import MyTableBazargah from '../../../../Common/Shared/Form/MyTableBazargah';
+import { ExportToExcel } from "../../../../Common/Shared/Common/ExportToExcel";
 
 
 

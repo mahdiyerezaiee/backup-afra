@@ -7,20 +7,20 @@ import {
     SetSupply
 } from '../../../services/supplyService';
 import { useNavigate } from 'react-router-dom';
-import { SupplyTypesEnums } from '../../../Enums/SupplyTypesEnums';
+import { SupplyTypesEnums } from '../../../Common/Enums/SupplyTypesEnums';
 import Modal from 'react-modal';
-import MyTable from '../../../components/form/MyTable';
+import MyTable from '../../../Common/Shared/Form/MyTable';
 
 
 import { DeleteProduct, GetAllProducts, getEditProduct, SetProduct } from "../../../services/productService";
 import { toast } from "react-toastify";
 import { GetAllWareHouses } from "../../../services/wareHouseService";
-import { MeasureUnitSample } from "../../../Enums/MeasureUnitSample";
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
-import AdvancedSearch from "../../../components/common/AdvancedSearch";
+import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
+import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
 import Select from "react-select";
 import { GetDataWithSearchOrder } from "../../../services/orderService";
-import { ShippingStatusEnums } from "../../../Enums/ShippingStatusEnums";
+import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";
 import QueryString from 'qs';
 
 

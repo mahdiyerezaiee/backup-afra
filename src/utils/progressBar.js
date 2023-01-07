@@ -1,7 +1,7 @@
 
 import './style.css'
 
-import {OrderStatusEnumsProgressBar} from "../Enums/OrderStatusEnumsProgressBar";
+import {OrderStatusEnumsProgressBar} from "../Common/Enums/OrderStatusEnumsProgressBar";
 const ProgressBar = ({id ,number}) => {
     return(
       <div  className="form-group mb-5 textOnInput col-lg-12 rounded border  border-dark  m-auto p-2  text-center">

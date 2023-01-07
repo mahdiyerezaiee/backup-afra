@@ -1,21 +1,21 @@
 
 import React, { Fragment, Suspense, lazy, useEffect, useLayoutEffect } from 'react';
-import Login from './../components/login/Login';
-import NotFound from './../components/common/notFound';
+import Login from '../Common/Shared/Login/Login';
+import NotFound from '../Common/Shared/Common/notFound';
 
-import { decodeToken } from './../utils/decodeToken';
+import { decodeToken } from '../Utils/decodeToken';
 import { GetUsersRoles, RefreshToken } from '../services/userService';
 import { Route, Router, Routes, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Logout from './../components/login/Logout';
-import CodeForMobile from './../components/login/CodeForMobile';
-import PrivateRoute from '../utils/PrivateRoute';
-import { GetUserInfo } from './../services/userService';
-import AdminMainLayout from '../components/layouts/AdminMainLayout';
-import LoginWithPassword from '../components/common/loginWithPassword';
+import Logout from '../Common/Shared/Login/Logout';
+import CodeForMobile from '../Common/Shared/Login/CodeForMobile';
+import PrivateRoute from '../Utils/PrivateRoute';
+import { GetUserInfo } from '../services/userService';
+import AdminMainLayout from '../Admin/Layout/AdminMainLayout';
+import LoginWithPassword from '../Common/Shared/Login/loginWithPassword';
 import SysPlus from '../pages/landingPage/SysPlus';
 
-const MainLazyLoad = lazy(() => import('../components/layouts/AdminMainLayout'))
+const MainLazyLoad = lazy(() => import('../Admin/Layout/AdminMainLayout'))
 
 const AdminPannel: React.FC = () => {
   const token = localStorage.getItem('Token');

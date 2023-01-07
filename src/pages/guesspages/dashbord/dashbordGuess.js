@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import {Table} from "react-bootstrap";
 import News from './../../news/news';
-import SalesBoard from "../../../components/common/salesBoard";
+import SalesBoard from "../../../Common/Shared/Common/salesBoard";
 import { Fragment } from 'react';
 
 const DashbordGuess = () => {

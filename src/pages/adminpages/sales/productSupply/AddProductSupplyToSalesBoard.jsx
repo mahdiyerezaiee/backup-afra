@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { NavLink } from 'react-router-dom';
 import { GetProducts, getEditProduct } from '../../../../services/productService';
 import { GetProductWareHouses } from '../../../../services/prodcutWarehouse';
-import { PaymentStructureEnums } from '../../../../Enums/PaymentStructureEnums'
+import { PaymentStructureEnums } from '../../../../Common/Enums/PaymentStructureEnums'
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"

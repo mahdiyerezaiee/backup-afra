@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal';
-import { ordersSpliter } from './../services/orderService';
+import { ordersSpliter } from '../services/orderService';
 import { toast } from 'react-toastify';
 
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
-import { decodeToken } from '../utils/decodeToken';
+import { decodeToken } from '../Utils/decodeToken';
 
 let configure=window.globalThis.site_url;
 

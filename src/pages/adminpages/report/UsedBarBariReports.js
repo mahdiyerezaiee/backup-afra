@@ -6,9 +6,9 @@ import { NavLink } from 'react-router-dom';
 
 
 import FadeLoader from 'react-spinners/FadeLoader'
-import MyTableBazargah  from "../../../components/form/MyTableBazargah";
+import MyTableBazargah  from "../../../Common/Shared/Form/MyTableBazargah";
 import {GetUsedBarBariReports} from "../../../services/reportService";
-import {ExportToExcel} from "../../../components/common/ExportToExcel";
+import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
 
 
 const UsedBarBariReport = () => {

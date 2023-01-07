@@ -3,17 +3,17 @@ import { useEffect, useState, createRef } from "react";
 import { GetOrder, GetOrderDetails } from "../../services/orderService";
 import { NavLink } from "react-router-dom";
 
-import { ShippingStatusEnums } from "../../Enums/ShippingStatusEnums";
-import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
+import { ShippingStatusEnums } from "../../Common/Enums/ShippingStatusEnums";
+import { MeasureUnitSample } from "../../Common/Enums/MeasureUnitSample";
 import { GetAllOrganisationCode } from "../../services/organisationService";
-import { ExportToExcel } from "../../components/common/ExportToExcel";
+import { ExportToExcel } from "../../Common/Shared/Common/ExportToExcel";
 import Pdf from "react-to-pdf";
 import { GetAddress } from "../../services/addressService";
 import { GetShoppingContracts, GetShoppings } from "../../services/ShippingService";
-import { DeliveryMethods } from "../../Enums/DeliveryMethodsEnums";
+import { DeliveryMethods } from "../../Common/Enums/DeliveryMethodsEnums";
 import QueryString from 'qs';
 import { GetAttachments } from "../../services/attachmentService";
-import ImagePreviewer from "../../utils/ImagePreviewer";
+import ImagePreviewer from "../../Utils/ImagePreviewer";
 
 
 

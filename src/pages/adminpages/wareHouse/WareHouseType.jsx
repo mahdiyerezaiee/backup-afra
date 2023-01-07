@@ -2,9 +2,9 @@ import React,{useState,useEffect,useMemo} from 'react'
 import {DeleteGroup, GetGroupsForEntity, SetGroup} from '../../../services/GroupService';
 import { useNavigate } from 'react-router-dom';
 import  Modal  from 'react-modal';
-import MyTable from './../../../components/form/MyTable';
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
-import MyTableBazargah from "../../../components/form/MyTableBazargah";
+import MyTable from '../../../Common/Shared/Form/MyTable';
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
+import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 
 const WareHouseType = () => {
 

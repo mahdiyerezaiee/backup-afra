@@ -3,7 +3,7 @@ import './style.css';
 import {GetAllOrganisation, GetAllOrganisationCode} from "../services/organisationService";
 import {GetAddress} from "../services/addressService";
 import {GetOrder, GetOrderDetails} from "../services/orderService";
-import {MeasureUnitSample} from "../Enums/MeasureUnitSample";
+import {MeasureUnitSample} from "../Common/Enums/MeasureUnitSample";
 import {useEffect, useState , createRef} from "react";
 import Pdf from "react-to-pdf";
 import {useNavigate, useParams} from "react-router-dom";

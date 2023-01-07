@@ -1,6 +1,6 @@
 import React from 'react';
-import {ChartLineCount} from "../../../components/chart/chartLineCount";
-import {ChartLineValue} from "../../../components/chart/chartLineValue";
+import {ChartLineCount} from "../../../Common/Shared/Chart/chartLineCount";
+import {ChartLineValue} from "../../../Common/Shared/Chart/chartLineValue";
 import {useEffect, useState} from "react";
 import {GetPeriodicSalesReport} from "../../../services/reportService";
 

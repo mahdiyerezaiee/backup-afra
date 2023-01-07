@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import video from "../../assets/img/Home.mp4"
+import video from "../../Common/Shared/Assets/img/Home.mp4"
 import "./style.css"
 const SysPlus = () => {
   const navigate=useNavigate()

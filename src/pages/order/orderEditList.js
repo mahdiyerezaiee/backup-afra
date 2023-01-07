@@ -2,11 +2,11 @@ import { ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails } from "../../s
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Select from "react-select";
-import { OrderStatus } from "../../Enums/OrderStatusEnums";
+import { OrderStatus } from "../../Common/Enums/OrderStatusEnums";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-import { PaymentStatusEnums } from './../../Enums/PaymentStatus';
-import { ShippingStatusEnums } from './../../Enums/ShippingStatusEnums';
+import { PaymentStatusEnums } from '../../Common/Enums/PaymentStatus';
+import { ShippingStatusEnums } from '../../Common/Enums/ShippingStatusEnums';
 
 const customStyles = {
     content: {

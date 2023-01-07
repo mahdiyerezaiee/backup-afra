@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useParams, useNavigate,NavLink } from 'react-router-dom';
 import { GetGroupById } from '../../../services/GroupService';
-import { SetGroup } from './../../../services/GroupService';
+import { SetGroup } from '../../../services/GroupService';
 import { toast } from 'react-toastify';
 import {ClipLoader} from "react-spinners";
 

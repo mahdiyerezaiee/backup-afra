@@ -2,14 +2,14 @@ import {useEffect, useState} from "react";
 import {GetShipping, GetShippingCompanies, SetShippingCompany} from "../../../services/ShippingService";
 
 import {useMemo} from "react";
-import AdvancedSearch from "../../../components/common/AdvancedSearch";
-import MyTable from "../../../components/form/MyTable";
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
-import {ExportToExcel} from "../../../components/common/ExportToExcel";
+import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
+import MyTable from "../../../Common/Shared/Form/MyTable";
+import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
+import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
 import QueryString from "qs";
 
-import {DeliveryMethods} from "../../../Enums/DeliveryMethodsEnums";
-import {MeasureUnitSample} from "../../../Enums/MeasureUnitSample";
+import {DeliveryMethods} from "../../../Common/Enums/DeliveryMethodsEnums";
+import {MeasureUnitSample} from "../../../Common/Enums/MeasureUnitSample";
 import DatePicker, {DateObject} from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";

@@ -1,7 +1,7 @@
 import {editOrder, GetOrder, GetOrderDetails} from "../../services/orderService";
 import {useEffect, useState} from "react";
 import Modal from "react-modal";
-import {OrderStatus} from "../../Enums/OrderStatusEnums";
+import {OrderStatus} from "../../Common/Enums/OrderStatusEnums";
 import {toast} from "react-toastify";
 import {GetProductSupplyConditions} from "../../services/ProductSupplyConditionService";
 import OrderConditionEdit from "./OrderConditionEdit";
