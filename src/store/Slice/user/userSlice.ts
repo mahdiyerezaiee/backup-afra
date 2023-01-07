@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Action } from "@remix-run/router";
-import { NewUser } from "../../../models/user";
+import { NewUser } from "../../../Common/models/user";
 
 const initialState: NewUser = {
 

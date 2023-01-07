@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { GetAllProducts } from '../../../services/productService';
 import { GetAllWareHouses } from '../../../services/wareHouseService';
-import { MeasureUnitSample } from '../../../Enums/MeasureUnitSample';
+import { MeasureUnitSample } from '../../../Common/Enums/MeasureUnitSample';
 import { GetAllSuppliers, GetSupply, SetSupply } from '../../../services/supplyService';
-import { SupplyTypesEnums } from '../../../Enums/SupplyTypesEnums';
+import { SupplyTypesEnums } from '../../../Common/Enums/SupplyTypesEnums';
 import { toast } from 'react-toastify';
 import { useNavigate, NavLink, useParams } from 'react-router-dom';
 import Select from 'react-select';
 
 import SimpleReactValidator from "simple-react-validator";
-import { ShippingStatusEnums } from "../../../Enums/ShippingStatusEnums";
+import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";
 import {ClipLoader} from "react-spinners";
 
 

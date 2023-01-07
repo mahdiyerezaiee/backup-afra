@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
 import { SetProductWareHouses } from "../../../services/prodcutWarehouse";
-import { MeasureUnitSample } from "../../../Enums/MeasureUnitSample";
+import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 import { GetAllWareHouses } from "../../../services/wareHouseService";
 import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
 import {GetGroupsForEntity} from "../../../services/GroupService";

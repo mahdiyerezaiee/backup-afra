@@ -5,12 +5,12 @@ import { useRef } from "react";
 import SimpleReactValidator from "simple-react-validator";
 import { toast } from "react-toastify";
 import Select from "react-select";
-import { MeasureUnitSample } from "../../../Enums/MeasureUnitSample";
+import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 import { GetAllWareHouses } from "../../../services/wareHouseService";
 import { GetProductWareHouses } from "../../../services/prodcutWarehouse";
 import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
 import { GetAttributeValues } from '../../../services/attributeService';
-import ProductWareHouseEdit from "../../../components/common/productWareHouseEdit";
+import ProductWareHouseEdit from "../../../Common/Shared/common/productWareHouseEdit";
 import {GetGroupsForEntity} from "../../../services/GroupService";
 import {ClipLoader} from "react-spinners";
 

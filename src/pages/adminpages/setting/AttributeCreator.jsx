@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { EntityTypes } from './../../../Enums/EntityTypesEnums';
-import { AttributeControlTypes } from './../../../Enums/AttributeControlTypesEnums';
+import { EntityTypes } from '../../../Common/Enums/EntityTypesEnums';
+import { AttributeControlTypes } from '../../../Common/Enums/AttributeControlTypesEnums';
 import Select from 'react-select';
 import { NavLink } from 'react-router-dom';
 import { SetAttribute } from '../../../services/attributeService';

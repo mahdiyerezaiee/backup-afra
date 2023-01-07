@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { EntityTypes } from '../../../Enums/EntityTypesEnums';
+import { EntityTypes } from '../../../Common/Enums/EntityTypesEnums';
 import  Select  from 'react-select';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';

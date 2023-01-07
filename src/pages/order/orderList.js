@@ -7,26 +7,26 @@ import {
 import { useEffect, useState, useRef } from "react";
 import { useMemo } from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import { OrderStatus } from "../../Enums/OrderStatusEnums";
-import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
-import { ShippingStatusEnums } from "../../Enums/ShippingStatusEnums";
+import { OrderStatus } from "../../Common/Enums/OrderStatusEnums";
+import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
+import { ShippingStatusEnums } from "../../Common/Enums/ShippingStatusEnums";
 import { GetAllOrganisationCode, GetAllOrganisation } from "../../services/organisationService";
-import ModalGroupWork from "../../components/common/ModalGroupWork";
-import { ExportToExcel } from './../../components/common/ExportToExcel';
-import MyTableClick from "../../components/form/MyTableClickable";
-import AdvancedSearch from "../../components/common/AdvancedSearch";
+import ModalGroupWork from "../../Common/Shared/common/ModalGroupWork";
+import { ExportToExcel } from '../../Common/Shared/common/ExportToExcel';
+import MyTableClick from "../../Common/Shared/form/MyTableClickable";
+import AdvancedSearch from "../../Common/Shared/common/AdvancedSearch";
 import Select from "react-select";
 import QueryString from 'qs';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
 import Modal from 'react-modal';
-import AddAdressCustomerForOrder from "../../components/common/addAdressCustomerForOrder";
+import AddAdressCustomerForOrder from "../../Common/Shared/common/addAdressCustomerForOrder";
 import { GetAddress } from "../../services/addressService";
 import OrderEditList from "./orderEditList";
-import { PaymentStatusEnums } from "../../Enums/PaymentStatus";
+import { PaymentStatusEnums } from "../../Common/Enums/PaymentStatus";
 import { toast } from "react-toastify";
-import { OverDueEnum } from "../../Enums/overDueEnum";
+import { OverDueEnum } from "../../Common/Enums/overDueEnum";
 
 
 const customStyles = {
@@ -788,7 +788,7 @@ const OrderList = () => {
         },
         {
             Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
-                <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/orderDetail/${row.row.original.id}`}>
+                <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/admin/orderDetail/${row.row.original.id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                         width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                             fill="none" stroke="#000" strokeLinecap="round"

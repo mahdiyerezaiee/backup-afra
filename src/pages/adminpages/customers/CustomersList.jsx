@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useMemo } from "react";
-import MyTable from "../../../components/form/MyTable";
+import MyTable from "../../../Common/Shared/form/MyTable";
 import { setCustomerInfo } from "../../../services/customerService";
 import { getAllWithRole } from './../../../services/customerService';
-import { ExportToExcel } from '../../../components/common/ExportToExcel';
+import { ExportToExcel } from '../../../Common/Shared/common/ExportToExcel';
 import {DeleteGroup, GetGroupsForEntity, SetGroup} from '../../../services/GroupService';
 import {GetAllOrganisation} from "../../../services/organisationService";
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
+import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
 import QueryString from "qs";
 import {GetDataWithSearch, GetForKarbars} from "../../../services/userService";
 

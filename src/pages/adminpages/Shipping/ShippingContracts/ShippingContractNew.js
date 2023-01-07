@@ -6,7 +6,7 @@ import {toast} from 'react-toastify';
 import SimpleReactValidator from 'simple-react-validator';
 
 import {GetAllShippingCompanies, SetShippingCompany, SetShoppingContract} from "../../../../services/ShippingService";
-import {MeasureUnitSample} from "../../../../Enums/MeasureUnitSample";
+import {MeasureUnitSample} from "../../../../Common/Enums/MeasureUnitSample";
 import Select from "react-select";
 import {ClipLoader} from "react-spinners";
 

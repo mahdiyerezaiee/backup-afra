@@ -8,12 +8,12 @@ import {
     SetSupplier,
     SetSupply
 } from './../../../services/supplyService';
-import MyTable from './../../../components/form/MyTable';
+import MyTable from '../../../Common/Shared/form/MyTable';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { ExportToExcel } from './../../../components/common/ExportToExcel';
+import { ExportToExcel } from '../../../Common/Shared/common/ExportToExcel';
 import {toast} from "react-toastify";
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
+import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
 import QueryString from "qs";
 
 const SupplierList = () => {

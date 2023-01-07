@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Router, Routes,Navigate, HashRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import AdminPannel from './AdminPannel';
-import Login from '../components/login/Login';
+import Login from '../Common/Shared/login/Login';
 import { decodeToken } from '../utils/decodeToken';
 import { RefreshToken } from '../services/userService';
-import CodeForMobile from '../components/login/CodeForMobile';
-import SubmitInfo from '../components/login/SubmitInfo';
+import CodeForMobile from '../Common/Shared/login/CodeForMobile';
+import SubmitInfo from '../Common/Shared/login/SubmitInfo';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserContext from '../context/userContext';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 
 

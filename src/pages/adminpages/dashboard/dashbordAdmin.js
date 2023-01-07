@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import ChartMain from "./chartMain";
 import News from '../../news/news';
-import SalesBoardForAdmin from './../../../components/common/salesBoardForAdmin';
-import ReportBlock from "../../../components/chart/reportBlock";
-import OverDuePaymentsByAttachments from "../../../components/common/OverDuePaymentsByAttachments";
+import SalesBoardForAdmin from '../../../Common/Shared/common/salesBoardForAdmin';
+import ReportBlock from "../../../Common/Shared/chart/reportBlock";
+import OverDuePaymentsByAttachments from "../../../Common/Shared/common/OverDuePaymentsByAttachments";
 import ScheduleJob from "../report/ScheduleJob";
 
 const DashbordAdmin = () => {

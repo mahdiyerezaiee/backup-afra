@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useMemo } from "react";
-import MyTable from "../../../../components/form/MyTable";
+import MyTable from "../../../../Common/Shared/form/MyTable";
 import Modal from "react-modal";
-import { ExportToExcel } from "../../../../components/common/ExportToExcel";
-import ModalGroupWork from "../../../../components/common/ModalGroupWork";
-import AdvancedSearch from '.././../../../components/common/AdvancedSearch';
+import { ExportToExcel } from "../../../../Common/Shared/common/ExportToExcel";
+import ModalGroupWork from "../../../../Common/Shared/common/ModalGroupWork";
+import AdvancedSearch from '../../../../Common/Shared/common/AdvancedSearch';
 import QueryString from "qs";
 import { GetShippingCompanies, SetShippingCompany } from "../../../../services/ShippingService";
 import { GetGroupsForEntity } from "../../../../services/GroupService";

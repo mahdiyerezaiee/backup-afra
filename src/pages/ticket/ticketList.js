@@ -3,9 +3,9 @@ import {useSelector} from "react-redux";
 import {GetSupportRequesstsAdmin, GetSupportRequesstsUser, setSupportRequessts} from "../../services/TicketService";
 import {useMemo} from "react";
 import {SetProduct} from "../../services/productService";
-import MyTable from "../../components/form/MyTable";
+import MyTable from "../../Common/Shared/form/MyTable";
 import {Link, useNavigate} from "react-router-dom";
-import ModalGroupWork from "../../components/common/ModalGroupWork";
+import ModalGroupWork from "../../Common/Shared/common/ModalGroupWork";
 import QueryString from "qs";
 import {GetShoppingContracts} from "../../services/ShippingService";
 

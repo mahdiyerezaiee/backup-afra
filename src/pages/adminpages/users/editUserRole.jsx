@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import { optionsRole } from "../../../Enums/RolesEnums";
+import { optionsRole } from "../../../Common/Enums/RolesEnums";
 import Modal from 'react-modal';
 import {ClipLoader} from "react-spinners";
 

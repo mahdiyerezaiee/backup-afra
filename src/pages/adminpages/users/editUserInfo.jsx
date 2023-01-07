@@ -6,7 +6,7 @@ import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
-import {PriceUnitEnums} from "../../../Enums/PriceUnit";
+import {PriceUnitEnums} from "../../../Common/Enums/PriceUnit";
 import {ClipLoader} from "react-spinners";
 import { toast } from 'react-toastify';
 

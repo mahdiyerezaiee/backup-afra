@@ -8,14 +8,14 @@ import {
     SetUserRole
 } from '../../../services/userService';
 import { useMemo } from "react";
-import MyTable from "../../../components/form/MyTable";
+import MyTable from "../../../Common/Shared/form/MyTable";
 import { setCustomerInfo } from "../../../services/customerService";
 import Select from "react-select";
-import { ExportToExcel } from '../../../components/common/ExportToExcel';
+import { ExportToExcel } from '../../../Common/Shared/common/ExportToExcel';
 import { GetAllOrganisation, GetAllOrganisationCode, GetOrganisationById, GetOrganisationCode } from '../../../services/organisationService';
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
-import AdvancedSearch from "../../../components/common/AdvancedSearch";
-import { optionsRole } from "../../../Enums/RolesEnums";
+import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
+import AdvancedSearch from "../../../Common/Shared/common/AdvancedSearch";
+import { optionsRole } from "../../../Common/Enums/RolesEnums";
 import QueryString from 'qs';
 import { GetGroupsForEntity } from '../../../services/GroupService';
 import EditCustomerGroup from '../customers/EditCustomerGroup';

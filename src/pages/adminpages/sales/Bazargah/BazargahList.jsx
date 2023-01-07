@@ -5,10 +5,10 @@ import persian_en from "react-date-object/locales/persian_en";
 import { NavLink } from 'react-router-dom';
 
 import { GetBazargahKharidList } from './../../../../services/outScopeService';
-import MyTable from '../../../../components/form/MyTable';
+import MyTable from '../../../../Common/Shared/form/MyTable';
 
 import FadeLoader from 'react-spinners/FadeLoader'
-import MyTableBazargah from "../../../../components/form/MyTableBazargah";
+import MyTableBazargah from "../../../../Common/Shared/form/MyTableBazargah";
 
 
 const BazargahList = () => {

@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { DeleteOrganization, GetAllOrganisationCode, SetOrganisation } from '../../../services/organisationService';
 import { useNavigate } from 'react-router-dom';
-import { ExportToExcel } from '../../../components/common/ExportToExcel';
-import MyTable from '../../../components/form/MyTable';
+import { ExportToExcel } from '../../../Common/Shared/common/ExportToExcel';
+import MyTable from '../../../Common/Shared/form/MyTable';
 import { DeleteProduct } from "../../../services/productService";
 
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import { DeleteNews, SetNews } from "../../../services/newsService";
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
+import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
 import QueryString from "qs";
 import { GetDataWithSearch } from "../../../services/userService";
-import AdvancedSearch from '../../../components/common/AdvancedSearch';
+import AdvancedSearch from '../../../Common/Shared/common/AdvancedSearch';
 const customStyles = {
     content: {
 

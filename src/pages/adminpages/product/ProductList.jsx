@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { useTable } from "react-table";
 import { DeleteProduct, GetAllProducts, SetProduct } from '../../../services/productService';
 import { useMemo } from "react";
-import MyTable from "../../../components/form/MyTable";
+import MyTable from "../../../Common/Shared/form/MyTable";
 
 import { toast } from "react-toastify";
 import Modal from "react-modal";
-import { ExportToExcel } from "../../../components/common/ExportToExcel";
+import { ExportToExcel } from "../../../Common/Shared/common/ExportToExcel";
 import { GetGroupsForEntity } from './../../../services/GroupService';
-import ModalGroupWork from "../../../components/common/ModalGroupWork";
-import AdvancedSearch from './../../../components/common/AdvancedSearch';
+import ModalGroupWork from "../../../Common/Shared/common/ModalGroupWork";
+import AdvancedSearch from '../../../Common/Shared/common/AdvancedSearch';
 import Select from 'react-select';
 import { GetProductsWithSearch } from './../../../services/productService';
 import QueryString from "qs";

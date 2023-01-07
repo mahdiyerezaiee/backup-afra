@@ -2,19 +2,19 @@ import {useState, useRef, useEffect} from "react";
 import {addOrder} from "../../services/orderService";
 import Select from "react-select";
 import {NavLink, useNavigate} from "react-router-dom";
-import {MeasureUnitSample} from "../../Enums/MeasureUnitSample";
+import {MeasureUnitSample} from "../../Common/Enums/MeasureUnitSample";
 import SimpleReactValidator from "simple-react-validator";
 import {GetProducts} from "../../services/productService";
 import {GetAllProductWithSearch} from "../../services/productSupplyService";
-import {PaymentStatusEnums} from "../../Enums/PaymentStatus";
+import {PaymentStatusEnums} from "../../Common/Enums/PaymentStatus";
 import {GetAllUsers, GetDataWithSearch} from "../../services/userService";
-import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
+import {PaymentStructureEnums} from "../../Common/Enums/PaymentStructureEnums";
 import {GetAllOrganisation} from "../../services/organisationService";
 import QueryString from "qs";
 import {toast} from "react-toastify";
 import {GetGroupsForEntity} from "../../services/GroupService";
 import Modal from 'react-modal';
-import {OrderStatus} from "../../Enums/OrderStatusEnums";
+import {OrderStatus} from "../../Common/Enums/OrderStatusEnums";
 import {ClipLoader} from "react-spinners";
 
 
