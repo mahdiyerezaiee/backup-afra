@@ -16,7 +16,7 @@ export const GetShoppingContractWithCompany=(id)=>{
 }
 export const GetShoppings=(id)=>{
 
-    return http.get(`${configure}/Shipping/GetShippings?OrderId=${id}`);
+    return http.get(`${configure}/Shipping/GetShippings?OrderId=${id}&PageNumber=0&PageSize=100000`);
 }
 export const SetShoppingContract=(ShoppingContract)=>{
 

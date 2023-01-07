@@ -79,7 +79,8 @@ select.form-custom::-ms-expand {
 
 .containerT {
   overflow: auto;
-  height: 400px;
+  max-height: 400px;
+  min-height: 100px;
 
 }
  table {
@@ -94,9 +95,21 @@ position: sticky;
   background: rgb(220 220 255)!important;
   z-index: 1;
   border: 1px solid rgb(220 220 255)!important;
+  box-shadow: 0px -10px  #fff;
 
 }
-
+.loadingAddress {
+  position: fixed;
+background:  #f1f2f3;
+inset: 0px;
+  z-index: 4;
+}
+.boxloadingAddress {
+  position:absolute;
+  inset:55% auto auto 50%;
+  margin-right:-50%;
+  transform:translate(-50%,-50%);
+}
 
 .fixed_header th {
   height: 0;
@@ -2236,11 +2249,11 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   }
   .textOnInput label {
     position: absolute;
-    top: -15px;
+    top: -18px;
     right: 15px;
     padding: 2px;
    background: white;
-   z-index: 1;
+   z-index: 2;
   }
 .textOnInput label::after {
   content: " ";

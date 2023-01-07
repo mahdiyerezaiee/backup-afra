@@ -14,6 +14,7 @@ import ExcelFileUploader from './../../utils/ExcelFileUploader';
 import { PaymentStructureEnums } from './../../Enums/PaymentStructureEnums';
 import TakhsisTable from "../form/TakhsisTable";
 import SelectColumnFilter from "../form/ColumnFilter";
+import FadeLoader from "react-spinners/FadeLoader";
 
 
 const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
@@ -28,6 +29,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     const [productSupplyId, setProductSupplyId] = useState(0)
     const [isOpenAddress, setIsOpenAddress] = useState(false)
     const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
+    let [loading, setLoading] = useState(false);
 
 
     const [cottageCode, setcottageCode] = useState('');
@@ -143,6 +145,8 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         setIsOpenUploadExcel(false)
     }
     const getDetails = async () => {
+        setLoading(true)
+
         let finalArr = [];
         try {
             for (let i = 0; i < details.length; i++) {
@@ -183,6 +187,8 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         } catch (error) {
 
         }
+        setLoading(false)
+
     }
 
 
@@ -265,7 +271,16 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
     }, [getOrder])
 
-    return (
+    if (loading){
+        return (
+            <div className="loadingAddress" >
+                <div  className="boxloadingAddress">
+            <p>دریافت اطلاعات ...</p>
+            <FadeLoader loading={loading} color={"#ccc"}/>
+                </div>
+        </div>)
+    }else {
+        return (
         <div>
             <ShippingSelected modalIsOpen={modalIsOpen} closeModal={closeModal} orderDetailId={orderDetailId} Order={order} />
             <FinancialConfirmation id={order.id} modalIsOpen={IsOpen} closeModal={closeModalFinancialConfirmation} />
@@ -285,8 +300,8 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                                     <th> #</th>
                                     <th> کالا</th>
                                     <th>قیمت پایه</th>
-                                    <th>وزن </th>
-                                    <th> قیمت کل</th>
+                                    <th>وزن مانده </th>
+                                    <th> ارزش کالا</th>
                                     <th> عرضه</th>
                                     <th>نحوه پرداخت</th>
                                     <th>بازه پرداخت</th>
@@ -360,6 +375,6 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                 EntityId={orderDetailId} EntityTypesId={11}
                 comment={'لطفا فایل اکسل مطابق نمونه اطلاعات ارسال را بارگزاری کنید'} />
         </div>
-    )
+    )}
 }
 export default OrderAddress
