@@ -144,7 +144,7 @@ if (data.success === true){
         draggable: true,
         progress: undefined
     });
-    navigate("/orderList")
+    navigate("/admin/orderList")
 }
   
 setLoading(false)
@@ -397,7 +397,7 @@ maxMenuHeight="200px"
                                 /></button>
                         </div>
                         <div className='col-lg-6 col-md-6 col-sm-11  '>
-                            <NavLink to='/orderList' className="btn btn-danger float-right">بازگشت</NavLink>
+                            <NavLink to='orderList' className="btn btn-danger float-right">بازگشت</NavLink>
                         </div>
                     </div>
 

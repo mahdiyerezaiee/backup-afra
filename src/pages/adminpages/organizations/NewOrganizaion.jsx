@@ -38,7 +38,7 @@ event.preventDefault();
                     progress: undefined
                 });
 setLoading(false)
-                navigate('/organizationlist')
+                navigate('/admin/organizationlist')
 
             }
         } catch (error) {
@@ -116,7 +116,7 @@ setLoading(false)
                                     </button>
                             </div>
                             <div >
-                                <NavLink to='/organizationlist' className="btn btn-danger">بازگشت</NavLink>
+                                <NavLink to='organizationlist' className="btn btn-danger">بازگشت</NavLink>
                             </div>
                         </div>
 

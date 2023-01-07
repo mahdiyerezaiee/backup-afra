@@ -293,7 +293,7 @@ const SupplyList = () => {
     }
 
     const formHandler = () => {
-        navigate("/newsupply")
+        navigate("/admin/newsupply")
     }
 
 
@@ -464,7 +464,7 @@ const SupplyList = () => {
     }
 
     const editHandler = (id) => {
-        navigate(`/editsupply/${id}`)
+        navigate(`/admin/editsupply/${id}`)
     }
 
     const columns = useMemo(() => [

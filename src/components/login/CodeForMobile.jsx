@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import { SetUserRole, verifyUser } from './../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser, setOTPCode } from '../../actions/user';
 import { loginUser } from '../../services/userService';
 import { decodeToken } from './../../utils/decodeToken';
 import './customCss.css';
@@ -90,10 +89,9 @@ const CodeForMobile = () => {
                 localStorage.setItem('connect', detoken.ID)
 
 
-                dispatch(addUser(detoken));
 
 
-                history('/dashboard');
+                history('/admin');
 
 
             }

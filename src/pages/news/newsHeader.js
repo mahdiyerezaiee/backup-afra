@@ -19,7 +19,7 @@ const NewsHeader = () => {
         getNews()
     },[])
     const clickHandler = (id) => {
-      navigate(`news/${id}`)
+      navigate(`/admin/news/${id}`)
     }
     return(
         <div style={{width:"100%" ,textAlign:"center" }}>

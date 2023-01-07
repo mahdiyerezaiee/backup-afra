@@ -207,7 +207,7 @@ const getSelectedData=(data)=>{
                                     <button type="submit" disabled={disable} className="btn btn-success float-left " onClick={handelSubmit} >تایید</button>
                                 </div>
                                 <div className='col-6 '>
-                                    <NavLink to='/dashboard' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </form>

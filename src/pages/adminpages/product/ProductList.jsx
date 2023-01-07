@@ -365,7 +365,7 @@ setGeData(false)
     }, [getData])
 
     const editHandler = (id) => {
-        navigate(`/editproduct/${id}`)
+        navigate(`/admin/editproduct/${id}`)
     }
 
     const deletHandler = async () => {
@@ -391,7 +391,7 @@ setGeData(false)
     }
     const navigate = useNavigate()
     const formHandler = () => {
-        navigate("/newproduct")
+        navigate("/admin/newproduct")
     }
 
     var formatter = new Intl.NumberFormat('fa-IR', {

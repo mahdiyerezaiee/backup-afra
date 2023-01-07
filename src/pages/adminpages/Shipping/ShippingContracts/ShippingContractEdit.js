@@ -114,7 +114,7 @@ const ShoppingContract =
                     draggable: true,
                     progress: undefined
                 });
-                navigate('/ShippingContract')
+                navigate('/admin/ShippingContract')
 
             }
 
@@ -231,7 +231,7 @@ setLoading(false)
                                 /></button>
                             </div>
                             <div className='col-lg-6 '>
-                                <NavLink to='/ShippingContract'
+                                <NavLink to='ShippingContract'
                                          className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>

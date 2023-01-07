@@ -77,7 +77,7 @@ useEffect(()=>{
         } catch (error) {
             console.log(error)
         }
-        navigate('/user-news')
+        navigate('/admin/user-news')
 setLoading(false)
     }
     const submit = (e) => {
@@ -128,7 +128,7 @@ setLoading(false)
                                 /></button>
                             </div>
                             <div className='col-lg-6 '>
-                                <NavLink to='/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='user-news' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 

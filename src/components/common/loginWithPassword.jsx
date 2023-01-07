@@ -105,7 +105,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                             progress: undefined
                         });
 
-                        navigate('/dashboard')
+                        navigate('/admin')
 
                     }
 

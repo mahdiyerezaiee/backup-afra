@@ -120,7 +120,7 @@ const OrderProductSupplyConditionEdit = ({modalIsOpen , closeModal,id , Detail})
 
     }
     const editHandler = (id) => {
-        Navigate(`/editproductsupply/${id}`)
+        Navigate(`/admin/editproductsupply/${id}`)
     }
 
     return(

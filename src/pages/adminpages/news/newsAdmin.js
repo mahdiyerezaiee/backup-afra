@@ -280,11 +280,11 @@ const[id,setId]=useState(0)
         }
     }
     const editHandler = (id) => {
-        navigate(`/editNews/${id}`)
+        navigate(`/admin/editNews/${id}`)
     }
     
     const formHandler = () => {
-        navigate("/newNews")
+        navigate("/admin/newNews")
     }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },

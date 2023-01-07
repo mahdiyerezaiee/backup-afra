@@ -213,7 +213,7 @@ export const CustomersGroup = () => {
         GetCustomerGroup();
     },[])
     const editHandler = (id) => {
-        navigate(`/editcustomergroupName/${id}`)
+        navigate(`/admin/editcustomergroupName/${id}`)
     }
     const deletHandler =async () => {
         try {
@@ -283,7 +283,7 @@ export const CustomersGroup = () => {
     ])
     const data=useMemo(()=>customerg);
     const handelForm=()=>{
-        navigate('/newcustomergroup')
+        navigate('/admin/newcustomergroup')
     }
     if(customerg && customerg.length > 0){
 

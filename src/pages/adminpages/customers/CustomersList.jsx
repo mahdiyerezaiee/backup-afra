@@ -219,10 +219,10 @@ const CustomersList = () => {
     const navigate = useNavigate()
 
     const editHandler = (id) => {
-        navigate(`/editcustomergroup/${id}`)
+        navigate(`/admin/editcustomergroup/${id}`)
     }
     const editInfoHandler=(id)=>{
-        navigate(`/editCustumer/${id}`)
+        navigate(`/admin/editCustumer/${id}`)
     }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },

@@ -73,7 +73,7 @@ const NewShippingCompany = () => {
                     draggable: true,
                     progress: undefined
                 });
-                navigate('/shippingcompanyList')
+                navigate('/admin/shippingcompanyList')
 
             }
 
@@ -159,7 +159,7 @@ setLoading(false)
                                 /></button>
                             </div>
                             <div className='col-6 '>
-                                <NavLink to='/shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 

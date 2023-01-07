@@ -329,13 +329,13 @@ setGeData(false)
     }, [getData])
 
     const editHandler = (id) => {
-        navigate(`/editShippingContract/${id}`)
+        navigate(`/admin/editShippingContract/${id}`)
     }
 
 
     const navigate = useNavigate()
     const formHandler = () => {
-        navigate("/newShippingContract")
+        navigate("/admin/newShippingContract")
     }
 
 

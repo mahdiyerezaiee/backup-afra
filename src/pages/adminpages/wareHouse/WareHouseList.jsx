@@ -253,10 +253,10 @@ const WareHouseList = () => {
     };
     const navigate = useNavigate()
     const editHandler = (id) => {
-        navigate(`/editwarehouse/${id}`)
+        navigate(`/admin/editwarehouse/${id}`)
     }
     const formHandler = () => {
-        navigate("/newwarehouse")
+        navigate("/admin/newwarehouse")
     }
     const deleteHandler = async () => {
 

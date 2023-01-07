@@ -258,7 +258,7 @@ GetProductGroup();
 },[])
 
 const editHandler = (id) => {
-    navigate(`/editproductgroup/${id}`)
+    navigate(`/admin/editproductgroup/${id}`)
 }
 const deletHandler =async () => {
     try {
@@ -316,7 +316,7 @@ const columns=useMemo(()=>[
 const data=useMemo(()=>productG);
 
 const handelForm=()=>{
-navigate('/newproductgroup')
+navigate('/admin/newproductgroup')
 }
     if (productG && productG.length >0) {
         const dataForExcel = data.map(item => ({

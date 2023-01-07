@@ -71,7 +71,7 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
 
             <Menu >
 
-                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="dashboard" />}></MenuItem>
+                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}></MenuItem>
 
                 <SubMenu hidden={roles.includes(1) ? false : true} icon={<FiUsers size={'2rem'} />} label="تکمیل اطلاعات" >
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-align-justify" />}><NavLink to='identitypannel'> احراز هویت</NavLink></MenuItem>
@@ -106,27 +106,27 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
                     <MenuItem onClick={handleHeaderClick}><NavLink to="productSupply">عرضه</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}> <NavLink to="orderList">سفارشات</NavLink></MenuItem>
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="addOrder">ثبت سفارش</NavLink></MenuItem>
-                    <MenuItem><NavLink to='/bazargah'>  بازارگاه </NavLink></MenuItem>
+                    <MenuItem><NavLink to='bazargah'>  بازارگاه </NavLink></MenuItem>
 
                 </SubMenu>
 
-                <SubMenu label="گزارشات" hidden={roles.includes(7) || roles.includes(8) ? false : true} icon={<TbReport size={'2rem'} />} ref={ref16} open={show.item16 === true ? true : false} onClick={() => setShow({ ...show, item16: !show.item16, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item2: false, item11: false, item12: false, item14: false, item13: false, item7: false })}>
-                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='/ShippingReport'></NavLink>حواله های باربری </MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='/UsedBarBariReports'></NavLink> بارگیری </MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='/CustomersReports'></NavLink>  مشتریان</MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='/OrdersReports'></NavLink> سفارشات</MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='/ProceessAttachments'></NavLink> اعتبار و اسناد</MenuItem>
+                <SubMenu  hidden={roles.includes(7) || roles.includes(8) ? false : true} icon={<TbReport size={'2rem'} />} ref={ref16} open={show.item16 === true ? true : false} onClick={() => setShow({ ...show, item16: !show.item16, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item2: false, item11: false, item12: false, item14: false, item13: false, item7: false })} label="گزارشات">
+                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='ShippingReport'>حواله های باربری </NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='UsedBarBariReports'>بارگیری </NavLink> </MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomersReports'>  مشتریان</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='OrdersReports'>سفارشات</NavLink> </MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='ProceessAttachments'>اعتبار و اسناد</NavLink> </MenuItem>
 
                 </SubMenu>
                 <SubMenu ref={ref7} open={show.item7 === true ? true : false} onClick={() => setShow({ ...show, item7: !show.item7, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item2: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(8) ? false : true} label='تحویل کالا' icon={<GiMineTruck size='2rem' />}>
 
                     {/* <MenuItem onClick={handleHeaderClick}>ثبت بارنامه و کسری سرک</MenuItem>
                 <MenuItem onClick={handleHeaderClick}><NavLink to='/reportfromsql'> ترافیک بارگیری</NavLink></MenuItem> */}
-                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='/shippingcompanyList'>لیست باربری</NavLink> </MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='/ShippingContract'>لیست قرارداد باربری</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='shippingcompanyList'>لیست باربری</NavLink> </MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='ShippingContract'>لیست قرارداد باربری</NavLink></MenuItem>
                     <SubMenu label='بروزرسانی باربری' onClick={handleHeaderClick}>
-                        <MenuItem onClick={handleHeaderClick} > <NavLink to='/updateShippingReports'> براساس تاریخ </NavLink></MenuItem>
-                        <MenuItem onClick={handleHeaderClick}><NavLink to='/updateAllShipping'> براساس حواله </NavLink></MenuItem>
+                        <MenuItem onClick={handleHeaderClick} > <NavLink to='updateShippingReports'> براساس تاریخ </NavLink></MenuItem>
+                        <MenuItem onClick={handleHeaderClick}><NavLink to='updateAllShipping'> براساس حواله </NavLink></MenuItem>
                     </SubMenu>
                 </SubMenu>
                 {/* <SubMenu ref={ref8} open={show.item8 === true? true:false} onClick={() => setShow({...show , item8: !show.item8 , item1: false,item3: false,item4: false,item5: false,item6: false,item2: false,item9: false,item10: false,item7: false,item11: false,item12: false,item14: false,item13: false})} hidden={roles.includes(7)||roles.includes(5) ? false : true} icon={<FaCashRegister size='2rem' />} label='حسابداری'>
@@ -157,7 +157,7 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
 
                 </SubMenu>
                 <SubMenu ref={ref14} open={show.item14 === true ? true : false} onClick={() => setShow({ ...show, item14: !show.item14, item1: false, item16: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item12: false, item13: false })} icon={<FaUserCog size='2rem' />} label="حساب کاربری" >
-                    <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-hashtag" />} ><NavLink to='/userProfile'>اطلاعات کاربری</NavLink> </MenuItem>
+                    <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-hashtag" />} ><NavLink to='userProfile'>اطلاعات کاربری</NavLink> </MenuItem>
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-share-square-o" />} > <NavLink to='/logout'>خروج از سامانه</NavLink></MenuItem>
                 </SubMenu>
 

@@ -113,7 +113,7 @@ const NewsList = () => {
         getNews()
     }, [])
     const ShowHandler = (id) => {
-        navigate(`/news/${id}`)
+        navigate(`/admin/news/${id}`)
     }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
