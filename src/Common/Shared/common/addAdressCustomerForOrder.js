@@ -7,7 +7,7 @@ import { orderSpliter } from "../../../services/orderService";
 
 import SimpleReactValidator from "simple-react-validator";
 import { GetOrderDetails } from '../../../services/orderService';
-import file from "../../../pages/order/addressFile.xlsx";
+import file from "../../../Admin/Order/Component/addressFile.xlsx";
 import {ClipLoader} from "react-spinners";
 
 const customStyles = {

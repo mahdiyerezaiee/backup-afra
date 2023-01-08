@@ -13,7 +13,6 @@ import PrivateRoute from '../Utils/PrivateRoute';
 import { GetUserInfo } from '../services/userService';
 import AdminMainLayout from '../Admin/Layout/AdminMainLayout';
 import LoginWithPassword from '../Common/Shared/Login/loginWithPassword';
-import SysPlus from '../pages/landingPage/SysPlus';
 
 const MainLazyLoad = lazy(() => import('../Admin/Layout/AdminMainLayout'))
 
