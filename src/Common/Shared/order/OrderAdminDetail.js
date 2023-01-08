@@ -1,7 +1,7 @@
 import {PaymentStructureEnums} from "../../Enums/PaymentStructureEnums";
 import {useEffect, useState} from "react";
 import {GetAllProductSupply} from "../../../services/productSupplyService";
-import OrderEdit from "../../../pages/order/orderEdit";
+import OrderEdit from "../../../Admin/Order/Component/orderEdit";
 import OrderConfirmation from "./orderConfirmation";
 import Modal from "react-modal";
 import InvoiceCreator from "../../../Utils/invoiceCreator";

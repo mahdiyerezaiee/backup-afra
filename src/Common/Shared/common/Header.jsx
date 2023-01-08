@@ -5,9 +5,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { DeleteCart, DeleteItemCart, DeleteItemCarts, GetShoppingCart } from "../../../services/cartShoppingService";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 
-import Setting from "../../../pages/setting/setting";
+import Setting from "../../Setting/setting";
 import { SetOrder } from "../../../services/orderService";
-import NewsHeader from "../../../pages/news/newsHeader";
+import NewsHeader from "../News/newsHeader";
 import { toast } from 'react-toastify';
 import { GiHamburgerMenu } from "react-icons/gi"
 import { BiX } from "react-icons/bi"

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { GetPreviewAddress } from '../services/orderService';
 import { Fragment } from 'react';
 import ExcelFilePreviewer from './ExcelFilePreviewer';
-import file from "../pages/order/addressFile.xlsx";
+import file from "../Admin/Order/Component/addressFile.xlsx";
 import {ClipLoader} from "react-spinners";
 import { Link } from 'react-router-dom';
 
