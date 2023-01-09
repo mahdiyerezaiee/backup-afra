@@ -14,7 +14,7 @@ const DashbordGuess = () => {
             <div className="card component-card_2 m-2">
                 <div className="card-body">
                     <p className="card-text d-inline m-auto">برای ثبت سفارش جدید لازم است که حتما احزار هویت انجام دهید</p>
-                    <NavLink to="identitypannel" className="btn btn-primary float-right ">احراز هویت</NavLink>
+                    <NavLink to="/admin/identitypannel" className="btn btn-primary float-right ">احراز هویت</NavLink>
                 </div>
             </div>
         

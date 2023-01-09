@@ -116,7 +116,7 @@ setLoading(false)
                                     </button>
                             </div>
                             <div >
-                                <NavLink to='organizationlist' className="btn btn-danger">بازگشت</NavLink>
+                                <NavLink to='/admin/organizationlist' className="btn btn-danger">بازگشت</NavLink>
                             </div>
                         </div>
 

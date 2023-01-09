@@ -338,7 +338,7 @@ navigate('/admin/identitypannel')
                                     <button type="submit" className="btn btn-success " disabled={Click} onClick={handelSubmit}>تایید</button>
                                 </div>
                                 <div className='col-3 '>
-                                    <NavLink to='identitypannel' className="btn btn-danger">بازگشت</NavLink>
+                                    <NavLink to='/admin/identitypannel' className="btn btn-danger">بازگشت</NavLink>
                                 </div>
                             </div>
 
@@ -499,7 +499,7 @@ navigate('/admin/identitypannel')
                                     <button type="submit" className="btn btn-success " disabled={Click} onClick={handelSubmit} >تایید</button>
                                 </div>
                                 <div >
-                                    <NavLink to='identitypannel' className="btn btn-danger">بازگشت</NavLink>
+                                    <NavLink to='/admin/identitypannel' className="btn btn-danger">بازگشت</NavLink>
                                 </div>
                             </div>
 

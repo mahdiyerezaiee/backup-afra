@@ -206,7 +206,7 @@ setLoading(false)
                                 /></button>
                             </div>
                             <div className='col-lg-6 '>
-                                <NavLink to='ShippingContract'
+                                <NavLink to='/admin/ShippingContract'
                                          className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>

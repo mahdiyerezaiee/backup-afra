@@ -128,7 +128,7 @@ setLoading(false)
                                 /></button>
                             </div>
                             <div className='col-lg-6 '>
-                                <NavLink to='user-news' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='/admin/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
 
