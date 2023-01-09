@@ -21,6 +21,7 @@ import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 import { DeliveryMethods } from '../../../Common/Enums/DeliveryMethodsEnums';
 import { OrderStatusEnumsProgressBar } from '../../../Common/Enums/OrderStatusEnumsProgressBar';
 import FadeLoader from "react-spinners/FadeLoader";
+import { GetOrderDetailsAdmin } from './../../../services/orderService';
 
 
 const OrderDetailTest = () => {
@@ -43,6 +44,7 @@ const OrderDetailTest = () => {
     const [OrderWeight, SetOrderWeight] = useState(0)
     let [loading, setLoading] = useState(false);
 
+    
     const GetShipping = async () => {
         try {
             const { data, status } = await GetShoppings(params.id)
@@ -118,12 +120,13 @@ const OrderDetailTest = () => {
     }
     const getOrder = async () => {
         try {
-            const { data, status } = await GetOrder(params.id)
+            const { data, status } = await GetOrder(Number(params.id))
             setCustomerDetail(data.result.order.customer)
             setOrder(data.result.order)
             SetShippingInformation(JSON.parse(data.result.order.extraData.data))
         } catch (err) {
             console.log(err)
+            console.log('1')
         }
     }
     const bindAdress = async (arr) => {
@@ -184,6 +187,7 @@ const OrderDetailTest = () => {
         }
 
     }
+    console.log(params.id);
     const returnHavaleSum = () => {
 
         var sum = 0
@@ -214,7 +218,7 @@ const OrderDetailTest = () => {
     const getOrderDetail = async () => {
 
         try {
-            const { data, status } = await GetOrderDetails(params.id)
+            const { data, status } = await GetOrderDetailsAdmin(Number(params.id))
             if (status === 200) {
                 orderDetail = data.result.orderDetails
                 setProduct(data.result.orderDetails[0].product)

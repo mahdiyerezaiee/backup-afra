@@ -7,6 +7,7 @@ import {MeasureUnitSample} from "../Common/Enums/MeasureUnitSample";
 import {useEffect, useState , createRef} from "react";
 import Pdf from "react-to-pdf";
 import {useNavigate, useParams} from "react-router-dom";
+import { GetOrderDetailsAdmin } from './../services/orderService';
 
 
 
@@ -37,6 +38,7 @@ const params = useParams()
         document.getElementsByClassName('main-Layout')[0].style.overflow="auto"
 
     }
+    console.log(params);
     const getOrder = async () => {
         try {
             const { data, status } = await GetOrder(params.id)
@@ -77,13 +79,13 @@ const params = useParams()
     const GetOrderDetail = async () => {
         try {
 
-            const { data, status } = await GetOrderDetails(params.id);
+            const { data, status } = await GetOrderDetailsAdmin(params.id);
             if (status === 200) {
                 setOrderDetail(data.result.orderDetails)
             }
 
         } catch (error) {
-            console.log(error);
+            console.log(error,1);
         }
 
     }

@@ -18,6 +18,10 @@ export const GetOrderDetails=(id)=>{
 
     return http.get(`${configure}/Order/GetOrderDetails?OrderID=${id}`);
 }
+export const GetOrderDetailsAdmin=(id)=>{
+
+    return http.get(`${configure}/Order/GetOrderDetails?OrderID=${id}&IsAdmin=true`);
+}
 export const GetCustomerOrders=(UserName)=>{
 
     return http.get(`${configure}/Order/GetOrders?UserName=${UserName}`);
