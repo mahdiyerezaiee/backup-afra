@@ -13,7 +13,7 @@ export const GetAllProductSupplyBord=()=>{
 }
 export const GetAllProductSupplyBordAdmin=()=>{
 
-    return http.get(`${configure}/Product/GetProductSupplies?Active=true&IsAdmin=true&PageNumber=0&PageSize=1000`);
+    return http.get(`${configure}/Product/GetProductSupplies?IsAdmin=true&Active=true&PageNumber=0&PageSize=1000`);
 }
 export const GetAllProductSupply=(id)=>{
 

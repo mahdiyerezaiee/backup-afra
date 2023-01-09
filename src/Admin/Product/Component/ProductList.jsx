@@ -9,12 +9,13 @@ import MyTable from "../../../Common/Shared/Form/MyTable";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
 import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
-import { GetGroupsForEntity } from './../../../services/GroupService';
+import { GetGroupsForEntity, GetGroupWithCompany } from './../../../services/GroupService';
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import Select from 'react-select';
 import { GetProductsWithSearch } from './../../../services/productService';
 import QueryString from "qs";
+import { GetCompanyChild } from './../../../services/companiesService';
 
 
 
@@ -83,14 +84,25 @@ const ProductList = () => {
     }
 
     const GetProductGroup = async () => {
-        const { data, status } = await GetGroupsForEntity(2);
-        if (status === 200) {
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
 
+            const { data, status } = await GetGroupWithCompany(2, companies[i].id);
 
-            setProductG(data.result.groups);
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
+            }
 
 
         }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setProductG(finalArr);
 
     }
 

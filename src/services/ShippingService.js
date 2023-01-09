@@ -32,7 +32,7 @@ export const GetShipping=(url)=>{
 }
 export const GetAllShippingCompanies=(url)=>{
 
-    return http.get(`${configure}/Shipping/GetShippingCompanies?PageSize=1000000`);
+    return http.get(`${configure}/Shipping/GetShippingCompanies?PageNumber=0&PageSize=1000000`);
 }
 export const GetShippingCompany=(id)=>{
 

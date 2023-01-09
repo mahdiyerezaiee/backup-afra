@@ -3,12 +3,13 @@ import { GetAttribute } from '../../../services/attributeService';
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import MyTable from '../../../Common/Shared/Form/MyTable';
-import {DeleteGroup, GetGroupsForEntity, SetGroup} from '../../../services/GroupService';
+import {DeleteGroup, GetGroupsForEntity, GetGroupWithCompany, SetGroup} from '../../../services/GroupService';
 import  Modal  from 'react-modal';
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import {setCustomerInfo} from "../../../services/customerService";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { toast } from 'react-toastify';
+import { GetCompanyChild } from './../../../services/companiesService';
 
 
 export const CustomersGroup = () => {
@@ -201,12 +202,25 @@ export const CustomersGroup = () => {
         setIsOpen(false);
     }
     const GetCustomerGroup = async () => {
-        const { data, status } = await GetGroupsForEntity(1);
-        if (status === 200) {
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
+            }
 
 
-            setCustomerg(data.result.groups);
         }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setCustomerg(finalArr);
 
     }
     useEffect(()=>{

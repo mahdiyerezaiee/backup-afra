@@ -8,9 +8,10 @@ import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { GetAllProductSupplyBordAdmin } from '../../../services/productSupplyService';
 
 import ModalSubmit from "./modalSubmit";
-import { GetGroupsForEntity } from '../../../services/GroupService';
+import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
 import ConditionSalesBordAdmin from "./conditionSalesBordAdmin";
 import { Link } from 'react-router-dom';
+import { GetCompanyChild } from './../../../services/companiesService';
 
 
 const customStyles = {
@@ -33,18 +34,18 @@ const SalesBoardForAdmin = () => {
     const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.user);
     const userRole = useSelector(state => state.roles);
-    const [Customerg, setCustomerg] = useState(getDataProductSupply().Customerg?getDataProductSupply().Customerg:[])
+    const [Customerg, setCustomerg] = useState(getDataProductSupply().Customerg ? getDataProductSupply().Customerg : [])
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
-    const [productSupply, setProductSupply] = useState(getDataProductSupply().productSupply?getDataProductSupply().productSupply:[]);
+    const [productSupply, setProductSupply] = useState(getDataProductSupply().productSupply ? getDataProductSupply().productSupply : []);
     const [modalInfo, setModalInfo] = useState([])
     const [quantity, setquantity] = useState(0)
     const [name, setName] = useState([]);
     const [productSupplyConditionId, setProductSupplyConditionId] = useState(0);
     const d = new Date();
-    d.setTime(d.getTime() +  (60 * 1000));
-    let expires =  d.toUTCString();
+    d.setTime(d.getTime() + (60 * 1000));
+    let expires = d.toUTCString();
     const dataProductSupply = {
         expiresAt: expires,
         productSupply,
@@ -56,15 +57,37 @@ const SalesBoardForAdmin = () => {
 
 
     }
+    const GetGroupsOfCustomers = async () => {
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
+            }
+
+
+        }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setCustomerg(finalArr);
+    
+    }
     const getProductSupply = async () => {
-        const { data, status } = await GetGroupsForEntity(1);
-        setCustomerg(data.result.groups);
-        dataProductSupply.Customerg = data.result.groups
+
+
         try {
             const { data, status } = await GetAllProductSupplyBordAdmin();
-            setProductSupply(data.result.productSupplies.values)
-            dataProductSupply.productSupply=data.result.productSupplies.values
 
+            setProductSupply(data.result.productSupplies.values)
+            dataProductSupply.productSupply = data.result.productSupplies.values
+            dataProductSupply.Customerg =Customerg
         } catch (error) {
             console.log(error);
         }
@@ -74,14 +97,15 @@ const SalesBoardForAdmin = () => {
 
     useEffect(() => {
 
-        if (getDataProductSupply().expiresAt < new Date().toUTCString()){
+        if (getDataProductSupply().expiresAt < new Date().toUTCString()) {
 
             sessionStorage.removeItem("dataProductSupply")
 
 
         }
-        if (!getDataProductSupply().expiresAt ){
+        if (!getDataProductSupply().expiresAt) {
 
+            GetGroupsOfCustomers()
             getProductSupply();
 
 
@@ -90,7 +114,7 @@ const SalesBoardForAdmin = () => {
 
     }, [])
 
-
+    console.log(Customerg);
     let formatter = new Intl.NumberFormat('fa-IR', {
         style: 'currency',
         currency: 'IRR', maximumFractionDigits: 0,
@@ -98,7 +122,7 @@ const SalesBoardForAdmin = () => {
     });
 
     let formatter2 = new Intl.NumberFormat('fa-IR', {
-         maximumFractionDigits: 0,
+        maximumFractionDigits: 0,
         minimumFractionDigits: 0,
     });
     const getModalInfo = async (id) => {
@@ -151,14 +175,14 @@ const SalesBoardForAdmin = () => {
         } catch (err) {
             console.log(err)
         }
-setLoading(false)
+        setLoading(false)
     }
 
     let productCondistion;
 
-    if(productSupply!== null){
+    if (productSupply !== null) {
 
-     productCondistion = productSupply.map(item => item.productSupplyConditions)
+        productCondistion = productSupply.map(item => item.productSupplyConditions)
     }
     const groupReturn = (array) => {
         let newArray = [];
@@ -188,11 +212,11 @@ setLoading(false)
             <div className=" statbox widget-content widget-content-area">
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2">
-                    <h4 className="text-center" style={{color:'#027f00'}}>تابلوی عرضه</h4>
+                        <h4 className="text-center" style={{ color: '#027f00' }}>تابلوی عرضه</h4>
                     </div>
                 </div>
                 <div className="   ">
-                    <div className=" w-100 " style={{overflowX:"auto"}}>
+                    <div className=" w-100 " style={{ overflowX: "auto" }}>
                         <Modal
                             isOpen={modalIsOpen}
                             onRequestClose={closeModal}
@@ -230,8 +254,8 @@ setLoading(false)
                                     <th className="text-center">تاریخ شروع</th>
                                     <th className="text-center">تاریخ پایان</th>
 
-                                     <th className="text-center">  درخواستی</th>
-                                     <th className="text-center"> مانده</th>
+                                    <th className="text-center">  درخواستی</th>
+                                    <th className="text-center"> مانده</th>
                                     <th className="text-center">عملیات</th>
                                 </tr>
                             </thead>
@@ -248,12 +272,12 @@ setLoading(false)
                                         <td className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnit).map(e => e.name)}</td>
                                         <td className="text-center">{formatter2.format(item.quantity)}</td>
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
-                                        <td className="text-center">{ groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item => item.gpName)) === null? "عمومی" : [...new Set(groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item, index) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
+                                        <td className="text-center">{groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item => item.gpName)) === null ? "عمومی" : [...new Set(groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item, index) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{formatter2.format(item.orderedQuantity)}</td>
                                         <td className="text-center">{formatter2.format(item.remainedQuantity)}</td>
-                                        <td className="text-center">{item.productSupplyConditions.length <0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>درخواست
+                                        <td className="text-center">{item.productSupplyConditions.length < 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>درخواست
                                         </button>) : (<button className="btn btn-success" disabled={userRole.includes(1) ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
 
 

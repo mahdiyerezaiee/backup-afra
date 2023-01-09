@@ -1,18 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { GetGroupsForEntity } from "../../../services/GroupService";
+import { GetGroupsForEntity, GetGroupWithCompany } from "../../../services/GroupService";
 import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
 import { GetProductSupplyConditionsCustomer } from "../../../services/ProductSupplyConditionService";
 import { Link } from 'react-router-dom';
+import { GetCompanyChild } from './../../../services/companiesService';
 
 const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeModal }) => {
 
 
     const [customerg, setCustomerg] = useState([])
     const GetCustomerGroup = async () => {
-        const { data, status } = await GetGroupsForEntity(1);
-        if (data.success===true) {
-            setCustomerg(data.result.groups);
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
+            }
+
+
         }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setCustomerg(finalArr);
+    
     }
 
     useEffect(() => {
