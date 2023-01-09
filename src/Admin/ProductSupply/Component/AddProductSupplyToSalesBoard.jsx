@@ -387,7 +387,7 @@ else{
                                         size={15}
                                     /></button>                                </div>
                                 <div className='col-lg-6 col-sm-12 '>
-                                    <NavLink to='productSupply' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin/productSupply' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
 

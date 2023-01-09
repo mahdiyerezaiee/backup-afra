@@ -73,7 +73,7 @@ const NewSupplier = () => {
                                         size={15}
                                     /></button>                                   </div>
                                 <div className='col-6 '>
-                                    <NavLink to='supplierList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin/supplierList' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>

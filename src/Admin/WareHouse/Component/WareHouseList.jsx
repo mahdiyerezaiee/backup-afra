@@ -7,11 +7,12 @@ import MyTable from "../../../Common/Shared/Form/MyTable";
 import { GetAttribute, GetAttributeValues } from '../../../services/attributeService'
 import { DeleteNews } from "../../../services/newsService";
 import Modal from "react-modal";
-import { GetGroupsForEntity } from './../../../services/GroupService';
+import { GetGroupsForEntity, GetGroupWithCompany } from './../../../services/GroupService';
 import {toast} from "react-toastify";
 import {DeleteSupplier, SetSupplier} from "../../../services/supplyService";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
+import { GetCompanyChild } from './../../../services/companiesService';
 
 const customStyles = {
     content: {
@@ -45,14 +46,26 @@ const WareHouseList = () => {
     const getTypesware = async () => {
 
 
-        try {
-            const { data, status } = await GetGroupsForEntity(4);
-            if (status === 200) {
-                setWareTypes(data.result.groups)
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(4, companies[i].id);
+
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
             }
-        } catch (error) {
-            console.log(error);
+
+
         }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setWareTypes(finalArr);
+
 
 
     }

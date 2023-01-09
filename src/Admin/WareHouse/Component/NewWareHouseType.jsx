@@ -74,7 +74,7 @@ const NewWareHouseType = () => {
                                         size={15}
                                     /></button>                                </div>
                                 <div className='col-6 '>
-                                    <NavLink to='warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin/warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>

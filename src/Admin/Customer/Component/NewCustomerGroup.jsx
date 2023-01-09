@@ -85,7 +85,7 @@ const NewCustomerGroup = () => {
                                         /></button>
                                 </div>
                                 <div className='col-6 '>
-                                    <NavLink to='customergroup' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>

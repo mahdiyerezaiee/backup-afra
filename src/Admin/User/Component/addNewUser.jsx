@@ -296,7 +296,7 @@ const AddNewUser = () => {
                                                 </button>}
                                         </div>
                                         <div className='col-lg-6 col-md-6 col-sm-11 '>
-                                            <NavLink to='userlist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                            <NavLink to='/admin/userlist' className="btn btn-danger float-right">بازگشت</NavLink>
                                         </div>
                                     </div>
                                 </div>
