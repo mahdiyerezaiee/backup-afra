@@ -6,8 +6,9 @@ import { NavLink, useParams } from "react-router-dom";
 import Select from 'react-select'
 import {  SetAttributeValues } from "../../../services/attributeService";
 import { GetAttributeValues } from '../../../services/attributeService';
-import { GetGroupsForEntity } from '../../../services/GroupService';
+import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
 
 const EditWareHouse = () => {
     const params = useParams()
@@ -42,14 +43,26 @@ const EditWareHouse = () => {
     }
 
     const GetWareHouseTypes = async () => {
-        try {
-            const { data, status } = await GetGroupsForEntity(4);
-            if(status===200){
-                SetWarehouseT(data.result.groups)
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(4, companies[i].id);
+
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
             }
-        } catch (error) {
-          console.log(error);  
-        } 
+
+
+        }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        SetWarehouseT(finalArr);
+
       
 
 
@@ -231,7 +244,7 @@ const EditWareHouse = () => {
                                     /></button>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 '>
-                                    <NavLink to='warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
                                 </div>
                             </div>
                         </div>
