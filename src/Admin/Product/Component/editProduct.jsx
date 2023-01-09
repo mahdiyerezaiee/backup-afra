@@ -301,7 +301,7 @@ const EditProduct = () => {
                                 /></button>
                             </div>
                             <div className='col-6 '>
-                                <NavLink to='productList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <NavLink to='/admin/productList' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
                     </form>
