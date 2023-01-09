@@ -343,7 +343,7 @@ const OrderDetailTest = () => {
                 </div>
                 <div className="py-5 ">
                     <button className="btn btn-danger  float-right m-1 ">
-                        <NavLink className="text-light" to='/orderList'>بازگشت</NavLink>
+                        <NavLink className="text-light" to='/admin/orderList'>بازگشت</NavLink>
                     </button>
                 </div>
                 <ExcelFileUploader modalIsOpen={modalIsOpenUploadExcel} closeModal={closeModalIsOpenUploadExcel}

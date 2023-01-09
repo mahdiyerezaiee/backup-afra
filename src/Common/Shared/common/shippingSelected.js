@@ -67,11 +67,13 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     const handelSubmit = async (e) => {
         setLoading(true)
         e.preventDefault();
+        for (let i = 0; i < orderDetailId.length; i++) {
         const body = {
-            orderDetailId,
+            orderDetailId:orderDetailId[i].id,
             shippingContractId,
             "byPassContractLimit": false
         }
+
         const { data, status } = await SyncWithSender(body)
        try {
         
@@ -106,6 +108,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
         } catch (error) {
             setLoading(false)
             closeModal()
+        }
         }
     }
     return (
@@ -170,4 +173,6 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
         </Modal>
     )
 }
+
 export default ShippingSelected
+

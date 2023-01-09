@@ -15,6 +15,7 @@ import { PaymentStructureEnums } from '../../Enums/PaymentStructureEnums';
 import TakhsisTable from "../Form/TakhsisTable";
 import SelectColumnFilter from "../Form/ColumnFilter";
 import FadeLoader from "react-spinners/FadeLoader";
+import ModalGroupWork from "../Common/ModalGroupWork";
 
 
 const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
@@ -23,15 +24,29 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     const [modalIsOpen, setIsOpen] = useState(false);
     const [OrderDetail, setOrderDetail] = useState([])
     const [IsOpen, SetIsOpen] = useState(false);
+    const [open, SetOpen] = useState(false);
+
     const [measureUnitId, setmeasureUnitId] = useState(0)
     const [orderDetailId, setorderDetailId] = useState(0);
     const [completeDdata, SetCompletedData] = useState([])
     const [productSupplyId, setProductSupplyId] = useState(0)
+    const [stateSuccess, SetStateSuccess] = useState(0)
+    const [stateError, SetStateError] = useState(0)
+
     const [isOpenAddress, setIsOpenAddress] = useState(false)
     const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
     let [loading, setLoading] = useState(false);
+    const [selectedRows, setSelectedRows] = useState([])
+    let arrayOfSelectedData = [];
+    const getSelectedData = (data) => {
+        arrayOfSelectedData = data.map(item => item.original);
+        return (arrayOfSelectedData)
+    }
+    const getBulkJob = () => {
+        const arrayOfData = getSelectedData(selectedRows);
+       openModal(arrayOfData)
 
-
+    }
     const [cottageCode, setcottageCode] = useState('');
 
     const getSupplyCode = async () => {
@@ -190,7 +205,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         setLoading(false)
 
     }
-
+    const close = () => {
+        SetOpen(false);
+    }
 
     var formatter = new Intl.NumberFormat('fa-IR', {
 
@@ -352,15 +369,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
                     (<div className="form-group mb-4  textOnInput col-lg-12 rounded border  border-dark    " style={{ marginTop: '3rem' }}>
                         <label >  تخصیص یافته </label>
 
-                        <TakhsisTable  columns={columns} data={data} />
-
-
-
-
-
-
-
-
+                        <TakhsisTable  columns={columns} data={data} getData={rows => setSelectedRows(rows)}
+                                       bulkJob={getBulkJob}  />
+                        <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>) : ''}
                 <div className=" text-end  p-2" style={{ textAlign: 'left' }}>

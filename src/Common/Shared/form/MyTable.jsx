@@ -23,6 +23,7 @@ const IndeterminateCheckbox = React.forwardRef(
 const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setPageSize,PageSize,getDataBySearch , total,  rowProps = () => ({}) } ) => {
 
     const [selectFunc,setSelectFunc]=useState(0);
+    const [Func, SetFunc] = useState([]);
 
     const {
         getTableProps,
@@ -35,7 +36,11 @@ const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setP
         selectedFlatRows,
         state: { selectedRowIds }
 
-    } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination, useRowSelect, hooks => {
+    } = useTable({ columns, data ,initialState: {
+
+            hiddenColumns:  Func
+        },
+    }, useGlobalFilter, useSortBy, usePagination, useRowSelect, hooks => {
         hooks.visibleColumns.push(columns => [
             // Let's make a column for selection
             {
@@ -58,6 +63,20 @@ const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setP
             ...columns,
         ])
     })
+    const formattedvalues = [];
+    const values= Object.values(rows.map(i =>  i.values));
+
+    useEffect(() => {
+             values.forEach(task =>
+            Object.entries(task).forEach(([key, value]) =>
+                value ===  null  ? formattedvalues.push(key): value ===  ""  ? formattedvalues.push(key):null
+            )
+        );
+            SetFunc(formattedvalues.length === values.length ? formattedvalues:[])
+
+
+
+    }, [values.length !== 0])
     useEffect(()=>{
         getData(selectedFlatRows);
     },[selectedRowIds])
