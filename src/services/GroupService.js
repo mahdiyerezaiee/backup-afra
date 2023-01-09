@@ -7,6 +7,10 @@ export const GetGroupsForEntity=(entityTypeId , url)=>{
 
     return http.get(`${configure}/Group/GetGroups?EntityTypeId=${entityTypeId}` , url)
 }
+export const GetGroupWithCompany=(entityTypeId , companyId)=>{
+
+    return http.get(`${configure}/Group/GetGroups?EntityTypeId=${entityTypeId}&CompanyId=${companyId}`)
+}
 export const GetGroupById=(groupId)=>{
 
     return http.get(`${configure}/Group/GetGroup?Id=${groupId}`)

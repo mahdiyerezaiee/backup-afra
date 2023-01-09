@@ -3,13 +3,14 @@ import { GetAttribute } from '../../../services/attributeService';
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import MyTable from '../../../Common/Shared/Form/MyTable';
-import {DeleteGroup, GetGroupsForEntity, SetGroup} from './../../../services/GroupService';
+import {DeleteGroup, GetGroupsForEntity, GetGroupWithCompany, SetGroup} from './../../../services/GroupService';
 import  Modal  from 'react-modal';
 import { ExportToExcel } from '../../../Common/Shared/Common/ExportToExcel';
 import {DeleteHouses, SetWareHouses} from "../../../services/wareHouseService";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
+import { GetCompanyChild } from './../../../services/companiesService';
 
 
 const ProductGroup = () => {
@@ -240,17 +241,25 @@ setId(id)
         setIsOpen(false);
     }
     const GetProductGroup = async () => {
-        try {
-            
-            const { data, status } = await GetGroupsForEntity(2);
-        if (status === 200) {
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
 
-          setProductG(data.result.groups)
+            const { data, status } = await GetGroupWithCompany(2, companies[i].id);
+
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
+            }
+
+
         }
 
-        } catch (error) {
-            console.log(error);
-        }
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setProductG(finalArr);
         
     }
 useEffect(()=>{

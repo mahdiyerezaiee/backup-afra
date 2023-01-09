@@ -27,6 +27,7 @@ import OrderEditList from "./orderEditList";
 import { PaymentStatusEnums } from "../../../Common/Enums/PaymentStatus";
 import { toast } from "react-toastify";
 import { OverDueEnum } from "../../../Common/Enums/overDueEnum";
+import { GetCompanyChild } from './../../../services/companiesService';
 
 
 const customStyles = {
@@ -81,11 +82,14 @@ const OrderList = () => {
     const [paymentStatusIds, setPaymentStatusId] = useState(getDefault().paymentStatusIds)
     const [shippingStatusIds, setShippingStatusIds] = useState(getDefault().shippingStatusIds)
     const [order, setOrder] = useState([])
+    const[companyId,setCompanyId]=useState(getDefault().companyId?getDefault().companyId:null)
     const [DetailAddress, setDetailAddress] = useState([]);
+    const[companies,setCompanies]=useState([])
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
     let SortColumn=null
     let SortingDirectionId=null
+
     const param = { PageSize, PageNumber }
 
     function getPage() {
@@ -197,6 +201,9 @@ const OrderList = () => {
     const getSelectedData = (data) => {
         arrayOfSelectedData = data.map(item => item.original);
         return (arrayOfSelectedData)
+    }
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
     }
     const getBulkJob = (selected) => {
         if (selected === 2) {
@@ -331,7 +338,8 @@ const OrderList = () => {
         orderStatusIds,
         StartDate,
         EndDate,
-        OrderDetailExtId
+        OrderDetailExtId,IsAdmin:true,
+        companyId
     }
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
@@ -342,7 +350,7 @@ const OrderList = () => {
         let config = {
             headers: { 'Content-Type': 'application/json' },
             params: {
-                Id: Number(Id),
+                Id: Number(Id),IsAdmin:true,
                 UserName: userName,
                 OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
                 StartDate
@@ -357,6 +365,7 @@ const OrderList = () => {
                 OrderDetailExtId,
                 PageNumber: 0,
                 PageSize,
+                companyId,
                 SortColumn,
                 SortingDirectionId
 
@@ -402,11 +411,11 @@ const OrderList = () => {
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
                 OrganizationNationalId:organizationNationalId,
-
+                companyId,
                 OrderDetailExtId,
                 PageNumber,
                 PageSize,  SortColumn,
-                SortingDirectionId
+                SortingDirectionId,IsAdmin:true
 
             }
             ,
@@ -634,7 +643,7 @@ const OrderList = () => {
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
                 OrganizationNationalId:organizationNationalId,
-
+                IsAdmin:true,
                 OrderDetailExtId,
                 PageNumber,
                 PageSize
@@ -664,6 +673,18 @@ const OrderList = () => {
             console.log(error);
         }
     }
+    const getCompany=async()=>{
+try {
+    const{data,status}=await GetCompanyChild()
+    if(status===200){
+        setCompanies(data.result.companies)
+    }
+    
+} catch (error) {
+    console.log(error);
+}
+
+    }
     var formatter = new Intl.NumberFormat('fa-IR', {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
@@ -671,9 +692,11 @@ const OrderList = () => {
     useEffect(() => {
         GetOrders()
         getOrganization()
+        getCompany()
     }, [getOrders])
 
 
+   
     const columns = useMemo(() => [
 
         {
@@ -891,6 +914,7 @@ const OrderList = () => {
         setShippingStatusIds([])
         setOrganizationNationalId('')
         SetoverDue(null)
+        setCompanyId(null)
         sessionStorage.clear()
 
         setPageNumber(0)
@@ -1070,6 +1094,31 @@ const OrderList = () => {
                                         setPaymentMethodIds(e)
                                     }}
                                 />
+                            </div>
+                        </div>
+                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                            style={{ marginBottom: "3rem" }}>
+                            <div className=" form-control-sm">
+                                <label> نام شرکت </label>
+
+                                {companyId && companyId === null ?
+                                    <Select
+
+                                        options={CompaniesIDs()}
+                                        onChange={e => {
+                                            setCompanyId(e.value)
+                                        }}
+                                    /> : <Select
+                                        value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                        placeholder='نام شرکت'
+                                        options={CompaniesIDs()}
+                                        onChange={e => {
+                                            setCompanyId(e.value)
+                                            console.log(e);
+
+                                        }}
+                                    />}
                             </div>
                         </div>
 
@@ -1294,6 +1343,31 @@ const OrderList = () => {
                                 </div>
 
                             </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                            style={{ marginBottom: "3rem" }}>
+                            <div className=" form-control-sm">
+                                <label> نام شرکت </label>
+
+                                {companyId && companyId === null ?
+                                    <Select
+
+                                        options={CompaniesIDs()}
+                                        onChange={e => {
+                                            setCompanyId(e.value)
+                                        }}
+                                    /> : <Select
+                                        value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                        placeholder='نام شرکت'
+                                        options={CompaniesIDs()}
+                                        onChange={e => {
+                                            setCompanyId(e.value)
+                                            console.log(e);
+
+                                        }}
+                                    />}
+                            </div>
+                        </div>
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
