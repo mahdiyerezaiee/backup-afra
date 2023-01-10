@@ -17,9 +17,11 @@ import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
 import { optionsRole } from "../../../Common/Enums/RolesEnums";
 import QueryString from 'qs';
-import { GetGroupsForEntity } from '../../../services/GroupService';
+import { GetGroupByIds, GetGroupsForEntity } from '../../../services/GroupService';
 import EditCustomerGroup from '../../../Admin/Customer/Component/EditCustomerGroup';
 import EditUserRole from './editUserRole';
+import { GetCompanyChild } from './../../../services/companiesService';
+import { GetGroupWithCompany } from './../../../services/GroupService';
 
 const UserList = () => {
 
@@ -35,6 +37,8 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
     const [organization, setOrganization] = useState([]);
     const [selectedRows, setSelectedRows] = useState([])
+    const [CustomerG, setCustomerG] = useState([])
+    const[Ids,setIds]=useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
     const[modalId,setModalId]=useState(0)
@@ -191,6 +195,7 @@ const UserList = () => {
             setGeData(false)
 
             setUsers(data.result.users.values);
+            setIds([...new Set((data.result.users.values).filter(item=>item.groupId!==null).map(item=>item.groupId))])
             setTotalCount(data.result.users.totalCount)
         }catch (e) {
             console.log(e)
@@ -210,10 +215,55 @@ const UserList = () => {
         }
     }
 
+    console.log(Ids);
+    // const getCustomerGroups=async()=>{
+    //     let newConfig={
+    //         headers: { 'Content-Type': 'application/json' },
+    //     params: {
+    //         EntityTypeId:1,
+    //         Ids:Ids
+    //     }
+    //     ,
+    //     paramsSerializer: params => {
+
+    //         return QueryString.stringify(params)
+    //     }
+    //     }
+    //     try {
+    //         const{data,status}=await GetGroupByIds(newConfig)
+    //         if(status===200){
+    //             setCustomerG(data.result.groups)
+    //         }
+    //     } catch (error) {
+            
+    //     }
+    // }
+
+    const getCustomerGroups=async()=>{
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
+            }
+
+
+        }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setCustomerG(finalArr);
+    }
     useEffect(() => {
         getUsers();
         getOrganizationName();
-
+        getCustomerGroups()
     }, [getData])
     const addNewUserHandler = () => {
         navigate('/admin/adduser')
@@ -361,22 +411,6 @@ const UserList = () => {
 
         }, {
             Header: 'گروه ', accessor: 'groupId', Cell: row => {
-                const [CustomerG, setCustomerG] = useState([])
-
-                const GetCustomerGroup = async () => {
-                    const { data, status } = await GetGroupsForEntity(1);
-                    if (status === 200) {
-
-
-                        setCustomerG(data.result.groups);
-                    }
-
-                }
-
-                useEffect(() => {
-
-                    GetCustomerGroup()
-                }, [])
 
                 if (!row.row.original.groupId) {
                     return ('تعیین نشده')

@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import {GetProductSupplyConditions} from "../../../services/ProductSupplyConditionService";
 import OrderConditionEdit from "./OrderConditionEdit";
 import {ClipLoader} from "react-spinners";
+import { GetOrderDetailsAdmin } from './../../../services/orderService';
 
 const customStyles = {
     content: {
@@ -53,7 +54,7 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
     }
     const getOrderDetail = async () => {
         try {
-            const {data, status} = await GetOrderDetails(id)
+            const {data, status} = await GetOrderDetailsAdmin(id)
             let Order = data.result.orderDetails
             setOrderDetail(data.result.orderDetails)
             setProductSupplyId(data.result.orderDetails[0].productSupplyId)
