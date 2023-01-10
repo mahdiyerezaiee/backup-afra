@@ -3,54 +3,84 @@ import { GetAttribute } from '../../../services/attributeService';
 import { NavLink } from 'react-router-dom';
 import { SetAttribute } from '../../../services/attributeService';
 import { toast } from 'react-toastify';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GetGroupById, SetGroup } from '../../../services/GroupService';
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
+import Select from 'react-select';
 
 
 
 const NewCustomerGroup = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [userCompanies, setUserCompanies] = useState([])
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
+
 
     const [name, Setname] = useState('')
-   
-   
+
+
+    const getCompanies = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            setUserCompanies(data.result.companies)
+            SetcompanyId(data.result.companies[0].id)
+            SetCompanyName(data.result.companies[0].name)
+
+
+        } catch (error) {
+
+        }
+
+    }
+
+    useEffect(() => {
+        getCompanies()
+    }, [])
 
 
     const handelSubmit = async (event) => {
         event.preventDefault();
- setLoading(true)
+        setLoading(true)
         try {
-            const body={
-            group:{
-                id:0,
-                entityTypeId:1,
-                name
+            const body = {
+                group: {
+                    id: 0,
+                    entityTypeId: 1,
+                    name
+                    ,companyId
+                    ,companyName
+                }
             }
-        }
 
-        const {data,status}=await SetGroup(body)
-        if(data.success===200){
-            setLoading(false)
-            toast.success('گروه جدید ایجاد شد',
-            {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            })
-            navigate('/admin/customergroup')
-        }
+            const { data, status } = await SetGroup(body)
+            if (data.success === 200) {
+                setLoading(false)
+                toast.success('گروه جدید ایجاد شد',
+                    {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    })
+                navigate('/admin/customergroup')
+            }
         } catch (error) {
             console.log(error);
         }
-    
+
 
     }
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
     return (
         <div className='user-progress' >
             <div className='row'>
@@ -66,13 +96,38 @@ const NewCustomerGroup = () => {
                     <form>
                         <div className='form-group '>
 
-                            <div className="form-group mb-3 textOnInput">
-                        <label>نام گروه</label>
+                            <div className="form-group mb-4 textOnInput">
+                                <label>نام گروه</label>
 
                                 <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
 
 
                             </div>
+                            {userCompanies?
+                            <div className="form-group mb-3 mt-3 textOnInput">
+
+                                <label> شرکت</label>
+                                <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={companys()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={e => {
+
+
+                                        SetcompanyId(e.value)
+                                        SetCompanyName(e.label)
+
+
+                                    }
+
+                                    }
+
+                                />
+
+
+                            </div>:''}
                             <div className='row '>
                                 <div className='col-6 '>
                                     <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} > ثبت

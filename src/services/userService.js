@@ -31,9 +31,13 @@ export const GetUserData=(id)=>{
 
     return http.get(`${configure}/AuthenticatedUser/GetUserInfo?CustomerId=${id}&IsAdmin=true`);
 }
-export const GetUsersRoles=(userId)=>{
+export const GetUsersRolesById=(userId)=>{
 
     return http.get(`${configure}/AuthenticatedUser/GetUserRoles?UserId=${userId}`);
+}
+export const GetUsersRoles=()=>{
+
+    return http.get(`${configure}/AuthenticatedUser/GetUserRoles`);
 }
 
 export const GetAllUsers=()=>{

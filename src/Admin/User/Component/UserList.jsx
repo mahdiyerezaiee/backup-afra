@@ -22,6 +22,7 @@ import EditCustomerGroup from '../../../Admin/Customer/Component/EditCustomerGro
 import EditUserRole from './editUserRole';
 import { GetCompanyChild } from './../../../services/companiesService';
 import { GetGroupWithCompany } from './../../../services/GroupService';
+import { GetUsersRolesById } from './../../../services/userService';
 
 const UserList = () => {
 
@@ -38,7 +39,7 @@ const UserList = () => {
     const [organization, setOrganization] = useState([]);
     const [selectedRows, setSelectedRows] = useState([])
     const [CustomerG, setCustomerG] = useState([])
-    const [Ids, setIds] = useState([])
+    let [Ids, setIds] = useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
     const [modalId, setModalId] = useState(0)
@@ -216,54 +217,58 @@ const UserList = () => {
     }
 
     console.log(Ids);
-    // const getCustomerGroups=async()=>{
-    //     let newConfig={
-    //         headers: { 'Content-Type': 'application/json' },
-    //     params: {
-    //         EntityTypeId:1,
-    //         Ids:Ids
-    //     }
-    //     ,
-    //     paramsSerializer: params => {
+    const getCustomerGroups=async()=>{
+        let newConfig={
+            headers: { 'Content-Type': 'application/json' },
+        params: {
+            EntityTypeId:1,
+            Ids
+        }
+        ,
+        paramsSerializer: params => {
 
-    //         return QueryString.stringify(params)
-    //     }
-    //     }
-    //     try {
-    //         const{data,status}=await GetGroupByIds(newConfig)
-    //         if(status===200){
-    //             setCustomerG(data.result.groups)
-    //         }
-    //     } catch (error) {
-
-    //     }
-    // }
-
-    const getCustomerGroups = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr = []
-        for (let i = 0; i < companies.length; i++) {
-
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
-
-            if (data.result.groups.length > 0) {
-                arr.push(data.result.groups)
+            return QueryString.stringify(params)
+        }
+        }
+        try {
+            const{data,status}=await GetGroupByIds(newConfig)
+            if(status===200){
+                setCustomerG(data.result.groups)
+                setIds([])
             }
-
+        } catch (error) {
 
         }
-
-        finalArr = Array.prototype.concat.apply([], arr);
-
-        setCustomerG(finalArr);
     }
+
+    // const getCustomerGroups = async () => {
+    //     const response = await GetCompanyChild();
+    //     let companies = response.data.result.companies
+    //     let arr = []
+    //     let finalArr = []
+    //     for (let i = 0; i < companies.length; i++) {
+
+    //         const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+    //         if (data.result.groups.length > 0) {
+    //             arr.push(data.result.groups)
+    //         }
+
+
+    //     }
+
+    //     finalArr = Array.prototype.concat.apply([], arr);
+
+    //     setCustomerG(finalArr);
+    // }
     useEffect(() => {
         getUsers();
         getOrganizationName();
-        getCustomerGroups()
+    
     }, [getData])
+
+
+
     const addNewUserHandler = () => {
         navigate('/admin/adduser')
     }
@@ -287,6 +292,11 @@ const UserList = () => {
     const modalGroupClose = () => {
         setmodalGroupOpen(false)
     }
+    useEffect(() => {
+      
+        if(Ids.length>0){
+        getCustomerGroups()}
+    }, [Ids])
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
         { Header: 'نام کاربری', accessor: 'userName' }
@@ -350,7 +360,7 @@ const UserList = () => {
                 let userId = row.row.original.id
                 const getrole = async () => {
                     try {
-                        const { data, status } = await GetUsersRoles(Number(userId))
+                        const { data, status } = await GetUsersRolesById(Number(userId))
                         setRoles(data.result.userRoleIds)
 
                     } catch (error) {
@@ -411,7 +421,7 @@ const UserList = () => {
         }, {
             Header: 'گروه ', accessor: 'groupId', Cell: row => {
 
-                if (!row.row.original.groupId) {
+                if (row.row.original.groupId===null) {
                     return ('تعیین نشده')
                 }
                 else {

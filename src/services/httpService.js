@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 import { decodeToken } from '../Utils/decodeToken';
 
-let configure=window.globalThis.site_url;
+let configure = window.globalThis.site_url;
 
 
 axios.defaults.headers.get["Content-Type"] = "application/json";
@@ -13,9 +13,12 @@ axios.defaults.headers.put["Content-Type"] = "application/json";
 
 
 const token = localStorage.getItem('token');
+if (token) {
 
-
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
 const refresh = localStorage.getItem('refresh');
 
 console.log(token);
@@ -26,70 +29,72 @@ const refreshR = {
 
 axios.interceptors.response.use(
 
-    resp => resp, async error => {
+  resp => resp, async error => {
 
-      if (error.response.status === 401 && token  ) {
+    if (error.response.status === 401 && !token) {
+      window.location.reload()
+    }
+    if (error.response.status === 401 && token) {
 
 
-        axios.interceptors.response.eject()
+      axios.interceptors.response.eject()
 
-        await axios.post(`${configure}/User/Refresh`, refreshR).then(response=>{
-          localStorage.setItem('token', response.data.result.token);
-          localStorage.setItem('refresh', response.data.result.refresh);
-          axios.defaults.headers.common["Authorization"] = `Bearer ${
-              response.data.result.token
+      await axios.post(`${configure}/User/Refresh`, refreshR).then(response => {
+        localStorage.setItem('token', response.data.result.token);
+        localStorage.setItem('refresh', response.data.result.refresh);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.result.token
           }`;
 
-        }).catch(err=>{
+      }).catch(err => {
 
 
-          
-            localStorage.clear()
-            localStorage.setItem('error',JSON.stringify(err.response))
-            window.location.replace('/logout')
-          
+
+        localStorage.clear()
+        localStorage.setItem('error', JSON.stringify(err.response))
+        window.location.replace('/logout')
+
+      });
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+    if (error.response.status === 500) {
+
+      console.log(error);
+      if (error.response.data.error.errorCode >= 400 && error.response.data.error.errorCode <= 499) {
+
+        toast.warning(error.response.data.error.message, {
+          position: "top-right",
+          closeOnClick: true
         });
-
-
-
-
-
+      }
+      else {
+        toast.error('سرور پاسخگو نیست', {
+          position: "top-right",
+          closeOnClick: true
+        });
       }
 
 
+    }
 
 
-
-
-
-      if (error.response.status === 500) {
-
-        console.log(error);
-        if (error.response.data.error.errorCode >= 400 && error.response.data.error.errorCode <= 499){
-
-          toast.warning(error.response.data.error.message, {
-            position: "top-right",
-            closeOnClick: true
-          });
-        }
-        else{
-          toast.error('سرور پاسخگو نیست', {
-            position: "top-right",
-            closeOnClick: true
-          });
-        }
-
-
-      }
-
-
-      return Promise.reject(error);
-    });
+    return Promise.reject(error);
+  });
 
 const axiosWithTokenRefresh = config =>
-    axios(config).catch(error =>
-        error.hasRefreshedToken ? axios(config) : Promise.reject(error)
-    );
+  axios(config).catch(error =>
+    error.hasRefreshedToken ? axios(config) : Promise.reject(error)
+  );
 
 export default {
   get: axios.get,

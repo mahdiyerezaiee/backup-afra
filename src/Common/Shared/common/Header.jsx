@@ -102,6 +102,7 @@ const Header = ({ collapsed, handelChange }) => {
             getCartShopping()
         } catch (err) {
             console.log(err)
+
         }
     }
 

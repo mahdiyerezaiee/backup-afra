@@ -2,14 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useRef, useState, useCallback } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
-import { loginUser } from "../../../services/userService";
+import { GetUsersRoles, loginUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import afra from "./afra.jpg";
 import { decodeToken } from '../../../Utils/decodeToken';
 import { AiOutlineReload } from "react-icons/ai"
 import Captcha from "react-captcha-code";
 import FadeLoader from "react-spinners/FadeLoader";
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import { GetUserInfo, GetUsersRolesBy } from './../../../services/userService';
+import { addUser } from "../../../store/Slice/user/userSlice";
+import { userRoles } from "../../../store/Slice/user/userRole/userRoleSlice";
 const LoginWithPassword = ({ value, onchange, setShows }) => {
     const [input, setInput] = useState('')
     const [valid, setValid] = useState(true)
@@ -24,18 +27,18 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
     const select = useSelector(state => state.userInfo)
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
-    const captchaRef=useRef()
-    const handelCaptchaChange=useCallback((code)=>{
+    const captchaRef = useRef()
+    const handelCaptchaChange = useCallback((code) => {
         setCaptcha(code)
     })
 
-    const captchaChek=()=>{
+    const captchaChek = () => {
 
-        if(SHOW){
-            if(captcha===input){
+        if (SHOW) {
+            if (captcha === input) {
                 setValid(true)
             }
-            else{
+            else {
                 setValid(false)
             }
         }
@@ -59,11 +62,11 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
         , element: message => <p style={{ color: 'red' }}>{message}</p>
     }));
 
-    const handelBack=(e)=>{
+    const handelBack = (e) => {
         e.preventDefault()
         navigate('sysplus')
     }
-    const handelRefreshCaptcha=(e)=>{
+    const handelRefreshCaptcha = (e) => {
         e.preventDefault()
         captchaRef.current.refresh()
     }
@@ -77,65 +80,63 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
         }
         event.preventDefault();
         // submitCaptcha()
-        if ( valid && validator.current.allValid()) {
+        if (valid && validator.current.allValid()) {
             try {
 
 
 
                 const { status, data } = await loginUser(user);
-                console.log(data,status);
-                if (status===200) {
-
-                     
-                        setValid(true)
-                        localStorage.setItem('mobile', user.phoneNumber)
-                        localStorage.setItem('token', data.result.token);
-                        localStorage.setItem('refresh', data.result.refresh);
-
-                        const detoken = decodeToken(data.result.token);
-                        localStorage.setItem('connect', detoken.ID);
-
-                        toast.success("ورود موفقیت آمیز بود", {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: true,
-                            progress: undefined
-                        });
-
-                        navigate('/admin')
-
-                    }
+                console.log(data, status);
+                if (status === 200) {
 
 
-                    else {
-                        setShow(true)
-                        toast.error(`${data.error.message}`, {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: true,
-                            progress: undefined
-                        });
+                    setValid(true)
+                    localStorage.setItem('mobile', user.phoneNumber)
+                    localStorage.setItem('token', data.result.token);
+                    localStorage.setItem('refresh', data.result.refresh);
 
-                    }
+                   
+                    toast.success("ورود موفقیت آمیز بود", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    });
 
-                    setLoading(false)
+                    navigate('/admin')
 
-                    
+                }
 
-                
+
+                else {
+                    setShow(true)
+                    toast.error(`${data.error.message}`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    });
+
+                }
+
+                setLoading(false)
+
+
+
+
             }
 
 
 
             catch (error) {
                 setShow(true)
-               
+
                 console.log(error);
                 setLoading(false)
 
@@ -168,7 +169,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                     <label>شماره موبایل</label>
 
                     <input type='text' name='mobile' className='form-control opacityForInput' placeholder='09121234567 ' maxLength="11"
-                           value={value} onChange={onchange} />
+                        value={value} onChange={onchange} />
 
 
 
@@ -180,10 +181,10 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                 <div className=' textOnInput' style={{ direction: 'ltr' }}>
                     <label>رمز عبور</label>
                     <input type='password' name='password' className='form-control opacityForInput' placeholder='******** '
-                           value={password} onChange={e => {
-                        setPassword(e.target.value)
-                        validator.current.showMessageFor("required");
-                    }} />
+                        value={password} onChange={e => {
+                            setPassword(e.target.value)
+                            validator.current.showMessageFor("required");
+                        }} />
 
 
 
@@ -198,7 +199,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                     </div>
                     <div className="row" >
                         {/* <LoadCanvasTemplate reloadColor="black" reloadText={`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/> <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/> </svg>`} /> */}
-                        <button className="border-0" style={{backgroundColor:'#ff000000'}} onClick={handelRefreshCaptcha}><AiOutlineReload size={30} color='#888ea8'/></button>
+                        <button className="border-0" style={{ backgroundColor: '#ff000000' }} onClick={handelRefreshCaptcha}><AiOutlineReload size={30} color='#888ea8' /></button>
 
                         <Captcha height='30' fontSize={25} width='130' onChange={handelCaptchaChange} ref={captchaRef} />
                     </div>
@@ -213,7 +214,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                 </div>
                 <div className='row'>
                     <div className="col-5">
-                        <button className='btn btn-success mt-5  mb-5 float-left' disabled={ !loading ? validator.current.allValid() ? false : true:true} onClick={handleSubmit}>
+                        <button className='btn btn-success mt-5  mb-5 float-left' disabled={!loading ? validator.current.allValid() ? false : true : true} onClick={handleSubmit}>
                             تایید
 
                             <ClipLoader

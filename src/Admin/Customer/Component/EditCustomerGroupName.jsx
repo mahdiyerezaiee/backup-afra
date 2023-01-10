@@ -1,70 +1,99 @@
-import React,{useState,useEffect} from 'react'
-import { useParams, useNavigate,NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { GetGroupById } from '../../../services/GroupService';
 import { SetGroup } from '../../../services/GroupService';
 import { toast } from 'react-toastify';
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
+import  Select  from 'react-select';
 
 const EditCustomerGroupName = () => {
-const navigate=useNavigate()
-    const params=useParams();
-    const[entityTypeId,setEntityTypeId]=useState(0)
-    const[name,setName]=useState('')
+    const navigate = useNavigate()
+    const params = useParams();
+    const [entityTypeId, setEntityTypeId] = useState(0)
+    const [name, setName] = useState('')
     const [loading, setLoading] = useState(false);
-
-    const getGroup=async()=>{
-
-try {
-    const{data,status}=await GetGroupById(params.id)
-    setName(data.result.group.name)
-    setEntityTypeId(data.result.group.entityTypeId)
-    
-} catch (error) {
-    console.log(error);
-}
-    }
-useEffect(()=>{
-
-    getGroup();
-},[])
-
-const handelSubmit=async(event)=>{
+    const [userCompanies, setUserCompanies] = useState([])
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
 
 
-    setLoading(true)
+    const getGroup = async () => {
 
-      event.preventDefault();
- 
         try {
-            const body={
-            group:{
-                id:Number(params.id),
-                entityTypeId,
-                name
-            }
+            const { data, status } = await GetGroupById(params.id)
+            setName(data.result.group.name)
+            setEntityTypeId(data.result.group.entityTypeId)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const getCompanies = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            setUserCompanies(data.result.companies)
+            SetcompanyId(data.result.companies[0].id)
+            SetCompanyName(data.result.companies[0].name)
+
+
+        } catch (error) {
+            console.log(error);
         }
 
-        const {data,status}=await SetGroup(body)
-        if(data.success===true){
-            setLoading(false)
-            toast.success('گروه ویرایش  شد',
-            {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined
-            })
-            navigate('/admin/customergroup')
-        }
+    }
+
+
+    useEffect(() => {
+
+        getGroup();
+        getCompanies()
+    }, [])
+
+    const handelSubmit = async (event) => {
+
+
+        setLoading(true)
+
+        event.preventDefault();
+
+        try {
+            const body = {
+                group: {
+                    id: Number(params.id),
+                    entityTypeId,
+                    name,
+                    companyId
+                    ,companyName
+                }
+            }
+
+            const { data, status } = await SetGroup(body)
+            if (data.success === true) {
+                setLoading(false)
+                toast.success('گروه ویرایش  شد',
+                    {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    })
+                navigate('/admin/customergroup')
+            }
         } catch (error) {
             console.log(error);
         }
 
 
-}
+    }
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
 
     return (
 
@@ -82,20 +111,45 @@ const handelSubmit=async(event)=>{
                     <form>
                         <div className='form-group'>
 
-                            <div className="form-group mb-3 textOnInput">
-<label>نام گروه</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
+                            <div className="form-group mb-4 textOnInput">
+                                <label>نام گروه</label>
+                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
 
                             </div>
+                            {userCompanies?
+                            <div className="form-group mb-3 mt-3 textOnInput">
+
+                                <label> شرکت</label>
+                                <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={companys()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={e => {
+
+
+                                        SetcompanyId(e.value)
+                                        SetCompanyName(e.label)
+
+
+                                    }
+
+                                    }
+
+                                />
+
+
+                            </div>:''}
                             <div className='row '>
                                 <div className='col-6 '>
                                     <button type="submit" className="btn btn-success float-left" disabled={loading} onClick={handelSubmit} >ثبت
                                         <ClipLoader
 
-                                        loading={loading}
-                                        color="#ffff"
-                                        size={15}
-                                    /></button>
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
                                 </div>
                                 <div className='col-6 '>
                                     <NavLink to='/admin/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>

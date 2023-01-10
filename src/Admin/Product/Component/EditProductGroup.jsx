@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import { useNavigate,useParams } from 'react-router-dom';
 import { GetGroupById, SetGroup } from './../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
+import  Select  from 'react-select';
 
 
 
@@ -14,23 +16,42 @@ const EditProductGroup = () => {
     const params=useParams();
     const [name, Setname] = useState('')
     const [loading, setLoading] = useState(false);
-    const getGroup=async()=>{
+
+      const [userCompanies, setUserCompanies] = useState([])
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
+
+
+    
+const getCompanies = async () => {
+    try {
+        const { data, status } = await GetCompanyChild()
+        setUserCompanies(data.result.companies)
+        SetcompanyId(data.result.companies[0].id)
+        SetCompanyName(data.result.companies[0].name)
+
+
+    } catch (error) {
+
+    }
+
+}
+console.log(userCompanies);
+    const getGroup = async () => {
 
         try {
-            const{data,status}=await GetGroupById(params.id);
-            if(status===200){
-                Setname(data.result.group.name)
-            }
-           
+            const { data, status } = await GetGroupById(params.id)
+            Setname(data.result.group.name)
+
         } catch (error) {
-            
+            console.log(error);
         }
     }
-  
-   useEffect(()=>{
-    getGroup()
-   },[])
+    useEffect(() => {
+        getCompanies()
 
+        getGroup();
+    }, [])
     const handelSubmit = async (event) => {
         event.preventDefault();
         setLoading(true)
@@ -40,7 +61,9 @@ const EditProductGroup = () => {
             group:{
                 id:params.id,
                 entityTypeId:2,
-                name
+                name, companyId
+                ,companyName
+            
             }
         }
 
@@ -67,6 +90,11 @@ const EditProductGroup = () => {
     
 
     }
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
     return (
         <div className='user-progress' >
             <div className='row'>
@@ -82,11 +110,36 @@ const EditProductGroup = () => {
                     <form>
                         <div className='form-group'>
 
-                            <div className="input-group mb-3">
+                            <div className="input-group mb-4">
                                 <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
 
 
                             </div>
+                            {userCompanies?
+                            <div className="form-group mb-3 mt-3 textOnInput">
+
+                                <label> شرکت</label>
+                                <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={companys()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={e => {
+
+
+                                        SetcompanyId(e.value)
+                                        SetCompanyName(e.label)
+
+
+                                    }
+
+                                    }
+
+                                />
+
+
+                            </div>:''}
                             <div className='row '>
                                 <div className='col-6 '>
                                     <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader

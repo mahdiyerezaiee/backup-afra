@@ -10,8 +10,10 @@ import { SetProductWareHouses } from "../../../services/prodcutWarehouse";
 import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 import { GetAllWareHouses } from "../../../services/wareHouseService";
 import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
-import {GetGroupsForEntity} from "../../../services/GroupService";
-import {ClipLoader} from "react-spinners";
+import { GetGroupsForEntity } from "../../../services/GroupService";
+import { ClipLoader } from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
+import { GetGroupWithCompany } from './../../../services/GroupService';
 
 
 
@@ -27,38 +29,42 @@ const NewProduct = () => {
     const [measureUnitId, setMeasureUnitId] = useState(0)
     const [measureUnit, setMeasureUnit] = useState(0);
     let productId = 0;
-    const [group , setGroup]=useState([])
-    const [groupId , setGroupId]=useState(0)
+    const [group, setGroup] = useState([])
+    const [groupId, setGroupId] = useState(0)
     const [wareHouseId, setwareHouseId] = useState(0);
     const [productG, setProductG] = useState([])
     const [attValue, setAttValue] = useState('')
     const [loading, setLoading] = useState(false);
 
-    const GetGroup =async () => {
-      try {
-          const {data , status}= await GetGroupsForEntity(2)
-          setGroup(data.result.groups)
-      }catch (err){
-          console.log(err)
-      }
-    }
-
-    const GetProductGroup = async () => {
-        const { data, status } = await GetAttribute(1003);
-        if (status === 200) {
-
-            const response = data.result.attribute.controlTypeValues;
-
-            const myArray = response.split(",");
-            const FormateValue = () => {
-
-                return (myArray.map(data => ({ id: Number(data.slice(0, 1)), value: data.slice(2, 100) })))
-            }
-
-            setProductG(FormateValue());
+    const GetGroup = async () => {
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr = []
+        for (let i = 0; i < companies.length; i++) {
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+             if (data.result.groups.length > 0) { arr.push(data.result.groups) }
         }
-
+        finalArr = Array.prototype.concat.apply([], arr);
+        setGroup(finalArr);
     }
+
+    // const GetProductGroup = async () => {
+    //     const { data, status } = await GetAttribute(1003);
+    //     if (status === 200) {
+
+    //         const response = data.result.attribute.controlTypeValues;
+
+    //         const myArray = response.split(",");
+    //         const FormateValue = () => {
+
+    //             return (myArray.map(data => ({ id: Number(data.slice(0, 1)), value: data.slice(2, 100) })))
+    //         }
+
+    //         setProductG(FormateValue());
+    //     }
+
+    // }
 
     const product = {
         name,
@@ -68,7 +74,7 @@ const NewProduct = () => {
         minSellableAmount,
         maxSellableAmount,
         measureUnitId,
-        measureUnit:measureUnitId,
+        measureUnit: measureUnitId,
         groupId,
 
     };
@@ -150,12 +156,12 @@ const NewProduct = () => {
 
 
     }
-  
+
     useEffect(() => {
 
 
-    GetGroup()
-        GetProductGroup();
+        GetGroup()
+
 
     }, []);
 
@@ -166,7 +172,7 @@ const NewProduct = () => {
             const { data, status } = await SetProduct(product);
             if (status === 200) {
                 setLoading(false)
-                productId = (data.result.product.id); 
+                productId = (data.result.product.id);
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -177,11 +183,11 @@ const NewProduct = () => {
                     progress: undefined
                 });
                 navigate('/admin/productList')
-                
-               }
+
+            }
 
             await setAttributevalue();
-           
+
         }
 
 
