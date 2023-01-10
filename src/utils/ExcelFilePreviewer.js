@@ -25,7 +25,6 @@ const customStyles = {
 const ExcelFilePreviewer = ({ modalIsOpen, closeModal, data, scondeModalClose,orderDetailId }) => {
 let [stateError,setStateError]=useState([]);
 let isData=false;
-console.log(data);
 if(data.length>0){
 if(data[0].allocationId>0){
     isData=true
@@ -89,7 +88,6 @@ let item={"bazargah":data[i]}
     }
     }
 
-    console.log(stateError);
     return (
 
         <Modal

@@ -20,7 +20,6 @@ const customStyles = {
 }
 
 const ExtraShipping = ({id ,modalIsOpen,closeModal }) => {
-    console.log(id)
     const [extra , setExtra] = useState([])
     const getExter = async () => {
 

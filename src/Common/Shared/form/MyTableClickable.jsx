@@ -74,6 +74,9 @@ useEffect(()=>{
 },[orderId])
 
     const [selectFunc, setSelectFunc] = useState(0);
+    const [Func, SetFunc] = useState([]);
+    const formattedvalues = [];
+
 
     const {
         getTableProps,
@@ -88,7 +91,11 @@ useEffect(()=>{
 
     } = useTable({
         columns
-        , data,
+        , data
+        ,initialState: {
+
+            hiddenColumns:  Func
+        },
 
     }, useGlobalFilter, useSortBy, useExpanded, usePagination, useRowSelect, hooks => {
         hooks.visibleColumns.push(columns => [
@@ -157,7 +164,18 @@ useEffect(()=>{
             ...columns,
         ])
     })
+    const values= Object.values(rows.map(i =>  i.values));
 
+    useEffect(() => {
+        values.forEach(task =>
+            Object.entries(task).forEach(([key, value]) =>
+                value ===  null  ? formattedvalues.push(key): value ===  ""  ? formattedvalues.push(key):null
+            )
+        );
+        SetFunc(formattedvalues.length === values.length ? formattedvalues:[])
+
+
+    }, [values.length !== 0])
 
     useEffect(() => {
         getData(selectedFlatRows);
@@ -357,8 +375,8 @@ useEffect(()=>{
                                                                     </tbody>
                                                                 </table>
                                                             </div> :null}
-                                                    </div> :null}</td></tr>:null}</Fragment>
-                            )
+                                                    </div> :null}</td></tr>:null}
+                                </Fragment>)
                         })
                     }
                     </tbody>
