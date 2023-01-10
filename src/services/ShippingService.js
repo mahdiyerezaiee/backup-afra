@@ -12,7 +12,7 @@ export const GetShoppingContract=(id)=>{
 }
 export const GetShoppingContractWithCompany=(id)=>{
 
-    return http.get(`${configure}/Shipping/GetShippingContracts?CompanyId=${id}`);
+    return http.get(`${configure}/Shipping/GetShippingContracts?ShippingCompanyId=${id}`);
 }
 export const GetShoppings=(id)=>{
 

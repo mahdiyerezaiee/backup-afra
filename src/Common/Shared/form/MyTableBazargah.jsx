@@ -9,6 +9,9 @@ import {disabled} from "react-widgets/PropTypes";
 const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({}) }) => {
 
     const [selectFunc,setSelectFunc]=useState(0);
+    const [Func, SetFunc] = useState([]);
+    const formattedvalues = [];
+
 
     const {
         getTableProps,
@@ -31,7 +34,10 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({
         selectedFlatRows,
         state: { selectedRowIds }
 
-    } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination, useRowSelect, hooks => {
+    } = useTable({ columns, data ,initialState: {
+
+            hiddenColumns:  Func
+        }, }, useGlobalFilter, useSortBy, usePagination, useRowSelect, hooks => {
         hooks.visibleColumns.push(columns => [
             // Let's make a column for selection
             {
@@ -54,6 +60,18 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({
             ...columns,
         ])
     })
+    const values= Object.values(rows.map(i =>  i.values));
+
+    useEffect(() => {
+        values.forEach(task =>
+            Object.entries(task).forEach(([key, value]) =>
+                value ===  null  ? formattedvalues.push(key): value ===  ""  ? formattedvalues.push(key):null
+            )
+        );
+        SetFunc(formattedvalues.length === values.length ? formattedvalues:[])
+
+
+    }, [values.length !== 0])
     useEffect(()=>{
         getData(selectedFlatRows);
     },[selectedRowIds])
