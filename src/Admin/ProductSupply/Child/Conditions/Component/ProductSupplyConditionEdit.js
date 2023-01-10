@@ -6,16 +6,32 @@ import { AdditionalTypeId } from "../../../../../Common/Enums/AdditionalTypeIdEn
 import Modal from 'react-modal';
 import ProductSupplyConditionReadOnly from "./ProductSupplyConditionRead";
 import {ClipLoader} from "react-spinners";
+import { GetCompanyChild } from './../../../../../services/companiesService';
+import { GetGroupWithCompany } from './../../../../../services/GroupService';
 
 const ProductSupplyConditionEdit = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index }) => {
     const [customerg, setCustomerg] = useState([])
     const [cu, SetCu] = useState(0)
     const [modalIsOpen, setIsOpen] = useState(true);
     const GetCustomerGroup = async () => {
-        const { data, status } = await GetGroupsForEntity(1);
-        if (status === 200) {
-            setCustomerg(data.result.groups);
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr = []
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+            if (data.result.groups.length > 0) {
+                arr.push(data.result.groups)
+            }
+
+
         }
+
+        finalArr = Array.prototype.concat.apply([], arr);
+
+        setCustomerg(finalArr);
     }
     useEffect(() => {
         GetCustomerGroup();

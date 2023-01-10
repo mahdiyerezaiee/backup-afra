@@ -5,6 +5,8 @@ import {PaymentStructureEnums} from "../../../../../Common/Enums/PaymentStructur
 import {AdditionalTypeId} from "../../../../../Common/Enums/AdditionalTypeIdEnums";
 import Modal from 'react-modal';
 import { Link } from "react-router-dom";
+import { GetCompanyChild } from './../../../../../services/companiesService';
+import { GetGroupWithCompany } from './../../../../../services/GroupService';
 
 const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick, handleDeleteClick, index}) => {
     const [customerg, setCustomerg] = useState([])
@@ -16,10 +18,24 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
         setIsOpen(false);
     }
     const GetCustomerGroup = async () => {
-        const {data, status} = await GetGroupsForEntity(1);
-        if (status === 200) {
-            setCustomerg(data.result.groups);
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr = []
+        for (let i = 0; i < companies.length; i++) {
+
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+            if (data.result.groups.length > 0) {
+                arr.push(data.result.groups)
+            }
+
+
         }
+
+        finalArr = Array.prototype.concat.apply([], arr);
+
+        setCustomerg(finalArr);
     }
     useEffect(() => {
         GetCustomerGroup();

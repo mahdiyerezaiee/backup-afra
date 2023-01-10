@@ -95,37 +95,48 @@ const AdminMainLayout = (props) => {
   const refreshPage = () => {
     window.location.reload();
   }
+  useEffect(() => {
+    fetchApi();
+    getUserRole();
+  }, [])
   const dispatch = useDispatch();
   async function fetchApi() {
     const { data, status } = await GetUserInfo();
-    if (status === 200) {
-      dispatch(addUser(data.result.customer));
-    }
-  }
+    try {
+      if (status === 200) {
+        localStorage.setItem('connect', data.result.customer.id)
   
-  const userId = localStorage.getItem('connect')
+        dispatch(addUser(data.result.customer));
+      }
+    } catch (error) {
+      
+        refreshPage()
+      
+    }
+  
+  }
+
   const getUserRole = async () => {
 
 
-    const { data, status } = await GetUsersRoles(Number(userId))
+    const { data, status } = await GetUsersRoles()
     try {
       if (status === 200) {
 
-         dispatch(userRoles(data.result.userRoleIds))
+        dispatch(userRoles(data.result.userRoleIds))
 
 
       }
     } catch (error) {
-      console.log(error);
-
+    
+  
+        refreshPage()
+      
     }
 
 
   }
-  useEffect(() => {
-    fetchApi();
-    getUserRole();
-    }, [])
+
 
   const [collapsed, setCollapsed] = useState(true);
   const handleCollapsedChange = (checked) => {
@@ -254,7 +265,7 @@ const AdminMainLayout = (props) => {
                   <Route path='editShippingContract/:id' element={<EditShippingContract />} />
                   <Route path='newShippingContract' element={<NewShippingContract />} />
                   <Route path='updateShippingReports' element={<UpdateShippingReports />} />
-                  <Route path='updateAllShipping' element={<UpdateAllShiping/>}/>
+                  <Route path='updateAllShipping' element={<UpdateAllShiping />} />
 
 
 
@@ -262,7 +273,7 @@ const AdminMainLayout = (props) => {
                   {/* COMMON & ODERCOMPONENT */}
 
                   <Route path='setting' element={<Setting />} />
-                   {/* Report */}
+                  {/* Report */}
                   <Route path='ShippingReport' element={<ShippingList />} />
                   <Route path='ProceessAttachments' element={<ProceessAttachments />} />
                   <Route path='customerAttachment/:id' element={<DetailCustomerAttachment />} />

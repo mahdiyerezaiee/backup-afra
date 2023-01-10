@@ -3,7 +3,9 @@ import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { GetGroupById } from '../../../services/GroupService';
 import { SetGroup } from './../../../services/GroupService';
 import { toast } from 'react-toastify';
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
+import  Select  from 'react-select';
 
 const EditProductGroupName = () => {
     const navigate = useNavigate()
@@ -11,7 +13,26 @@ const EditProductGroupName = () => {
     const [entityTypeId, setEntityTypeId] = useState(0)
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false);
+    const [userCompanies, setUserCompanies] = useState([])
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
 
+
+    
+const getCompanies = async () => {
+    try {
+        const { data, status } = await GetCompanyChild()
+        setUserCompanies(data.result.companies)
+        SetcompanyId(data.result.companies[0].id)
+        SetCompanyName(data.result.companies[0].name)
+
+
+    } catch (error) {
+
+    }
+
+}
+console.log(userCompanies);
     const getGroup = async () => {
 
         try {
@@ -24,13 +45,14 @@ const EditProductGroupName = () => {
         }
     }
     useEffect(() => {
+        getCompanies()
 
         getGroup();
     }, [])
 
     const handelSubmit = async (event) => {
 
-setLoading(true)
+        setLoading(true)
 
         event.preventDefault();
 
@@ -39,7 +61,8 @@ setLoading(true)
                 group: {
                     id: Number(params.id),
                     entityTypeId,
-                    name
+                    name, companyId
+                    ,companyName
                 }
             }
 
@@ -59,12 +82,17 @@ setLoading(true)
             }
             setLoading(false)
         } catch (error) {
-           
+
             console.log(error);
         }
 
 
     }
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
 
     return (
 
@@ -82,11 +110,12 @@ setLoading(true)
                     <form>
                         <div className='form-group'>
 
-                            <div className="form-group mb-3 textOnInput">
+                            <div className="form-group mb-4 textOnInput">
                                 <label>نام گروه</label>
                                 <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
 
                             </div>
+                         
                             <div className='row '>
                                 <div className='col-6 '>
                                     <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader

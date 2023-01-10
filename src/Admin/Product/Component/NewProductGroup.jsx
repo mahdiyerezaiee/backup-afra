@@ -6,16 +6,35 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { SetGroup } from './../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
+import  Select  from 'react-select';
 
 
 const NewProductGroup = () => {
     const navigate=useNavigate();
     const [loading, setLoading] = useState(false);
-
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
+    const [userCompanies, setUserCompanies] = useState([])
     const [name, Setname] = useState('')
    
   
-   
+const getCompanies = async () => {
+    try {
+        const { data, status } = await GetCompanyChild()
+        setUserCompanies(data.result.companies)
+        SetcompanyId(data.result.companies[0].id)
+        SetCompanyName(data.result.companies[0].name)
+
+
+    } catch (error) {
+
+    }
+
+}
+useEffect(() => {
+    getCompanies()
+}, [])
 
     const handelSubmit = async (event) => {
         setLoading(true)
@@ -26,7 +45,8 @@ const NewProductGroup = () => {
             group:{
                 id:0,
                 entityTypeId:2,
-                name
+                name,  companyId
+                ,companyName
             }
         }
 
@@ -51,6 +71,14 @@ const NewProductGroup = () => {
     
 
     }
+
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
+
+
     return (
         <div className='user-progress' >
             <div className='row'>
@@ -66,11 +94,36 @@ const NewProductGroup = () => {
                     <form>
                         <div className='form-group'>
 
-                            <div className="input-group mb-3">
+                            <div className="input-group mb-4">
                                 <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
 
 
                             </div>
+                            {userCompanies?
+                            <div className="form-group mb-3 mt-3 textOnInput">
+
+                                <label> شرکت</label>
+                                <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={companys()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={e => {
+
+
+                                        SetcompanyId(e.value)
+                                        SetCompanyName(e.label)
+
+
+                                    }
+
+                                    }
+
+                                />
+
+
+                            </div>:''}
                             <div className='row '>
                                 <div className='col-6 '>
                                     <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader

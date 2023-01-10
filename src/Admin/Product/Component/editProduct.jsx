@@ -11,8 +11,9 @@ import { GetProductWareHouses } from "../../../services/prodcutWarehouse";
 import { GetAttribute, SetAttributeValues } from "../../../services/attributeService";
 import { GetAttributeValues } from '../../../services/attributeService';
 import ProductWareHouseEdit from "../../../Common/Shared/Common/productWareHouseEdit";
-import {GetGroupsForEntity} from "../../../services/GroupService";
+import {GetGroupsForEntity, GetGroupWithCompany} from "../../../services/GroupService";
 import {ClipLoader} from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
 
 const EditProduct = () => {
     const params = useParams()
@@ -49,20 +50,20 @@ const EditProduct = () => {
         setMeasureUnitId(data.result.product.measureUnitId);
         setGroupId(data.result.product.groupId)
     }
-    const GetProductGroup = async () => {
-        const { data, status } = await GetAttribute(1003);
-        if (status === 200) {
+    // const GetProductGroup = async () => {
+    //     const { data, status } = await GetAttribute(1003);
+    //     if (status === 200) {
 
-            const response = data.result.attribute.controlTypeValues;
+    //         const response = data.result.attribute.controlTypeValues;
 
-            const myArray = response.split(",");
+    //         const myArray = response.split(",");
 
-            const FormateValue = () => {
+    //         const FormateValue = () => {
 
-                return (myArray.map(data => ({ id: Number(data.slice(0, 1)), value: data.slice(2, 100) })))
-            }
-            setProductG(FormateValue());}
-    }
+    //             return (myArray.map(data => ({ id: Number(data.slice(0, 1)), value: data.slice(2, 100) })))
+    //         }
+    //         setProductG(FormateValue());}
+    // }
     const getPoroductWareHouses = async () => {
         const { data, status } = await GetProductWareHouses(params.id)
         setWareHouse(data.result.productWareHouses)}
@@ -71,7 +72,7 @@ const EditProduct = () => {
 
         getPoroductWareHouses()
         getProducts();
-        GetProductGroup();
+        
         }, [])
 
     const UpdateProduct = {
@@ -87,12 +88,15 @@ const EditProduct = () => {
         groupId,
     }
     const GetGroup =async () => {
-        try {
-            const {data , status}= await GetGroupsForEntity(2)
-            setGroup(data.result.groups)
-        }catch (err){
-            console.log(err)
-        }
+        const response = await GetCompanyChild(); 
+        let companies = response.data.result.companies 
+        let arr = [] 
+        let finalArr = [] 
+        for (let i = 0; i < companies.length; i++) {
+             const { data, status } = await GetGroupWithCompany(1, companies[i].id); if (data.result.groups.length > 0) { arr.push(data.result.groups) } 
+            }
+              finalArr = Array.prototype.concat.apply([], arr);
+              setGroup(finalArr);
     }
     const updateAttrte=async()=>{
 

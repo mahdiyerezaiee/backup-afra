@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { optionsRole } from "../../../Common/Enums/RolesEnums";
 import Modal from 'react-modal';
 import {ClipLoader} from "react-spinners";
+import { GetUsersRolesById } from './../../../services/userService';
 
 
 const customStyles = {
@@ -35,7 +36,7 @@ const EditUserRole = ({id,closeModal,modalIsOpen}) => {
 
     const getrole = async () => {
         try {
-            const { data, status } = await GetUsersRoles(Number(id))
+            const { data, status } = await GetUsersRolesById(Number(id))
             setRoles(data.result.userRoleIds)
 
         } catch (error) {
