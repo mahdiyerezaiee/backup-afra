@@ -22,12 +22,12 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     const roles = useSelector(state => state.roles)
     const [orderCondition, setOrderCondition] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [OrderDetail, setOrderDetail] = useState([])
+    const [FilterData, setFilterData] = useState([])
     const [IsOpen, SetIsOpen] = useState(false);
     const [open, SetOpen] = useState(false);
 
     const [measureUnitId, setmeasureUnitId] = useState(0)
-    const [orderDetailId, setorderDetailId] = useState(0);
+    const [orderDetailId, setorderDetailId] = useState([]);
     const [completeDdata, SetCompletedData] = useState([])
     const [productSupplyId, setProductSupplyId] = useState(0)
     const [stateSuccess, SetStateSuccess] = useState(0)
@@ -37,15 +37,29 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
     let [loading, setLoading] = useState(false);
     const [selectedRows, setSelectedRows] = useState([])
-    let arrayOfSelectedData = [];
     const getSelectedData = (data) => {
-        arrayOfSelectedData = data.map(item => item.original);
-        return (arrayOfSelectedData)
-    }
-    const getBulkJob = () => {
-        const arrayOfData = getSelectedData(selectedRows);
-       openModal(arrayOfData)
+        let arrayOfSelectedData = [];
 
+        arrayOfSelectedData = data.map(item => item.original);
+        return(arrayOfSelectedData)
+    }
+    const getBulkJob = (selected) => {
+        const arrayOfData = getSelectedData(selectedRows);
+
+        setorderDetailId(arrayOfData)
+
+        openModal(arrayOfData)
+
+
+
+
+    }
+    const selectedFunc =()=>{
+        const arrayOfData = getSelectedData(selectedRows);
+        console.log(selectedRows)
+        setorderDetailId(arrayOfData)
+
+        openModal(arrayOfData)
     }
     const [cottageCode, setcottageCode] = useState('');
 
@@ -160,10 +174,11 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         setIsOpenUploadExcel(false)
     }
     const getDetails = async () => {
-        setLoading(true)
 
         let finalArr = [];
         try {
+            setLoading(true)
+
             for (let i = 0; i < details.length; i++) {
 
                 const { data, status } = await getExtraData(Number(details[i].extId), 1)
@@ -198,11 +213,12 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
             }
             SetCompletedData(finalArr)
+            setFilterData(finalArr.filter(item => item.extId !== null))
+            setLoading(false)
 
         } catch (error) {
 
         }
-        setLoading(false)
 
     }
     const close = () => {
@@ -214,7 +230,12 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
     });
+    useEffect(() => {
+        getDetails()
+        getSupplyCode()
+        getOrderDetailCondition()
 
+    }, [getOrder])
 
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id', disableFilters: true },
@@ -277,16 +298,12 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
 
 
 
-            ), disableFilters: true, 
+            ), disableFilters: true,
         }
     ])
-    const data = useMemo(() => completeDdata.filter(item => item.extId !== null))
-    useEffect(() => {
-        getDetails()
-        getSupplyCode()
-        getOrderDetailCondition()
 
-    }, [getOrder])
+    const data = useMemo(() => FilterData)
+
 
     if (loading){
         return (

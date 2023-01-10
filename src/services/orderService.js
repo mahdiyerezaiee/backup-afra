@@ -16,7 +16,7 @@ export const GetAllOrders=()=>{
 }
 export const GetOrderDetails=(id)=>{
 
-    return http.get(`${configure}/Order/GetOrderDetails?OrderID=${id}`);
+    return http.get(`${configure}/Order/GetOrderDetails?OrderID=${id}&IsAdmin=true`);
 }
 export const GetCustomerOrders=(UserName)=>{
 

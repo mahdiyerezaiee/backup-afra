@@ -29,7 +29,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     const [shippingContract, setShippingContract] = useState([]);
     const [shippingContractId, setShippingContractId] = useState(0);
     let [loading, setLoading] = useState(false);
-
+    console.log(orderDetailId)
     const getShippingCompany = async () => {
         try {
             const { data, status } = await GetAllShippingCompanies();

@@ -1,5 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import {useTable, useFilters, useGlobalFilter, useAsyncDebounce, useRowSelect} from 'react-table';
+import {
+    useTable,
+    useFilters,
+    useGlobalFilter,
+    useAsyncDebounce,
+    useRowSelect,
+    useSortBy,
+    usePagination
+} from 'react-table';
 
 const IndeterminateCheckbox = React.forwardRef(
     ({ indeterminate, ...rest }, ref) => {
@@ -18,7 +26,7 @@ const IndeterminateCheckbox = React.forwardRef(
     }
 )
 
-const TakhsisTable = ({ columns, data , getData, bulkJob}) => {
+const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({})}) => {
 
     const [selectFunc, setSelectFunc] = useState(0);
 
@@ -33,69 +41,63 @@ const TakhsisTable = ({ columns, data , getData, bulkJob}) => {
         page,
         state,
         selectedFlatRows,
-        state: {selectedRowIds , expanded}
-    } = useTable(
-        {
-            columns,
-            data,
-
-        },
-        useFilters, // useFilters!
-        useGlobalFilter, useRowSelect, hooks => {
-            hooks.visibleColumns.push(columns => [
-                // Let's make a column for selection
-                {
-                    id: 'selection',
-                    // The header can use the table's getToggleAllRowsSelectedProps method
-                    // to render a checkbox
-                    Header: ({ getToggleAllRowsSelectedProps }) => (
-                        <div>
-                            <IndeterminateCheckbox{...getToggleAllRowsSelectedProps()} />
-                        </div>
-                    ),
-                    // The cell can use the individual row's getToggleRowSelectedProps method
-                    // to the render a checkbox
-                    Cell: ({row}) => (
-                        <div>
-                            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-                        </div>
-                    ),
-                },
-                ...columns,
-            ])
-        })
+        state: {selectedRowIds }
+    } = useTable({columns, data}, useGlobalFilter, useFilters, useRowSelect, hooks => {
+        hooks.visibleColumns.push(columns => [
+            // Let's make a column for selection
+            {
+                id: 'selection',
+                // The header can use the table's getToggleAllRowsSelectedProps method
+                // to render a checkbox
+                Header: ({ getToggleAllRowsSelectedProps }) => (
+                    <div>
+                        <IndeterminateCheckbox{...getToggleAllRowsSelectedProps()} />
+                    </div>
+                ),
+                // The cell can use the individual row's getToggleRowSelectedProps method
+                // to the render a checkbox
+                Cell: ({row}) => (
+                    <div>
+                        <IndeterminateCheckbox   {...row.getToggleRowSelectedProps()} />
+                    </div>
+                ),
+            },
+            ...columns,
+        ])
+    })
     useEffect(() => {
         getData(selectedFlatRows);
     }, [selectedRowIds])
+    console.log(selectedFlatRows )
             return (
         <Fragment>
 
             {/*<GlobalFilter filter={globalfilter} setFilter={setGlobalFilter} />*/}
+            <div className='d-block clearfix mt-3 '>
+                <span className=" py-3" style={{fontSize: 'smaller'}}> اقدام دسته جمعی: </span>
 
+                <select
+                    // style={{height:'20px'}}
+                    className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
+                    style={{fontSize: 'smaller'}}
+                    value={selectFunc}
+                    onChange={e => {
+                        setSelectFunc(Number(e.target.value))
+                    }}
+                >
+                    {[{id:1,name:'انتخاب'},{id: 2, name: 'صدور حواله '}].map(item => (
+                        <option key={item.id} value={item.id}>
+                            {item.name}
+                        </option>
+
+                    ))}
+                </select>
+                <button className='btn-sm btn-light' onClick={() => bulkJob(selectFunc)}>ثبت</button>
+            </div>
             <div className=" containerT  p-2 "
 // style={{overflowX:"auto"}}
             >
-                <div className='d-block clearfix mt-3 float-left'>
-                    <span className=" py-3" style={{fontSize: 'smaller'}}> اقدام دسته جمعی: </span>
 
-                        <select
-                            // style={{height:'20px'}}
-                            className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
-                            style={{fontSize: 'smaller'}}
-                            value={selectFunc}
-                            onChange={e => {
-                                setSelectFunc(Number(e.target.value))
-                            }}
-                        >
-                            {[{id: 1, name: 'صدور حواله '}].map(item => (
-                                <option key={item.id} value={item.id}>
-                                    {item.name}
-                                </option>
-
-                            ))}
-                        </select>
-                    <button className='btn-sm btn-light' onClick={() => bulkJob(selectFunc)}>ثبت</button>
-                </div>
 
                 <table className='table m-1 table-striped  fixed_header ' {...getTableProps()}
                 // style={{ transform:'rotateX(180deg)'}}
@@ -124,7 +126,7 @@ const TakhsisTable = ({ columns, data , getData, bulkJob}) => {
                     {rows.map((row, i) => {
                         prepareRow(row)
                         return (
-                            <tr {...row.getRowProps()}>
+                            <tr  {...row.getRowProps(rowProps(row))}>
                                 {row.cells.map(cell => {
                                     return <td  className="text-center" {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                 })}

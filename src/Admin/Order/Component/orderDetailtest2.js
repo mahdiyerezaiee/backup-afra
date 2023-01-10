@@ -21,6 +21,7 @@ import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 import { DeliveryMethods } from '../../../Common/Enums/DeliveryMethodsEnums';
 import { OrderStatusEnumsProgressBar } from '../../../Common/Enums/OrderStatusEnumsProgressBar';
 import FadeLoader from "react-spinners/FadeLoader";
+import {addRoundedRectPath} from "chart.js/helpers";
 
 
 const OrderDetailTest = () => {
@@ -126,64 +127,6 @@ const OrderDetailTest = () => {
             console.log(err)
         }
     }
-    const bindAdress = async (arr) => {
-        let FilnalArr = [];
-
-        if (orderDetail.length > 1) {
-            for (let i = 0; i < orderDetail.length; i++) {
-                try {
-
-                    const { data, status } = await GetAddress(11, arr[i].id)
-                    let detail = orderDetail.filter(item => item.id === arr[i].id)[0]
-                    let address = data.result.addresses;
-                    const finallAddres = address.map(item =>
-                    ({
-                        fullAddress: item.fullAddress,
-                        postalCode: item.postalCode,
-                        receiverTel: item.receiverTel,
-                        receiverMobile: item.receiverMobile,
-                        receiverName: item.receiverName,
-
-
-                    }))[0]
-
-                    let obj = { ...detail, ...finallAddres }
-                    FilnalArr.push(obj)
-                    setDetailAddress(FilnalArr)
-                } catch (e) {
-                    console.log(e)
-                }
-
-            }
-        } else {
-            for (let i = 0; i < orderDetail.length; i++) {
-                try {
-
-                    const { data, status } = await GetAddress(10, arr[i].orderId)
-                    let detail = orderDetail.filter(item => item.orderId === arr[i].orderId)[0]
-                    let address = data.result.addresses;
-                    const finallAddres = address.map(item =>
-                    ({
-                        fullAddress: item.fullAddress,
-                        postalCode: item.postalCode,
-                        receiverTel: item.receiverTel,
-                        receiverMobile: item.receiverMobile,
-                        receiverName: item.receiverName,
-
-
-                    }))[0]
-
-                    let obj = { ...detail, ...finallAddres }
-                    FilnalArr.push(obj)
-                    setDetailAddress(FilnalArr)
-                } catch (e) {
-                    console.log(e)
-                }
-
-            }
-        }
-
-    }
     const returnHavaleSum = () => {
 
         var sum = 0
@@ -220,7 +163,7 @@ const OrderDetailTest = () => {
                 setProduct(data.result.orderDetails[0].product)
 
                 await bindAdress(orderDetail)
-
+                console.log(orderDetail)
                 var sum = 0;
                 orderDetail.forEach(item => sum += item.quantity
 
@@ -241,6 +184,65 @@ const OrderDetailTest = () => {
         handelGetAttachment()
 
     }, [])
+    const bindAdress = async (arr) => {
+        let FilnalArr = [];
+
+        if (arr.length > 1) {
+            for (let i = 0; i < arr.length; i++) {
+                try {
+
+                    const { data, status } = await GetAddress(11, arr[i].id)
+                    let detail = arr.filter(item => item.id === arr[i].id)[0]
+                    let address = data.result.addresses;
+                    const finallAddres = address.map(item =>
+                        ({
+                            fullAddress: item.fullAddress,
+                            postalCode: item.postalCode,
+                            receiverTel: item.receiverTel,
+                            receiverMobile: item.receiverMobile,
+                            receiverName: item.receiverName,
+
+
+                        }))[0]
+
+                    let obj = { ...detail, ...finallAddres }
+                    FilnalArr.push(obj)
+                    setDetailAddress(FilnalArr)
+                } catch (e) {
+                    console.log(e)
+                }
+
+            }
+        } else {
+            for (let i = 0; i < arr.length; i++) {
+                try {
+
+                    const { data, status } = await GetAddress(10, arr[i].orderId)
+                    let detail = arr.filter(item => item.orderId === arr[i].orderId)[0]
+                    let address = data.result.addresses;
+                    const finallAddres = address.map(item =>
+                        ({
+                            fullAddress: item.fullAddress,
+                            postalCode: item.postalCode,
+                            receiverTel: item.receiverTel,
+                            receiverMobile: item.receiverMobile,
+                            receiverName: item.receiverName,
+
+
+                        }))[0]
+
+                    let obj = { ...detail, ...finallAddres }
+                    FilnalArr.push(obj)
+                    setDetailAddress(FilnalArr)
+                } catch (e) {
+                    console.log(e)
+                }
+
+            }
+        }
+
+    }
+    console.log(DetailAddress)
     const handelPreview = (item) => {
         setImage(item)
         setIsOpen(true)
