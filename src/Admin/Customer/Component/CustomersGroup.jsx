@@ -1,15 +1,17 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { GetAttribute } from '../../../services/attributeService';
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import MyTable from '../../../Common/Shared/Form/MyTable';
-import {DeleteGroup, GetGroupsForEntity, GetGroupWithCompany, SetGroup} from '../../../services/GroupService';
-import  Modal  from 'react-modal';
+import { DeleteGroup, GetGroupsForEntity, GetGroupWithCompany, SetGroup } from '../../../services/GroupService';
+import Modal from 'react-modal';
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
-import {setCustomerInfo} from "../../../services/customerService";
+import { setCustomerInfo } from "../../../services/customerService";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { toast } from 'react-toastify';
 import { GetCompanyChild } from './../../../services/companiesService';
+import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import Select from 'react-select';
 
 
 export const CustomersGroup = () => {
@@ -27,54 +29,56 @@ export const CustomersGroup = () => {
             border: '2px ridge black'
         }
     };
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [customerg, setCustomerg] = useState([])
+    const [userCompanies, setUserCompanies] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
-    const[selectedRows,setSelectedRows]=useState([])
-    const [stateSuccess , SetStateSuccess ] = useState(0)
-    const [stateError , SetStateError ] = useState(0)
-    const[open,SetOpen]=useState(false);
+    const [selectedRows, setSelectedRows] = useState([])
+    const [stateSuccess, SetStateSuccess] = useState(0)
+    const [stateError, SetStateError] = useState(0)
+    const [open, SetOpen] = useState(false);
+    let [companyId, SetcompanyId] = useState()
     const close = () => {
         SetOpen(false);
     }
-    let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    let arrayOfSelectedData = [];
+    const getSelectedData = (data) => {
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData = data.map(item => item.original);
 
 
-        return(arrayOfSelectedData)
+        return (arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
-        if(selected===2){
+    const getBulkJob = (selected) => {
+        if (selected === 2) {
             enableSelectedItem()
         }
-        if(selected===3){
+        if (selected === 3) {
             copySelectedItem()
-        }if(selected===4){
+        } if (selected === 4) {
             DeleteSelectedItem()
         }
-        if(selected===5){
+        if (selected === 5) {
             disableSelectedItem()
         }
     }
-    const DeleteSelectedItem=async()=>{
-        const arrayOfData=getSelectedData(selectedRows);
-        let successCount=0;
-        let errorCount=0;
+    const DeleteSelectedItem = async () => {
+        const arrayOfData = getSelectedData(selectedRows);
+        let successCount = 0;
+        let errorCount = 0;
         for (let i = 0; i < arrayOfData.length; i++) {
 
             try {
-                const{data,status}=await DeleteGroup(arrayOfData[i].id)
-                if(data.result.success ===true){
+                const { data, status } = await DeleteGroup(arrayOfData[i].id)
+                if (data.result.success === true) {
                     SetOpen(true)
 
-                    SetStateSuccess ( successCount+=1)
-                } if(data.result.success ===false){
+                    SetStateSuccess(successCount += 1)
+                } if (data.result.success === false) {
                     SetOpen(true)
 
-                    SetStateError (errorCount+=1)
+                    SetStateError(errorCount += 1)
                 }
 
 
@@ -82,7 +86,7 @@ export const CustomersGroup = () => {
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
 
 
             }
@@ -91,31 +95,31 @@ export const CustomersGroup = () => {
         }
 
     }
-    const copySelectedItem=async()=>{
-        const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
+    const copySelectedItem = async () => {
+        const arrayOfData = getSelectedData(selectedRows);
+        const copyData = arrayOfData.map(item => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
-        let successCount=0;
-        let errorCount=0;
+        let successCount = 0;
+        let errorCount = 0;
         for (let i = 0; i < copyData.length; i++) {
 
 
             try {
-                let payload={
-                    'group':copyData[i]
+                let payload = {
+                    'group': copyData[i]
                 }
-                const{data,status}=await SetGroup(payload)
-                if(status===200){
+                const { data, status } = await SetGroup(payload)
+                if (status === 200) {
                     SetOpen(true)
 
-                    SetStateSuccess ( successCount+=1)
+                    SetStateSuccess(successCount += 1)
                 }
 
 
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
             }
 
 
@@ -123,57 +127,57 @@ export const CustomersGroup = () => {
 
 
     }
-    const enableSelectedItem=async()=>{
-        const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:true}})
+    const enableSelectedItem = async () => {
+        const arrayOfData = getSelectedData(selectedRows);
+        const copyData = arrayOfData.map(item => { return { ...item, active: true } })
 
-        let successCount=0;
-        let errorCount=0;
+        let successCount = 0;
+        let errorCount = 0;
         for (let i = 0; i < copyData.length; i++) {
 
 
             try {
-                let payload={
-                    'group':copyData[i]
+                let payload = {
+                    'group': copyData[i]
                 }
 
-                const{data,status}=await SetGroup(payload)
-                if(status===200){
+                const { data, status } = await SetGroup(payload)
+                if (status === 200) {
                     SetOpen(true)
 
-                    SetStateSuccess ( successCount+=1)
+                    SetStateSuccess(successCount += 1)
                 }
 
 
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
             }
 
         }
 
 
     }
-    const disableSelectedItem=async()=>{
-        const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:false}})
+    const disableSelectedItem = async () => {
+        const arrayOfData = getSelectedData(selectedRows);
+        const copyData = arrayOfData.map(item => { return { ...item, active: false } })
 
-        let successCount=0;
-        let errorCount=0;
+        let successCount = 0;
+        let errorCount = 0;
         for (let i = 0; i < copyData.length; i++) {
 
 
             try {
 
-                let payload={
-                    'group':copyData[i]
+                let payload = {
+                    'group': copyData[i]
                 }
-                const{data,status}=await SetGroup(payload)
+                const { data, status } = await SetGroup(payload)
                 SetOpen(true)
-                if(status===200){
+                if (status === 200) {
 
-                    SetStateSuccess( successCount+=1)
+                    SetStateSuccess(successCount += 1)
 
                 }
 
@@ -181,9 +185,9 @@ export const CustomersGroup = () => {
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
 
-            }finally {
+            } finally {
 
             }
 
@@ -192,8 +196,8 @@ export const CustomersGroup = () => {
 
 
     }
-    const [id , setId]= useState(0)
-    const openModal =  (id) => {
+    const [id, setId] = useState(0)
+    const openModal = (id) => {
         setIsOpen(true);
         setId(id)
 
@@ -201,87 +205,140 @@ export const CustomersGroup = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
-    const GetCustomerGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr=[]
-        for (let i = 0; i < companies.length; i++) {
+    const GetCurrentUserCompany = async () => {
 
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+        try {
+            const { data, status } = await GetCompanyChild()
+            if (status === 200) {
+                setUserCompanies(data.result.companies)
+                SetcompanyId(data.result.companies[0].id)
+            }
+        } catch (error) {
+            console.log();
+        }
 
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
+    }
+    // const GetCustomerGroup = async () => {
+    //     const response = await GetCompanyChild();
+    //     let companies = response.data.result.companies
+    //     let arr = []
+    //     let finalArr=[]
+    //     for (let i = 0; i < companies.length; i++) {
+
+    //         const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+
+    //         if(data.result.groups.length>0)
+    //         {
+    //            arr.push(data.result.groups)
+    //         }
+
+
+    //     }
+
+    //     finalArr=Array.prototype.concat.apply([], arr);
+
+    //     setCustomerg(finalArr);
+
+    // }
+
+    const GetCustomerGroup = async (companyId) => {
+        console.log(companyId);
+        if (userCompanies.length === 1) {
+            try {
+
+                const { data, status } = await GetGroupWithCompany(1, userCompanies[0].id);
+                setCustomerg(data.result.groups)
+
+            } catch (error) {
+
             }
 
+        }
+        else {
+            try {
+                const { data, status } = await GetGroupWithCompany(1, companyId);
+                setCustomerg(data.result.groups)
+
+            } catch (error) {
+
+            }
 
         }
 
-        finalArr=Array.prototype.concat.apply([], arr);
-
-        setCustomerg(finalArr);
 
     }
-    useEffect(()=>{
-        GetCustomerGroup();
-    },[])
+    
+    useEffect(() => {
+        GetCurrentUserCompany()
+
+
+    }, [])
+
+    useEffect(() => {
+        GetCustomerGroup(companyId)
+
+
+    }, [companyId])
+
+
+
+
+
     const editHandler = (id) => {
         navigate(`/admin/editcustomergroupName/${id}`)
     }
-    const deletHandler =async () => {
+    const deletHandler = async () => {
         try {
-            const {data , status}= await DeleteGroup(id)
-            if (data.success==true)
-            {
+            const { data, status } = await DeleteGroup(id)
+            if (data.success == true) {
                 setIsOpen(false)
                 GetCustomerGroup();
-               
 
-                    toast.success('گروه حذف شد', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined
-                    });
-                
+
+                toast.success('گروه حذف شد', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
+
             }
-        }catch (err){
+        } catch (err) {
             console.log(err)
             setIsOpen(false)
 
         }
     }
-    const columns=useMemo(()=>[
+    const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
-        { Header: 'نام', accessor: 'name' }, { Header: 'عملیات', accessor: '11', Cell: row =>
-            {
+        { Header: 'نام', accessor: 'name' }, {
+            Header: 'عملیات', accessor: '11', Cell: row => {
 
-                return(
+                return (
                     <ul className="table-controls">
 
                         <button className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="ویرایش"
-                                onClick={e => editHandler(row.row.original.id)}>
+                            onClick={e => editHandler(row.row.original.id)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                 viewBox="0 0 24 24" fill="none"
-                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                 strokeLinejoin="round"
-                                 className="feather feather-edit-2">
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-edit-2">
                                 <path
                                     d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                             </svg>
                         </button>
 
 
-                        <button  onClick={()=>openModal(row.row.original.id)  } className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="حذف">
+                        <button onClick={() => openModal(row.row.original.id)} className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="حذف">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                 viewBox="0 0 24 24" fill="none"
-                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                 strokeLinejoin="round"
-                                 className="feather feather-trash-2">
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-trash-2">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path
                                     d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -293,18 +350,51 @@ export const CustomersGroup = () => {
 
 
                     </ul>
-                )}}
+                )
+            }
+        }
     ])
-    const data=useMemo(()=>customerg);
-    const handelForm=()=>{
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
+
+    console.log(customerg);
+    const data = useMemo(() => customerg);
+    const handelForm = () => {
         navigate('/admin/newcustomergroup')
     }
-    if(customerg && customerg.length > 0){
+    if (customerg && customerg.length > 0) {
 
         return (
             <div className='user-progress'>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+
+                        {userCompanies.length > 1 ?
+                            <AdvancedSearch>
+                                <form className='form-row textOnInput'>
+
+                                    <div className="col-lg-4 col-md-6  col-sm-12  co selectIndex">
+                                        <label> شرکت</label>
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={companys()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={e =>
+                                                SetcompanyId(e.value)
+                                            }
+
+                                        />
+                                    </div>
+
+
+                                </form>
+
+                            </AdvancedSearch> : ''}
 
 
                     </div>
@@ -323,7 +413,7 @@ export const CustomersGroup = () => {
 
 
 
-                            <p> آیا مطمئنید  گروه {customerg.filter(item=> item.id === id).map(item=> item.name)}   </p>
+                            <p> آیا مطمئنید  گروه {customerg.filter(item => item.id === id).map(item => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -337,19 +427,49 @@ export const CustomersGroup = () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={handelForm}>تعریف گروه</button>
-                        <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}  bulkJob={getBulkJob}/>
+                        <MyTableBazargah columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>
                 </div>
             </div>
-        )}
-    else{
-        return(
+        )
+    }
+    else {
+        return (
             <div className='user-progress'>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
 
+                        {userCompanies.length > 1 ?
+                            <AdvancedSearch>
+                                <form className='form-row textOnInput'>
+
+                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                        <label> شرکت</label>
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={companys()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={e => {
+
+
+                                                SetcompanyId(e.value)
+
+
+                                            }
+
+                                            }
+
+                                        />
+                                    </div>
+
+
+                                </form>
+
+                            </AdvancedSearch> : ''}
 
                     </div>
                 </div>

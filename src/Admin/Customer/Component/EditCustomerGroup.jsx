@@ -36,6 +36,9 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen,refresh }) => {
 
     const navigate = useNavigate();
     const params = useParams();
+
+
+    
     const GetCustomerGroup = async () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies

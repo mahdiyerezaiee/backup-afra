@@ -11,6 +11,8 @@ import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { GetCompanyChild } from './../../../services/companiesService';
+import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import  Select  from 'react-select';
 
 
 const ProductGroup = () => {
@@ -39,6 +41,9 @@ const navigate=useNavigate();
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
+    const [userCompanies, setUserCompanies] = useState([])
+    let [companyId, SetcompanyId] = useState()
+
     const param = { PageSize , PageNumber}
 
     function getPage() {
@@ -66,6 +71,18 @@ const navigate=useNavigate();
 
     };
 
+    const GetCurrentUserCompany = async () => {
+
+        try {
+            const { data, status } = await GetCompanyChild()
+            if (status === 200) {
+                setUserCompanies(data.result.companies)
+                SetcompanyId(data.result.companies[0].id)
+            }
+        } catch (error) {
+            console.log();
+        }
+    }
     const getDataBySearch = async () => {
 
         const { data, status } = await GetGroupsForEntity(2,config);
@@ -240,32 +257,40 @@ setId(id)
     const closeModal = () => {
         setIsOpen(false);
     }
-    const GetProductGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr=[]
-        for (let i = 0; i < companies.length; i++) {
+    const GetProductGroup = async (companyId) => {
+        console.log(companyId);
+        if (userCompanies.length === 1) {
+            try {
 
-            const { data, status } = await GetGroupWithCompany(2, companies[i].id);
+                const { data, status } = await GetGroupWithCompany(2, userCompanies[0].id);
+                setProductG(data.result.groups)
 
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
+            } catch (error) {
+
             }
 
+        }
+        else {
+            try {
+                const { data, status } = await GetGroupWithCompany(2, companyId);
+                setProductG(data.result.groups)
+
+            } catch (error) {
+
+            }
 
         }
 
-        finalArr=Array.prototype.concat.apply([], arr);
 
-        setProductG(finalArr);
-        
     }
 useEffect(()=>{
-GetProductGroup();
+    GetCurrentUserCompany();
 },[])
 
+
+useEffect(()=>{
+    GetProductGroup(companyId);
+},[companyId])
 const editHandler = (id) => {
     navigate(`/admin/editproductgroup/${id}`)
 }
@@ -322,6 +347,11 @@ const columns=useMemo(()=>[
         </ul>
     )}}
 ])
+const companys = () => {
+    return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+}
+let defaultValue = companys()[0]
 const data=useMemo(()=>productG);
 
 const handelForm=()=>{
@@ -337,6 +367,35 @@ navigate('/admin/newproductgroup')
             <div className='user-progress'>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                    {userCompanies.length > 1 ?
+                            <AdvancedSearch>
+                                <form className='form-row textOnInput'>
+
+                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                        <label> شرکت</label>
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={companys()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={e => {
+
+
+                                                SetcompanyId(e.value)
+
+
+                                            }
+
+                                            }
+
+                                        />
+                                    </div>
+
+
+                                </form>
+
+                            </AdvancedSearch> : ''}
 
 
                     </div>
@@ -400,6 +459,35 @@ navigate('/admin/newproductgroup')
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
 
+                    {userCompanies.length > 1 ?
+                            <AdvancedSearch>
+                                <form className='form-row textOnInput'>
+
+                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                        <label> شرکت</label>
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={companys()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={e => {
+
+
+                                                SetcompanyId(e.value)
+
+
+                                            }
+
+                                            }
+
+                                        />
+                                    </div>
+
+
+                                </form>
+
+                            </AdvancedSearch> : ''}
 
                     </div>
                 </div>

@@ -26,9 +26,10 @@ export const GetUserInfo=()=>{
 
     return http.get(`${configure}/AuthenticatedUser/GetUserInfo`);
 }
+
 export const GetUserData=(id)=>{
 
-    return http.get(`${configure}/AuthenticatedUser/GetUserInfo?userId=${id}`);
+    return http.get(`${configure}/AuthenticatedUser/GetUserInfo?CustomerId=${id}&IsAdmin=true`);
 }
 export const GetUsersRoles=(userId)=>{
 
