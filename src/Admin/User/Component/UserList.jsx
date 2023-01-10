@@ -25,12 +25,12 @@ import { GetGroupWithCompany } from './../../../services/GroupService';
 
 const UserList = () => {
 
-    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
-    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+    const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [totalCount, setTotalCount] = useState(0);
     const [UserName, setUserName] = useState(getDefault().UserName)
     const [FirstName, setFirstName] = useState(getDefault().FirstName)
-    const [LastName, setLastName] = useState( getDefault().LastName)
+    const [LastName, setLastName] = useState(getDefault().LastName)
     const [NationalCode, setNationalCode] = useState(getDefault().NationalCode)
     const [organizations, SetOrganisations] = useState([]);
     const [userRole, setUserRole] = useState(getDefault().userRole)
@@ -38,26 +38,26 @@ const UserList = () => {
     const [organization, setOrganization] = useState([]);
     const [selectedRows, setSelectedRows] = useState([])
     const [CustomerG, setCustomerG] = useState([])
-    const[Ids,setIds]=useState([])
+    const [Ids, setIds] = useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
-    const[modalId,setModalId]=useState(0)
-    const[modalGroupOpen,setmodalGroupOpen]=useState(false)
-    const[modalRoleOpen,setmodalRoleOpen]=useState(false)
+    const [modalId, setModalId] = useState(0)
+    const [modalGroupOpen, setmodalGroupOpen] = useState(false)
+    const [modalRoleOpen, setmodalRoleOpen] = useState(false)
     const [getData, setGeData] = useState(false)
-    const params = { UserName, FirstName, NationalCode,LastName,userRole}
+    const params = { UserName, FirstName, NationalCode, LastName, userRole }
 
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
 
     }
-    const param = { PageSize , PageNumber}
+    const param = { PageSize, PageNumber }
 
     function getPage() {
         let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
 
     }
@@ -83,12 +83,12 @@ const UserList = () => {
 
         headers: { 'Content-Type': 'application/json' },
         params: {
-            RoleIds: params.userRole ?params.userRole.map(item => item.value): [],
-            UserName:params.UserName,
-            FirstName:params.FirstName,
-            LastName:params.LastName,
-            NationalCode:params.NationalCode,
-            PageNumber:0,
+            RoleIds: params.userRole ? params.userRole.map(item => item.value) : [],
+            UserName: params.UserName,
+            FirstName: params.FirstName,
+            LastName: params.LastName,
+            NationalCode: params.NationalCode,
+            PageNumber: 0,
             PageSize
 
 
@@ -103,12 +103,12 @@ const UserList = () => {
 
     const getDataBySearch = async () => {
         const { data, status } = await GetDataWithSearch(config);
-        if (status === 200){
-        setUsers(data.result.users.values);
-        setTotalCount(data.result.users.totalCount)
+        if (status === 200) {
+            setUsers(data.result.users.values);
+            setTotalCount(data.result.users.totalCount)
 
             setPageNumber(0)
-        sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
+            sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
             sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
         }
     }
@@ -118,12 +118,12 @@ const UserList = () => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                RoleIds: userRole ?userRole.map(item => item.value): [],
-                UserName:UserName,
-                FirstName:FirstName,
-                LastName:LastName,
-                NationalCode:NationalCode,
-                PageNumber ,
+                RoleIds: userRole ? userRole.map(item => item.value) : [],
+                UserName: UserName,
+                FirstName: FirstName,
+                LastName: LastName,
+                NationalCode: NationalCode,
+                PageNumber,
                 PageSize
             }
             ,
@@ -171,7 +171,7 @@ const UserList = () => {
 
         headers: { 'Content-Type': 'application/json' },
         params: {
-            RoleIds:userRole ?userRole.map(item => item.value): [],
+            RoleIds: userRole ? userRole.map(item => item.value) : [],
             UserName,
             FirstName,
             LastName,
@@ -186,7 +186,7 @@ const UserList = () => {
         }
     };
     const getUsers = async () => {
-        if (getData){
+        if (getData) {
             sessionStorage.clear()
 
         }
@@ -195,9 +195,9 @@ const UserList = () => {
             setGeData(false)
 
             setUsers(data.result.users.values);
-            setIds([...new Set((data.result.users.values).filter(item=>item.groupId!==null).map(item=>item.groupId))])
+            setIds([...new Set((data.result.users.values).filter(item => item.groupId !== null).map(item => item.groupId))])
             setTotalCount(data.result.users.totalCount)
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
     }
@@ -235,28 +235,27 @@ const UserList = () => {
     //             setCustomerG(data.result.groups)
     //         }
     //     } catch (error) {
-            
+
     //     }
     // }
 
-    const getCustomerGroups=async()=>{
+    const getCustomerGroups = async () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr=[]
+        let finalArr = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(1, companies[i].id);
 
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
+            if (data.result.groups.length > 0) {
+                arr.push(data.result.groups)
             }
 
 
         }
 
-        finalArr=Array.prototype.concat.apply([], arr);
+        finalArr = Array.prototype.concat.apply([], arr);
 
         setCustomerG(finalArr);
     }
@@ -274,7 +273,7 @@ const UserList = () => {
         setModalId(id)
         setmodalRoleOpen(true)
     }
-    const modalRoleClose=()=>{
+    const modalRoleClose = () => {
         setmodalRoleOpen(false)
 
     }
@@ -285,7 +284,7 @@ const UserList = () => {
         setModalId(id)
         setmodalGroupOpen(true)
     }
-    const modalGroupClose=()=>{
+    const modalGroupClose = () => {
         setmodalGroupOpen(false)
     }
     const columns = useMemo(() => [
@@ -530,7 +529,7 @@ const UserList = () => {
     ])
     const handelSearchFieldClear = () => {
         setGeData(true)
-getUsers()
+        getUsers()
 
         setPageNumber(0)
         setFirstName('');
@@ -557,14 +556,14 @@ getUsers()
             <div
             // className='user-progress'
             >
-               
-                <EditUserRole id={modalId} closeModal={modalRoleClose} modalIsOpen={modalRoleOpen}/>
+
+                <EditUserRole id={modalId} closeModal={modalRoleClose} modalIsOpen={modalRoleOpen} />
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 
                     </div>
                 </div>
-                <EditCustomerGroup id={modalId} closeModal={modalGroupClose} modalIsOpen={modalGroupOpen} refresh={getUsers}/>
+                <EditCustomerGroup id={modalId} closeModal={modalGroupClose} modalIsOpen={modalGroupOpen} refresh={getUsers} />
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
                     <AdvancedSearch>
 
@@ -607,19 +606,19 @@ getUsers()
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div>
-                        </div> </div>
+                                    </button>
+                                </div>
+                            </div> </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().UserName || getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().UserName || getDefault().userRole || getDefault().LastName || getDefault().NationalCode || getDefault().FirstName ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
 
@@ -703,19 +702,20 @@ getUsers()
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
+                                    </button>
+                                </div>
+                            </div>  
                             </div>
-                        </div>  </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().UserName|| getDefault().userRole||getDefault().LastName ||getDefault().NationalCode || getDefault().FirstName   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().UserName || getDefault().userRole || getDefault().LastName || getDefault().NationalCode || getDefault().FirstName ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>

@@ -6,6 +6,8 @@ import MyTable from '../../../Common/Shared/Form/MyTable';
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { GetCompanyChild } from './../../../services/companiesService';
+import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import  Select  from 'react-select';
 
 const WareHouseType = () => {
 
@@ -31,6 +33,8 @@ const WareHouseType = () => {
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
+    const [userCompanies, setUserCompanies] = useState([])
+    let [companyId, SetcompanyId] = useState()
     const close = () => {
         SetOpen(false);
     }
@@ -189,6 +193,19 @@ const WareHouseType = () => {
 
 
     }
+    
+    const GetCurrentUserCompany = async () => {
+
+        try {
+            const { data, status } = await GetCompanyChild()
+            if (status === 200) {
+                setUserCompanies(data.result.companies)
+                SetcompanyId(data.result.companies[0].id)
+            }
+        } catch (error) {
+            console.log();
+        }
+    }
     const openModal =  (id) => {
         setIsOpen(true);
         setId(id)
@@ -197,31 +214,36 @@ const WareHouseType = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
-    const GetWareHouseGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr=[]
-        for (let i = 0; i < companies.length; i++) {
+    const GetWareHouseGroup = async (companyId) => {
+        console.log(companyId);
+        if (userCompanies.length === 1) {
+            try {
 
-            const { data, status } = await GetGroupWithCompany(4, companies[i].id);
+                const { data, status } = await GetGroupWithCompany(4, userCompanies[0].id);
+                setWareHouseG(data.result.groups)
 
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
+            } catch (error) {
+
             }
 
+        }
+        else {
+            try {
+                const { data, status } = await GetGroupWithCompany(4, companyId);
+                setWareHouseG(data.result.groups)
+
+            } catch (error) {
+
+            }
 
         }
-
-        finalArr=Array.prototype.concat.apply([], arr);
-
-        setWareHouseG(finalArr);
-
     }
     useEffect(()=>{
-        GetWareHouseGroup();
+        GetCurrentUserCompany();
     },[])
+    useEffect(()=>{
+        GetWareHouseGroup(companyId);
+    },[companyId])
     const editHandler = (id) => {
         navigate(`/admin/EditWareHouseTypeName/${id}`)
     }
@@ -277,6 +299,11 @@ const WareHouseType = () => {
                     </ul>
                 )}}
     ])
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+    
+    }
+    let defaultValue = companys()[0]
     const data=useMemo(()=>WarehouseG);
     const handelForm=()=>{
         navigate('/admin/newwarehousetype')
@@ -287,7 +314,35 @@ const WareHouseType = () => {
             <div className='user-progress'>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                    {userCompanies.length > 1 ?
+                            <AdvancedSearch>
+                                <form className='form-row textOnInput'>
 
+                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                        <label> شرکت</label>
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={companys()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={e => {
+
+
+                                                SetcompanyId(e.value)
+
+
+                                            }
+
+                                            }
+
+                                        />
+                                    </div>
+
+
+                                </form>
+
+                            </AdvancedSearch> : ''}
 
                     </div>
                 </div>
@@ -342,7 +397,35 @@ const WareHouseType = () => {
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
 
+                    {userCompanies.length > 1 ?
+                            <AdvancedSearch>
+                                <form className='form-row textOnInput'>
 
+                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                        <label> شرکت</label>
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={companys()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={e => {
+
+
+                                                SetcompanyId(e.value)
+
+
+                                            }
+
+                                            }
+
+                                        />
+                                    </div>
+
+
+                                </form>
+
+                            </AdvancedSearch> : ''}
                     </div>
                 </div>
                 <div className=" statbox widget-content widget-content-area">
