@@ -7,3 +7,17 @@ export const PaymentStatusEnums=[
     {name:'شرایطی  ',id:6}
 
 ]
+
+
+
+
+// public enum PaymentStatus
+// {
+//     Pending = 1,
+//     PartiallyPaid,
+//     Paid,
+//     Refunded,
+//     Voided,
+//     ConditionalPay
+// }
+

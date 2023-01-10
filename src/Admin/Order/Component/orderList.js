@@ -28,6 +28,7 @@ import { PaymentStatusEnums } from "../../../Common/Enums/PaymentStatus";
 import { toast } from "react-toastify";
 import { OverDueEnum } from "../../../Common/Enums/overDueEnum";
 import { GetCompanyChild } from './../../../services/companiesService';
+import { GetOrderDetailsAdmin } from './../../../services/orderService';
 
 
 const customStyles = {
@@ -867,7 +868,7 @@ try {
                     setDetailAddress([])
                     setOrderId(state.original.id)
                     try {
-                        const { data, status } = await GetOrderDetails(state.original.id)
+                        const { data, status } = await GetOrderDetailsAdmin(state.original.id)
                         SetAddress({ active: address.active === false ? true : false, id: state.id })
                         if (status === 200) {
                             Detail = data.result.orderDetails

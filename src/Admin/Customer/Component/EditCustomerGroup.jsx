@@ -10,6 +10,8 @@ import { setCustomerInfo } from '../../../services/customerService';
 import { template } from 'lodash';
 import Modal from 'react-modal';
 import {ClipLoader} from "react-spinners";
+import { GetGroupWithCompany } from './../../../services/GroupService';
+import { GetCompanyChild } from './../../../services/companiesService';
 
 const customStyles = {
     content: {
@@ -35,14 +37,25 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen,refresh }) => {
     const navigate = useNavigate();
     const params = useParams();
     const GetCustomerGroup = async () => {
-        const { data, status } = await GetGroupsForEntity(1);
-        if (status === 200) {
+        const response = await GetCompanyChild();
+        let companies = response.data.result.companies
+        let arr = []
+        let finalArr=[]
+        for (let i = 0; i < companies.length; i++) {
 
+            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
 
+            if(data.result.groups.length>0)
+            {
+               arr.push(data.result.groups)
+            }
 
-            setCustomerG(data.result.groups);
 
         }
+
+        finalArr=Array.prototype.concat.apply([], arr);
+
+        setCustomerG(finalArr);
 
     }
 let userId;
