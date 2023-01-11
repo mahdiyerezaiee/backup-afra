@@ -88,6 +88,7 @@ import InvoiceCreator from "../../Utils/invoiceCreator";
 import Ticket from "../../Common/Shared/Ticket/ticket_v2";
 import { addUser } from '../../store/Slice/user/userSlice';
 import { userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
+import ReportShipping from "../Report/Component/ReportShipping";
 
 const AdminMainLayout = (props) => {
   const [isloading, setIsloading] = useState(true);
@@ -275,7 +276,7 @@ const AdminMainLayout = (props) => {
 
                   <Route path='setting' element={<Setting />} />
                   {/* Report */}
-                  <Route path='ShippingReport' element={<ShippingList />} />
+                  <Route path='ShippingReport' element={<ReportShipping />} />
                   <Route path='ProceessAttachments' element={<ProceessAttachments />} />
                   <Route path='customerAttachment/:id' element={<DetailCustomerAttachment />} />
                   <Route path='UsedBarBariReports' element={<UsedBarBariReport />} />
