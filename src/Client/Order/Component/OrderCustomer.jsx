@@ -406,7 +406,6 @@ const OrderCustomer = () => {
     GetOrders()
     sessionStorage.clear()
 
-    getOrganization()
   }, [getOrders])
   const GetOrders = async () => {
     let userName = localStorage.getItem("mobile")
@@ -530,47 +529,7 @@ const OrderCustomer = () => {
       }
 
     },
-    {
-      Header: 'خریدار', accessor: d => {
-        let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.name)
-
-        return (` ${d.customer.firstName} ,    ${d.customer.lastName} , ${OName}`)
-      }
-      , Cell: row => {
-        let fName = row.row.original.customer.firstName;
-        let lName = row.row.original.customer.lastName;
-        let OName;
-        if (row.row.original.customer.organizationId > 0) {
-
-          OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.name)
-        }
-        let fullname = `${fName ? fName : ''} ${lName ? lName : ''} ${OName ? OName : ''}`;
-        return (fullname)
-      }
-    },
-    { Header: 'شماره همراه', accessor: 'customer.userName' },
-    {
-      Header: 'شماره / شناسه ملی', accessor: d => {
-        let Ncode = d.customer.nationalCode;
-        let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.nationalId)
-        return (`${Ncode}`, `${OName}`)
-
-      }, Cell: row => {
-        let Ncode = row.row.original.customer.nationalCode;
-        let OName;
-        if (row.row.original.customer.organizationId > 0) {
-
-          OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.nationalId)
-        }
-        let code = `${Ncode ? Ncode : ''} ${OName ? OName : ''}`
-        return (code)
-      }
-    },
-    // {
-    //   Header: 'پرداخت', accessor: 'paymentMethodId', Cell: row => {
-    //     return (PaymentStructureEnums.filter(item => item.id === row.row.original.paymentMethodId).map(item => item.name))
-    //   }
-    // },
+  
     {
       Header: 'وضعیت تخصیص', accessor: 'shippingStatusId', Cell: row => {
         return (ShippingStatusEnums.filter(item => item.id === row.row.original.shippingStatusId).map(item => item.name))

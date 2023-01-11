@@ -141,6 +141,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     }
     let condition = [...orderCondition]
 
+    console.log(condition);
 
     const openModal = (id) => {
         setorderDetailId(id)
@@ -232,7 +233,7 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
     });
     useEffect(() => {
         getDetails()
-        getSupplyCode()
+        // getSupplyCode()
         getOrderDetailCondition()
 
     }, [getOrder])

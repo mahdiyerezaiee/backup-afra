@@ -30,7 +30,7 @@ export const GetShipping=(url)=>{
 
     return http.get(`${configure}/Shipping/GetShippings`, url);
 }
-export const GetAllShippingCompanies=(url)=>{
+export const GetAllShippingCompanies=()=>{
 
     return http.get(`${configure}/Shipping/GetShippingCompanies?PageNumber=0&PageSize=1000000`);
 }

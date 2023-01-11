@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { GetAllShippingCompanies } from '../../../services/ShippingService';
 import { editOrder } from '../../../services/orderService';
 import {ClipLoader} from "react-spinners";
+import { useSelector } from 'react-redux';
 
 const customStyles = {
     content: {
@@ -29,6 +30,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     const [shippingContract, setShippingContract] = useState([]);
     const [shippingContractId, setShippingContractId] = useState(0);
     let [loading, setLoading] = useState(false);
+    const roles=useSelector(state=>state.roles)
     console.log(orderDetailId)
     const getShippingCompany = async () => {
         try {
@@ -52,7 +54,8 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     }
 
     useEffect(() => {
-        getShippingCompany()
+if(roles.includes(7)||roles.includes(8)){
+         getShippingCompany()}
     }, [])
 
     const shippingCompanySelect = () => {

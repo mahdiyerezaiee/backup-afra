@@ -228,8 +228,8 @@ const OrderDetailTest = () => {
         getOrder()
         getOrderDetail()
         GetShipping()
-        getOrganizationName();
-        ShippingContract()
+        // getOrganizationName();
+        // ShippingContract()
         handelGetAttachment()
 
 
