@@ -148,7 +148,7 @@ const AdminMainLayout = (props) => {
 
       <Header collapsed={collapsed} handelChange={handleCollapsedChange} />
       <div className="main-container" id="container">
-        <SideNavbar collapsed={collapsed} loading={isloading} />
+        <SideNavbar />
         <div id="content" className="main-content main-Layout">
           <div className="layout-px-spacing">
             <div className="row layout-top-spacing">

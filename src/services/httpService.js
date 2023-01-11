@@ -20,6 +20,7 @@ if (token) {
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 const refresh = localStorage.getItem('refresh');
+const connect=localStorage.getItem('connect')
 
 console.log(token);
 const refreshR = {
@@ -31,7 +32,7 @@ axios.interceptors.response.use(
 
   resp => resp, async error => {
 
-    if (error.response.status === 401 && !token) {
+    if (error.response.status === 401 && !connect ) {
       window.location.reload()
     }
     if (error.response.status === 401 && token) {
