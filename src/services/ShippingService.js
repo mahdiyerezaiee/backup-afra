@@ -18,6 +18,10 @@ export const GetShoppings=(id)=>{
 
     return http.get(`${configure}/Shipping/GetShippings?OrderId=${id}&PageNumber=0&PageSize=100000`);
 }
+export const GetShoppingsAdmin=(id)=>{
+
+    return http.get(`${configure}/Shipping/GetShippings?OrderId=${id}&PageNumber=0&PageSize=100000&IsAdmin=true`);
+}
 export const SetShoppingContract=(ShoppingContract)=>{
 
     return http.post(`${configure}/Shipping/SetShippingContract`, JSON.stringify(ShoppingContract));
