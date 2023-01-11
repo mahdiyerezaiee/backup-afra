@@ -22,6 +22,7 @@ import Select from "react-select";
 import { GetDataWithSearchOrder } from "../../../services/orderService";
 import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";
 import QueryString from 'qs';
+import { GetCompanyChild } from './../../../services/companiesService';
 
 
 const SupplyList = () => {
@@ -40,8 +41,8 @@ const SupplyList = () => {
         }
     };
     const navigate = useNavigate()
-    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
-    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+    const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
 
     const [totalCount, setTotalCount] = useState(0);
     const [supplies, setSupplies] = useState([]);
@@ -59,22 +60,24 @@ const SupplyList = () => {
     const [contractNumber, SetContractNumber] = useState(getDefault().contractNumber);
     const [products, SetProducts] = useState([]);
     const [getData, setGeData] = useState(false)
+    const [companies, setCompanies] = useState([])
+    const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : null)
 
     const [suppliers, setSuppliers] = useState([])
 
     const [open, SetOpen] = useState(false);
-    const param = { PageSize , PageNumber}
+    const param = { PageSize, PageNumber }
 
     function getPage() {
         let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
 
     }
-    const params = { supplierId, supplyTypeIds, shippingStatusIds, productId, wareHouseId, contractNumber}
+    const params = { supplierId, supplyTypeIds, shippingStatusIds, productId, wareHouseId, contractNumber }
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
 
     }
@@ -259,9 +262,10 @@ const SupplyList = () => {
         return (SupplyTypesEnums.map(data => ({ label: data.name, value: data.id })));
     }
     const inputProductG = () => {
-        if(products){
-        return (products.map(data => ({ label: data.name, value: data.id })))}
-        else{
+        if (products) {
+            return (products.map(data => ({ label: data.name, value: data.id })))
+        }
+        else {
             return null
         }
     }
@@ -306,7 +310,7 @@ const SupplyList = () => {
         setIsOpen(false);
     }
     const getSupplies = async () => {
-        if (getData){
+        if (getData) {
             sessionStorage.clear()
 
         }
@@ -316,12 +320,12 @@ const SupplyList = () => {
             headers: { 'Content-Type': 'application/json' },
             params: {
                 SupplierId: supplierId,
-                SupplyTypeIds: supplyTypeIds ?supplyTypeIds.map(item => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ?shippingStatusIds.map(item => item.value) : [],
-                ProductId:productId,
+                SupplyTypeIds: supplyTypeIds ? supplyTypeIds.map(item => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+                ProductId: productId,
                 WareHouseId: wareHouseId,
                 ContractNumber: contractNumber,
-              PageNumber,
+                PageNumber,
                 PageSize
 
 
@@ -352,14 +356,14 @@ const SupplyList = () => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                SupplierId:supplierId,
+                SupplierId: supplierId,
                 SupplyTypeIds: supplyTypeIds ? supplyTypeIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 ProductId: params.productId,
                 WareHouseId: params.wareHouseId,
                 ContractNumber: params.contractNumber,
                 PageNumber: 0,
-                PageSize
+                PageSize,companyId
 
 
             }
@@ -397,7 +401,7 @@ const SupplyList = () => {
                 ProductId: params.productId,
                 WareHouseId: params.wareHouseId,
                 ContractNumber: params.contractNumber,
-
+                companyId,
                 PageNumber,
                 PageSize
 
@@ -421,6 +425,18 @@ const SupplyList = () => {
 
         } catch (err) {
             console.log(err)
+        }
+
+    }
+    const getCompanies = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            setCompanies(data.result.companies)
+
+
+
+        } catch (error) {
+
         }
 
     }
@@ -452,13 +468,14 @@ const SupplyList = () => {
 
         getSupplies();
         getWareHouse();
-
+        getCompanies()
         getSupplier()
     }, [getData])
     const SupplierG = () => {
-        if(suppliers){
-        return (suppliers.map(data => ({ label: data.name, value: data.id })))}
-        else{
+        if (suppliers) {
+            return (suppliers.map(data => ({ label: data.name, value: data.id })))
+        }
+        else {
             return null
         }
     }
@@ -491,7 +508,7 @@ const SupplyList = () => {
         },
 
         {
-            Header: 'مقدار', accessor: 'quantity' , Cell:row => formatter.format(row.row.original.quantity)
+            Header: 'مقدار', accessor: 'quantity', Cell: row => formatter.format(row.row.original.quantity)
         }, {
             Header: 'واحد', accessor: 'Mesures', Cell: row => {
 
@@ -581,9 +598,13 @@ const SupplyList = () => {
             }
         }
     ])
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
+    }
+
     const data = useMemo(() => supplies)
-    const handelSearchFieldClear =async () => {
-setGeData(true)
+    const handelSearchFieldClear = async () => {
+        setGeData(true)
         getSupplies()
         SetContractNumber('')
         SetProductId('')
@@ -591,6 +612,7 @@ setGeData(true)
         SetSupplyTypeIds([])
         SetShippingStatusIds([])
         SetWareHouseId('')
+        setCompanyId(null)
 
         sessionStorage.clear()
 
@@ -621,12 +643,12 @@ setGeData(true)
                                     value={contractNumber} onChange={e => SetContractNumber(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>محصول</label>
 
                                     <Select
-defaultValue={products.filter(i=> i.id === productId).map(data => ({ label: data.name, value: data.id }))[0]}
+                                        defaultValue={products.filter(i => i.id === productId).map(data => ({ label: data.name, value: data.id }))[0]}
 
                                         placeholder='محصول'
                                         options={inputProductG()}
@@ -637,12 +659,12 @@ defaultValue={products.filter(i=> i.id === productId).map(data => ({ label: data
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>تامین کننده</label>
 
                                     <Select
-defaultValue={params.supplierId}
+                                        defaultValue={params.supplierId}
 
                                         placeholder='تامین کننده'
                                         options={SupplierG()}
@@ -653,7 +675,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>نوع تامین</label>
 
@@ -673,7 +695,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت ارسال </label>
 
@@ -693,12 +715,12 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12      textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>انبار </label>
 
                                     <Select
-defaultValue={params.wareHouseId}
+                                        defaultValue={params.wareHouseId}
                                         isClearable={true}
                                         placeholder='انبار'
                                         options={WareHouseG()}
@@ -712,23 +734,49 @@ defaultValue={params.wareHouseId}
                                 </div>
                             </div>
 
+                            {companies.length > 1 ? <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
+
+                                    {companyId && companyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
+
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div>
-                        </div></div>
+                                    </button>
+                                </div>
+                            </div></div>
                     </AdvancedSearch>
                 </div>
-                { getDefault().shippingStatusIds||getDefault().wareHouseId||getDefault().contractNumber || getDefault().productId||getDefault().supplierId || getDefault().supplyTypeIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().shippingStatusIds || getDefault().wareHouseId || getDefault().contractNumber || getDefault().productId || getDefault().supplierId || getDefault().supplyTypeIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
@@ -739,9 +787,9 @@ defaultValue={params.wareHouseId}
                         ariaHideApp={false}
 
                     >
-                        <div style={{width:'20rem'}}>
+                        <div style={{ width: '20rem' }}>
 
-                            <div className="d-block clearfix mb-2"   onClick={closeModal}><svg
+                            <div className="d-block clearfix mb-2" onClick={closeModal}><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24"
                                 viewBox="0 0 24 24" fill="none"
@@ -750,9 +798,9 @@ defaultValue={params.wareHouseId}
                                 strokeLinejoin="round"
                                 className="feather feather-x close"
                                 data-dismiss="alert"><line x1="18" y1="6"
-                                                           x2="6"
-                                                           y2="18"></line><line
-                                x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                                    x2="6"
+                                    y2="18"></line><line
+                                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
                             <p> آیا مطمئنید تامین {supplies.filter(item => item.id === id).map(item => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
@@ -806,13 +854,13 @@ defaultValue={params.wareHouseId}
                                     value={contractNumber} onChange={e => SetContractNumber(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>محصول</label>
 
                                     <Select
 
-                                        defaultValue={products?products.filter(i=> i.id === productId).map(data => ({ label: data.name, value: data.id }))[0]:""}
+                                        defaultValue={products ? products.filter(i => i.id === productId).map(data => ({ label: data.name, value: data.id }))[0] : ""}
                                         placeholder='محصول'
                                         options={inputProductG()}
 
@@ -822,13 +870,13 @@ defaultValue={params.wareHouseId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group  " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group  " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>تامین کننده</label>
 
                                     <Select
 
-defaultValue={params.supplierId}
+                                        defaultValue={params.supplierId}
                                         placeholder='تامین کننده'
                                         options={SupplierG()}
 
@@ -838,7 +886,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{marginBottom:"3rem"}} >
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{ marginBottom: "3rem" }} >
                                 <div className=" form-control-sm">
                                     <label>نوع تامین</label>
 
@@ -858,7 +906,7 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت ارسال </label>
 
@@ -878,12 +926,12 @@ defaultValue={params.supplierId}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>انبار </label>
 
                                     <Select
-defaultValue={params.wareHouseId}
+                                        defaultValue={params.wareHouseId}
                                         isClearable={true}
                                         placeholder='انبار'
                                         options={WareHouseG()}
@@ -897,23 +945,48 @@ defaultValue={params.wareHouseId}
                                 </div>
                             </div>
 
+                            {companies.length > 1 ? <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
+
+                                    {companyId && companyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div> </div>
+                                    </button>
+                                </div> </div>
                         </div>
                     </AdvancedSearch>
                 </div>
-                {getDefault().shippingStatusIds||getDefault().wareHouseId||getDefault().contractNumber || getDefault().productId||getDefault().supplierId || getDefault().supplyTypeIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().shippingStatusIds || getDefault().wareHouseId || getDefault().contractNumber || getDefault().productId || getDefault().supplierId || getDefault().supplyTypeIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>

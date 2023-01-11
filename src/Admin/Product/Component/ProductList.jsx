@@ -36,9 +36,10 @@ const customStyles = {
     }
 };
 const ProductList = () => {
-    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
-    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
-
+    const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
+    const [companies, setCompanies] = useState([])
+    const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : null)
     const [totalCount, setTotalCount] = useState(0);
     const [product, setProduct] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -55,18 +56,18 @@ const ProductList = () => {
 
 
     const [open, SetOpen] = useState(false);
-    const param = { PageSize , PageNumber}
+    const param = { PageSize, PageNumber }
 
     function getPage() {
         let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
 
     }
-    const params = { Name, EnglishName, groupIds}
+    const params = { Name, EnglishName, groupIds }
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
 
     }
@@ -87,20 +88,19 @@ const ProductList = () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr=[]
+        let finalArr = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(2, companies[i].id);
 
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
+            if (data.result.groups.length > 0) {
+                arr.push(data.result.groups)
             }
 
 
         }
 
-        finalArr=Array.prototype.concat.apply([], arr);
+        finalArr = Array.prototype.concat.apply([], arr);
 
         setProductG(finalArr);
 
@@ -256,13 +256,14 @@ const ProductList = () => {
             headers: { 'Content-Type': 'application/json' },
 
             params: {
-                Name:params.Name,
-                EnglishName:params.EnglishName,
+                Name: params.Name,
+                EnglishName: params.EnglishName,
                 GroupIds: params.groupIds ? params.groupIds.map(item => item.value) : [],
                 isAdmin: true,
                 active: false,
-                PageNumber:0,
+                PageNumber: 0,
                 PageSize,
+                companyId
 
             },
             paramsSerializer: params => {
@@ -296,11 +297,12 @@ const ProductList = () => {
             params: {
                 isAdmin: true,
                 active: false,
-                Name:Name,
-                EnglishName:EnglishName,
+                Name: Name,
+                EnglishName: EnglishName,
                 GroupIds: groupIds ? groupIds.map(item => item.value) : [],
                 PageNumber,
                 PageSize,
+                companyId
             },
             paramsSerializer: params => {
 
@@ -330,8 +332,20 @@ const ProductList = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
+    const getCompany = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            if (status === 200) {
+                setCompanies(data.result.companies)
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
     const getProducts = async () => {
-        if (getData){
+        if (getData) {
             sessionStorage.clear()
 
         }
@@ -341,7 +355,7 @@ const ProductList = () => {
 
             params: {
                 Name,
-               EnglishName,
+                EnglishName,
                 GroupIds: groupIds ? groupIds.map(item => item.value) : [],
                 isAdmin: true,
                 active: false,
@@ -360,7 +374,7 @@ const ProductList = () => {
         try {
             const { data, status } = await GetProductsWithSearch(config)
             if (status === 200) {
-setGeData(false)
+                setGeData(false)
                 setProduct(data.result.products.values)
                 setTotalCount(data.result.products.totalCount)
 
@@ -374,6 +388,7 @@ setGeData(false)
         getProducts();
 
         GetProductGroup();
+        getCompany()
     }, [getData])
 
     const editHandler = (id) => {
@@ -408,8 +423,8 @@ setGeData(false)
 
     var formatter = new Intl.NumberFormat('fa-IR', {
         style: 'currency',
-        currency: 'IRR', maximumFractionDigits: 0, 
-        minimumFractionDigits: 0, 
+        currency: 'IRR', maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
 
 
     });
@@ -524,14 +539,18 @@ setGeData(false)
                 )
             }
         }])
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
+    }
     const data = useMemo(() => product);
     const handelSearchFieldClear = () => {
         setGeData(true)
-getProducts()
+        getProducts()
         setPageNumber(0)
         setName('')
         setEnglishName('')
         SetGroupId([])
+        setCompanyId(null)
         sessionStorage.clear();
 
 
@@ -562,25 +581,26 @@ getProducts()
 
 
 
-                            <div className="col-lg-4 col-md-4  col-sm-12    mb-1">
+
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
 
                                 <label> نام کالا</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام فارسی" value={Name} onChange={e => setName(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-4 col-sm-12 col-md-4  mb-1">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
                                 <label> کد بازارگاه</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد بازارگاه" value={EnglishName} onChange={e => setEnglishName(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-4 col-md-4 col-sm-12  textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12    textOnInput form-group " : "col-lg-3 col-md-3  col-sm-12    textOnInput form-group "} style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>گروه کالا </label>
 
                                     <Select
-                                        value={groupIds}
+
                                         placeholder='گروه کالا'
                                         options={groups}
                                         isMulti
@@ -594,26 +614,50 @@ getProducts()
                                     />
                                 </div>
                             </div>
+                            {companies.length > 1 ? <div className="col-lg-3 col-md-3  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
 
+                                    {companyId && companyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
 
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div></div>
+                                    </button>
+                                </div></div>
                         </div>
                         <br />
                     </AdvancedSearch>
                 </div>
-                {getDefault().Name || getDefault().EnglishName || getDefault().groupIds   ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().Name || getDefault().EnglishName || getDefault().groupIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
@@ -625,7 +669,7 @@ getProducts()
 
                     >
                         <>
-                            <div className="d-block clearfix mb-2"   onClick={closeModal}><svg
+                            <div className="d-block clearfix mb-2" onClick={closeModal}><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24"
                                 viewBox="0 0 24 24" fill="none"
@@ -634,9 +678,9 @@ getProducts()
                                 strokeLinejoin="round"
                                 className="feather feather-x close"
                                 data-dismiss="alert"><line x1="18" y1="6"
-                                                           x2="6"
-                                                           y2="18"></line><line
-                                x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                                    x2="6"
+                                    y2="18"></line><line
+                                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
                             <p> آیا مطمئنید  کالا {product.filter(item => item.id === id).map(item => item.name)}   </p>
@@ -684,20 +728,20 @@ getProducts()
 
 
 
-                            <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
 
                                 <label> نام کالا</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام فارسی" value={Name} onChange={e => setName(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
                                 <label> کد بازارگاه</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد بازارگاه" value={EnglishName} onChange={e => setEnglishName(e.target.value)} />
                             </div>
 
-                            <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12    textOnInput form-group " : "col-lg-3 col-md-3  col-sm-12    textOnInput form-group "} style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
                                     <label>گروه کالا </label>
 
@@ -716,27 +760,51 @@ getProducts()
                                     />
                                 </div>
                             </div>
+                            {companies.length > 1 ? <div className="col-lg-3 col-md-3  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
 
+                                    {companyId && companyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
 
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div>
-                        </div></div>
+                                    </button>
+                                </div>
+                            </div></div>
                         <br />
 
                     </AdvancedSearch>
                 </div>
-                {getDefault().Name || getDefault().EnglishName || getDefault().groupIds  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().Name || getDefault().EnglishName || getDefault().groupIds ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>

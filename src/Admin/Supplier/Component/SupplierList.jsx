@@ -15,6 +15,8 @@ import { ExportToExcel } from '../../../Common/Shared/Common/ExportToExcel';
 import {toast} from "react-toastify";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
+import { GetCompanyChild } from './../../../services/companiesService';
+import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
 
 const SupplierList = () => {
     const customStyles = {
@@ -41,6 +43,8 @@ const SupplierList = () => {
     const[selectedRows,setSelectedRows]=useState([])
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
+    const [companies, setCompanies] = useState([])
+    const [companyId, setCompanyId] = useState(getPage().companyId ? getPage().companyId : null)
     const[open,SetOpen]=useState(false);
     const param = { PageSize , PageNumber}
 
@@ -74,6 +78,18 @@ const SupplierList = () => {
         if(selected===5){
             disableSelectedItem()
         }
+    }
+    const getCompanies = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            setCompanies(data.result.companies)
+      
+
+
+        } catch (error) {
+
+        }
+
     }
     const DeleteSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
@@ -257,6 +273,7 @@ const SupplierList = () => {
     useEffect(() => {
 
         getSuppliers();
+        getCompanies()
     }, [])
     const getDataBySearch = async () => {
         let config = {
@@ -266,6 +283,7 @@ const SupplierList = () => {
 
                 PageNumber,
                 PageSize
+                ,companyId
 
 
             }
@@ -335,6 +353,10 @@ const SupplierList = () => {
             }
         }
     ])
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
+    }
+
     const data = useMemo(() => suppliers)
     if(suppliers){
         const dataForExcel = data.map(item => ({

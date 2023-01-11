@@ -321,7 +321,6 @@ setPageNumber(0)
     useEffect(() => {
         getShippingCompany();
         sessionStorage.clear()
-        GetshippingCompanyGroup();
     }, [getData])
 
     const editHandler = (id) => {
