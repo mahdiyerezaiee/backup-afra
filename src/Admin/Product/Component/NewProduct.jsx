@@ -35,18 +35,50 @@ const NewProduct = () => {
     const [productG, setProductG] = useState([])
     const [attValue, setAttValue] = useState('')
     const [loading, setLoading] = useState(false);
+    let [companyId, SetcompanyId] = useState()
+let [companyName, SetCompanyName] = useState()
+    const [userCompanies, setUserCompanies] = useState([])
 
-    const GetGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr = []
-        for (let i = 0; i < companies.length; i++) {
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
-             if (data.result.groups.length > 0) { arr.push(data.result.groups) }
+
+    
+const getCompanies = async () => {
+    try {
+        const { data, status } = await GetCompanyChild()
+        setUserCompanies(data.result.companies)
+        SetcompanyId(data.result.companies[0].id)
+        SetCompanyName(data.result.companies[0].name)
+
+
+    } catch (error) {
+
+    }
+
+}
+   const GetProductGroup = async (companyId) => {
+        console.log(companyId);
+        if (userCompanies.length === 1) {
+            try {
+
+                const { data, status } = await GetGroupWithCompany(2, userCompanies[0].id);
+                setProductG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
         }
-        finalArr = Array.prototype.concat.apply([], arr);
-        setGroup(finalArr);
+        else {
+            try {
+                const { data, status } = await GetGroupWithCompany(2, companyId);
+                setProductG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+
+
     }
 
     // const GetProductGroup = async () => {
@@ -76,6 +108,7 @@ const NewProduct = () => {
         measureUnitId,
         measureUnit: measureUnitId,
         groupId,
+        companyId,companyName
 
     };
     const validator = useRef(new SimpleReactValidator({
@@ -160,10 +193,16 @@ const NewProduct = () => {
     useEffect(() => {
 
 
-        GetGroup()
+        
+        getCompanies()
 
 
     }, []);
+
+
+useEffect(()=>{
+    GetProductGroup(companyId);
+},[companyId])
 
     const submit = async (event) => {
         setLoading(true)
@@ -207,8 +246,15 @@ const NewProduct = () => {
         return (warehouse.map(data => ({ label: data.name, value: data.id })));
     }
     const inputProductG = () => {
-        return (group.map(data => ({ label: data.name, value: data.id })))
+        return (productG.map(data => ({ label: data.name, value: data.id })))
     }
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
+
+
     return (
 
         <div className='user-progress' >
@@ -263,7 +309,7 @@ const NewProduct = () => {
 
                         <div className="form-group mb-4 textOnInput">
                             <div className='form-row'>
-                                <div className="col-6">
+                                <div className={userCompanies.length===1?'col-6':'col-4'}>
 
                                     <label>واحد</label>
                                     <Select
@@ -281,7 +327,7 @@ const NewProduct = () => {
 
                                 </div>
 
-                                <div className="col-6" >
+                                <div className={userCompanies.length===1?'col-6':'col-4'} >
                                     <label>گروه کالا</label>
 
                                     <Select
@@ -297,6 +343,31 @@ const NewProduct = () => {
 
 
                                 </div>
+                                {userCompanies?
+                            <div className="col-4  textOnInput">
+
+                                <label> شرکت</label>
+                                <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={companys()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={e => {
+
+
+                                        SetcompanyId(e.value)
+                                        SetCompanyName(e.label)
+
+
+                                    }
+
+                                    }
+
+                                />
+
+
+                            </div>:''}
                             </div>
                         </div>
 

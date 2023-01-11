@@ -6,7 +6,7 @@ import {
 } from "../../../services/orderService";
 import { useEffect, useState, useRef } from "react";
 import { useMemo } from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { OrderStatus } from "../../../Common/Enums/OrderStatusEnums";
 import { PaymentStructureEnums } from "../../../Common/Enums/PaymentStructureEnums";
 import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";
@@ -83,13 +83,13 @@ const OrderList = () => {
     const [paymentStatusIds, setPaymentStatusId] = useState(getDefault().paymentStatusIds)
     const [shippingStatusIds, setShippingStatusIds] = useState(getDefault().shippingStatusIds)
     const [order, setOrder] = useState([])
-    const[companyId,setCompanyId]=useState(getDefault().companyId?getDefault().companyId:null)
+    const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : null)
     const [DetailAddress, setDetailAddress] = useState([]);
-    const[companies,setCompanies]=useState([])
+    const [companies, setCompanies] = useState([])
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
-    let SortColumn=null
-    let SortingDirectionId=null
+    let SortColumn = null
+    let SortingDirectionId = null
 
     const param = { PageSize, PageNumber }
 
@@ -339,7 +339,7 @@ const OrderList = () => {
         orderStatusIds,
         StartDate,
         EndDate,
-        OrderDetailExtId,IsAdmin:true,
+        OrderDetailExtId, IsAdmin: true,
         companyId
     }
     function getDefault() {
@@ -351,7 +351,7 @@ const OrderList = () => {
         let config = {
             headers: { 'Content-Type': 'application/json' },
             params: {
-                Id: Number(Id),IsAdmin:true,
+                Id: Number(Id), IsAdmin: true,
                 UserName: userName,
                 OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
                 StartDate
@@ -362,7 +362,7 @@ const OrderList = () => {
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
-                OrganizationNationalId:organizationNationalId,
+                OrganizationNationalId: organizationNationalId,
                 OrderDetailExtId,
                 PageNumber: 0,
                 PageSize,
@@ -387,9 +387,9 @@ const OrderList = () => {
                 setPageNumber(0)
                 sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
-            
+
             }
-            
+
 
         } catch (err) {
             console.log(err)
@@ -411,12 +411,12 @@ const OrderList = () => {
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
-                OrganizationNationalId:organizationNationalId,
+                OrganizationNationalId: organizationNationalId,
                 companyId,
                 OrderDetailExtId,
                 PageNumber,
-                PageSize,  SortColumn,
-                SortingDirectionId,IsAdmin:true
+                PageSize, SortColumn,
+                SortingDirectionId, IsAdmin: true
 
             }
             ,
@@ -443,9 +443,9 @@ const OrderList = () => {
         return {
 
             onClick: (e) => {
-                var siblings=[];
-                
-               
+                var siblings = [];
+
+
 
 
                 // console.log(e.target);
@@ -460,24 +460,24 @@ const OrderList = () => {
                     case 'شماره سفارش':
 
                         if (e.target.children[0].innerText === '') {
-                            SortColumn='id'
-                            SortingDirectionId=1
+                            SortColumn = 'id'
+                            SortingDirectionId = 1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
                         }
 
                         else if (e.target.children[0].innerText === '🔼') {
                             console.log('hiiii');
-                            SortColumn='id'
-                            SortingDirectionId=2
+                            SortColumn = 'id'
+                            SortingDirectionId = 2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            SortColumn=null
-                            SortingDirectionId=null
+                            SortColumn = null
+                            SortingDirectionId = null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -486,23 +486,23 @@ const OrderList = () => {
                     case 'تاریخ':
 
                         if (e.target.children[0].innerText === '') {
-                            SortColumn='CreateDate'
-                            SortingDirectionId=1
+                            SortColumn = 'CreateDate'
+                            SortingDirectionId = 1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            SortColumn='CreateDate'
-                            SortingDirectionId=2
+                            SortColumn = 'CreateDate'
+                            SortingDirectionId = 2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
-                            SortColumn=null
-                            SortingDirectionId=null
+                            SortColumn = null
+                            SortingDirectionId = null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -512,24 +512,24 @@ const OrderList = () => {
                     case 'مبلغ-ریال':
 
                         if (e.target.children[0].innerText === '') {
-                            SortColumn='OrderFinalizedPrice'
-                            SortingDirectionId=1
+                            SortColumn = 'OrderFinalizedPrice'
+                            SortingDirectionId = 1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            SortColumn='OrderFinalizedPrice'
-                            SortingDirectionId=2
+                            SortColumn = 'OrderFinalizedPrice'
+                            SortingDirectionId = 2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            SortColumn=null
-                            SortingDirectionId=null
+                            SortColumn = null
+                            SortingDirectionId = null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -539,23 +539,23 @@ const OrderList = () => {
 
 
                         if (e.target.children[0].innerText === '') {
-                            SortColumn='OrderStatusId'
-                            SortingDirectionId=1
+                            SortColumn = 'OrderStatusId'
+                            SortingDirectionId = 1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            SortColumn='OrderStatusId'
-                            SortingDirectionId=2
+                            SortColumn = 'OrderStatusId'
+                            SortingDirectionId = 2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                           SortColumn=null
-                            SortingDirectionId=null
+                            SortColumn = null
+                            SortingDirectionId = null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -565,24 +565,24 @@ const OrderList = () => {
 
 
                         if (e.target.children[0].innerText === '') {
-                            SortColumn='PaymentStatusId'
-                            SortingDirectionId=1
+                            SortColumn = 'PaymentStatusId'
+                            SortingDirectionId = 1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                            SortColumn='PaymentStatusId'
-                            SortingDirectionId=2
+                            SortColumn = 'PaymentStatusId'
+                            SortingDirectionId = 2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            SortColumn=null
-                            SortingDirectionId=null
+                            SortColumn = null
+                            SortingDirectionId = null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -592,24 +592,24 @@ const OrderList = () => {
                     case 'وضعیت ارسال':
 
                         if (e.target.children[0].innerText === '') {
-                            SortColumn='ShippingStatusId'
-                            SortingDirectionId=1
+                            SortColumn = 'ShippingStatusId'
+                            SortingDirectionId = 1
                             e.target.children[0].innerText = '🔼'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔼') {
 
-                           SortColumn='ShippingStatusId'
-                            SortingDirectionId=2
+                            SortColumn = 'ShippingStatusId'
+                            SortingDirectionId = 2
                             e.target.children[0].innerText = '🔽'
                             getDataBySearch()
 
                         }
                         else if (e.target.children[0].innerText === '🔽') {
 
-                            SortColumn=null
-                            SortingDirectionId=null
+                            SortColumn = null
+                            SortingDirectionId = null
                             e.target.children[0].innerText = ''
                             getDataBySearch()
 
@@ -625,7 +625,7 @@ const OrderList = () => {
 
     }
     const GetOrders = async () => {
-        if (getOrders){
+        if (getOrders) {
             sessionStorage.clear()
 
         }
@@ -643,8 +643,8 @@ const OrderList = () => {
                 PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
                 ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
                 NationalCode: nationalCode,
-                OrganizationNationalId:organizationNationalId,
-                IsAdmin:true,
+                OrganizationNationalId: organizationNationalId,
+                IsAdmin: true,
                 OrderDetailExtId,
                 PageNumber,
                 PageSize
@@ -674,16 +674,16 @@ const OrderList = () => {
             console.log(error);
         }
     }
-    const getCompany=async()=>{
-try {
-    const{data,status}=await GetCompanyChild()
-    if(status===200){
-        setCompanies(data.result.companies)
-    }
-    
-} catch (error) {
-    console.log(error);
-}
+    const getCompany = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            if (status === 200) {
+                setCompanies(data.result.companies)
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
 
     }
     var formatter = new Intl.NumberFormat('fa-IR', {
@@ -697,7 +697,7 @@ try {
     }, [getOrders])
 
 
-   
+
     const columns = useMemo(() => [
 
         {
@@ -812,7 +812,7 @@ try {
         },
         {
             Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
-                <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/admin/orderDetail/${row.row.original.id}`}>
+                <Link className="border-0 bg-transparent non-hover edit-btn" to={`/admin/orderDetail/${row.row.original.id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                         width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                             fill="none" stroke="#000" strokeLinecap="round"
@@ -841,7 +841,7 @@ try {
                             openModalEdit(row.row.original.id)
                             SetAddress({ active: address.active === false ? false : false })
                         }}
-                        disabled={roles.includes(8)?false:true}>
+                        disabled={roles.includes(8) ? false : true}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                             viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
@@ -1097,7 +1097,7 @@ try {
                                 />
                             </div>
                         </div>
-                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                        {companies.length > 1 ? <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
                             <div className=" form-control-sm">
                                 <label> نام شرکت </label>
@@ -1121,26 +1121,26 @@ try {
                                         }}
                                     />}
                             </div>
-                        </div>
+                        </div> : ''}
 
                     </form>
                     <div className="  filter-btn ">
-                    <div className=" row  ">
-                        <div className="col-6 ">
-                            <button onClick={handelSearchFieldClear}
-                                className="  btn-sm btn-danger ">حذف فیلتر
-                            </button>
-                        </div>
-                        <div className="col-6">
-                            <button onClick={getDataBySearch}
-                                className="  btn-sm  btn-primary">جستجو
-                            </button>
-                        </div>
+                        <div className=" row  ">
+                            <div className="col-6 ">
+                                <button onClick={handelSearchFieldClear}
+                                    className="  btn-sm btn-danger ">حذف فیلتر
+                                </button>
+                            </div>
+                            <div className="col-6">
+                                <button onClick={getDataBySearch}
+                                    className="  btn-sm  btn-primary">جستجو
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </AdvancedSearch>
             </div>
-            {getDefault().organizationNationalId  ||getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
+            {getDefault().organizationNationalId || getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
                 <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
             <div className=" statbox widget-content widget-content-area rounded">
                 <div>
@@ -1225,8 +1225,8 @@ try {
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه ملی</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
-                                       maxLength="11" value={organizationNationalId}
-                                       onChange={e => setOrganizationNationalId(e.target.value)} /></div>
+                                    maxLength="11" value={organizationNationalId}
+                                    onChange={e => setOrganizationNationalId(e.target.value)} /></div>
 
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه خرید بازارگاه</label>
@@ -1344,7 +1344,7 @@ try {
                                 </div>
 
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                            {companies.length > 1 ? <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
                             <div className=" form-control-sm">
                                 <label> نام شرکت </label>
@@ -1368,36 +1368,38 @@ try {
                                         }}
                                     />}
                             </div>
-                        </div>
-                        </form>
-                        <div className="  filter-btn ">
-                            <div className=" row  ">
-                                <div className="col-6 ">
+                        </div> : ''}
+                    </form>
+                    <div className="  filter-btn ">
+                        <div className=" row  ">
+                            <div className="col-6 ">
                                 <button onClick={handelSearchFieldClear}
-                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                    className="  btn-sm btn-danger ">حذف فیلتر
                                 </button>
                             </div>
                             <div className="col-6">
                                 <button onClick={getDataBySearch}
-                                        className="  btn-sm  btn-primary">جستجو
+                                    className="  btn-sm  btn-primary">جستجو
                                 </button>
                             </div>
                         </div></div>
-                    </AdvancedSearch>
-                </div>
-                {getDefault().organizationNationalId ||getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
-                    <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
-
-                <div className=" statbox widget-content widget-content-area">
-                    <div>
-                        <div className='text-center mt-5'>
-                            <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
-                        </div>
-                    </div>
-                </div>
-
-
+                </AdvancedSearch>
             </div>
+                {
+            getDefault().organizationNationalId || getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
+                <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null
+        }
+
+        <div className=" statbox widget-content widget-content-area">
+            <div>
+                <div className='text-center mt-5'>
+                    <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                </div>
+            </div>
+        </div>
+
+
+            </div >
         )
     }
 }

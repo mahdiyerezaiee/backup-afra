@@ -4,10 +4,12 @@ import { SetWareHouses } from '../../../services/wareHouseService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import {  SetAttributeValues } from '../../../services/attributeService';
+import { SetAttributeValues } from '../../../services/attributeService';
 import Select from 'react-select'
 import { GetGroupsForEntity } from '../../../services/GroupService';
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import { GetCompanyChild } from './../../../services/companiesService';
+import { GetGroupWithCompany } from './../../../services/GroupService';
 
 const NewWareHouse = () => {
     const [name, Setname] = useState('');
@@ -16,37 +18,73 @@ const NewWareHouse = () => {
     const [attValuehajm, setAttValueHajm] = useState('')
     const [Addres, setAddres] = useState('');
     const [loading, setLoading] = useState(false);
+    const [userCompanies, setUserCompanies] = useState([])
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
+
 
     let wareId = 0;
     const navigate = useNavigate();
     const test = {
-        "wareHouse": { 
-            name ,
-            groupId
-
+        "wareHouse": {
+            name,
+            groupId,
+companyId, companyName
         }
 
     }
-    useEffect(() => {
+    const GetCurrentUserCompany = async () => {
 
-        GetWareHouseType();
-    }, [])
-    const GetWareHouseType = async () => {
         try {
-            const { data, status } = await GetGroupsForEntity(4);
-            if(status===200){
-                SetWarehouseT(data.result.groups)
+            const { data, status } = await GetCompanyChild()
+            if (status === 200) {
+                setUserCompanies(data.result.companies)
+                SetcompanyId(data.result.companies[0].id)
+                SetCompanyName(data.result.companies[0].name)
+
             }
         } catch (error) {
-          console.log(error);  
-        } 
-      
+            console.log();
+        }
+    }
+
+    useEffect(() => {
+
+        GetCurrentUserCompany()
+    }, [])
+    const GetWareHouseType = async (companyId) => {
+
+        if (userCompanies.length === 1) {
+            try {
+
+                const { data, status } = await GetGroupWithCompany(4, userCompanies[0].id);
+                SetWarehouseT(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+        else {
+            try {
+                const { data, status } = await GetGroupWithCompany(4, companyId);
+                SetWarehouseT(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+
+
+
+
 
     }
     const inputwareHouseT = () => {
         return (wareHouseT.map(data => ({ label: data.name, value: data.id })))
     }
-  
+
     const setAddressForWare = async () => {
 
         const attribute = {
@@ -86,12 +124,15 @@ const NewWareHouse = () => {
             console.log(error);
         }
     }
+    useEffect(() => {
+        GetWareHouseType(companyId);
+    }, [companyId])
     const handelSubmit = async (event) => {
         setLoading(true)
         event.preventDefault();
         try {
             const { data, status } = await SetWareHouses(test);
-       
+
             if (status === 200) {
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
@@ -103,7 +144,7 @@ const NewWareHouse = () => {
                     progress: undefined
                 });
                 wareId = data.result.id;
-               
+
                 setAddressForWare();
                 setAttributevalueforHajm();
                 navigate('/admin/warehouselist')
@@ -113,6 +154,11 @@ const NewWareHouse = () => {
             console.log(error);
         }
     }
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
 
     return (
         <div className='user-progress' >
@@ -147,7 +193,32 @@ const NewWareHouse = () => {
 
 
                             </div>
-                            <div className="mb-4 textOnInput selectIndex">
+                            {userCompanies ?
+                                <div className="form-group mb-4 mt-3 textOnInput">
+
+                                    <label> شرکت</label>
+                                    <Select
+                                        defaultValue={defaultValue}
+                                        placeholder='نام شرکت'
+                                        options={companys()}
+                                        key={defaultValue}
+                                        isClearable={true}
+                                        onChange={e => {
+
+
+                                            SetcompanyId(e.value)
+                                            SetCompanyName(e.label)
+
+
+                                        }
+
+                                        }
+
+                                    />
+
+
+                                </div> : ''}
+                            <div className="mb-4 textOnInput ">
 
                                 <label>گروه انبار</label>
 
@@ -165,6 +236,7 @@ const NewWareHouse = () => {
 
 
                             </div>
+
                             <div className='mb-4 textOnInput'>
                                 <label>آدرس</label>
                                 <textarea type="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={e => {

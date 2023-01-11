@@ -16,11 +16,12 @@ import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import React from "react";
 import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import { PaymentStructureEnums } from "../../../Common/Enums/PaymentStructureEnums";
-import  Select  from 'react-select';
+import Select from 'react-select';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import { GetProducts } from '../../../services/productService';
+import { GetCompanyChild } from './../../../services/companiesService';
 
 const customStyles = {
     content: {
@@ -38,35 +39,48 @@ const customStyles = {
 };
 
 const ProductSupply = () => {
-    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
-    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
-
-    const [totalCount , setTotalCount]=useState(0) ;
+    const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
+    const [companies, setCompanies] = useState([])
+    const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : null)
+    const [totalCount, setTotalCount] = useState(0);
     const [productSupply, setProductSupply] = useState([]);
-    const[ProductId,setProducId]=useState(getDefault().ProductId);
-    const[products,setProduct]=useState([])
+    const [ProductId, setProducId] = useState(getDefault().ProductId);
+    const [products, setProduct] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
-    const[bulkStatusModal,SetBulkStatusModal]=useState(false)
+    const [bulkStatusModal, SetBulkStatusModal] = useState(false)
     const [id, setId] = useState(0)
-    const [stateSuccess , SetStateSuccess ] = useState('')
-    const [stateError , SetStateError ] = useState('')
-    const[open,SetOpen]=useState(false);
+    const [stateSuccess, SetStateSuccess] = useState('')
+    const [stateError, SetStateError] = useState('')
+    const [open, SetOpen] = useState(false);
     const [CreateDate, setCreateDate] = useState(getDefault().CreateDate)
-    const[CottageCode,setCottageCode]=useState(getDefault().CottageCode);
+    const [CottageCode, setCottageCode] = useState(getDefault().CottageCode);
     const [getData, setGeData] = useState(false)
-    const param = { PageSize , PageNumber}
+    const param = { PageSize, PageNumber }
 
     function getPage() {
         let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
 
     }
-    const params = { CreateDate, CottageCode, ProductId}
+    const params = { CreateDate, CottageCode, ProductId }
     function getDefault() {
         let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
-        return items? items:''
+        return items ? items : ''
 
+
+    }
+    const getCompanies = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            setCompanies(data.result.companies)
+
+
+
+        } catch (error) {
+
+        }
 
     }
     const getDataBySearch = async () => {
@@ -77,8 +91,9 @@ const ProductSupply = () => {
                 CreateDate,
                 CottageCode,
                 ProductId,
-                PageNumber:0,
+                PageNumber: 0,
                 PageSize,
+                companyId,
                 IsAdmin: true,
                 Active: false
 
@@ -93,51 +108,52 @@ const ProductSupply = () => {
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
     }
-    const getDataByPage=async()=>{
+    const getDataByPage = async () => {
         let config = {
-       
+
             headers: { 'Content-Type': 'application/json' },
             params: {
                 CreateDate,
                 CottageCode,
                 ProductId,
-              PageNumber,
-              PageSize,
-              IsAdmin:true,
-              Active:false
-             
-    
+                PageNumber,
+                PageSize,
+                companyId,
+                IsAdmin: true,
+                Active: false
+
+
             }
         };
-        const {data,status}=await GetAllProductWithSearch(config);
+        const { data, status } = await GetAllProductWithSearch(config);
         setProductSupply(data.result.productSupplies.values)
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
     }
-    const getProduct=async()=>{
+    const getProduct = async () => {
 
         try {
-            const {data,status}=await GetProducts();
-           if (status===200) {
-            setProduct(data.result.products.values)
-           }
+            const { data, status } = await GetProducts();
+            if (status === 200) {
+                setProduct(data.result.products.values)
+            }
         } catch (error) {
             console.log(error);
         }
-        
+
     }
-const productForSelect=()=>{
-    if(products){
-    return(products.map(data => ({ label: data.name, value: data.id })))
+    const productForSelect = () => {
+        if (products) {
+            return (products.map(data => ({ label: data.name, value: data.id })))
+        }
+        else {
+            return null
+        }
     }
-    else{
-        return null
-    }
-}
     const paymentMethod = () => {
         return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
     }
-  
+
     const close = () => {
         SetOpen(false);
     }
@@ -165,14 +181,14 @@ const productForSelect=()=>{
 
             try {
                 const { data, status } = await DeleteProductSupply(arrayOfData[i].id)
-                if(data.result.success ===true){
+                if (data.result.success === true) {
                     SetOpen(true)
 
-                    SetStateSuccess ( successCount+=1)
-                } if(data.result.success ===false){
+                    SetStateSuccess(successCount += 1)
+                } if (data.result.success === false) {
                     SetOpen(true)
 
-                    SetStateError (errorCount+=1)
+                    SetStateError(errorCount += 1)
                 }
 
 
@@ -180,7 +196,7 @@ const productForSelect=()=>{
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
 
             }
 
@@ -209,14 +225,14 @@ const productForSelect=()=>{
                 if (status === 200) {
                     SetOpen(true)
 
-                    SetStateSuccess ( successCount+=1)
+                    SetStateSuccess(successCount += 1)
                 }
 
 
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
             }
 
 
@@ -244,14 +260,14 @@ const productForSelect=()=>{
                 if (status === 200) {
                     SetOpen(true)
 
-                    SetStateSuccess ( successCount+=1)
+                    SetStateSuccess(successCount += 1)
                 }
 
 
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
             }
 
 
@@ -280,14 +296,14 @@ const productForSelect=()=>{
                 if (status === 200) {
                     SetOpen(true)
 
-                    SetStateSuccess ( successCount+=1)
+                    SetStateSuccess(successCount += 1)
                 }
 
 
             } catch (error) {
                 SetOpen(true)
 
-                SetStateError (errorCount+=1)
+                SetStateError(errorCount += 1)
             }
 
 
@@ -329,7 +345,7 @@ const productForSelect=()=>{
     }
 
     const getProductSupply = async () => {
-        if (getData){
+        if (getData) {
             sessionStorage.clear()
 
         }
@@ -349,7 +365,7 @@ const productForSelect=()=>{
             }
         };
         try {
-            const {data,status}=await GetAllProductWithSearch(config);
+            const { data, status } = await GetAllProductWithSearch(config);
             setGeData(false)
             setProductSupply(data.result.productSupplies.values)
             setTotalCount(data.result.productSupplies.totalCount)
@@ -361,7 +377,7 @@ const productForSelect=()=>{
     useEffect(() => {
 
         getProductSupply();
-
+        getCompanies()
         getProduct();
     }, [getData])
 
@@ -375,7 +391,7 @@ const productForSelect=()=>{
     const openModal = (id) => {
         setIsOpen(true);
         setId(id)
-       
+
     }
     const closeModal = () => {
         setIsOpen(false);
@@ -391,16 +407,16 @@ const productForSelect=()=>{
 
 
     });
-    
-    const handleChangeExpire = (value) => {
-if (value===null){
-setCreateDate('')
 
-}
+    const handleChangeExpire = (value) => {
+        if (value === null) {
+            setCreateDate('')
+
+        }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setCreateDate(new Date(value.toDate().setHours(3,30,0,0)))
-          
+            setCreateDate(new Date(value.toDate().setHours(3, 30, 0, 0)))
+
 
         }
     }
@@ -409,28 +425,28 @@ setCreateDate('')
         { Header: ' شناسه عرضه', accessor: 'name' },
         { Header: 'محصول', accessor: 'product.name' },
         { Header: 'انبار', accessor: 'wareHouse.wareHouseName' },
-        , { Header: 'قیمت', accessor: d=>`${d.price}`, Cell: row => (formater.format(row.row.original.price)) }
+        , { Header: 'قیمت', accessor: d => `${d.price}`, Cell: row => (formater.format(row.row.original.price)) }
         , {
-            Header: 'واحد ', accessor:d => {
+            Header: 'واحد ', accessor: d => {
                 let MeasureUnit = MeasureUnitSample.filter(item => item.id === d.product.measureUnitId).map(item => item.name)
-                return(`${MeasureUnit}`)
+                return (`${MeasureUnit}`)
             }, Cell: row => {
 
                 return (MeasureUnitSample.filter(item => item.id === row.row.original.product.measureUnitId).map(item => item.name))
             }
         },
         { Header: 'مقدار عرضه', accessor: '', Cell: row => (formater.format(row.row.original.quantity)) },
-        { Header: 'مقدار خریداری شده', accessor: 'orderedQuantity' , Cell: row => (formater.format(row.row.original.orderedQuantity))},
+        { Header: 'مقدار خریداری شده', accessor: 'orderedQuantity', Cell: row => (formater.format(row.row.original.orderedQuantity)) },
         { Header: 'مقدار مانده', accessor: 'remainedQuantity', Cell: row => (formater.format(row.row.original.remainedQuantity)) },
         { Header: 'شماره کوتاژ', accessor: 'cottageCode' },
         {
             Header: 'تاریخ اعتبار', accessor: 'date', Cell: row => {
-                return (new Date(row.row.original.endDate).toLocaleDateString('fa-IR',{year:'numeric',month:'2-digit',day:'2-digit'}))
+                return (new Date(row.row.original.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }))
             }
         },
         {
             Header: 'توضیحات', accessor: 'comment', Cell: row => {
-                return(row.row.original.comment.substring(0, 20))
+                return (row.row.original.comment.substring(0, 20))
             }
         },
         {
@@ -442,7 +458,7 @@ setCreateDate('')
                 const activeChang = {
                     productSupply: {
                         id,
-                        name:row.row.original.name,
+                        name: row.row.original.name,
                         productId: row.row.original.productId,
                         productWareHouseId: row.row.original.productWareHouseId,
                         createDate: row.row.original.createDate,
@@ -472,9 +488,9 @@ setCreateDate('')
                             groupId: row.row.original.product.groupId,
                             measureUnit: row.row.original.product.measureUnit
                         },
-                        wareHouse:null
+                        wareHouse: null
                         // wareHouse: {
-                           
+
                         //     wareHouseId: row.row.original.wareHouse.wareHouseId,
                         //     wareHouseName: row.row.original.wareHouse.wareHouseName,
                         //     productId: row.row.original.wareHouse.productId,
@@ -491,7 +507,7 @@ setCreateDate('')
 
                     try {
                         const { data, status } = await SetProductSupply(activeChang)
-                        
+
                         // if (status === 200){
                         //
                         //     setActive(!active)
@@ -505,14 +521,14 @@ setCreateDate('')
                 if (active === true) {
                     return (
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                             className="feather feather-check  " onClick={activeHandler} style={{ color: 'green' }}>
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                            className="feather feather-check  " onClick={activeHandler} style={{ color: 'green' }}>
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>)
                 } else {
                     return (<svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
-                                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                                 className="feather feather-x  danger " onClick={activeHandler} style={{ color: 'red' }}>
+                        fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                        className="feather feather-x  danger " onClick={activeHandler} style={{ color: 'red' }}>
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>)
@@ -528,12 +544,12 @@ setCreateDate('')
                 <ul className="table-controls">
 
                     <button className="p-0 border-0  non-hover  bg-transparent edit-btn" data-toggle="tooltip" data-placement="top" title="ویرایش"
-                            onClick={e => editHandler(row.row.original.id)}>
+                        onClick={e => editHandler(row.row.original.id)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                             strokeLinejoin="round"
-                             className="feather feather-edit-2">
+                            viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-edit-2">
                             <path
                                 d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                         </svg>
@@ -542,10 +558,10 @@ setCreateDate('')
 
                     <button className="p-0 border-0  non-hover  bg-transparent edit-btn" onClick={() => openModal(row.row.original.id)} href="#" data-toggle="tooltip" data-placement="top" title="حذف">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                             viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                             strokeLinejoin="round"
-                             className="feather feather-trash-2">
+                            viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-trash-2">
                             <polyline points="3 6 5 6 21 6"></polyline>
                             <path
                                 d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -559,21 +575,24 @@ setCreateDate('')
                 </ul>
             )
         }])
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
+    }
 
     const data = useMemo(() => productSupply);
-    const handelSearchFieldClear=async()=>{
-setGeData(true)
+    const handelSearchFieldClear = async () => {
+        setGeData(true)
         getProductSupply()
         setCreateDate('')
         setCottageCode('')
         setProducId('')
         setGeData(true)
-
+        setCompanyId(null)
         setPageNumber(0)
         sessionStorage.clear()
 
     }
-    if(productSupply){
+    if (productSupply) {
         const dataForExcel = data.map(item => ({
             'شناسه': item.id,
             'محصول': item.product.name,
@@ -593,12 +612,12 @@ setGeData(true)
                 </div>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1 ">
                     <AdvancedSearch>
-                      
+
                         <form className='form-row  form-group textOnInput'>
 
 
 
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
 
                                 <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>تاریخ ایجاد</label>
                                 <div className='form-group  '>
@@ -613,7 +632,7 @@ setGeData(true)
 
                                 </div>
                             </div>
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
                                 <label> کد کوتاژ</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد کوتاژ" value={CottageCode} onChange={e => setCottageCode(e.target.value)} />
@@ -621,10 +640,10 @@ setGeData(true)
 
 
 
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1  textOnInput form-group ">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1  textOnInput form-group" : "col-lg-3 col-md-3  col-sm-12  mb-1  textOnInput form-group"}
+                            >
                                 <div className=" form-control-sm">
                                     <label> کالا </label>
-
                                     <Select
 
                                         placeholder='کالا'
@@ -638,26 +657,51 @@ setGeData(true)
                                 </div>
                             </div>
 
+                            {companies.length > 1 ? <div className="col-lg-3 col-md-3  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
+
+                                    {companyId && companyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
 
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div>
-                        </div> </div>
-                    <br />
+                                    </button>
+                                </div>
+                            </div> </div>
+                        <br />
 
                     </AdvancedSearch>
                 </div>
-                {getDefault().ProductId || getDefault().CreateDate || getDefault().CottageCode  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().ProductId || getDefault().CreateDate || getDefault().CottageCode ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
@@ -668,9 +712,9 @@ setGeData(true)
                         ariaHideApp={false}
 
                     >
-                        <div style={{width:'20rem'}}>
+                        <div style={{ width: '20rem' }}>
 
-                            <div className="d-block clearfix mb-2"   onClick={closeModal}><svg
+                            <div className="d-block clearfix mb-2" onClick={closeModal}><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24"
                                 viewBox="0 0 24 24" fill="none"
@@ -679,12 +723,12 @@ setGeData(true)
                                 strokeLinejoin="round"
                                 className="feather feather-x close"
                                 data-dismiss="alert"><line x1="18" y1="6"
-                                                           x2="6"
-                                                           y2="18"></line><line
-                                x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                                    x2="6"
+                                    y2="18"></line><line
+                                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                        <p> آیا مطمئنید  عرضه محصول {productSupply && productSupply.filter(item => item.id === id).map(item => item.product.name)}   </p>
+                            <p> آیا مطمئنید  عرضه محصول {productSupply && productSupply.filter(item => item.id === id).map(item => item.product.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -710,9 +754,10 @@ setGeData(true)
             </div>
 
 
-        )}
-    else{
-        return(
+        )
+    }
+    else {
+        return (
             <div className='user-progress'>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 '>
@@ -722,12 +767,13 @@ setGeData(true)
                 </div>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1 ">
                     <AdvancedSearch>
-                      
+
                         <form className='form-row  form-group textOnInput'>
 
 
 
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
+
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
 
                                 <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>تاریخ ایجاد</label>
                                 <div className='form-group  '>
@@ -742,7 +788,7 @@ setGeData(true)
 
                                 </div>
                             </div>
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
                                 <label> کد کوتاژ</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد کوتاژ" value={CottageCode} onChange={e => setCottageCode(e.target.value)} />
@@ -750,10 +796,10 @@ setGeData(true)
 
 
 
-                            <div className="col-lg-4 col-md-6  col-sm-12  mb-1  textOnInput form-group ">
+                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1  textOnInput form-group" : "col-lg-3 col-md-3  col-sm-12  mb-1  textOnInput form-group"}
+                            >
                                 <div className=" form-control-sm">
                                     <label> کالا </label>
-
                                     <Select
 
                                         placeholder='کالا'
@@ -767,26 +813,50 @@ setGeData(true)
                                 </div>
                             </div>
 
+                            {companies.length > 1 ? <div className="col-lg-3 col-md-3  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
 
+                                    {companyId && companyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={e => {
+                                                setCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div>
-                        </div> </div>
-                    <br />
+                                    </button>
+                                </div>
+                            </div> </div>
+                        <br />
 
                     </AdvancedSearch>
                 </div>
-                {getDefault().ProductId || getDefault().CreateDate || getDefault().CottageCode  ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().ProductId || getDefault().CreateDate || getDefault().CottageCode ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>
