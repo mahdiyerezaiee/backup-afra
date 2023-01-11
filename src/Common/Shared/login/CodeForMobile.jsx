@@ -84,9 +84,8 @@ const CodeForMobile = () => {
                 setLoading(false)
                 localStorage.setItem('token', data.result.token);
                 localStorage.setItem('refresh', data.result.refresh);
-
-                const detoken = decodeToken(data.result.token);
-                localStorage.setItem('connect', detoken.ID)
+                
+                
 
 
 
