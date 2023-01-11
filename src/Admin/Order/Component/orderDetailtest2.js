@@ -4,7 +4,7 @@ import { GetOrder, GetOrderDetails } from "../../../services/orderService";
 import { NavLink } from "react-router-dom";
 import { GetAllOrganisation, GetAllOrganisationCode } from "../../../services/organisationService";
 import { GetAddress } from "../../../services/addressService";
-import { GetShoppingContracts, GetShoppings } from "../../../services/ShippingService";
+import {GetShoppingContracts, GetShoppings, GetShoppingsAdmin} from "../../../services/ShippingService";
 import QueryString from 'qs';
 import { GetAttachments } from "../../../services/attachmentService";
 import ImagePreviewer from "../../../Utils/ImagePreviewer";
@@ -47,7 +47,7 @@ const OrderDetailTest = () => {
     
     const GetShipping = async () => {
         try {
-            const { data, status } = await GetShoppings(params.id)
+            const { data, status } = await GetShoppingsAdmin(params.id)
             SetShipping(data.result.shippings.values)
 
         } catch (e) {
@@ -133,7 +133,7 @@ const OrderDetailTest = () => {
         let FilnalArr = [];
 
         if (orderDetail.length > 1) {
-            for (let i = 0; i < orderDetail.length; i++) {
+            for (let i = 0; i < arr.length; i++) {
                 try {
 
                     const { data, status } = await GetAddress(11, arr[i].id)
@@ -347,7 +347,7 @@ const OrderDetailTest = () => {
                 </div>
                 <div className="py-5 ">
                     <button className="btn btn-danger  float-right m-1 ">
-                        <NavLink className="text-light" to='/orderList'>بازگشت</NavLink>
+                        <NavLink className="text-light" to='/admin/orderList'>بازگشت</NavLink>
                     </button>
                 </div>
                 <ExcelFileUploader modalIsOpen={modalIsOpenUploadExcel} closeModal={closeModalIsOpenUploadExcel}
