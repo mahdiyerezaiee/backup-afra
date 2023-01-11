@@ -134,16 +134,15 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
               </SubMenu> */}
                 <MenuItem hidden={roles.includes(7) || roles.includes(5) || roles.includes(8) ? false : true} icon={<FaCashRegister size='2rem' />} >حسابداری</MenuItem>
                 
-                {/*<MenuItem onClick={handleHeaderClick} hidden={false } routerLink={<Link to='cuoList'/>} icon={<FaRegHandshake size={'2rem'} /> }>سفارش ها</MenuItem>*/}
+                <MenuItem onClick={handleHeaderClick} hidden={false } routerLink={<Link to='cuoList'/>} icon={<FaRegHandshake size={'2rem'} /> }>سفارش ها</MenuItem>
                 
 
 
                 {/*<MenuItem hidden={ false } icon={<FaCashRegister size='2rem' />} > w,vj pshf </MenuItem>*/}
                 <SubMenu ref={ref12} open={show.item12 === true ? true : false} onClick={() => setShow({ ...show, item12: !show.item12, item16: false, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item13: false, item14: false })} hidden={(roles.includes(2) || roles.includes(7) || roles.includes(8)) || roles.includes(5) ? false : true} icon={<MdSupportAgent size='2rem' />} label="پشتیبانی" >
                     <MenuItem onClick={handleHeaderClick} hidden={roles.includes(7) || roles.includes(8) || roles.includes(5) ? false : true}><NavLink to="user-news" >اطلاعیه و اعلان ها</NavLink></MenuItem>
-
-                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='ticket'>لیست تیکت ها</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) || roles.includes(1) ? false : true} icon={<i className="fa fa-align-justify" />} ><NavLink to='newTicket'>ثبت تیکت جدید </NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  >لیست تیکت ها</MenuItem>
+                    <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) || roles.includes(1) ? false : true}  routerLink={<Link to='newTicket'></Link>}>ثبت تیکت جدید </MenuItem>
 
                 </SubMenu>
 

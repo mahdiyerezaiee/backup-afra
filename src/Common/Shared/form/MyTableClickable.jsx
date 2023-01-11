@@ -44,7 +44,7 @@ const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, ad
     }
 
 useEffect(()=>{
-    getSupplyCode()
+    // getSupplyCode()
 },[Detail])
 
 
