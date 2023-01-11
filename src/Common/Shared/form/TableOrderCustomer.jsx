@@ -38,7 +38,7 @@ const TableOrderCustomer = ({columns, data, getData, bulkJob, formatRowProps, sh
     }
 
 useEffect(()=>{
-    getSupplyCode()
+    // getSupplyCode()
 },[Detail])
 
 
