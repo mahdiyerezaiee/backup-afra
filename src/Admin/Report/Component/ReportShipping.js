@@ -98,7 +98,7 @@ const ReportShipping = () => {
         { Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId' },
         {Header:'شناسه بازارگاه',accessor:'orderExtId',Cell:row => row.row.original.orderExtId? row.row.original.orderExtId :"" },
         { Header: 'شناسه قرارداد باربری', accessor: 'shippingContractCode' ,Cell:row => row.row.original.shippingContractCode? row.row.original.shippingContractCode :"" },
-        { Header: 'وزن', accessor: 'plannedQuantity' ,Cell:row => row.row.original.shippedQuantity? row.row.original.shippedQuantity :"" },
+        { Header: 'وزن', accessor: 'plannedQuantity' ,Cell:row => row.row.original.plannedQuantity? row.row.original.plannedQuantity :"" },
         { Header: 'تریلی', accessor: '',Cell:row =>
             {
                 const [address , SetAddress]=useState([])
