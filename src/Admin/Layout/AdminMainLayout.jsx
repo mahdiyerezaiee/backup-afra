@@ -105,6 +105,7 @@ const AdminMainLayout = (props) => {
     try {
       if (status === 200) {
         localStorage.setItem('connect', data.result.customer.id)
+        localStorage.setItem('com',data.result.customer.companyId)
   
         dispatch(addUser(data.result.customer));
       }

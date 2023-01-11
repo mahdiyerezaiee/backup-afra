@@ -21,6 +21,8 @@ const EditWareHouse = () => {
     const [attributeIdadd, setattributeIdadd] = useState(0);
     const [loading, setLoading] = useState(false);
     const [attValuehajm, setAttValueHajm] = useState('')
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
     const id = params.id
     const navigator = useNavigate();
     const test = {
@@ -28,7 +30,7 @@ const EditWareHouse = () => {
         "wareHouse": {
             id,
             name,
-            groupId
+            groupId,companyId,companyName
         }
 
     }
@@ -37,6 +39,9 @@ const EditWareHouse = () => {
             const { data, status } = await GetAllWareHouse(params.id)
             Setname(data.result.wareHouse.name)
             setWareGId(data.result.wareHouse.groupId)
+            SetcompanyId(data.result.wareHouse.companyId)
+            SetCompanyName(data.result.wareHouse.companyName)
+
         } catch (err) {
             console.log(err)
         }
