@@ -44,7 +44,7 @@ const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, ad
     }
 
 useEffect(()=>{
-    getSupplyCode()
+    // getSupplyCode()
 },[Detail])
 
 
@@ -167,20 +167,23 @@ useEffect(()=>{
     const values= Object.values(rows.map(i =>  i.values));
 
     useEffect(() => {
-       const vl= Object.values(values).filter((item) => item.nationalCode !== '').length
-       const notNullable = values.reduce((r, o) => 
-       r + +!Object.values(o).includes("")
-     , 0);
-     const notNullable2 = values.reduce((r, o) => 
-       r + +!Object.values(o).includes('  ')
-     , 0);
-        
-             values.forEach(task =>
+        const notNullable = values.reduce((r, o) =>
+                r + +!Object.values(o).includes("")
+            , 0);
+
+        const notNullable2 = values.reduce((r, o) =>
+                r + +!Object.values(o).includes('  ')
+            , 0);
+        const notNullable3 = values.reduce((r, o) =>
+                r + +!Object.values(o).includes(null)
+            , 0);
+
+        values.forEach(task =>
             Object.entries(task).forEach(([key, value]) =>
-                value ===  null  ? formattedvalues.push(key): value ===  ""  ? formattedvalues.push(key): value ===  '  '  ? formattedvalues.push(key):null 
+                value ===  null  ? formattedvalues.push(key): value ===  ""  ? formattedvalues.push(key): value ===  '  '  ? formattedvalues.push(key):null
             )
         );
-            SetFunc(notNullable === 0 ?  formattedvalues:notNullable2 === 0 ? formattedvalues:[])
+        SetFunc( notNullable === 0 ?  formattedvalues:notNullable2 === 0 ? formattedvalues:notNullable3 === 0 ? formattedvalues:[])
 
 
 

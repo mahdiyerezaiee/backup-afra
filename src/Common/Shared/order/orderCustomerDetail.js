@@ -40,7 +40,7 @@ let newAttachmnet=attachments.filter(item=>item.deleted===false)
     }
 
     useEffect(()=>{
-        getSupplyCode()
+        // getSupplyCode()
     },[orderDetail])
     const openModalEdit = (id) => {
         setIdEdit(id)
