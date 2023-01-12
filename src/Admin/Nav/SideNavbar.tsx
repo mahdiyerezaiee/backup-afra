@@ -71,7 +71,7 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
 
             <Menu >
 
-                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}></MenuItem>
+                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}>داشبورد</MenuItem>
 
                 <SubMenu hidden={roles.includes(1) ? false : true} icon={<FiUsers size={'2rem'} />} label="تکمیل اطلاعات" >
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-align-justify" />}><NavLink to='identitypannel'> احراز هویت</NavLink></MenuItem>
@@ -134,7 +134,7 @@ const SideNavbar: React.FC<Props> = ({collapsed}) => {
               </SubMenu> */}
                 <MenuItem hidden={roles.includes(7) || roles.includes(5) || roles.includes(8) ? false : true} icon={<FaCashRegister size='2rem' />} >حسابداری</MenuItem>
                 
-                <MenuItem onClick={handleHeaderClick} hidden={false } routerLink={<Link to='cuoList'/>} icon={<FaRegHandshake size={'2rem'} /> }>سفارش ها</MenuItem>
+                <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2)?false:true } routerLink={<Link to='cuoList'/>} icon={<FaRegHandshake size={'2rem'} /> }>سفارش ها</MenuItem>
                 
 
 
