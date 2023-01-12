@@ -1,14 +1,29 @@
-import { GetShoppingContracts, GetShoppings } from "../../../services/ShippingService";
+import { GetShoppingContracts, GetShoppings,GetShoppingsAdmin } from "../../../services/ShippingService";
 import { useEffect, useState } from "react";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { DeliveryMethods } from "../../Enums/DeliveryMethodsEnums";
+import { useSelector } from 'react-redux';
 
 const ShippingsOrder = ({ id }) => {
     const [Shipping, SetShipping] = useState([])
     const [ShippingContracts, SetShippingContracts] = useState([])
+    const roles=useSelector(state=>state.roles)
     const GetShipping = async () => {
         try {
             const { data, status } = await GetShoppings(id)
+            if (data.result.shippings.values !== null) {
+                SetShipping(data.result.shippings.values)
+            }
+            else {
+                SetShipping(null)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const GetShippingAdmin = async () => {
+        try {
+            const { data, status } = await GetShoppingsAdmin(id)
             if (data.result.shippings.values !== null) {
                 SetShipping(data.result.shippings.values)
             }
@@ -29,8 +44,13 @@ const ShippingsOrder = ({ id }) => {
         }
     }
     useEffect(() => {
+        if(roles.includes(2)){
         GetShipping()
-        ShippingContract()
+        ShippingContract()}
+        else{
+            GetShippingAdmin()
+            ShippingContract()
+        }
 
     }, [id])
 

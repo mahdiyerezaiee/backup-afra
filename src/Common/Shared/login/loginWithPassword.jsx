@@ -13,6 +13,7 @@ import { ClipLoader } from "react-spinners";
 import { GetUserInfo, GetUsersRolesBy } from './../../../services/userService';
 import { addUser } from "../../../store/Slice/user/userSlice";
 import { userRoles } from "../../../store/Slice/user/userRole/userRoleSlice";
+import axios from 'axios';
 const LoginWithPassword = ({ value, onchange, setShows }) => {
     const [input, setInput] = useState('')
     const [valid, setValid] = useState(true)
@@ -95,7 +96,8 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                     localStorage.setItem('token', data.result.token);
                     localStorage.setItem('refresh', data.result.refresh);
 
-                   
+                    axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
+
                     toast.success("ورود موفقیت آمیز بود", {
                         position: "top-right",
                         autoClose: 5000,

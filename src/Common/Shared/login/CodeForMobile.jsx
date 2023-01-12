@@ -10,6 +10,7 @@ import './customCss.css';
 import afra from './afra.jpg';
 import Countdown from 'react-countdown';
 import { ShowTimer } from '../Common/ShowTimer';
+import  axios  from 'axios';
 
 
 
@@ -84,6 +85,7 @@ const CodeForMobile = () => {
                 setLoading(false)
                 localStorage.setItem('token', data.result.token);
                 localStorage.setItem('refresh', data.result.refresh);
+                axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
                 
                 
 

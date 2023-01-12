@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Action } from "@remix-run/router";
 import { NewUser } from "../../../Common/models/user";
 
 const initialState: NewUser = {
@@ -20,7 +19,7 @@ const UserSlice = createSlice({
 
             return { ...action.payload }
         },
-        removeUser: () => {
+        userDelete: () => {
             return {}
         }
 
@@ -29,5 +28,5 @@ const UserSlice = createSlice({
 
     }
 })
-export const { addUser, removeUser } = UserSlice.actions
+export const { addUser, userDelete } = UserSlice.actions
 export default UserSlice.reducer
