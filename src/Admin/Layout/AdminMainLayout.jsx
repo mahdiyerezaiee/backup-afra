@@ -86,8 +86,8 @@ import AddOrder from "../Order/Component/addOrder";
 import ShippingList from "../Shipping/Component/ShippingList";
 import InvoiceCreator from "../../Utils/invoiceCreator";
 import Ticket from "../../Common/Shared/Ticket/ticket_v2";
-import { addUser } from '../../store/Slice/user/userSlice';
-import { userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
+import { addUser, userDelete } from '../../store/Slice/user/userSlice';
+import { removeRole, userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
 import ReportShipping from "../Report/Component/ReportShipping";
 
 const AdminMainLayout = (props) => {
@@ -107,7 +107,6 @@ const AdminMainLayout = (props) => {
       if (status === 200) {
         localStorage.setItem('connect', data.result.customer.id)
         localStorage.setItem('com',data.result.customer.companyId)
-  
         dispatch(addUser(data.result.customer));
       }
     } catch (error) {
@@ -124,7 +123,6 @@ const AdminMainLayout = (props) => {
     const { data, status } = await GetUsersRoles()
     try {
       if (status === 200) {
-
         dispatch(userRoles(data.result.userRoleIds))
 
 

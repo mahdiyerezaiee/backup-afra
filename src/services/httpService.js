@@ -10,14 +10,13 @@ axios.defaults.headers.get["Content-Type"] = "application/json";
 axios.defaults.headers.delete["Content-Type"] = "application/json";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.put["Content-Type"] = "application/json";
-
-
 const token = localStorage.getItem('token');
-if (token) {
 
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-}
+if(token){
+
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
+
 
 const refresh = localStorage.getItem('refresh');
 const connect=localStorage.getItem('connect')

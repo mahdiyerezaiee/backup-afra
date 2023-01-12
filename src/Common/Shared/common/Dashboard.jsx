@@ -8,13 +8,14 @@ import DashbordAdmin from '../../../Admin/Dashboard/dashbordAdmin';
 
 const Dashboard = () => {
     const roles=useSelector(state => state.roles);
+    console.log(roles);
 
-  if (roles.includes(1)) {
+  if (roles.length>0 && roles.includes(1)) {
     return (
       <DashbordGuess/>
     )
   }
-  else if (roles.includes(2)) {
+  else if (roles.length>0 && roles.includes(2)) {
     return(
     <DashbordCustomer/>)
   }
