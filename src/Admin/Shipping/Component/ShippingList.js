@@ -90,6 +90,7 @@ CottageCode,
                 PageSize,
                 SortColumn,
                 SortingDirectionId,
+                IsAdmin:true
 
             }
             ,
@@ -132,6 +133,8 @@ CottageCode,
                 PageSize,
                 SortColumn,
                 SortingDirectionId,
+                IsAdmin:true
+
 
             },
             paramsSerializer: params => {
@@ -488,6 +491,8 @@ CottageCode,
                 PageSize,
                 SortColumn,
                 SortingDirectionId,
+                IsAdmin:true
+
 
             },
             paramsSerializer: params => {

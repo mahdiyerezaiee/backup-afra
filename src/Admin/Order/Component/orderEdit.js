@@ -36,11 +36,14 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
     const [orderCondition, setOrderCondition] = useState([])
     const [comment, setComment] = useState(null);
     const [loading, setLoading] = useState(false);
-
+let Id;
+if(id>0){
+    Id=id
+}
    
     const getOrder = async () => {
         try {
-            const {data, status} = await GetOrder(id)
+            const {data, status} = await GetOrder(Id)
             setOrder(data.result.order)
             setOrderFinalizedPrice(data.result.order.orderFinalizedPrice)
             setOrderStatusId(data.result.order.orderStatusId)
@@ -54,7 +57,7 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
     }
     const getOrderDetail = async () => {
         try {
-            const {data, status} = await GetOrderDetailsAdmin(id)
+            const {data, status} = await GetOrderDetailsAdmin(Id)
             let Order = data.result.orderDetails
             setOrderDetail(data.result.orderDetails)
             setProductSupplyId(data.result.orderDetails[0].productSupplyId)
