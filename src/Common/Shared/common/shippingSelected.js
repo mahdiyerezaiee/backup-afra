@@ -1,12 +1,12 @@
 import Modal from 'react-modal';
-import {  GetShoppingContractWithCompany } from "../../../services/ShippingService";
+import { GetShoppingContractWithCompany } from "../../../services/ShippingService";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import { SyncWithSender } from '../../../services/outScopeService';
 import { toast } from 'react-toastify';
 import { GetAllShippingCompanies } from '../../../services/ShippingService';
 import { editOrder } from '../../../services/orderService';
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { useSelector } from 'react-redux';
 
 const customStyles = {
@@ -30,7 +30,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     const [shippingContract, setShippingContract] = useState([]);
     const [shippingContractId, setShippingContractId] = useState(0);
     let [loading, setLoading] = useState(false);
-    const roles=useSelector(state=>state.roles)
+    const roles = useSelector(state => state.roles)
     console.log(orderDetailId)
     const getShippingCompany = async () => {
         try {
@@ -54,8 +54,9 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     }
 
     useEffect(() => {
-if(roles.includes(7)||roles.includes(8)){
-         getShippingCompany()}
+        if (roles.includes(7) || roles.includes(8)) {
+            getShippingCompany()
+        }
     }, [])
 
     const shippingCompanySelect = () => {
@@ -69,19 +70,20 @@ if(roles.includes(7)||roles.includes(8)){
     }
     const handelSubmit = async (e) => {
         setLoading(true)
+        console.log('hi im here');
         e.preventDefault();
-        for (let i = 0; i < orderDetailId.length; i++) {
-        const body = {
-            orderDetailId:orderDetailId[i].id,
-            shippingContractId,
-            "byPassContractLimit": false
-        }
+        let body = {}
+        console.log(orderDetailId);
+        if (!Array.isArray(orderDetailId)) {
+            body = {
+                orderDetailId: orderDetailId,
+                shippingContractId,
+                "byPassContractLimit": false
+            }
+            try {
+                const { data, status } = await SyncWithSender(body)
+                if (status === 200) {
 
-        const { data, status } = await SyncWithSender(body)
-       try {
-        
-       if ( data.success === true) {
-                
                     toast.success('حواله با موفقیت صادر شد', {
                         position: "top-right",
                         autoClose: 5000,
@@ -96,7 +98,7 @@ if(roles.includes(7)||roles.includes(8)){
                         Orders = Order
                     }
                     const bodyOrder = {
-                        "order": { ...Orders, orderStatusId: 9,customer:null, locked:false}
+                        "order": { ...Orders, orderStatusId: 9, customer: null, locked: false }
                     }
                     closeModal()
 
@@ -104,14 +106,63 @@ if(roles.includes(7)||roles.includes(8)){
 
                     window.location.reload()
                 }
-            
-         
-            setLoading(false)
-            closeModal()
-        } catch (error) {
-            setLoading(false)
-            closeModal()
-        }
+                setLoading(false)
+                closeModal()
+            }
+            catch (error) {
+                setLoading(false)
+                closeModal()
+            }}
+        else {
+            let notShipped=orderDetailId.filter(item=>item.shippingId===null)
+            console.log(notShipped);
+            for (let i = 0; i < notShipped.length; i++) {
+                body = {
+                    orderDetailId: notShipped[i].id,
+                    shippingContractId,
+                    "byPassContractLimit": false
+                }
+                console.log('hi im here');
+
+                const { data, status } = await SyncWithSender(body)
+                try {
+
+                    if (status === 200) {
+
+                        toast.success('حواله با موفقیت صادر شد', {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined
+                        });
+                        let Orders;
+                        if (Order) {
+                            Orders = Order
+                        }
+                        const bodyOrder = {
+                            "order": { ...Orders, orderStatusId: 9, customer: null, locked: false }
+                        }
+                        closeModal()
+
+                        const response = await editOrder(bodyOrder)
+
+                      
+                    }
+
+
+                    setLoading(false)
+                    closeModal()
+                } catch (error) {
+                    setLoading(false)
+                    closeModal()
+                }
+            }
+
+
+             window.location.reload()
         }
     }
     return (
@@ -126,7 +177,7 @@ if(roles.includes(7)||roles.includes(8)){
                 <p>در ااین بخش میتونید اطلاعات سفارش را برای باربری ارسال نمایید</p>
                 <div className="form-group mt-4 textOnInput ">
                     <div className='form-row mb-4'>
-                        <div className="col-12 selectIndex">
+                        <div className="col-12 ">
 
                             <label>شرکت باربری</label>
                             <Select

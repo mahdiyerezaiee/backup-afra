@@ -46,3 +46,15 @@ export const SetShippingCompany=(SetShippingCompany)=>{
 
     return http.post(`${configure}/Shipping/SetShippingCompany`, JSON.stringify(SetShippingCompany));
 }
+
+export const  DeleteShipping=id =>{
+    let config={headers:
+        {
+            Authorization:`Bearer ${localStorage.getItem('token')}`
+        },
+        data:{
+            id:(id)
+        }
+        }
+    return http.delete(`${configure}/Shipping/DeleteShipping`,config);
+}

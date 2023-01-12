@@ -30,7 +30,7 @@ const DashbordAdmin = () => {
   return(
       <div >
           <div className="">
-          <OverDuePaymentsByAttachments/>
+          {/* <OverDuePaymentsByAttachments/> */}
       </div>
           <div className=" ">
               <ReportBlock/>
