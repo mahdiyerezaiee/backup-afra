@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,Fragment} from "react";
 import { GetGroupsForEntity, GetGroupWithCompany } from "../../../services/GroupService";
 import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
 import { GetProductSupplyConditionsCustomer } from "../../../services/ProductSupplyConditionService";
@@ -7,7 +7,7 @@ import { GetCompanyChild } from './../../../services/companiesService';
 
 const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, closeModal }) => {
 
-
+    console.log(productSupplyConditions)
     const [customerg, setCustomerg] = useState([])
     const [Condition, setCondition] = useState([])
     const GetCustomerGroup = async () => {
@@ -31,19 +31,9 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
 
         setCustomerg(finalArr);
     }
-    const GetCondition = async () => {
-       try {
-        const { data, status } = await GetProductSupplyConditionsCustomer(productSupplyConditions);
-        if (data.success===true) {
-            setCondition(data.result.productSupplyConditions.values);
-        }
-       } catch (error) {
-        
-       } 
-    }
+
     useEffect(() => {
         GetCustomerGroup();
-        GetCondition()
     }, [productSupplyConditions])
     const CustomerG = () => {
         let customer = [...customerg, { id: null, name: 'عمومی' }]
@@ -60,23 +50,24 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
 
 
 
-    return (
-        <div className="table-responsive p-2">
-            <div className="d-block clearfix mb-2" onClick={closeModal}><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24" height="24"
-                viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-x close"
-                data-dismiss="alert"><line x1="18" y1="6"
-                    x2="6"
-                    y2="18"></line><line
-                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
-            <h5 className="text-center mb-3">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
+    return ( <Fragment>
+        <h5 className="text-center mb-3">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
+
+        <div className=" containerT  p-2">
+            {/*<div className="d-block clearfix mb-2" onClick={closeModal}><svg*/}
+            {/*    xmlns="http://www.w3.org/2000/svg"*/}
+            {/*    width="24" height="24"*/}
+            {/*    viewBox="0 0 24 24" fill="none"*/}
+            {/*    stroke="currentColor" strokeWidth="2"*/}
+            {/*    strokeLinecap="round"*/}
+            {/*    strokeLinejoin="round"*/}
+            {/*    className="feather feather-x close"*/}
+            {/*    data-dismiss="alert"><line x1="18" y1="6"*/}
+            {/*        x2="6"*/}
+            {/*        y2="18"></line><line*/}
+            {/*            x1="6" y1="6" x2="18" y2="18"></line></svg></div>*/}
             <table
-                className="table table-bordered  table-striped  mt-2  mb-4">
+                className="table table-bordered  table-striped  mt-2  fixed_header mb-4">
                 <thead>
                     <tr style={{ fontSize: '10px' }}>
 
@@ -92,7 +83,7 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
                     </tr>
                 </thead>
                 <tbody>
-                    {Condition ? Condition.map((contact, index) =>
+                    {productSupplyConditions ? productSupplyConditions.productSupplyConditions.map((contact, index) =>
 
                         <tr className='text-center'>
                             <td>{index + 1}</td>
@@ -125,6 +116,7 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
                 </tbody>
             </table>
         </div>
+        </Fragment>
 
     )
 }
