@@ -77,7 +77,7 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
                         <th style={{ fontSize: '10px' }} className="text-center">بازه</th>
                         <th style={{ fontSize: '10px' }} className="text-center">فی</th>
 
-                        <th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>
+                        {/*<th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>*/}
                         <th style={{ fontSize: '10px' }} className="text-center">توضیحات</th>
                         <th style={{ fontSize: '10px' }} className="text-center">عملیات</th>
                     </tr>
