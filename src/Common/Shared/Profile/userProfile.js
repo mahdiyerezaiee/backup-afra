@@ -5,14 +5,15 @@ import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { GetAddress, GetAllProvince } from "../../../services/addressService";
 import { ImUser } from "react-icons/im"
-import { GetAllOrganisation } from "../../../services/organisationService";
+import { GetAllOrganisation,GetOrganisationById } from "../../../services/organisationService";
 const UserProfile = () => {
   const Navigate = useNavigate()
   const user = useSelector(state => state.user);
+  const roles = useSelector(state => state.roles);
 
   const [address, setAddress] = useState([]);
   const [province, setProvince] = useState([]);
-  const [organization, setOrganization] = useState([]);
+  const [organization, setOrganization] = useState({});
   const getProvince = async () => {
     const { data, status } = await GetAllProvince();
     setProvince(data.result.provinces);
@@ -27,6 +28,7 @@ const UserProfile = () => {
   }
   useEffect(() => {
     fetchApi();
+ 
     getOrganiz()
 
   }, [])
@@ -46,7 +48,7 @@ const UserProfile = () => {
   const getOrganiz = async () => {
 
     try {
-      const { data, status } = await GetAllOrganisation()
+      const { data, status } = await GetOrganisationById(user.organizationId)
       setOrganization(data.result.organizationLists.values)
     } catch (error) {
       console.log(error);
@@ -55,7 +57,7 @@ const UserProfile = () => {
 
   let organizm = {}
   if (user.organizationId) {
-    organizm = organization.filter(item => item.id === user.organizationId)[0]
+    organizm =organization
   }
   console.log(address);
   return (
