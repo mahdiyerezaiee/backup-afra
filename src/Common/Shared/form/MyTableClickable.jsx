@@ -70,7 +70,8 @@ useEffect(()=>{
         }
     }
 useEffect(()=>{
-    GetShippings()
+    if(orderId>0){
+    GetShippings()}
 },[orderId])
 
     const [selectFunc, setSelectFunc] = useState(0);
