@@ -75,11 +75,9 @@ select.form-custom::-ms-expand {
 
 }
 
-
-
 .containerT {
   overflow: auto;
-  max-height: 400px;
+  max-height: 300px;
   min-height: 100px;
 
 }
