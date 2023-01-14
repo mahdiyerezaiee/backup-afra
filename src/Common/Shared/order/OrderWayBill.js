@@ -120,7 +120,7 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
         return (<div>
 
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 "  >
-            <Modal
+            {/* <Modal
                         isOpen={modalOpen}
                         onRequestClose={closeModalDelet}
                         style={customStyles}
@@ -152,9 +152,8 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
                             <button className="btn btn-danger " onClick={deletHandler}>حذف
                             </button>
 
-                            {/*<button className="btn btn-success float-right" onClick={closeModal}>خیر</button>*/}
                         </div>
-                    </Modal>
+                    </Modal> */}
                 <label>اطلاعات حواله </label>
                 {loading === false ?
                     <div className="containerT p-2 ">
@@ -172,7 +171,7 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
                                     <th >شماره قرارداد</th>
                                     <th >نام باربری</th>
                                     <th >مشاهده جزییات</th>
-                                    <th hidden={roles.includes(7) || roles.includes(8) ? false : true}>عملیات</th>
+                                    {/* <th hidden={roles.includes(7) || roles.includes(8) ? false : true}>عملیات</th> */}
 
 
                                 </tr>
@@ -204,7 +203,7 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
                                                 d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
                                                 strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg></td>
 
-                                        <td hidden={roles.includes(7) || roles.includes(8) ? false : true}>
+                                        {/* <td hidden={roles.includes(7) || roles.includes(8) ? false : true}>
                                             <button onClick={() => openModalDelet(item.id)} className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="حذف">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     viewBox="0 0 24 24" fill="none"
@@ -219,7 +218,7 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
 
                                                 </svg>
                                             </button>
-                                        </td>
+                                        </td> */}
                                     </tr>
 
                                 ) : <tr className='text-center'></tr>}
