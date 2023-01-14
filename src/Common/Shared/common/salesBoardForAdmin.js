@@ -262,7 +262,7 @@ const SalesBoardForAdmin = () => {
                                                 {modalIsOpenCondition === true && productSupplyConditionId === item.id?
                                                     <tr >
                                                         <td colSpan={17}   className="fadeInt   m-3    " >
-                                                    <ConditionSalesBordCustomer   productSupplyConditions={productSupplyCondition} handelClick={handelClick} />
+                                                    <ConditionSalesBordAdmin   productSupplyConditions={productSupplyCondition} handelClick={handelClick} />
                                                         </td>
 
                                                     </tr>
