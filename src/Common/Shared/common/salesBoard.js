@@ -52,17 +52,17 @@ const SalesBoardForCustomer = () => {
         } catch (error) {
             console.log(error);
         }
-        if (user ) {
-
-            try {
-                const { data, status } = await GetGroupById(user.groupId)
-                    setGroupInfo(data.result.group)
-
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        // if (user ) {
+        //
+        //     try {
+        //         const { data, status } = await GetGroupById(user.groupId)
+        //             setGroupInfo(data.result.group)
+        //
+        //
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
 
     }
 
@@ -79,14 +79,6 @@ const SalesBoardForCustomer = () => {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
     });
-    const getModalInfo = async (id) => {
-        const { data, status } = await GetAllProductSupply(id)
-        setModalInfo(data.result.productSupply)
-        setName(data.result.productSupply.product)
-    }
-
-
-
     const openModal =  (id) => {
         setProductSupplyCondition(id)
 
@@ -95,7 +87,10 @@ const SalesBoardForCustomer = () => {
     const openModalCondition =  (item ,id) => {
         setProductSupplyCondition(item)
         setProductSupplyConditionId(id)
-        setIsOpenCondition(!modalIsOpenCondition);
+        if (id === productSupplyConditionId){
+            setIsOpenCondition(!modalIsOpenCondition);
+
+        }
     }
     const closeModal = () => {
         setIsOpen(false);
@@ -139,7 +134,12 @@ setLoading(false)
             <div className=" statbox widget-content widget-content-area" >
                 <div className="row " >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2 " >
-                    <h4 className="text-center" style={{color:'#027f00'}}>کالای قابل عرضه به گروه مشتریان ( {groupInfo    ?  "عمومی" : groupInfo && groupInfo.name} )</h4>
+                    <h4 className="text-center" style={{color:'#027f00'}}>
+                        کالای قابل عرضه به گروه مشتریان (
+                       عمومی
+                        {/*{!groupInfo    ?  "عمومی" : groupInfo && groupInfo.name}*/}
+                        )
+                    </h4>
                     </div>
                 </div>
                 <div className="   ">
@@ -155,16 +155,16 @@ setLoading(false)
                             <ModalSubmit  loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={productSupplyCondition} closeModal={closeModal}  quantity={quantity} submitHandler={submitHandler}
                                 setquantity={setquantity} />
                         </Modal>
-                        <Modal
-                            isOpen={modalIsOpenCondition}
-                            onRequestClose={closeModalCobdition}
-                            style={customStyles}
-                            contentLabel="Selected Option"
-                            ariaHideApp={false}
+                        {/*<Modal*/}
+                        {/*    isOpen={modalIsOpenCondition}*/}
+                        {/*    onRequestClose={closeModalCobdition}*/}
+                        {/*    style={customStyles}*/}
+                        {/*    contentLabel="Selected Option"*/}
+                        {/*    ariaHideApp={false}*/}
 
-                        >
+                        {/*>*/}
 
-                        </Modal>
+                        {/*</Modal>*/}
 
                         <table className="table mb-4 SalesBoard " >
                             <thead>
@@ -184,7 +184,7 @@ setLoading(false)
                                     <th className="text-center">عملیات</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                                 {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item , index) =>
                                     <Fragment key={index + "_frag"}>
 
@@ -204,16 +204,18 @@ setLoading(false)
 
 
                                     </tr>
-                                        <tr >
-                                            <td colSpan={17}   className="fadeInt   m-3    " >
-                                                {modalIsOpenCondition ?
+
+                                                {modalIsOpenCondition === true && productSupplyConditionId === item.id?
+                                                    <tr >
+                                                        <td colSpan={17}   className="fadeInt   m-3    " >
                                                     <ConditionSalesBordCustomer  closeModal={closeModalCobdition} productSupplyConditions={productSupplyCondition} handelClick={handelClick} />
-:null
+                                                        </td>
+
+                                                    </tr>
+                                                            :null
                                                 }
 
-                                            </td>
 
-                                        </tr>
                                     </Fragment>
                                 )}
                             </tbody>

@@ -113,9 +113,14 @@ const SalesBoardForAdmin = () => {
         setIsOpen(true);
     }
     const openModalCondition =  (item ,id) => {
-setProductSupplyCondition(item)
-        setProductSupplyConditionId(id)
-        setIsOpenCondition(true);
+        let idCondition= id
+        setProductSupplyConditionId(idCondition)
+
+        setProductSupplyCondition(item)
+        if (id === productSupplyConditionId){
+            setIsOpenCondition(!modalIsOpenCondition);
+
+        }
     }
     const closeModal = () => {
         setIsOpen(false);
