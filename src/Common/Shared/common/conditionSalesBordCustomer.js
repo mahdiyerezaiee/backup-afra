@@ -10,39 +10,39 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
     console.log(productSupplyConditions)
     const [customerg, setCustomerg] = useState([])
     const [Condition, setCondition] = useState([])
-    const GetCustomerGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr=[]
-        for (let i = 0; i < companies.length; i++) {
-
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
-
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
-            }
-
-
-        }
-
-        finalArr=Array.prototype.concat.apply([], arr);
-
-        setCustomerg(finalArr);
-    }
-
-    useEffect(() => {
-        GetCustomerGroup();
-    }, [productSupplyConditions])
-    const CustomerG = () => {
-        let customer = [...customerg, { id: null, name: 'عمومی' }]
-        return (customer.map(data => ({
-            label: data.name,
-            value: data.id
-        })))
-
-    }
+    // const GetCustomerGroup = async () => {
+    //     const response = await GetCompanyChild();
+    //     let companies = response.data.result.companies
+    //     let arr = []
+    //     let finalArr=[]
+    //     for (let i = 0; i < companies.length; i++) {
+    //
+    //         const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+    //
+    //         if(data.result.groups.length>0)
+    //         {
+    //            arr.push(data.result.groups)
+    //         }
+    //
+    //
+    //     }
+    //
+    //     finalArr=Array.prototype.concat.apply([], arr);
+    //
+    //     setCustomerg(finalArr);
+    // }
+    //
+    // useEffect(() => {
+    //     GetCustomerGroup();
+    // }, [productSupplyConditions])
+    // const CustomerG = () => {
+    //     let customer = [...customerg, { id: null, name: 'عمومی' }]
+    //     return (customer.map(data => ({
+    //         label: data.name,
+    //         value: data.id
+    //     })))
+    //
+    // }
     const PaymentId = (id) => {
         return (PaymentStructureEnums.filter(item => item.id === id).map(data => data.name))
 
@@ -97,7 +97,7 @@ const ConditionSalesBordCustomer = ({ productSupplyConditions, handelClick, clos
 
 
                             <td>{contact.price}</td>
-                            <td>{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>
+                            {/*<td>{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>*/}
 
                             <td title={contact.comment}>{contact.comment ? contact.comment.substring(0, 10) + "..." : ""}</td>
 
