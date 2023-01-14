@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,Fragment} from "react";
 import { Button } from "react-bootstrap";
 import { GetAllProductSupply, GetAllProductSupplyBord } from "../../../services/productSupplyService";
 import Modal from 'react-modal';
 import { useSelector } from "react-redux";
 import { AddTOCart } from "../../../services/cartShoppingService";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
-import { GetAllProductSupplyBordAdmin } from '../../../services/productSupplyService';
-import ConditionSalesBord from "./conditionSalesBordCustomer";
+
 import ModalSubmit from "./modalSubmit";
 import { GetGroupById } from "../../../services/GroupService";
 import ConditionSalesBordCustomer from "./conditionSalesBordCustomer";
-import SalesBoardForAdmin from "./salesBoardForAdmin";
 import { Link } from 'react-router-dom';
 
 const customStyles = {
@@ -36,32 +34,20 @@ const SalesBoardForCustomer = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
+    const [productSupplyCondition, setProductSupplyCondition] = useState( []);
 
-    const [productSupply, setProductSupply] = useState(getDataProductSupplyCustomer().productSupply);
+    const [productSupply, setProductSupply] = useState([]);
     const [modalInfo, setModalInfo] = useState([])
     const [quantity, setquantity] = useState(0)
     const [name, setName] = useState([]);
-    const [groupInfo, setGroupInfo] = useState(getDataProductSupplyCustomer().groupInfo)
+    const [groupInfo, setGroupInfo] = useState([])
     const [productSupplyConditionId, setProductSupplyConditionId] = useState(0);
-    const d = new Date();
-    d.setTime(d.getTime() +  (60 * 1000));
-    let expires =  d.toUTCString();
-    const dataProductSupplyCustomer = {
-        expiresAt: expires,
-        productSupply,
-        groupInfo,
-    }
-    console.log(user)
-    function getDataProductSupplyCustomer() {
-        let items = JSON.parse(sessionStorage.getItem('dataProductSupplyCustomer'));
-        return items ? items : ''
-    }
+
     const getProductSupply = async () => {
         try {
             const { data, status } = await GetAllProductSupplyBord();
 
             setProductSupply(data.result.productSupplies.values)
-            dataProductSupplyCustomer.productSupply=data.result.productSupplies.values
 
         } catch (error) {
             console.log(error);
@@ -71,33 +57,18 @@ const SalesBoardForCustomer = () => {
             try {
                 const { data, status } = await GetGroupById(user.groupId)
                     setGroupInfo(data.result.group)
-                    dataProductSupplyCustomer.groupInfo=data.result.group
 
 
             } catch (error) {
                 console.log(error);
             }
         }
-        sessionStorage.setItem('dataProductSupplyCustomer', JSON.stringify(dataProductSupplyCustomer));
 
     }
 
     useEffect(() => {
-
-        if (getDataProductSupplyCustomer().expiresAt < new Date().toUTCString()){
-
-            sessionStorage.removeItem("dataProductSupplyCustomer")
-
-
-        }if (!getDataProductSupplyCustomer().expiresAt ){
-
-            getProductSupply();
-
-
-        }
-
-    }, [user])
-    console.log(groupInfo)
+        getProductSupply();
+            }, [user])
     let formatter = new Intl.NumberFormat('fa-IR', {
         style: 'currency',
         currency: 'IRR', maximumFractionDigits: 0, 
@@ -114,16 +85,17 @@ const SalesBoardForCustomer = () => {
         setName(data.result.productSupply.product)
     }
 
-    const openModal = async (id) => {
-        await getModalInfo(id)
+
+
+    const openModal =  (id) => {
+        setProductSupplyCondition(id)
 
         setIsOpen(true);
     }
-    const openModalCondition = async (id) => {
-        await getModalInfo(id)
+    const openModalCondition =  (item ,id) => {
+        setProductSupplyCondition(item)
         setProductSupplyConditionId(id)
-
-        setIsOpenCondition(true);
+        setIsOpenCondition(!modalIsOpenCondition);
     }
     const closeModal = () => {
         setIsOpen(false);
@@ -135,20 +107,19 @@ const SalesBoardForCustomer = () => {
     }
     const handelClick = (id, productSupplyConditionId) => {
         setProductSupplyConditionId(productSupplyConditionId)
-        closeModalCobdition()
         openModal(id)
     }
+
     const addToCart = {
 
         customerId: user.id,
-        productId: name.id,
-        measureUnitId: modalInfo.measureUnitId,
+        productId:productSupplyCondition.length !==0 ? productSupplyCondition.product.id:0,
+        measureUnitId: productSupplyCondition.measureUnitId,
         quantity,
-        productSupplyId: modalInfo.id,
+        productSupplyId: productSupplyCondition.id,
         productSupplyConditionId: productSupplyConditionId === 0 ? null : productSupplyConditionId,
 
     }
-
 
     const submitHandler = async (e) => {
         setLoading(true)
@@ -168,7 +139,7 @@ setLoading(false)
             <div className=" statbox widget-content widget-content-area" >
                 <div className="row " >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2 " >
-                    <h4 className="text-center" style={{color:'#027f00'}}>کالای قابل عرضه به گروه مشتریان ( {!dataProductSupplyCustomer.groupInfo    ?  "عمومی" : dataProductSupplyCustomer.groupInfo && dataProductSupplyCustomer.groupInfo.name} )</h4>
+                    <h4 className="text-center" style={{color:'#027f00'}}>کالای قابل عرضه به گروه مشتریان ( {groupInfo    ?  "عمومی" : groupInfo && groupInfo.name} )</h4>
                     </div>
                 </div>
                 <div className="   ">
@@ -181,7 +152,7 @@ setLoading(false)
                             ariaHideApp={false}
 
                         >
-                            <ModalSubmit  loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={modalInfo} closeModal={closeModal} name={name} quantity={quantity} submitHandler={submitHandler}
+                            <ModalSubmit  loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={productSupplyCondition} closeModal={closeModal}  quantity={quantity} submitHandler={submitHandler}
                                 setquantity={setquantity} />
                         </Modal>
                         <Modal
@@ -192,7 +163,6 @@ setLoading(false)
                             ariaHideApp={false}
 
                         >
-                            <ConditionSalesBordCustomer  closeModal={closeModalCobdition} productSupplyConditions={productSupplyConditionId} handelClick={handelClick} />
 
                         </Modal>
 
@@ -215,8 +185,8 @@ setLoading(false)
                                 </tr>
                             </thead>
                             <tbody>
-                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item) =>
-
+                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item , index) =>
+                                    <Fragment key={index + "_frag"}>
 
                                     <tr key={item.id}>
                                         <td className="text-center">{item.id}</td>
@@ -229,11 +199,22 @@ setLoading(false)
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td> 
                                         <td className="text-center">{formatter2.format(item.remainedQuantity)}</td>
-                                        <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item.id)}>ثبت درخواست
-                                            </button>) : (<button  className=" btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item.id)}>شرایط پرداخت</button>)}</td>
+                                        <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item)}>ثبت درخواست
+                                            </button>) : (<button  className=" btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item , item.id)}>شرایط پرداخت</button>)}</td>
 
 
                                     </tr>
+                                        <tr >
+                                            <td colSpan={17}   className="fadeInt   m-3    " >
+                                                {modalIsOpenCondition ?
+                                                    <ConditionSalesBordCustomer  closeModal={closeModalCobdition} productSupplyConditions={productSupplyCondition} handelClick={handelClick} />
+:null
+                                                }
+
+                                            </td>
+
+                                        </tr>
+                                    </Fragment>
                                 )}
                             </tbody>
                         </table>
