@@ -25,11 +25,11 @@ export  interface UserList {
 }
 
 export interface UserRoles{
-    userRoleIds:number[]
+    userRoleIds?:number[]
 }
 
 export interface UserRolesMapping{
-    userRoleIds:number[],
-    userId:number,
+    userRoleIds?:number[],
+    userId?:number,
 }
 
