@@ -68,14 +68,15 @@ export const addOrder =(body)=>{
 export const DeleteOrderDetail=(id)=>{
 
 
-    let config={headers:
+    let config={
+        headers:
         {
             Authorization:`Bearer ${localStorage.getItem('token')}`
         },
         data:{
-            id:(id)
+            "orderDetailId":(id)
         }
         }
 
-    return http.post(`${configure}/Order/DeleteOrderDetail`,config);
+    return http.delete(`${configure}/Order/DeleteOrderDetail`,config);
 }
