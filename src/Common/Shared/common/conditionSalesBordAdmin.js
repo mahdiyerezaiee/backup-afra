@@ -48,10 +48,11 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
 
 
     return (
-        <Fragment>
-        <h5 className="text-center mb-3">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
+        <Fragment >
+            <div className="  ">
+        <h5 className="text-center">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
 
-    <div className="containerT  p-2">
+    <div className="containerT   p-2">
             {/*<div className="d-block clearfix mb-2" onClick={closeModal}><svg*/}
             {/*    xmlns="http://www.w3.org/2000/svg"*/}
             {/*    width="24" height="24"*/}
@@ -65,7 +66,7 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
             {/*        y2="18"></line><line*/}
             {/*            x1="6" y1="6" x2="18" y2="18"></line></svg></div>*/}
             <table
-                className="table table-bordered  table-striped fixed_header  mt-2  mb-4">
+                className="table table-bordered bg-light-warning mb-4">
                 <thead>
                     <tr style={{ fontSize: '10px' }}>
 
@@ -112,6 +113,7 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
 
                 </tbody>
             </table>
+        </div>
         </div>
         </Fragment>
     )

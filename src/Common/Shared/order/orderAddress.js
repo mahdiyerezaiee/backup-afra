@@ -78,6 +78,9 @@ const OrderAddress = ({ details, shipping, orderWeight, TakhsisWeight, getOrder,
         setIsModalOpen(false);
     }
     const deletHandler = async () => {
+        // const body={
+        //     "orderDetailId":IdDelete
+        // }
         try {
             const { data, status } = await DeleteOrderDetail(IdDelete)
             if (status === 200) {
