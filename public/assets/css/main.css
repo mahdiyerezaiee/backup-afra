@@ -78,7 +78,7 @@ select.form-custom::-ms-expand {
 .containerT {
 
   overflow: auto;
- 
+
   max-height: 300px;
   min-height: 100px;
 
@@ -3308,5 +3308,24 @@ padding-bottom: 10px;
   background: white!important;
   padding: 0px 8px;
 }
+@keyframes pulseblue {
+  0% {
+    box-shadow: 0 0 0 0 #4431c4;
+  }
+  100% {
+    box-shadow: 0 0 0 10px #027f0000;
+  }
+}
+.findeTakhsis{
+animation: pulseblue 1s infinite;
+  background: rgba(125, 113, 197, 0.27);
+  color: #FFFFFF;
+}
+.findeTakhsis td{
+  background: #4431C445;
 
+}
+#havaleTable tr:hover{
+  cursor: pointer;
+}
 
