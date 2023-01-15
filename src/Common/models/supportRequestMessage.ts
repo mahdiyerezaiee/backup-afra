@@ -1,10 +1,10 @@
 export interface SupportRequestMessage    {
-    id: number,
-    supportRequestId: number,
-    creatorId: number,
-    creatorName: string,
-    createDate: string,
-    message: string
+    id?: number,
+    supportRequestId?: number,
+    creatorId?: number,
+    creatorName?: string,
+    createDate?: string,
+    message?: string
   }
 
 

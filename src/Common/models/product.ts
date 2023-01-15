@@ -6,9 +6,9 @@ export  interface NewProduct {
     active?: boolean
     minSellableAmount?: number
     maxSellableAmount?: number
-    measureUnitId: number
+    measureUnitId?: number
     groupId?: number
-    measureUnit: number
+    measureUnit?: number
 }
 
 export  interface ProductList extends Array<NewProduct> {

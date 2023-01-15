@@ -2,7 +2,7 @@
 
 export  interface LoginModel{
 
-phoneNumber:string,
+phoneNumber?:string,
 password?:string
 
 }
@@ -15,19 +15,19 @@ export  interface LoginModelWithPass{
 
 export interface Verify{
     
-  verificationCode: string,
-  phoneNumber: string
+  verificationCode?: string,
+  phoneNumber?: string
 }
 
 
 export interface LoginResponse{
-    name: string,
-  token: string,
-  refresh: string,
-  requireInfo: boolean
+    name?: string,
+  token?: string,
+  refresh?: string,
+  requireInfo?: boolean
 }
 
 export interface RefreshToken{
-    token: string,
-    refresh: string
+    token?: string,
+    refresh?: string
 }

@@ -1,8 +1,8 @@
 export interface Address {
 
 
-    id: number
-    provinceId: number
+    id?: number
+    provinceId?: number
     fullAddress?: string
     postalCode?: string
     receiverTel?: string
@@ -12,9 +12,9 @@ export interface Address {
 
 }
 export interface AddressMapping {
-    Address: Address,
-    entityTypeId: number,
-    entityId: number
+    Address?: Address,
+    entityTypeId?: number,
+    entityId?: number
 
 
 }
@@ -25,9 +25,9 @@ export interface Addresses extends Array<Address>{
 
 export interface province {
 
-    id: number,
-     name: string, 
-     parentId: number
+    id?: number,
+     name?: string, 
+     parentId?: number
 
 
 }

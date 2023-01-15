@@ -1,7 +1,7 @@
 export interface Supplier{
-    id: number,
-    name: string,
-    groupId: number
+    id?: number,
+    name?: string,
+    groupId?: number
 }
 
 
