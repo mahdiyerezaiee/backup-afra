@@ -95,23 +95,24 @@ const ReportShipping = () => {
     });
 
     const columns = useMemo(() => [
+        { Header: 'کد قرارداد باربری', accessor: 'shippingContractCode' },
         {
-            Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId', Cell: rows => {
-                if (rows.row.original.orderDetailId !== null) { return (rows.row.original.orderDetailId) }
-                else {
-                    return (rows.row.original.orderId)
-                }
-            }
-        },
-        {
-            Header: 'شناسه بازارگاه', accessor: 'orderExtId', Cell: rows => {
+            Header: 'کد تخصیص', accessor: 'orderExtId', Cell: rows => {
                 if (rows.row.original.orderExtId !== null) { return (rows.row.original.orderExtId) }
                 else {
                     return (rows.row.original.orderDetailExtId)
                 }
             }
         },
-        { Header: 'شناسه قرارداد باربری', accessor: 'shippingContractCode' },
+        {
+            Header: 'کد جزییات سفارش', accessor: 'orderDetailId', Cell: rows => {
+                if (rows.row.original.orderDetailId !== null) { return (rows.row.original.orderDetailId) }
+                else {
+                    return (rows.row.original.orderId)
+                }
+            }
+        },
+        
         { Header: 'وزن', accessor: 'plannedQuantity' },
         {
             Header: 'تریلی', accessor: 'deliveryMethodId', Cell: row =>
@@ -121,10 +122,11 @@ const ReportShipping = () => {
         },
         { Header: 'نام تحویل گیرند', accessor: 'receiverName' },
         { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress' },
+        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: '' },
+
         { Header: 'کدپستی', accessor: 'receiverPostalCode' },
         { Header: 'تلفن دریافت کننده', accessor: 'receiverTel' },
         { Header: 'کدیکتای جهاد ', accessor: 'jahadYektaCode' },
-        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: '' }
     ]);
     const data = useMemo(() => Response);;
 
@@ -227,7 +229,7 @@ const ReportShipping = () => {
         if (Response && Response.length > 0) {
             const dataForExcel = Response.map(item => ({
                 'کد قرارداد باربری':item.shippingContractCode,
-                'کد تخصیص بازارگاه':(item.orderExtId!==null?item.orderExtId:item.orderDetailExtId),
+                'کد تخصیص ':(item.orderExtId!==null?item.orderExtId:item.orderDetailExtId),
                 'کد جزییات شفارش':(item.orderDetailId!==null?item.orderDetailId:item.orderId),
                 'وزن':item.plannedQuantity,
                 'تریلی':(item.deliveryMethodId === 5 ? 'بله' : 'خیر'),

@@ -1,25 +1,21 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {NewProduct, ProductList }from '../../../Common/models/product'
-const initialState : NewProduct={
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NewProduct, ProductList } from '../../../Common/models/product'
+const initialState: ProductList = []
 
-}
+
 
 const productSlice = createSlice({
-    name:"product",
+    name: "product",
     initialState,
-    reducers:{
-        addProduct:(state , action:PayloadAction<NewProduct>)=>{
+    reducers: {
 
-           return{...action.payload}
-        },
-        Products:(state , action:PayloadAction<ProductList>)=>{
+        Products: (state, action: PayloadAction<ProductList>) => {
             return {
-                ...state,
-                order: action.payload,
+                ...action.payload,
 
             }
-},
+        },
     }
 })
-export const {addProduct,Products}=productSlice.actions
+export const { Products } = productSlice.actions
 export default productSlice.reducer
