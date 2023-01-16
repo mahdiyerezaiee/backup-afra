@@ -4,9 +4,11 @@ export interface Group{
     CompanyId?:number
     entityTypeId?: number,
     name?: string
+    companyId?:number
+    companyName?:string
 
 }
-export interface Groups extends Array<Group>{
+export interface GroupList extends Array<Group>{
 
 }
 
