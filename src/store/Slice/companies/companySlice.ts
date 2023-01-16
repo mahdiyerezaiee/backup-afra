@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { Action } from "@remix-run/router";
 import { Companies } from "../../../Common/models/companies";
 
+
 const initialState:Companies=[]
 
 
