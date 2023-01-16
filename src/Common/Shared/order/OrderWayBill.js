@@ -43,6 +43,21 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
         getShippingTotal()
 
     }, [])
+    const findeTakhsis = (id) => {
+
+        const row = document.getElementById(`${id}`);
+        const ClassNames =document.getElementsByClassName(`findeTakhsis`)
+        console.log(ClassNames.length !== 0)
+        if (ClassNames.length !== 0){
+            ClassNames.item(".findeTakhsis").classList.remove(`findeTakhsis`)
+        }
+        row.classList.remove("findeTakhsis")
+
+    row.scrollIntoView({behavior: "smooth", block:"center"});
+
+        row.classList.add("findeTakhsis")
+
+    }
     const openModalDelet = (id) => {
         setIsModalOpen(true);
         setIdDelete(id)
@@ -176,10 +191,10 @@ const OrderWayBill = ({ loading, Shipping, ShippingContracts, dataForExcel, upda
 
                                 </tr>
                             </thead>
-                            <tbody className="text-center">
+                            <tbody className="text-center" id="havaleTable">
                                 {Shipping ? Shipping.map(item =>
 
-                                    <tr key={item.id}>
+                                    <tr key={item.id} id={item.orderDetailId} onClick={()=>findeTakhsis(item.orderDetailId)}>
                                         <td bgcolor="transparent" >{item.id}</td>
                                         <td bgcolor="transparent">{item.orderId ? item.orderId : "--"}</td>
                                         <td bgcolor="transparent" >{item.orderDetailId ? item.orderDetailId : "--"}</td>

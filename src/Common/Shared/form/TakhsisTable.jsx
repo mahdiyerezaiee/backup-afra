@@ -122,11 +122,11 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
                                 </tr>
                             ))}
                     </thead>
-                    <tbody {...getTableBodyProps()}>
+                    <tbody id="tableTakhsis" {...getTableBodyProps()}>
                     {rows.map((row, i) => {
                         prepareRow(row)
                         return (
-                            <tr  {...row.getRowProps(rowProps(row))}>
+                            <tr id={row.original.id} {...row.getRowProps(rowProps(row))}>
                                 {row.cells.map(cell => {
                                     return <td  className="text-center" {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                 })}
