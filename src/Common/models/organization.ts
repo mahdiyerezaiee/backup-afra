@@ -11,6 +11,6 @@ export default interface newOrganizaton{
 
 
 }
-export default interface OrganizationList extends Array<newOrganizaton>{
+export  interface AllOrganization extends Array<newOrganizaton>{
     
 }
