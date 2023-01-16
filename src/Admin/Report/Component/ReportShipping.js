@@ -1,13 +1,13 @@
-import {useMemo, useState} from "react";
-import {GetOrdersReports, GetShippingReports} from "../../../services/reportService";
-import {useEffect} from "react";
-import {getExtraData} from "../../../services/extraService";
+import { useMemo, useState } from "react";
+import { GetOrdersReports, GetShippingReports } from "../../../services/reportService";
+import { useEffect } from "react";
+import { getExtraData } from "../../../services/extraService";
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import { NavLink } from 'react-router-dom';
 import FadeLoader from 'react-spinners/FadeLoader'
-import MyTableBazargah  from "../../../Common/Shared/Form/MyTableBazargah";
-import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
+import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
+import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
 import persian_fa from "react-date-object/locales/persian_fa";
 
 const ReportShipping = () => {
@@ -18,27 +18,27 @@ const ReportShipping = () => {
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
     const [clicked, SetClicked] = useState(false)
-    const[selectedRows,setSelectedRows]=useState([])
+    const [selectedRows, setSelectedRows] = useState([])
 
-    const[show,SetShow]=useState(false);
-    const[disable,setDisable]=useState(false);
+    const [show, SetShow] = useState(false);
+    const [disable, setDisable] = useState(false);
 
-    const[open,SetOpen]=useState(false);
+    const [open, SetOpen] = useState(false);
     let [loading, setLoading] = useState(false);
     let [color, setColor] = useState("#0c4088");
     const close = () => {
         SetOpen(false);
     }
-    let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    let arrayOfSelectedData = [];
+    const getSelectedData = (data) => {
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData = data.map(item => item.original);
 
 
-        return(arrayOfSelectedData)
+        return (arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob = (selected) => {
 
     }
 
@@ -50,7 +50,7 @@ const ReportShipping = () => {
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setStartDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
+            setStartDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
         }
     }
     const handelEndDate = (value) => {
@@ -59,7 +59,7 @@ const ReportShipping = () => {
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setEndDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
+            setEndDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
         }
     }
     const handelSubmit = async (event) => {
@@ -67,7 +67,7 @@ const ReportShipping = () => {
         event.preventDefault();
         try {
 
-            const { data, status } = await GetShippingReports(StartDate, EndDate, Unshipped ? Unshipped: false,HasShippingContract?HasShippingContract:false);
+            const { data, status } = await GetShippingReports(StartDate, EndDate, Unshipped ? Unshipped : false, HasShippingContract ? HasShippingContract : false);
             if (status === 200) {
 
                 SetResponse(data.result.shippingReport);
@@ -79,7 +79,7 @@ const ReportShipping = () => {
         }
 
     }
-    const handelFrom=()=>{
+    const handelFrom = () => {
         SetClicked(false)
     }
     let formatter = new Intl.NumberFormat('fa-IR', {
@@ -95,26 +95,41 @@ const ReportShipping = () => {
     });
 
     const columns = useMemo(() => [
-        { Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId' },
-        {Header:'شناسه بازارگاه',accessor:'orderExtId' },
-        { Header: 'شناسه قرارداد باربری', accessor: 'shippingContractCode' },
-        { Header: 'وزن', accessor: 'plannedQuantity' ,Cell:row => row.row.original.plannedQuantity? row.row.original.plannedQuantity :" --" },
-        { Header: 'تریلی', accessor: 'deliveryMethodId',Cell:row =>
-    (
-        row.row.original.deliveryMethodId===5?'بله':'خیر'
-    )
+        {
+            Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId', Cell: rows => {
+                if (rows.row.original.orderDetailId !== null) { return (rows.row.original.orderDetailId) }
+                else {
+                    return (rows.row.original.orderId)
+                }
+            }
         },
-        { Header: 'نام تحویل گیرند', accessor: 'receiverName',Cell:row => row.row.original.receiverName? row.row.original.receiverName :"" },
-        { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress',Cell:row => row.row.original.receiverAddress? row.row.original.receiverAddress :"" },
-        { Header: 'کدپستی', accessor: 'receiverPostalCode' ,Cell:row => row.row.original.receiverPostalCode? row.row.original.receiverPostalCode :"" },
-        { Header: 'تلفن دریافت کننده', accessor: 'receiverMobile' ,Cell:row => row.row.original.receiverMobile? row.row.original.receiverMobile :"" },
+        {
+            Header: 'شناسه بازارگاه', accessor: 'orderExtId', Cell: rows => {
+                if (rows.row.original.orderExtId !== null) { return (rows.row.original.orderExtId) }
+                else {
+                    return (rows.row.original.orderDetailExtId)
+                }
+            }
+        },
+        { Header: 'شناسه قرارداد باربری', accessor: 'shippingContractCode' },
+        { Header: 'وزن', accessor: 'plannedQuantity' },
+        {
+            Header: 'تریلی', accessor: 'deliveryMethodId', Cell: row =>
+            (
+                row.row.original.deliveryMethodId === 5 ? 'بله' : 'خیر'
+            )
+        },
+        { Header: 'نام تحویل گیرند', accessor: 'receiverName' },
+        { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress' },
+        { Header: 'کدپستی', accessor: 'receiverPostalCode' },
+        { Header: 'تلفن دریافت کننده', accessor: 'receiverTel' },
         { Header: 'کدیکتای جهاد ', accessor: 'jahadYektaCode' },
-        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: ''}
+        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: '' }
     ]);
     const data = useMemo(() => Response);;
 
     if (!clicked) {
-        if(!loading){
+        if (!loading) {
             return (
                 <div className='user-progress' >
                     <div className='row'>
@@ -144,7 +159,7 @@ const ReportShipping = () => {
 
                                             </div>
                                         </div>
-                                        {show? <p  style={{color:'red'}}> شروع تاریخ از 1401/4/1 است</p>:null}
+                                        {show ? <p style={{ color: 'red' }}> شروع تاریخ از 1401/4/1 است</p> : null}
                                     </div>
                                     <div className=" col ">
                                         <div className=" mb-4 " style={{ position: 'relative' }}>
@@ -164,21 +179,21 @@ const ReportShipping = () => {
 
                                     </div>
                                     <div className=" col-12 ">
-                                    <div className=" row ">
+                                        <div className=" row ">
 
-                                        <div className="col-6 n-chk d-flex  mb-4">
+                                            <div className="col-6 n-chk d-flex  mb-4">
 
-                                                <input type="checkbox" checked={Unshipped} onClick={e=>setUnshipped(e.target.checked)}/>
-                                            <label >حمل شده </label>
-
-                                            </div>
-                                        <div className=" col-6 n-chk d-flex  mb-4">
-                                                <input type="checkbox" checked={HasShippingContract} onClick={e=>setHasShippingContract(e.target.checked)}/>
-                                            <label >قرارداد باربری دارد </label>
+                                                <input type="checkbox" checked={Unshipped} onClick={e => setUnshipped(e.target.checked)} />
+                                                <label >حمل شده </label>
 
                                             </div>
+                                            <div className=" col-6 n-chk d-flex  mb-4">
+                                                <input type="checkbox" checked={HasShippingContract} onClick={e => setHasShippingContract(e.target.checked)} />
+                                                <label >قرارداد باربری دارد </label>
 
-                                    </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div className='row justify-content-between'>
@@ -197,11 +212,11 @@ const ReportShipping = () => {
 
             )
         }
-        else{
-            return(
-                <div style={{position:'fixed',top:'40%',left:'40%'}}>
+        else {
+            return (
+                <div style={{ position: 'fixed', top: '40%', left: '40%' }}>
                     <p>دریافت اطلاعات ...</p>
-                    <FadeLoader loading={loading} color={color}/>
+                    <FadeLoader loading={loading} color={color} />
                 </div>
             )
 
@@ -209,34 +224,27 @@ const ReportShipping = () => {
     }
 
     else {
-        if (Response && Response.length >0){
+        if (Response && Response.length > 0) {
             const dataForExcel = Response.map(item => ({
-                'شناسه سفارش': item.orderId,
-                'شناسه انبار': item.wareHouseId,
-                'نام انبار': item.wareHouseName,
-                'شناسه محصول': item.productId,
-                'نام محصول': item.productName,
-                'شناسه عرضه':item.productSupplyId,
-                'نام عرضه':item.productSupplyName,
-                'شناسه بازارگاه': item.kharidId,
-                'شناسه تخصیص': item.allocationId,
-                'مقدار': item.quantity,
-                'واحد': item.measureUnitId,
-                'تاریخ':new Date(item.createDate).toLocaleDateString("fa-IR"),
-                'قیمت واحد': item.itemPrice,
-                'قیمت سفارش': item.orderPrice,
-                'نام کاربر': item.customerName,
-                'شناسه ملی کار بر': item.customerNationalCode,
-                'نام سازمان': item.organizationName,
-                'شناسه ملی سازمان': item.organizationNationalId,
-                'شماره ثبت سازمان': item.organizationRegistrationNumber,
+                'کد قرارداد باربری':item.shippingContractCode,
+                'کد تخصیص بازارگاه':(item.orderExtId!==null?item.orderExtId:item.orderDetailExtId),
+                'کد جزییات شفارش':(item.orderDetailId!==null?item.orderDetailId:item.orderId),
+                'وزن':item.plannedQuantity,
+                'تریلی':(item.deliveryMethodId === 5 ? 'بله' : 'خیر'),
+                'نام تحویل گیرنده':item.receiverName,
+                'آدرس تحویل گیرنده':item.receiverAddress,
+                'شماره/شناسه ملی':'',
+                'کد پستی':item.receiverPostalCode,
+                'تلفن تحویل گیرنده':item.receiverTel,
+                'کد یکتای جهاد':item.jahadYektaCode,
+
             }))
             return (
                 <div className=" statbox widget-content widget-content-area ">
                     <div>
                         <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-                        <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
+                        <MyTableBazargah columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
                     </div>
                     <div className="d-flex justify-content-end m-2">
@@ -245,8 +253,8 @@ const ReportShipping = () => {
                 </div>
 
             )
-        }else {
-            return(
+        } else {
+            return (
                 <div className=" statbox widget-content widget-content-area rounded">
                     <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
@@ -258,6 +266,6 @@ const ReportShipping = () => {
         }
 
 
-}
+    }
 }
 export default ReportShipping
