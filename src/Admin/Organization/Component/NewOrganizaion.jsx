@@ -3,6 +3,8 @@ import { SetOrganisation } from '../../../services/organisationService';
 import { useNavigate,NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {ClipLoader} from "react-spinners";
+import { Formik, Form, Field } from 'formik';
+import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
 const NewOrganizaion = () => {
     const [companyName, setcompanyName] = useState('');
@@ -11,19 +13,19 @@ const NewOrganizaion = () => {
     const navigate=useNavigate();
     const [loading, setLoading] = useState(false);
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async ( ) => {
         setLoading(true)
-event.preventDefault();
-        const organisation = {
-            organization: {
-                id: 0,
-                name: companyName,
-                nationalId,
-                registrationNumber: companyRegister,
-                parentId: 0,
-                groupId: 0
-            }
-        }
+const organisation = {
+    organization:{
+        id:0,
+        name: companyName,
+        nationalId,
+        registrationNumber: companyRegister,
+        parentId: 0,
+        groupId: 0
+    }
+
+}
         try {
             const { data, status } = await SetOrganisation(organisation)
             if (status === 200) {
@@ -57,7 +59,24 @@ setLoading(false)
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-lg-4 col-sm-12'>
 
-                    <form className='form col' >
+
+                    <Formik
+                        initialValues={{
+                            id:0,
+                            name: companyName,
+                            nationalId,
+                            registrationNumber: companyRegister,
+                            parentId: 0,
+                            groupId: 0
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit( )
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+                            <Form className="form col"  >
                         <div className="n-chk">
 
 
@@ -71,30 +90,34 @@ setLoading(false)
 
                             <label >شماره ملی شرکت</label>
                             <div className='form-row justify-content-center'>
-                                <input type="text" className="form-control opacityForInput col" value={nationalId} onChange={(e) => { SetnationalId(e.target.value); }} placeholder="12345678912" />
+                                <Field validate={validatNumber} type="text" className="form-control opacityForInput col" name="nationalId" value={nationalId} onChange={(e) => { SetnationalId(e.target.value); }} placeholder="12345678912" />
 
 
                             </div>
+                            {errors.nationalId && touched.nationalId && <div className="text-danger">{errors.nationalId}</div>}
 
 
 
                         </div>
                         <div className="form-group mb-4 textOnInput ">
                             <label >نام شرکت</label>
-                            <input type="text" className="form-control opacityForInput" value={companyName}
+                            <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={companyName}
                                 onChange={(e) => {
                                     setcompanyName(e.target.value)
 
                                 }} placeholder="نام شرکت" />
 
+                            {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                         </div>
-                        <div className="form-group mb-4 textOnInput ">
+
+                                <div className="form-group mb-4 textOnInput ">
                             <label >شماره ثبت</label>
-                            <input type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e) => {
+                            <Field validate={validatNumber} name="registrationNumber" type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e) => {
                                 setcompanyRegister(e.target.value)
 
                             }} placeholder="شماره ثبت" />
+                                    {errors.registrationNumber && touched.registrationNumber && <div className="text-danger">{errors.registrationNumber}</div>}
 
 
                         </div>
@@ -104,7 +127,7 @@ setLoading(false)
 
                         <div className='row justify-content-between'>
                             <div >
-                                <button type="submit" disabled={loading} className="btn btn-success " onClick={handelSubmit} >
+                                <button type="submit" disabled={loading} className="btn btn-success "  >
                                     تایید
 
                                     <ClipLoader
@@ -123,7 +146,9 @@ setLoading(false)
 
 
 
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div >
             </div >
         </div>

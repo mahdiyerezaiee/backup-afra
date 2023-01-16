@@ -1,0 +1,58 @@
+export function validateEmail(value) {
+    let error;
+    if (!value) {
+        error = 'پرکردن این فیلد الزامی می باشد';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+        error = 'ایمیل معتبر نیست';
+    }
+    return error;
+}
+
+export function validatAlpha(value) {
+    let error;
+    if (!value) {
+        error = 'پرکردن این فیلد الزامی می باشد';
+    } else if (!/^[A-Z  ك آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/i.test(value)) {
+        error = 'از حروف استفاده کنید';
+    }
+    return error;
+
+}
+export function validatNumber(value) {
+    let error;
+    if (!value) {
+        error = 'پرکردن این فیلد الزامی می باشد';
+    } else if (!/^[u06F0-u06F9]+$/i.test(value)) {
+        error = 'از اعداد  استفاده کنید';
+    }
+    return error;
+
+}
+export function validatMobail(value) {
+    let error;
+    if (!value) {
+        error = 'پرکردن این فیلد الزامی می باشد';
+    } else if (value.length !== 11) {
+        error = 'شماره موبایل وارد شده صحیح نیست';
+    }
+    return error;
+
+}
+export function validatmin10(value) {
+    let error;
+    if (!value) {
+        error = 'پرکردن این فیلد الزامی می باشد';
+    } else if (value.length !== 10) {
+        error = 'کد وارد شده صحیح نیست';
+    }
+    return error;
+
+}
+export function validatPassword(value) {
+    let error;
+    if (!value) {
+        error = 'پرکردن این فیلد الزامی می باشد';
+    }
+    return error;
+
+}
