@@ -17,11 +17,11 @@ export default interface Order {
     comment?: string,
     locked?: boolean,
     conditionalPaymentTypeId?: number,
-    customer?:NewUser|null,
-    extraData?:ExtraData|null
+    customer?:NewUser,
+    extraData?:ExtraData
 
 }
 
-export default interface OrderList extends Array<Order>{
+export  interface Orders extends Array<Order>{
     
 }
