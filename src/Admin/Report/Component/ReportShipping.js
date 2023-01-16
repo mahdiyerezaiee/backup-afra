@@ -67,7 +67,7 @@ const ReportShipping = () => {
         event.preventDefault();
         try {
 
-            const { data, status } = await GetShippingReports(StartDate, EndDate, Unshipped ? Unshipped: "",HasShippingContract?HasShippingContract:"");
+            const { data, status } = await GetShippingReports(StartDate, EndDate, Unshipped ? Unshipped: false,HasShippingContract?HasShippingContract:false);
             if (status === 200) {
 
                 SetResponse(data.result.shippingReport);
@@ -96,50 +96,20 @@ const ReportShipping = () => {
 
     const columns = useMemo(() => [
         { Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId' },
-        {Header:'شناسه بازارگاه',accessor:'orderExtId',Cell:row => row.row.original.orderExtId? row.row.original.orderExtId :"" },
-        { Header: 'شناسه قرارداد باربری', accessor: 'shippingContractCode' ,Cell:row => row.row.original.shippingContractCode? row.row.original.shippingContractCode :"" },
-        { Header: 'وزن', accessor: 'plannedQuantity' ,Cell:row => row.row.original.plannedQuantity? row.row.original.plannedQuantity :"" },
-        { Header: 'تریلی', accessor: '',Cell:row =>
-            {
-                const [address , SetAddress]=useState([])
-                const getAddress =async () => {
-                const response =  await getExtraData(Number(row.row.original.orderDetailExtId), 1)
-                    if (response.data.result.extraData){
-                        SetAddress( JSON.parse(response.data.result.extraData.data))
-
-                    }
-
-                }
-useEffect(()=>{
-    getAddress()
-},[])
-                return(address && address.ShipTruckTypet === 1 ?   "بلی" : "خیر")
-            }
+        {Header:'شناسه بازارگاه',accessor:'orderExtId' },
+        { Header: 'شناسه قرارداد باربری', accessor: 'shippingContractCode' },
+        { Header: 'وزن', accessor: 'plannedQuantity' ,Cell:row => row.row.original.plannedQuantity? row.row.original.plannedQuantity :" --" },
+        { Header: 'تریلی', accessor: 'deliveryMethodId',Cell:row =>
+    (
+        row.row.original.deliveryMethodId===5?'بله':'خیر'
+    )
         },
         { Header: 'نام تحویل گیرند', accessor: 'receiverName',Cell:row => row.row.original.receiverName? row.row.original.receiverName :"" },
         { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress',Cell:row => row.row.original.receiverAddress? row.row.original.receiverAddress :"" },
         { Header: 'کدپستی', accessor: 'receiverPostalCode' ,Cell:row => row.row.original.receiverPostalCode? row.row.original.receiverPostalCode :"" },
         { Header: 'تلفن دریافت کننده', accessor: 'receiverMobile' ,Cell:row => row.row.original.receiverMobile? row.row.original.receiverMobile :"" },
         { Header: 'کدیکتای جهاد ', accessor: 'jahadYektaCode' },
-        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: '',Cell:row =>{
-                const [address , SetAddress]=useState([])
-                const getAddress =async () => {
-                    const response =  await getExtraData(Number(row.row.original.orderDetailExtId), 1)
-                    if (response.data.result.extraData){
-                        SetAddress( JSON.parse(response.data.result.extraData.data))
-
-                    }
-
-                }
-                useEffect(()=>{
-                    getAddress()
-                },[])
-                return(address && address.ReceiverId )
-
-
-
-            }
-                },
+        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: ''}
     ]);
     const data = useMemo(() => Response);;
 
