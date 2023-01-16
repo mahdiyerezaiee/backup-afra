@@ -61,29 +61,28 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({
         ])
     })
     const values= Object.values(rows.map(i =>  i.values));
-    console.log(values)
-    useEffect(() => {
-        const notNullable = values.reduce((r, o) =>
-                r + +!Object.values(o).includes("")
-            , 0);
-
-        const notNullable2 = values.reduce((r, o) =>
-                r + +!Object.values(o).includes('  ')
-            , 0);
-        const notNullable3 = values.reduce((r, o) =>
-                r + +!Object.values(o).includes(null)
-            , 0);
-
-        values.forEach(task =>
-            Object.entries(task).forEach(([key, value]) =>
-                value ===  null  ? formattedvalues.push(key): value ===  ""  ? formattedvalues.push(key): value ===  '  '  ? formattedvalues.push(key):null
-            )
-        );
-        SetFunc(notNullable === 0 ?  formattedvalues:notNullable2 === 0 ? formattedvalues:notNullable3 === 0 ? formattedvalues:[])
-
-
-
-    }, [rows])
+    // useEffect(() => {
+    //     const notNullable = values.reduce((r, o) =>
+    //             r + +!Object.values(o).includes("")
+    //         , 0);
+    //
+    //     const notNullable2 = values.reduce((r, o) =>
+    //             r + +!Object.values(o).includes('  ')
+    //         , 0);
+    //     const notNullable3 = values.reduce((r, o) =>
+    //             r + +!Object.values(o).includes(null)
+    //         , 0);
+    //
+    //     values.forEach(task =>
+    //         Object.entries(task).forEach(([key, value]) =>
+    //             value ===  null  ? formattedvalues.push(key): value ===  ""  ? formattedvalues.push(key): value ===  '  '  ? formattedvalues.push(key):null
+    //         )
+    //     );
+    //     SetFunc(notNullable === 0 ?  formattedvalues:notNullable2 === 0 ? formattedvalues:notNullable3 === 0 ? formattedvalues:[])
+    //
+    //
+    //
+    // }, [rows])
     useEffect(()=>{
         getData(selectedFlatRows);
     },[selectedRowIds])
