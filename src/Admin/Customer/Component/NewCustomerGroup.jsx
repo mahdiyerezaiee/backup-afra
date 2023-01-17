@@ -8,7 +8,8 @@ import { GetGroupById, SetGroup } from '../../../services/GroupService';
 import { ClipLoader } from "react-spinners";
 import { GetCompanyChild } from './../../../services/companiesService';
 import Select from 'react-select';
-
+import { Formik, Form, Field } from 'formik';
+import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
 
 const NewCustomerGroup = () => {
@@ -41,8 +42,7 @@ const NewCustomerGroup = () => {
     }, [])
 
 
-    const handelSubmit = async (event) => {
-        event.preventDefault();
+    const handelSubmit = async () => {
         setLoading(true)
         try {
             const body = {
@@ -57,7 +57,6 @@ const NewCustomerGroup = () => {
 
             const { data, status } = await SetGroup(body)
             if (data.success === 200) {
-                setLoading(false)
                 toast.success('گروه جدید ایجاد شد',
                     {
                         position: "top-right",
@@ -68,11 +67,12 @@ const NewCustomerGroup = () => {
                         draggable: true,
                         progress: undefined
                     })
-                navigate('/admin/customergroup')
             }
         } catch (error) {
             console.log(error);
         }
+        navigate('/admin/customergroup')
+        setLoading(false)
 
 
     }
@@ -93,14 +93,30 @@ const NewCustomerGroup = () => {
                 <div className='widget box shadow col-md-4 col-xs-12 textOnInput'>
 
 
-                    <form>
+                    <Formik
+                        initialValues={{
+                            id: 0,
+                            entityTypeId: 1,
+                            name
+                            ,companyId
+                            ,companyName
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+                            <Form  >
                         <div className='form-group '>
 
                             <div className="form-group mb-4 textOnInput">
                                 <label>نام گروه</label>
 
-                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
 
+                                {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                             </div>
                             {userCompanies?
@@ -130,7 +146,7 @@ const NewCustomerGroup = () => {
                             </div>:''}
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} > ثبت
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left" > ثبت
 
                                         <ClipLoader
 
@@ -144,7 +160,10 @@ const NewCustomerGroup = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

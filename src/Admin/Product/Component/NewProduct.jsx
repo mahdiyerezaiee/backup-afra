@@ -3,8 +3,6 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { SetProduct } from "../../../services/productService";
 
 import { toast } from 'react-toastify';
-
-import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
 import { SetProductWareHouses } from "../../../services/prodcutWarehouse";
 import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
@@ -14,7 +12,8 @@ import { GetGroupsForEntity } from "../../../services/GroupService";
 import { ClipLoader } from "react-spinners";
 import { GetCompanyChild } from './../../../services/companiesService';
 import { GetGroupWithCompany } from './../../../services/GroupService';
-
+import { Formik, Form, Field } from 'formik';
+import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
 
 const NewProduct = () => {
@@ -111,30 +110,7 @@ const getCompanies = async () => {
         companyId,companyName
 
     };
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
 
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u0660-u0669]+$/,) && params.indexOf(val) === -1;
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از عداد استفاده کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const setAttributevalue = async () => {
 
         const attribute = {
@@ -204,9 +180,8 @@ useEffect(()=>{
     GetProductGroup(companyId);
 },[companyId])
 
-    const submit = async (event) => {
+    const submit = async () => {
         setLoading(true)
-        event.preventDefault();
         try {
             const { data, status } = await SetProduct(product);
             if (status === 200) {
@@ -267,16 +242,34 @@ useEffect(()=>{
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-6 col-xs-12'>
 
+                    <Formik
+                        initialValues={{
+                            name,
+                            englishName,
+                            price,
+                            active,
+                            minSellableAmount,
+                            maxSellableAmount,
+                            measureUnitId,
+                            measureUnit: measureUnitId,
+                            groupId,
+                            companyId,companyName
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit( )
+                        }}>
+                        {({ errors, touched,setFieldTouched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                    <form className="col-8">
+                    <Form className="col-8">
                         <div className="n-chk d-flex  mb-4">
 
                             <div>
                                 <label className="mr-2"> فعال </label>
 
-                                <input type="checkbox" defaultChecked={active} onChange={e => {
+                                <Field name="active" type="checkbox" defaultChecked={active} onChange={e => {
                                     setActive(e.checked)
-                                    validator.current.showMessageFor("required");
 
                                 }}
                                 />
@@ -286,24 +279,22 @@ useEffect(()=>{
                         <div className="form-group mb-4 textOnInput  align-content-between">
 
                             <label>نام کالا</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="کنجاله ، ذرت و..."
+                            <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="کنجاله ، ذرت و..."
                                 value={name} onChange={e => {
                                     setName(e.target.value)
-                                    validator.current.showMessageFor("required");
 
                                 }} />
-                            {validator.current.message("required", name, "required|alpha")}
+                            {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                         </div>
                         <div className="form-group mb-4 textOnInput">
                             <label>کد بازارگاه</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="... Corn Seed "
+                            <Field name="englishName"  validate={validatNumber}  type="text" className="form-control opacityForInput" placeholder="... Corn Seed "
                                 value={englishName} onChange={e => {
                                     setEnglishName(e.target.value)
-                                    validator.current.showMessageFor("required");
 
                                 }} />
-                            {validator.current.message("required", englishName, "required")}
+                            {errors.englishName && touched.englishName && <div className="text-danger">{errors.englishName}</div>}
 
                         </div>
 
@@ -312,18 +303,19 @@ useEffect(()=>{
                                 <div className={userCompanies.length===1?'col-6':'col-4'}>
 
                                     <label>واحد</label>
+
                                     <Select
-                                        placeholder={validator.current.showMessageFor("required") ? "Normal text placeholder" : <span className="text-danger">خالی است </span>}
-
-                                        options={Mesures()}
-                                        onChange={e => {
-                                            setMeasureUnitId(e.value)
-                                            validator.current.showMessageFor("required");
-
+                                        name="measureUnitId"
+validate={validatNumber}
+                                        onBlur={() => setFieldTouched('measureUnitId', true)}
+                                        onChange={(option, e) => {
+                                        setMeasureUnitId(e.value)
                                         }}
-                                    />
-                                    {validator.current.message("required", Mesures, "required")}
+                                        placeholder="واحد"
+                                        options={Mesures()}
 
+                                    />
+                                    {measureUnitId  ===0 ? <div className="text-danger">پر کردن فیلد الزامیست</div>:null}
 
                                 </div>
 
@@ -331,16 +323,20 @@ useEffect(()=>{
                                     <label>گروه کالا</label>
 
                                     <Select
-                                        placeholder={validator.current.showMessageFor("required") ? "Normal text placeholder" : <span className="text-danger">خالی است </span>}
+                                        validate={validatNumber}
+
+                                        placeholder="گروه کالا"
                                         options={inputProductG()}
-                                        onChange={e => {
+                                        onBlur={() => setFieldTouched('groupId', true)}
+                                        onChange={(option, e) => {
+
                                             setGroupId(e.value)
-                                            validator.current.showMessageFor("required");
 
                                         }}
+                                       name="groupId"
                                     />
-                                    {validator.current.message("required", inputWarehouses, "required")}
 
+                                    {groupId  ===0 ? <div className="text-danger">پر کردن فیلد الزامیست</div>:null}
 
                                 </div>
                                 {userCompanies?
@@ -381,7 +377,7 @@ useEffect(()=>{
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
-                                <button type="submit" disabled={loading} className="btn btn-success float-left " onClick={submit}>تایید  <ClipLoader
+                                <button type="submit" disabled={loading && measureUnitId === 0} className="btn btn-success float-left " >تایید  <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
@@ -394,7 +390,9 @@ useEffect(()=>{
                         </div>
 
 
-                    </form>
+                    </Form>
+                        )}
+                    </Formik>
                 </div >
             </div >
         </div>

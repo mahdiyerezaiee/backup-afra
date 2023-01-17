@@ -2,14 +2,20 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { CreateUser, GetUserData } from "../../../services/userService";
 import { GetAllOrganisation } from "../../../services/organisationService";
-import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { setCustomerInfo } from "../../../services/customerService";
 import "./style.css"
 import {PriceUnitEnums} from "../../../Common/Enums/PriceUnit";
 import {ClipLoader} from "react-spinners";
 import { toast } from 'react-toastify';
-
+import { Formik, Form, Field } from 'formik';
+import {
+    validatAlpha,
+    validateEmail,
+    validatmin10,
+    validatMobail, validatNumber,
+    validatPassword
+} from "../../../Utils/validitionParams";
 
 const EditUserInfo = () => {
     const navigate = useNavigate()
@@ -21,6 +27,7 @@ const EditUserInfo = () => {
     const [lastName, setLastName] = useState('')
     const [nationalCode, setNationalCode] = useState('')
     const [organizationID, setOrganizationID] = useState([])
+    const [user, setUser] = useState([])
     const [organizationId, setOrganizationId] = useState(null)
     const [maxValidityUnitId, setMaxValidityUnitId] = useState(null)
     const [password, setPassword] = useState(null)
@@ -44,37 +51,27 @@ const EditUserInfo = () => {
     const showHandler = (e) => {
         setShow(e.target.checked)
     }
-    const dataUser = {
 
-        id:Number( params.id),
-        userName,
-        email,
-        firstName,
-        lastName,
-        nationalCode,
-        organizationId:check?organizationId:null,
-        password,
-        active,
-        maxValidity,
-        maxValidityUnitId,
-        actionBlock,
-        groupId
-    }
     const getUserInfo = async () => {
 
         try {
             const { data, status } = await GetUserData(Number(params.id))
-            setEmail(data.result.customer.email)
-            setUserName(data.result.customer.userName)
-            setFirstName(data.result.customer.firstName)
-            setLastName(data.result.customer.lastName)
-            setNationalCode(data.result.customer.nationalCode)
-            setOrganizationId(data.result.customer.organizationId)
-            setActive(data.result.customer.active)
-            SetactionBlock(data.result.customer.actionBlock)
-            setMaxValidity(data.result.customer.maxValidity)
-            setMaxValidityUnitId(data.result.customer.maxValidityUnitId)
-            setGroupId(data.result.customer.groupId)
+            if (status === 200){
+                setUser(data.result.c)
+                setEmail(data.result.customer.email)
+
+                setUserName(data.result.customer.userName)
+                setFirstName(data.result.customer.firstName)
+                setLastName(data.result.customer.lastName)
+                setNationalCode(data.result.customer.nationalCode)
+                setOrganizationId(data.result.customer.organizationId)
+                setActive(data.result.customer.active)
+                SetactionBlock(data.result.customer.actionBlock)
+                setMaxValidity(formatter.format(data.result.customer.maxValidity))
+                setMaxValidityUnitId(data.result.customer.maxValidityUnitId)
+                setGroupId(data.result.customer.groupId)
+            }
+
 
         } catch (err) {
             console.log(err)
@@ -83,7 +80,7 @@ const EditUserInfo = () => {
 
     useEffect(() => {
         getUserInfo()
-    }, [])
+    }, [params.id])
 
     useEffect(() => {
 
@@ -94,11 +91,9 @@ const EditUserInfo = () => {
 
 
     }, [organizationId])
-console.log(maxValidityUnitId);
-    const submit = async (e) => {
+    const submit = async (dataUser) => {
         setLoading(true)
 
-        e.preventDefault()
         try {
             const { data, status } = await setCustomerInfo(dataUser)
             if (status===200){
@@ -111,12 +106,12 @@ console.log(maxValidityUnitId);
                     draggable: true,
                     progress: undefined
                 });
-                setLoading(false)
             }
         } catch (err) {
             console.log(err)
         }
         navigate(-1)
+        setLoading(false)
 
     }
     const getOrganizationId = async () => {
@@ -143,38 +138,7 @@ console.log(maxValidityUnitId);
         return (PriceUnitEnums.filter(item => item.id === maxValidityUnitId).map(item => ({ label: item.name, value: item.id }))[0])
     }
 
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
 
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[ یكئآابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی  ]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u06F0-u06F9]+$/,);
-
-                }
-            },
-            min: {
-                message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-                    return val.length >= options[0];
-                }, messageReplace: function messageReplace(message, options) {
-                    return message.replace(':min', options[0]);
-                }
-            }
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'کد ملی را صحیح وارد کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const handelNavigate = (e) => {
         e.preventDefault()
         navigate(-1)
@@ -199,7 +163,32 @@ console.log(maxValidityUnitId);
                 <div className='widget box shadow col-md-6 col-sm-12'>
 
 
-                    <form  >
+                    <Formik
+                        initialValues={{
+
+                        id:Number( params.id),
+                        userName,
+                        email,
+                        firstName,
+                        lastName,
+                        nationalCode,
+                        organizationId:check?organizationId:null,
+                        password,
+                        active,
+                        maxValidity:maxValidity ?maxValidity.replaceAll(",",""):maxValidity,
+                        maxValidityUnitId,
+                        actionBlock,
+                        groupId
+
+                    }}
+enableReinitialize={true}
+                    onSubmit={values => {
+                                // same shape as initial values
+                                submit( values)
+                            }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+                            <Form  >
 
                         <div className="form-group  textOnInput col-12 ">
 
@@ -219,68 +208,56 @@ console.log(maxValidityUnitId);
 
                                         <label className="form-check-label mb-3">
 
-                                            <input type="checkbox" checked={active} className="form-check-input" onChange={e => setActive(e.target.checked)} />
+                                            <Field type="checkbox" className="form-check-input" name="active"  />
                                             فعال                                     </label>
                                     </div>
                                     <div className="col-lg-4 col-md-6 col-sm-11">
 
                                         <label className="form-check-label mb-3 text-danger font-weight-bold">
 
-                                            <input type="checkbox" checked={actionBlock} className="form-check-input" onChange={e => SetactionBlock(e.target.checked)} />
+                                            <Field type="checkbox"  name="actionBlock" className="form-check-input" />
                                             تعلیق کاربر                                  </label>
                                     </div>
                                 </div>
                                 <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                     <label >شماره موبایل</label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="شماره موبایل" value={userName || ""} onChange={
-                                        (e) => {
-                                            setUserName(e.target.value);
-                                            validator.current.showMessageFor("required");
-                                        }} />
-                                    {validator.current.message("required", userName, "required|numeric|min:11")}
+                                    <Field type="text" className="form-control opacityForInput" placeholder="شماره موبایل" name="userName" validate={validatMobail} />
+
+                                    {errors.userName && touched.userName && <div className="text-danger">{errors.userName}</div>}
+
                                 </div>
+
                                 <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                     <label >نام</label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="نام" value={firstName || ""} onChange={
-                                        (e) => {
-                                            setFirstName(e.target.value);
-                                            validator.current.showMessageFor("required");
-                                        }} />
-                                    {validator.current.message("required", firstName, "required|alpha")}
+                                    <Field type="text" className="form-control opacityForInput" placeholder="نام" name="firstName"   validate={validatAlpha}/>
+                                    {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
                                 </div>
                                 <div className="col-lg-4 col-md-6 col-sm-11 mb-4" >
                                     <label >نام خانوادگی</label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={e => {
-                                        setLastName(e.target.value)
-                                        validator.current.showMessageFor("required");
-                                    }} />
-                                    {validator.current.message("required", lastName, "required|alpha")}
+                                    <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} />
+                                    {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >کد ملی</label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" value={nationalCode || ""} onChange={e => {
-                                        setNationalCode(e.target.value)
-                                        validator.current.showMessageFor("required");
-                                    }} />
-                                    {validator.current.message("required", nationalCode, "required|numeric|min:10")}
+                                    <Field type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" validate={validatmin10} name="nationalCode"/>
+                                    {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
+
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >ایمیل</label>
-                                    <input type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={e => {
-                                        setEmail(e.target.value)
-                                        validator.current.showMessageFor("email")
-                                    }} />
-                                    {validator.current.message("email", email, "email")}
+                                    <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name="email" validate={validateEmail} />
+                                    {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
+
                                 </div>
+
+
                                 <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >مقدار اعتبار </label>
-                                    <input type="text" className=" formater form-control opacityForInput" placeholder="100,000"  value={formatter.format(maxValidity)} onChange={e => {
-                                        setMaxValidity(e.target.value.replaceAll(",",""))
-                                        validator.current.showMessageFor("required");
-                                    }} />
-                                    {validator.current.message("required", nationalCode, "required|numeric|min:10")}
+                                    <Field type="text" className=" formater form-control opacityForInput" placeholder="100,000" validate={validatNumber}  name='maxValidity'  />
+                                    {errors.maxValidity && touched.maxValidity && <div className="text-danger">{errors.maxValidity}</div>}
+
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                     <label >واحد قیمت</label>
@@ -308,21 +285,24 @@ console.log(maxValidityUnitId);
 
                                 <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                     <label >رمز عبور</label>
-                                    <input type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" value={password || ""} onChange={e => {
+                                    <Field type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" name="password" onChange={e => {
                                         setPassword(e.target.value)
-                                        validator.current.showMessageFor("required");
                                     }} />
+
                                     <div className="input-group-append ">
+
                                         <button className=" btn-outline-primary box-shadow-none rounded" onClick={togglePassword} style={{ border: 'none' }}>
                                             {passwordType === "password" ? <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" fill="blue"></path> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="blue"></path> </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" /> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" /> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" /> </svg>}</button>
                                     </div>
+                                    <hr/>
+
                                 </div>
+
                                 <div className="col-1"></div>
                                 <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                     <label >تکراررمز عبور</label>
                                     <input type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" value={passwordConfirm || ""} onChange={e => {
                                         setPasswordConfirm(e.target.value)
-                                        validator.current.showMessageFor("required");
                                     }} />
                                     <div className="input-group-append ">
                                         <button className=" btn-outline-primary box-shadow-none rounded" onClick={togglePassword} style={{ border: 'none', outline: 'none' }}>
@@ -330,21 +310,16 @@ console.log(maxValidityUnitId);
                                     </div>
 
                                 </div>
-                                {password !== passwordConfirm ?
-                                    <p hidden={!show} className="text-danger">رمز عبور برابر نیست</p> : ''}
-                                <div className="form-group">
-                                    <div className="form-check pl-0">
-                                        <div className="custom-control custom-checkbox checkbox-info">
 
-                                        </div>
-                                    </div>
-                                </div>
+                                {password !== passwordConfirm ?
+                                    <p hidden={!show} className="d-block text-danger">رمز عبور برابر نیست</p> : ''}
+
                                 <div className="col-12">
                                     <div className='row'>
                                         <div className='col-lg-6 col-md-6 col-sm-12 mb-1 '>
                                             {show === true ?
-                                                <button type="submit" className="btn btn-success  " disabled={password === passwordConfirm && validator.current.allValid() ? false : true} onClick={submit}>تایید</button> :
-                                                <button type="submit" className="btn btn-success  " disabled={!loading ?validator.current.allValid() ? false : true:true} onClick={submit}>تایید
+                                                <button type="submit" className="btn btn-success  " disabled={password !== passwordConfirm } >تایید</button> :
+                                                <button type="submit" className="btn btn-success  " disabled={!loading ? false:true} >تایید
                                                     <ClipLoader
 
                                                         loading={loading}
@@ -363,7 +338,9 @@ console.log(maxValidityUnitId);
 
 
 
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
 
                 </div >
             </div >
