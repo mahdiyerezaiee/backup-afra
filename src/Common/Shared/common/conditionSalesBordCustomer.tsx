@@ -1,58 +1,64 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, { useEffect, useState ,Fragment} from "react";
 import { GetGroupsForEntity, GetGroupWithCompany } from "../../../services/GroupService";
 import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
+import { GetProductSupplyConditionsCustomer } from "../../../services/ProductSupplyConditionService";
 import { Link } from 'react-router-dom';
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 
-const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeModal }) => {
+interface Props {
+    productSupplyConditions: any,
+    handelClick: any,closeModal:any
+}
 
+const ConditionSalesBordCustomer:React.FC<Props> = ({closeModal, productSupplyConditions, handelClick }) => {
+
+    console.log(productSupplyConditions)
     const [customerg, setCustomerg] = useState([])
-    const GetCustomerGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr=[]
-        for (let i = 0; i < companies.length; i++) {
-
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
-
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
-            }
-
-
-        }
-
-        finalArr=Array.prototype.concat.apply([], arr);
-
-        setCustomerg(finalArr);
-    
-    }
-
-    useEffect(() => {
-        GetCustomerGroup();
-    }, [])
-    const CustomerG = () => {
-        let customer = [...customerg, { id: null, name: 'عمومی' }]
-        return (customer.map(data => ({
-            label: data.name,
-            value: data.id
-        })))
-    }
-    const PaymentId = (id) => {
+    const [Condition, setCondition] = useState([])
+    // const GetCustomerGroup = async () => {
+    //     const response = await GetCompanyChild();
+    //     let companies = response.data.result.companies
+    //     let arr = []
+    //     let finalArr=[]
+    //     for (let i = 0; i < companies.length; i++) {
+    //
+    //         const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+    //
+    //         if(data.result.groups.length>0)
+    //         {
+    //            arr.push(data.result.groups)
+    //         }
+    //
+    //
+    //     }
+    //
+    //     finalArr=Array.prototype.concat.apply([], arr);
+    //
+    //     setCustomerg(finalArr);
+    // }
+    //
+    // useEffect(() => {
+    //     GetCustomerGroup();
+    // }, [productSupplyConditions])
+    // const CustomerG = () => {
+    //     let customer = [...customerg, { id: null, name: 'عمومی' }]
+    //     return (customer.map(data => ({
+    //         label: data.name,
+    //         value: data.id
+    //     })))
+    //
+    // }
+    const PaymentId = (id:number) => {
         return (PaymentStructureEnums.filter(item => item.id === id).map(data => data.name))
 
     }
 
 
 
-    return (
-        <Fragment >
-            <div className="  ">
-        <h5 className="text-center">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
+    return ( <Fragment>
+        <h5 className="text-center ">لطفا یکی از شرایط ذیل را برای ثبت سفارش انتخاب کنید :</h5>
 
-    <div className="containerT   p-2">
+        <div className=" containerT p-2">
             {/*<div className="d-block clearfix mb-2" onClick={closeModal}><svg*/}
             {/*    xmlns="http://www.w3.org/2000/svg"*/}
             {/*    width="24" height="24"*/}
@@ -66,7 +72,7 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
             {/*        y2="18"></line><line*/}
             {/*            x1="6" y1="6" x2="18" y2="18"></line></svg></div>*/}
             <table
-                className="table table-bordered bg-light-warning mb-4">
+                className="table table-bordered  bg-light-warning mb-4">
                 <thead>
                     <tr style={{ fontSize: '10px' }}>
 
@@ -76,13 +82,13 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
                         <th style={{ fontSize: '10px' }} className="text-center">بازه</th>
                         <th style={{ fontSize: '10px' }} className="text-center">فی</th>
 
-                        <th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>
+                        {/*<th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>*/}
                         <th style={{ fontSize: '10px' }} className="text-center">توضیحات</th>
                         <th style={{ fontSize: '10px' }} className="text-center">عملیات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {productSupplyConditions.productSupplyConditions.map((contact, index) =>
+                    {productSupplyConditions ? productSupplyConditions.productSupplyConditions.map((contact:any, index:number) =>
 
                         <tr className='text-center'>
                             <td>{index + 1}</td>
@@ -96,26 +102,27 @@ const ConditionSalesBordAdmin = ({ productSupplyConditions, handelClick, closeMo
 
 
                             <td>{contact.price}</td>
-                            <td>{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>
+                            {/*<td>{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>*/}
 
-                            <td title={contact.comment}>{contact.comment?contact.comment.substring(0,10)+ "...":""}</td>
+                            <td title={contact.comment}>{contact.comment ? contact.comment.substring(0, 10) + "..." : ""}</td>
+
                             <td className="text-center">
                                 <ul className="table-controls">
 
-                                    <li><Link className="btn btn-success" data-toggle="tooltip" data-placement="top"
+                                    <li><Link to='#' className="btn btn-success" data-toggle="tooltip" data-placement="top"
                                         onClick={() => handelClick(productSupplyConditions, contact.id)} >
                                         ثبت درخواست                           </Link></li>
 
                                 </ul>
                             </td>
                         </tr>
-                    )}
+                    ) : <tr className="text-center "><td colSpan={7} className="text-danger">این عرضه برای شما قابل درخواست نمی باشد</td></tr>}
 
                 </tbody>
             </table>
         </div>
-        </div>
         </Fragment>
+
     )
 }
-export default ConditionSalesBordAdmin
+export default ConditionSalesBordCustomer

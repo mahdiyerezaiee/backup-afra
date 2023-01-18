@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Footer= () => {
+const Footer:React.FC= () => {
     return (<footer>
         <div className="footer-wrapper" style={{background:'#fafafa'}}>
             <div className="footer-section f-section-1">

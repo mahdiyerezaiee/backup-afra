@@ -16,7 +16,10 @@ const customStyles = {
     }
 
 }
-const ModalGroupWork = ({open , close ,success , error}) => {
+interface Props{
+    open:any , close:any ,success:any , error:any
+}
+const ModalGroupWork :React.FC<Props>= ({open , close ,success , error}) => {
    
     return( <Modal
         isOpen={open}

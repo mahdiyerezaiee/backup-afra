@@ -8,6 +8,7 @@ import { GetAllShippingCompanies } from '../../../services/ShippingService';
 import { editOrder } from '../../../services/orderService';
 import { ClipLoader } from "react-spinners";
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const customStyles = {
     content: {
@@ -24,13 +25,17 @@ const customStyles = {
     }
 
 }
-const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => {
+interface Props{
+    modalIsOpen:any, closeModal:any, orderDetailId:any, Order:any
+
+}
+const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetailId, Order }) => {
     const [shippingCompany, setShippingCompanys] = useState([]);
     const [shippingCompanyId, setShippingCompanysId] = useState(0);
     const [shippingContract, setShippingContract] = useState([]);
     const [shippingContractId, setShippingContractId] = useState(0);
     let [loading, setLoading] = useState(false);
-    const roles = useSelector(state => state.roles)
+    const roles = useSelector((state:RootState) => state.roles)
     console.log(orderDetailId)
     const getShippingCompany = async () => {
         try {
@@ -42,7 +47,7 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
             console.log(error);
         }
     }
-    const getShippingContractCompany = async (id) => {
+    const getShippingContractCompany = async (id:number) => {
         try {
             const { data, status } = await GetShoppingContractWithCompany(id);
 
@@ -60,15 +65,15 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
     }, [])
 
     const shippingCompanySelect = () => {
-        return (shippingCompany.map(data => ({ label: data.name, value: data.id })))
+        return (shippingCompany.map((data:any) => ({ label: data.name, value: data.id })))
     }
     const shippingContractSelect = () => {
         if (shippingContract !== null) {
-            return (shippingContract.map(data => ({ label: data.contractNumber, value: data.id })))
+            return (shippingContract.map((data:any) => ({ label: data.contractNumber, value: data.id })))
         }
 
     }
-    const handelSubmit = async (e) => {
+    const handelSubmit = async (e:any) => {
         setLoading(true)
         console.log('hi im here');
         e.preventDefault();
@@ -184,8 +189,8 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
 
                                 placeholder="شرکت باربری"
                                 options={shippingCompanySelect()}
-                                maxMenuHeight='150px'
-                                onChange={(e) => {
+                                maxMenuHeight={150}
+                                onChange={(e:any) => {
                                     setShippingCompanysId(e.value)
                                     getShippingContractCompany(Number(e.value))
                                 }} />
@@ -200,9 +205,10 @@ const ShippingSelected = ({ modalIsOpen, closeModal, orderDetailId, Order }) => 
                                 <Select
                                     placeholder="قراداد باربری"
                                     options={shippingContractSelect()}
-                                    maxMenuHeight='150px'
+                                    maxMenuHeight={150}
 
-                                    onChange={(e) => {
+
+                                    onChange={(e:any) => {
                                         setShippingContractId(e.value)
                                     }} />
                             </div>

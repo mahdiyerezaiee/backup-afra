@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import DashbordCustomer from '../../../Client/Dashboard/Component/dashbordCustomer';
 import DashbordGuess from '../../../Client/Dashboard/Component/dashbordGuess';
 import DashbordAdmin from '../../../Admin/Dashboard/dashbordAdmin';
+import { AppDispatch, RootState } from '../../../store';
 
 
 
-const Dashboard = () => {
-    const roles=useSelector(state => state.roles);
+const Dashboard :React.FC= () => {
+    const roles=useSelector((state:RootState) => state.roles);
     console.log(roles);
 
   if (roles.length>0 && roles.includes(1)) {
@@ -22,6 +23,11 @@ const Dashboard = () => {
   else if (roles.includes(7)||roles.includes(3)||roles.includes(4) ||roles.includes(5) ||roles.includes(6) ||roles.includes(8)) {
     return(
     <DashbordAdmin/>)
+  }
+  else{
+    return(
+    <div></div>
+    )
   }
 }
 
