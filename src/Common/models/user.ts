@@ -1,4 +1,5 @@
 export  interface NewUser {
+    companyId?: number
     id?: number,
     userName?: string,
     email?: string,

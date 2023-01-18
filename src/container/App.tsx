@@ -76,7 +76,7 @@ const App:React.FC=()=>{
         rtl={true}
         pauseOnFocusLoss={false}
         draggable
-        pauseOnHover={false} />
+         />
         </ProSidebarProvider>
     </BrowserRouter>
   )
