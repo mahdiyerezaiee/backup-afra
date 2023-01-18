@@ -5,6 +5,8 @@ import {toast} from "react-toastify";
 import Select from "react-select";
 import {NavLink,useNavigate} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
+import {validateRequired} from "../../../Utils/validitionParams";
+import {Field, Form, Formik} from "formik";
 
 const NewNews = () => {
     const user=useSelector(state=>state.user);
@@ -46,8 +48,7 @@ const addNews = async ()=>{
     }
     setLoading(false)
 }
-const submit=(e)=>{
-        e.preventDefault()
+const submit=()=>{
         addNews()
 }
 return(
@@ -62,8 +63,25 @@ return(
             <div className='widget box shadow col-lg-4'>
 
 
-                <form className="col" >
-                    <div className="n-chk d-flex  mb-4">
+                <Formik
+                    initialValues={{
+                        title,
+                        message,
+                        creatorId,
+                        active
+                    }}
+                    enableReinitialize={true}
+                    onSubmit={values => {
+                        // same shape as initial values
+                        submit()
+                    }}>
+                    {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                        <Form  className="col" >
+
+                        <div className="n-chk d-flex  mb-4">
 
                         <div>
                             <label className="mr-2"> فعال  </label>
@@ -75,16 +93,19 @@ return(
                     <div className="form-group mb-4 textOnInput  align-content-between">
 
                         <label >عنوان</label>
-                        <input type="text" className="form-control opacityForInput" placeholder="عنوان اعلان" value={title} onChange={e => setTitle(e.target.value)} />
+                        <Field  validate={validateRequired} name="title" type="text" className="form-control opacityForInput" placeholder="عنوان اعلان" value={title} onChange={e => setTitle(e.target.value)} />
+                        {errors.title && touched.title && <div className="text-danger">{errors.title}</div>}
 
                     </div>
                     <div className="form-group mb-4 textOnInput">
                         <label >متن</label>
-                        <textarea   className="form-control opacityForInput" placeholder="متن اعلان" value={message} onChange={e => setMessage(e.target.value)}  rows='10'/>
+                        <Field  validate={validateRequired} name="message"   as="textarea"  className="form-control opacityForInput" placeholder="متن اعلان" value={message} onChange={e => setMessage(e.target.value)}  rows='10'/>
+                        {errors.message && touched.message && <div className="text-danger">{errors.message}</div>}
+
                     </div>
                     <div className='row'>
                         <div className='col-lg-6 '>
-                            <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
+                            <button disabled={loading} type="submit" className="btn btn-success float-left"  >تایید  <ClipLoader
 
                                 loading={loading}
                                 color="#ffff"
@@ -99,7 +120,10 @@ return(
 
 
 
-                </form>
+
+                        </Form>
+                    )}
+                </Formik>
             </div >
         </div >
     </div>

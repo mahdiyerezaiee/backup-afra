@@ -4,9 +4,10 @@ import {ClipLoader} from "react-spinners";
 
 import { toast } from 'react-toastify';
 
-import SimpleReactValidator from 'simple-react-validator';
 
 import { GetShippingCompany, GetShoppingContract, SetShippingCompany } from "../../../../../services/ShippingService";
+import {Field, Form, Formik} from "formik";
+import {validatAlpha, validatNumber} from "../../../../../Utils/validitionParams";
 
 
 const EditShippingCompany = () => {
@@ -46,35 +47,11 @@ const EditShippingCompany = () => {
 
         }
     };
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u0660-u0669]+$/,) && params.indexOf(val) === -1;
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از عداد استفاده کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
 
 
-    const submit = async (event) => {
+
+    const submit = async () => {
         setLoading(true)
-        event.preventDefault();
         try {
             const { data, status } = await SetShippingCompany(ShippingCompany);
             if (status === 200) {
@@ -117,66 +94,83 @@ setLoading(false)
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
-
-                    <form>
-                        <div className="col-12 mb-3">
-
-
-                            <label className="form-check-label mb-3">
-
-                                <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
-                                فعال /غیرفعال
-                            </label>
-                        </div>
-                        <div className="form-group mb-4 textOnInput  align-content-between">
-
-                            <label>نام باربری</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="نام باربری"
-                                value={name} onChange={e => {
-                                    setName(e.target.value)
-                                    validator.current.showMessageFor("required");
-
-                                }} />
-                            {validator.current.message("required", name, "required|alpha")}
-
-                        </div>
-
-                        <div className="form-group mb-4 textOnInput">
-                            <label>کد</label>
-                            <input type="text" className="form-control opacityForInput" value={code} onChange={e => {
-                                setCode(e.target.value)
-                                validator.current.showMessageFor("required");
-
-                            }} />
-                            {validator.current.message("required", code, "required|numeric")}
-
-                        </div>
+                    <Formik
+                        initialValues={{
+                            id: Number(params.id),
+                            name,
+                            code,
+                            active: check
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
 
 
+                            <Form >
 
-                        <div className="form-group">
-                            <div className="form-check pl-0">
-                                <div className="custom-control custom-checkbox checkbox-info">
+                                <div className="col-12 mb-3">
+
+
+                                    <label className="form-check-label mb-3">
+
+                                        <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
+                                        فعال /غیرفعال
+                                    </label>
+                                </div>
+                                <div className="form-group mb-4 textOnInput  align-content-between">
+
+                                    <label>نام باربری</label>
+                                    <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="نام باربری"
+                                            value={name} onChange={e => {
+                                        setName(e.target.value)
+
+                                    }} />
+                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                                 </div>
-                            </div>
-                        </div>
-                        <div className='row justify-content-between'>
-                            <div className='col-6 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-left " onClick={submit}>تایید <ClipLoader
 
-                                    loading={loading}
-                                    color="#ffff"
-                                    size={15}
-                                /></button>                            </div>
-                            <div className='col-6 '>
-                                <NavLink to='/admin/shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
-                            </div>
-                        </div>
+                                <div className="form-group mb-4 textOnInput">
+                                    <label>کد</label>
+                                    <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={e => {
+                                        setCode(e.target.value)
+
+                                    }} />
+                                    {errors.code && touched.code && <div className="text-danger">{errors.code}</div>}
+
+                                </div>
 
 
-                    </form>
+
+
+                                <div className="form-group">
+                                    <div className="form-check pl-0">
+                                        <div className="custom-control custom-checkbox checkbox-info">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='row justify-content-between'>
+                                    <div className='col-6 '>
+                                        <button disabled={loading} type="submit" className="btn btn-success float-left " >تایید <ClipLoader
+
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
+                                    </div>
+                                    <div className='col-6 '>
+                                        <NavLink to='/admin/shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    </div>
+                                </div>
+
+
+                            </Form>
+                        )}
+                    </Formik>
                 </div >
             </div >
         </div>

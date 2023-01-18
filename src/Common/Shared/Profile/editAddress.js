@@ -2,9 +2,10 @@ import Select from "react-select";
 import {GetAddress, GetAllProvince, SetAddress} from "../../../services/addressService";
 import {toast} from "react-toastify";
 import React, {useEffect, useRef, useState} from "react";
-import SimpleReactValidator from "simple-react-validator";
 import {useNavigate , useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {Field, Form, Formik} from "formik";
+import {validateRequired, validatmin10, validatMobail, validatNumber} from "../../../Utils/validitionParams";
 
 const EditAddress = () => {
     const params =useParams()
@@ -27,36 +28,7 @@ const EditAddress = () => {
         setProvinceId(address.provinceId)
     }
     console.log(provinceId)
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
 
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u06F0-u06F9]+$/,);
-
-                }
-            },
-            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-                    return val.length >= options[0];
-                }, messageReplace: function messageReplace(message, options) {
-                    return message.replace(':min', options[0]);
-                } }
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'کد ملی را صحیح وارد کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const getProvince = async () => {
 
         const { data, status } = await GetAllProvince();
@@ -126,52 +98,64 @@ const EditAddress = () => {
               <div className='widget box shadow col-md-6 col-xs-12'>
 
 
-                  <form>
+                  <Formik
+                      initialValues={{
+                          id:0,
+                          provinceId,
+                          fullAddress,
+                          postalCode,receiverTel,receiverMobile
+                      }}
+                      enableReinitialize={true}
+                      onSubmit={values => {
+                          // same shape as initial values
+                          addressSetHandler()
+                      }}>
+                      {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                          <Form >
 
                       <div className="form-group mb-4 textOnInput">
                           <label>آدرس</label>
-                          <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=> {
+                          <Field  validate={validateRequired} name="fullAddress" type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=> {
                               setFulAddress(e.target.value)
-                              validator.current.showMessageFor("required");
 
                           }}/>
-                          {validator.current.message("required", receiverTel, "required")}
+                          {errors.fullAddress && touched.fullAddress && <div className="text-danger">{errors.fullAddress}</div>}
 
                       </div>
 
                       <div className="form-row mb-4 textOnInput">
                           <div className="form-group col-md-4">
                               <label >تلفن </label>
-                              <input type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=> {
+                              <Field  validate={validatNumber} name="receiverTel" type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=> {
                                   setreceiverTel(e.target.value)
-                                  validator.current.showMessageFor("required");
 
                               }}/>
-                              {validator.current.message("required", receiverTel, "required")}
+                              {errors.receiverTel && touched.receiverTel && <div className="text-danger">{errors.receiverTel}</div>}
 
                           </div>
 
                           <div className="form-group col-md-4">
 
                               <label > موبایل</label>
-                              <input type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=> {
+                              <Field  validate={validatMobail} name="receiverMobile"  type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=> {
                                   setreceiverMobile(e.target.value)
-                                  validator.current.showMessageFor("required");
 
                               }} />
-                              {validator.current.message("required", postalCode, "required|numeric|min:11")}
+                              {errors.receiverMobile && touched.receiverMobile && <div className="text-danger">{errors.receiverMobile}</div>}
 
                           </div>
                           <div className="form-group col-md-4">
 
                               <label >کد پستی</label>
-                              <input type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=> {
+                              <Field  validate={validatmin10} name="postalCode" type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=> {
                                   setpostalCode(e.target.value)
-                                  validator.current.showMessageFor("required");
 
 
                               }} />
-                              {validator.current.message("required", postalCode, "required|numeric|min:10")}
+                              {errors.postalCode && touched.postalCode && <div className="text-danger">{errors.postalCode}</div>}
 
                           </div>
                       </div>
@@ -218,7 +202,7 @@ const EditAddress = () => {
                       </div>
                       <div className='row justify-content-between mt-4'>
                           <div >
-                              <button  onClick={addressSetHandler} className="btn btn-success">ذخیره تغییرات</button>
+                              <button  type="submit" className="btn btn-success">ذخیره تغییرات</button>
                           </div>
                           <div >
                               <button  onClick={backHandel} className="btn btn-primary">بازگشت</button>
@@ -228,7 +212,9 @@ const EditAddress = () => {
 
 
 
-                  </form>
+                          </Form>
+                      )}
+                  </Formik>
               </div >
           </div >
 

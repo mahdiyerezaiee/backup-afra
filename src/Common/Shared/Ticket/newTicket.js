@@ -2,8 +2,9 @@ import {useState , useRef} from "react";
 import {useSelector} from "react-redux";
 import {setSupportRequessts, SetSupportRequestMessage} from "../../../services/TicketService";
 import {NavLink, useNavigate} from "react-router-dom";
-import SimpleReactValidator from "simple-react-validator";
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validateRequired, validatNumber} from "../../../Utils/validitionParams";
 
 const NewTicket = () => {
     const user = useSelector(state => state.user);
@@ -15,23 +16,7 @@ const NewTicket = () => {
     const [title , setTitle]=useState("")
     const [message ,setMessage]=useState("")
     let supportRequestId=0
-    const validator = useRef(new SimpleReactValidator({
-        validators:{
-            alpha:{
 
-                rule: (val ,params,validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i, )&& params.indexOf(val) === -1;
-                }
-            },
-
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-            alpha:"لطفا از حروف استفاده کنید"
-
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const sendTicket = {
         "supportRequestDto":{
             title,
@@ -69,8 +54,7 @@ const NewTicket = () => {
 
         await sendMessage()
     }
-    const submit = (e) => {
-        e.preventDefault()
+    const submit = () => {
 
         sendTicketHandler()
         Navigate("/admin/ticket")
@@ -87,33 +71,48 @@ const NewTicket = () => {
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
+                    <Formik
+                        initialValues={{
+                            title,
+                            creatorId:user.id,
+                            onlineChat: false,
+                            createDate :new Date(),
+                            supportRequestId,
+                            message,
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                    <form className="col" >
+
+
+                            <Form  className="col" >
                         
                         <div className="form-group mb-4 textOnInput  align-content-between">
 
                             <label >عنوان</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="عنوان " value={title}
+                            <Field  validate={validateRequired} name="title"  type="text" className="form-control opacityForInput" placeholder="عنوان " value={title}
                                    onChange={e => {
                                        setTitle(e.target.value)
-                                       validator.current.showMessageFor("alpha");
                                    }} />
-                            {validator.current.message("alpha", title, "required|alpha")}
+                            {errors.title && touched.title && <div className="text-danger">{errors.title}</div>}
 
                         </div>
                         <div className="form-group mb-4 textOnInput">
                             <label >پیام</label>
-                            <textarea   rows={10} className="form-control opacityForInput" placeholder="پیام " value={message}
+                            <Field  validate={validateRequired} name="message"   as="textarea" rows={10} className="form-control opacityForInput" placeholder="پیام " value={message}
                                         onChange={e => {
                                             setMessage(e.target.value)
-                                            validator.current.showMessageFor("required");
                                         }} />
-                            {validator.current.message("required", message, "required")}
+                            {errors.message && touched.message && <div className="text-danger">{errors.message}</div>}
 
                         </div>
                         <div className='row'>
                             <div className='col-lg-6 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
+                                <button disabled={loading} type="submit" className="btn btn-success float-left"  >تایید  <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
@@ -127,7 +126,9 @@ const NewTicket = () => {
 
 
 
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div >
             </div >
         </div>

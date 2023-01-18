@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import SimpleReactValidator from 'simple-react-validator';
 import { useNavigate, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -11,6 +10,8 @@ import afra from './afra.jpg';
 import LoginWithPassword from "./loginWithPassword";
 import { BiArrowBack } from 'react-icons/bi';
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatMobail} from "../../../Utils/validitionParams";
 
 
 
@@ -26,22 +27,7 @@ const Login = () => {
     
 
 
-   const validator = useRef(new SimpleReactValidator({
-validators:{
-    min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-        return val.length >= options[0];
-    }, messageReplace: function messageReplace(message, options) {
-        return message.replace(':min', options[0]);
-    } }
-}
-,
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد"
 
-
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const handelBack=(e)=>{
         e.preventDefault()
         history('sysplus')
@@ -59,8 +45,7 @@ validators:{
 
 
     }
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async () => {
         setLoading(true)
         setClick(true);
         const user = {
@@ -75,7 +60,7 @@ validators:{
 
         try {
 
-            if (validator.current.allValid()) {
+
 
                 if (getDataLogin().expiresAt < new Date().toUTCString()){
 
@@ -99,32 +84,11 @@ validators:{
                         });
                         setLoading(true)
                         localStorage.setItem('mobile', user.phoneNumber)
-
-
                         resetForm();
-
                         history('/verify', { replace: true });
-
                     }
-                    
                     sessionStorage.setItem('dataLogin', JSON.stringify(dataLogin));
-
-
-                }
-
-
-            }
-            else {
-                setClick(false);
-                validator.current.showMessages();
-
-                forceUpdate(1);
-            }
-
-
-
-
-        }
+                }}
         catch (error) {
         
             setClick(false);
@@ -157,26 +121,39 @@ mobileNo=mobile
                             <p className='mt-5'>برای استفاده از خدمات هولدینگ افرا، وارد حساب کاربری خود شوید .</p>
 
 
+                                <Formik
+                                    initialValues={{
+                                        mobile
 
-                            <form onSubmit={handleSubmit}>
+                                    }}
+                                    enableReinitialize={true}
+                                    onSubmit={values => {
+                                        // same shape as initial values
+                                        handleSubmit()
+                                    }}>
+                                    {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                                        <Form >
                             <div className=' mt-5 textOnInput ' style={{direction: 'ltr'}} >
                 <label>شماره موبایل</label>
 
-                            <input  type='text' name='mobile' className='form-control opacityForInput' value={mobile} placeholder='09121234567 ' maxLength="11" onChange={e => {
+                            <Field   type='text' name='mobile' className='form-control opacityForInput' value={mobile} placeholder='09121234567 ' maxLength="11" onChange={e => {
                             setMobile(e.target.value)
-                            validator.current.showMessageFor("required");
-                        }} />
+                        }}  validate={validatMobail} />
+
+                                {errors.mobile && touched.mobile && <div className="text-danger">{errors.mobile}</div>}
 
 
                             </div>
                             <div className='form-group' style={{height: "20px"}}>
-                        {validator.current.message("required", mobile, "required|min:11")}
                             </div>
                                 <div className='row'>
 
 
                                     <div className="col-6">
-                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={validator.current.allValid() && !loading? false: true}>
+                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={loading}>
                                             تایید و ادامه
                                             <ClipLoader
 
@@ -192,7 +169,9 @@ mobileNo=mobile
                                         <button className='   btn btn-primary mt-5 mb-5 float-right'  onClick={()=>setShow(false)}>ورود با رمز عبور</button>
                                     </div>
                                 </div>
-                            </form>
+                                        </Form>
+                                        )}
+                                </Formik>
 
                             </div>
                         }

@@ -5,10 +5,9 @@ import Select from "react-select";
 import Modal from "react-modal";
 import { orderSpliter } from "../../../services/orderService";
 
-import SimpleReactValidator from "simple-react-validator";
-import { GetOrderDetails } from '../../../services/orderService';
-import file from "../../../Admin/Order/Component/addressFile.xlsx";
 import {ClipLoader} from "react-spinners";
+import {validatAlpha, validatmin10, validatMobail, validatNumber} from "../../../Utils/validitionParams";
+import {Field, Form, Formik} from "formik";
 
 const customStyles = {
     content: {
@@ -64,9 +63,8 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
         return (cities.map(data => ({ label: data.name, value: data.id })))
     }
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
 
         try {
             const body = {
@@ -117,38 +115,7 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
         setLoading(false)
     }
 
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
 
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[ یكئآابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی  ]*$/i,) && params.indexOf(val) === -1;
-
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[0123456789]/,) && params.indexOf(val) === -1;
-
-
-                }
-            },
-            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-                return val.length >= options[0];
-              }, messageReplace: function messageReplace(message, options) {
-                return message.replace(':min', options[0]);
-              } }
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-         
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'از اعداد استفاده کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
 
     return (
         <Modal
@@ -165,8 +132,34 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
                     <div className='widget box shadow' style={{ width: '50rem'  }}>
 
 
-                        <form>
-                            <div className="d-block clearfix mb-2" onClick={closeModal}><svg
+                        <Formik
+                            initialValues={{
+                                idKharId: Number(idKharId),
+                                quantity: Number(quantity),
+                                allocationId: Number(allocationId),
+                                receiverUniqueId,
+                                traceCode,
+                                heavyWeightTruck,
+                                provinceName,
+                                fullAddress,
+                                postalCode,
+                                receiverTel,
+                                receiverMobile,
+                                receiverName, receiverId,
+                                measureUnitId: orderMeasuerId,
+
+                            }}
+                            enableReinitialize={true}
+                            onSubmit={values => {
+                                // same shape as initial values
+                                handelSubmit()
+                            }}>
+                            {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                                <Form >
+                                <div className="d-block clearfix mb-2" onClick={closeModal}><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24"
                                 viewBox="0 0 24 24" fill="none"
@@ -183,7 +176,7 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
                                 <div>
                                     <label className="mr-2"> امکان حمل با تریلی </label>
 
-                                    <input type="checkbox" defaultChecked={heavyWeightTruck} onChange={e => {
+                                    <Field type="checkbox" defaultChecked={heavyWeightTruck} onChange={e => {
                                         SetheavyWeightTruck(e.checked)
 
                                     }}
@@ -195,131 +188,121 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
                                 <div className="form-group  textOnInput col-md-2">
 
                                     <label >مقدار </label>
-                                    <input type="text" className="form-control" id="inputZip" value={quantity}
+                                    <Field  validate={validatNumber} name="quantity" type="text" className="form-control" id="inputZip" value={quantity}
                                            onChange={e => {
                                                setQuantity(e.target.value)
-                                               validator.current.showMessageFor("required");
                                            }} />
-                                    {validator.current.message("required", quantity, "required|numeric")}
 
+                                    {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
 
                                 </div>
                                 <div className="form-group  textOnInput col-md-2">
 
                                     <label >شناسه خرید </label>
-                                    <input type="text" className="form-control" id="inputZip" value={idKharId}
+                                    <Field  validate={validatNumber} name="idKharId" type="text" className="form-control" id="inputZip" value={idKharId}
                                            onChange={e => {
                                                SetidKharId(e.target.value)
-                                               validator.current.showMessageFor("required");
 
                                            }} />
-                                    {validator.current.message("required", idKharId, "required|numeric")}
+                                    {errors.idKharId && touched.idKharId && <div className="text-danger">{errors.idKharId}</div>}
 
                                 </div>
                                 <div className="form-group  textOnInput col-md-2">
 
                                     <label >کد رهگیری </label>
-                                    <input type="text" className="form-control" id="inputZip" value={traceCode}
+                                    <Field  validate={validatNumber} name="traceCode" type="text" className="form-control" id="inputZip" value={traceCode}
                                            onChange={e => {
                                                SetTraceCode(e.target.value)
-                                               validator.current.showMessageFor("required");
 
                                            }} />
-                                    {validator.current.message("required", traceCode, "required|numeric")}
+                                    {errors.traceCode && touched.traceCode && <div className="text-danger">{errors.traceCode}</div>}
 
                                 </div>
                                 <div className="form-group  textOnInput col-md-3">
 
                                     <label >شماره تخصیص </label>
-                                    <input type="text" className="form-control" id="inputZip" value={allocationId}
+                                    <Field  validate={validatNumber} name="allocationId" type="text" className="form-control" id="inputZip" value={allocationId}
                                            onChange={e => {
                                                setAllocationId(e.target.value)
-                                               validator.current.showMessageFor("required");
 
                                            }} />
-                                    {validator.current.message("required", allocationId, "required|numeric")}
+                                    {errors.allocationId && touched.allocationId && <div className="text-danger">{errors.allocationId}</div>}
+
                                 </div>
                                 <div className="form-group  textOnInput col-md-3">
 
                                     <label >شناسه یکتا </label>
-                                    <input type="text" maxLength="12" className="form-control" id="inputZip" value={receiverUniqueId}
+                                    <Field  validate={validatNumber} name="receiverUniqueId" type="text" maxLength="12" className="form-control" id="inputZip" value={receiverUniqueId}
                                            onChange={e => {
                                                SetReceiverUniqueId(e.target.value)
-                                               validator.current.showMessageFor("required");
 
                                            }} />
-                                    {validator.current.message("required", receiverUniqueId, "required|numeric|min:12")}
+                                    {errors.receiverUniqueId && touched.receiverUniqueId && <div className="text-danger">{errors.receiverUniqueId}</div>}
 
                                 </div>
 
                             </div>
                             <div className="form-group mb-4 textOnInput">
                                 <label>آدرس</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}
+                                <Field  validate={validatAlpha} name="fullAddress" type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}
                                        onChange={e => {
                                            setFulAddress(e.target.value)
-                                           validator.current.showMessageFor("required");
 
                                        }} />
-                                {validator.current.message("required", fullAddress, "required")}
+                                {errors.fullAddress && touched.fullAddress && <div className="text-danger">{errors.fullAddress}</div>}
 
                             </div>
 
                             <div className="form-row mb-4 textOnInput">
                                 <div className="form-group col-md-3">
                                     <label >نام تحویل گیرنده </label>
-                                    <input type="text" className="form-control" id="inputCity" value={receiverName} onChange={e => {
+                                    <Field  validate={validatAlpha} name="receiverName"  type="text" className="form-control" id="inputCity" value={receiverName} onChange={e => {
                                         setReceiverName(e.target.value)
-                                        validator.current.showMessageFor("required");
 
                                     }} />
-                                    {validator.current.message("required", receiverName, "required|alpha")}
+                                    {errors.receiverName && touched.receiverName && <div className="text-danger">{errors.receiverName}</div>}
 
                                 </div>
 
                                 <div className="form-group col-md-3">
                                     <label >کد ملی تحویل گیرنده </label>
-                                    <input type="text" className="form-control" id="inputCity" value={receiverId} maxLength="10" onChange={e => {
+                                    <Field  validate={validatmin10} name="receiverId" type="text" className="form-control" id="inputCity" value={receiverId} maxLength="10" onChange={e => {
                                         SetreceiverId(e.target.value)
-                                        validator.current.showMessageFor("required");
 
                                     }} />
-                                    {validator.current.message("required", receiverId, "required|numeric|min:10")}
+                                    {errors.receiverId && touched.receiverId && <div className="text-danger">{errors.receiverId}</div>}
 
                                 </div>
                                 <div className="form-group col-md-2">
                                     <label >تلفن </label>
-                                    <input type="text" className="form-control" id="inputCity" value={receiverTel} onChange={e => {
+                                    <Field  validate={validatNumber} name="receiverTel" type="text" className="form-control" id="inputCity" value={receiverTel} onChange={e => {
                                         setreceiverTel(e.target.value)
-                                        validator.current.showMessageFor("required");
 
                                     }} />
-                                    {validator.current.message("required", receiverTel, "required|numeric")}
+                                    {errors.receiverTel && touched.receiverTel && <div className="text-danger">{errors.receiverTel}</div>}
 
                                 </div>
 
                                 <div className="form-group col-md-2">
 
                                     <label > موبایل</label>
-                                    <input type="text" className="form-control" maxLength='11' id="inputZip" value={receiverMobile}
+                                    <Field  validate={validatMobail} name="receiverMobile" type="text" className="form-control" maxLength='11' id="inputZip" value={receiverMobile}
                                            onChange={e => {
                                                setreceiverMobile(e.target.value)
-                                               validator.current.showMessageFor("required");
 
                                            }} />
-                                    {validator.current.message("required", receiverMobile, "required|numeric|min:11")}
+                                    {errors.receiverMobile && touched.receiverMobile && <div className="text-danger">{errors.receiverMobile}</div>}
 
                                 </div>
                                 <div className="form-group col-md-2">
 
                                     <label >کد پستی</label>
-                                    <input type="text" className="form-control" id="inputZip" maxLength="10" value={postalCode}
+                                    <Field  validate={validatmin10} name="postalCode" type="text" className="form-control" id="inputZip" maxLength="10" value={postalCode}
                                            onChange={e => {
                                                setpostalCode(e.target.value)
-                                               validator.current.showMessageFor("required");
 
                                            }} />
-                                    {validator.current.message("required", postalCode, "required|numeric|min:10")}
+                                    {errors.postalCode && touched.postalCode && <div className="text-danger">{errors.postalCode}</div>}
 
                                 </div>
 
@@ -360,7 +343,7 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
                             <div className='row justify-content-between'>
 
                                 <div className='col-6 '>
-                                    <button disabled={loading || ostanId === 0 || !validator.current.allValid()} type="submit" className="btn btn-primary" onClick={handelSubmit}>تایید<ClipLoader
+                                    <button disabled={loading || ostanId === 0 } type="submit" className="btn btn-primary" >تایید<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -374,7 +357,9 @@ const AddAdressCustomerForOrder = ({ closeModal, isOpenAddress, orderDetailId, o
 
 
 
-                        </form>
+                        </Form>
+                            )}
+                        </Formik>
                     </div >
 
         </Modal>

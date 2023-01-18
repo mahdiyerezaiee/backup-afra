@@ -3,13 +3,12 @@ import Modal from 'react-modal';
 import {DeleteAttachments, SetAttachmentType} from "../services/attachmentService";
 import {toast} from "react-toastify";
 import {useState} from "react"
-import InputMask from "./InputMask";
 import DatePicker, {DateObject} from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {useRef} from "react";
-import SimpleReactValidator from "simple-react-validator";
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatmin10, validatNumber} from "./validitionParams";
 
 const attachmet = window.globalThis.stie_att
 const customStyles = {
@@ -52,28 +51,7 @@ const closeModelDelete = () => {
         value,
         dueDate: new Date(),
     }
-    const validator = useRef(new SimpleReactValidator({
-        validators:{
 
-            numeric:{
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val,/^[u06F0-u06F9]+$/,)&& params.indexOf(val) === -1  ;
-
-                }
-            },
-            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-                    return val.length >= options[0];
-                }, messageReplace: function messageReplace(message, options) {
-                    return message.replace(':min', options[0]);
-                } }
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-            numeric: 'لطفا عدد وارد کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const submitAttachment = async () => {
         setLoading(true)
         try {
@@ -180,6 +158,25 @@ const closeModelDelete = () => {
                         height: chacked === true ? "12.5rem" : '25rem'
                     }} src={`${attachmet}${item.path}`} className="img-fluid m-auto" alt={item.name}/>
                 </div>
+                <Formik
+                    initialValues={{
+                        attachmentId: item.id,
+                        name: '',
+                        attachmentTypeId: 2,
+                        trackingCode,
+                        value,
+                        dueDate: new Date(),
+                    }}
+                    enableReinitialize={true}
+                    onSubmit={values => {
+                        // same shape as initial values
+                        submitAttachment()
+                    }}>
+                    {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                        <Form >
                 {!isUser ? <div className="row ">
                         {item.trackingCode ? null :
                             <div className="col-6 mb-2 ">
@@ -196,22 +193,21 @@ const closeModelDelete = () => {
 
                                     <div className="col-lg-3">
                                         <label>شماره چک</label>
-                                        <input hidden={item.trackingCode} className="form-control opacityForInput  mb-4"
+                                        <Field  validate={validatNumber} name="trackingCode" hidden={item.trackingCode} className="form-control opacityForInput  mb-4"
                                                type="text" value={trackingCode}
                                                onChange={e =>{ setTrackingCode(e.target.value)
-                                                   validator.current.showMessageFor("required");
                                                }} />
-                                        {validator.current.message("required", trackingCode, "required|numeric")}
+                                        {errors.trackingCode && touched.trackingCode && <div className="text-danger">{errors.trackingCode}</div>}
+
                                         {item.trackingCode?<p className=" img-caption p-3 border">{item.trackingCode}</p>  :null}
 
                                     </div>
                                     <div className="col-lg-3">
                                         <label>مبلغ چک</label>
-                                        <input hidden={item.value} className="  form-control opacityForInput  mb-4"
+                                        <Field  validate={validatNumber} name="value" hidden={item.value} className="  form-control opacityForInput  mb-4"
                                                type="text" value={value} onChange={e => {setValue(e.target.value)
-                                            validator.current.showMessageFor("required");
                                         }} />
-                                        {validator.current.message("required", value, "required|numeric")}
+                                        {errors.value && touched.value && <div className="text-danger">{errors.value}</div>}
                                         {item.value?<p className=" img-caption p-3 border">{formatter.format(item.value)}</p>  :null}
                                     </div>
 
@@ -238,7 +234,7 @@ const closeModelDelete = () => {
                                     </div>
 
                                     {item.trackingCode ? null : <div className="col-3 text-center">
-                                        <button disabled={loading} className="btn btn-success  float-right" onClick={submitAttachment}>ثبت سند
+                                        <button type="submit" disabled={loading} className="btn btn-success  float-right" >ثبت سند
                                             مالی
                                             <ClipLoader
 
@@ -254,6 +250,10 @@ const closeModelDelete = () => {
                             : ""}
                     </div>
                     : null}
+
+                        </Form>
+                    )}
+                </Formik>
                 <div className=' d-block   '>
                     <div className='m-1'>
                         <button disabled={chacked||loading} hidden={isUser && orderStatus >= 3} onClick={()=>openModelDelete()

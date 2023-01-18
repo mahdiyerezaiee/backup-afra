@@ -1,27 +1,16 @@
 import react, { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import {ClipLoader} from "react-spinners";
-
 import { toast } from 'react-toastify';
-
-import SimpleReactValidator from 'simple-react-validator';
-
 import { SetShippingCompany } from "../../../../../services/ShippingService";
-
-
+import {validatAlpha, validateRequired, validatNumber} from "../../../../../Utils/validitionParams";
+import {Field, Form, Formik} from "formik";
 const NewShippingCompany = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false);
-
     const [code, setCode] = useState(0)
     const [check, setChek] = useState(true);
-
-
-
-
-
-
 
     const ShippingCompany = {
         "shippingCompany"  :{
@@ -32,35 +21,10 @@ const NewShippingCompany = () => {
         }
 
     };
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u0660-u0669]+$/,) && params.indexOf(val) === -1;
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از عداد استفاده کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
 
 
-    const submit = async (event) => {
+    const submit = async () => {
        setLoading(true)
-        event.preventDefault();
         try {
             const { data, status } = await SetShippingCompany(ShippingCompany);
             if (status === 200) {
@@ -80,14 +44,11 @@ const NewShippingCompany = () => {
 
         }
 
-
-
         catch (error) {
             console.log(error);
         }
 
-
-setLoading(false)
+        setLoading(false)
     };
 
 
@@ -103,8 +64,23 @@ setLoading(false)
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
+                    <Formik
+                        initialValues={{
+                            name,
+                            code,
+                            createDate: new Date(),
+                            active:check
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                    <form>
+
+
+                            <Form >
 
                         <div className="col-12 mb-3">
 
@@ -118,24 +94,22 @@ setLoading(false)
                         <div className="form-group mb-4 textOnInput  align-content-between">
 
                             <label>نام باربری</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="نام باربری"
+                            <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="نام باربری"
                                 value={name} onChange={e => {
                                     setName(e.target.value)
-                                    validator.current.showMessageFor("required");
 
                                 }} />
-                            {validator.current.message("required", name, "required|alpha")}
+                            {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                         </div>
 
                         <div className="form-group mb-4 textOnInput">
                             <label>کد</label>
-                            <input type="text" className="form-control opacityForInput" value={code} onChange={e => {
+                            <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={e => {
                                 setCode(e.target.value)
-                                validator.current.showMessageFor("required");
 
                             }} />
-                            {validator.current.message("required", code, "required|numeric")}
+                            {errors.code && touched.code && <div className="text-danger">{errors.code}</div>}
 
                         </div>
 
@@ -151,7 +125,7 @@ setLoading(false)
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-6 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-left " onClick={submit}>تایید <ClipLoader
+                                <button disabled={loading} type="submit" className="btn btn-success float-left " >تایید <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
@@ -164,7 +138,9 @@ setLoading(false)
                         </div>
 
 
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div >
             </div >
         </div>

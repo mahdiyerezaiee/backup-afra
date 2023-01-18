@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import {  SetGroup } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatAlpha} from "../../../Utils/validitionParams";
 
 
 
@@ -11,9 +13,8 @@ const NewWareHouseType = () => {
     const navigate=useNavigate();
     const [loading, setLoading] = useState(false);
     const [name, Setname] = useState('')
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
         try {
             const body={
             group:{
@@ -54,18 +55,31 @@ const NewWareHouseType = () => {
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-12 col-md-6 col-xs-12'>
 
+                    <Formik
+                        initialValues={{
+                            id:0,
+                            entityTypeId:4,
+                            name,
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                    <form className='form-group col-md-10'>
+                            <Form className='form-group col-md-10' >
                         <div className='form-group '>
 
                             <div className="input-group  mb-3">
-                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
 
+                                {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >
                                         ثبت
                                         <ClipLoader
 
@@ -78,7 +92,9 @@ const NewWareHouseType = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </Form>
+                            )}
+                    </Formik>
                 </div>
             </div>
         </div>
