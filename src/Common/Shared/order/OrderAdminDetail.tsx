@@ -33,7 +33,6 @@ const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order , attachments, han
     const [modalIsOpeninvoice, setIsOpeninvoice] = useState(false);
     const [modalIsOpen, setIsOpen] = useState(false);
     let newAttachmnet=attachments.filter((item:any)=>item.deleted===false)
-
     const getSupplyCode = async () => {
         try {
             const {data , status}= await GetAllProductSupply(orderDetail[0].productSupplyId)
@@ -119,7 +118,7 @@ const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order , attachments, han
             </div>
 
             <OrderConfirmation id={order.id} modalIsOpen={modalIsOpen} closeModal={closeModal} orderStatusId={id}/>
-            <OrderEdit id={idEdit} closeModal={closeModalEdit} modalIsOpen={modalIsOpenEdit} />
+            <OrderEdit id={order.id} closeModal={closeModalEdit} modalIsOpen={modalIsOpenEdit} />
 
 
         </div> )
