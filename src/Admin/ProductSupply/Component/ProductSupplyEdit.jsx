@@ -8,10 +8,11 @@ import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import {GetAllProductSupply, SetProductSupply} from '../../../services/productSupplyService';
 import {toast} from 'react-toastify';
-import {useRef} from "react";
-import SimpleReactValidator from "simple-react-validator";
+
 import ProductSupplyCondition from "../Child/Conditions/Component/ProductSupplyCondition";
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
 
 
 const ProductSupplyEdit = () => {
@@ -62,31 +63,7 @@ const ProductSupplyEdit = () => {
 
         getProductSupply()
     }, [])
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
 
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u06F0-u06F9]+$/,) && params.indexOf(val) === -1 && val > 0;
-
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از اعداد استفاده کنید'
-        }
-        , element: message => <p style={{color: 'red'}}>{message}</p>
-    }));
     const getProdcutForCombo = async () => {
 
         try {
@@ -167,16 +144,14 @@ const ProductSupplyEdit = () => {
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
             setendDate(value.add(270,'minute').toDate())
-            validator.current.showMessageFor("required");
 
         }
     }
 
 
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
         const getwareId = () => {
             return Productwarehouse.filter(data => data.id !== 0).map(data => data.id)[0]
         }
@@ -205,7 +180,6 @@ const ProductSupplyEdit = () => {
         }
 
         try {
-            if (validator.current.allValid()) {
 
                 const {data, status} = await SetProductSupply(body)
                 if (status === 200) {
@@ -222,12 +196,7 @@ const ProductSupplyEdit = () => {
                     navigate(-1)
 
                 }
-            } else {
 
-                validator.current.showMessages();
-
-                forceUpdate(1);
-            }
             setLoading(false)
         } catch (error) {
             console.log(error);
@@ -255,8 +224,33 @@ const ProductSupplyEdit = () => {
             </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-6 col-xs-12'>
-                    <form>
-                        <div className="form-group mt-1 mb-3 textOnInput ">
+                    <Formik
+                        initialValues={{
+
+                            id: params.id,
+                            productId,
+                            productWareHouseId,
+                            createDate,
+                            cottageCode,
+                            endDate,
+                            measureUnitId,
+                            quantity,
+                            active,
+                            comment,
+                            name,
+                            price,
+
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                            <Form >                        <div className="form-group mt-1 mb-3 textOnInput ">
                             <div className='form-row'>
 
                                 <div className="col-md-6 col-xs-12 mb-4">
@@ -272,8 +266,6 @@ const ProductSupplyEdit = () => {
                                                 onChange={e => {
                                                     setProductId(e.value)
                                                     Prodcutware(e.value)
-                                                    validator.current.showMessageFor("required");
-
                                                 }}
                                             />
                                             <p style={{color: 'red'}}>لطفا این فیلد را پر کنید</p>
@@ -288,7 +280,6 @@ const ProductSupplyEdit = () => {
                                             setProductId(e.value)
                                             Prodcutware(e.value)
                                             ProductMeasure(productValue[0].id)
-                                            validator.current.showMessageFor("required");
 
                                         }}
                                     />)}
@@ -308,8 +299,6 @@ const ProductSupplyEdit = () => {
                                         onChange={e => {
                                             setproductWareHouseId(e.value)
 
-                                            validator.current.showMessageFor("required");
-
                                         }}
                                     />
 
@@ -325,90 +314,80 @@ const ProductSupplyEdit = () => {
                             <div className='form-row'>
                                 <div className='col-12 mb-4'>
                                     <label > شناسه عرضه</label>
-                                    <input type="text" className="form-control opacityForInput" value={name} onChange={e => {
+                                    <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={e => {
                                         setName(e.target.value)
-                                        validator.current.showMessageFor("required");
 
                                     }} />
-                                    {validator.current.message("required", name, "required")}
-                                </div>
-                                <div className="col-md-6 col-xs-12 mb-3">
-                                    <label>شماره کوتاژ</label>
-                                    <input type="text" className="form-control opacityForInput" value={cottageCode}
-                                           onChange={e => {
-                                               setcottageCode(e.target.value)
-                                               validator.current.showMessageFor("required");
-
-                                           }}/>
-                                    {validator.current.message("required", cottageCode, "required|numeric")}
+                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                                 </div>
-                                <div className="col-md-6 col-xs-12">
-                                    <label>مقدار عرضه</label>
-                                    <input type="text" className="form-control opacityForInput" value={formatter.format(quantity) }
-                                           onChange={e => {
-                                               setQuantity(Number(e.target.value.replaceAll(",",'')))
-                                               validator.current.showMessageFor("required");
+                                <div className="col-6">
+                                    <label >شماره کوتاژ</label>
+                                    <Field  validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={e => {
+                                        setcottageCode(e.target.value)
 
-                                           }}/>
-                                    {validator.current.message("required", quantity, "required|numeric")}
+                                    }} />
+                                    {errors.cottageCode && touched.cottageCode && <div className="text-danger">{errors.cottageCode}</div>}
+
+                                </div>
+                                <div className="col-6">
+                                    <label >مقدار عرضه</label>
+                                    <Field  validate={validatNumber} name="quantity"  type="text" className="form-control opacityForInput" value={formatter.format(quantity)}
+                                            onChange={e => {
+                                                setQuantity(Number(e.target.value.replaceAll("," ,"")))
+
+                                            }} />
+                                    {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
                                 </div>
 
-                            </div>
-                        </div>
-                        <div className="form-group mb-1 textOnInput  ">
-                            <div className='form-row'>
+                            </div></div>
+                                <div className="form-group mb-4 textOnInput  ">
+                                    <div className='form-row'>
 
-                                <div className="col-md-6 col-sm-6 ">
-                                    <label>قیمت</label>
-                                    <input type="text" className="form-control opacityForInput" value={formatter.format(price)}
-                                           onChange={e => {
-                                               setPrice(e.target.value.replaceAll(",",""))
-                                               validator.current.showMessageFor("required");
+                                        <div className="col-6">
+                                            <label >قیمت</label>
+                                            <Field  validate={validatNumber} name="price" type="text" className="form-control opacityForInput" value={formatter.format(price)}
+                                                    onChange={e => {
+                                                        setPrice(Number(e.target.value.replaceAll(",","")))
 
-                                           }}/>
-                                    {validator.current.message("required", price, "required|numeric")}
-                                </div>
-                                <div className=" col-lg-6 col-sm-6 ">
-                                    <div className=" mb-2 " style={{position: 'relative'}}>
-                                        <label style={{
-                                            position: 'absolute',
-                                            zIndex: '1',
-                                            top: '-15px',
-                                            right: '10px',
-                                            background: 'white',
-                                            padding: '0 8px'
-                                        }}>تاریخ اعتبار</label>
-                                        <div className='form-group '>
+                                                    }} />
+                                            {errors.price && touched.price && <div className="text-danger">{errors.price}</div>}
+
+                                        </div>
+
+                                        <div className="col-6">
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>تاریخ اعتبار</label>
+
                                             <DatePicker
                                                 calendar={persian}
 
                                                 locale={persian_fa}
-                                                style={{height: '45.39px', width: '100%', textAlign: 'center'}}
+                                                style={{ height: '45.39px', width: '100%', textAlign: 'center', }}
                                                 value={endDate}
-                                                onChange={handleChangeExpire}
-                                            />
+                                                onChange={
+                                                    handleChangeExpire
+                                                } />
+
 
                                         </div>
-                                    </div>
+                                    </div></div>
+                                <div className="form-group mb-4 textOnInput" style={{ position: 'relative' }}>
+
+
+                                </div>
+                                <div className="form-group mb-4 textOnInput">
+                                    <label >توضیحات</label>
+
+                                    <Field  validate={validatNumber} name="comment"  as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
+                                        setComment(e.target.value)
+
+                                    }} />
+                                    {errors.comment && touched.comment && <div className="text-danger">{errors.comment}</div>}
+
                                 </div>
 
-                            </div>
 
-                        </div>
-
-
-                        <div className="form-group mb-4 textOnInput ">
-                            <label>توضیحات</label>
-
-                            <textarea type="textarea" className="form-control opacityForInput " rows='4'
-                                      placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
-                                setComment(e.target.value)
-
-                            }}/>
-
-                        </div>
-                        <div className='form-group mb-4 textOnInput'>
+                                <div className='form-group mb-4 textOnInput'>
                             <label>شرایط پرداخت</label>
                             <ProductSupplyCondition quantity={quantity} />
                         </div>
@@ -431,7 +410,9 @@ const ProductSupplyEdit = () => {
                             </div>
                         </div>
 
-                    </form>
+                    </Form>
+                            )}
+                    </Formik>
                 </div>
             </div>
 

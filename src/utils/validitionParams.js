@@ -7,7 +7,13 @@ export function validateEmail(value) {
     }
     return error;
 }
-
+export function validateRequired(value) {
+    let error;
+    if (!value) {
+        error = 'پرکردن این فیلد الزامی می باشد';
+    }
+    return error;
+}
 export function validatAlpha(value) {
     let error;
     if (!value) {

@@ -7,10 +7,10 @@ import { SupplyTypesEnums } from '../../../Common/Enums/SupplyTypesEnums';
 import { toast } from 'react-toastify';
 import { useNavigate, NavLink, useParams } from 'react-router-dom';
 import Select from 'react-select';
-
-import SimpleReactValidator from "simple-react-validator";
 import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
 
 
 const EditeSupply = () => {
@@ -59,29 +59,6 @@ const EditeSupply = () => {
             console.log(error);
         }
     }
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u0660-u0669]+$/,) && params.indexOf(val) === -1;
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از عداد استفاده کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const getWareHouses = async () => {
         try {
 
@@ -149,9 +126,8 @@ const EditeSupply = () => {
         return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
     }
 
-    const submit = async (event) => {
+    const submit = async () => {
         setLoading(true)
-        event.preventDefault();
         try {
             const supply = {
                 "supply": {
@@ -202,7 +178,29 @@ const EditeSupply = () => {
             </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-7 col-xs-12'>
-                    <form  className='col'>
+                    <Formik
+                        initialValues={{
+                            id: params.id,
+                            supplyTypeId,
+                            shippingStatusId,
+                            supplierId,
+                            productId,
+                            measureUnitId,
+                            quantity,
+                            wareHouseId,
+                            contractNumber,
+                            cottageCode,
+                            comment
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+                            <Form  className='col'>
                         <div className="n-chk d-flex  mb-4">
 
                             {/* <div>
@@ -230,7 +228,6 @@ const EditeSupply = () => {
                                         onChange={e => {
                                             setProductId(e.value)
 
-                                            validator.current.showMessageFor("required");
 
                                         }}
                                     />
@@ -250,7 +247,6 @@ const EditeSupply = () => {
                                         onChange={e => {
                                             setMeasureUnitId(e.value)
 
-                                            validator.current.showMessageFor("required");
 
                                         }}
                                     />
@@ -271,7 +267,6 @@ const EditeSupply = () => {
                                         onChange={e => {
                                             setWareHouseId(e.value)
 
-                                            validator.current.showMessageFor("required");
 
                                         }}
                                     />
@@ -294,7 +289,6 @@ const EditeSupply = () => {
                                             onChange={e => {
                                                 setSupplierId(e.value)
 
-                                                validator.current.showMessageFor("required");
 
                                             }}
                                         />
@@ -314,7 +308,6 @@ const EditeSupply = () => {
                                             onChange={e => {
                                                 setShippingStatusId(e.value)
 
-                                                validator.current.showMessageFor("required");
 
                                             }}
                                         />
@@ -334,7 +327,6 @@ const EditeSupply = () => {
                                             onChange={e => {
                                                 setSupplyTypeId(e.value)
 
-                                                validator.current.showMessageFor("required");
 
                                             }}
                                         />
@@ -349,44 +341,42 @@ const EditeSupply = () => {
                                 <div className='form-row'>
                                     <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                         <label >مقدار</label>
-                                        <input type="text" className=" value form-control opacityForInput" value={formatter.format(quantity)}
+                                        <Field  validate={validatNumber} name="quantity" type="text" className=" value form-control opacityForInput" value={formatter.format(quantity)}
                                                onChange={e => {
                                                    setQuantity(e.target.value.replaceAll(",",''))
-                                                   validator.current.showMessageFor("required");
 
                                                }} />
-                                        {validator.current.message("required", quantity, "required|numeric")}
+                                        {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
+
                                     </div>
                                     <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                         <label >کد کوتاژ</label>
-                                        <input type="text" className="form-control opacityForInput" value={cottageCode}
+                                        <Field  validate={validatNumber} name="cottageCode" className="form-control opacityForInput" value={cottageCode}
                                                onChange={e => {
                                                    setCottageCode(e.target.value)
-                                                   validator.current.showMessageFor("required");
 
                                                }} />
-                                        {validator.current.message("required", quantity, "required|numeric")}
+                                        {errors.cottageCode && touched.cottageCode && <div className="text-danger">{errors.cottageCode}</div>}
+
                                     </div>
                                     <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                         <label >شماره قرارداد</label>
-                                        <input type="text" className="form-control opacityForInput" value={contractNumber}
+                                        <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" value={contractNumber}
                                                onChange={e => {
                                                    setContractNumber(e.target.value)
-                                                   validator.current.showMessageFor("required");
 
                                                }} />
-                                        {validator.current.message("required", contractNumber, "required|numeric")}
                                     </div>
+                                    {errors.contractNumber && touched.contractNumber && <div className="text-danger">{errors.contractNumber}</div>}
 
                                 </div></div>
                             <div className="form-group mb-4 textOnInput">
                                 <label >توضیحات</label>
 
-                                <textarea type="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
+                                <Field  validate={validatAlpha} name="comment"   as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
                                     setComment(e.target.value)
-                                    validator.current.showMessageFor("required");
                                 }} />
-                                {validator.current.message("required", comment, "required")}
+                                {errors.comment && touched.comment && <div className="text-danger">{errors.comment}</div>}
 
                             </div>
 
@@ -400,26 +390,23 @@ const EditeSupply = () => {
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-lg-6 col-md-6 col-sm-11  '>
-                                {validator.current.allValid()
-                                    ? <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " onClick={submit}>تایید<ClipLoader
+
+                                  <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " >تایید<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
                                         size={15}
                                     /></button>
-                                    : <button disabled={true} type="submit" className="btn btn-success float-left " onClick={submit}>تایید<ClipLoader
 
-                                        loading={loading}
-                                        color="#ffff"
-                                        size={15}
-                                    /></button>  }
 
                             </div>
                             <div className='col-lg-6 col-md-6 col-sm-11  '>
                                 <NavLink to='/admin/supply' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
-                    </form>
+                    </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

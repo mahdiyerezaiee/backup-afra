@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { useNavigate,useParams } from 'react-router-dom';
 import { GetGroupById, SetGroup } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatAlpha} from "../../../Utils/validitionParams";
 
 
 
@@ -30,10 +32,9 @@ const EditWareHouseType = () => {
     getGroup()
    },[])
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
- 
+
         try {
             const body={
             group:{
@@ -76,29 +77,46 @@ const EditWareHouseType = () => {
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
 
-                    <form>
-                        <div className='form-group'>
+                    <Formik
+                        initialValues={{
+                            id:params.id,
+                            entityTypeId:4,
+                            name,
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                            <div className="input-group mb-3">
-                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                            <Form className='form-group col-md-10' >
+                                <div className='form-group '>
 
+                                    <div className="input-group  mb-3">
+                                        <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
 
-                            </div>
-                            <div className='row '>
-                                <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+                                        {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
-                                        loading={loading}
-                                        color="#ffff"
-                                        size={15}
-                                    /></button>
+                                    </div>
+                                    <div className='row '>
+                                        <div className='col-6 '>
+                                            <button type="submit" disabled={loading} className="btn btn-success float-left"  >
+                                                ثبت
+                                                <ClipLoader
+
+                                                    loading={loading}
+                                                    color="#ffff"
+                                                    size={15}
+                                                /></button>                                </div>
+                                        <div className='col-6 '>
+                                            <NavLink to='/admin/warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='col-6 '>
-                                    <NavLink to='/admin/warehousetypes' className="btn btn-danger float-right">بازگشت</NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

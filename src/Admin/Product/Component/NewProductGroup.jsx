@@ -8,7 +8,8 @@ import { SetGroup } from './../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
 import { GetCompanyChild } from './../../../services/companiesService';
 import  Select  from 'react-select';
-
+import { Formik, Form, Field } from 'formik';
+import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
 const NewProductGroup = () => {
     const navigate=useNavigate();
@@ -91,15 +92,32 @@ useEffect(() => {
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
 
-                    <form>
-                        <div className='form-group'>
+                    <Formik
+                        initialValues={{
+                            id: 0,
+                            entityTypeId: 2,
+                            name
+                            ,companyId
+                            ,companyName
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+                            <Form  >
+                                <div className='form-group'>
 
                             <div className="input-group mb-4">
-                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
 
 
                             </div>
-                            {userCompanies?
+                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
+
+                                    {userCompanies?
                             <div className="form-group mb-3 mt-3 textOnInput">
 
                                 <label> شرکت</label>
@@ -126,7 +144,7 @@ useEffect(() => {
                             </div>:''}
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -138,7 +156,9 @@ useEffect(() => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

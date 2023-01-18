@@ -6,6 +6,9 @@ import { toast } from 'react-toastify';
 import { ClipLoader } from "react-spinners";
 import { GetCompanyChild } from './../../../services/companiesService';
 import  Select  from 'react-select';
+import { Formik, Form, Field } from 'formik';
+import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
+
 
 const EditCustomerGroupName = () => {
     const navigate = useNavigate()
@@ -50,12 +53,11 @@ const EditCustomerGroupName = () => {
         getCompanies()
     }, [])
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
 
 
         setLoading(true)
 
-        event.preventDefault();
 
         try {
             const body = {
@@ -107,56 +109,78 @@ const EditCustomerGroupName = () => {
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
+                    <Formik
+                        initialValues={{
+                            id: 0,
+                            entityTypeId: 1,
+                            name
+                            ,companyId
+                            ,companyName
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                    <form>
-                        <div className='form-group'>
+                            <Form  >
+                                <div className='form-group '>
 
-                            <div className="form-group mb-4 textOnInput">
-                                <label>نام گروه</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
+                                    <div className="form-group mb-4 textOnInput">
+                                        <label>نام گروه</label>
 
-                            </div>
-                            {userCompanies?
-                            <div className="form-group mb-3 mt-3 textOnInput">
-
-                                <label> شرکت</label>
-                                <Select
-                                    defaultValue={defaultValue}
-                                    placeholder='نام شرکت'
-                                    options={companys()}
-                                    key={defaultValue}
-                                    isClearable={true}
-                                    onChange={e => {
-
-
-                                        SetcompanyId(e.value)
-                                        SetCompanyName(e.label)
+                                        <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
 
 
-                                    }
+                                    </div>
+                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
-                                    }
+                                    {userCompanies?
+                                        <div className="form-group mb-3 mt-3 textOnInput">
 
-                                />
+                                            <label> شرکت</label>
+                                            <Select
+                                                defaultValue={defaultValue}
+                                                placeholder='نام شرکت'
+                                                options={companys()}
+                                                key={defaultValue}
+                                                isClearable={true}
+                                                onChange={e => {
 
 
-                            </div>:''}
-                            <div className='row '>
-                                <div className='col-6 '>
-                                    <button type="submit" className="btn btn-success float-left" disabled={loading} onClick={handelSubmit} >ثبت
-                                        <ClipLoader
+                                                    SetcompanyId(e.value)
+                                                    SetCompanyName(e.label)
 
-                                            loading={loading}
-                                            color="#ffff"
-                                            size={15}
-                                        /></button>
+
+                                                }
+
+                                                }
+
+                                            />
+
+
+                                        </div>:''}
+                                    <div className='row '>
+                                        <div className='col-6 '>
+                                            <button type="submit" disabled={loading} className="btn btn-success float-left" > ثبت
+
+                                                <ClipLoader
+
+                                                    loading={loading}
+                                                    color="#ffff"
+                                                    size={15}
+                                                /></button>
+                                        </div>
+                                        <div className='col-6 '>
+                                            <NavLink to='/admin/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='col-6 '>
-                                    <NavLink to='/admin/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

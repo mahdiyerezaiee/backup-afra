@@ -4,6 +4,8 @@ import { GetGroupById } from '../../../services/GroupService';
 import { SetGroup } from '../../../services/GroupService';
 import { toast } from 'react-toastify';
 import {ClipLoader} from "react-spinners";
+import {validatAlpha} from "../../../Utils/validitionParams";
+import {Field, Form, Formik} from "formik";
 
 const EditWareHouseTypeName = () => {
 const navigate=useNavigate()
@@ -28,12 +30,11 @@ useEffect(()=>{
     getGroup();
 },[])
 
-const handelSubmit=async(event)=>{
+const handelSubmit=async()=>{
 
    setLoading(true)
 
-      event.preventDefault();
- 
+
         try {
             const body={
             group:{
@@ -76,19 +77,31 @@ const handelSubmit=async(event)=>{
             </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-12 col-md-6 col-xs-12'>
+                    <Formik
+                        initialValues={{
+                            id:Number(params.id),
+                            entityTypeId,
+                            name
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-
-                    <form className='form-group col-md-10'>
+                            <Form className='form-group col-md-10' >
                         <div className='form-group col-md-12'>
 
                             <div className="form-group mb-3 textOnInput">
 <label>نام گروه</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
+                                <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
+                                {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left">ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -99,7 +112,7 @@ const handelSubmit=async(event)=>{
                                 </div>
                             </div>
                         </div>
-                    </form>
+                            </Form>)}</Formik>
                 </div>
             </div>
         </div>

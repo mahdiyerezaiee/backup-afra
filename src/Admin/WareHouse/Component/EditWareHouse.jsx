@@ -9,6 +9,8 @@ import { GetAttributeValues } from '../../../services/attributeService';
 import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
 import { GetCompanyChild } from './../../../services/companiesService';
+import {Field, Form, Formik} from "formik";
+import {validatAlpha, validateRequired, validatNumber} from "../../../Utils/validitionParams";
 
 const EditWareHouse = () => {
     const params = useParams()
@@ -150,9 +152,8 @@ const EditWareHouse = () => {
         }
     }
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
         try {
             const { data, status } = await SetWareHouses(test);
             if (status === 200) {
@@ -195,12 +196,28 @@ const EditWareHouse = () => {
                 <div className='widget box shadow col-md-5 col-xs-12'>
 
 
-                    <form className='col-lg-6 col-sm-12'>
-                        <div className='form-group'>
+                    <Formik
+                        initialValues={{
+                            name,
+                            groupId,
+                            companyId,
+                            companyName,
+                            Addres,
+                            attValuehajm,
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+                            <Form className='col-lg-6 col-sm-12' >                        <div className='form-group'>
 
                             <div className=" mb-4 textOnInput">
                                 <label >انبار</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} name="name" validate={validatAlpha} onChange={e => Setname(e.target.value)} />
+                                {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
 
                             </div>
@@ -209,8 +226,9 @@ const EditWareHouse = () => {
 
                                 <label>حجم انبار</label>
 
-                                <input type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={e => setAttValueHajm(e.target.value)} />
+                                <Field name="attValuehajm"  validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={e => setAttValueHajm(e.target.value)} />
 
+                                {errors.attValuehajm && touched.attValuehajm && <div className="text-danger">{errors.attValuehajm}</div>}
 
 
 
@@ -229,19 +247,22 @@ const EditWareHouse = () => {
                                             onChange={e =>setGroupId(e.value)}
                                         />
 
+                                {groupId === 0 ? <div className="text-danger">پر کردن این فیلد الزامی است</div>:null}
 
 
                             </div>
                             <div className='mb-4 textOnInput'>
                                 <label>آدرس</label>
-                                <textarea type="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={e => {
+                                <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={e => {
                                     setAddres(e.target.value)
 
                                 }} />
+                                {errors.Addres && touched.Addres && <div className="text-danger">{errors.Addres}</div>}
+
                             </div>
                             <div className='row '>
                                 <div className='col-lg-6 col-sm-12 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -253,7 +274,9 @@ const EditWareHouse = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>
