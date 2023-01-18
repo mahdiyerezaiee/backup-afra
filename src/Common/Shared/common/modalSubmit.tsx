@@ -1,7 +1,12 @@
 import {useState} from "react";
 import {ClipLoader} from "react-spinners";
 
-const ModalSubmit = ({ loading , modalInfo , submitHandler ,closeModal,quantity, setquantity , formatter, productSupplyConditionId }) => {
+interface Props{
+    loading:any , modalInfo:any , submitHandler:any ,closeModal:any,quantity:any, setquantity:any , formatter:any, productSupplyConditionId:any
+}
+
+
+const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,closeModal,quantity, setquantity , formatter, productSupplyConditionId }) => {
     const [check,setCheck]=useState(false)
     console.log(productSupplyConditionId)
     return(
@@ -25,15 +30,15 @@ const ModalSubmit = ({ loading , modalInfo , submitHandler ,closeModal,quantity,
               <button className="btn-sm btn-light border-0 bg-transparent non-hover p-2" onClick={() => setquantity(Number(quantity) + 1000)}>+
               </button>
               <input  className="form-control opacityForInput col-4 d-inline" placeholder="وزن سفارش" step={100}
-                      type="text" value={quantity} onChange={(e) => setquantity(Number(e.target.value))} />
+                      type="text" value={quantity} onChange={(e:any) => setquantity(Number(e.target.value))} />
               <button className="btn-sm btn-light border-0 bg-transparent non-hover p-2"  onClick={() =>quantity>=1000 ?setquantity(Number(quantity) - 1000):""}>--
               </button>
           </p>
           {modalInfo.productSupplyConditions.length !==0 ? (
               <div>
-                  { quantity >= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=>item.minSellableAmount) ? (<p></p>) : (
+                  { quantity >= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.minSellableAmount) ? (<p></p>) : (
                       <p className="text-danger text-center mt-3">مقدار از حداقل مجاز سفارش کمتراست</p>)}
-                  { quantity <= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.maxSellableAmount) ? (<p></p>) : (
+                  { quantity <= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.maxSellableAmount) ? (<p></p>) : (
                       <p className="text-danger text-center mt-3">مقدار از حداکثر مجاز سفارش بیشتراست</p>)}
                   {modalInfo.comment  ?<div className="form-group" style={{width: '510px'}}>
                       <p ><b style={{fontSize: 'medium'}}> توضیحات</b> : {  modalInfo.comment}</p>
@@ -44,8 +49,8 @@ const ModalSubmit = ({ loading , modalInfo , submitHandler ,closeModal,quantity,
 
 
                       </p>
-                  </div>: modalInfo.productSupplyConditions && modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=>item.comment)[0] ? <div className="form-group" style={{width: '510px'}}>
-                  <p ><b style={{fontSize: 'medium'}}> توضیحات</b> : { modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=>item.comment) }</p>
+                  </div>: modalInfo.productSupplyConditions && modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.comment)[0] ? <div className="form-group" style={{width: '510px'}}>
+                  <p ><b style={{fontSize: 'medium'}}> توضیحات</b> : { modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.comment) }</p>
                   <p className="text-center">
 
                       <label className="text-danger" style={{fontSize:'small'}}>توضیحات و شرایط را قبول دارم</label>
@@ -54,8 +59,8 @@ const ModalSubmit = ({ loading , modalInfo , submitHandler ,closeModal,quantity,
 
                   </p>
               </div>:""}
-                  <h5 className="text-center ">قیمت کل :   { modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=>item.price) ? formatter.format( modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=>item.price)* quantity ):formatter.format( modalInfo.price * quantity)}</h5>
-                  {modalInfo.comment ? <button disabled={  loading ?true : quantity >=  modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.maxSellableAmount) && check  ? false : true}
+                  <h5 className="text-center ">قیمت کل :   { modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price) ? formatter.format( modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price)* quantity ):formatter.format( modalInfo.price * quantity)}</h5>
+                  {modalInfo.comment ? <button disabled={  loading ?true : quantity >=  modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.maxSellableAmount) && check  ? false : true}
                                                className="btn btn-success  float-left" onClick={submitHandler}>اضافه به سبدخرید
                           <ClipLoader
 
@@ -63,7 +68,7 @@ const ModalSubmit = ({ loading , modalInfo , submitHandler ,closeModal,quantity,
                               color="#ffff"
                               size={15}
                           /></button>:
-                      <button disabled={  loading ?true :quantity >=  modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter(i=> i.id === productSupplyConditionId ).map(item=> item.maxSellableAmount)  ? false : true}
+                      <button disabled={  loading ?true :quantity >=  modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.maxSellableAmount)  ? false : true}
                               className="btn btn-success  float-left" onClick={submitHandler}>اضافه به سبدخرید
                           <ClipLoader
 

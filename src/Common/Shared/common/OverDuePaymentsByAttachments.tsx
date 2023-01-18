@@ -3,7 +3,7 @@ import {HasOverDuePaymentsByAttachments} from "../../../services/orderService";
 import {Link, useNavigate} from "react-router-dom";
 import {FiAlertOctagon} from "react-icons/fi"
 import {BsArrowLeftCircle} from "react-icons/bs"
-const OverDuePaymentsByAttachments = () => {
+const OverDuePaymentsByAttachments:React.FC = () => {
     const navigate = useNavigate()
 
   const [checked , setChecked]= useState(getDataOverDuePaymentsByAttachments().checked)
@@ -16,7 +16,7 @@ const OverDuePaymentsByAttachments = () => {
         checked
     }
     function getDataOverDuePaymentsByAttachments() {
-        let items = JSON.parse(sessionStorage.getItem('dataOverDuePaymentsByAttachments'));
+        let items = JSON.parse(String(sessionStorage.getItem('dataOverDuePaymentsByAttachments')));
         return items ? items : false
 
 

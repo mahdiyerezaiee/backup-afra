@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Switch from 'react-switch';
 import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { DeleteCart, DeleteItemCart, DeleteItemCarts, GetShoppingCart } from "../../../services/cartShoppingService";
+import {  DeleteItemCart, DeleteItemCarts, GetShoppingCart } from "../../../services/cartShoppingService";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 
 import Setting from "../../Setting/setting";
@@ -15,30 +15,36 @@ import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
 import { ClipLoader } from "react-spinners";
 import { Link } from 'react-router-dom';
 import { useProSidebar } from 'react-pro-sidebar';
+import { RootState } from '../../../store';
+interface Props{
+
+    collapsed:boolean
 
 
+} 
 
-const Header = ({ collapsed, handelChange }) => {
-    const ref = useRef()
+
+const Header:React.FC<Props> = ({ collapsed }) => {
+    const ref:any = useRef()
     const { collapseSidebar } = useProSidebar();
-    const refNews = useRef()
+    const refNews:any = useRef()
     const Navigate = useNavigate()
-    const user = useSelector(state => state.user);
+    const user = useSelector((state:RootState) => state.user);
     const [cartShopping, setCartShopping] = useState([])
     const [theme, setTheme] = useState(false)
     const [show, setShow] = useState(false)
     const [showNews, setShowNews] = useState(false)
-    const roles = useSelector(state => state.roles);
+    const roles = useSelector((state:RootState) => state.roles);
     const [loading, setLoading] = useState(false);
 
-    const handleHeaderClick = (event) => {
+    const handleHeaderClick = (event:any) => {
 
         event.stopPropagation();
     };
 
     useEffect(() => {
 
-        const checkIfClickedOutside = e => {
+        const checkIfClickedOutside = (e:any) => {
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
             if (show && ref.current && !ref.current.contains(e.target)) {
@@ -60,7 +66,7 @@ const Header = ({ collapsed, handelChange }) => {
     }, [show])
     useEffect(() => {
 
-        const checkIfClickedOutside = e => {
+        const checkIfClickedOutside =(e:any)=> {
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
             if (show && ref.current && !ref.current.contains(e.target)) {
@@ -86,7 +92,7 @@ const Header = ({ collapsed, handelChange }) => {
 
     }
 
-    const deleteItemHandler = async (id) => {
+    const deleteItemHandler = async (id:number) => {
 
         try {
             const { data, status } = await DeleteItemCart(id, Number(localStorage.getItem('connect')))
@@ -95,7 +101,7 @@ const Header = ({ collapsed, handelChange }) => {
             console.log(err)
         }
     }
-    const deleteHandler = async (id) => {
+    const deleteHandler = async () => {
 
         try {
             const { data, status } = await DeleteItemCarts(Number(localStorage.getItem('connect')))
@@ -140,7 +146,7 @@ const Header = ({ collapsed, handelChange }) => {
         }
         setLoading(false)
     }
-    const MeasureUnit = (id) => {
+    const MeasureUnit = (id:number) => {
         return (MeasureUnitSample.filter(item => item.id === id).map(item => item.name))
     }
     let formatter = new Intl.NumberFormat('fa-IR', {
@@ -185,7 +191,7 @@ const Header = ({ collapsed, handelChange }) => {
                     </li>
                     <li className="nav-item dropdown message-dropdown">
                         <div ref={ref}>
-                            <Link className="nav-link dropdown-toggle" id="messageDropdown"
+                            <Link to='#' className="nav-link dropdown-toggle" id="messageDropdown"
                                 onClick={() => setShow(oldState => !oldState)}>
 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="currentColor"
@@ -220,11 +226,11 @@ const Header = ({ collapsed, handelChange }) => {
                                 <div >
                                     {cartShopping.length !== 0 ?
 
-                                        Array.from({ length: 10 } && cartShopping.map((item, i) =>
+                                        Array.from({ length: 10 } && cartShopping.map((item:any, i) =>
 
                                             show && (
 
-                                                <Link className=" animated dropdown-item border-bottom border-light p-2 my-2 mt-3 "
+                                                <Link to='#' className=" animated dropdown-item border-bottom border-light p-2 my-2 mt-3 "
                                                     key={item.id}>
                                                     <div className="row shadow">
                                                         <div className="col-12">
@@ -274,7 +280,7 @@ const Header = ({ collapsed, handelChange }) => {
                                             )
                                         ))
 
-                                        : <Link className="dropdown-item border-bottom border-light p-2 my-2 mt-3 ">
+                                        : <Link to='#' className="dropdown-item border-bottom border-light p-2 my-2 mt-3 ">
 
                                             <div className="col-12"></div>
                                             <div className="media col-5 p-2 ">
@@ -304,7 +310,7 @@ const Header = ({ collapsed, handelChange }) => {
 
                                 </svg></span>
                                 <p className="font-weight-bolder  " style={{ fontSize: '0.8rem' }}> مبلغ قابل پرداخت
-                                    :{formatter.format(cartShopping.reduce((total, item) => total + (item.price), 0))} ریال</p>
+                                    :{formatter.format(cartShopping.reduce((total, item:any) => total + (item.price), 0))} ریال</p>
                                 <p>
                                     <button
                                         onClick={setOrder} disabled={loading ? true : cartShopping.length > 0 ? false : true} className="btn btn-primary  float-left mt-3">ارسال درخواست
@@ -327,7 +333,7 @@ const Header = ({ collapsed, handelChange }) => {
 
                     <li className="nav-item dropdown notification-dropdown">
                         <div ref={refNews}>
-                            <Link className="nav-link dropdown-toggle" id="messageDropdown"
+                            <Link to='#' className="nav-link dropdown-toggle" id="messageDropdown"
                                 onClick={() => {
                                     setShowNews(oldState => !oldState)
                                     setShow(false)
@@ -335,12 +341,10 @@ const Header = ({ collapsed, handelChange }) => {
                                 <svg style={{
                                     width: "24",
                                     height: "24",
-                                    viewBox: "0 0 24 24",
                                     fill: "none",
                                     stroke: "currentColor",
                                     strokeWidth: "2",
                                     strokeLinecap: "round",
-                                    strokeLineJoin: "round"
                                 }} className="feather feather-bell">
                                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -357,7 +361,7 @@ const Header = ({ collapsed, handelChange }) => {
                     </li>
 
                     <li className="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
-                        <Link className="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown"
+                        <Link to='#' className="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 className="bi bi-person-circle" viewBox="0 0 16 16">
@@ -385,12 +389,10 @@ const Header = ({ collapsed, handelChange }) => {
                                     <svg style={{
                                         width: "24",
                                         height: "24",
-                                        viewBox: "0 0 24 24",
                                         fill: "none",
                                         stroke: "currentColor",
                                         strokeWidth: "2",
                                         strokeLinecap: "round",
-                                        strokeLineJoin: "round"
                                     }} className="feather feather-user">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
@@ -399,16 +401,14 @@ const Header = ({ collapsed, handelChange }) => {
                                 </NavLink>
                             </div>
                             <div className="dropdown-item">
-                                <Link href="apps_mailbox.html">
+                                <Link to="apps_mailbox.html">
                                     <svg style={{
                                         width: "24",
                                         height: "24",
-                                        viewBox: "0 0 24 24",
                                         fill: "none",
                                         stroke: "currentColor",
                                         strokeWidth: "2",
                                         strokeLinecap: "round",
-                                        strokeLineJoin: "round"
                                     }} className="feather feather-inbox">
                                         <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
                                         <path
@@ -427,12 +427,10 @@ const Header = ({ collapsed, handelChange }) => {
                                     <svg style={{
                                         width: "24",
                                         height: "24",
-                                        viewBox: "0 0 24 24",
                                         fill: "none",
                                         stroke: "currentColor",
                                         strokeWidth: "2",
                                         strokeLinecap: "round",
-                                        strokeLineJoin: "round"
                                     }} className="feather feather-log-out">
                                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                         <polyline points="16 17 21 12 16 7"></polyline>

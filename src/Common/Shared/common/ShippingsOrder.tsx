@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 import { DeliveryMethods } from "../../Enums/DeliveryMethodsEnums";
 import { useSelector } from 'react-redux';
+import { RootState } from "../../../store";
 
-const ShippingsOrder = ({ id }) => {
-    const [Shipping, SetShipping] = useState([])
-    const [ShippingContracts, SetShippingContracts] = useState([])
-    const roles=useSelector(state=>state.roles)
+interface Props{
+    id:number
+}
+const ShippingsOrder:React.FC<Props> = ({ id }) => {
+    const [Shipping, SetShipping] = useState<any>([])
+    const [ShippingContracts, SetShippingContracts] = useState<any>([])
+    const roles=useSelector((state:RootState)=>state.roles)
     const GetShipping = async () => {
         try {
             const { data, status } = await GetShoppings(id)
@@ -63,20 +67,20 @@ const ShippingsOrder = ({ id }) => {
 
                     <thead style={{ color: 'white' }}>
                         <tr>
-                            <th bgcolor='#247881'>  #</th>
-                            <th bgcolor='#247881'> شناسه سفارش</th>
-                            <th bgcolor='#247881'>شناسه جزییات سفارش</th>
-                            <th bgcolor='#247881'> واحد</th>
-                            <th bgcolor="#247881"> مقدار </th>
-                            <th bgcolor="#247881">تاریخ قرارداد</th>
-                            <th bgcolor="#247881">نحوه ارسال</th>
-                            <th bgcolor="#247881">شماره قرارداد</th>
+                            <th>  #</th>
+                            <th > شناسه سفارش</th>
+                            <th>شناسه جزییات سفارش</th>
+                            <th > واحد</th>
+                            <th > مقدار </th>
+                            <th >تاریخ قرارداد</th>
+                            <th >نحوه ارسال</th>
+                            <th >شماره قرارداد</th>
 
 
                         </tr>
                     </thead>
                     <tbody className='table table-stripped' >
-                        {Shipping.map(item =>
+                        {Shipping.map((item:any) =>
                             <tr key={item.id}>
                                 <td >{item.id}</td>
                                 <td >{item.orderId?item.orderId:"--"}</td>
@@ -85,7 +89,7 @@ const ShippingsOrder = ({ id }) => {
                                 <td >{item.quantity}</td>
                                 <td >{new Date(item.shippingDate).toLocaleDateString('fa-IR')}</td>
                                 <td >{DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name)}</td>
-                                <td >{item.shippingContractId === null ? '' : ShippingContracts.filter(i => i.id === item.shippingContractId).map(i => i.contractNumber)}</td>
+                                <td >{item.shippingContractId === null ? '' : ShippingContracts.filter((i:any) => i.id === item.shippingContractId).map((i:any)=> i.contractNumber)}</td>
 
 
                             </tr>

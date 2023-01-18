@@ -4,17 +4,21 @@ import {useMemo, useState} from "react";
 import MyTable from "../Form/MyTable";
 import {useRef} from "react";
 
-const ProductWareHouse = ({id, submit}) => {
-    let inp = useRef();
+interface Props{
+    id:number,
+    submit:boolean
+}
+const ProductWareHouse:React.FC<Props> = ({id, submit}) => {
+    let inp:any = useRef();
 
-    const [wareHouse, setWarehouse] = useState([])
-    const [active, setActive] = useState([])
-    const [newWareHouse, setNewWareHouse] = useState([])
-    const activity = active.map(data => ({active: data}))
+    const [wareHouse, setWarehouse] = useState<any>([])
+    const [active, setActive] = useState<any>([])
+    const [newWareHouse, setNewWareHouse] = useState<any>([])
+    const activity = active.map((data:any) => ({active: data}))
 
-    const mergeById = (a1, a2) =>
-        a1.map((itm, index1) => ({
-            ...a2.find((item, index) => index === index1 && item),
+    const mergeById = (a1:any, a2:any) =>
+        a1.map((itm:any, index1:number) => ({
+            ...a2.find((item:any, index:number) => index === index1 && item),
             ...itm,
         }));
     useEffect(() => {
@@ -29,7 +33,7 @@ const ProductWareHouse = ({id, submit}) => {
     const getProductWareHouse = async () => {
         try {
             const {data, status} = await GetProductWareHouses(id)
-            setWarehouse(data.result.productWareHouses, ...active)
+            setWarehouse([data.result.productWareHouses, ...active])
 
         } catch (err) {
             console.log(err)
@@ -40,7 +44,7 @@ const ProductWareHouse = ({id, submit}) => {
 
     }, [])
 
-    const [editFormData, setEditFormData] = useState({
+    const [editFormData, setEditFormData] = useState<any>({
         quantity: '',
         consumableQuantity: '',
         reservedQuantity: '',
@@ -50,20 +54,20 @@ const ProductWareHouse = ({id, submit}) => {
     });
     const [editContactId, setEditContactId] = useState(null);
 
-    const handleEditFormChange = (event, position) => {
+    const handleEditFormChange = (event:any) => {
         const fieldName = event.target.getAttribute("name");
         const fieldValue = event.target.value;
         const newFormData = {...editFormData};
         newFormData[fieldName] = fieldValue;
         setEditFormData(newFormData);
     };
-    const checkValueee = (position) => {
-        const updatedCheckedState = active.map((item, index) =>
+    const checkValueee = (position:any) => {
+        const updatedCheckedState = active.map((item:any, index:number) =>
             index === position ? !item : item
         );
         setActive(updatedCheckedState);
     }
-    const handleEditFormSubmit = (event, contact, position) => {
+    const handleEditFormSubmit = () => {
         const editedContact = {
             wareHouseId: editContactId,
             quantity: editFormData.quantity,
@@ -75,18 +79,18 @@ const ProductWareHouse = ({id, submit}) => {
 
         };
         const newContacts = [...wareHouse];
-        const index = wareHouse.findIndex((contact) => contact.wareHouseId === editContactId);
+        const index = wareHouse.findIndex((contact:any) => contact.wareHouseId === editContactId);
         newContacts[index] = editedContact
         setWarehouse(newContacts);
         setEditContactId(null)
 
     };
 
-const filterWareHouse = newWareHouse.filter((item )=> item.active === true).map(item=>  item)
-    const toDos = filterWareHouse.reduce(function(array, friend) {
+const filterWareHouse = newWareHouse.filter((item:any )=> item.active === true).map((item:any)=>  item)
+    const toDos = filterWareHouse.reduce(function(array:any, friend:any) {
         return array.concat(friend.active);
     }, []);
-    const finallWarHouse= filterWareHouse.map(item=>
+    const finallWarHouse= filterWareHouse.map((item:any)=>
         ({id:item.id ,
             quantity:item.quantity,
             consumableQuantity:item.consumableQuantity,
@@ -112,7 +116,7 @@ const filterWareHouse = newWareHouse.filter((item )=> item.active === true).map(
 if (submit === true){
     setproductware()
 }
-    const handleEditClick = (event, contact, position) => {
+    const handleEditClick = (event:any, contact:any) => {
     setEditContactId(contact.wareHouseId);
         const formValues = {
             quantity: contact.quantity,
@@ -142,7 +146,7 @@ return (
                         </tr>
                         </thead>
                         <tbody>
-                        {wareHouse.map((contact, index) => (
+                        {wareHouse.map((contact:any, index:number) => (
                             editContactId === contact.wareHouseId ? (
                                 <tr style={{backgroundColor : contact.id !== 0 ? 'lightgray' : 'transparent'}}>
                                     <td>
@@ -156,7 +160,7 @@ return (
                                             id={`custom-checkbox-${index}`}
                                             checked={active[index]}
                                             type="checkbox"
-                                            required="required"
+                                            required={true}
                                             value={contact}
                                             name={contact}
                                             onClick={(event) => checkValueee(index)}
@@ -176,7 +180,7 @@ return (
 
                                         <input
                                             type="مقدار"
-                                            required="required"
+                                            required={true}
                                             ref={inp}
 
                                             value={editFormData.quantity}
@@ -206,7 +210,7 @@ return (
                                             type="checkbox"
                                             value={contact}
                                             name={contact}
-                                            onClick={function (event) {
+                                            onClick={function (event:any) {
                                                 handleEditClick(event, contact);
                                                 checkValueee(index)
                                             }}

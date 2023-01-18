@@ -18,8 +18,8 @@ interface Props{
     collapsed:boolean
 }
 
-const SideNavbar: React.FC<Props> = ({collapsed}) => {
-    const { collapseSidebar } = useProSidebar();
+const SideNavbar: React.FC<Props> = () => {
+    
 
    
     const roles = useSelector((state: RootState) => state.roles)

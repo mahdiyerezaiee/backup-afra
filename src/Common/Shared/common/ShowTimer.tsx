@@ -4,7 +4,12 @@ import FadeLoader from "react-spinners/FadeLoader";
 import {useState} from "react";
 import {ClipLoader} from "react-spinners";
 
-export const ShowTimer = ({timer,firstCondition,secondCondition , loading }) => {
+interface Props{
+    timer:any,firstCondition:any,secondCondition:any , loading:any
+}
+
+
+export const ShowTimer :React.FC<Props>= ({timer,firstCondition,secondCondition , loading }) => {
     const [minutes, second] = [Math.floor(timer/60), timer%60];
 
     const navigate=useNavigate();

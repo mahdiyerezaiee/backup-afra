@@ -1,4 +1,10 @@
-const AdvancedSearch = ({children}) => {
+
+
+interface Props{
+
+    children:any
+}
+const AdvancedSearch:React.FC<Props> = ({children}) => {
     return(
   
                                 <div id="iconsAccordion" className="accordion-icons">
@@ -22,7 +28,7 @@ const AdvancedSearch = ({children}) => {
                                                 <polyline points="6 9 12 15 18 9"></polyline>
                                             </svg></div>*/}</div> 
                                     </section>
-                                    <div id="iconAccordion100" className="collapse show m-4" aria-labelledby={1} data-parent="#iconsAccordion">
+                                    <div id="iconAccordion100" className="collapse show m-4"  data-parent="#iconsAccordion">
                                         {children}
                                     </div>
                                 </div>

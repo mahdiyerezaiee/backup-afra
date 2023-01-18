@@ -10,6 +10,7 @@ import ModalSubmit from "./modalSubmit";
 import { GetGroupById } from "../../../services/GroupService";
 import ConditionSalesBordCustomer from "./conditionSalesBordCustomer";
 import { Link } from 'react-router-dom';
+import { RootState } from "../../../store";
 
 const customStyles = {
     content: {
@@ -27,14 +28,14 @@ const customStyles = {
 
 }
 
-const SalesBoardForCustomer = () => {
-    const user = useSelector(state => state.user);
-    const userRole = useSelector(state => state.roles);
+const SalesBoardForCustomer:React.FC = () => {
+    const user = useSelector((state:RootState) => state.user);
+    const userRole = useSelector((state:RootState) => state.roles);
     const [loading, setLoading] = useState(false);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
     const [showMore, setShowMore] = useState(false);
-    const [productSupplyCondition, setProductSupplyCondition] = useState( []);
+    const [productSupplyCondition, setProductSupplyCondition] = useState<any>( []);
 
     const [productSupply, setProductSupply] = useState([]);
     const [modalInfo, setModalInfo] = useState([])
@@ -79,12 +80,12 @@ const SalesBoardForCustomer = () => {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
     });
-    const openModal =  (id) => {
-        setProductSupplyCondition(id)
+    const openModal =  (id:number) => {
+        setProductSupplyConditionId(id)
 
         setIsOpen(true);
     }
-    const openModalCondition =  (item ,id) => {
+    const openModalCondition =  (item:any ,id:number) => {
         setProductSupplyCondition(item)
         setProductSupplyConditionId(id)
         if (id === productSupplyConditionId){
@@ -100,7 +101,7 @@ const SalesBoardForCustomer = () => {
     const closeModalCobdition = () => {
         setIsOpenCondition(false);
     }
-    const handelClick = (id, productSupplyConditionId) => {
+    const handelClick = (id:any, productSupplyConditionId:number) => {
         setProductSupplyConditionId(productSupplyConditionId)
         openModal(id)
     }
@@ -116,7 +117,7 @@ const SalesBoardForCustomer = () => {
 
     }
 
-    const submitHandler = async (e) => {
+    const submitHandler = async (e:any) => {
         setLoading(true)
         e.preventDefault()
         try {
@@ -185,7 +186,7 @@ setLoading(false)
                                 </tr>
                             </thead>
                             <tbody >
-                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item , index) =>
+                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item:any , index:number) =>
                                     <Fragment key={index + "_frag"}>
 
                                     <tr key={item.id}>
@@ -222,7 +223,7 @@ setLoading(false)
                         </table>
 
 
-                        {productSupply && productSupply.length <= 5 ? null:  <Link
+                        {productSupply && productSupply.length <= 5 ? null:  <Link to='#'
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center text-danger text-m"
                             onClick={() => setShowMore(!showMore)}
                             style={{fontSize:'medium', fontWeight:'bold'}}

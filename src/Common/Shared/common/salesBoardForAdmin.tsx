@@ -11,8 +11,9 @@ import ModalSubmit from "./modalSubmit";
 import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
 import ConditionSalesBordAdmin from "./conditionSalesBordAdmin";
 import { Link } from 'react-router-dom';
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 import ConditionSalesBordCustomer from "./conditionSalesBordCustomer";
+import { RootState } from "../../../store";
 
 
 const customStyles = {
@@ -31,26 +32,26 @@ const customStyles = {
 
 }
 
-const SalesBoardForAdmin = () => {
+const SalesBoardForAdmin:React.FC = () => {
     const [loading, setLoading] = useState(false);
-    const user = useSelector(state => state.user);
-    const userRole = useSelector(state => state.roles);
-    const [Customerg, setCustomerg] = useState( [])
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const [modalIsOpenCondition, setIsOpenCondition] = useState(false);
+    const user = useSelector((state:RootState) => state.user);
+    const userRole = useSelector((state:RootState) => state.roles);
+    const [Customerg, setCustomerg] = useState<any>( [])
+    const [modalIsOpen, setIsOpen] = useState<any>(false);
+    const [modalIsOpenCondition, setIsOpenCondition] = useState<boolean>(false);
     const [showMore, setShowMore] = useState(false);
-    const [productSupply, setProductSupply] = useState( []);
-    const [productSupplyCondition, setProductSupplyCondition] = useState( []);
-    const [modalInfo, setModalInfo] = useState([])
+    const [productSupply, setProductSupply] = useState<any>( []);
+    const [productSupplyCondition, setProductSupplyCondition] = useState<any>( []);
+    const [modalInfo, setModalInfo] = useState<any>([])
     const [quantity, setquantity] = useState(0)
-    const [name, setName] = useState([]);
-    const [productSupplyConditionId, setProductSupplyConditionId] = useState(0);
+    const [name, setName] = useState<any>([]);
+    const [productSupplyConditionId, setProductSupplyConditionId] = useState<any>(0);
 
     const GetGroupsOfCustomers = async () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
-        let arr = []
-        let finalArr=[]
+        let arr:any = []
+        let finalArr:any=[]
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(1, companies[i].id);
@@ -97,22 +98,22 @@ const SalesBoardForAdmin = () => {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
     });
-    const getModalInfo = async (id) => {
+    const getModalInfo = async (id:number) => {
         const { data, status } = await GetAllProductSupply(id)
         setModalInfo(data.result.productSupply)
         setName(data.result.productSupply.product)
     }
-    const handelClick = (id, productSupplyConditionId) => {
+    const handelClick = (id:number, productSupplyConditionId:any) => {
         setProductSupplyConditionId(productSupplyConditionId)
         openModal(id)
     }
 
-    const openModal =  (id) => {
-        setProductSupplyCondition(id)
+    const openModal =  (id:number) => {
+        setProductSupplyConditionId(id)
 
         setIsOpen(true);
     }
-    const openModalCondition =  (item ,id) => {
+    const openModalCondition =  (item:any ,id:number) => {
         let idCondition= id
         setProductSupplyConditionId(idCondition)
 
@@ -140,7 +141,7 @@ const SalesBoardForAdmin = () => {
     }
 
 
-    const submitHandler = async (e) => {
+    const submitHandler = async (e:any) => {
         setLoading(true)
         e.preventDefault()
         try {
@@ -152,14 +153,14 @@ const SalesBoardForAdmin = () => {
         setLoading(false)
     }
 
-    let productCondistion;
+    let productCondistion:any;
 
     if (productSupply !== null) {
 
-        productCondistion = productSupply.map(item => item.productSupplyConditions)
+        productCondistion = productSupply.map((item:any) => item.productSupplyConditions)
     }
-    const groupReturn = (array) => {
-        let newArray = [];
+    const groupReturn:any = (array:any) => {
+        let newArray:any = [];
         for (let i = 0; i < array.length; i++) {
 
             if (array[i].length > 0) {
@@ -172,7 +173,7 @@ const SalesBoardForAdmin = () => {
                 }
                 for (let c = 0; c < newArray.length; c++) {
 
-                    [...newArray][c].gpName = Customerg.filter(item => item.id === newArray[c].customerGroupId).map((item, index) => { return (`${item.name}`) })
+                    [...newArray][c].gpName = Customerg.filter((item:any) => item.id === newArray[c].customerGroupId).map((item:any) => { return (`${item.name}`) })
                 }
             }
         }
@@ -234,7 +235,7 @@ const SalesBoardForAdmin = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {productSupply && productSupply.slice(0, showMore ? productSupply.length : 5).map((item , index) =>
+                            {productSupply && productSupply.slice(0, showMore ? productSupply.length : 5).map((item:any , index:number) =>
                                     <Fragment key={index + "_frag"}>
 
 
@@ -247,7 +248,7 @@ const SalesBoardForAdmin = () => {
                                         <td className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnit).map(e => e.name)}</td>
                                         <td className="text-center">{formatter2.format(item.quantity)}</td>
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
-                                        <td className="text-center">{groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item => item.gpName)) === null ? "عمومی" : [...new Set(groupReturn(productCondistion).filter(data => data.productSupplyId === item.id).map((item, index) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
+                                        <td className="text-center">{groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map(((item:any) => item.gpName)) === null ? "عمومی" : [...new Set<string>(groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map((item:any) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{formatter2.format(item.orderedQuantity)}</td>
@@ -275,7 +276,7 @@ const SalesBoardForAdmin = () => {
                             </tbody>
                         </table>
 
-                        {productSupply.length <= 5 ? null : <Link
+                        {productSupply.length <= 5 ? null : <Link to='#'
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center text-danger text-m"
                             onClick={() => setShowMore(!showMore)}
                             style={{ fontSize: 'medium', fontWeight: 'bold' }}
