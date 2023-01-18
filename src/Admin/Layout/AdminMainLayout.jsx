@@ -16,7 +16,7 @@ import WareHouseList from '../WareHouse/Component/WareHouseList';
 import UserList from '../User/Component/UserList';
 
 import UserProfile from '../../Common/Shared/Profile/userProfile';
-import EditProfile from '../../Common/Shared/Profile/editProfile';
+import EditProfile from '../../Common/Shared/Profile/editProfile.tsx';
 import EditProduct from "../Product/Component/editProduct";
 import EditWareHouse from "../WareHouse/Component/EditWareHouse";
 import AttributeCreator from '../Attribute/Component/AttributeCreator';
@@ -75,7 +75,7 @@ import NotFound from "../../Common/Shared/Common/notFound";
 import UpdateShippingReports from "../Report/Component/updateShippingReports";
 import OrderDetailTest from '../../Admin/Order/Component/orderDetailtest2';
 import CustomerOrderDetailTest from '../../Client/Order/Component/customerOrderDetailTest';
-import UpdateAllShiping from '../Report/Component/updateShippingReports';
+import UpdateAllShiping from '../Report/Component/UpdateAllShiping';
 import EditAddress from "../../Common/Shared/Profile/editAddress";
 import ProceessAttachments from "../Report/Component/ProceessAttachments";
 import UsedBarBariReport from "../Report/Component/UsedBarBariReports";

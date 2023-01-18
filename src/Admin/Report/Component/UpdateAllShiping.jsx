@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { UpdateShippingReport } from '../../../../services/outScopeService';
+import { UpdateShippingReport } from '../../../services/outScopeService';
 import  FadeLoader  from 'react-spinners/FadeLoader';
 import { toast } from 'react-toastify';
 
