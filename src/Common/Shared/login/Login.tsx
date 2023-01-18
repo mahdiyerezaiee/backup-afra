@@ -6,12 +6,12 @@ import { loginUser } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import './customCss.css';
 
-import LoginWithPassword from "./loginWithPassword";
 import { BiArrowBack } from 'react-icons/bi';
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validatMobail} from "../../../Utils/validitionParams";
 import { RootState } from '../../../store';
+import LoginWithPassword from './loginWithPassword';
 const afra =require( './afra.jpg');
 
 

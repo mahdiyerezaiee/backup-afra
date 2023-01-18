@@ -28,7 +28,7 @@ const AdminPannel: React.FC = () => {
 
       <Route path='/admin/*' element={<PrivateRoute><AdminMainLayout /></PrivateRoute>} />
 
-      {/* // <Route path='/sysplus' element={<SysPlus/>} /> */}
+      <Route path='/' element={token?<Login/>:<Navigate to='/admin'/>} /> 
       <Route path='/login' element={<Login />} />
       // <Route path='/verify' element={<CodeForMobile />} />
 
