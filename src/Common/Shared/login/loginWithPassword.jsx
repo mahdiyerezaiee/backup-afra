@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useRef, useState, useCallback } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import SimpleReactValidator from "simple-react-validator";
 import { GetUsersRoles, loginUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import afra from "./afra.jpg";
@@ -14,6 +13,8 @@ import { GetUserInfo, GetUsersRolesBy } from './../../../services/userService';
 import { addUser } from "../../../store/Slice/user/userSlice";
 import { userRoles } from "../../../store/Slice/user/userRole/userRoleSlice";
 import axios from 'axios';
+import {Field, Form, Formik} from "formik";
+import {validateRequired, validatMobail} from "../../../Utils/validitionParams";
 const LoginWithPassword = ({ value, onchange, setShows }) => {
     const [input, setInput] = useState('')
     const [valid, setValid] = useState(true)
@@ -45,23 +46,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
         }
 
     }
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            min: {
-                message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-                    return val.length >= options[0];
-                }, messageReplace: function messageReplace(message, options) {
-                    return message.replace(':min', options[0]);
-                }
-            }
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد"
 
-
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
 
     const handelBack = (e) => {
         e.preventDefault()
@@ -71,7 +56,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
         e.preventDefault()
         captchaRef.current.refresh()
     }
-    const handleSubmit = async (event) => {
+    const handleSubmit = async () => {
         setLoading(true)
 
         const user = {
@@ -79,9 +64,9 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
             phoneNumber: value,
             password
         }
-        event.preventDefault();
+
         // submitCaptcha()
-        if (valid && validator.current.allValid()) {
+
             try {
 
 
@@ -146,7 +131,7 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
             }
 
 
-        }
+
 
 
     }
@@ -166,27 +151,41 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
             <p className='mt-5'>برای استفاده از خدمات هولدینگ افرا، وارد حساب کاربری خود شوید .</p>
 
 
-            <form onSubmit={handleSubmit}>
+            <Formik
+                initialValues={{
+                    value,
+                    password
+
+                }}
+                enableReinitialize={true}
+                onSubmit={values => {
+                    // same shape as initial values
+                    handleSubmit()
+                }}>
+                {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                    <Form >
                 <div className='mt-5 textOnInput' style={{ direction: 'ltr' }}>
                     <label>شماره موبایل</label>
 
-                    <input type='text' name='mobile' className='form-control opacityForInput' placeholder='09121234567 ' maxLength="11"
-                        value={value} onChange={onchange} />
+                    <Field  type='text' name='value' className='form-control opacityForInput' placeholder='09121234567 ' maxLength="11"
+                        value={value} onChange={onchange} validate={validatMobail} />
 
 
 
                 </div>
                 <div className='form-group' style={{ height: "20px" }}>
-                    {validator.current.message("required", value, "required|min:11")}
+                    {errors.value && touched.value && <div className="text-danger">{errors.value}</div>}
 
                 </div>
                 <div className=' textOnInput' style={{ direction: 'ltr' }}>
                     <label>رمز عبور</label>
-                    <input type='password' name='password' className='form-control opacityForInput' placeholder='******** '
+                    <Field type='password' name='password' className='form-control opacityForInput' placeholder='******** '
                         value={password} onChange={e => {
                             setPassword(e.target.value)
-                            validator.current.showMessageFor("required");
-                        }} />
+                        }} validate={validateRequired}/>
 
 
 
@@ -211,12 +210,12 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
 
 
                 <div className='form-group' style={{ height: "20px" }}>
-                    {validator.current.message("required", password, "required")}
+                    {errors.password && touched.password && <div className="text-danger">{errors.password}</div>}
 
                 </div>
                 <div className='row'>
                     <div className="col-5">
-                        <button className='btn btn-success mt-5  mb-5 float-left' disabled={!loading ? validator.current.allValid() ? false : true : true} onClick={handleSubmit}>
+                        <button type="submit" className='btn btn-success mt-5  mb-5 float-left' disabled={loading }>
                             تایید
 
                             <ClipLoader
@@ -233,7 +232,9 @@ const LoginWithPassword = ({ value, onchange, setShows }) => {
                     </div>
 
                 </div>
-            </form>
+                    </Form>
+                    )}
+            </Formik>
         </div>
 
 

@@ -231,7 +231,7 @@ const backHandel=(e)=>{
 
                                         <div className='row justify-content-between mt-4'>
                                             <div >
-                                                    <button  onClick={handelSetCustomer}  className="btn btn-success">ذخیره تغییرات</button>
+                                                    <button   type="submit"  className="btn btn-success">ذخیره تغییرات</button>
                                                 </div>
                                                 <div >
                                                     <button  onClick={backHandel} className="btn btn-primary">بازگشت</button>

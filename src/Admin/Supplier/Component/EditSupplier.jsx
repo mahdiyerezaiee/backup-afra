@@ -3,6 +3,8 @@ import { useNavigate, NavLink, useParams } from 'react-router-dom';
 import { GetSupplier, SetSupplier } from '../../../services/supplyService';
 import { toast } from 'react-toastify';
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatAlpha} from "../../../Utils/validitionParams";
 
 
 
@@ -30,9 +32,8 @@ const EditSupplier = () => {
         getSupplierbyId();
     },[])
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
         try {
             const supplier={
                 'supplier':{
@@ -73,20 +74,33 @@ const EditSupplier = () => {
             </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-4 col-xs-12'>
+                    <Formik
+                        initialValues={{
+                            id:Number(params.id),
+                            name,
+                            groupId:null
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
 
-                    <form>
+                    <Form>
                         <div className='form-group'>
 
                             <div className=" mb-4 textOnInput">
                                 <label >نام </label>
-                                <input type="text" className="form-control opacityForInput" placeholder="نام تامیین کننده" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="نام تامیین کننده" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
 
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" onClick={handelSubmit} >ثبت<ClipLoader
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -98,7 +112,7 @@ const EditSupplier = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </Form>)}</Formik>
                 </div>
             </div>
         </div>

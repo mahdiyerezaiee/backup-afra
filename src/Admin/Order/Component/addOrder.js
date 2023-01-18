@@ -3,40 +3,20 @@ import {addOrder} from "../../../services/orderService";
 import Select from "react-select";
 import {NavLink, useNavigate} from "react-router-dom";
 import {MeasureUnitSample} from "../../../Common/Enums/MeasureUnitSample";
-import SimpleReactValidator from "simple-react-validator";
-import {GetProducts} from "../../../services/productService";
-import {GetAllProductWithSearch} from "../../../services/productSupplyService";
+import {GetAllProducts, GetProducts} from "../../../services/productService";
 import {PaymentStatusEnums} from "../../../Common/Enums/PaymentStatus";
 import {GetAllUsers, GetDataWithSearch} from "../../../services/userService";
 import {PaymentStructureEnums} from "../../../Common/Enums/PaymentStructureEnums";
 import {GetAllOrganisation} from "../../../services/organisationService";
 import QueryString from "qs";
 import {toast} from "react-toastify";
-import {GetGroupsForEntity} from "../../../services/GroupService";
-import Modal from 'react-modal';
 import {OrderStatus} from "../../../Common/Enums/OrderStatusEnums";
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validateRequired, validatNumber} from "../../../Utils/validitionParams";
 
-
-
-const customStyles = {
-    content: {
-height:"50%",
-        inset: '50% auto auto 50%',
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '5%',
-        border: '2px ridge black'
-    }
-
-}
 const AddOrder = () => {
     const [products, setProducts] = useState([]);
-    const [productSupply, setProductSupply] = useState([]);
     const [customerId, setCustomerId] = useState(0)
     const [orderStatusId, setOrderStatusId] = useState(0)
     const [comment, setComment] = useState('')
@@ -127,11 +107,9 @@ const AddOrder = () => {
         productSupplyConditionId:null,
         productBasePrice:Number(productBasePrice),
     }
-    console.log(order)
     const navigate = useNavigate()
-    const SubmitOrder = async (e) => {
+    const SubmitOrder = async () => {
         setLoading(true)
-        e.preventDefault()
         try {
             const {data, status} = await addOrder(order)
 if (data.success === true){
@@ -153,31 +131,6 @@ setLoading(false)
         }
 
     }
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u0660-u0669]+$/,) && params.indexOf(val) === -1;
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از عداد استفاده کنید'
-        }
-        , element: message => <p style={{color: 'red'}}>{message}</p>
-    }));
-
     const Mesures = () => {
         if (measureUnitId && measureUnitId > 0) {
             return (MeasureUnitSample.filter(i => i.id === measureUnitId[0]).map(data => (data.name)));
@@ -193,7 +146,7 @@ setLoading(false)
     const getProdcutForCombo = async () => {
 
         try {
-            const {data, status} = await GetProducts();
+            const {data, status} = await GetAllProducts();
             if (status === 200) {
                 setProducts(data.result.products.values)
 
@@ -232,8 +185,31 @@ const statusOrder = () => {
 
         <div className='row d-flex justify-content-center '>
             <div className='widget box shadow col-md-6 col-xs-12'>
+                <Formik
+                    initialValues={{
+                        customerId,
+                        orderStatusId:Number(orderStatusId),
+                        paymentStatusId,
+                        paymentMethodId,
+                        comment,
+                        "createDate": new Date(),
+                        productId,
+                        measureUnitId: measureUnitId && measureUnitId[0],
+                        quantity:Number(quantity),
+                        productSupplyId:null,
+                        productSupplyConditionId:null,
+                        productBasePrice:Number(productBasePrice),
+                    }}
+                    enableReinitialize={true}
+                    onSubmit={values => {
+                        // same shape as initial values
+                        SubmitOrder()
+                    }}>
+                    {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                <form className="col-lg-8 col-sm-12">
+
+
+                        <Form className="col-lg-8 col-sm-12">
                     <div className="n-chk d-flex  mb-4">
 
                     </div>
@@ -248,7 +224,6 @@ const statusOrder = () => {
                                     options={customerComb()}
                                     onChange={e => {
                                         setCustomerId(e.value)
-                                        validator.current.showMessageFor("required");
 
                                     }}
                                 />
@@ -267,7 +242,6 @@ const statusOrder = () => {
                                                 options={productCombo()}
                                                 onChange={e => {
                                                     setProductId(e.value)
-                                                    validator.current.showMessageFor("required");
                                                     setMeasureUnitId(products.filter(i => i.id === e.value).map(i => i.measureUnitId))
 
                                                 }}
@@ -283,7 +257,6 @@ const statusOrder = () => {
                                                  setMeasureUnitId(products.filter(i => i.id === e.value).map(i => i.measureUnitId))
 
 
-                                                 validator.current.showMessageFor("required");
 
                                              }}
                                 />)}
@@ -327,25 +300,22 @@ const statusOrder = () => {
                             <div className="col-lg-6 col-md-6 col-sm-11 ">
 
                                 <label>مقدار</label>
-                                <input type="text" className="  form-control opacityForInput  mb-4" value={formatter.format(quantity)}
+                                <Field  validate={validatNumber} name="quantity" type="text" className="  form-control opacityForInput  mb-4" value={formatter.format(quantity)}
                                        onChange={e => {
                                            setQuantity(e.target.value.replaceAll(",",""))
-                                           validator.current.showMessageFor("required");
                                        }}/>
-                                {validator.current.message("required", quantity, "required")}
-
+                                {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
 
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-11 ">
 
                                 <label>فی</label>
-                                <input type="text" className="  form-control opacityForInput  mb-4"
+                                <Field  validate={validatNumber} name="productBasePrice" type="text" className="  form-control opacityForInput  mb-4"
                                        value={formatter.format(productBasePrice)} onChange={e => {
                                     setProductBasePrice(e.target.value.replaceAll(",",''))
-                                    validator.current.showMessageFor("required");
 
                                 }}/>
-                                {validator.current.message("required", productBasePrice, "required")}
+                                {errors.productBasePrice && touched.productBasePrice && <div className="text-danger">{errors.productBasePrice}</div>}
 
 
                             </div>
@@ -366,12 +336,12 @@ maxMenuHeight="200px"
                             <div className="col-12">
 
                                 <label>توضیحات</label>
-                                <textarea type="text" className="form-control opacityForInput  mb-4"
+                                <Field  validate={validateRequired} name="comment" as="textarea" className="form-control opacityForInput  mb-4"
                                        value={comment} onChange={e => {
                                     setComment(e.target.value)
 
                                 }}/>
-
+                                {errors.comment && touched.comment && <div className="text-danger">{errors.comment}</div>}
 
                             </div>
 
@@ -388,7 +358,7 @@ maxMenuHeight="200px"
                     </div>
                     <div className='row justify-content-between'>
                         <div className='col-lg-6 col-md-6 col-sm-11  '>
-                            <button  disabled={loading} className="btn btn-success float-left " onClick={SubmitOrder}>تایید
+                            <button  disabled={loading} className="btn btn-success float-left " >تایید
                                 <ClipLoader
 
                                     loading={loading}
@@ -402,8 +372,9 @@ maxMenuHeight="200px"
                     </div>
 
 
-                </form>
-
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
     )

@@ -4,6 +4,8 @@ import {GetAllNewsForAdmin, GetAllNewsForUsers, SetNews} from "../../../services
 import {toast} from "react-toastify";
 import {Navigate, NavLink, useNavigate, useParams} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validateRequired} from "../../../Utils/validitionParams";
 
 const EditNews = () => {
     const user = useSelector(state => state.user);
@@ -80,8 +82,7 @@ useEffect(()=>{
         navigate('/admin/user-news')
 setLoading(false)
     }
-    const submit = (e) => {
-        e.preventDefault()
+    const submit = () => {
         addNews()
     }
     return (
@@ -95,45 +96,69 @@ setLoading(false)
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-lg-4'>
 
-
-                    <form className="col">
-                        <div className="n-chk d-flex  mb-4">
-
-                            <div>
-                                <label className="mr-2"> فعال </label>
-
-                                <input type="checkbox" defaultChecked={active} onChange={e => setActive(e.checked)}/>
-
-                            </div>
-                        </div>
-                        <div className="form-group mb-4 textOnInput  align-content-between">
-
-                            <label>عنوان</label>
-                            <input type="text" className="form-control opacityForInput"
-                                   value={title} onChange={e => setTitle(e.target.value)}/>
-
-                        </div>
-                        <div className="form-group mb-4 textOnInput">
-                            <label>متن</label>
-                            <textarea className="form-control opacityForInput"  value={message}
-                                      onChange={e => setMessage(e.target.value)} rows="10"/>
-                        </div>
-                        <div className='row'>
-                            <div className='col-lg-6 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-left" onClick={submit} >تایید  <ClipLoader
-
-                                    loading={loading}
-                                    color="#ffff"
-                                    size={15}
-                                /></button>
-                            </div>
-                            <div className='col-lg-6 '>
-                                <NavLink to='/admin/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
-                            </div>
-                        </div>
+                    <Formik
+                        initialValues={{
+                            id: params.id,
+                            title,
+                            message,
+                            creatorId,
+                            active,
+                            createDate:new Date()
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
 
-                    </form>
+
+                            <Form  className="col" >
+
+                                <div className="n-chk d-flex  mb-4">
+
+                                    <div>
+                                        <label className="mr-2"> فعال  </label>
+
+                                        <input type="checkbox" defaultChecked={active}  onChange={e=>setActive(e.checked)} />
+
+                                    </div>
+                                </div>
+                                <div className="form-group mb-4 textOnInput  align-content-between">
+
+                                    <label >عنوان</label>
+                                    <Field  validate={validateRequired} name="title" type="text" className="form-control opacityForInput" placeholder="عنوان اعلان" value={title} onChange={e => setTitle(e.target.value)} />
+                                    {errors.title && touched.title && <div className="text-danger">{errors.title}</div>}
+
+                                </div>
+                                <div className="form-group mb-4 textOnInput">
+                                    <label >متن</label>
+                                    <Field  validate={validateRequired} name="message"   as="textarea"  className="form-control opacityForInput" placeholder="متن اعلان" value={message} onChange={e => setMessage(e.target.value)}  rows='10'/>
+                                    {errors.message && touched.message && <div className="text-danger">{errors.message}</div>}
+
+                                </div>
+                                <div className='row'>
+                                    <div className='col-lg-6 '>
+                                        <button disabled={loading} type="submit" className="btn btn-success float-left"  >تایید  <ClipLoader
+
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
+                                    </div>
+                                    <div className='col-lg-6 '>
+                                        <NavLink to='/admin/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

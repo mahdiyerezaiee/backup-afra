@@ -2,7 +2,7 @@ import { NavLink, useParams,useNavigate } from "react-router-dom";
 import {  getEditProduct, SetProduct } from "../../../services/productService";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import SimpleReactValidator from "simple-react-validator";
+
 import { toast } from "react-toastify";
 import Select from "react-select";
 import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
@@ -14,7 +14,8 @@ import ProductWareHouseEdit from "../../../Common/Shared/Common/productWareHouse
 import {GetGroupsForEntity, GetGroupWithCompany} from "../../../services/GroupService";
 import {ClipLoader} from "react-spinners";
 import { GetCompanyChild } from './../../../services/companiesService';
-
+import { Formik, Form, Field } from 'formik';
+import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 const EditProduct = () => {
     const params = useParams()
     const [, forceUpdate] = useState();
@@ -119,10 +120,8 @@ const EditProduct = () => {
     }
     const submit = async (event) => {
         setLoading(true)
-        event.preventDefault();
 
         try {
-            if (validator.current.allValid()) {
 
                 const { data, status } = await SetProduct(UpdateProduct);
 
@@ -143,43 +142,15 @@ const EditProduct = () => {
 
                 }
 
-            } else {
-
-                validator.current.showMessages();
-
-                forceUpdate(1);
-            }
-            setLoading(false)
 
         } catch (error) {
             console.log(error);
         }
+        setLoading(false)
 
 
 
     };
-
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;}
-            },
-            numeric: {
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u06F0-u06F9]+$/,) && params.indexOf(val) === -1 && val > 0;
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از اعداد استفاده کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
-
     const WareHouses = async () => {
         try {
             const { data, status } = await GetAllWareHouses();
@@ -241,32 +212,57 @@ const EditProduct = () => {
         </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-8 col-xs-12'>
-                    <form>
+                    <Formik
+                        initialValues={{
+                            id,
+                            active,
+                            name,
+                            englishName,
+                            price,
+                            maxSellableAmount,
+                            minSellableAmount,
+                            measureUnitId,
+                            measureUnit:measureUnitId,
+                            groupId,
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit( )
+                        }}>
+                        {({ errors, touched,setFieldTouched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+                            <Form>
                         <div className="n-chk d-flex  mb-4">
                             <div>
                                 <label className="mr-2"> فعال </label>
-                                <input type="checkbox" checked={active} onChange={e => {
-                                    setActive(e.target.checked)
-                                    validator.current.showMessageFor("required");}}/>
+                                <Field name="active" type="checkbox" defaultChecked={active} onChange={e => {
+                                    setActive(e.checked)
+
+                                }}
+                                />
                             </div>
                         </div>
                         <div className="form-group mb-4 textOnInput  align-content-between">
                             <div className='form-row'>
                                 <div className="col-lg-6 col-sm-12  mt-3">
                             <label>نام کالا</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="کنجاله ، ذرت و..."
-                                   value={name} onChange={e => {
-                                setName(e.target.value)
-                                validator.current.showMessageFor("required");}} />
-                            {validator.current.message("required", name, "required|alpha")}
+                                    <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="کنجاله ، ذرت و..."
+                                           value={name} onChange={e => {
+                                        setName(e.target.value)
+
+                                    }} />
+                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
                                 </div>
                                 <div className="col-lg-6 col-sm-12 mt-3">
                             <label>کد بازارگاه</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="... Corn Seed "
-                                   value={englishName} onChange={e => {
-                                setEnglishName(e.target.value)
-                                validator.current.showMessageFor("required");}} />
-                            {validator.current.message("required", englishName, "required")}
+                                    <Field name="englishName"  validate={validatNumber}  type="text" className="form-control opacityForInput" placeholder="... Corn Seed "
+                                           value={englishName} onChange={e => {
+                                        setEnglishName(e.target.value)
+
+                                    }} />
+                                    {errors.englishName && touched.englishName && <div className="text-danger">{errors.englishName}</div>}
+
                                 </div>
                         </div>
                         </div>
@@ -276,7 +272,7 @@ const EditProduct = () => {
                                 <div className="col-lg-6 col-sm-12 mt-3">
                                     <label>واحد</label>
                                     <Select
-
+required={true}
                                         value={{ label: MEASURE, id: measureUnitId }}
                                         options={Mesures()}
                                         onChange={e => setMeasureUnitId(e.value)}
@@ -287,6 +283,8 @@ const EditProduct = () => {
                                 <div className="col-lg-6 col-sm-12 mt-3" >
                                     <label>گروه کالا</label>
                                     <Select
+                                        required={true}
+
                                         placeholder="گروه کالا ..."
                                         options={inputProductG()}
                                         value={currentProductG()}
@@ -297,7 +295,7 @@ const EditProduct = () => {
                         </div>
                         <div className='row '>
                             <div className='col-6 '>
-                                <button type="submit" disabled={loading} className="btn btn-success float-left " onClick={submit}>تایید  <ClipLoader
+                                <button type="submit" disabled={loading } className="btn btn-success float-left ">تایید  <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
@@ -308,8 +306,9 @@ const EditProduct = () => {
                                 <NavLink to='/admin/productList' className="btn btn-danger float-right">بازگشت</NavLink>
                             </div>
                         </div>
-                    </form>
-
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
 
             </div>

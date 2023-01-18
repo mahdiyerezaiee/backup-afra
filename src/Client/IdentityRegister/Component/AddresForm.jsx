@@ -6,39 +6,11 @@ import { GetAllProvince, SetAddress } from '../../../services/addressService';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import {useRef} from "react";
-import SimpleReactValidator from "simple-react-validator";
+import {Field, Form, Formik} from "formik";
+import {validateRequired, validatmin10, validatMobail, validatNumber} from "../../../Utils/validitionParams";
 
 const AddresForm = () => {
-    const validator = useRef(new SimpleReactValidator({
-        validators:{
-            alpha:{
 
-                rule: (val ,params,validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i, )&& params.indexOf(val) === -1;
-                }
-            },
-            numeric:{
-
-                rule: (val ,params,validator) => {
-                    return validator.helpers.testRegex(val,/^[u06F0-u06F9]+$/,)&& params.indexOf(val) === -1 && val.length===10;
-
-                }
-            },
-            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-                    return val.length >= options[0];
-                }, messageReplace: function messageReplace(message, options) {
-                    return message.replace(':min', options[0]);
-                } }
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'کد ملی را صحیح وارد کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const userinfo = useSelector(state => state.user);
     const [fullAddress, setFulAddress] = useState('');
     const [postalCode, setpostalCode] = useState('');
@@ -87,8 +59,7 @@ const AddresForm = () => {
         entityTypeId:1,
         entityId:Number( localStorage.getItem('connect'))
     }
-    const handelSubmit =async (event) => {
-        event.preventDefault();
+    const handelSubmit =async () => {
         try {
             
             const {data,status}=await SetAddress(body);
@@ -123,106 +94,123 @@ const AddresForm = () => {
                 <div className='widget box shadow'>
 
 
-                    <form>
-
-                        <div className="form-group mb-4 textOnInput">
-                            <label>آدرس</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=> {
-                                setFulAddress(e.target.value)
-                                validator.current.showMessageFor("required");
-
-                            }}/>
-                            {validator.current.message("required", receiverTel, "required")}
-
-                        </div>
-
-                        <div className="form-row mb-4 textOnInput">
-                            <div className="form-group col-md-4">
-                                <label >تلفن </label>
-                                <input type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=> {
-                                    setreceiverTel(e.target.value)
-                                    validator.current.showMessageFor("required");
-
-                                }}/>
-                                {validator.current.message("required", receiverTel, "required")}
-
-                            </div>
-
-                            <div className="form-group col-md-4">
-
-                                <label > موبایل</label>
-                                <input type="text" className="form-control" id="inputZip" maxLength='11' value={receiverMobile}  onChange={e=> {
-                                    setreceiverMobile(e.target.value)
-                                    validator.current.showMessageFor("required");
-
-                                }} />
-                                {validator.current.message("required", postalCode, "numeric|min:11")}
-
-                            </div>
-                            <div className="form-group col-md-4">
-
-                                <label >کد پستی</label>
-                                <input type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=> {
-                                    setpostalCode(e.target.value)
-                                    validator.current.showMessageFor("required");
+                    <Formik
+                        initialValues={{
+                            id:0,
+                            provinceId,
+                            fullAddress,
+                            postalCode,receiverTel,receiverMobile
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            handelSubmit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
 
-                                }} />
-                                {validator.current.message("required", postalCode, "required|numeric|min:10")}
 
-                            </div>
-                        </div>
+                            <Form >
 
-                        <div className="form-row  textOnInput">
-                            <div className="form-group col-md-6">
-                                <label>استان</label>
-                                <Select
-                                    placeholder='استان'
-                                    options={ProvincerenderList()}
-                                    onChange={e=>{setostanId(e.value)
-                               }}
-                                />
-                                {ostanId ===0 ?<span className="text-danger">استان خود را انتخاب کنید</span> :null }
+                                <div className="form-group mb-4 textOnInput">
+                                    <label>آدرس</label>
+                                    <Field  validate={validateRequired} name="fullAddress" type="text" className="form-control opacityForInput" placeholder="تهران ، اسلام شهر و ...." value={fullAddress}  onChange={e=> {
+                                        setFulAddress(e.target.value)
 
-                            </div>
-                            <div className="form-group col-md-6">
-
-                                <label >شهر</label>
-                                <Select
-                                    placeholder='شهر'
-                                    options={CitiesrenderList()}
-                                    className='form-group'
-                                    onChange={e=>setProvinceId(e.value)}
-                                />
-                                {provinceId ===0 ?<span className="text-danger">شهر خود را انتخاب کنید</span> :null }
-
-                            </div>
-
-
-                        </div>
-                        <div className='form-row  tesxOnInput'>
-
-                        </div>
-                        <div className="form-group">
-                            <div className="form-check pl-0">
-                                <div className="custom-control custom-checkbox checkbox-info">
+                                    }}/>
+                                    {errors.fullAddress && touched.fullAddress && <div className="text-danger">{errors.fullAddress}</div>}
 
                                 </div>
-                            </div>
-                        </div>
-                        <div className='row justify-content-between'>
-                            <div className='col '>
-                                <button type="submit" className="btn btn-success" onClick={handelSubmit}>تایید</button>
-                            </div>
-                            <div className='col-3 '>
-                                <NavLink to='/admin/identitypannel' className="btn btn-danger">بازگشت</NavLink>
-                            </div>
-                        </div>
+
+                                <div className="form-row mb-4 textOnInput">
+                                    <div className="form-group col-md-4">
+                                        <label >تلفن </label>
+                                        <Field  validate={validatNumber} name="receiverTel" type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={e=> {
+                                            setreceiverTel(e.target.value)
+
+                                        }}/>
+                                        {errors.receiverTel && touched.receiverTel && <div className="text-danger">{errors.receiverTel}</div>}
+
+                                    </div>
+
+                                    <div className="form-group col-md-4">
+
+                                        <label > موبایل</label>
+                                        <Field  validate={validatMobail} name="receiverMobile"  type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={e=> {
+                                            setreceiverMobile(e.target.value)
+
+                                        }} />
+                                        {errors.receiverMobile && touched.receiverMobile && <div className="text-danger">{errors.receiverMobile}</div>}
+
+                                    </div>
+                                    <div className="form-group col-md-4">
+
+                                        <label >کد پستی</label>
+                                        <Field  validate={validatmin10} name="postalCode" type="text" className="form-control" id="inputZip" value={postalCode}  onChange={e=> {
+                                            setpostalCode(e.target.value)
+
+
+                                        }} />
+                                        {errors.postalCode && touched.postalCode && <div className="text-danger">{errors.postalCode}</div>}
+
+                                    </div>
+                                </div>
+
+                                <div className="form-row  textOnInput">
+                                    <div className="form-group col-md-6">
+                                        <label>استان</label>
+                                        <Select
+                                            placeholder='استان'
+                                            options={ProvincerenderList()}
+                                            onChange={e=>{setostanId(e.value)
+                                            }}
+                                        />
+                                        {ostanId ===0 ?<span className="text-danger">استان خود را انتخاب کنید</span> :null }
+
+                                    </div>
+                                    <div className="form-group col-md-6">
+
+                                        <label >شهر</label>
+                                        <Select
+                                            placeholder='شهر'
+                                            options={CitiesrenderList()}
+                                            className='form-group'
+                                            onChange={e=>setProvinceId(e.value)}
+                                        />
+                                        {provinceId ===0 ?<span className="text-danger">شهر خود را انتخاب کنید</span> :null }
+
+                                    </div>
+
+
+                                </div>
+                                <div className='form-row  tesxOnInput'>
+
+                                </div>
+                                <div className='form-row  tesxOnInput'>
+
+                                </div>
+                                <div className="form-group">
+                                    <div className="form-check pl-0">
+                                        <div className="custom-control custom-checkbox checkbox-info">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='row justify-content-between mt-4'>
+                                    <div >
+                                        <button  type="submit" className="btn btn-success">ذخیره تغییرات</button>
+                                    </div>
+                                    <div >
+                                        <NavLink to='/admin/identitypannel' className="btn btn-danger">بازگشت</NavLink>
+                                    </div>
+                                </div>
 
 
 
 
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div >
             </div >
         </div>

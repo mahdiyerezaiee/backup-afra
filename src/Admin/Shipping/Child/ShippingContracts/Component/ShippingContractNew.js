@@ -1,14 +1,12 @@
 import react, {Fragment, useEffect, useState, useRef} from "react";
 import {useNavigate, NavLink} from "react-router-dom";
-
 import {toast} from 'react-toastify';
-
-import SimpleReactValidator from 'simple-react-validator';
-
 import {GetAllShippingCompanies, SetShippingCompany, SetShoppingContract} from "../../../../../services/ShippingService";
 import {MeasureUnitSample} from "../../../../../Common/Enums/MeasureUnitSample";
 import Select from "react-select";
 import {ClipLoader} from "react-spinners";
+import {Field, Form, Formik} from "formik";
+import {validatNumber} from "../../../../../Utils/validitionParams";
 
 
 const NewShippingContract = () => {
@@ -31,30 +29,7 @@ const[shippingCompanyId,SetshippingCompanyId]=useState();
 
 
     }};
-    const validator = useRef(new SimpleReactValidator({
-        validators: {
-            alpha: {
 
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i,) && params.indexOf(val) === -1;
-                }
-            },
-            numeric: {
-
-                rule: (val, params, validator) => {
-                    return validator.helpers.testRegex(val, /^[u0660-u0669]+$/,) && params.indexOf(val) === -1;
-                }
-            },
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'حتما از عداد استفاده کنید'
-        }
-        , element: message => <p style={{color: 'red'}}>{message}</p>
-    }));
     const getBarbaris=async()=>{
         try {
             const{data,status}=await GetAllShippingCompanies();
@@ -74,9 +49,8 @@ const[shippingCompanyId,SetshippingCompanyId]=useState();
     const Mesures = () => {
         return (MeasureUnitSample.map(data => ({label: data.name, value: data.id})));
     }
-    const submit = async (event) => {
+    const submit = async () => {
         setLoading(true)
-        event.preventDefault();
         try {
             const {data, status} = await SetShoppingContract(ShippingContract);
             if (status === 200) {
@@ -114,31 +88,45 @@ setLoading(false)
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-4 col-xs-12'>
 
+                    <Formik
+                        initialValues={{
+                            contractNumber,
+                            shippingCompanyId,
+                            measureUnitId,
+                            quantity,
+                            createDate: new Date(),
+                        }}
+                        enableReinitialize={true}
+                        onSubmit={values => {
+                            // same shape as initial values
+                            submit()
+                        }}>
+                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                    <form className="col-lg-8 col-sm-12">
+
+
+                            <Form className="col-lg-8 col-sm-12">
 
                         <div className="form-group mb-4 textOnInput  align-content-between">
 
                             <label>شماره قرارداد</label>
-                            <input type="text" className="form-control opacityForInput" placeholder="شماره قرارداد"
+                            <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" placeholder="شماره قرارداد"
                                    value={contractNumber} onChange={e => {
                                 setContractNumber(e.target.value)
-                                validator.current.showMessageFor("required");
 
                             }}/>
-                            {validator.current.message("required", contractNumber, "required")}
+                            {errors.contractNumber && touched.contractNumber && <div className="text-danger">{errors.contractNumber}</div>}
 
                         </div>
 
                         <div className="form-group mb-4 textOnInput">
                             <label>مقدار</label>
-                            <input type="text" className="form-control opacityForInput" value={quantity}
+                            <Field  validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={quantity}
                                    onChange={e => {
                                        setQuantity(e.target.value)
-                                       validator.current.showMessageFor("required");
 
                                    }}/>
-                            {validator.current.message("required", quantity, "required|numeric")}
+                            {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
 
                         </div>
                         <div className="form-group mb-4 textOnInput">
@@ -149,17 +137,14 @@ setLoading(false)
                                     <label>واحد</label>
                                     <Select
                                     
-                                        placeholder={validator.current.showMessageFor("required") ? "Normal text placeholder" :
-                                            <span className="text-danger">خالی است </span>}
+                                        placeholder="واحد"
 
                                         options={Mesures()}
                                         onChange={e => {
                                             setMeasureUnitId(e.value)
-                                            validator.current.showMessageFor("required");
 
                                         }}
                                     />
-                                    {validator.current.message("required", Mesures, "required")}
 
 
                                 </div>
@@ -171,17 +156,14 @@ setLoading(false)
                                     <label>باربری</label>
                                     <Select
                                     
-                                        placeholder={validator.current.showMessageFor("required") ? "Normal text placeholder" :
-                                            <span className="text-danger">خالی است </span>}
+                                        placeholder="باربری"
 
                                         options={Barbaries()}
                                         onChange={e => {
                                             SetshippingCompanyId(Number(e.value))
-                                            validator.current.showMessageFor("required");
 
                                         }}
                                     />
-                                    {validator.current.message("required", Mesures, "required")}
 
 
                                 </div>
@@ -198,7 +180,7 @@ setLoading(false)
                         </div>
                         <div className='row justify-content-between'>
                             <div className='col-lg-6 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-left " onClick={submit}>تایید <ClipLoader
+                                <button disabled={loading} type="submit" className="btn btn-success float-left " >تایید <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
@@ -212,7 +194,9 @@ setLoading(false)
                         </div>
 
 
-                    </form>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

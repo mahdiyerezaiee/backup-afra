@@ -1,6 +1,5 @@
 
 import React, { useState, useRef, useEffect } from 'react'
-import SimpleReactValidator from 'simple-react-validator';
 import {NavLink, useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import "react-multi-date-picker/styles/layouts/prime.css";
@@ -8,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { GetOrganisationCode, SetOrganisation } from '../../../services/organisationService';
 import { setCustomerInfo } from '../../../services/customerService';
 import { GetUserInfo } from '../../../services/userService';
+import {validatAlpha, validateEmail, validatmin10} from "../../../Utils/validitionParams";
+import {Field, Form, Formik} from "formik";
 
 
 const PersonIdetity = () => {
@@ -47,7 +48,8 @@ const PersonIdetity = () => {
         lastName,
         requireInfo: true,
         nationalCode,
-        organizationId: null
+        organizationId: null,
+        active:true
     }
 
     const organ = {
@@ -57,36 +59,7 @@ const PersonIdetity = () => {
         }
     }
 
-    const validator = useRef(new SimpleReactValidator({
-        validators:{
-            alpha:{
 
-                rule: (val ,params,validator) => {
-                    return validator.helpers.testRegex(val, /^[A-Z آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]*$/i, )&& params.indexOf(val) === -1;
-                }
-            },
-            numeric:{
-
-                rule: (val ,params,validator) => {
-                    return validator.helpers.testRegex(val,/^[u06F0-u06F9]+$/,)&& params.indexOf(val) === -1 && val.length===10;
-
-                }
-            },
-            min:{ message: 'حداقل :min کارکتر.', rule: function rule(val, options) {
-                    return val.length >= options[0];
-                }, messageReplace: function messageReplace(message, options) {
-                    return message.replace(':min', options[0]);
-                } }
-        },
-        messages: {
-            required: "پرکردن این فیلد الزامی می باشد",
-
-            email: 'ایمیل صحیح نیست',
-            alpha: 'حتما از حروف استفاده کنید',
-            numeric: 'کد ملی را صحیح وارد کنید'
-        }
-        , element: message => <p style={{ color: 'red' }}>{message}</p>
-    }));
     const handelSetCustomer = async () => {
 
         try {
@@ -154,11 +127,9 @@ navigate('/admin/identitypannel')
 
         setShow(!show)
     }
-    const handelSubmit = (event) => {
-        event.preventDefault();
+    const handelSubmit = () => {
         try {
 
-            if (validator.current.allValid()) {
 
                 if (check) {
                     handelSetOrganisation();
@@ -168,16 +139,7 @@ navigate('/admin/identitypannel')
                     handelSetCustomer();
                 }
 
-            }
-            else {
-
-                validator.current.showMessages();
-
-                forceUpdate(1);
-            }
-
-        }
-        catch (error) {
+            } catch (error) {
 
         }
 
@@ -198,8 +160,30 @@ navigate('/admin/identitypannel')
                 <div className='row d-flex justify-content-center '>
                     <div className='widget box shadow col-4'>
 
+                        <Formik
+                            initialValues={{
+                                id: userinfo.id,
+                                userName: userinfo.userName,
+                                email,
+                                firstName,
+                                lastName,
+                                requireInfo: true,
+                                nationalCode,
+                                organizationId: null,
+                                parentId: 0,
+                                name: companyName, nationalId, registrationNumber: companyRegister
 
-                        <form  >
+                            }}
+                            enableReinitialize={true}
+                            onSubmit={values => {
+                                // same shape as initial values
+                                handelSubmit()
+                            }}>
+                            {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                                <Form  >
                             <div className="n-chk">
 
 
@@ -211,38 +195,34 @@ navigate('/admin/identitypannel')
                             <div className="form-group mb-4 textOnInput  align-content-between">
 
                                 <label >نام</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="نام" value={firstName || ""} onChange={
+                                <Field name="firstName" validate={validatAlpha}  type="text" className="form-control opacityForInput" placeholder="نام" value={firstName } onChange={
                                     (e) => {
                                         setfirstName(e.target.value);
-                                        validator.current.showMessageFor("required");
                                     }} />
-                                {validator.current.message("required", firstName, "required|alpha")}
+                                {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
                             </div>
                             <div className="form-group mb-4 textOnInput">
                                 <label >نام خانوادگی</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={e => {
+                                <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName } onChange={e => {
                                     setlastName(e.target.value)
-                                    validator.current.showMessageFor("required");
-                                }} />
-                                {validator.current.message("required", lastName, "required|alpha")}
+                                }} name="lastName" validate={validatAlpha} />
+                                {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
                             </div>
                             <div className="form-group mb-4 textOnInput">
                                 <label >کد ملی</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode ||""} onChange={e => {
+                                <Field type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode } onChange={e => {
                                     setnationalCode(e.target.value)
-                                    validator.current.showMessageFor("required");
-                                }} />
-                                {validator.current.message("required", nationalCode, "required|numeric|min:10")}
+                                }} name="nationalCode"  validate={validatmin10}/>
+                                {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
                             </div>
 
 
                             <div className="form-group mb-4 textOnInput">
                                 <label >ایمیل</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={e => {
+                                <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email} onChange={e => {
                                     setemail(e.target.value)
-                                    validator.current.showMessageFor("email")
-                                }} />
-                                {validator.current.message("email", email, "email")}
+                                }} name='email' validate={validateEmail}/>
+                                {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
                             </div>
 
 
@@ -251,9 +231,8 @@ navigate('/admin/identitypannel')
                                 <>
                                     <div className="input-group col-12 mb-5 mt-4 textOnInputForGrp rounded"  hidden={!show}>
                                         <label >رمز عبور</label>
-                                        <input type={passwordType}  className="form-control opacityForInput" placeholder="*******" value={password || ""} onChange={e => {
+                                        <input type={passwordType}  className="form-control opacityForInput" placeholder="*******" value={password } onChange={e => {
                                             setPassword(e.target.value)
-                                            validator.current.showMessageFor("required");
                                         }} />
                                         <div className="input-group-append ">
                                             <button className=" btn-outline-primary box-shadow-none rounded"
@@ -282,13 +261,11 @@ navigate('/admin/identitypannel')
                                                 </svg>}</button>
                                         </div>
 
-                                        {validator.current.message("required", password, "required")}
                                     </div>
                                     <div className="input-group col-12 mb-5 mt-4 textOnInputForGrp rounded"  hidden={!show}>
                                         <label >تکرار مرز عبور</label>
                                         <input type={passwordType}  className="form-control opacityForInput" placeholder="*******" value={passwordConfirm || " "} onChange={e => {
                                             setPasswordConfirm(e.target.value)
-                                            validator.current.showMessageFor("required");
                                         }} />
                                         <div className="input-group-append ">
                                             <button className=" btn-outline-primary box-shadow-none rounded"
@@ -335,7 +312,7 @@ navigate('/admin/identitypannel')
                             </div>
                             <div className='row justify-content-between'>
                                 <div className='col '>
-                                    <button type="submit" className="btn btn-success " disabled={Click} onClick={handelSubmit}>تایید</button>
+                                    <button type="submit" className="btn btn-success " disabled={Click} >تایید</button>
                                 </div>
                                 <div className='col-3 '>
                                     <NavLink to='/admin/identitypannel' className="btn btn-danger">بازگشت</NavLink>
@@ -345,7 +322,10 @@ navigate('/admin/identitypannel')
 
 
 
-                        </form>
+
+                                </Form>
+                            )}
+                        </Formik>
                     </div >
                 </div >
             </div>
@@ -392,7 +372,29 @@ navigate('/admin/identitypannel')
                 <div className='row d-flex justify-content-center '>
                     <div className='widget box shadow col-4'>
 
-                        <form className='form' >
+                        <Formik
+                            initialValues={{
+                                id: userinfo.id,
+                                userName: userinfo.userName,
+                                email,
+                                firstName,
+                                lastName,
+                                requireInfo: true,
+                                nationalCode,
+                                organizationId: null,
+                                parentId: 0,
+                                name: companyName, nationalId, registrationNumber: companyRegister
+                            }}
+                            enableReinitialize={true}
+                            onSubmit={values => {
+                                // same shape as initial values
+                                handelSubmit()
+                            }}>
+                            {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                                <Form  className='form' >
                             <div className="n-chk">
 
 
@@ -401,54 +403,48 @@ navigate('/admin/identitypannel')
                                     شخص حقوقی هستم
                                 </label>
                             </div>
-                            <div className="form-group mb-4 textOnInput  align-content-between">
+                                    <div className="form-group mb-4 textOnInput  align-content-between">
 
-                                <label >نام</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="نام" value={firstName || ""} onChange={
-                                    (e) => {
-                                        setfirstName(e.target.value);
-                                        validator.current.showMessageFor("required");
-                                    }} />
-                                {validator.current.message("required", firstName, "required|alpha")}
-                            </div>
-                            <div className="form-group mb-4 textOnInput">
-                                <label >نام خانوادگی</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={e => {
-                                    setlastName(e.target.value)
-                                    validator.current.showMessageFor("required");
-                                }} />
-                                {validator.current.message("required", lastName, "required|alpha")}
-                            </div>
-                            <div className="form-group mb-4 textOnInput">
-                                <label >کد ملی</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode || ""} onChange={e => {
-                                    setnationalCode(e.target.value)
-                                    validator.current.showMessageFor("required");
-                                }} />
-                                {validator.current.message("required", nationalCode, "required|numeric")}
-                            </div>
+                                        <label >نام</label>
+                                        <Field name="firstName" validate={validatAlpha}  type="text" className="form-control opacityForInput" placeholder="نام" value={firstName || ""} onChange={
+                                            (e) => {
+                                                setfirstName(e.target.value);
+                                            }} />
+                                        {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
+                                    </div>
+                                    <div className="form-group mb-4 textOnInput">
+                                        <label >نام خانوادگی</label>
+                                        <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={e => {
+                                            setlastName(e.target.value)
+                                        }} name="lastName" validate={validatAlpha} />
+                                        {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
+                                    </div>
+                                    <div className="form-group mb-4 textOnInput">
+                                        <label >کد ملی</label>
+                                        <Field type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode ||""} onChange={e => {
+                                            setnationalCode(e.target.value)
+                                        }} name="nationalCode"  validate={validatmin10}/>
+                                        {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
+                                    </div>
 
 
-                            <div className="form-group mb-4 textOnInput">
-                                <label >ایمیل</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={e => {
-                                    setemail(e.target.value)
-
-                                }} />
-                                {validator.current.message("required", email, "required|email")}
-
-                            </div>
+                                    <div className="form-group mb-4 textOnInput">
+                                        <label >ایمیل</label>
+                                        <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={e => {
+                                            setemail(e.target.value)
+                                        }} name='email' validate={validateEmail}/>
+                                        {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
+                                    </div>
 
                             <br />
                             <div className="form-group mb-4 textOnInput">
 
                                 <label >شماره ملی شرکت</label>
                                 <div className='form-row justify-content-center'>
-                                    <input type="text" className="form-control opacityForInput col" value={nationalId || ""} onChange={(e) => { SetnationalId(e.target.value); validator.current.showMessageFor('required') }} placeholder="12345678912" />
+                                    <input type="text" className="form-control opacityForInput col" value={nationalId || ""} onChange={(e) => { SetnationalId(e.target.value)}} placeholder="12345678912" />
                                     <button type='submit' className='btn btn-outline-primary col-4 ' onClick={handelCheckCompanyCode}>استعلام </button>
 
                                 </div>
-                                {validator.current.message("required", nationalId, "required|numeric")}
 
 
                             </div>
@@ -456,18 +452,14 @@ navigate('/admin/identitypannel')
                                 <label >نام شرکت</label>
                                 <input type="text" className="form-control opacityForInput" disabled={formDisable} value={companyName || ""} onChange={(e) => {
                                     setcompanyName(e.target.value)
-                                    validator.current.showMessageFor('required')
                                 }} placeholder="نام شرکت" />
-                                {validator.current.message("required", companyName, "required|alpha")}
 
                             </div>
                             <div className="form-group  textOnInput ">
                                 <label >شماره ثبت</label>
                                 <input type="text" className="form-control opacityForInput" disabled={formDisable} value={companyRegister || ""} onChange={(e) => {
                                     setcompanyRegister(e.target.value)
-                                    validator.current.showMessageFor('required')
                                 }} placeholder="شماره ثبت" />
-                                {validator.current.message("required", companyRegister, "required|numeric")}
 
                             </div>
                             <div><input type='checkbox' checked={show} onClick={showHandler}/> تغییر رمز عبور </div>
@@ -477,15 +469,12 @@ navigate('/admin/identitypannel')
                                         <label >رمز عبور</label>
                                         <input type="password" className="form-control opacityForInput" placeholder="*******" value={password || ""} onChange={e => {
                                             setPassword(e.target.value)
-                                            validator.current.showMessageFor("required");
                                         }} />
-                                        {validator.current.message("required", password, "required")}
                                     </div>
                                     <div className="form-group m-4 textOnInput">
                                         <label >تکرار مرز عبور</label>
                                         <input type="password" className="form-control opacityForInput" placeholder="*******" value={passwordConfirm || ""} onChange={e => {
                                             setPasswordConfirm(e.target.value)
-                                            validator.current.showMessageFor("required");
                                         }} />
                                         {password !== passwordConfirm ?
                                             <p  className="text-danger">رمز عبور برابر نیست</p> : ''}
@@ -496,7 +485,7 @@ navigate('/admin/identitypannel')
 
                             <div className='row justify-content-between'>
                                 <div >
-                                    <button type="submit" className="btn btn-success " disabled={Click} onClick={handelSubmit} >تایید</button>
+                                    <button type="submit" className="btn btn-success " disabled={Click}  >تایید</button>
                                 </div>
                                 <div >
                                     <NavLink to='/admin/identitypannel' className="btn btn-danger">بازگشت</NavLink>
@@ -505,8 +494,9 @@ navigate('/admin/identitypannel')
 
 
 
-
-                        </form>
+                                        </Form>
+                                        )}
+                                </Formik>
                     </div >
                 </div >
             </div>
