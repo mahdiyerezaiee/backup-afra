@@ -1,6 +1,7 @@
 import React from 'react'
-const FileSaver =require( "file-saver");
 import * as XLSX from "xlsx";
+const FileSaver =require( "file-saver");
+
 interface Props{
   apiData:any, fileName:any
   
