@@ -25,7 +25,6 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
     const [modalIsOpeninvoice, setIsOpeninvoice] = useState(false);
     const [modalIsOpen, setIsOpen] = useState(false);
     let newAttachmnet=attachments.filter(item=>item.deleted===false)
-
     const getSupplyCode = async () => {
         try {
             const {data , status}= await GetAllProductSupply(orderDetail[0].productSupplyId)
@@ -111,7 +110,7 @@ const OrderAdminDetail = ({orderDetail ,order , attachments, handelPreview, getO
             </div>
 
             <OrderConfirmation id={order.id} modalIsOpen={modalIsOpen} closeModal={closeModal} orderStatusId={id}/>
-            <OrderEdit id={idEdit} closeModal={closeModalEdit} modalIsOpen={modalIsOpenEdit} />
+            <OrderEdit id={order.id} closeModal={closeModalEdit} modalIsOpen={modalIsOpenEdit} />
 
 
         </div> )

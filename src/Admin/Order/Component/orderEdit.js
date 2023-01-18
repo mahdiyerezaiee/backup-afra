@@ -25,7 +25,6 @@ const customStyles = {
 }
 const OrderEdit = ({id, modalIsOpen, closeModal}) => {
     let FilnalArr = [];
-
     const [order, setOrder] = useState([])
     const [OrderDetail, setOrderDetail] = useState([])
     const [paymentMethodId, setPaymentMethodId] = useState(0)
@@ -55,6 +54,7 @@ if(id>0){
             console.log(err)
         }
     }
+
     const getOrderDetail = async () => {
         try {
             const {data, status} = await GetOrderDetailsAdmin(Id)
@@ -154,7 +154,8 @@ conditionOrder=orderCondition
                 "paid": false,
                 comment,
                 "customer": null,
-                "extraData": null
+                "extraData": null,
+                companyId:order.companyId
             }
         }
         try {

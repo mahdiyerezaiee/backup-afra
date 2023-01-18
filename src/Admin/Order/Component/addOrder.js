@@ -14,6 +14,7 @@ import {OrderStatus} from "../../../Common/Enums/OrderStatusEnums";
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validateRequired, validatNumber} from "../../../Utils/validitionParams";
+import {GetCompanyChild} from "../../../services/companiesService";
 
 const AddOrder = () => {
     const [products, setProducts] = useState([]);
@@ -30,11 +31,27 @@ const AddOrder = () => {
     const [productBasePrice, setProductBasePrice] = useState(0)
     const [users, setUsers] = useState([])
     const [organizations, setOrganizations] = useState([])
+    let [companyId, SetcompanyId] = useState()
+    let [companyName, SetCompanyName] = useState()
+    const [userCompanies, setUserCompanies] = useState([])
+    const getCompanies = async () => {
+        try {
+            const { data, status } = await GetCompanyChild()
+            setUserCompanies(data.result.companies)
+            SetcompanyId(data.result.companies[0].id)
+            SetCompanyName(data.result.companies[0].name)
+
+
+        } catch (error) {
+
+        }
+
+    }
 
     useEffect(() => {
         getUser();
         getOrganizations()
-
+        getCompanies()
     }, [])
 
     const getUser = async () => {
@@ -43,7 +60,7 @@ const AddOrder = () => {
 
             headers: {'Content-Type': 'application/json'},
             params: {
-                RoleIds: [2],
+                RoleIds: 2,
                 PageNumber: 0,
                 PageSize: 100000000
             }
@@ -106,7 +123,9 @@ const AddOrder = () => {
         productSupplyId:null,
         productSupplyConditionId:null,
         productBasePrice:Number(productBasePrice),
+        companyId,companyName
     }
+
     const navigate = useNavigate()
     const SubmitOrder = async () => {
         setLoading(true)
@@ -176,6 +195,11 @@ setLoading(false)
 const statusOrder = () => {
         return (OrderStatus.map(data => ({label: data.name, value: data.id})))
     }
+    const companys = () => {
+        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+
+    }
+    let defaultValue = companys()[0]
     var formatter = new Intl.NumberFormat('en-US', {
 
 
@@ -199,6 +223,7 @@ const statusOrder = () => {
                         productSupplyId:null,
                         productSupplyConditionId:null,
                         productBasePrice:Number(productBasePrice),
+                        companyId,companyName
                     }}
                     enableReinitialize={true}
                     onSubmit={values => {
@@ -332,6 +357,31 @@ maxMenuHeight="200px"
 
 
                             </div>
+                            {userCompanies?
+                                <div className="col-12 mb-4  textOnInput">
+
+                                    <label> شرکت</label>
+                                    <Select
+                                        defaultValue={defaultValue}
+                                        placeholder='نام شرکت'
+                                        options={companys()}
+                                        key={defaultValue}
+                                        isClearable={true}
+                                        onChange={e => {
+
+
+                                            SetcompanyId(e.value)
+                                            SetCompanyName(e.label)
+
+
+                                        }
+
+                                        }
+
+                                    />
+
+
+                                </div>:''}
 
                             <div className="col-12">
 
