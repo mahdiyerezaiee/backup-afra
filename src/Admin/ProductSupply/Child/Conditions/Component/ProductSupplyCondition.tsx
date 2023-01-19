@@ -1,24 +1,24 @@
 import Select from "react-select";
-import React, {useRef, useState, useEffect} from "react";
-import {GetGroupsForEntity} from "../../../../../services/GroupService";
-import {PaymentStructureEnums} from "../../../../../Common/Enums/PaymentStructureEnums";
-import {AdditionalTypeId} from "../../../../../Common/Enums/AdditionalTypeIdEnums";
+import React, { useRef, useState, useEffect } from "react";
+import { GetGroupsForEntity } from "../../../../../services/GroupService";
+import { PaymentStructureEnums } from "../../../../../Common/Enums/PaymentStructureEnums";
+import { AdditionalTypeId } from "../../../../../Common/Enums/AdditionalTypeIdEnums";
 import {
     DeleteProductSupplyCondition,
     GetProductSupplyConditions,
     SetProductSupplyConditions
 } from "../../../../../services/ProductSupplyConditionService";
-import {useParams} from "react-router-dom";
-import {toast} from "react-toastify";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import ProductSupplyConditionReadOnly from "./ProductSupplyConditionRead";
 import ProductSupplyConditionEdit from "./ProductSupplyConditionEdit";
 import Modal from 'react-modal';
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
-import { GetCompanyChild } from './../../../../../services/companiesService';
-import { GetGroupWithCompany } from './../../../../../services/GroupService';
+import { GetCompanyChild } from '../../../../../services/companiesService';
+import { GetGroupWithCompany } from '../../../../../services/GroupService';
 
-const customStyles = {
+const customStyles: any = {
     content: {
 
         inset: '50% auto auto 50%',
@@ -33,20 +33,23 @@ const customStyles = {
     }
 };
 
-const ProductSupplyCondition = ({quantity}) => {
+interface Props {
+    quantity: any
+}
+const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
     const params = useParams()
 
-    const [paymentMethodId, setpaymentMethodId] = useState(0)
-    const [additionalTypeId, setadditionalTypeId] = useState(0)
-    const [customerGroupId, setcustomerGroupId] = useState(0)
+    const [paymentMethodId, setpaymentMethodId] = useState<any>(0)
+    const [additionalTypeId, setadditionalTypeId] = useState<any>(0)
+    const [customerGroupId, setcustomerGroupId] = useState<any>(0)
     const [active, setActive] = useState(true)
     const [special, setSpecial] = useState(false)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [show, setShow] = useState(false)
-    const [condition, setCondition] = useState([])
-    const [addFormData, setAddFormData] = useState({
+    const [condition, setCondition] = useState<any>([])
+    const [addFormData, setAddFormData] = useState<any>({
 
         minSellableAmount: 0,
         maxSellableAmount: quantity,
@@ -75,7 +78,7 @@ const ProductSupplyCondition = ({quantity}) => {
         additionalTypeId,
         customerGroupId,
     });
-    const openModal = async (id) => {
+    const openModal = async () => {
         setpaymentMethodId(0)
         setcustomerGroupId(0)
         setadditionalTypeId(0)
@@ -89,11 +92,11 @@ const ProductSupplyCondition = ({quantity}) => {
     const [customerg, setCustomerg] = useState([])
 
     const GetCustomerGroup = async () => {
-       
+
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr = []
+        let finalArr: any = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(1, companies[i].id);
@@ -108,7 +111,7 @@ const ProductSupplyCondition = ({quantity}) => {
         finalArr = Array.prototype.concat.apply([], arr);
 
         setCustomerg(finalArr);
-   
+
     }
     useEffect(() => {
         GetCustomerGroup();
@@ -119,7 +122,7 @@ const ProductSupplyCondition = ({quantity}) => {
 
     const GetProductSupplyC = async () => {
         try {
-            const {data, status} = await GetProductSupplyConditions(params.id);
+            const { data, status } = await GetProductSupplyConditions(params.id);
             if (status === 200) {
                 setCondition(data.result.productSupplyConditions.values)
             }
@@ -127,18 +130,18 @@ const ProductSupplyCondition = ({quantity}) => {
             console.log(err)
         }
     }
-   
-    const handleAddFormChange = (event) => {
+
+    const handleAddFormChange = (event: any) => {
         const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value.replaceAll(",",'');
-        const newFormData = {...addFormData};
+        const fieldValue = event.target.value.replaceAll(",", '');
+        const newFormData: any = { ...addFormData };
         newFormData[fieldName] = fieldValue;
         setAddFormData(newFormData);
     };
-    const handleEditFormChange = (event) => {
+    const handleEditFormChange = (event: any) => {
         const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value.replaceAll(",",'');
-        const newFormData = {...editFormData};
+        const fieldValue = event.target.value.replaceAll(",", '');
+        const newFormData: any = { ...editFormData };
         newFormData[fieldName] = fieldValue;
         setEditFormData(newFormData);
     };
@@ -152,22 +155,22 @@ const ProductSupplyCondition = ({quantity}) => {
             installmentOccureCount: addFormData.installmentOccureCount,
             installmentStartDate: new Date(),
             comment: addFormData.comment,
-            active:true,
+            active: true,
             special,
             additionalAmount: addFormData.additionalAmount,
             additionalTypeId,
             customerGroupId,
-            
+
         }
     }
-    const handleAddFormSubmit = async (event) => {
+    const handleAddFormSubmit = async (event: any) => {
         setLoading(true)
         event.preventDefault();
 
 
         try {
 
-            const {data, status} = await SetProductSupplyConditions(body)
+            const { data, status } = await SetProductSupplyConditions(body)
             console.log(status)
             if (status === 200) {
                 closeModal()
@@ -181,7 +184,7 @@ const ProductSupplyCondition = ({quantity}) => {
                 GetProductSupplyC()
 
             }
-setLoading(false)
+            setLoading(false)
         } catch (err) {
             console.log(err)
         }
@@ -199,7 +202,7 @@ setLoading(false)
             installmentOccureCount: editFormData.installmentOccureCount,
             installmentStartDate: new Date(),
             comment: editFormData.comment,
-            active:true,
+            active: true,
             special,
             additionalAmount: editFormData.additionalAmount,
             additionalTypeId,
@@ -210,23 +213,23 @@ setLoading(false)
         }
     };
 
-    const handleEditFormSubmit = async (event) => {
+    const handleEditFormSubmit = async () => {
 
-setLoading(true)
+        setLoading(true)
         try {
-            const {data, status} = await SetProductSupplyConditions(editedContact)
+            const { data, status } = await SetProductSupplyConditions(editedContact)
             console.log(data)
             if (data.result.message === "ProductSupplyCondition saved completed") {
                 GetProductSupplyC()
-setLoading(false)
+                setLoading(false)
             }
 
         } catch (err) {
             console.log(err)
         }
-        const newContacts = [...condition];
+        const newContacts: any = [...condition];
 
-        const index = condition.findIndex((contact) => contact.id === editContactId);
+        const index = condition.findIndex((contact: any) => contact.id === editContactId);
 
         newContacts[index] = editedContact;
 
@@ -234,10 +237,10 @@ setLoading(false)
 
         setEditContactId(null);
     };
-    const setActiveHandler = async (editedContact) => {
+    const setActiveHandler = async (editedContact: any) => {
         try {
 
-            const {data, status} = await SetProductSupplyConditions(editedContact)
+            const { data, status } = await SetProductSupplyConditions(editedContact)
             if (status === 200) {
                 GetProductSupplyC()
 
@@ -248,74 +251,74 @@ setLoading(false)
         }
     }
 
-    const activeHandler =  (event , condition) => {
+    const activeHandler = (event: any, condition: any) => {
         event.preventDefault();
         let ids = condition.id
         setId(ids);
         const formValues = {
             minSellableAmount: condition.minSellableAmount,
             maxSellableAmount: condition.maxSellableAmount,
-            paymentMethodId:condition.paymentMethodId,
+            paymentMethodId: condition.paymentMethodId,
             installmentPeriod: condition.installmentPeriod,
             installmentOccureCount: condition.installmentOccureCount,
             comment: condition.comment,
-            active:condition.active,
-            special:condition.special,
+            active: condition.active,
+            special: condition.special,
             additionalAmount: condition.additionalAmount,
-            additionalTypeId:condition.additionalTypeId,
-            customerGroupId:condition.customerGroupId,
+            additionalTypeId: condition.additionalTypeId,
+            customerGroupId: condition.customerGroupId,
         };
         setEditFormData(formValues);
 
-        if (Id !== null){
-        setActive(!active)
-        const editedContact = {
-            productSupplyCondition: {
-                id: Id,
+        if (Id !== null) {
+            setActive(!active)
+            const editedContact = {
+                productSupplyCondition: {
+                    id: Id,
 
-                minSellableAmount: editFormData.minSellableAmount,
-                maxSellableAmount: editFormData.maxSellableAmount,
-                paymentMethodId:editFormData.paymentMethodId,
-                productSupplyId: Number(params.id),
-                installmentPeriod: editFormData.installmentPeriod,
-                installmentOccureCount: editFormData.installmentOccureCount,
-                installmentStartDate: new Date(),
-                comment: editFormData.comment,
-                active,
-                special:editFormData.special,
-                additionalAmount: editFormData.additionalAmount,
-                additionalTypeId:editFormData.additionalTypeId,
-                orderDetails: null,
-                shoppingCartItems: null,
-                productSupply: null,
-                customerGroupId:editFormData.customerGroupId,
-            }
-        };
+                    minSellableAmount: editFormData.minSellableAmount,
+                    maxSellableAmount: editFormData.maxSellableAmount,
+                    paymentMethodId: editFormData.paymentMethodId,
+                    productSupplyId: Number(params.id),
+                    installmentPeriod: editFormData.installmentPeriod,
+                    installmentOccureCount: editFormData.installmentOccureCount,
+                    installmentStartDate: new Date(),
+                    comment: editFormData.comment,
+                    active,
+                    special: editFormData.special,
+                    additionalAmount: editFormData.additionalAmount,
+                    additionalTypeId: editFormData.additionalTypeId,
+                    orderDetails: null,
+                    shoppingCartItems: null,
+                    productSupply: null,
+                    customerGroupId: editFormData.customerGroupId,
+                }
+            };
 
             setActiveHandler(editedContact)
-    setId(null);
+            setId(null);
 
-}
+        }
 
 
     };
 
-    const handleEditClick = (event, condition) => {
+    const handleEditClick = (event: any, condition: any) => {
         event.preventDefault();
         setEditContactId(condition.id);
 
         const formValues = {
             minSellableAmount: condition.minSellableAmount,
             maxSellableAmount: condition.maxSellableAmount,
-            paymentMethodId:condition.paymentMethodId,
+            paymentMethodId: condition.paymentMethodId,
             installmentPeriod: condition.installmentPeriod,
             installmentOccureCount: condition.installmentOccureCount,
             comment: condition.comment,
-            active:condition.active,
-            special:condition.special,
+            active: condition.active,
+            special: condition.special,
             additionalAmount: condition.additionalAmount,
-            additionalTypeId:condition.additionalTypeId,
-            customerGroupId:condition.customerGroupId,
+            additionalTypeId: condition.additionalTypeId,
+            customerGroupId: condition.customerGroupId,
         };
         console.log(formValues)
         setEditFormData(formValues);
@@ -324,9 +327,9 @@ setLoading(false)
         setEditContactId(null);
 
     };
-    const handleDeleteClick = async (id) => {
+    const handleDeleteClick = async (id: any) => {
         try {
-            const {data, status} = await DeleteProductSupplyCondition(id)
+            const { data, status } = await DeleteProductSupplyCondition(id)
             if (data.result.success === true) {
                 toast.success("شرط با موفقیت حذف شد", {
                     position: "top-right",
@@ -350,7 +353,7 @@ setLoading(false)
         }
     }
     const CustomerG = () => {
-let customer=[...customerg , {id:null ,name: 'همه'}]
+        let customer = [...customerg, { id: null, name: 'همه' }]
         return (customer.map(data => ({
             label: data.name,
             value: data.id
@@ -359,7 +362,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
     }
 
     const paymentMethod = () => {
-        return (PaymentStructureEnums.map(data => ({label: data.name, value: data.id})))
+        return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
     }
 
     const additionalTypeIdS = () => {
@@ -371,83 +374,82 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
     }
 
     return (
-        <div className=" rounded ProductSupplyCondition " style={{border:" 1px solid #bfc9d4"}}>
-            {condition ===null?  (<span className="d-block text-center p-5">هیچ شرطی یافت نشد</span>) :(
-            <div className=" ProductSupplyCondition-table table table-bordered table-hover table-striped  p-2">
-                <table
-                    className="  mt-2  mb-4">
-                    <thead>
-                    <tr style={{fontSize:'10px'}}>
+        <div className=" rounded ProductSupplyCondition " style={{ border: " 1px solid #bfc9d4" }}>
+            {condition === null ? (<span className="d-block text-center p-5">هیچ شرطی یافت نشد</span>) : (
+                <div className=" ProductSupplyCondition-table table table-bordered table-hover table-striped  p-2">
+                    <table
+                        className="  mt-2  mb-4">
+                        <thead>
+                            <tr style={{ fontSize: '10px' }}>
 
-                        <th style={{fontSize:'10px'}} className="text-center">ردیف</th>
-                        <th style={{fontSize:'10px'}} className="text-center">نوع پرداخت</th>
-                        <th style={{fontSize:'10px'}} className="text-center">تعداد اقساط</th>
-                        <th style={{fontSize:'10px'}} className="text-center">بازه</th>
-                        <th style={{fontSize:'10px'}}  className="text-center">فی</th>
+                                <th style={{ fontSize: '10px' }} className="text-center">ردیف</th>
+                                <th style={{ fontSize: '10px' }} className="text-center">نوع پرداخت</th>
+                                <th style={{ fontSize: '10px' }} className="text-center">تعداد اقساط</th>
+                                <th style={{ fontSize: '10px' }} className="text-center">بازه</th>
+                                <th style={{ fontSize: '10px' }} className="text-center">فی</th>
 
-                        <th style={{fontSize:'10px'}} className="text-center">گروه مشتریان</th>
-                        <th style={{fontSize:'10px'}}  className="text-center">فعال</th>
-                        <th style={{fontSize:'10px'}}  className="text-center">عملیات</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-            {condition.map((contact , index) => (
-
-
-                editContactId === contact.id ?  (
-
-                    <ProductSupplyConditionEdit
-                        customStyles={customStyles}
-                        handleEditFormSubmit={handleEditFormSubmit}
-                        setcustomerGroupId={setcustomerGroupId}
-                        setpaymentMethodId={setpaymentMethodId}
-                        setadditionalTypeId={setadditionalTypeId}
-                        paymentMethodId={paymentMethodId}
-                    editFormData={contact}
-                    indext={index}
-                        loading={loading}
-                    handleEditFormChange={handleEditFormChange}
-                    handleCancelClick={handleCancelClick}
-                        setSpecial={setSpecial}
-                />
-            ) : (
+                                <th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>
+                                <th style={{ fontSize: '10px' }} className="text-center">فعال</th>
+                                <th style={{ fontSize: '10px' }} className="text-center">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {condition.map((contact: any, index: any) => (
 
 
-                            <ProductSupplyConditionReadOnly
-                                activeHandler={activeHandler}
-                            customStyles={customStyles}
-                            index={index}
-                            contact={contact}
-                            handleEditClick={handleEditClick}
-                            handleDeleteClick={handleDeleteClick}
-                        />
+                                editContactId === contact.id ? (
+
+                                    <ProductSupplyConditionEdit
+                                        customStyles={customStyles}
+                                        handleEditFormSubmit={handleEditFormSubmit}
+                                        setcustomerGroupId={setcustomerGroupId}
+                                        setpaymentMethodId={setpaymentMethodId}
+                                        setadditionalTypeId={setadditionalTypeId}
+                                        paymentMethodId={paymentMethodId}
+                                        editFormData={contact}
+                                        index={index}
+                                        loading={loading}
+                                        handleEditFormChange={handleEditFormChange}
+                                        handleCancelClick={handleCancelClick}
+                                        setSpecial={setSpecial}
+                                    />
+                                ) : (
 
 
-                    )
+                                    <ProductSupplyConditionReadOnly
+                                        activeHandler={activeHandler}
+                                        index={index}
+                                        contact={contact}
+                                        handleEditClick={handleEditClick}
+                                        handleDeleteClick={handleDeleteClick}
+                                    />
 
-            ))}
-                    </tbody>
+
+                                )
+
+                            ))}
+                        </tbody>
                     </table>
-                    </div>)}
+                </div>)}
             <div className='d-block  '>
 
 
 
 
-                <Link   style={{marginTop:'-1.2rem', marginLeft:'.6rem' , background:'white'}} className=" ProductSupplyCondition-add border-0      float-right " data-title="افزودن شرط"  onClick={()=>openModal()}>
-                    <svg  style={{width:'24px', height:'38px'}} xmlns="http://www.w3.org/2000/svg"  fill="currentColor"
-                         className="bi bi-plus-circle" viewBox="0 0 17 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <Link to='#' style={{ marginTop: '-1.2rem', marginLeft: '.6rem', background: 'white' }} className=" ProductSupplyCondition-add border-0      float-right " data-title="افزودن شرط" onClick={() => openModal()}>
+                    <svg style={{ width: '24px', height: '38px' }} xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        className="bi bi-plus-circle" viewBox="0 0 17 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                         <path
-                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                     </svg>
                 </Link>
             </div>
-            <Modal  isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
-                    style={customStyles}
-                    contentLabel="Selected Option"
-                    ariaHideApp={false}>
+            <Modal isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Selected Option"
+                ariaHideApp={false}>
                 <div >
 
 
@@ -465,7 +467,7 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
 
                                             <input type="checkbox" checked={special}
 
-                                                   onChange={e=> setSpecial(e.target.checked)}/>
+                                                onChange={e => setSpecial(e.target.checked)} />
 
                                         </div>
 
@@ -483,14 +485,14 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                         <Select
                                             placeholder="نوع پرداخت"
                                             options={paymentMethod()}
-                                            onChange={e => setpaymentMethodId(e.value)}
+                                            onChange={(e:any) => setpaymentMethodId(e.value)}
                                         />
-                                        {paymentMethodId === 0 ? (<span className="text-danger">نوع پرداخت را وارد کنید</span> ):null}
+                                        {paymentMethodId === 0 ? (<span className="text-danger">نوع پرداخت را وارد کنید</span>) : null}
 
                                     </div>
 
                                     <div className="  form-group col-md-6 col-xs-12 textOnInput  seectIndex"
-                                         style={{zIndex: '4'}}>
+                                        style={{ zIndex: '4' }}>
 
                                         <label>نوع افزایش</label>
 
@@ -500,10 +502,10 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                                 name="additionalTypeId"
                                                 placeholder="نوع افزایش"
                                                 options={additionalTypeIdS()}
-                                                onChange={e => setadditionalTypeId(e.value)}
+                                                onChange={(e:any) => setadditionalTypeId(e.value)}
                                             />
 
-                                            {additionalTypeId === 0 ? (<span className="text-danger">نوع افزایش را وارد کنید</span> ):null}
+                                            {additionalTypeId === 0 ? (<span className="text-danger">نوع افزایش را وارد کنید</span>) : null}
 
                                         </>
 
@@ -516,13 +518,13 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                         <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                             <label>تعداد اقساط</label>
                                             <input type="number" className="form-control opacityForInput"
-                                                   name="installmentOccureCount" onChange={handleAddFormChange}/>
+                                                name="installmentOccureCount" onChange={handleAddFormChange} />
                                         </div>
 
                                         <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                             <label> چند روزه</label>
                                             <input type="number" className="form-control opacityForInput"
-                                                   name="installmentPeriod" onChange={handleAddFormChange}/>
+                                                name="installmentPeriod" onChange={handleAddFormChange} />
 
                                         </div>
 
@@ -535,20 +537,20 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                     <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                         <label>مقدار افزایش</label>
                                         <input type="number" className="form-control opacityForInput"
-                                               name="additionalAmount"
-                                               onChange={handleAddFormChange}/>
+                                            name="additionalAmount"
+                                            onChange={handleAddFormChange} />
                                     </div>
 
 
                                     <div className="form-group col-md-6 col-xs-12 textOnInput   "
-                                         style={{zIndex: '3'}}>
+                                        style={{ zIndex: '3' }}>
                                         <label>گروه مشتریان</label>
                                         <Select
                                             placeholder="گروه مشتریان"
                                             options={CustomerG()}
-                                            onChange={e => setcustomerGroupId(e.value)}
+                                            onChange={(e:any) => setcustomerGroupId(e.value)}
                                         />
-                                        {customerGroupId === 0 ? (<span className="text-danger">گروه مشتریان را وارد کنید</span> ):null}
+                                        {customerGroupId === 0 ? (<span className="text-danger">گروه مشتریان را وارد کنید</span>) : null}
 
                                     </div>
                                 </div>
@@ -556,15 +558,15 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                     <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                         <label>حداقل سفارش</label>
                                         <input type="number" className="form-control opacityForInput"
-                                               name="minSellableAmount"
-                                               onChange={handleAddFormChange}/>
+                                            name="minSellableAmount"
+                                            onChange={handleAddFormChange} />
                                     </div>
                                     <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                         <label>حداکثر سفارش</label>
-                                        <input  type="text" className="form-control opacityForInput"
-                                                name="maxSellableAmount"
-                                                value={quantity}
-                                                onChange={handleAddFormChange}/>
+                                        <input type="text" className="form-control opacityForInput"
+                                            name="maxSellableAmount"
+                                            value={quantity}
+                                            onChange={handleAddFormChange} />
                                     </div>
 
                                 </div>
@@ -572,27 +574,27 @@ let customer=[...customerg , {id:null ,name: 'همه'}]
                                 <div className="form-group  textOnInput ">
                                     <label>توضیحات</label>
 
-                                    <textarea type="text" className="form-control opacityForInput " rows='4'
-                                              placeholder='توضیحات تکمیلی' name="comment" onChange={handleAddFormChange}/>
+                                    <textarea  className="form-control opacityForInput " rows={4}
+                                        placeholder='توضیحات تکمیلی' name="comment" onChange={handleAddFormChange} />
 
                                 </div>
                                 <div className='row '>
 
-                                <div className='col-6 '>
-                                    <button className="btn btn-success float-left "
-                                          disabled={loading?true:false||paymentMethodId === 0 ? true : false && additionalTypeId === 0 ? true : false && customerGroupId === 0 ? true : false }  onClick={handleAddFormSubmit}>تایید
-                                        <ClipLoader
+                                    <div className='col-6 '>
+                                        <button className="btn btn-success float-left "
+                                            disabled={loading ? true : false || paymentMethodId === 0 ? true : false && additionalTypeId === 0 ? true : false && customerGroupId === 0 ? true : false} onClick={handleAddFormSubmit}>تایید
+                                            <ClipLoader
 
-                                            loading={loading}
-                                            color="#ffff"
-                                            size={15}
-                                        /></button>
-                                </div>
-                                <div className='col-6 '>
-                                    <button className="btn btn-danger float-right "
+                                                loading={loading}
+                                                color="#ffff"
+                                                size={15}
+                                            /></button>
+                                    </div>
+                                    <div className='col-6 '>
+                                        <button className="btn btn-danger float-right "
                                             onClick={closeModal}>بازگشت
-                                    </button>
-                                </div>
+                                        </button>
+                                    </div>
                                 </div>
 
 

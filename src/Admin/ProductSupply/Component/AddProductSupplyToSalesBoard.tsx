@@ -17,18 +17,18 @@ import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
 
 
 
-const AddProductSupplyToSalesBoard = () => {
+const AddProductSupplyToSalesBoard:React.FC = () => {
     const [, forceUpdate] = useState();
 
     const navigate = useNavigate();
-    const [Productwarehouse, setProductwarehouse] = useState([]);
+    const [Productwarehouse, setProductwarehouse] = useState<any>([]);
     const [products, setProducts] = useState([]);
-    const [quantity, setQuantity] = useState('');
+    const [quantity, setQuantity] = useState<any>('');
     const [name, setName] = useState('');
     let customerg = [];
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState<any>('');
     const [comment, setComment] = useState('');
-    const [productId, setProductId] = useState('');
+    const [productId, setProductId] = useState<any>('');
     const [measureUnitId, setmeasureUnitId] = useState(0);
     const [productWareHouseId, setproductWareHouseId] = useState(0);
     const [endDate, setendDate] = useState(new Date())
@@ -62,7 +62,7 @@ const AddProductSupplyToSalesBoard = () => {
         }
     }
 
-    const Prodcutware = async (id) => {
+    const Prodcutware = async (id:any) => {
 
         try {
             const { data, status } = await GetProductWareHouses(id);
@@ -85,7 +85,7 @@ const AddProductSupplyToSalesBoard = () => {
         getProdcutForCombo();
         GetCustomerGroup();
     }, [])
-    const ProductMeasure = async (id) => {
+    const ProductMeasure = async (id:any) => {
         const { data, status } = await getEditProduct(id);
         if (status === 200) {
 
@@ -93,14 +93,14 @@ const AddProductSupplyToSalesBoard = () => {
         }
 
     }
-    const productCombo = () => {
+    const productCombo:any = () => {
         if(products){
-        return (products.map(data => ({ label: data.name, value: data.id })))}
+        return (products.map((data:any) => ({ label: data.name, value: data.id })))}
         else{return null}
     }
     const wareCombo = () => {
 if(Productwarehouse && Productwarehouse.length>0){
-        return (Productwarehouse.filter(data => data.id !== 0).map(data => ({ label: data.wareHouseName, value: data.id })))}
+        return (Productwarehouse.filter((data:any) => data.id !== 0).map((data:any) => ({ label: data.wareHouseName, value: data.id })))}
 else{
     return null
 }
@@ -109,7 +109,7 @@ else{
         return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
     }
 
-    const handleChangeExpire = (value) => {
+    const handleChangeExpire = (value:any) => {
 
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
@@ -119,7 +119,7 @@ else{
     }
    
 
-        let att;
+        let att:any;
         if (valuecheck1 === '' && valuecheck2 === '' && valuecheck3 === '') {
             att = null;
         }
@@ -130,7 +130,7 @@ else{
             setLoading(true)
 
             const getwareId = () => {
-                return Productwarehouse.filter(data => data.id !== 0).map(data => data.id)[0]
+                return Productwarehouse.filter((data:any) => data.id !== 0).map((data:any) => data.id)[0]
             }
             const body = {
                 "productSupply": {
@@ -234,7 +234,7 @@ else{
                                 <div>
                                     <label className="mr-2"> فعال  </label>
 
-                                    <input type="checkbox" defaultChecked={active} onChange={e => setActive(e.checked)} />
+                                    <input type="checkbox" defaultChecked={active} onChange={(e:any) => setActive(e.checked)} />
 
                                 </div>
 
@@ -251,7 +251,7 @@ else{
                                                 <Select placeholder='کالا'
                                                     className='opacityForInput border-danger'
                                                     options={productCombo()}
-                                                    onChange={e => {
+                                                    onChange={(e:any) => {
                                                         setProductId(e.value)
                                                         Prodcutware(e.value)
 
@@ -263,7 +263,7 @@ else{
                                         ) : (<Select placeholder='کالا'
                                             className='opacityForInput '
                                             options={productCombo()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setProductId(e.value)
                                                 Prodcutware(e.value)
                                                 ProductMeasure(e.value)
@@ -281,7 +281,7 @@ else{
                                             placeholder='انبار'
                                             options={wareCombo()}
                                             // value={wareCombo()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setproductWareHouseId(e.value)
 
                                             }}
@@ -297,7 +297,7 @@ else{
                                 <div className='form-row'>
                                     <div className='col-12 mb-4'>
                                     <label > شناسه عرضه</label>
-                                        <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={e => {
+                                        <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => {
                                             setName(e.target.value)
 
                                         }} />
@@ -306,7 +306,7 @@ else{
                                     </div>
                                     <div className="col-6">
                                         <label >شماره کوتاژ</label>
-                                        <Field  validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={e => {
+                                        <Field  validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={(e:any)  => {
                                             setcottageCode(e.target.value)
 
                                         }} />
@@ -316,11 +316,11 @@ else{
                                     <div className="col-6">
                                         <label >مقدار عرضه</label>
                                         <Field  validate={validatNumber} name="quantity"  type="text" className="form-control opacityForInput" value={formatter.format(quantity)}
-                                            onChange={e => {
+                                            onChange={(e:any)  => {
                                                 setQuantity(Number(e.target.value.replaceAll("," ,"")))
 
                                             }} />
-                                        {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
+                                        {errors.quantity && touched.quantity && <div className="text-danger">{String(errors.quantity)}</div>}
                                     </div>
 
                                 </div></div>
@@ -330,11 +330,11 @@ else{
                                     <div className="col-6">
                                         <label >قیمت</label>
                                         <Field  validate={validatNumber} name="price" type="text" className="form-control opacityForInput" value={formatter.format(price)}
-                                            onChange={e => {
+                                            onChange={(e:any)  => {
                                                 setPrice(Number(e.target.value.replaceAll(",","")))
 
                                             }} />
-                                        {errors.price && touched.price && <div className="text-danger">{errors.price}</div>}
+                                        {errors.price && touched.price && <div className="text-danger">{String(errors.price)}</div>}
 
                                     </div>
 
@@ -361,7 +361,7 @@ else{
                             <div className="form-group mb-4 textOnInput">
                                 <label >توضیحات</label>
 
-                               <Field  validate={validatNumber} name="comment"  as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
+                               <Field  validate={validatNumber} name="comment"  as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={(e:any)  => {
                                     setComment(e.target.value)
 
                                 }} />
