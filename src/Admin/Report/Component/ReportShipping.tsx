@@ -95,8 +95,8 @@ const ReportShipping: React.FC = () => {
     });
 
     const columns = useMemo(() => [
-        { Header: 'کد قرارداد باربری', accessor: 'shippingCompanyName' },
-        { Header: 'نام باربری', accessor: 'shippingContractCode' },
+        { Header: 'نام باربری', accessor: 'shippingCompanyName' },
+        { Header: 'کد قرارداد باربری', accessor: 'shippingContractCode' },
         { Header: 'شناسه خرید', accessor: 'orderId' },
         { Header: 'شناسه بازارگاه', accessor: 'orderExtId' },
 
