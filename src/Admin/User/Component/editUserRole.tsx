@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { optionsRole } from "../../../Common/Enums/RolesEnums";
 import Modal from 'react-modal';
 import {ClipLoader} from "react-spinners";
-import { GetUsersRolesById } from './../../../services/userService';
+import { GetUsersRolesById } from '../../../services/userService';
 
 
 const customStyles = {
@@ -26,8 +26,10 @@ const customStyles = {
 
 }
 
-
-const EditUserRole = ({id,closeModal,modalIsOpen}) => {
+interface Props{
+    id:any,closeModal:any,modalIsOpen:any
+}
+const EditUserRole:React.FC<Props> = ({id,closeModal,modalIsOpen}) => {
     const [editRoles, setEditRoles] = useState([])
     const [roles, setRoles] = useState([]);
     const navigate = useNavigate()
@@ -117,7 +119,7 @@ setLoading(false)
     }
 
 
-    const onchangRole = (e) => {
+    const onchangRole = (e:any) => {
         setEditRoles(e.value)
     }
 
@@ -165,7 +167,7 @@ setLoading(false)
                                             options={optionsRole}
                                             placeholder={UserRoles()}
                                             onChange={onchangRole}
-                                            maxMenuHeight='100px'
+                                            maxMenuHeight={100}
                                         />
                                     </div>
 

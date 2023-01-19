@@ -11,7 +11,7 @@ import FadeLoader from 'react-spinners/FadeLoader'
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 
 
-const BazargahList = () => {
+const BazargahList:React.FC = () => {
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
@@ -29,15 +29,15 @@ const BazargahList = () => {
         SetOpen(false);
     }
    let arrayOfSelectedData=[];
-const getSelectedData=(data)=>{
+const getSelectedData=(data:any)=>{
     
-   arrayOfSelectedData= data.map(item=>item.original);
+   arrayOfSelectedData= data.map((item:any)=>item.original);
    
 
     return(arrayOfSelectedData)
    
    }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -64,7 +64,7 @@ const getSelectedData=(data)=>{
 
     }
 
-    const handleStartDate = (value) => {
+    const handleStartDate = (value:any) => {
 
         //تغییرات روی تاریخ رو اینجا اعمال کنید
       
@@ -74,7 +74,7 @@ const getSelectedData=(data)=>{
 
 
     }
-    const handleEndDate = (value) => {
+    const handleEndDate = (value:any) => {
 
         //تغییرات روی تاریخ رو اینجا اعمال کنید
 
@@ -83,7 +83,7 @@ const getSelectedData=(data)=>{
 
 
     }
-    const handelSubmit = async (event) => {
+    const handelSubmit = async (event:any) => {
         setLoading(true)
         event.preventDefault();
         try {
@@ -120,36 +120,36 @@ const getSelectedData=(data)=>{
         {Header:'تاریخ',accessor:'date'},
         { Header: 'کوتاژ', accessor: 'goodTag' },
         { Header: 'کالا', accessor: 'productName' },
-        { Header: 'وزن', accessor: 'qty',Cell:row=>(formater.format(row.row.original.qty)) },
-        { Header: 'تحویلی', accessor: 'wBarnameShode',Cell:row=>(formater.format(row.row.original.wBarnameShode)) },
+        { Header: 'وزن', accessor: 'qty',Cell:(row:any)=>(formater.format(row.row.original.qty)) },
+        { Header: 'تحویلی', accessor: 'wBarnameShode',Cell:(row:any)=>(formater.format(row.row.original.wBarnameShode)) },
         { Header: 'پیگری', accessor: 'traceCode' },
         { Header: 'خریدار', accessor: 'buyerName' },
         { Header: 'شماره همراه', accessor: 'buyerPhone' },
         { Header: 'شناسه ملی', accessor: 'buyerId' },
         { Header: 'شناسه یکتا', accessor: 'buyerUniqueId' },
-        { Header: 'مبلغ-ریال', accessor: 'totalValue', Cell:row=>(formater.format(row.row.original.totalValue))},
+        { Header: 'مبلغ-ریال', accessor: 'totalValue', Cell:(row:any)=>(formater.format(row.row.original.totalValue))},
         { Header: 'پرداخت', accessor: 'paymentTerm' },
         { Header: 'شناسه واریز', accessor: 'buyerpaymentId' },
-        { Header: 'قیمت-ریال', accessor: 'fee' ,Cell:row=>(formater.format(row.row.original.fee))},
-        { Header: 'تخصیص', accessor: 'allocationState',Cell:row=>((row.row.original.allocationState)?'تخصیص یافته':'تخصیص نیافته')},
-        { Header: 'ثبت', accessor:d=>{
+        { Header: 'قیمت-ریال', accessor: 'fee' ,Cell:(row:any)=>(formater.format(row.row.original.fee))},
+        { Header: 'تخصیص', accessor: 'allocationState',Cell:(row:any)=>((row.row.original.allocationState)?'تخصیص یافته':'تخصیص نیافته')},
+        { Header: 'ثبت', accessor:(d:any)=>{
 
                 let condition=(d.storedInDb?'ثبت شده':'ثبت نشده')
                 return(`${condition}`)
 
-            },Cell:row=>((row.row.original.storedInDb)?'ثبت شده':'ثبت نشده')},
-            { Header: 'قفل', accessor:d=>{
+            },Cell:(row:any)=>((row.row.original.storedInDb)?'ثبت شده':'ثبت نشده')},
+            { Header: 'قفل', accessor:(d:any)=>{
 
                 let condition=(d.lockedData?'قفل شده':'قفل نشده')
                 return(`${condition}`)
 
-            },Cell:row=>((row.row.original.lockedData)?'قفل شده':'قفل نشده')}
+            },Cell:(row:any)=>((row.row.original.lockedData)?'قفل شده':'قفل نشده')}
 
 
        
 
-    ]);
-    const data = useMemo(() => Response);;
+    ],[]);
+    const data = useMemo(() => Response,[Response]);;
     console.log(data)
     if (!clicked) {
         if(!loading){
@@ -236,15 +236,7 @@ const getSelectedData=(data)=>{
             <div>
                 <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
               
-                <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}   rowProps={row => ({
-                   
-                   
-                    style: {
-                        backgroundColor: (row.values.ثبت === 'ثبت شده' && row.values.قفل==='قفل نشده')? 'lightgreen':(row.values.قفل ==='قفل شده' &&row.values.ثبت === 'ثبت شده'  )?'yellow':'#ff00003b',
-
-                        cursor: "pointer"
-                    }
-                })} bulkJob={getBulkJob}/>
+                <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
                 {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
             </div>
             </div>
@@ -254,4 +246,17 @@ const getSelectedData=(data)=>{
     }
 }
 
+
+
+// rowProps={(row:any) => ({
+                   
+                   
+//     style: {
+//         backgroundColor: (row.values.ثبت === 'ثبت شده' && row.values.قفل==='قفل نشده')? 'lightgreen':(row.values.قفل ==='قفل شده' &&row.values.ثبت === 'ثبت شده'  )?'yellow':'#ff00003b',
+
+//         cursor: "pointer"
+//     } 
+// } 
+
+// ) نمیشه این رو استفاده کنیم باید یه فکر دیگ بکنیم}
 export default BazargahList

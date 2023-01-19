@@ -1,17 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
-import persian_fa from "react-date-object/locales/persian_fa";
+import persian_en from "react-date-object/locales/persian_en";
 import { NavLink } from 'react-router-dom';
 
 
 import FadeLoader from 'react-spinners/FadeLoader'
 import MyTableBazargah  from "../../../Common/Shared/Form/MyTableBazargah";
-import {GetUsedBarBariReports} from "../../../services/reportService";
+import {GetCustomersReports, GetUsedBarBariReports} from "../../../services/reportService";
 import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 
-const UsedBarBariReport = () => {
+const CustomerReports:React.FC = () => {
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
@@ -28,21 +29,21 @@ const UsedBarBariReport = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
 
     }
 
 
 
-    const handelStartDate = (value) => {
+    const handelStartDate = (value:any) => {
         if (value === null) {
             setStartDate('')
         }
@@ -51,24 +52,23 @@ const UsedBarBariReport = () => {
             setStartDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
         }
     }
-    const handelEndDate = (value) => {
+    const handelEndDate = (value:any) => {
         if (value === null) {
             setEndDate('')
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setEndDate( new Date(value.toDate().setHours(27,30,0,0)).toJSON())
-
+            setEndDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
         }
     }
-    const handelSubmit = async (event) => {
+    const handelSubmit = async (event:any) => {
         setLoading(true)
         event.preventDefault();
         try {
-            const { data, status } = await GetUsedBarBariReports(StartDate, EndDate);
+            const { data, status } = await GetCustomersReports(StartDate, EndDate);
             if (status === 200) {
 
-                SetResponse(data.result.barBariUsedReports);
+                SetResponse(data.result.customerReports);
                 SetClicked(true);
                 setLoading(false)
             }
@@ -80,38 +80,18 @@ const UsedBarBariReport = () => {
     const handelFrom=()=>{
         SetClicked(false)
     }
-    let formatter = new Intl.NumberFormat('fa-IR', {
-        style: 'currency',
-        currency: 'IRR',
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0,
-
-
-    });
-    let formater = new Intl.NumberFormat('fa-IR', {
-
-
-    });
 
     const columns = useMemo(() => [
-        { Header: 'کد باربری', accessor: 'companyCode' },
-        {Header:'تاریخ بارنامه',accessor:'barDate'},
-        { Header: 'شماره بارنامه', accessor: 'bar_n' },
-        { Header: 'شماره سریال بارنامه', accessor: 'bar_n_s' },
-        { Header: 'شماره تلفن راننده', accessor: 'dTel'},
-        { Header: 'وزن بارنامه', accessor: 'netT'},
-        { Header: 'کد تخصیص بازارگاه', accessor: 'kaCode' },
-        { Header: 'کرایه بار', accessor: 'kra2' },
-        { Header: 'نام راننده', accessor: 'dName' },
-        { Header: 'فامیلی راننده', accessor: 'dFam' },
-        { Header: 'پلاک', accessor: 'tplk' },
-        { Header: ' ساعت بارنامه', accessor: 'barTime'},
-        { Header: ' شناسه یا کد ملی تحویل گیرنده', accessor: 'ka_E_Code' },
-        { Header: 'نام تحویل گیرنده', accessor: 'tarGetName' },
-        { Header: ' شماره قرارداد', accessor: 'ghErtebat' },
-        { Header: 'آدرس بارنامه', accessor: 'barAdd'},]);
-    const data = useMemo(() => Response);;
-    console.log(data)
+        { Header: 'ردیف', accessor: 'id' },
+        {Header:'نام کاربری',accessor:'userName',Cell:(row:any) => row.row.original.userName? row.row.original.userName :"--"},
+        { Header: 'نام مشتری ', accessor: 'name' ,Cell:row => row.row.original.name ? row.row.original.name :"--"},
+        { Header: 'کد ملی مشتری', accessor: 'nationalCode',Cell:row => row.row.original.nationalCode? row.row.original.nationalCode :"--" },
+        { Header: 'کد سازمان', accessor: 'organizationId',Cell:row => row.row.original.organizationId? row.row.original.organizationId :"--"},
+        { Header: ' نام سازمان', accessor: 'organization',Cell:row => row.row.original.organization? row.row.original.organization :"--"},
+        { Header: 'شناسه ملی سازمان', accessor: 'organizationNationaId',Cell:row => row.row.original.organizationNationaId? row.row.original.organizationNationaId :"--" },
+        { Header: 'شماره ثبت سازمان', accessor: 'organizationRegistrationNumber' ,Cell:row => row.row.original.organizationRegistrationNumber? row.row.original.organizationRegistrationNumber :"--"},
+       ],[]);
+    const data = useMemo(() => Response,[Response]);;
 
     if (!clicked) {
         if(!loading){
@@ -120,7 +100,7 @@ const UsedBarBariReport = () => {
                     <div className='row'>
                         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
                             <h5 >درخواست اطلاعات </h5>
-                            <p>در این بخش می توانید گزارش بارگیری دریافت کنید.</p>
+                            <p>در این بخش می توانید گزارش مشتریان دریافت کنید.</p>
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
@@ -190,58 +170,47 @@ const UsedBarBariReport = () => {
 
         }
     }
-
     else {
+
         if (Response && Response.length >0){
-            const dataForExcel = Response.map(item => ({
+            const dataForExcel = Response.map((item:any) => ({
+                'ردیف': item.id,
+                'نام کاربری': item.userName,
+                'نام': item.name,
+                'کد ملی': item.nationalCode,
+                'کد سازمان': item.organizationId,
+                'نام سازمان':item.organization,
+                'شناسه ملی سازمان':item.organizationNationaId,
+                'شماره ثبت سازمان': item.organizationRegistrationNumber,
+            }))
+            return (
+                <div className=" statbox widget-content widget-content-area ">
+                    <div>
+                        <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-    'تاریخ بارنامه': item.barDate,
-    'شماره بارنامه': item.bar_n,
-    'شماره سریال بارنامه': item.bar_n_s,
-    'شماره تلفن راننده': item.dTel,
-    'وزن بارنامه': item.netT,
-    'کد تخصیص بازارگاه':item.kaCode,
-    'کرایه بار':item.kra2,
-    'کد باربری': item.companyCode,
-    'نا راننده': item.dName,
-    'فامیلی راننده': item.dFam,
-    'پلاک': item.tplk,
-    'ساعت بارنامه': item.barTime,
-    'شناسه یا کد ملی تحویل گیرنده': item.ka_E_Code,
-    'نام تحویل گیرنده':item.tarGetName,
-    'شماه قرارداد': item.ghErtebat,
-    'آدرس بارنامه': item.barAdd,
+                        <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
+                        {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
+                    </div>
+                    <div className="d-flex justify-content-end m-2">
+                        <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
+                    </div>
+                </div>
 
+            )
+        }else {
+            return(
+                <div className=" statbox widget-content widget-content-area rounded">
+                    <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-}))
-    return (
-        <div className=" statbox widget-content widget-content-area ">
-            <div>
-                <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
-
-                <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
-                {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
-            </div>
-            <div className="d-flex justify-content-end m-2">
-                <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
-            </div>
-        </div>
-
-    )
-}else {
-    return(
-        <div className=" statbox widget-content widget-content-area rounded">
-            <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
-
-            <div className='text-center mt-5'>
-                <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
-            </div>
-        </div>
-    )
-}
+                    <div className='text-center mt-5'>
+                        <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                    </div>
+                </div>
+            )
+        }
 
 
     }
 }
 
-export default UsedBarBariReport
+export default CustomerReports

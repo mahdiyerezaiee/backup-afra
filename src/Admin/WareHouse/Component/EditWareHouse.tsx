@@ -8,16 +8,16 @@ import {  SetAttributeValues } from "../../../services/attributeService";
 import { GetAttributeValues } from '../../../services/attributeService';
 import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 import {Field, Form, Formik} from "formik";
 import {validatAlpha, validateRequired, validatNumber} from "../../../Utils/validitionParams";
 
-const EditWareHouse = () => {
+const EditWareHouse:React.FC = () => {
     const params = useParams()
     const [Addres, setAddres] = useState('');
     const [name, Setname] = useState('');
     const[wareGid,setWareGId]=useState(0)
-    const [wareHouseT, SetWarehouseT] = useState([]);
+    const [wareHouseT, SetWarehouseT] = useState<any>([]);
     const [groupId, setGroupId] = useState(0);
     const [attributeIdHajm, setattributeIdHajm] = useState(0);
     const [attributeIdadd, setattributeIdadd] = useState(0);
@@ -53,7 +53,7 @@ const EditWareHouse = () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr=[]
+        let finalArr:any=[]
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(4, companies[i].id);
@@ -105,9 +105,9 @@ const EditWareHouse = () => {
     
 
     const inputwareHouseT = () => {
-        return (wareHouseT.map(data => ({ label: data.name, value: data.id })))
+        return (wareHouseT.map((data:any) => ({ label: data.name, value: data.id })))
     }
-   let WareT=wareHouseT.filter(item=>item.id===wareGid).map(item=>item.name)
+   let WareT=wareHouseT.filter((item:any)=>item.id===wareGid).map((item:any)=>item.name)
 
  let wareGPName=WareT[0]
    
@@ -216,7 +216,7 @@ const EditWareHouse = () => {
 
                             <div className=" mb-4 textOnInput">
                                 <label >انبار</label>
-                                <Field type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} name="name" validate={validatAlpha} onChange={e => Setname(e.target.value)} />
+                                <Field type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} name="name" validate={validatAlpha} onChange={(e:any) => Setname(e.target.value)} />
                                 {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
 
@@ -226,7 +226,7 @@ const EditWareHouse = () => {
 
                                 <label>حجم انبار</label>
 
-                                <Field name="attValuehajm"  validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={e => setAttValueHajm(e.target.value)} />
+                                <Field name="attValuehajm"  validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={(e:any) => setAttValueHajm(e.target.value)} />
 
                                 {errors.attValuehajm && touched.attValuehajm && <div className="text-danger">{errors.attValuehajm}</div>}
 
@@ -244,7 +244,7 @@ const EditWareHouse = () => {
                                             {label:wareGPName,value:wareGid}
                                     }
                                             options={inputwareHouseT()}
-                                            onChange={e =>setGroupId(e.value)}
+                                            onChange={(e:any) =>setGroupId(e.value)}
                                         />
 
                                 {groupId === 0 ? <div className="text-danger">پر کردن این فیلد الزامی است</div>:null}
@@ -253,7 +253,7 @@ const EditWareHouse = () => {
                             </div>
                             <div className='mb-4 textOnInput'>
                                 <label>آدرس</label>
-                                <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={e => {
+                                <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={(e:any) => {
                                     setAddres(e.target.value)
 
                                 }} />

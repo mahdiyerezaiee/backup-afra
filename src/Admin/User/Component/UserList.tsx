@@ -18,13 +18,13 @@ import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
 import { optionsRole } from "../../../Common/Enums/RolesEnums";
 import QueryString from 'qs';
 import { GetGroupByIds, GetGroupsForEntity } from '../../../services/GroupService';
-import EditCustomerGroup from '../../../Admin/Customer/Component/EditCustomerGroup';
+import EditCustomerGroup from '../../Customer/Component/EditCustomerGroup';
 import EditUserRole from './editUserRole';
-import { GetCompanyChild } from './../../../services/companiesService';
-import { GetGroupWithCompany } from './../../../services/GroupService';
-import { GetUsersRolesById } from './../../../services/userService';
+import { GetCompanyChild } from '../../../services/companiesService';
+import { GetGroupWithCompany } from '../../../services/GroupService';
+import { GetUsersRolesById } from '../../../services/userService';
 
-const UserList = () => {
+const UserList:React.FC = () => {
 
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
@@ -49,7 +49,7 @@ const UserList = () => {
     const params = { UserName, FirstName, NationalCode, LastName, userRole }
 
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
 
 
@@ -57,7 +57,7 @@ const UserList = () => {
     const param = { PageSize, PageNumber }
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items ? items : ''
 
 
@@ -84,7 +84,7 @@ const UserList = () => {
 
         headers: { 'Content-Type': 'application/json' },
         params: {
-            RoleIds: params.userRole ? params.userRole.map(item => item.value) : [],
+            RoleIds: params.userRole ? params.userRole.map((item:any) => item.value) : [],
             UserName: params.UserName,
             FirstName: params.FirstName,
             LastName: params.LastName,
@@ -95,7 +95,7 @@ const UserList = () => {
 
         }
         ,
-        paramsSerializer: params => {
+        paramsSerializer: (params:any) => {
 
             return QueryString.stringify(params)
         }
@@ -119,7 +119,7 @@ const UserList = () => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                RoleIds: userRole ? userRole.map(item => item.value) : [],
+                RoleIds: userRole ? userRole.map((item:any) => item.value) : [],
                 UserName: UserName,
                 FirstName: FirstName,
                 LastName: LastName,
@@ -128,7 +128,7 @@ const UserList = () => {
                 PageSize
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
                 return QueryString.stringify(params)
             }
         };
@@ -140,11 +140,11 @@ const UserList = () => {
 
     const [open, SetOpen] = useState(false);
     let arrayOfSelectedData = [];
-    const getSelectedData = (data) => {
-        arrayOfSelectedData = data.map(item => item.original);
+    const getSelectedData = (data:any) => {
+        arrayOfSelectedData = data.map((item:any) => item.original);
         return (arrayOfSelectedData)
     }
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -172,7 +172,7 @@ const UserList = () => {
 
         headers: { 'Content-Type': 'application/json' },
         params: {
-            RoleIds: userRole ? userRole.map(item => item.value) : [],
+            RoleIds: userRole ? userRole.map((item:any) => item.value) : [],
             UserName,
             FirstName,
             LastName,
@@ -181,7 +181,7 @@ const UserList = () => {
             PageSize
         }
         ,
-        paramsSerializer: params => {
+        paramsSerializer: (params:any) => {
 
             return QueryString.stringify(params)
         }
@@ -192,11 +192,11 @@ const UserList = () => {
 
         }
         try {
-            const { data, staus } = await GetDataWithSearch(configs);
+            const { data, status } = await GetDataWithSearch(configs);
             setGeData(false)
 
             setUsers(data.result.users.values);
-            setIds([...new Set((data.result.users.values).filter(item => item.groupId !== null).map(item => item.groupId))])
+            setIds([...new Set((data.result.users.values).filter((item:any) => item.groupId !== null).map((item:any) => item.groupId))] as any)
             setTotalCount(data.result.users.totalCount)
         } catch (e) {
             console.log(e)
@@ -225,7 +225,7 @@ const UserList = () => {
             Ids
         }
         ,
-        paramsSerializer: params => {
+        paramsSerializer: (params:any) => {
 
             return QueryString.stringify(params)
         }
@@ -274,7 +274,7 @@ const UserList = () => {
     }
     const navigate = useNavigate()
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         setModalId(id)
         setmodalRoleOpen(true)
     }
@@ -282,10 +282,10 @@ const UserList = () => {
         setmodalRoleOpen(false)
 
     }
-    const editInfoHandler = (id) => {
+    const editInfoHandler = (id:any) => {
         navigate(`/admin/editInfo/${id}`)
     }
-    const editHandlerGroup = (id) => {
+    const editHandlerGroup = (id:number) => {
         setModalId(id)
         setmodalGroupOpen(true)
     }
@@ -302,12 +302,12 @@ const UserList = () => {
         { Header: 'نام کاربری', accessor: 'userName' }
         ,
         {
-            Header: 'نام و نام خانوادگی', accessor: d => {
+            Header: 'نام و نام خانوادگی', accessor: (d:any) => {
                 let fName = d.firstName;
                 let lName = d.lastName;
                 let fullname = `${fName ? fName : ''} ${lName ? lName : ''} `;
                 return (fullname)
-            }, Cell: row => {
+            }, Cell: (row:any) => {
 
                 let fName = row.row.original.firstName;
                 let lName = row.row.original.lastName;
@@ -320,13 +320,13 @@ const UserList = () => {
         }
         , { Header: 'کد ملی', accessor: 'nationalCode' }
         , {
-            Header: 'شناسه ملی', accessor: d => {
-                let organizationss = organizations.filter(item => item.id === d.organizationId).map(item => item.nationalId)
+            Header: 'شناسه ملی', accessor: (d:any) => {
+                let organizationss = organizations.filter((item:any) => item.id === d.organizationId).map((item:any) => item.nationalId)
                 return (`${organizationss}`)
-            }, Cell: row => {
+            }, Cell: (row:any) => {
 
                 if (row.row.original.organizationId) {
-                    return (organizations.filter(item => item.id === row.row.original.organizationId).map(item => item.nationalId))
+                    return (organizations.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.nationalId))
 
                 }
                 else {
@@ -338,12 +338,12 @@ const UserList = () => {
         },
         {
             Header: 'سازمان', accessor: d => {
-                let organizationss = organizations.filter(item => item.id === d.organizationId).map(item => item.name)
+                let organizationss = organizations.filter((item:any) => item.id === d.organizationId).map((item:any) => item.name)
                 return (`${organizationss}`)
-            }, Cell: row => {
+            }, Cell: (row:any) => {
 
                 if (row.row.original.organizationId) {
-                    return (organizations.filter(item => item.id === row.row.original.organizationId).map(item => item.name))
+                    return (organizations.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.name))
 
                 }
                 else {
@@ -419,18 +419,18 @@ const UserList = () => {
 
 
         }, {
-            Header: 'گروه ', accessor: 'groupId', Cell: row => {
+            Header: 'گروه ', accessor: 'groupId', Cell: (row:any) => {
 
                 if (row.row.original.groupId===null) {
                     return ('تعیین نشده')
                 }
                 else {
-                    return (CustomerG.filter(item => item.id === row.row.original.groupId).map(item => item.name))
+                    return (CustomerG.filter((item:any) => item.id === row.row.original.groupId).map((item:any) => item.name))
                 }
             }
         }
         , {
-            Header: 'وضعیت', accessor: '', Cell: row => {
+            Header: 'وضعیت', accessor: '', Cell: (row:any) => {
                 const [active, setActive] = useState(row.row.original.active)
                 const id = row.row.original.id
 
@@ -452,7 +452,7 @@ const UserList = () => {
                     "active": !active,
                 }
 
-                const activeHandler = async (e) => {
+                const activeHandler = async () => {
                     try {
                         const { data, status } = await setCustomerInfo(activeChang)
 
@@ -500,7 +500,7 @@ const UserList = () => {
                     <button className="p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
                         title="تعیین نقش"
                         onClick={e => editHandler(row.row.original.id)}>
-                        <svg width="19" height="24" viewBox="0 0 24 24" style={{ fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLineJoin: "round" }} className="feather feather-user">
+                        <svg width="19" height="24" viewBox="0 0 24 24" style={{ fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round" }} className="feather feather-user">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     </button>
                     <button className=" p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
@@ -536,7 +536,7 @@ const UserList = () => {
                 </ul>
             )
         }
-    ])
+    ],[])
     const handelSearchFieldClear = () => {
         setGeData(true)
         getUsers()
@@ -551,10 +551,10 @@ const UserList = () => {
 
 
     }
-    const data = useMemo(() => users);
+    const data = useMemo(() => users,[users]);
 
     if (users) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام کاربری': item.userName,
             'نام': item.firstName,
@@ -637,7 +637,7 @@ const UserList = () => {
 
                         <button onClick={addNewUserHandler} className="btn btn-primary m-3">تعریف کاربر جدید</button>
 
-                        <MyTable columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                             total={totalCount}
                             setPageSize={setPageSize}
                             PageSize={PageSize}

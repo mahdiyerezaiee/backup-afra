@@ -12,7 +12,7 @@ import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
 
 
 
-const UpdateShippingReports = () => {
+const UpdateShippingReports:React.FC = () => {
 
     const [startDate, SetStartDate] = useState('')
     const [endDate, SetEndDate] = useState('')
@@ -26,7 +26,7 @@ const UpdateShippingReports = () => {
     let color = "#0c4088"
 
     const navigator = useNavigate();
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -75,7 +75,7 @@ const UpdateShippingReports = () => {
 
     }, [])
 
-    const handelSubmit = async(e) => {
+    const handelSubmit = async(e:any) => {
         e.preventDefault();
         setLoading(true)
         const body = {
@@ -140,21 +140,21 @@ const UpdateShippingReports = () => {
         { Header: 'kaGrp', accessor: 'kaGrp'},
         { Header: 'barAdd', accessor: 'barAdd'},
         { Header: 'grpName', accessor: 'grpName'},
-        { Header: 'ثبت', accessor:d=>{
+        { Header: 'ثبت', accessor:(d:any)=>{
 
             let condition=(d.storedInDb?'ثبت شده':'ثبت نشده')
             return(`${condition}`)
 
-        },Cell:row=>((row.row.original.storedInDb)?'ثبت شده':'ثبت نشده')},
+        },Cell:(row:any)=>((row.row.original.storedInDb)?'ثبت شده':'ثبت نشده')},
 
    
 
-    ]);
+    ],[]);
 
     const shippingCompanySelect = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }
-const data=useMemo(()=>report)
+const data=useMemo(()=>report,[report])
 const handelFrom=()=>{
     setClicked(false)
 }
@@ -175,13 +175,13 @@ if(!clicked){
                         <form className="form form-group">
                             <div className="col mb-4  " style={{ position: 'relative' }}>
                                 <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> از تاریخ</label>
-                                <InputMask className=" start form-control opacityForInput  mb-4"  placeholder="تاریخ" value={startDate} onChange={e => { SetStartDate(e.target.value)
+                                <InputMask className=" start form-control opacityForInput  mb-4"  placeholder="تاریخ" value={startDate} onChange={(e:any) => { SetStartDate(e.target.value)
                                     setDisable(false)} } />
                             </div>
                             <div className="col mb-4 " >
                                 <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
 
-                                <InputMask className=" end form-control opacityForInput  mb-4"  placeholder="تاریخ" value={endDate} onChange={e => {SetEndDate(e.target.value)
+                                <InputMask className=" end form-control opacityForInput  mb-4"  placeholder="تاریخ" value={endDate} onChange={(e:any) => {SetEndDate(e.target.value)
                                     setDisable(false) }}  />
 
 
@@ -192,8 +192,8 @@ if(!clicked){
                                 <Select
                                     placeholder="شرکت باربری"
                                     options={shippingCompanySelect()}
-                                    maxMenuHeight='150px'
-                                    onChange={(e) => {
+                                    maxMenuHeight={150}
+                                    onChange={(e:any) => {
                                         setCompanyId(e.value)
                                         setDisable(false)
 
@@ -230,7 +230,7 @@ if(!clicked){
 }
 else {
 if (report) {
-    const dataForExcel = data.map(item => ({
+    const dataForExcel = data.map((item:any) => ({
         'companyCode': item.companyCode,
         'barDel': item.barDel,
         'barDate': item.barDate,
@@ -282,17 +282,17 @@ if (report) {
             <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
 
-            <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}   rowProps={row => ({
+            <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}    bulkJob={getBulkJob}/>
+
+
+            {/*rowProps={row => ({
 
                 style: {
                     backgroundColor: row.values.ثبت === 'ثبت شده'? 'lightgreen': '#ff00003b',
 
                     cursor: "pointer"
                 }
-            })} bulkJob={getBulkJob}/>
-
-
-            {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
+            })}     نمیتونیم ازین استفاده کنیم باید یه فکر دیگه بکنیم*/}
         </div>
         <div className="d-flex justify-content-end">
             <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />

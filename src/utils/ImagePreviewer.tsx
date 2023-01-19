@@ -10,7 +10,7 @@ import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validatmin10, validatNumber} from "./validitionParams";
 
-const attachmet = window.globalThis.stie_att
+const attachmet=(window as any).globalThis.stie_att
 const customStyles = {
     content: {
 
@@ -28,8 +28,13 @@ const customStyles = {
 
 }
 
+interface Props{
 
-const ImagePreviewer = ({modalIsOpen, closeModal, item, isUser, orderStatus}) => {
+    modalIsOpen:any, closeModal:any, item:any, isUser:any, orderStatus:any
+}
+
+
+const ImagePreviewer:React.FC<Props> = ({modalIsOpen, closeModal, item, isUser, orderStatus}) => {
     const [trackingCode, setTrackingCode] = useState(0)
     const [value, setValue] = useState(0)
     const [dueDate, setDueDate] = useState(item.dueDate)
@@ -78,7 +83,7 @@ const closeModelDelete = () => {
         setLoading(false)
 
     }
-    const handelDelete = async (e) => {
+    const handelDelete = async (e:any) => {
         setLoading(true)
         e.preventDefault()
         try {
@@ -105,7 +110,7 @@ const closeModelDelete = () => {
         }
         setLoading(false)
     }
-    const handelStartDate = (value) => {
+    const handelStartDate = (value:any) => {
         if (value === null) {
             setDueDate('')
 
@@ -195,7 +200,7 @@ const closeModelDelete = () => {
                                         <label>شماره چک</label>
                                         <Field  validate={validatNumber} name="trackingCode" hidden={item.trackingCode} className="form-control opacityForInput  mb-4"
                                                type="text" value={trackingCode}
-                                               onChange={e =>{ setTrackingCode(e.target.value)
+                                               onChange={(e:any) =>{ setTrackingCode(e.target.value)
                                                }} />
                                         {errors.trackingCode && touched.trackingCode && <div className="text-danger">{errors.trackingCode}</div>}
 
@@ -205,7 +210,7 @@ const closeModelDelete = () => {
                                     <div className="col-lg-3">
                                         <label>مبلغ چک</label>
                                         <Field  validate={validatNumber} name="value" hidden={item.value} className="  form-control opacityForInput  mb-4"
-                                               type="text" value={value} onChange={e => {setValue(e.target.value)
+                                               type="text" value={value} onChange={(e:any) => {setValue(e.target.value)
                                         }} />
                                         {errors.value && touched.value && <div className="text-danger">{errors.value}</div>}
                                         {item.value?<p className=" img-caption p-3 border">{formatter.format(item.value)}</p>  :null}

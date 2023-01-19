@@ -182,7 +182,7 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({
                     <tbody className='text-center' {...getTableBodyProps()}>
                     { // loop over the rows
 
-                        page.map(row => {
+                        page.map((row) => {
                             prepareRow(row)
 
                             return (

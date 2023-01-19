@@ -8,19 +8,19 @@ import { SetAttributeValues } from '../../../services/attributeService';
 import Select from 'react-select'
 import { GetGroupsForEntity } from '../../../services/GroupService';
 import { ClipLoader } from "react-spinners";
-import { GetCompanyChild } from './../../../services/companiesService';
-import { GetGroupWithCompany } from './../../../services/GroupService';
+import { GetCompanyChild } from '../../../services/companiesService';
+import { GetGroupWithCompany } from '../../../services/GroupService';
 import {Field, Form, Formik} from "formik";
 import {validatAlpha, validateRequired, validatNumber} from "../../../Utils/validitionParams";
 
-const NewWareHouse = () => {
+const NewWareHouse:React.FC = () => {
     const [name, Setname] = useState('');
-    const [wareHouseT, SetWarehouseT] = useState([]);
+    const [wareHouseT, SetWarehouseT] = useState<any>([]);
     const [groupId, setGroupId] = useState({})
     const [attValuehajm, setAttValueHajm] = useState('')
     const [Addres, setAddres] = useState('');
     const [loading, setLoading] = useState(false);
-    const [userCompanies, setUserCompanies] = useState([])
+    const [userCompanies, setUserCompanies] = useState<any>([])
     let [companyId, SetcompanyId] = useState()
     let [companyName, SetCompanyName] = useState()
 
@@ -54,7 +54,7 @@ companyId, companyName
 
         GetCurrentUserCompany()
     }, [])
-    const GetWareHouseType = async (companyId) => {
+    const GetWareHouseType = async (companyId:any) => {
 
         if (userCompanies.length === 1) {
             try {
@@ -84,7 +84,7 @@ companyId, companyName
 
     }
     const inputwareHouseT = () => {
-        return (wareHouseT.map(data => ({ label: data.name, value: data.id })))
+        return (wareHouseT.map((data:any) => ({ label: data.name, value: data.id })))
     }
 
     const setAddressForWare = async () => {
@@ -156,7 +156,7 @@ companyId, companyName
         }
     }
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
     let defaultValue = companys()[0]
@@ -193,7 +193,7 @@ companyId, companyName
 
                             <div className=" mb-4 textOnInput">
                                 <label >انبار</label>
-                                <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
 
                                 {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
@@ -204,7 +204,7 @@ companyId, companyName
 
                                 <label>حجم انبار</label>
 
-                                <Field name="attValuehajm"  validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={e => setAttValueHajm(e.target.value)} />
+                                <Field name="attValuehajm"  validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={(e:any) => setAttValueHajm(e.target.value)} />
 
                                 {errors.attValuehajm && touched.attValuehajm && <div className="text-danger">{errors.attValuehajm}</div>}
 
@@ -245,7 +245,7 @@ companyId, companyName
                                 <Select
                                     placeholder="گروه"
                                     options={inputwareHouseT()}
-                                    onChange={e =>
+                                    onChange={(e:any) =>
                                         setGroupId(e.value)
 
 
@@ -260,7 +260,7 @@ companyId, companyName
 
                             <div className='mb-4 textOnInput'>
                                 <label>آدرس</label>
-                                <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={e => {
+                                <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={(e:any) => {
                                     setAddres(e.target.value)
 
                                 }} />

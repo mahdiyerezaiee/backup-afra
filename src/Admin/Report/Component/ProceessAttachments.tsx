@@ -5,15 +5,15 @@ import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import {PriceUnitEnums} from "../../../Common/Enums/PriceUnit";
 
-const ProceessAttachments = () => {
+const ProceessAttachments:React.FC = () => {
     const Navigate = useNavigate()
     const[selectedRows,setSelectedRows]=useState([])
 
     const [report ,setReport] = useState([])
-    const showDetial = (id) => {
+    const showDetial = (id:any) => {
      Navigate(`/admin/customerAttachment/${id}`)
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
 
 
     }
@@ -25,7 +25,7 @@ const ProceessAttachments = () => {
         console.log(e)
     }
   }
-    const editInfoHandler = (id) => {
+    const editInfoHandler = (id:any) => {
         Navigate(`/admin/editInfo/${id}`)
     }
   useEffect(()=>{
@@ -41,7 +41,7 @@ const ProceessAttachments = () => {
     const columns = useMemo(() => [
 
         { Header: 'شناسه مشتری', accessor: 'customerId' },
-        { Header: 'نام کاربری', accessor: 'userName',Cell:row => {
+        { Header: 'نام کاربری', accessor: 'userName',Cell:(row:any) => {
             return(<button  onClick={()=>editInfoHandler(row.row.original.customerId)} className="bg-transparent border-0">{row.row.original.userName}</button>)
             } },
         {Header: 'نام سند', accessor: 'name'},
@@ -85,10 +85,10 @@ const ProceessAttachments = () => {
                 )
             }
         }
-    ])
-    const data = useMemo(() => report)
+    ],[])
+    const data = useMemo(() => report,[report])
     if (report && report.length >0 ){
-        const dataForExcel = report.map(item => ({
+        const dataForExcel = report.map((item:any) => ({
             'شناسه مشتری': item.customerId,
             'نام کاربری': item.userName,
             'نام سند': item.name,
@@ -103,7 +103,7 @@ const ProceessAttachments = () => {
             <div className=" statbox widget-content widget-content-area rounded">
                 <div>
 
-                    <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)} bulkJob={getBulkJob}/>
+                    <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} bulkJob={getBulkJob}/>
 
                     {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError}/>*/}
                 </div>

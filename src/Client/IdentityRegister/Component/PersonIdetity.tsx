@@ -9,20 +9,21 @@ import { setCustomerInfo } from '../../../services/customerService';
 import { GetUserInfo } from '../../../services/userService';
 import {validatAlpha, validateEmail, validatmin10} from "../../../Utils/validitionParams";
 import {Field, Form, Formik} from "formik";
+import { RootState } from '../../../store';
 
 
-const PersonIdetity = () => {
+const PersonIdetity:React.FC = () => {
     const navigate=useNavigate()
 
     const [, forceUpdate] = useState();
     const [userData, setUserData] = useState({});
     const [Click, setClick] = useState(false);
     const [check, setChek] = useState(false);
-    const userinfo = useSelector(state => state.user);
+    const userinfo = useSelector((state:RootState) => state.user);
     const dispatch = useDispatch();
     const [nationalId, SetnationalId] = useState('');
     const [formDisable, setformDisable] = useState(true);
-    const [password, setPassword]=useState(null)
+    const [password, setPassword]=useState<any>(null)
     const [passwordConfirm , setPasswordConfirm]=useState(null)
     const [companyName, setcompanyName] = useState('');
     const [companyRegister, setcompanyRegister] = useState('');
@@ -32,7 +33,7 @@ const PersonIdetity = () => {
     const [email, setemail] = useState(userinfo.email);
     const [show , setShow]=useState(false)
     const [passwordType, setPasswordType] = useState("password");
-    const togglePassword = (e) => {
+    const togglePassword = (e:any) => {
         e.preventDefault()
         if (passwordType === "password") {
             setPasswordType("text")
@@ -123,7 +124,7 @@ navigate('/admin/identitypannel')
 
 
     }
-    const showHandler = (e) => {
+    const showHandler = () => {
 
         setShow(!show)
     }
@@ -196,21 +197,21 @@ navigate('/admin/identitypannel')
 
                                 <label >نام</label>
                                 <Field name="firstName" validate={validatAlpha}  type="text" className="form-control opacityForInput" placeholder="نام" value={firstName } onChange={
-                                    (e) => {
+                                    (e:any) => {
                                         setfirstName(e.target.value);
                                     }} />
                                 {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
                             </div>
                             <div className="form-group mb-4 textOnInput">
                                 <label >نام خانوادگی</label>
-                                <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName } onChange={e => {
+                                <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName } onChange={(e:any) => {
                                     setlastName(e.target.value)
                                 }} name="lastName" validate={validatAlpha} />
                                 {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
                             </div>
                             <div className="form-group mb-4 textOnInput">
                                 <label >کد ملی</label>
-                                <Field type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode } onChange={e => {
+                                <Field type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode } onChange={(e:any) => {
                                     setnationalCode(e.target.value)
                                 }} name="nationalCode"  validate={validatmin10}/>
                                 {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
@@ -219,7 +220,7 @@ navigate('/admin/identitypannel')
 
                             <div className="form-group mb-4 textOnInput">
                                 <label >ایمیل</label>
-                                <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email} onChange={e => {
+                                <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email} onChange={(e:any) => {
                                     setemail(e.target.value)
                                 }} name='email' validate={validateEmail}/>
                                 {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
@@ -231,7 +232,7 @@ navigate('/admin/identitypannel')
                                 <>
                                     <div className="input-group col-12 mb-5 mt-4 textOnInputForGrp rounded"  hidden={!show}>
                                         <label >رمز عبور</label>
-                                        <input type={passwordType}  className="form-control opacityForInput" placeholder="*******" value={password } onChange={e => {
+                                        <input type={passwordType}  className="form-control opacityForInput" placeholder="*******" value={password } onChange={(e:any) => {
                                             setPassword(e.target.value)
                                         }} />
                                         <div className="input-group-append ">
@@ -264,7 +265,7 @@ navigate('/admin/identitypannel')
                                     </div>
                                     <div className="input-group col-12 mb-5 mt-4 textOnInputForGrp rounded"  hidden={!show}>
                                         <label >تکرار مرز عبور</label>
-                                        <input type={passwordType}  className="form-control opacityForInput" placeholder="*******" value={passwordConfirm || " "} onChange={e => {
+                                        <input type={passwordType}  className="form-control opacityForInput" placeholder="*******" value={passwordConfirm || " "} onChange={(e:any) => {
                                             setPasswordConfirm(e.target.value)
                                         }} />
                                         <div className="input-group-append ">
@@ -334,7 +335,7 @@ navigate('/admin/identitypannel')
     }
     else {
 
-        const handelCheckCompanyCode = async (event) => {
+        const handelCheckCompanyCode = async (event:any) => {
             event.preventDefault();
             const NationalId = nationalId
             try {
@@ -399,7 +400,7 @@ navigate('/admin/identitypannel')
 
 
                                 <label className="form-check-label mb-3">
-                                    <input type="checkbox" className="form-check-input" onChange={e => setChek(e.target.checked)} />
+                                    <input type="checkbox" className="form-check-input" onChange={(e:any) => setChek(e.target.checked)} />
                                     شخص حقوقی هستم
                                 </label>
                             </div>
@@ -407,21 +408,21 @@ navigate('/admin/identitypannel')
 
                                         <label >نام</label>
                                         <Field name="firstName" validate={validatAlpha}  type="text" className="form-control opacityForInput" placeholder="نام" value={firstName || ""} onChange={
-                                            (e) => {
+                                            (e:any) => {
                                                 setfirstName(e.target.value);
                                             }} />
                                         {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
                                     </div>
                                     <div className="form-group mb-4 textOnInput">
                                         <label >نام خانوادگی</label>
-                                        <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={e => {
+                                        <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" value={lastName || ""} onChange={(e:any) => {
                                             setlastName(e.target.value)
                                         }} name="lastName" validate={validatAlpha} />
                                         {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
                                     </div>
                                     <div className="form-group mb-4 textOnInput">
                                         <label >کد ملی</label>
-                                        <Field type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode ||""} onChange={e => {
+                                        <Field type="text" className="form-control opacityForInput" placeholder="0070090602" value={nationalCode ||""} onChange={(e:any) => {
                                             setnationalCode(e.target.value)
                                         }} name="nationalCode"  validate={validatmin10}/>
                                         {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
@@ -430,7 +431,7 @@ navigate('/admin/identitypannel')
 
                                     <div className="form-group mb-4 textOnInput">
                                         <label >ایمیل</label>
-                                        <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={e => {
+                                        <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" value={email || ""} onChange={(e:any) => {
                                             setemail(e.target.value)
                                         }} name='email' validate={validateEmail}/>
                                         {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
@@ -441,7 +442,7 @@ navigate('/admin/identitypannel')
 
                                 <label >شماره ملی شرکت</label>
                                 <div className='form-row justify-content-center'>
-                                    <input type="text" className="form-control opacityForInput col" value={nationalId || ""} onChange={(e) => { SetnationalId(e.target.value)}} placeholder="12345678912" />
+                                    <input type="text" className="form-control opacityForInput col" value={nationalId || ""} onChange={(e:any) => { SetnationalId(e.target.value)}} placeholder="12345678912" />
                                     <button type='submit' className='btn btn-outline-primary col-4 ' onClick={handelCheckCompanyCode}>استعلام </button>
 
                                 </div>
@@ -450,14 +451,14 @@ navigate('/admin/identitypannel')
                             </div>
                             <div className="form-group mb-4 textOnInput ">
                                 <label >نام شرکت</label>
-                                <input type="text" className="form-control opacityForInput" disabled={formDisable} value={companyName || ""} onChange={(e) => {
+                                <input type="text" className="form-control opacityForInput" disabled={formDisable} value={companyName || ""} onChange={(e:any) => {
                                     setcompanyName(e.target.value)
                                 }} placeholder="نام شرکت" />
 
                             </div>
                             <div className="form-group  textOnInput ">
                                 <label >شماره ثبت</label>
-                                <input type="text" className="form-control opacityForInput" disabled={formDisable} value={companyRegister || ""} onChange={(e) => {
+                                <input type="text" className="form-control opacityForInput" disabled={formDisable} value={companyRegister || ""} onChange={(e:any) => {
                                     setcompanyRegister(e.target.value)
                                 }} placeholder="شماره ثبت" />
 
@@ -467,13 +468,13 @@ navigate('/admin/identitypannel')
                                 <>
                                     <div className="form-group m-4 textOnInput">
                                         <label >رمز عبور</label>
-                                        <input type="password" className="form-control opacityForInput" placeholder="*******" value={password || ""} onChange={e => {
+                                        <input type="password" className="form-control opacityForInput" placeholder="*******" value={password || ""} onChange={(e:any) => {
                                             setPassword(e.target.value)
                                         }} />
                                     </div>
                                     <div className="form-group m-4 textOnInput">
                                         <label >تکرار مرز عبور</label>
-                                        <input type="password" className="form-control opacityForInput" placeholder="*******" value={passwordConfirm || ""} onChange={e => {
+                                        <input type="password" className="form-control opacityForInput" placeholder="*******" value={passwordConfirm || ""} onChange={(e:any) => {
                                             setPasswordConfirm(e.target.value)
                                         }} />
                                         {password !== passwordConfirm ?
