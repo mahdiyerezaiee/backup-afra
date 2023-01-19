@@ -1,11 +1,11 @@
-import { useState,useEffect } from 'react'
+import React,{ useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { UpdateShippingReport } from '../../../services/outScopeService';
 import  FadeLoader  from 'react-spinners/FadeLoader';
 import { toast } from 'react-toastify';
 
 
-const UpdateAllShiping = () => {
+const UpdateAllShiping:React.FC = () => {
 const[loading,setLoading]=useState(false)
 const navigate=useNavigate()
     let color = "#0c4088"
@@ -46,6 +46,10 @@ useEffect(()=>{
                 <FadeLoader style={{ position: 'absolute', top: '50%', left: '50%' }} loading={loading} color={color} />
             </div>
         )
+    }
+    else{
+        return(
+        <div></div>)
     }
    
 }

@@ -1,7 +1,7 @@
 import {GetScheduleJobsReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
 import {GrUpdate} from "react-icons/gr"
-const ScheduleJob = () => {
+const ScheduleJob:React.FC = () => {
   const [report , setReport] = useState(getDataScheduleJob().report?getDataScheduleJob().report:[])
     let d = new Date();
     d.setTime(d.getTime() +  (60 * 1000));
@@ -11,7 +11,7 @@ const ScheduleJob = () => {
         report
     }
     function getDataScheduleJob() {
-        let items = JSON.parse(sessionStorage.getItem('dataScheduleJob'));
+        let items = JSON.parse(String(sessionStorage.getItem('dataScheduleJob')));
         return items ? items : ''
 
 
@@ -51,7 +51,7 @@ GetData()
 
                     <div className="mt-container mx-auto">
                         <div className="timeline-line">
-    {report.map((item , index)=>
+    {report.map((item:any , index:number)=>
     // <div key={index} className="   rounded cronJob" style={{direction:"rtl",backgroundColor:"white",padding:"14px 19px",border:" 2px solid #e0e6ed", borderRadius: "8px",marginBottom: "4px"}}>
         <div className={item.type === "باربری" ? "item-timeline timeline-primary" : item.type === "بازارگاه" ? "item-timeline timeline-danger" : "item-timeline  timeline-warning"}>
             <div className="t-dot" data-original-title="" title="">

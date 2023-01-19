@@ -1,8 +1,11 @@
 import React from 'react'
+import { RatioProps } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 
-const PersonBankAccount = () => {
-    const handelSubmit=(event)=>{
+
+
+const PersonBankAccount :React.FC= () => {
+    const handelSubmit=(event:any)=>{
 event.preventDefault();
     }
     return (
@@ -30,7 +33,7 @@ event.preventDefault();
                            
                         </div>
                         <div className='form-group'>
-                        <span >برای دریافت شماره شبا <Link href="#">اینجا</Link> کلیک کنید.</span>
+                        <span >برای دریافت شماره شبا <Link to="#">اینجا</Link> کلیک کنید.</span>
                         </div>
                         <div className='form-group'>
                         <div className='row justify-content-between'>

@@ -1,52 +1,30 @@
-import React,{useState,useEffect} from 'react'
-import { useParams, useNavigate,NavLink } from 'react-router-dom';
-import { GetGroupById } from '../../../services/GroupService';
-import { SetGroup } from '../../../services/GroupService';
+import React, {  useState } from 'react'
+import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import {  SetGroup } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
-import {validatAlpha} from "../../../Utils/validitionParams";
 import {Field, Form, Formik} from "formik";
+import {validatAlpha} from "../../../Utils/validitionParams";
 
-const EditWareHouseTypeName = () => {
-const navigate=useNavigate()
-    const params=useParams();
-    const[entityTypeId,setEntityTypeId]=useState(0)
-    const[name,setName]=useState('')
+
+
+const NewWareHouseType:React.FC = () => {
+    const navigate=useNavigate();
     const [loading, setLoading] = useState(false);
-
-    const getGroup=async()=>{
-
-try {
-    const{data,status}=await GetGroupById(params.id)
-    setName(data.result.group.name)
-    setEntityTypeId(data.result.group.entityTypeId)
-    
-} catch (error) {
-    console.log(error);
-}
-    }
-useEffect(()=>{
-
-    getGroup();
-},[])
-
-const handelSubmit=async()=>{
-
-   setLoading(true)
-
-
+    const [name, Setname] = useState('')
+    const handelSubmit = async () => {
+        setLoading(true)
         try {
             const body={
             group:{
-                id:Number(params.id),
-                entityTypeId,
-                name
+                id:0,
+                entityTypeId:4,
+                name}
             }
-        }
-
-        const {data,status}=await SetGroup(body)
+            const {data,status}=await SetGroup(body)
         if(status===200){
-            toast.success('گروه ویرایش  شد',
+            toast.success('گروه جدید ایجاد شد',
             {
                 position: "top-right",
                 autoClose: 5000,
@@ -58,30 +36,30 @@ const handelSubmit=async()=>{
             })
             navigate('/admin/warehousetypes')
         }
-        setLoading(false)
+            setLoading(false)
+
         } catch (error) {
             console.log(error);
         }
+    
 
-
-}
-
+    }
     return (
-
-        <div className='user-progress ' >
+        <div className='user-progress' >
             <div className='row'>
                 <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                    <h5 >ویرایش گروه انبار</h5>
-                    <p>در این بخش می توانید گروه را ویرایش کنید.</p>
+                    <h5 >تعریف گروه انبار</h5>
+                    <p>در این بخش می توانید گروه جدید تعریف کنید.</p>
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-12 col-md-6 col-xs-12'>
+
                     <Formik
                         initialValues={{
-                            id:Number(params.id),
-                            entityTypeId,
-                            name
+                            id:0,
+                            entityTypeId:4,
+                            name,
                         }}
                         enableReinitialize={true}
                         onSubmit={values => {
@@ -91,17 +69,19 @@ const handelSubmit=async()=>{
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
                             <Form className='form-group col-md-10' >
-                        <div className='form-group col-md-12'>
+                        <div className='form-group '>
 
-                            <div className="form-group mb-3 textOnInput">
-<label>نام گروه</label>
-                                <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
+                            <div className="input-group  mb-3">
+                                <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
+
                                 {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left">ثبت<ClipLoader
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >
+                                        ثبت
+                                        <ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -112,12 +92,13 @@ const handelSubmit=async()=>{
                                 </div>
                             </div>
                         </div>
-                            </Form>)}</Formik>
+                    </Form>
+                            )}
+                    </Formik>
                 </div>
             </div>
         </div>
-
     )
 }
 
-export default EditWareHouseTypeName
+export default NewWareHouseType

@@ -7,12 +7,12 @@ import MyTable from "../../../Common/Shared/Form/MyTable";
 import { GetAttribute, GetAttributeValues } from '../../../services/attributeService'
 import { DeleteNews } from "../../../services/newsService";
 import Modal from "react-modal";
-import { GetGroupsForEntity, GetGroupWithCompany } from './../../../services/GroupService';
+import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
 import {toast} from "react-toastify";
 import {DeleteSupplier, SetSupplier} from "../../../services/supplyService";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 
 const customStyles = {
     content: {
@@ -29,10 +29,10 @@ const customStyles = {
     }
 };
 
-const WareHouseList = () => {
+const WareHouseList:React.FC = () => {
     const [warehouse, setwarehouse] = useState([]);
     const [quantity, setQuantity] = useState(0);
-    const [consumableQuantity, setConsumableQuantity] = useState(0);
+    const [consumableQuantity, setConsumableQuantity] = useState<any>({});
     const [reservedQuantity, setReservedQuantity] = useState(0);
     const [id, setId] = useState(0)
     const [stateSuccess , SetStateSuccess ] = useState(0)
@@ -49,7 +49,7 @@ const WareHouseList = () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr=[]
+        let finalArr:any=[]
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(4, companies[i].id);
@@ -79,15 +79,15 @@ const WareHouseList = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -134,7 +134,7 @@ const WareHouseList = () => {
     }
     const copySelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,id:0,active:true,createDate:new Date()}})
 
         let successCount=0;
         let errorCount=0;
@@ -166,7 +166,7 @@ const WareHouseList = () => {
     }
     const enableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:true}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:true}})
 
         let successCount=0;
         let errorCount=0;
@@ -198,7 +198,7 @@ const WareHouseList = () => {
     }
     const disableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:false}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:false}})
 
         let successCount=0;
         let errorCount=0;
@@ -234,7 +234,7 @@ const WareHouseList = () => {
 
     }
 
-    const openModal = (id) => {
+    const openModal = (id:number) => {
         setIsOpen(true);
         setId(id)
     }
@@ -259,13 +259,9 @@ const WareHouseList = () => {
     useEffect(() => {
         getWareHouses();
     }, [])
-    const changeHandler = (id, e) => {
-
-        setConsumableQuantity(id, { value: e.target.value });
-
-    };
+    
     const navigate = useNavigate()
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editwarehouse/${id}`)
     }
     const formHandler = () => {
@@ -311,19 +307,19 @@ const WareHouseList = () => {
         { Header: '#', accessor: 'id' },
         { Header: 'نام', accessor: 'name' },
         {
-            Header: 'گروه انبار', accessor: d=>{
-                let WareHosueType = wareTypes.filter(item => item.id ==d.groupId).map(item => item.name)
+            Header: 'گروه انبار', accessor: (d:any)=>{
+                let WareHosueType = wareTypes.filter((item:any) => item.id ==d.groupId).map((item:any) => item.name)
                 return(`${WareHosueType}`)
-            }, Cell: row => {
+            }, Cell: (row:any) => {
 
-                return (wareTypes.filter(item => item.id ==row.row.original.groupId).map(item => item.name))
+                String(wareTypes.filter((item:any) => item.id ==row.row.original.groupId).map((item:any) => item.name))
 
 
             }
         },
         {
-            Header: 'حجم-کیلوگرم', accessor: '', Cell: row => {
-                const [attValue, setAttValue] = useState('')
+            Header: 'حجم-کیلوگرم', accessor: '', Cell: (row:any) => {
+                const [attValue, setAttValue] = useState<any>('')
                 const getAttValue = async () => {
                     const { data, status } = await GetAttributeValues(1006, row.row.original.id)
 
@@ -398,8 +394,8 @@ const WareHouseList = () => {
                     </ul>
                 )
             }
-        }])
-    const data = useMemo(() => warehouse);
+        }],[])
+    const data = useMemo(() => warehouse,[warehouse]);
 
     if(warehouse && warehouse.length >0){
 
@@ -433,7 +429,7 @@ const WareHouseList = () => {
                                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                            <p> آیا مطمئنید  انبار  {warehouse.filter(data => data.id === id).map(data => data.name)}  </p>
+                            <p> آیا مطمئنید  انبار  {warehouse.filter((data:any) => data.id === id).map((data:any) => data.name)}  </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -481,7 +477,7 @@ const WareHouseList = () => {
                         <button className="btn btn-primary m-3" onClick={formHandler}> تعریف انبار جدید</button>
 
 
-                        <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)} bulkJob={getBulkJob}/>
+                        <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} bulkJob={getBulkJob}/>
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>

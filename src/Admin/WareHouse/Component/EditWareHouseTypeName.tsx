@@ -1,30 +1,52 @@
-import React, {  useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import React,{useState,useEffect} from 'react'
+import { useParams, useNavigate,NavLink } from 'react-router-dom';
+import { GetGroupById } from '../../../services/GroupService';
+import { SetGroup } from '../../../services/GroupService';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import {  SetGroup } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
-import {Field, Form, Formik} from "formik";
 import {validatAlpha} from "../../../Utils/validitionParams";
+import {Field, Form, Formik} from "formik";
 
-
-
-const NewWareHouseType = () => {
-    const navigate=useNavigate();
+const EditWareHouseTypeName:React.FC = () => {
+const navigate=useNavigate()
+    const params=useParams();
+    const[entityTypeId,setEntityTypeId]=useState(0)
+    const[name,setName]=useState('')
     const [loading, setLoading] = useState(false);
-    const [name, Setname] = useState('')
-    const handelSubmit = async () => {
-        setLoading(true)
+
+    const getGroup=async()=>{
+
+try {
+    const{data,status}=await GetGroupById(params.id)
+    setName(data.result.group.name)
+    setEntityTypeId(data.result.group.entityTypeId)
+    
+} catch (error) {
+    console.log(error);
+}
+    }
+useEffect(()=>{
+
+    getGroup();
+},[])
+
+const handelSubmit=async()=>{
+
+   setLoading(true)
+
+
         try {
             const body={
             group:{
-                id:0,
-                entityTypeId:4,
-                name}
+                id:Number(params.id),
+                entityTypeId,
+                name
             }
-            const {data,status}=await SetGroup(body)
+        }
+
+        const {data,status}=await SetGroup(body)
         if(status===200){
-            toast.success('گروه جدید ایجاد شد',
+            toast.success('گروه ویرایش  شد',
             {
                 position: "top-right",
                 autoClose: 5000,
@@ -36,30 +58,30 @@ const NewWareHouseType = () => {
             })
             navigate('/admin/warehousetypes')
         }
-            setLoading(false)
-
+        setLoading(false)
         } catch (error) {
             console.log(error);
         }
-    
 
-    }
+
+}
+
     return (
-        <div className='user-progress' >
+
+        <div className='user-progress ' >
             <div className='row'>
                 <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                    <h5 >تعریف گروه انبار</h5>
-                    <p>در این بخش می توانید گروه جدید تعریف کنید.</p>
+                    <h5 >ویرایش گروه انبار</h5>
+                    <p>در این بخش می توانید گروه را ویرایش کنید.</p>
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-12 col-md-6 col-xs-12'>
-
                     <Formik
                         initialValues={{
-                            id:0,
-                            entityTypeId:4,
-                            name,
+                            id:Number(params.id),
+                            entityTypeId,
+                            name
                         }}
                         enableReinitialize={true}
                         onSubmit={values => {
@@ -69,19 +91,17 @@ const NewWareHouseType = () => {
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
                             <Form className='form-group col-md-10' >
-                        <div className='form-group '>
+                        <div className='form-group col-md-12'>
 
-                            <div className="input-group  mb-3">
-                                <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
-
+                            <div className="form-group mb-3 textOnInput">
+<label>نام گروه</label>
+                                <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => setName(e.target.value)} />
                                 {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                             </div>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >
-                                        ثبت
-                                        <ClipLoader
+                                    <button type="submit" disabled={loading} className="btn btn-success float-left">ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -92,13 +112,12 @@ const NewWareHouseType = () => {
                                 </div>
                             </div>
                         </div>
-                    </Form>
-                            )}
-                    </Formik>
+                            </Form>)}</Formik>
                 </div>
             </div>
         </div>
+
     )
 }
 
-export default NewWareHouseType
+export default EditWareHouseTypeName

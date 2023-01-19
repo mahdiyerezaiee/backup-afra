@@ -5,13 +5,13 @@ import {useEffect, useState} from "react";
 import ImageFileUploader from "../../../Utils/ImageFileUploader";
 import ImagePreviewer from "../../../Utils/ImagePreviewer";
 
-const DetailCustomerAttachment = () => {
-  const attachmet=window.globalThis.stie_att
+const DetailCustomerAttachment:React.FC = () => {
+  const attachmet=(window as any).globalThis.stie_att
   const [isOpen, setIsOpen] = useState(false)
   const [image, setImage] = useState({})
 
   const params = useParams()
-const [data , setData] = useState()
+const [data , setData] = useState<any>()
 const getAtt = async () => {
 
   let config = {
@@ -26,7 +26,7 @@ const getAtt = async () => {
       isAdmin: true
     }
     ,
-    paramsSerializer: params => {
+    paramsSerializer: (params:any) => {
 
       return QueryString.stringify(params)
     }
@@ -40,7 +40,7 @@ const {data , status} = await GetAttachments(config)
   useEffect(()=>{
     getAtt()
   },[])
-  const handelPreview = (item) => {
+  const handelPreview = (item:any) => {
     setImage(item)
     setIsOpen(true)
   }
@@ -63,7 +63,7 @@ const {data , status} = await GetAttachments(config)
           {data && data.length > 0?
 
 
-              (data.map((item , index) =>
+              (data.map((item:any , index:number) =>
                   <div key={index} onClick={() => handelPreview(item)} className={item.attachmentTypeId ===2 ?" img col-md-2 col-sm-12" :"  col-md-2 col-sm-12"} >
                     <img src={`${attachmet}${item.path}`} className={item.attachmentTypeId ===2 ?"img-thumbnail border-danger":" img-thumbnail"} alt={item.name}  />
                     {item.attachmentTypeId ===2 ?  <div className="detial-img">
@@ -85,7 +85,7 @@ const {data , status} = await GetAttachments(config)
       </div>
 
     </div>
-    <ImagePreviewer modalIsOpen={isOpen} closeModal={closeModal} item={image} isUser={false} />
+    <ImagePreviewer modalIsOpen={isOpen} closeModal={closeModal} item={image} isUser={false}  orderStatus={null}/>
 
   </div> )
 }

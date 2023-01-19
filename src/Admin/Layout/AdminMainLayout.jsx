@@ -34,7 +34,7 @@ import Message from '../../Common/Shared/Ticket/message';
 import { CustomersGroup } from '../Customer/Component/CustomersGroup';
 import CustomersList from '../../Admin/Customer/Component/CustomersList';
 import NewCustomerGroup from '../../Admin/Customer/Component/NewCustomerGroup';
-import BazargahList from '../Report/Component/BazargahList';
+import BazargahList from '../Report/Component/BazargahList.tsx';
 import Setting from '../../Common/Setting/setting';
 import Dashboard from '../../Common/Shared/Common/Dashboard';
 
@@ -79,7 +79,7 @@ import UpdateAllShiping from '../Report/Component/UpdateAllShiping';
 import EditAddress from "../../Common/Shared/Profile/editAddress";
 import ProceessAttachments from "../Report/Component/ProceessAttachments";
 import UsedBarBariReport from "../Report/Component/UsedBarBariReports";
-import CustomerReports from "../Report/Component/CustomersReports";
+import CustomerReports from "../Report/Component/CustomersReports.tsx";
 import OrdersReports from "../Report/Component/OrdersReports";
 import DetailCustomerAttachment from "../Report/Component/DetailCustomerAttachment";
 import AddOrder from "../Order/Component/addOrder";
@@ -90,7 +90,7 @@ import { addUser, userDelete } from '../../store/Slice/user/userSlice';
 import { removeRole, userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
 import ReportShipping from "../Report/Component/ReportShipping";
 
-const AdminMainLayout = (props) => {
+const AdminMainLayout = () => {
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
   const refreshPage = () => {

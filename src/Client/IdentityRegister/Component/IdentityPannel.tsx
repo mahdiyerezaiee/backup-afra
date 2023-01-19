@@ -8,10 +8,12 @@ import {useSelector} from "react-redux";
 import {GetAddress} from "../../../services/addressService";
 import {HiArrowLeft} from "react-icons/hi"
 import  "../../../Utils/style.css"
-const IdentityPannel = () => {
-    const user=useSelector(state=>state.user);
+import { RootState } from '../../../store';
 
-    const [address , setAddress] = useState()
+const IdentityPannel :React.FC= () => {
+    const user=useSelector((state:RootState)=>state.user);
+
+    const [address , setAddress] = useState<any>()
     const GetAddresUser= async ()=>{
         const {data , status} = await GetAddress(1, user.id )
         setAddress(data.result.addresses)
@@ -49,7 +51,7 @@ const IdentityPannel = () => {
                 </Link>
                 {user.nationalCode ? <HiArrowLeft  style={{margin:"auto 0 " ,color:"green"}} size={"3rem"}/> :  null}
 
-                <Link to='/admin/addresform' className=' m-auto rounded' style={{ color:address && address.lenght !== 0 ?  " green": " lightcoral" ,border:address && address.lenght !==0 ? " 1px solid green": " 1px solid lightcoral" , animation: address && address.lenght!== 0 ? "none":"pulsered 2s infinite" }} >
+                <Link to='/admin/addresform' className=' m-auto rounded' style={{ color:address && address.length !== 0 ?  " green": " lightcoral" ,border:address && address.lenght !==0 ? " 1px solid green": " 1px solid lightcoral" , animation: address && address.lenght!== 0 ? "none":"pulsered 2s infinite" }} >
                     
                 
                     <div className='col-lg-12 col-md-12 col-sm-2 col-xs-2 m-auto widget box shadow'  >

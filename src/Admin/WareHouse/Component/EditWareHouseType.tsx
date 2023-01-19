@@ -9,7 +9,7 @@ import {validatAlpha} from "../../../Utils/validitionParams";
 
 
 
-const EditWareHouseType = () => {
+const EditWareHouseType:React.FC = () => {
     const navigate=useNavigate();
     const params=useParams();
     const [name, Setname] = useState('')
@@ -94,7 +94,7 @@ const EditWareHouseType = () => {
                                 <div className='form-group '>
 
                                     <div className="input-group  mb-3">
-                                        <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                        <Field validate={validatAlpha}  name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
 
                                         {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 

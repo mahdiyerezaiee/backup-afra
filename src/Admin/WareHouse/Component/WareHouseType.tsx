@@ -5,11 +5,11 @@ import  Modal  from 'react-modal';
 import MyTable from '../../../Common/Shared/Form/MyTable';
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
-import { GetCompanyChild } from './../../../services/companiesService';
-import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import { GetCompanyChild } from '../../../services/companiesService';
+import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import  Select  from 'react-select';
 
-const WareHouseType = () => {
+const WareHouseType :React.FC= () => {
 
     const customStyles = {
         content: {
@@ -33,21 +33,21 @@ const WareHouseType = () => {
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
-    const [userCompanies, setUserCompanies] = useState([])
+    const [userCompanies, setUserCompanies] = useState<any>([])
     let [companyId, SetcompanyId] = useState()
     const close = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -94,7 +94,7 @@ const WareHouseType = () => {
     }
     const copySelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,id:0,active:true,createDate:new Date()}})
 
         let successCount=0;
         let errorCount=0;
@@ -126,7 +126,7 @@ const WareHouseType = () => {
     }
     const enableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:true}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:true}})
 
         let successCount=0;
         let errorCount=0;
@@ -158,7 +158,7 @@ const WareHouseType = () => {
     }
     const disableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:false}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:false}})
 
         let successCount=0;
         let errorCount=0;
@@ -206,7 +206,7 @@ const WareHouseType = () => {
             console.log();
         }
     }
-    const openModal =  (id) => {
+    const openModal =  (id:number) => {
         setIsOpen(true);
         setId(id)
 
@@ -214,7 +214,7 @@ const WareHouseType = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
-    const GetWareHouseGroup = async (companyId) => {
+    const GetWareHouseGroup = async (companyId:any) => {
         console.log(companyId);
         if (userCompanies.length === 1) {
             try {
@@ -244,7 +244,7 @@ const WareHouseType = () => {
     useEffect(()=>{
         GetWareHouseGroup(companyId);
     },[companyId])
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/EditWareHouseTypeName/${id}`)
     }
     const deletHandler =async () => {
@@ -253,7 +253,7 @@ const WareHouseType = () => {
             if (status===200)
             {
                 setIsOpen(false)
-                GetWareHouseGroup();
+                GetWareHouseGroup(companyId);
             }
         }catch (err){
             console.log(err)
@@ -261,7 +261,7 @@ const WareHouseType = () => {
     }
     const columns=useMemo(()=>[
         { Header: '#', accessor: 'id' },
-        { Header: 'نوع', accessor: 'name' }, { Header: 'عملیات', accessor: '11', Cell: row =>
+        { Header: 'نوع', accessor: 'name' }, { Header: 'عملیات', accessor: '11', Cell: (row:any) =>
             {
 
                 return(
@@ -298,13 +298,13 @@ const WareHouseType = () => {
 
                     </ul>
                 )}}
-    ])
+    ],[])
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
     
     }
     let defaultValue = companys()[0]
-    const data=useMemo(()=>WarehouseG);
+    const data=useMemo(()=>WarehouseG,[WarehouseG]);
     const handelForm=()=>{
         navigate('/admin/newwarehousetype')
     }
@@ -371,7 +371,7 @@ const WareHouseType = () => {
                                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                            <p> آیا مطمئنید  گروه {WarehouseG.filter(item=> item.id === id).map(item=> item.name)}   </p>
+                            <p> آیا مطمئنید  گروه {WarehouseG.filter((item:any)=> item.id === id).map((item:any)=> item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -385,7 +385,7 @@ const WareHouseType = () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={handelForm}>تعریف گروه</button>
-                        <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}  bulkJob={getBulkJob}/>
+                        <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}  bulkJob={getBulkJob}/>
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
                     </div>
                 </div>

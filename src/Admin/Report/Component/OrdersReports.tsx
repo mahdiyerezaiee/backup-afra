@@ -1,21 +1,19 @@
 import React, { useState, useMemo } from 'react';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
-import persian_en from "react-date-object/locales/persian_en";
 import { NavLink } from 'react-router-dom';
-
-
 import FadeLoader from 'react-spinners/FadeLoader'
 import MyTableBazargah  from "../../../Common/Shared/Form/MyTableBazargah";
-import {GetCustomersReports, GetUsedBarBariReports} from "../../../services/reportService";
+import { GetOrdersReports} from "../../../services/reportService";
 import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
 import persian_fa from "react-date-object/locales/persian_fa";
+import {MeasureUnitSample} from "../../../Common/Enums/MeasureUnitSample";
 
 
-const CustomerReports = () => {
+const OrdersReports:React.FC = () => {
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
-    const [Response, SetResponse] = useState([]);
+    const [Response, SetResponse] = useState<any>([]);
     const [clicked, SetClicked] = useState(false)
     const[selectedRows,setSelectedRows]=useState([])
 
@@ -29,21 +27,21 @@ const CustomerReports = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
 
     }
 
 
 
-    const handelStartDate = (value) => {
+    const handelStartDate = (value:any) => {
         if (value === null) {
             setStartDate('')
         }
@@ -52,7 +50,7 @@ const CustomerReports = () => {
             setStartDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
         }
     }
-    const handelEndDate = (value) => {
+    const handelEndDate = (value:any) => {
         if (value === null) {
             setEndDate('')
         }
@@ -61,14 +59,14 @@ const CustomerReports = () => {
             setEndDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
         }
     }
-    const handelSubmit = async (event) => {
+    const handelSubmit = async (event:any) => {
         setLoading(true)
         event.preventDefault();
         try {
-            const { data, status } = await GetCustomersReports(StartDate, EndDate);
+            const { data, status } = await GetOrdersReports(StartDate, EndDate);
             if (status === 200) {
 
-                SetResponse(data.result.customerReports);
+                SetResponse(data.result.orderReports);
                 SetClicked(true);
                 setLoading(false)
             }
@@ -80,18 +78,47 @@ const CustomerReports = () => {
     const handelFrom=()=>{
         SetClicked(false)
     }
+    let formatter = new Intl.NumberFormat('fa-IR', {
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+
+
+    });
+    let formater = new Intl.NumberFormat('fa-IR', {
+
+
+    });
 
     const columns = useMemo(() => [
-        { Header: 'ردیف', accessor: 'id' },
-        {Header:'نام کاربری',accessor:'userName',Cell:row => row.row.original.userName? row.row.original.userName :"--"},
-        { Header: 'نام مشتری ', accessor: 'name' ,Cell:row => row.row.original.name ? row.row.original.name :"--"},
-        { Header: 'کد ملی مشتری', accessor: 'nationalCode',Cell:row => row.row.original.nationalCode? row.row.original.nationalCode :"--" },
-        { Header: 'کد سازمان', accessor: 'organizationId',Cell:row => row.row.original.organizationId? row.row.original.organizationId :"--"},
-        { Header: ' نام سازمان', accessor: 'organization',Cell:row => row.row.original.organization? row.row.original.organization :"--"},
-        { Header: 'شناسه ملی سازمان', accessor: 'organizationNationaId',Cell:row => row.row.original.organizationNationaId? row.row.original.organizationNationaId :"--" },
+        { Header: 'شماره سفارش', accessor: 'orderId' },
+        {Header:'شناسه انبار',accessor:'wareHouseId', Cell :(row:any) => String(row.row.original.wareHouseId? row.row.original.wareHouseId :"--") },
+        { Header: 'نام انبار', accessor: 'wareHouseName' ,Cell:(row:any) => String(row.row.original.wareHouseName? row.row.original.wareHouseName :"--" )},
+        { Header: 'شناسه محصول', accessor: 'productId' ,Cell:(row:any) =>String( row.row.original.productId? row.row.original.productId :"--") },
+        { Header: 'نام محصول', accessor: 'productName',Cell:(row:any)=> String(row.row.original.productName? row.row.original.productName :"--" )},
+        { Header: 'نام عرضه', accessor: 'productSupplyName',Cell:(row:any)=> String(row.row.original.productSupplyName? row.row.original.productSupplyName :"--" )},
+        { Header: 'شناسه عرضه', accessor: 'productSupplyId',Cell:(row:any) => String(row.row.original.productSupplyId? row.row.original.productSupplyId :"--" )},
+        { Header: 'شناسه بازارگاه', accessor: 'kharidId' ,Cell:(row:any)=> String(row.row.original.kharidId? row.row.original.kharidId :"--") },
+        { Header: 'شناسه تخصیص', accessor: 'allocationId' ,Cell:(row:any) => String(row.row.original.allocationId? row.row.original.allocationId :"--" )},
+        { Header: 'مقدار ', accessor: 'quantity' },
+        {Header: 'واحد ', accessor:(d:any) => {
+                let MeasureUnit = MeasureUnitSample.filter((item:any) => item.id === d.measureUnitId).map((item:any) => item.name)
+                return(`${MeasureUnit}`)
+            }, Cell: (row:any) => {
+
+                String (MeasureUnitSample.filter((item:any) => item.id === row.row.original.measureUnitId).map((item:any) => item.name))
+            }
+        },
+        { Header: 'تاریخ', accessor: 'createDate',Cell:row => new Date(row.row.original.createDate).toLocaleDateString('fa-IR')},
+        { Header: 'قیمت واحد', accessor: 'itemPrice',Cell:row => formatter.format(row.row.original.itemPrice) },
+        { Header: 'قیمت سفارش', accessor: 'orderPrice',Cell:row => formatter.format(row.row.original.orderPrice) },
+        { Header: 'نام کاربر', accessor: 'customerName' ,Cell:row => row.row.original.customerName? row.row.original.customerName :"--" },
+        { Header: 'کد ملی  کاربر', accessor: 'customerNationalCode',Cell:row => row.row.original.customerNationalCode? row.row.original.customerNationalCode :"--" },
+        { Header: 'نام سازمان', accessor: 'organizationName',Cell:row => row.row.original.organizationName? row.row.original.organizationName :"--" },
+        { Header: 'شناسه ملی سازمان', accessor: 'organizationNationalId',Cell:row => row.row.original.organizationNationalId? row.row.original.organizationNationalId :"--" },
         { Header: 'شماره ثبت سازمان', accessor: 'organizationRegistrationNumber' ,Cell:row => row.row.original.organizationRegistrationNumber? row.row.original.organizationRegistrationNumber :"--"},
-       ]);
-    const data = useMemo(() => Response);;
+    ],[]);
+    const data = useMemo(() => Response,[Response]);;
 
     if (!clicked) {
         if(!loading){
@@ -100,7 +127,7 @@ const CustomerReports = () => {
                     <div className='row'>
                         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
                             <h5 >درخواست اطلاعات </h5>
-                            <p>در این بخش می توانید گزارش مشتریان دریافت کنید.</p>
+                            <p>در این بخش می توانید گزارش سفارشات دریافت کنید.</p>
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
@@ -170,17 +197,28 @@ const CustomerReports = () => {
 
         }
     }
-    else {
 
+    else {
         if (Response && Response.length >0){
-            const dataForExcel = Response.map(item => ({
-                'ردیف': item.id,
-                'نام کاربری': item.userName,
-                'نام': item.name,
-                'کد ملی': item.nationalCode,
-                'کد سازمان': item.organizationId,
-                'نام سازمان':item.organization,
-                'شناسه ملی سازمان':item.organizationNationaId,
+            const dataForExcel = Response.map((item:any) => ({
+                'شناسه سفارش': item.orderId,
+                'شناسه انبار': item.wareHouseId,
+                'نام انبار': item.wareHouseName,
+                'شناسه محصول': item.productId,
+                'نام محصول': item.productName,
+                'شناسه عرضه':item.productSupplyId,
+                'نام عرضه':item.productSupplyName,
+                'شناسه بازارگاه': item.kharidId,
+                'شناسه تخصیص': item.allocationId,
+                'مقدار': item.quantity,
+                'واحد': item.measureUnitId,
+                'تاریخ':new Date(item.createDate).toLocaleDateString("fa-IR"),
+                'قیمت واحد': item.itemPrice,
+                'قیمت سفارش': item.orderPrice,
+                'نام کاربر': item.customerName,
+                'شناسه ملی کار بر': item.customerNationalCode,
+                'نام سازمان': item.organizationName,
+                'شناسه ملی سازمان': item.organizationNationalId,
                 'شماره ثبت سازمان': item.organizationRegistrationNumber,
             }))
             return (
@@ -188,7 +226,7 @@ const CustomerReports = () => {
                     <div>
                         <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-                        <MyTableBazargah columns={columns} data={data} getData={rows=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
+                        <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
                         {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
                     </div>
                     <div className="d-flex justify-content-end m-2">
@@ -213,4 +251,4 @@ const CustomerReports = () => {
     }
 }
 
-export default CustomerReports
+export default OrdersReports
