@@ -4,15 +4,19 @@ import persian from "react-date-object/calendars/persian"
 import persian_en from "react-date-object/locales/persian_en";
 import { NavLink } from 'react-router-dom';
 
-import { GetBazargahKharidList } from '../../../services/outScopeService';
+import { GetBazargahKharidList, GetBazargahKharidListWithCompany } from '../../../services/outScopeService';
 import MyTable from '../../../Common/Shared/Form/MyTable';
 
 import FadeLoader from 'react-spinners/FadeLoader'
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import  Select  from 'react-select';
 
 
 const BazargahList:React.FC = () => {
     const [StartDate, setStartDate] = useState('');
+    const companies=useSelector((state:RootState)=>state.companies)
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
     const [clicked, SetClicked] = useState(false)
@@ -24,6 +28,7 @@ const BazargahList:React.FC = () => {
 
     const[open,SetOpen]=useState(false);
     let [loading, setLoading] = useState(false);
+    const[companyId,SetCompnayId]=useState(0)
     let [color, setColor] = useState("#0c4088");
     const close = () => {
         SetOpen(false);
@@ -37,6 +42,11 @@ const getSelectedData=(data:any)=>{
     return(arrayOfSelectedData)
    
    }
+
+   const CompaniesIDs = () => {
+    return (companies.map(data => ({ label: data.name, value: data.id })))
+}
+   
     const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
@@ -86,6 +96,7 @@ const getSelectedData=(data:any)=>{
     const handelSubmit = async (event:any) => {
         setLoading(true)
         event.preventDefault();
+        if(companies.length===1){
         try {
             const { data, status } = await GetBazargahKharidList(StartDate, EndDate);
             if (status === 200) {
@@ -97,7 +108,23 @@ const getSelectedData=(data:any)=>{
         } catch (error) {
             console.log(error);
         }
+    }
+    else{
 
+        try {
+            const { data, status } = await GetBazargahKharidListWithCompany(StartDate, EndDate,companyId);
+            if (status === 200) {
+
+                SetResponse(data.result.bazarGahKharidList);
+                SetClicked(true);
+                setLoading(false)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+        
+    }
     }
     const handelFrom=()=>{
            SetClicked(false)
@@ -149,8 +176,8 @@ const getSelectedData=(data:any)=>{
        
 
     ],[]);
+    let defaultValue:any=CompaniesIDs()[0]
     const data = useMemo(() => Response,[Response]);;
-    console.log(data)
     if (!clicked) {
         if(!loading){
         return (
@@ -166,6 +193,30 @@ const getSelectedData=(data:any)=>{
 
 
                         <form >
+                        {companies?
+                            <div className="col mb-4  form-group textOnInput">
+
+                                <label> شرکت</label>
+                                <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={CompaniesIDs()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={e => {
+
+
+                                        SetCompnayId(e.value)
+
+
+                                    }
+
+                                    }
+
+                                />
+
+
+                            </div>:''}
                             <div className='row'>
                                 <div className=" col ">
                                     <div className=" mb-4 " style={{ position: 'relative' }}>
@@ -201,7 +252,11 @@ const getSelectedData=(data:any)=>{
                                         </div></div>
 
                                 </div>
+
+                        
+
                             </div>
+                           
                             <div className='row justify-content-between'>
                                 <div className='col-6 '>
                                     <button type="submit" disabled={disable} className="btn btn-success float-left " onClick={handelSubmit} >تایید</button>

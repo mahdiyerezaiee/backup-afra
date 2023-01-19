@@ -7,6 +7,10 @@ export const GetBazargahKharidList=(startDate,endDate)=>{
 
     return http.get(`${configure}/OutScope/GetBazargahKharidList?StartDate=${startDate}&EndDate=${endDate}`);
 }
+export const GetBazargahKharidListWithCompany=(startDate,endDate,companyId)=>{
+
+    return http.get(`${configure}/OutScope/GetBazargahKharidList?StartDate=${startDate}&EndDate=${endDate}&CompanyId=${companyId}`);
+}
 
 export const SyncWithSender=(body)=>{
 

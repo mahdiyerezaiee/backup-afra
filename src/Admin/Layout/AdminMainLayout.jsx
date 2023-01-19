@@ -89,6 +89,8 @@ import Ticket from "../../Common/Shared/Ticket/ticket_v2";
 import { addUser, userDelete } from '../../store/Slice/user/userSlice';
 import { removeRole, userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
 import ReportShipping from "../Report/Component/ReportShipping";
+import { GetCompanyChild } from './../../services/companiesService';
+import { AllCompanies } from '../../store/Slice/companies/companySlice';
 
 const AdminMainLayout = () => {
   const [isloading, setIsloading] = useState(true);
@@ -99,6 +101,7 @@ const AdminMainLayout = () => {
   useEffect(() => {
     fetchApi();
     getUserRole();
+    getUserCompanies()
   }, [])
   const dispatch = useDispatch();
   async function fetchApi() {
@@ -135,6 +138,14 @@ const AdminMainLayout = () => {
     }
 
 
+  }
+
+  const getUserCompanies=async()=>{
+    const {data,status}=await GetCompanyChild()
+    if(status===200){
+
+      dispatch(AllCompanies(data.result.companies))
+    }
   }
 
 
