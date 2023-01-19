@@ -95,34 +95,27 @@ const ReportShipping: React.FC = () => {
     });
 
     const columns = useMemo(() => [
-        { Header: 'کد قرارداد باربری', accessor: 'shippingContractCode' },
+        { Header: 'کد قرارداد باربری', accessor: 'shippingCompanyName' },
+        { Header: 'نام باربری', accessor: 'shippingContractCode' },
+        { Header: 'شناسه خرید', accessor: 'orderId' },
+        { Header: 'شناسه بازارگاه', accessor: 'orderExtId' },
+
         {
-            Header: 'کد تخصیص', accessor: 'orderExtId', Cell: (rows: any) => {
-                if (rows.row.original.orderExtId !== null) { return (rows.row.original.orderExtId) }
-                else {
-                    return (rows.row.original.orderDetailExtId)
-                }
-            }
-        },
-        {
-            Header: 'کد جزییات سفارش', accessor: 'orderDetailId', Cell: rows => {
-                if (rows.row.original.orderDetailId !== null) { return (rows.row.original.orderDetailId) }
-                else {
-                    return (rows.row.original.orderId)
-                }
-            }
+            Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId'
+        }, {
+            Header: 'کد تخصیص', accessor: 'orderDetailExtId'
         },
 
         { Header: 'وزن', accessor: 'plannedQuantity' },
         {
-            Header: 'تریلی', accessor: 'deliveryMethodId', Cell: row =>
+            Header: 'تریلی', accessor: 'deliveryMethodId', Cell: (row:any) =>
             (
                 row.row.original.deliveryMethodId === 5 ? 'بله' : 'خیر'
             )
         },
         { Header: 'نام تحویل گیرند', accessor: 'receiverName' },
         { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress' },
-        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: '' },
+        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: 'receiverNationalCode' },
 
         { Header: 'کدپستی', accessor: 'receiverPostalCode' },
         { Header: 'تلفن دریافت کننده', accessor: 'receiverTel' },
@@ -186,7 +179,7 @@ const ReportShipping: React.FC = () => {
                                             <div className="col-6   ">
 
                                                 <input type="checkbox" checked={Unshipped} onClick={(e: any) => setUnshipped(e.target.checked)} />
-                                                <label  className="ml-3">فقط حمل شده</label>
+                                                <label className="ml-3">فقط حمل شده</label>
 
                                             </div>
                                             <div className=" col-6   mb-2">
@@ -230,8 +223,11 @@ const ReportShipping: React.FC = () => {
         if (Response && Response.length > 0) {
             const dataForExcel = Response.map((item: any) => ({
                 'کد قرارداد باربری': item.shippingContractCode,
-                'کد تخصیص ': (item.orderExtId !== null ? item.orderExtId : item.orderDetailExtId),
-                'کد جزییات شفارش': (item.orderDetailId !== null ? item.orderDetailId : item.orderId),
+                'نام باربری':item.shippingCompanyName,
+                'شناسه خرید':item.orderId,
+                'شناسه بازارگاه':item.orderExtId,
+                'شناسه جزییات شفارش': item.orderDetailId ,
+                'کد تخصیص ': item.orderDetailExtId ,
                 'وزن': item.plannedQuantity,
                 'تریلی': (item.deliveryMethodId === 5 ? 'بله' : 'خیر'),
                 'نام تحویل گیرنده': item.receiverName,
