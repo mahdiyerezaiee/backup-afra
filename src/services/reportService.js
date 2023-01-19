@@ -18,6 +18,10 @@ export const GetUsedBarBariReports=(StartDate , EndDate)=>{
 
     return http.get(`${configure}/Report/GetUsedBarBariReports?StartDate=${StartDate}&EndDate=${EndDate}`);
 }
+export const GetUsedBarBariReportsCompanies=(StartDate , EndDate,companyId)=>{
+
+    return http.get(`${configure}/Report/GetUsedBarBariReports?StartDate=${StartDate}&EndDate=${EndDate}&CompanyId=${companyId}`);
+}
 export const GetCustomersReports=(StartDate , EndDate)=>{
 
     return http.get(`${configure}/Report/GetCustomersReports?StartDate=${StartDate}&EndDate=${EndDate}`);

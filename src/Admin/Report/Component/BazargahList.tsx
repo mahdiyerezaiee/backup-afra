@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
-import persian_en from "react-date-object/locales/persian_en";
+import persian_fa from "react-date-object/locales/persian_fa";
 import { NavLink } from 'react-router-dom';
 
 import { GetBazargahKharidList, GetBazargahKharidListWithCompany } from '../../../services/outScopeService';
@@ -77,20 +77,26 @@ const getSelectedData=(data:any)=>{
     const handleStartDate = (value:any) => {
 
         //تغییرات روی تاریخ رو اینجا اعمال کنید
-      
-        setStartDate(value.toString())
-
-       console.log(show);
-
+        if (value === null) {
+            setStartDate('')
+        }
+        //تغییرات روی تاریخ رو اینجا اعمال کنید
+        if (value instanceof DateObject) {
+            setStartDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
+        }
 
     }
     const handleEndDate = (value:any) => {
 
         //تغییرات روی تاریخ رو اینجا اعمال کنید
 
-        setEndDate(value.toString())
-
-
+        if (value === null) {
+            setEndDate('')
+        }
+        //تغییرات روی تاریخ رو اینجا اعمال کنید
+        if (value instanceof DateObject) {
+            setEndDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
+        }
 
     }
     const handelSubmit = async (event:any) => {
@@ -225,7 +231,7 @@ const getSelectedData=(data:any)=>{
                                             <DatePicker
                                                 calendar={persian}
 
-                                                locale={persian_en}
+                                                locale={persian_fa}
                                                 style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
                                                 value={StartDate}
                                                 onChange={handleStartDate}
@@ -243,7 +249,7 @@ const getSelectedData=(data:any)=>{
                                             
                                                 calendar={persian}
 
-                                                locale={persian_en}
+                                                locale={persian_fa}
                                                 style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
                                                 value={EndDate}
                                                 onChange={handleEndDate}

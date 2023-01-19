@@ -1,4 +1,4 @@
-import { useEffect, useState,useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { UpdateShippingReport, UpdateShippingReportByDate } from "../../../services/outScopeService";
 import { useNavigate } from "react-router-dom";
@@ -9,50 +9,53 @@ import { toast } from 'react-toastify';
 import InputMask from "../../../Utils/InputMask";
 import MyTableBazargah from '../../../Common/Shared/Form/MyTableBazargah';
 import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
+import DatePicker, { DateObject } from 'react-multi-date-picker';
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
 
 
 
-const UpdateShippingReports:React.FC = () => {
+const UpdateShippingReports: React.FC = () => {
 
     const [startDate, SetStartDate] = useState('')
     const [endDate, SetEndDate] = useState('')
-    const[selectedRows,setSelectedRows]=useState([])
+    const [selectedRows, setSelectedRows] = useState([])
     const [companies, setCompanies] = useState([])
-    const [CompanyId, setCompanyId] = useState(0)
-    const[disable,setDisable]=useState(false)
+    const [shippingCompanyId, setshippingCompanyId] = useState(0)
+    const [disable, setDisable] = useState(false)
     let [loading, setLoading] = useState(false);
     let [clicked, setClicked] = useState(false);
-    const[report,setReport]=useState([])
+    const [report, setReport] = useState([])
     let color = "#0c4088"
 
     const navigator = useNavigate();
-    const getBulkJob=(selected:any)=>{
-        if(selected===2){
+    const getBulkJob = (selected: any) => {
+        if (selected === 2) {
             enableSelectedItem()
         }
-        if(selected===3){
+        if (selected === 3) {
             copySelectedItem()
-        }if(selected===4){
+        } if (selected === 4) {
             DeleteSelectedItem()
         }
-        if(selected===5){
+        if (selected === 5) {
             disableSelectedItem()
         }
     }
 
-    const DeleteSelectedItem=async()=>{
+    const DeleteSelectedItem = async () => {
 
     }
-    const copySelectedItem=async()=>{
+    const copySelectedItem = async () => {
 
-
-
-    }
-    const enableSelectedItem=async()=>{
 
 
     }
-    const disableSelectedItem=async()=>{
+    const enableSelectedItem = async () => {
+
+
+    }
+    const disableSelectedItem = async () => {
 
 
     }
@@ -75,17 +78,36 @@ const UpdateShippingReports:React.FC = () => {
 
     }, [])
 
-    const handelSubmit = async(e:any) => {
+    const handelStartDate = (value: any) => {
+        if (value === null) {
+            SetStartDate('')
+        }
+        //تغییرات روی تاریخ رو اینجا اعمال کنید
+        if (value instanceof DateObject) {
+            SetStartDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
+        }
+    }
+    const handelEndDate = (value: any) => {
+        if (value === null) {
+            SetEndDate('')
+        }
+        //تغییرات روی تاریخ رو اینجا اعمال کنید
+        if (value instanceof DateObject) {
+            SetEndDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
+        }
+    }
+
+    const handelSubmit = async (e: any) => {
         e.preventDefault();
         setLoading(true)
         const body = {
-            startDate, endDate, CompanyId
+            startDate, endDate, shippingCompanyId
         }
         try {
 
-            const{data,status}=await UpdateShippingReportByDate(body)
+            const { data, status } = await UpdateShippingReportByDate(body)
 
-            if (status===200) {
+            if (status === 200) {
                 toast.success("اطلاعات با موفقیت بروز رسانی شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -105,7 +127,7 @@ const UpdateShippingReports:React.FC = () => {
             }
 
         } catch (error) {
-
+            setLoading(false)
         }
 
 
@@ -122,170 +144,190 @@ const UpdateShippingReports:React.FC = () => {
         { Header: 'dTel', accessor: 'dTel' },
         { Header: 'wH1', accessor: 'wH1' },
         { Header: 'many1', accessor: 'buyerUniqueId' },
-        { Header: 'netT', accessor: 'netT'},
+        { Header: 'netT', accessor: 'netT' },
         { Header: 'kaCode', accessor: 'kaCode' },
         { Header: 'kra1', accessor: 'kra1' },
         { Header: 'kra2', accessor: 'kra2' },
-        { Header: 'ghComp', accessor: 'ghComp'},
-        { Header: 'tambar', accessor: 'tambar'},
-        { Header: 'dName', accessor: 'dName'},
-        { Header: 'dFam', accessor: 'dFam'},
-        { Header: 'tplk', accessor: 'tplk'},
-        { Header: 'barTime', accessor: 'barTime'},
-        { Header: 'plName', accessor: 'plName'},
-        { Header: 'tsp', accessor: 'tsp'},
-        { Header: 'ka_E_Code', accessor: 'ka_E_Code'},
-        { Header: 'tarGetName', accessor: 'tarGetName'},
-        { Header: 'ghErtebat', accessor: 'ghErtebat'},
-        { Header: 'kaGrp', accessor: 'kaGrp'},
-        { Header: 'barAdd', accessor: 'barAdd'},
-        { Header: 'grpName', accessor: 'grpName'},
-        { Header: 'ثبت', accessor:(d:any)=>{
+        { Header: 'ghComp', accessor: 'ghComp' },
+        { Header: 'tambar', accessor: 'tambar' },
+        { Header: 'dName', accessor: 'dName' },
+        { Header: 'dFam', accessor: 'dFam' },
+        { Header: 'tplk', accessor: 'tplk' },
+        { Header: 'barTime', accessor: 'barTime' },
+        { Header: 'plName', accessor: 'plName' },
+        { Header: 'tsp', accessor: 'tsp' },
+        { Header: 'ka_E_Code', accessor: 'ka_E_Code' },
+        { Header: 'tarGetName', accessor: 'tarGetName' },
+        { Header: 'ghErtebat', accessor: 'ghErtebat' },
+        { Header: 'kaGrp', accessor: 'kaGrp' },
+        { Header: 'barAdd', accessor: 'barAdd' },
+        { Header: 'grpName', accessor: 'grpName' },
+        {
+            Header: 'ثبت', accessor: (d: any) => {
 
-            let condition=(d.storedInDb?'ثبت شده':'ثبت نشده')
-            return(`${condition}`)
+                let condition = (d.storedInDb ? 'ثبت شده' : 'ثبت نشده')
+                return (`${condition}`)
 
-        },Cell:(row:any)=>((row.row.original.storedInDb)?'ثبت شده':'ثبت نشده')},
+            }, Cell: (row: any) => ((row.row.original.storedInDb) ? 'ثبت شده' : 'ثبت نشده')
+        },
 
-   
 
-    ],[]);
+
+    ], []);
 
     const shippingCompanySelect = () => {
-        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
+        return (companies.map((data: any) => ({ label: data.name, value: data.id })))
     }
-const data=useMemo(()=>report,[report])
-const handelFrom=()=>{
-    setClicked(false)
-}
+    const data = useMemo(() => report, [report])
+    const handelFrom = () => {
+        setClicked(false)
+    }
 
-if(!clicked){
-    if (loading===false) {
-        return (
-            <div className='user-progress ' >
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                        <h5 >درخواست اطلاعات </h5>
-                        <p>در این بخش می توانید اطلاعات ارسال  را از باربری دریافت کنید.</p>
+    if (!clicked) {
+        if (loading === false) {
+            return (
+                <div className='user-progress ' >
+                    <div className='row'>
+                        <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                            <h5 >درخواست اطلاعات </h5>
+                            <p>در این بخش می توانید اطلاعات ارسال  را از باربری دریافت کنید.</p>
+                        </div>
+                    </div>
+                    <div className='row d-flex justify-content-center '>
+                        <div className='statbox widget-content widget-content-area'>
+
+                            <form className="form form-group">
+                                <div className="col mb-4  " style={{ position: 'relative' }}>
+                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
+                                    <div className='form-group '>
+                                        <DatePicker
+                                            calendar={persian}
+
+                                            locale={persian_fa}
+                                            style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                            value={startDate}
+                                            onChange={handelStartDate}
+                                        />
+
+                                    </div>
+                                </div>
+                                <div className="col mb-4 " >
+                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
+                                    <div className='form-group '>
+                                        <DatePicker
+
+                                            calendar={persian}
+
+                                            locale={persian_fa}
+                                            style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                            value={endDate}
+                                            onChange={handelEndDate}
+                                        />
+
+                                    </div>
+
+
+                                </div>
+                                <div className="col  form-input mb-4">
+                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> نام باربری </label>
+
+                                    <Select
+                                        placeholder="شرکت باربری"
+                                        options={shippingCompanySelect()}
+                                        maxMenuHeight={150}
+                                        onChange={(e: any) => {
+                                            setshippingCompanyId(e.value)
+                                            setDisable(false)
+
+                                        }}
+                                    />
+
+                                </div>
+                                <div className='row justify-content-between mt-5 mb-1'>
+
+                                    <div className='col-6 '>
+                                        <NavLink to='/admin/orderList' className="btn btn-danger float-left">بازگشت</NavLink>
+                                    </div>
+                                    <div className='col-6 '>
+                                        <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit}>تایید</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
                     </div>
                 </div>
-                <div className='row d-flex justify-content-center '>
-                    <div className='statbox widget-content widget-content-area'>
-
-                        <form className="form form-group">
-                            <div className="col mb-4  " style={{ position: 'relative' }}>
-                                <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> از تاریخ</label>
-                                <InputMask className=" start form-control opacityForInput  mb-4"  placeholder="تاریخ" value={startDate} onChange={(e:any) => { SetStartDate(e.target.value)
-                                    setDisable(false)} } />
-                            </div>
-                            <div className="col mb-4 " >
-                                <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
-
-                                <InputMask className=" end form-control opacityForInput  mb-4"  placeholder="تاریخ" value={endDate} onChange={(e:any) => {SetEndDate(e.target.value)
-                                    setDisable(false) }}  />
-
-
-                            </div>
-                            <div className="col  form-input mb-4">
-                                <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> نام باربری </label>
-
-                                <Select
-                                    placeholder="شرکت باربری"
-                                    options={shippingCompanySelect()}
-                                    maxMenuHeight={150}
-                                    onChange={(e:any) => {
-                                        setCompanyId(e.value)
-                                        setDisable(false)
-
-                                    }}
-                                />
-
-                            </div>
-                            <div className='row justify-content-between mt-5 mb-1'>
-
-                                <div className='col-6 '>
-                                    <NavLink to='/admin/orderList' className="btn btn-danger float-left">بازگشت</NavLink>
-                                </div>
-                                <div className='col-6 '>
-                                    <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit}>تایید</button>
-                                </div>
-                            </div>
-                        </form>
-
+            )
+        }
+        else {
+            return (
+                <div >
+                    <div style={{ position: 'fixed', top: '40%', left: '40%' }}>
+                        <p>دریافت اطلاعات ...</p>
+                        <FadeLoader loading={loading} color={color} />
                     </div>
-
-                </div>
-            </div>
-        )
+                </div>)
+        }
     }
     else {
-        return(
-            <div >
-                <div style={{ position: 'fixed', top: '40%', left: '40%' }}>
-                    <p>دریافت اطلاعات ...</p>
-                    <FadeLoader loading={loading} color={color} />
-                </div>
-            </div>)
-    }
-}
-else {
-if (report) {
-    const dataForExcel = data.map((item:any) => ({
-        'companyCode': item.companyCode,
-        'barDel': item.barDel,
-        'barDate': item.barDate,
-        'bar_n': item.bar_n,
-        'bar_n_s': item.bar_n_s,
-        'havNum':item.havNum,
-        'dTel': item.dTel,
-        'wH1': item.wH1,
-        'wH2': item.wH2,
-        'netT': item.netT,
-        'kaCode':item.kaCode,
-        'kra1': item.kra1,
-        'kra2':item.kra2,
-        'pish': item.pish,
-        'barArzesh': item.barArzesh,
-        'daryafti': item.daryafti,
-        'ghComp': item.ghComp,
-        'comp': item.comp,
-        'ghPaia':item.ghPaia,
-        'paia': item.paia,
-        'afzode': item.afzode,
-        'barBim': item.barBim,
-        'barBimAfzode': item.barBimAfzode,
-        'tambar': item.tambar,
-        'bor':item.bor,
-        'dName': item.dName,
-        'dFam': item.dFam,
-        'tplk': item.tplk,
-        'barTime': item.barTime,
-        'plName':item.plName,
-        'hazTakh': item.hazTakh,
-        'bargiriMab': item.bargiriMab,
-        'azA2': item.azA2,
-        'bus': item.bus,
-        'ka_E_Code': item.ka_E_Code,
-        'tarGetName':item.tarGetName,
-        'mbkhaal': item.mbkhaal,
-        'ghErtebat': item.ghErtebat,
-        'kaGrp': item.kaGrp,
-        'barAdd': item.barAdd,
-        'grpName': item.grpName,
-        'storedInDb':(item.storedInDb===true?'ثبت شده':'ثبت نشده'),
+        if (report) {
+            const dataForExcel = data.map((item: any) => ({
+                'companyCode': item.companyCode,
+                'barDel': item.barDel,
+                'barDate': item.barDate,
+                'bar_n': item.bar_n,
+                'bar_n_s': item.bar_n_s,
+                'havNum': item.havNum,
+                'dTel': item.dTel,
+                'wH1': item.wH1,
+                'wH2': item.wH2,
+                'netT': item.netT,
+                'kaCode': item.kaCode,
+                'kra1': item.kra1,
+                'kra2': item.kra2,
+                'pish': item.pish,
+                'barArzesh': item.barArzesh,
+                'daryafti': item.daryafti,
+                'ghComp': item.ghComp,
+                'comp': item.comp,
+                'ghPaia': item.ghPaia,
+                'paia': item.paia,
+                'afzode': item.afzode,
+                'barBim': item.barBim,
+                'barBimAfzode': item.barBimAfzode,
+                'tambar': item.tambar,
+                'bor': item.bor,
+                'dName': item.dName,
+                'dFam': item.dFam,
+                'tplk': item.tplk,
+                'barTime': item.barTime,
+                'plName': item.plName,
+                'hazTakh': item.hazTakh,
+                'bargiriMab': item.bargiriMab,
+                'azA2': item.azA2,
+                'bus': item.bus,
+                'ka_E_Code': item.ka_E_Code,
+                'tarGetName': item.tarGetName,
+                'mbkhaal': item.mbkhaal,
+                'ghErtebat': item.ghErtebat,
+                'kaGrp': item.kaGrp,
+                'barAdd': item.barAdd,
+                'grpName': item.grpName,
+                'storedInDb': (item.storedInDb === true ? 'ثبت شده' : 'ثبت نشده'),
 
-    }))
+            }))
 
-    return (
-    <div className=" statbox widget-content widget-content-area ">
-        <div>
-            <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
+            return (
+                <div className=" statbox widget-content widget-content-area ">
+                    <div>
+                        <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
 
-            <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}    bulkJob={getBulkJob}/>
+                        <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
 
 
-            {/*rowProps={row => ({
+                        {/*rowProps={row => ({
 
                 style: {
                     backgroundColor: row.values.ثبت === 'ثبت شده'? 'lightgreen': '#ff00003b',
@@ -293,25 +335,26 @@ if (report) {
                     cursor: "pointer"
                 }
             })}     نمیتونیم ازین استفاده کنیم باید یه فکر دیگه بکنیم*/}
-        </div>
-        <div className="d-flex justify-content-end">
-            <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
-        </div>
-    </div>
+                    </div>
+                    <div className="d-flex justify-content-end">
+                        <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
+                    </div>
+                </div>
 
-)}else {
-    return(
-        <div className=" statbox widget-content widget-content-area rounded">
-            <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
+            )
+        } else {
+            return (
+                <div className=" statbox widget-content widget-content-area rounded">
+                    <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-            <div className='text-center mt-5'>
-                <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
-            </div>
-        </div>
-    )
-}
+                    <div className='text-center mt-5'>
+                        <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                    </div>
+                </div>
+            )
+        }
 
 
-}
+    }
 }
 export default UpdateShippingReports

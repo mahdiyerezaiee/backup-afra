@@ -8,7 +8,7 @@ import {validatAlpha} from "../../../Utils/validitionParams";
 
 
 
-const NewSupplier = () => {
+const NewSupplier:React.FC = () => {
     const[name,Setname]=useState();
     const navigate=useNavigate();
     const [loading, setLoading] = useState(false);
@@ -74,7 +74,7 @@ const NewSupplier = () => {
 
                                     <div className=" mb-4 textOnInput">
                                         <label >نام </label>
-                                        <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="نام تامیین کننده" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                        <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="نام تامیین کننده" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
                                         {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
 

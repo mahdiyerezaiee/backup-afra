@@ -9,15 +9,21 @@ import FadeLoader from 'react-spinners/FadeLoader'
 import MyTableBazargah  from "../../../Common/Shared/Form/MyTableBazargah";
 import {GetUsedBarBariReports} from "../../../services/reportService";
 import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import  Select  from 'react-select';
+import { GetUsedBarBariReportsCompanies } from './../../../services/reportService';
 
 
 const UsedBarBariReport:React.FC = () => {
+
+    const companies=useSelector((state:RootState)=>state.companies)
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
     const [clicked, SetClicked] = useState(false)
     const[selectedRows,setSelectedRows]=useState([])
-
+    const[companyId,SetCompanyId]=useState<any>()
     const[show,SetShow]=useState(false);
     const[disable,setDisable]=useState(false);
 
@@ -64,6 +70,7 @@ const UsedBarBariReport:React.FC = () => {
     const handelSubmit = async (event:any) => {
         setLoading(true)
         event.preventDefault();
+        if(companies.length===1){
         try {
             const { data, status } = await GetUsedBarBariReports(StartDate, EndDate);
             if (status === 200) {
@@ -75,7 +82,22 @@ const UsedBarBariReport:React.FC = () => {
         } catch (error) {
             console.log(error);
         }
+    }
+    else{
 
+        try {
+            const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate,companyId);
+            if (status === 200) {
+
+                SetResponse(data.result.barBariUsedReports);
+                SetClicked(true);
+                setLoading(false)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
     }
     const handelFrom=()=>{
         SetClicked(false)
@@ -92,7 +114,9 @@ const UsedBarBariReport:React.FC = () => {
 
 
     });
-
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
+    }
     const columns = useMemo(() => [
         { Header: 'کد باربری', accessor: 'companyCode' },
         {Header:'تاریخ بارنامه',accessor:'barDate'},
@@ -110,6 +134,8 @@ const UsedBarBariReport:React.FC = () => {
         { Header: 'نام تحویل گیرنده', accessor: 'tarGetName' },
         { Header: ' شماره قرارداد', accessor: 'ghErtebat' },
         { Header: 'آدرس بارنامه', accessor: 'barAdd'},],[]);
+    let defaultValue:any=CompaniesIDs()[0]
+
     const data = useMemo(() => Response,[Response]);;
     console.log(data)
 
@@ -128,6 +154,30 @@ const UsedBarBariReport:React.FC = () => {
 
 
                             <form >
+                            {companies?
+                            <div className="col mb-4  form-group textOnInput">
+
+                                <label> شرکت</label>
+                                <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={CompaniesIDs()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={(e:any) => {
+
+
+                                        SetCompanyId(e.value)
+
+
+                                    }
+
+                                    }
+
+                                />
+
+
+                            </div>:''}
                                 <div className='row'>
                                     <div className=" col ">
                                         <div className=" mb-4 " style={{ position: 'relative' }}>

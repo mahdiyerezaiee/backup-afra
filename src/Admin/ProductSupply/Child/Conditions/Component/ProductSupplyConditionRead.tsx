@@ -5,13 +5,16 @@ import {PaymentStructureEnums} from "../../../../../Common/Enums/PaymentStructur
 import {AdditionalTypeId} from "../../../../../Common/Enums/AdditionalTypeIdEnums";
 import Modal from 'react-modal';
 import { Link } from "react-router-dom";
-import { GetCompanyChild } from './../../../../../services/companiesService';
-import { GetGroupWithCompany } from './../../../../../services/GroupService';
+import { GetCompanyChild } from '../../../../../services/companiesService';
+import { GetGroupWithCompany } from '../../../../../services/GroupService';
 
-const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick, handleDeleteClick, index}) => {
+interface Props{
+    activeHandler:any, contact:any, handleEditClick:any, handleDeleteClick:any, index:any
+}
+const ProductSupplyConditionReadOnly:React.FC<Props> = ({activeHandler, contact, handleEditClick, handleDeleteClick, index}) => {
     const [customerg, setCustomerg] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
-    const openModal = async (id) => {
+    const openModal = async () => {
         setIsOpen(true);
     }
     const closeModal = () => {
@@ -21,7 +24,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr = []
+        let finalArr:any = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(1, companies[i].id);
@@ -53,7 +56,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
     const paymentMethod = () => {
         return (PaymentStructureEnums.map(data => ({label: data.name, value: data.id})))
     }
-    const PaymentId = (id) => {
+    const PaymentId = (id:any) => {
         return (PaymentStructureEnums.filter(item => item.id === id).map(data => data.name))
 
     }
@@ -64,7 +67,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
         })))
 
     }
-    const additionalType = (id) => {
+    const additionalType = (id:any) => {
         return (AdditionalTypeId.filter(item => item.id === id).map(data => ({
             label: data.name,
             value: data.id
@@ -102,7 +105,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
                 className="text-center">
                 <ul className="table-controls">
 
-                    <li><Link onClick={(event) => handleEditClick(event, contact)} data-toggle="tooltip"
+                    <li><Link to='#' onClick={(event) => handleEditClick(event, contact)} data-toggle="tooltip"
                            data-placement="top"
                            data-title="ویرایش">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -111,7 +114,7 @@ const ProductSupplyConditionReadOnly = ({activeHandler, contact, handleEditClick
                             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                         </svg>
                     </Link></li>
-                    <li><Link onClick={() => handleDeleteClick(contact.id)} data-toggle="tooltip" data-placement="top"
+                    <li><Link to='#' onClick={() => handleDeleteClick(contact.id)} data-toggle="tooltip" data-placement="top"
                            data-title="حذف">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
