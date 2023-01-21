@@ -33,7 +33,7 @@ const UserList:React.FC = () => {
     const [FirstName, setFirstName] = useState(getDefault().FirstName)
     const [LastName, setLastName] = useState(getDefault().LastName)
     const [NationalCode, setNationalCode] = useState(getDefault().NationalCode)
-    const [organizations, SetOrganisations] = useState([]);
+    const [organizations, SetOrganisations] = useState<any>([]);
     const [userRole, setUserRole] = useState(getDefault().userRole)
     const [users, setUsers] = useState([]);
     const [organization, setOrganization] = useState([]);
@@ -62,7 +62,7 @@ const UserList:React.FC = () => {
 
 
     }
-
+ 
 
     const getOrganization = async () => {
         try {
@@ -77,9 +77,7 @@ const UserList:React.FC = () => {
         }
 
     }
-    useEffect(() => {
-        getOrganization()
-    }, [])
+
     let config = {
 
         headers: { 'Content-Type': 'application/json' },
@@ -205,16 +203,7 @@ const UserList:React.FC = () => {
     const close = () => {
         SetOpen(false);
     }
-    const getOrganizationName = async () => {
-        try {
-            const { data, status } = await GetAllOrganisationCode();
-            if (status === 200) {
-                setOrganization(data.result.organizationLists.values)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    
 
     console.log(Ids);
     const getCustomerGroups=async()=>{
@@ -262,8 +251,8 @@ const UserList:React.FC = () => {
     //     setCustomerG(finalArr);
     // }
     useEffect(() => {
+        getOrganization()
         getUsers();
-        getOrganizationName();
     
     }, [getData])
 
@@ -295,8 +284,12 @@ const UserList:React.FC = () => {
     useEffect(() => {
       
         if(Ids.length>0){
-        getCustomerGroups()}
+        getCustomerGroups()
+}
     }, [Ids])
+    let organiz=organizations
+    console.log(organiz);
+    
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
         { Header: 'نام کاربری', accessor: 'userName' }
@@ -321,12 +314,12 @@ const UserList:React.FC = () => {
         , { Header: 'کد ملی', accessor: 'nationalCode' }
         , {
             Header: 'شناسه ملی', accessor: (d:any) => {
-                let organizationss = organizations.filter((item:any) => item.id === d.organizationId).map((item:any) => item.nationalId)
+                let organizationss = organiz.filter((item:any) => item.id === d.organizationId).map((item:any) => item.nationalId)
                 return (`${organizationss}`)
             }, Cell: (row:any) => {
 
                 if (row.row.original.organizationId) {
-                    return (organizations.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.nationalId))
+                    return (organiz.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.nationalId))
 
                 }
                 else {
@@ -337,13 +330,13 @@ const UserList:React.FC = () => {
             }
         },
         {
-            Header: 'سازمان', accessor: d => {
-                let organizationss = organizations.filter((item:any) => item.id === d.organizationId).map((item:any) => item.name)
+            Header: 'سازمان', accessor: (d:any) => {
+                let organizationss = organiz.filter((item:any) => item.id === d.organizationId).map((item:any) => item.name)
                 return (`${organizationss}`)
             }, Cell: (row:any) => {
 
                 if (row.row.original.organizationId) {
-                    return (organizations.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.name))
+                    return (organiz.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.name))
 
                 }
                 else {
@@ -355,7 +348,7 @@ const UserList:React.FC = () => {
         },
 
         , {
-            Header: 'نقش کاربر', accessor: '', Cell: row => {
+            Header: 'نقش کاربر', accessor: '', Cell: (row:any) => {
                 const [roles, setRoles] = useState([]);
                 let userId = row.row.original.id
                 const getrole = async () => {
@@ -536,7 +529,7 @@ const UserList:React.FC = () => {
                 </ul>
             )
         }
-    ],[])
+    ],[organiz])
     const handelSearchFieldClear = () => {
         setGeData(true)
         getUsers()

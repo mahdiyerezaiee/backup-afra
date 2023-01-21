@@ -21,7 +21,7 @@ import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import { GetProducts } from '../../../services/productService';
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 
 const customStyles = {
     content: {
@@ -38,7 +38,7 @@ const customStyles = {
     }
 };
 
-const ProductSupply = () => {
+const ProductSupply:React.FC = () => {
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [companies, setCompanies] = useState([])
@@ -50,8 +50,8 @@ const ProductSupply = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [bulkStatusModal, SetBulkStatusModal] = useState(false)
     const [id, setId] = useState(0)
-    const [stateSuccess, SetStateSuccess] = useState('')
-    const [stateError, SetStateError] = useState('')
+    const [stateSuccess, SetStateSuccess] = useState<any>('')
+    const [stateError, SetStateError] = useState<any>('')
     const [open, SetOpen] = useState(false);
     const [CreateDate, setCreateDate] = useState(getDefault().CreateDate)
     const [CottageCode, setCottageCode] = useState(getDefault().CottageCode);
@@ -59,14 +59,14 @@ const ProductSupply = () => {
     const param = { PageSize, PageNumber }
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items ? items : ''
 
 
     }
     const params = { CreateDate, CottageCode, ProductId }
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
 
 
@@ -142,16 +142,16 @@ const ProductSupply = () => {
         }
 
     }
-    const productForSelect = () => {
+    const productForSelect:any = () => {
         if (products) {
-            return (products.map(data => ({ label: data.name, value: data.id })))
+            return (products.map((data:any) => ({ label: data.name, value: data.id })))
         }
         else {
             return null
         }
     }
     const paymentMethod = () => {
-        return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
+        return (PaymentStructureEnums.map((data:any) => ({ label: data.name, value: data.id })))
     }
 
     const close = () => {
@@ -160,7 +160,7 @@ const ProductSupply = () => {
     const [selectedRows, setSelectedRows] = useState([])
     let arrayOfSelectedData = [];
 
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -206,7 +206,7 @@ const ProductSupply = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, id: 0, active: true, createDate: new Date() } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -242,7 +242,7 @@ const ProductSupply = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: true } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: true } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -277,7 +277,7 @@ const ProductSupply = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: false } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: false } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -312,9 +312,9 @@ const ProductSupply = () => {
 
     }
 
-    const getSelectedData = (data) => {
+    const getSelectedData = (data:any) => {
 
-        arrayOfSelectedData = data.map(item => item.original);
+        arrayOfSelectedData = data.map((item:any) => item.original);
 
 
         return (arrayOfSelectedData)
@@ -381,14 +381,14 @@ const ProductSupply = () => {
         getProduct();
     }, [getData])
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editproductsupply/${id}`)
     }
     const navigate = useNavigate()
     const formHandler = () => {
         navigate("/admin/newProductsupply")
     }
-    const openModal = (id) => {
+    const openModal = (id:number) => {
         setIsOpen(true);
         setId(id)
 
@@ -408,7 +408,7 @@ const ProductSupply = () => {
 
     });
 
-    const handleChangeExpire = (value) => {
+    const handleChangeExpire = (value:any) => {
         if (value === null) {
             setCreateDate('')
 
@@ -425,33 +425,33 @@ const ProductSupply = () => {
         { Header: ' شناسه عرضه', accessor: 'name' },
         { Header: 'محصول', accessor: 'product.name' },
         { Header: 'انبار', accessor: 'wareHouse.wareHouseName' },
-        , { Header: 'قیمت', accessor: d => `${d.price}`, Cell: row => (formater.format(row.row.original.price)) }
+        , { Header: 'قیمت', accessor: (d:any) => `${d.price}`, Cell: (row:any) => (formater.format(row.row.original.price)) }
         , {
-            Header: 'واحد ', accessor: d => {
+            Header: 'واحد ', accessor: (d:any) => {
                 let MeasureUnit = MeasureUnitSample.filter(item => item.id === d.product.measureUnitId).map(item => item.name)
                 return (`${MeasureUnit}`)
-            }, Cell: row => {
+            }, Cell: (row:any) => {
 
                 return (MeasureUnitSample.filter(item => item.id === row.row.original.product.measureUnitId).map(item => item.name))
             }
         },
-        { Header: 'مقدار عرضه', accessor: '', Cell: row => (formater.format(row.row.original.quantity)) },
-        { Header: 'مقدار خریداری شده', accessor: 'orderedQuantity', Cell: row => (formater.format(row.row.original.orderedQuantity)) },
-        { Header: 'مقدار مانده', accessor: 'remainedQuantity', Cell: row => (formater.format(row.row.original.remainedQuantity)) },
+        { Header: 'مقدار عرضه', accessor: '', Cell: (row:any) => (formater.format(row.row.original.quantity)) },
+        { Header: 'مقدار خریداری شده', accessor: 'orderedQuantity', Cell: (row:any) => (formater.format(row.row.original.orderedQuantity)) },
+        { Header: 'مقدار مانده', accessor: 'remainedQuantity', Cell: (row:any) => (formater.format(row.row.original.remainedQuantity)) },
         { Header: 'شماره کوتاژ', accessor: 'cottageCode' },
         {
-            Header: 'تاریخ اعتبار', accessor: 'date', Cell: row => {
+            Header: 'تاریخ اعتبار', accessor: 'date', Cell: (row:any) => {
                 return (new Date(row.row.original.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }))
             }
         },
         {
-            Header: 'توضیحات', accessor: 'comment', Cell: row => {
+            Header: 'توضیحات', accessor: 'comment', Cell: (row:any) => {
                 return (row.row.original.comment.substring(0, 20))
             }
         },
         {
             Header: 'فعال', accessor: '', isVisible: true,
-            disableFilters: true, Cell: row => {
+            disableFilters: true, Cell: (row:any) => {
                 const [active, setActive] = useState(row.row.original.active)
                 const id = row.row.original.id
 
@@ -502,7 +502,7 @@ const ProductSupply = () => {
 
                 }
 
-                const activeHandler = async (e) => {
+                const activeHandler = async () => {
                     setActive(!active)
 
                     try {
@@ -556,7 +556,7 @@ const ProductSupply = () => {
                     </button>
 
 
-                    <button className="p-0 border-0  non-hover  bg-transparent edit-btn" onClick={() => openModal(row.row.original.id)} href="#" data-toggle="tooltip" data-placement="top" title="حذف">
+                    <button className="p-0 border-0  non-hover  bg-transparent edit-btn" onClick={() => openModal(row.row.original.id)}  data-toggle="tooltip" data-placement="top" title="حذف">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                             viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
@@ -574,12 +574,12 @@ const ProductSupply = () => {
 
                 </ul>
             )
-        }])
+        }],[])
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }
 
-    const data = useMemo(() => productSupply);
+    const data = useMemo(() => productSupply,[productSupply]);
     const handelSearchFieldClear = async () => {
         setGeData(true)
         getProductSupply()
@@ -593,7 +593,7 @@ const ProductSupply = () => {
 
     }
     if (productSupply) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'محصول': item.product.name,
 
@@ -635,7 +635,7 @@ const ProductSupply = () => {
                             <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
                                 <label> کد کوتاژ</label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد کوتاژ" value={CottageCode} onChange={e => setCottageCode(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد کوتاژ" value={CottageCode} onChange={(e:any) => setCottageCode(e.target.value)} />
                             </div>
 
 
@@ -648,7 +648,7 @@ const ProductSupply = () => {
 
                                         placeholder='کالا'
                                         options={productForSelect()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setProducId(e.value)
 
 
@@ -666,7 +666,7 @@ const ProductSupply = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
@@ -674,7 +674,7 @@ const ProductSupply = () => {
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 
@@ -728,7 +728,7 @@ const ProductSupply = () => {
                                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                            <p> آیا مطمئنید  عرضه محصول {productSupply && productSupply.filter(item => item.id === id).map(item => item.product.name)}   </p>
+                            <p> آیا مطمئنید  عرضه محصول {productSupply && productSupply.filter((item:any) => item.id === id).map((item:any) => item.product.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -743,7 +743,7 @@ const ProductSupply = () => {
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف عرضه جدید</button>
 
-                        <MyTable PageNumber={PageNumber} PageSize={PageSize} getDataBySearch={getDataByPage} setPageSize={setPageSize} total={totalCount} setPageNumber={setPageNumber} columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        <MyTable PageNumber={PageNumber} PageSize={PageSize} getDataBySearch={getDataByPage} setPageSize={setPageSize} total={totalCount} setPageNumber={setPageNumber} columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>
@@ -804,7 +804,7 @@ const ProductSupply = () => {
 
                                         placeholder='کالا'
                                         options={productForSelect()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setProducId(e.value)
 
 
@@ -822,7 +822,7 @@ const ProductSupply = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
@@ -830,7 +830,7 @@ const ProductSupply = () => {
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 
