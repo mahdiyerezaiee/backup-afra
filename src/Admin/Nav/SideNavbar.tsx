@@ -18,7 +18,7 @@ interface Props{
     collapsed:boolean
 }
 
-const SideNavbar: React.FC<Props> = () => {
+const SideNavbar: React.FC = () => {
     
 
    
@@ -114,7 +114,7 @@ const SideNavbar: React.FC<Props> = () => {
                     <MenuItem onClick={handleHeaderClick}  ><NavLink to='ShippingReport'>حواله های باربری </NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}  ><NavLink to='UsedBarBariReports'>بارگیری </NavLink> </MenuItem>
                     <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomersReports'>  مشتریان</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='OrdersReports'>سفارشات</NavLink> </MenuItem>
+                    {/* <MenuItem onClick={handleHeaderClick}  > <NavLink to='OrdersReports'>سفارشات</NavLink> </MenuItem> */}
                     <MenuItem onClick={handleHeaderClick}  > <NavLink to='ProceessAttachments'>اعتبار و اسناد</NavLink> </MenuItem>
 
                 </SubMenu>
