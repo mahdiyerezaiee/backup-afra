@@ -41,7 +41,7 @@ const WareHouseList:React.FC = () => {
     const [modalIsOpen2, setIsOpen2] = useState(false);
     const[selectedRows,setSelectedRows]=useState([])
     const[open,SetOpen]=useState(false);
-    const [wareTypes, setWareTypes] = useState([])
+    const [wareTypes, setWareTypes] = useState<any>([])
 
     const getTypesware = async () => {
 
@@ -70,10 +70,7 @@ const WareHouseList:React.FC = () => {
 
     }
 
-    useEffect(() => {
-        getTypesware()
-
-    }, [])
+   
 
     const close = () => {
         SetOpen(false);
@@ -257,7 +254,9 @@ const WareHouseList:React.FC = () => {
 
 
     useEffect(() => {
+        getTypesware()
         getWareHouses();
+
     }, [])
     
     const navigate = useNavigate()
@@ -303,16 +302,20 @@ const WareHouseList:React.FC = () => {
 
 
     });
+   let groupsname=wareTypes
+    
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
         { Header: 'نام', accessor: 'name' },
         {
             Header: 'گروه انبار', accessor: (d:any)=>{
-                let WareHosueType = wareTypes.filter((item:any) => item.id ==d.groupId).map((item:any) => item.name)
-                return(`${WareHosueType}`)
+                
+                let WareHosueType = groupsname.filter((item:any) => item.id ==d.groupId).map((item:any) => item.name)
+                return(`${WareHosueType }`)
             }, Cell: (row:any) => {
-
-                String(wareTypes.filter((item:any) => item.id ==row.row.original.groupId).map((item:any) => item.name))
+              
+                
+               return( groupsname.filter((item:any) => item.id ==row.row.original.groupId).map((item:any) => item.name))
 
 
             }
@@ -394,8 +397,8 @@ const WareHouseList:React.FC = () => {
                     </ul>
                 )
             }
-        }],[])
-    const data = useMemo(() => warehouse,[warehouse]);
+        }],[groupsname])
+    const data = useMemo(() => warehouse,[warehouse,groupsname]);
 
     if(warehouse && warehouse.length >0){
 

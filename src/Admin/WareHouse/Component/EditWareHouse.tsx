@@ -234,7 +234,7 @@ const EditWareHouse:React.FC = () => {
 
 
                             </div>
-                            <div className="mb-4 textOnInput selectIndex">
+                            <div className="mb-4 textOnInput ">
 
                                 <label>گروه انبار</label>
                                
