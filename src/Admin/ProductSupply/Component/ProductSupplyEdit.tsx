@@ -15,24 +15,24 @@ import {Field, Form, Formik} from "formik";
 import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
 
 
-const ProductSupplyEdit = () => {
+const ProductSupplyEdit:React.FC = () => {
     const params = useParams()
     const [, forceUpdate] = useState();
 
     const navigate = useNavigate();
     const [Productwarehouse, setProductwarehouse] = useState([]);
     const [products, setProducts] = useState([]);
-    const [quantity, setQuantity] = useState('');
+    const [quantity, setQuantity] = useState<any>('');
     const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState<any>('');
     const [comment, setComment] = useState('');
-    const [productId, setProductId] = useState('');
+    const [productId, setProductId] = useState<any>('');
     const [productIdItem, setProductIdItem] = useState(0);
     const [measureUnitId, setmeasureUnitId] = useState(0);
     const [productWareHouseId, setproductWareHouseId] = useState(0);
     const [endDate, setendDate] = useState(new Date())
-    const [warHouseName, setWarHouseName] = useState('');
-    const [warHouseId, setWarHouseId] = useState(0);
+    const [warHouseName, setWarHouseName] = useState<any>('');
+    const [warHouseId, setWarHouseId] = useState<any>();
     const[createDate,setCreateDate]=useState(new Date());
     const [active, setActive] = useState(true);
     const [cottageCode, setcottageCode] = useState('');
@@ -79,7 +79,7 @@ const ProductSupplyEdit = () => {
         }
 
     }
-    const Prodcutware = async (id) => {
+    const Prodcutware = async (id:any) => {
 
         try {
             const {data, status} = await GetProductWareHouses(id);
@@ -106,7 +106,7 @@ const ProductSupplyEdit = () => {
 
 
     },[productId])
-    const ProductMeasure = async (id) => {
+    const ProductMeasure = async () => {
         const {data, status} = await getEditProduct(productValue[0].id);
         if (status === 200) {
 
@@ -115,23 +115,23 @@ const ProductSupplyEdit = () => {
 
     }
 
-    const productCombo = () => {
-        return (products.map(data => ({label: data.name, value: data.id})))
+    const productCombo:any = () => {
+        return (products.map((data:any) => ({label: data.name, value: data.id})))
     }
     const product = () => {
-        return (products.filter(item => item.id === productId).map(data => ({label: data.name, id: data.id})))
+        return (products.filter((item:any) => item.id === productId).map((data:any) => ({label: data.name, id: data.id})))
     }
-    let productValue=product()
+    let productValue:any=product()
 
-    const wareCombo = () => {
+    const wareCombo:any = () => {
 
-        return (Productwarehouse.filter(data => data.id !== 0).map(data => ({
+        return (Productwarehouse.filter((data:any) => data.id !== 0).map((data:any) => ({
             label: data.wareHouseName,
             value: data.id
         })))
     }
     const WareHouse = () => {
-        return (Productwarehouse.filter(data => data.id === productWareHouseId).map(data => ({
+        return (Productwarehouse.filter((data:any) => data.id === productWareHouseId).map((data:any) => ({
             label: data.wareHouseName,
             id: data.wareHouseId
         })))
@@ -139,7 +139,7 @@ const ProductSupplyEdit = () => {
     }
 
 
-    const handleChangeExpire = (value) => {
+    const handleChangeExpire = (value:any) => {
 
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
@@ -153,7 +153,7 @@ const ProductSupplyEdit = () => {
     const handelSubmit = async () => {
         setLoading(true)
         const getwareId = () => {
-            return Productwarehouse.filter(data => data.id !== 0).map(data => data.id)[0]
+            return Productwarehouse.filter((data:any) => data.id !== 0).map((data:any) => data.id)[0]
         }
 
         const body = {
@@ -203,7 +203,7 @@ const ProductSupplyEdit = () => {
         }
 
     }
-    const handelNavigate = (e) => {
+    const handelNavigate = (e:any) => {
         e.preventDefault()
         navigate(-1)
     }
@@ -263,7 +263,7 @@ const ProductSupplyEdit = () => {
                                                 // placeholder='کالا'
                                                 className='opacityForInput border-danger'
                                                 options={productCombo()}
-                                                onChange={e => {
+                                                onChange={(e:any) => {
                                                     setProductId(e.value)
                                                     Prodcutware(e.value)
                                                 }}
@@ -276,10 +276,9 @@ const ProductSupplyEdit = () => {
 
                                         className='opacityForInput '
                                         options={productCombo()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setProductId(e.value)
                                             Prodcutware(e.value)
-                                            ProductMeasure(productValue[0].id)
 
                                         }}
                                     />)}
@@ -291,12 +290,11 @@ const ProductSupplyEdit = () => {
                                     <label>انبار</label>
                                     <Select
 
-                                        value={{label:warHouseName,value:warHouseId}}
                                         options={wareCombo()}
                                         defaultValue={WareHouse()}
                                         placeholder="انبار"
 
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setproductWareHouseId(e.value)
 
                                         }}
@@ -314,7 +312,7 @@ const ProductSupplyEdit = () => {
                             <div className='form-row'>
                                 <div className='col-12 mb-4'>
                                     <label > شناسه عرضه</label>
-                                    <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={e => {
+                                    <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => {
                                         setName(e.target.value)
 
                                     }} />
@@ -323,7 +321,7 @@ const ProductSupplyEdit = () => {
                                 </div>
                                 <div className="col-6">
                                     <label >شماره کوتاژ</label>
-                                    <Field  validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={e => {
+                                    <Field  validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={(e:any) => {
                                         setcottageCode(e.target.value)
 
                                     }} />
@@ -333,11 +331,11 @@ const ProductSupplyEdit = () => {
                                 <div className="col-6">
                                     <label >مقدار عرضه</label>
                                     <Field  validate={validatNumber} name="quantity"  type="text" className="form-control opacityForInput" value={formatter.format(quantity)}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setQuantity(Number(e.target.value.replaceAll("," ,"")))
 
                                             }} />
-                                    {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
+                                    {errors.quantity && touched.quantity && <div className="text-danger">{String(errors.quantity)}</div>}
                                 </div>
 
                             </div></div>
@@ -347,11 +345,11 @@ const ProductSupplyEdit = () => {
                                         <div className="col-6">
                                             <label >قیمت</label>
                                             <Field  validate={validatNumber} name="price" type="text" className="form-control opacityForInput" value={formatter.format(price)}
-                                                    onChange={e => {
+                                                    onChange={(e:any) => {
                                                         setPrice(Number(e.target.value.replaceAll(",","")))
 
                                                     }} />
-                                            {errors.price && touched.price && <div className="text-danger">{errors.price}</div>}
+                                            {errors.price && touched.price && <div className="text-danger">{String(errors.price)}</div>}
 
                                         </div>
 
@@ -378,7 +376,7 @@ const ProductSupplyEdit = () => {
                                 <div className="form-group mb-4 textOnInput">
                                     <label >توضیحات</label>
 
-                                    <Field  validate={validatNumber} name="comment"  as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
+                                    <Field  validate={validatNumber} name="comment"  as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={(e:any) => {
                                         setComment(e.target.value)
 
                                     }} />

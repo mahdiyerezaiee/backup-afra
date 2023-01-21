@@ -536,7 +536,7 @@ const ProductList:React.FC = () => {
                     </ul>
                 )
             }
-        }],[])
+        }],[productG])
     const CompaniesIDs = () => {
         return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }

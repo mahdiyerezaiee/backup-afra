@@ -857,7 +857,7 @@ const OrderList :React.FC= () => {
                 </div>
 
             )
-        }],[])
+        }],[organizations])
 
 
     const data = useMemo(() => order,[order]);
