@@ -16,6 +16,13 @@
 .css-1097eso{
     background-color: transparent!important;
 }
+.css-1nzbc76{
+  position: fixed!important;
+}
+.css-1nzbc76{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .ps-sidebar-root {
   color: #6e82a5;
   height: calc(100vh - 100px);
@@ -25,7 +32,7 @@
   min-width: 230px;
   text-align: left;
   transition: width, left, right, 0.3s;
-  position: relative;
+  position: fixed;
   box-shadow: 3px -13px 8px 0px rgb(0 0 0);
   z-index: 1009; }
 .css-ewdv3l {background-color:transparent!important;}
@@ -110,7 +117,50 @@
     overflow-y: auto!important;
     overflow-x: hidden!important;
   }
+@media (max-width: 992px) {
+  .ps-sidebar-root{
+    color: #6e82a5;
+    height: calc(100vh - 30px);
+    width: 280px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    min-width: 200px;
+    text-align: left;
+    transition: width, left, right, 0.3s;
+    position: fixed;
+    box-shadow: 3px -13px 8px 0px rgb(0 0 0);
+    z-index: 1009;
+  }
+  .ps-sidebar-root > .css-dip3t8 {
+    background: #fafafa;
+
+    /*overflow: hidden!important;*/
+    /*margin-top: 80px;*/
+    z-index: 101; }
+  .ps-sidebar-root.lg {
+    position: fixed;
+    left: -270px; }
+  .ps-sidebar-root.lg.ps-collapsed  {
+    left: -80px; }
+  .ps-sidebar-root.lg.toggled {
+    left: 0; }
+  .ps-sidebar-root.lg.toggled .overlay {
+    display: block; }
+  .ps-sidebar-root.lg.ps-rtl  {
+    left: auto;
+    right: -270px; }
+  .ps-sidebar-root.lg.ps-rtl .ps-collapsed  {
+    left: auto;
+    right: -80px; }
+  .ps-sidebar-root.lg.ps-rtl .toggled {
+    left: auto;
+    right: 0; } }
   @media (max-width: 600px) {
+    .css-vj11vy{
+      height: calc(100vh - 30px);
+      overflow-y: auto;
+
+    }
     .ps-sidebar-root.ps-rtl  .pro-menu .ps-menuitem-root  > .ps-menu-button  {
       margin-top: 2%!important;
       margin-bottom: 1%!important;
@@ -121,18 +171,18 @@
       min-width: 0!important;
     }
     .ps-sidebar-root > .css-dip3t8 {
-      margin-top: 80px;
+      /*margin-top: 80px;*/
       }
     .ps-sidebar-root {
       color: #6e82a5;
       height: calc(100vh - 30px);
       width: 280px;
-      overflow-y: auto!important;
-      overflow-x: hidden!important;
+      overflow-y: auto;
+      overflow-x: hidden;
       min-width: 200px;
       text-align: left;
       transition: width, left, right, 0.3s;
-      position: relative;
+      position: fixed;
       box-shadow: 3px -13px 8px 0px rgb(0 0 0);
       z-index: 1009; }
     .ps-sidebar-root.xs {
@@ -190,44 +240,6 @@
           left: auto;
           right: -80px; }
         .ps-sidebar-root.md.ps-rtl .toggled {
-          left: auto;
-          right: 0; } }
-  @media (max-width: 992px) {
-    .ps-sidebar-root{
-      color: #6e82a5;
-      height: calc(100vh - 30px);
-      width: 280px;
-      overflow-y: hidden!important;
-      overflow-x: hidden!important;
-      min-width: 200px;
-      text-align: left;
-      transition: width, left, right, 0.3s;
-      position: relative;
-      box-shadow: 3px -13px 8px 0px rgb(0 0 0);
-      z-index: 1009;
-    }
-    .ps-sidebar-root > .css-dip3t8 {
-      background: #fafafa;
-
-overflow: hidden!important;
-      margin-top: 80px;
-      z-index: 101; }
-    .ps-sidebar-root.lg {
-      position: fixed;
-      left: -270px; }
-      .ps-sidebar-root.lg.ps-collapsed  {
-        left: -80px; }
-      .ps-sidebar-root.lg.toggled {
-        left: 0; }
-        .ps-sidebar-root.lg.toggled .overlay {
-          display: block; }
-      .ps-sidebar-root.lg.ps-rtl  {
-        left: auto;
-        right: -270px; }
-        .ps-sidebar-root.lg.ps-rtl .ps-collapsed  {
-          left: auto;
-          right: -80px; }
-        .ps-sidebar-root.lg.ps-rtl .toggled {
           left: auto;
           right: 0; } }
   @media (max-width: 1300px) {
