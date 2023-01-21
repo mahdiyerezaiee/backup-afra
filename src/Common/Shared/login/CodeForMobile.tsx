@@ -142,7 +142,7 @@ const CodeForMobile:React.FC = () => {
                                 <OtpInput
 
                                     containerStyle={{ display: 'flex' }}
-                                    inputStyle={{  width: "3rem"}}
+                                    inputStyle={{  width: ""}}
                                     value={Code}
                                     numInputs={5}
                                     shouldAutoFocus={true}

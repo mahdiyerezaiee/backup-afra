@@ -57,7 +57,7 @@ const ReportBlock = () => {
 
                 ReportEntityStyle.map(i => i.id === item.entityTypeId ?
 
-                    < div className="col-md-6 col-lg-2 mb-3 mr-2 " key={i.id}>
+                    <div className="col-lg-2 col-md-4 col-sm-4 mb-3 mr-2 " key={i.id}>
 
                         <div   className="" style={{ zIndex: '1', position: 'relative', animation:  "changeRight 1s "  }} >
                             <NavLink to={i.path}>

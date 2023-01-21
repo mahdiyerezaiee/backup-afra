@@ -154,7 +154,7 @@ code {
   flex-grow: 8;
   /*margin-top: 80px;*/
   margin-bottom: 0;
-  margin-right: 6px;
+  margin-right: 85px;
   margin-left: -23px;
   -webkit-transition: .3s ease all;
   transition: .3s ease all; }
@@ -1224,8 +1224,9 @@ code {
   .auth{width: 288px!important;}
   .auth img{ display: none!important;}
   .auth .btn-primary{
+    margin: 0;
 padding: 7px!important;
     font-size: 10px;
-width: 120px;
+width: 108px;
   }
 }
