@@ -6,7 +6,7 @@ import {ClipLoader} from "react-spinners";
 import { Formik, Form, Field } from 'formik';
 import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
-const NewOrganizaion = () => {
+const NewOrganizaion:React.FC = () => {
     const [companyName, setcompanyName] = useState('');
     const [companyRegister, setcompanyRegister] = useState('');
     const [nationalId, SetnationalId] = useState('');
@@ -90,7 +90,7 @@ setLoading(false)
 
                             <label >شماره ملی شرکت</label>
                             <div className='form-row justify-content-center'>
-                                <Field validate={validatNumber} type="text" className="form-control opacityForInput col" name="nationalId" value={nationalId} onChange={(e) => { SetnationalId(e.target.value); }} placeholder="12345678912" />
+                                <Field validate={validatNumber} type="text" className="form-control opacityForInput col" name="nationalId" value={nationalId} onChange={(e:any) => { SetnationalId(e.target.value); }} placeholder="12345678912" />
 
 
                             </div>
@@ -102,7 +102,7 @@ setLoading(false)
                         <div className="form-group mb-4 textOnInput ">
                             <label >نام شرکت</label>
                             <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={companyName}
-                                onChange={(e) => {
+                                onChange={(e:any) => {
                                     setcompanyName(e.target.value)
 
                                 }} placeholder="نام شرکت" />
@@ -113,7 +113,7 @@ setLoading(false)
 
                                 <div className="form-group mb-4 textOnInput ">
                             <label >شماره ثبت</label>
-                            <Field validate={validatNumber} name="registrationNumber" type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e) => {
+                            <Field validate={validatNumber} name="registrationNumber" type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e:any) => {
                                 setcompanyRegister(e.target.value)
 
                             }} placeholder="شماره ثبت" />

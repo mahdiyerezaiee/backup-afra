@@ -27,8 +27,9 @@ import OrderEditList from "./orderEditList";
 import { PaymentStatusEnums } from "../../../Common/Enums/PaymentStatus";
 import { toast } from "react-toastify";
 import { OverDueEnum } from "../../../Common/Enums/overDueEnum";
-import { GetCompanyChild } from './../../../services/companiesService';
-import { GetOrderDetailsAdmin } from './../../../services/orderService';
+import { GetCompanyChild } from '../../../services/companiesService';
+import { GetOrderDetailsAdmin } from '../../../services/orderService';
+import { RootState } from "../../../store";
 
 
 const customStyles = {
@@ -47,15 +48,15 @@ const customStyles = {
 
 }
 
-const OrderList = () => {
+const OrderList :React.FC= () => {
     const location = useLocation();
 
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
 
     const [orderId, setOrderId] = useState(0)
-    let FilnalArr = [];
-    const roles = useSelector(state => state.roles)
+    let FilnalArr:any = [];
+    const roles = useSelector((state:RootState) => state.roles)
     const Navigate = useNavigate()
     const [selectedRows, setSelectedRows] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -66,8 +67,8 @@ const OrderList = () => {
     const [stateError, SetStateError] = useState(0)
     const [open, SetOpen] = useState(false);
     const [overDue, SetoverDue] = useState(location.state ? true : getDefault().overDue);
-    const [address, SetAddress] = useState({ active: false, id: 0 });
-    let Detail = [];
+    const [address, SetAddress] = useState<any>({ active: false, id: 0 });
+    let Detail:any = [];
     const [totalCount, setTotalCount] = useState(0);
     const [ShippingInformation, SetShippingInformation] = useState([]);
     const [organizations, SetOrganisations] = useState([]);
@@ -88,25 +89,25 @@ const OrderList = () => {
     const [companies, setCompanies] = useState([])
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
-    let SortColumn = null
-    let SortingDirectionId = null
+    let SortColumn:any = null
+    let SortingDirectionId:any = null
 
     const param = { PageSize, PageNumber }
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items ? items : ''
 
 
     }
-    const bindAdress = async (arr) => {
+    const bindAdress = async (arr:any) => {
         if (arr.length > 1) {
             for (let i = 0; i < arr.length; i++) {
                 try {
                     const { data, status } = await GetAddress(11, arr[i].id)
-                    let detail = Detail.filter(item => item.id === arr[i].id)[0]
+                    let detail = Detail.filter((item:any) => item.id === arr[i].id)[0]
                     let address = data.result.addresses;
-                    const finallAddres = address.map(item =>
+                    const finallAddres = address.map((item:any) =>
                     ({
                         fullAddress: item.fullAddress,
                         postalCode: item.postalCode,
@@ -127,9 +128,9 @@ const OrderList = () => {
             for (let i = 0; i < arr.length; i++) {
                 try {
                     const { data, status } = await GetAddress(10, arr[i].orderId)
-                    let detail = Detail.filter(item => item.orderId === arr[i].orderId)[0]
+                    let detail = Detail.filter((item:any) => item.orderId === arr[i].orderId)[0]
                     let address = data.result.addresses;
-                    const finallAddres = address.map(item =>
+                    const finallAddres = address.map((item:any) =>
                     ({
                         fullAddress: item.fullAddress,
                         postalCode: item.postalCode,
@@ -151,14 +152,14 @@ const OrderList = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
-    const openModalEdit = (id) => {
+    const openModalEdit = (id:number) => {
         setIdEdit(id)
         setIsOpenEdit(true);
     }
     const closeModalEdit = () => {
         setIsOpenEdit(false);
     }
-    const handelStartDate = (value) => {
+    const handelStartDate = (value:any) => {
         if (value === null) {
             setStartDate('')
         }
@@ -171,7 +172,7 @@ const OrderList = () => {
         }
     }
 
-    const handelEndDate = (value) => {
+    const handelEndDate = (value:any) => {
         if (value === null) {
             setEndDate('')
         }
@@ -199,14 +200,14 @@ const OrderList = () => {
         return (OverDueEnum.map(data => ({ label: data.name, value: data.value })))
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data) => {
-        arrayOfSelectedData = data.map(item => item.original);
+    const getSelectedData = (data:any) => {
+        arrayOfSelectedData = data.map((item:any) => item.original);
         return (arrayOfSelectedData)
     }
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -223,7 +224,7 @@ const OrderList = () => {
     const DeleteSelectedItem = async () => { }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, id: 0, active: true, createDate: new Date() }
         })
 
@@ -237,12 +238,12 @@ const OrderList = () => {
                 let payload = {
                     'organization': copyData[i]
                 }
-                const { data, status } = await setOrder(copyData[i])
-                if (status === 200) {
+               setOrder(copyData[i])
+               
                     SetOpen(true)
 
                     SetStateSuccess(successCount += 1)
-                }
+             
 
 
             } catch (error) {
@@ -258,7 +259,7 @@ const OrderList = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, active: true }
         })
 
@@ -272,12 +273,12 @@ const OrderList = () => {
                 let payload = {
                     'order': copyData[i]
                 }
-                const { data, status } = await setOrder(copyData[i])
-                if (status === 200) {
+                setOrder(copyData[i])
+                
                     SetOpen(true)
 
                     SetStateSuccess(successCount += 1)
-                }
+               
 
 
             } catch (error) {
@@ -293,7 +294,7 @@ const OrderList = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, active: false }
         })
 
@@ -307,12 +308,12 @@ const OrderList = () => {
                 let payload = {
                     'order': copyData[i]
                 }
-                const { data, status } = await setOrder(copyData[i])
-                if (status === 200) {
+                setOrder(copyData[i])
+              
                     SetOpen(true)
 
                     SetStateSuccess(successCount += 1)
-                }
+                
 
 
             } catch (error) {
@@ -343,7 +344,7 @@ const OrderList = () => {
         companyId
     }
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
     }
 
@@ -353,14 +354,14 @@ const OrderList = () => {
             params: {
                 Id: Number(Id), IsAdmin: true,
                 UserName: userName,
-                OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
                 StartDate
                 , EndDate
                 , ExtId: Number(ExtId),
                 AttachmentsOverDue: overDue,
-                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
-                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
+                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
                 NationalCode: nationalCode,
                 OrganizationNationalId: organizationNationalId,
                 OrderDetailExtId,
@@ -372,7 +373,7 @@ const OrderList = () => {
 
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -402,14 +403,14 @@ const OrderList = () => {
             params: {
                 Id: Number(Id),
                 UserName: userName,
-                OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
                 StartDate
                 , EndDate
                 , ExtId: Number(ExtId),
                 AttachmentsOverDue: overDue,
-                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
-                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
+                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
                 NationalCode: nationalCode,
                 OrganizationNationalId: organizationNationalId,
                 companyId,
@@ -420,7 +421,7 @@ const OrderList = () => {
 
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
                 return QueryString.stringify(params)
             }
         };
@@ -442,7 +443,7 @@ const OrderList = () => {
     const onHeaderClick = () => {
         return {
 
-            onClick: (e) => {
+            onClick: (e:any) => {
                 var siblings = [];
 
 
@@ -634,14 +635,14 @@ const OrderList = () => {
             params: {
                 Id: Number(Id),
                 UserName: userName,
-                OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
                 StartDate
                 , EndDate
                 , ExtId: Number(ExtId),
-                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
+                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
                 AttachmentsOverDue: overDue,
-                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
                 NationalCode: nationalCode,
                 OrganizationNationalId: organizationNationalId,
                 IsAdmin: true,
@@ -650,7 +651,7 @@ const OrderList = () => {
                 PageSize
             }
             ,
-            paramsSerializer: params => { return QueryString.stringify(params) }
+            paramsSerializer: (params:any) => { return QueryString.stringify(params) }
 
 
         };
@@ -706,7 +707,7 @@ const OrderList = () => {
         ,
         {
             Header: 'تاریخ', accessor: 'CreateDate'
-            , Cell: row => {
+            , Cell: (row:any) => {
 
                 return (new Date(row.row.original.createDate).toLocaleDateString('fa-IR', {
                     year: 'numeric',
@@ -717,18 +718,18 @@ const OrderList = () => {
 
         },
         {
-            Header: 'خریدار', accessor: d => {
-                let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.name)
+            Header: 'خریدار', accessor: (d:any) => {
+                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.name)
 
                 return (` ${d.customer.firstName} ,    ${d.customer.lastName} ,`)
             }
-            , Cell: row => {
+            , Cell: (row:any) => {
                 let fName = row.row.original.customer.firstName;
                 let lName = row.row.original.customer.lastName;
                 let OName;
                 if (row.row.original.customer.organizationId > 0) {
 
-                    OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.name)
+                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.name)
                 }
                 let fullname = `${fName ? fName : '--'} ${lName ? lName : ''} `;
                 return (fullname)
@@ -736,7 +737,7 @@ const OrderList = () => {
         }, {
             Header: 'کد ملی', accessor: d => {
                 let Ncode = d.customer.nationalCode;
-                let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.nationalId)
+                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.nationalId)
                 return (`${Ncode}`)
 
             }, Cell: row => {
@@ -744,14 +745,14 @@ const OrderList = () => {
                 let OName;
                 if (row.row.original.customer.organizationId > 0) {
 
-                    OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.nationalId)
+                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.nationalId)
                 }
                 let code = `${Ncode ? Ncode : '--'} `
                 return (code)
             }
         }, {
             Header: 'سازمان', accessor: d => {
-                let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.name)
+                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.name)
 
                 return (` ${d.OName} `)
             }
@@ -760,7 +761,7 @@ const OrderList = () => {
                 let OName;
                 if (row.row.original.customer.organizationId > 0) {
 
-                    OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.name)
+                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.name)
                 }
                 let fullname = `${OName ? OName : '--'}  `;
                 return (fullname)
@@ -768,7 +769,7 @@ const OrderList = () => {
         }, {
             Header: 'شناسه ملی', accessor: d => {
                 let Ncode = d.customer.nationalCode;
-                let OName = organizations.filter(item => item.id === d.customer.organizationId).map(item => item.nationalId)
+                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.nationalId)
                 return (`${OName}`)
 
             }, Cell: row => {
@@ -776,39 +777,39 @@ const OrderList = () => {
                 let OName;
                 if (row.row.original.customer.organizationId > 0) {
 
-                    OName = organizations.filter(item => item.id === row.row.original.customer.organizationId).map(item => item.nationalId)
+                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.nationalId)
                 }
                 let code = ` ${OName ? OName : '--'}`
                 return (code)
             }
         }, {
             Header: 'نحوه پرداخت', accessor: 'paymentMethodId', Cell: row => {
-                return (PaymentStructureEnums.filter(item => item.id === row.row.original.paymentMethodId).map(item => item.name))
+                return (PaymentStructureEnums.filter((item:any) => item.id === row.row.original.paymentMethodId).map((item:any) => item.name))
             }
         },
         { Header: 'شماره همراه', accessor: 'customer.userName' },
         ,
         {
             Header: 'وضعیت ارسال', accessor: 'shippingStatusId', Cell: row => {
-                return (ShippingStatusEnums.filter(item => item.id === row.row.original.shippingStatusId).map(item => item.name))
+                return (ShippingStatusEnums.filter((item:any) => item.id === row.row.original.shippingStatusId).map((item:any) => item.name))
             }
         },
         {
             Header: 'وضعیت سفارش', accessor: 'orderStatusId', Cell: row => {
-                return (OrderStatus.filter(item => item.id === row.row.original.orderStatusId).map(item => item.name))
+                return (OrderStatus.filter((item:any) => item.id === row.row.original.orderStatusId).map((item:any) => item.name))
             }
         }
         ,
 
         {
             Header: 'وضعیت پرداخت', accessor: 'paymentStatusId', Cell: row => {
-                return (PaymentStatusEnums.filter(item => item.id === row.row.original.paymentStatusId).map(item => item.name))
+                return (PaymentStatusEnums.filter((item:any) => item.id === row.row.original.paymentStatusId).map((item:any) => item.name))
             }
         },
         {
             Header: 'مبلغ-ریال',
             accessor: 'orderFinalizedPrice',
-            Cell: row => (formatter.format(row.row.original.orderFinalizedPrice))
+            Cell: (row:any) => (formatter.format(row.row.original.orderFinalizedPrice))
         },
         {
             Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
@@ -856,14 +857,14 @@ const OrderList = () => {
                 </div>
 
             )
-        }])
+        }],[])
 
 
-    const data = useMemo(() => order);
-    const formatTrProps = (state = {}) => {
+    const data = useMemo(() => order,[order]);
+    const formatTrProps = (state:any = {}) => {
         if (modalIsOpenEdit === false) {
             return {
-                onClick: async (e) => {
+                onClick: async (e:any) => {
                     e.preventDefault()
                     setDetailAddress([])
                     setOrderId(state.original.id)
@@ -921,7 +922,7 @@ const OrderList = () => {
         setPageNumber(0)
     }
     if (order) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شمراه فاکتور': item.id,
             'خریدار': item.customer.firstName,
             'شماره همراه': item.customer.userName,
@@ -948,7 +949,6 @@ const OrderList = () => {
                 style={customStyles}
                 contentLabel="Selected Option"
                 ariaHideApp={false}>
-                <AddAdressCustomerForOrder closeModal={closeModal} />
             </Modal>
             <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
                 <AdvancedSearch>
@@ -983,29 +983,29 @@ const OrderList = () => {
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                             <label>شماره سفارش</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="سفارش"
-                                value={Id} onChange={e => setId(e.target.value)} /></div>
+                                value={Id} onChange={(e:any) => setId(e.target.value)} /></div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                             <label> کد ملی</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
-                                maxLength="11" value={nationalCode}
-                                onChange={e => setNationalCode(e.target.value)} /></div>
+                                maxLength={11} value={nationalCode}
+                                onChange={(e:any) => setNationalCode(e.target.value)} /></div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                             <label> شناسه ملی</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
-                                maxLength="11" value={organizationNationalId}
-                                onChange={e => setOrganizationNationalId(e.target.value)} /></div>
+                                maxLength={11} value={organizationNationalId}
+                                onChange={(e:any) => setOrganizationNationalId(e.target.value)} /></div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                             <label> شناسه خرید بازارگاه</label>
 
                             <input className="form-control opacityForInput  mb-4" type="text"
                                 placeholder="شناسه خرید"
-                                value={ExtId} onChange={e => setExtId(e.target.value)} />
+                                value={ExtId} onChange={(e:any) => setExtId(e.target.value)} />
                         </div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                             <label> کد تخصیص</label>
 
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
-                                value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
+                                value={OrderDetailExtId} onChange={(e:any) => setOrderDetailExtId(e.target.value)} />
                         </div>
                         <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
@@ -1065,7 +1065,7 @@ const OrderList = () => {
                                     <Select
 
                                         options={OverDue()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             SetoverDue(e.value)
                                         }}
                                     /> : <Select
@@ -1073,7 +1073,7 @@ const OrderList = () => {
 
                                         placeholder=' وضعیت سررسید '
                                         options={OverDue()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             SetoverDue(e.value)
                                         }}
                                     />}
@@ -1091,7 +1091,7 @@ const OrderList = () => {
                                     options={paymentMethodIDs()}
                                     isMulti
                                     isClearable={true}
-                                    onChange={e => {
+                                    onChange={(e:any) => {
                                         setPaymentMethodIds(e)
                                     }}
                                 />
@@ -1106,7 +1106,7 @@ const OrderList = () => {
                                     <Select
 
                                         options={CompaniesIDs()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setCompanyId(e.value)
                                         }}
                                     /> : <Select
@@ -1114,7 +1114,7 @@ const OrderList = () => {
 
                                         placeholder='نام شرکت'
                                         options={CompaniesIDs()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setCompanyId(e.value)
                                             console.log(e);
 
@@ -1145,8 +1145,8 @@ const OrderList = () => {
             <div className=" statbox widget-content widget-content-area rounded">
                 <div>
 
-                    <MyTableClick columns={columns} data={data} getData={rows => setSelectedRows(rows)}
-                        bulkJob={getBulkJob} formatRowProps={(state) => formatTrProps(state)}
+                    <MyTableClick columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)}
+                        bulkJob={getBulkJob} formatRowProps={(state:any) => formatTrProps(state)}
                         show={address}
                         address={ShippingInformation}
                         ShippingCartInformation={ShoppingCartInformation}
@@ -1219,21 +1219,21 @@ const OrderList = () => {
                                 <label> کد ملی</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
-                                    maxLength="11" value={nationalCode}
-                                    onChange={e => setNationalCode(e.target.value)} />
+                                    maxLength={11} value={nationalCode}
+                                    onChange={(e:any) => setNationalCode(e.target.value)} />
                             </div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه ملی</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
-                                    maxLength="11" value={organizationNationalId}
-                                    onChange={e => setOrganizationNationalId(e.target.value)} /></div>
+                                    maxLength={11} value={organizationNationalId}
+                                    onChange={(e:any) => setOrganizationNationalId(e.target.value)} /></div>
 
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه خرید بازارگاه</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text"
                                     placeholder="شناسه خرید"
-                                    value={ExtId} onChange={e => setExtId(e.target.value)} />
+                                    value={ExtId} onChange={(e:any) => setExtId(e.target.value)} />
                             </div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> کد تخصیص</label>
@@ -1310,14 +1310,14 @@ const OrderList = () => {
                                             placeholder=' وضعیت سررسید '
                                             options={OverDue()}
                                             isMulti={true}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 SetoverDue(e.value)
                                             }}
                                         /> : <Select
                                             value={OverDue().filter(i => i.value === overDue).map(i => i)}
                                             placeholder=' وضعیت سررسید '
                                             options={OverDue()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 SetoverDue(e.value)
                                             }}
                                         />}
@@ -1353,7 +1353,7 @@ const OrderList = () => {
                                     <Select
 
                                         options={CompaniesIDs()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setCompanyId(e.value)
                                         }}
                                     /> : <Select
@@ -1361,7 +1361,7 @@ const OrderList = () => {
 
                                         placeholder='نام شرکت'
                                         options={CompaniesIDs()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setCompanyId(e.value)
                                             console.log(e);
 

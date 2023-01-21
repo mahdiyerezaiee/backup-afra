@@ -297,7 +297,16 @@ const getSelectedData=(data:any)=>{
             <div>
                 <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
               
-                <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
+                <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} rowProps={(row:any) => ({
+                   
+                   
+                   style: {
+                       backgroundColor: (row.values.ثبت === 'ثبت شده' && row.values.قفل==='قفل نشده')? 'lightgreen':(row.values.قفل ==='قفل شده' &&row.values.ثبت === 'ثبت شده'  )?'yellow':'#ff00003b',
+               
+                       cursor: "pointer"
+                   } 
+               })}    bulkJob={getBulkJob} 
+                />
                 {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
             </div>
             </div>
@@ -309,15 +318,6 @@ const getSelectedData=(data:any)=>{
 
 
 
-// rowProps={(row:any) => ({
-                   
-                   
-//     style: {
-//         backgroundColor: (row.values.ثبت === 'ثبت شده' && row.values.قفل==='قفل نشده')? 'lightgreen':(row.values.قفل ==='قفل شده' &&row.values.ثبت === 'ثبت شده'  )?'yellow':'#ff00003b',
-
-//         cursor: "pointer"
-//     } 
-// } 
 
 // ) نمیشه این رو استفاده کنیم باید یه فکر دیگ بکنیم}
 export default BazargahList

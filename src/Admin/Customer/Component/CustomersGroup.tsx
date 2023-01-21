@@ -9,12 +9,12 @@ import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import { setCustomerInfo } from "../../../services/customerService";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { toast } from 'react-toastify';
-import { GetCompanyChild } from './../../../services/companiesService';
-import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import { GetCompanyChild } from '../../../services/companiesService';
+import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import Select from 'react-select';
 
 
-export const CustomersGroup = () => {
+export const CustomersGroup:React.FC = () => {
     const customStyles = {
         content: {
 
@@ -30,27 +30,27 @@ export const CustomersGroup = () => {
         }
     };
     const navigate = useNavigate();
-    const [customerg, setCustomerg] = useState([])
-    const [userCompanies, setUserCompanies] = useState([])
+    const [customerg, setCustomerg] = useState<any>([])
+    const [userCompanies, setUserCompanies] = useState<any>([])
     const [modalIsOpen, setIsOpen] = useState(false);
     const [selectedRows, setSelectedRows] = useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
     const [open, SetOpen] = useState(false);
-    let [companyId, SetcompanyId] = useState()
+    let [companyId, SetcompanyId] = useState<any>()
     const close = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data) => {
+    const getSelectedData = (data:any) => {
 
-        arrayOfSelectedData = data.map(item => item.original);
+        arrayOfSelectedData = data.map((item:any) => item.original);
 
 
         return (arrayOfSelectedData)
 
     }
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -97,7 +97,7 @@ export const CustomersGroup = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, id: 0, active: true, createDate: new Date() } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -129,7 +129,7 @@ export const CustomersGroup = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: true } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: true } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -161,7 +161,7 @@ export const CustomersGroup = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: false } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: false } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -197,7 +197,7 @@ export const CustomersGroup = () => {
 
     }
     const [id, setId] = useState(0)
-    const openModal = (id) => {
+    const openModal = (id:number) => {
         setIsOpen(true);
         setId(id)
 
@@ -241,7 +241,7 @@ export const CustomersGroup = () => {
 
     // }
 
-    const GetCustomerGroup = async (companyId) => {
+    const GetCustomerGroup = async (companyId:number) => {
         console.log(companyId);
         if (userCompanies.length === 1) {
             try {
@@ -284,7 +284,7 @@ export const CustomersGroup = () => {
 
 
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editcustomergroupName/${id}`)
     }
     const deletHandler = async () => {
@@ -292,7 +292,7 @@ export const CustomersGroup = () => {
             const { data, status } = await DeleteGroup(id)
             if (data.success == true) {
                 setIsOpen(false)
-                GetCustomerGroup();
+                GetCustomerGroup(companyId);
 
 
                 toast.success('گروه حذف شد', {
@@ -315,7 +315,7 @@ export const CustomersGroup = () => {
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
         { Header: 'نام', accessor: 'name' }, {
-            Header: 'عملیات', accessor: '11', Cell: row => {
+            Header: 'عملیات', accessor: '11', Cell: (row:any) => {
 
                 return (
                     <ul className="table-controls">
@@ -353,15 +353,15 @@ export const CustomersGroup = () => {
                 )
             }
         }
-    ])
+    ],[])
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
     let defaultValue = companys()[0]
 
     console.log(customerg);
-    const data = useMemo(() => customerg);
+    const data = useMemo(() => customerg,[customerg]);
     const handelForm = () => {
         navigate('/admin/newcustomergroup')
     }
@@ -413,7 +413,7 @@ export const CustomersGroup = () => {
 
 
 
-                            <p> آیا مطمئنید  گروه {customerg.filter(item => item.id === id).map(item => item.name)}   </p>
+                            <p> آیا مطمئنید  گروه {customerg.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -427,7 +427,7 @@ export const CustomersGroup = () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={handelForm}>تعریف گروه</button>
-                        <MyTableBazargah columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        <MyTableBazargah columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>

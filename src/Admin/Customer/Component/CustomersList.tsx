@@ -13,7 +13,7 @@ import QueryString from "qs";
 import {GetDataWithSearch, GetForKarbars} from "../../../services/userService";
 
 
-const CustomersList = () => {
+const CustomersList:React.FC = () => {
     const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
     const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
@@ -28,7 +28,7 @@ const CustomersList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items? items:''
 
 
@@ -45,7 +45,7 @@ const CustomersList = () => {
 
             }
             ,
-            paramsSerializer:params=>{
+            paramsSerializer:(params:any)=>{
 
                 return QueryString.stringify(params)
             }
@@ -66,15 +66,15 @@ const CustomersList = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -92,7 +92,7 @@ const CustomersList = () => {
     }
     const copySelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,id:0,active:true,createDate:new Date()}})
 
         let successCount=0;
         let errorCount=0;
@@ -124,7 +124,7 @@ const CustomersList = () => {
     }
     const enableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:true}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:true}})
 
         let successCount=0;
         let errorCount=0;
@@ -156,7 +156,7 @@ const CustomersList = () => {
     }
     const disableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:false}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:false}})
 
         let successCount=0;
         let errorCount=0;
@@ -195,7 +195,7 @@ const CustomersList = () => {
     const getCustomers = async () => {
 
 
-        const { data, staus } = await getAllWithRole(2);
+        const { data, status } = await getAllWithRole(2);
         setUsers(data.result.users.values);
         setTotalCount(data.result.users.totalCount)
     }
@@ -218,10 +218,10 @@ const CustomersList = () => {
 
     const navigate = useNavigate()
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editcustomergroup/${id}`)
     }
-    const editInfoHandler=(id)=>{
+    const editInfoHandler=(id:number)=>{
         navigate(`/admin/editCustumer/${id}`)
     }
     const columns = useMemo(() => [
@@ -229,12 +229,12 @@ const CustomersList = () => {
         { Header: 'نام کاربری', accessor: 'userName' }
         ,
         {
-            Header: 'نام و نام خانوادگی', accessor: d => {
+            Header: 'نام و نام خانوادگی', accessor: (d:any) => {
                 let fName = d.firstName;
                 let lName = d.lastName;
                 let fullname = `${fName ? fName : ''} ${lName ? lName : ''} `;
                 return (fullname)
-            }, Cell: row => {
+            }, Cell: (row:any) => {
 
                 let fName = row.row.original.firstName;
                 let lName = row.row.original.lastName;
@@ -247,13 +247,13 @@ const CustomersList = () => {
         }
         , { Header: 'کد ملی', accessor: 'nationalCode' }
         , { Header: 'سازمان', accessor:d=> {
-            let OName = organization.filter(item => item.id === d.organizationId).map(item => item.name)
+            let OName = organization.filter((item:any) => item.id === d.organizationId).map((item:any) => item.name)
             return(`${OName}`)
 
         }, Cell: row => {
 
                 if (row.row.original.organizationId) {
-            let OName = organization.filter(item => item.id ===row.row.original.organizationId).map(item => item.name)
+            let OName = organization.filter((item:any) => item.id ===row.row.original.organizationId).map((item:any) => item.name)
 
                     return (OName)
                 }
@@ -292,7 +292,7 @@ const CustomersList = () => {
                     return('تعیین نشده')
                 }
                 else{
-                    return (CustomerG.filter(item=>item.id === row.row.original.groupId).map(item=> item.name))
+                    return (CustomerG.filter((item:any)=>item.id === row.row.original.groupId).map((item:any)=> item.name))
                 }
             }
         }
@@ -319,7 +319,7 @@ const CustomersList = () => {
                     "active":!active,
                 }
 
-                const activeHandler = async (e) => {
+                const activeHandler = async () => {
                     try {
                         const { data, status } = await setCustomerInfo(activeChang)
 
@@ -358,7 +358,7 @@ const CustomersList = () => {
                     <button className="p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
                         title="گروه بندی"
                         onClick={e => editHandler(row.row.original.id)}>
-                        <svg  width="19"  height="24" viewBox="0 0 24 24" style={{   fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLineJoin: "round" }}  className="feather feather-user">
+                        <svg  width="19"  height="24" viewBox="0 0 24 24" style={{   fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round",  }}  className="feather feather-user">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     </button>
                     <button className=" p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
@@ -374,7 +374,7 @@ const CustomersList = () => {
                         </svg>
                     </button>
 
-                    <button className=" p-0 border-0 bg-transparent non-hover edit-btn" href="#" data-toggle="tooltip" data-placement="top" title="حذف">
+                    <button className=" p-0 border-0 bg-transparent non-hover edit-btn"  data-toggle="tooltip" data-placement="top" title="حذف">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20"
                             viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
@@ -393,11 +393,11 @@ const CustomersList = () => {
                 </ul>
             )
         }
-    ])
-    const data = useMemo(() => users);;
+    ],[])
+    const data = useMemo(() => users,[users]);;
 
     if(users){
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام کاربری': item.userName,
             'نام': item.firstName,
@@ -417,7 +417,7 @@ const CustomersList = () => {
                     <div className="table-responsive">
 
 
-                        <MyTable   columns={columns} data={data} getData={rows=>setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable   columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} bulkJob={getBulkJob}
                                    total={totalCount}
                                    setPageSize={setPageSize}
                                    PageSize={PageSize}

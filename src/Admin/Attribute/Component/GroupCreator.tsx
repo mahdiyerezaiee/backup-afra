@@ -3,9 +3,9 @@ import { EntityTypes } from '../../../Common/Enums/EntityTypesEnums';
 import  Select  from 'react-select';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { SetGroup } from './../../../services/GroupService';
+import { SetGroup } from '../../../services/GroupService';
 
-const GroupCreator = () => {
+const GroupCreator:React.FC = () => {
     const [name, setName] = useState('');
     const [entityTypeId, setEntityTypeId] = useState(0);
     const entityTypes = () => {
@@ -19,7 +19,7 @@ const GroupCreator = () => {
             name
         }
     }
-    const submit = async (event) => {
+    const submit = async (event:any) => {
         event.preventDefault();
         try {
 
@@ -57,7 +57,7 @@ const GroupCreator = () => {
                         <div className="form-group mb-4 textOnInput  ">
 
                             <label >نام گروه</label>
-                            <input type="text" className="form-control opacityForInput" value={name} onChange={e => setName(e.target.value)} />
+                            <input type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => setName(e.target.value)} />
 
                         </div>
                         <div className="form-group mb-4 textOnInput  ">
@@ -65,7 +65,7 @@ const GroupCreator = () => {
 
                             <Select className='form-input opacityForInput' placeholder='انتخاب موجودیت'
                                 options={entityTypes()}
-                                onChange={e => setEntityTypeId(e.value)} />
+                                onChange={(e:any) => setEntityTypeId(e.value)} />
                         </div>
                    
                         <div className='row'>

@@ -16,13 +16,13 @@ import WareHouseList from '../WareHouse/Component/WareHouseList';
 import UserList from '../User/Component/UserList';
 
 import UserProfile from '../../Common/Shared/Profile/userProfile';
-import EditProfile from '../../Common/Shared/Profile/editProfile.tsx';
+import EditProfile from '../../Common/Shared/Profile/editProfile';
 import EditProduct from "../Product/Component/editProduct";
 import EditWareHouse from "../WareHouse/Component/EditWareHouse";
 import AttributeCreator from '../Attribute/Component/AttributeCreator';
 import NewsAdmin from "../News/Component/newsAdmin";
 import NewNews from "../News/Component/NewNews"
-import EditNews from "../News/Component//editNews"
+import EditNews from "../News/Component/editNews"
 import ProductGroup from '../Product/Component/ProductGroup';
 import NewProductGroup from '../Product/Component/NewProductGroup';
 import EditUserRole from '../User/Component/editUserRole';
@@ -32,21 +32,21 @@ import TicketList from '../../Common/Shared/Ticket/ticketList';
 import NewTicket from '../../Common/Shared/Ticket/newTicket';
 import Message from '../../Common/Shared/Ticket/message';
 import { CustomersGroup } from '../Customer/Component/CustomersGroup';
-import CustomersList from '../../Admin/Customer/Component/CustomersList';
-import NewCustomerGroup from '../../Admin/Customer/Component/NewCustomerGroup';
-import BazargahList from '../Report/Component/BazargahList.tsx';
+import CustomersList from '../Customer/Component/CustomersList';
+import NewCustomerGroup from '../Customer/Component/NewCustomerGroup';
+import BazargahList from '../Report/Component/BazargahList';
 import Setting from '../../Common/Setting/setting';
 import Dashboard from '../../Common/Shared/Common/Dashboard';
 
 import ProductSupplyEdit from '../ProductSupply/Component/ProductSupplyEdit';
 import EditUserInfo from '../User/Component/editUserInfo';
 import AddNewUser from '../User/Component/addNewUser';
-import EditCustomerGroup from '../../Admin/Customer/Component/EditCustomerGroup';
-import OrderList from '../../Admin/Order/Component/orderList';
+import EditCustomerGroup from '../Customer/Component/EditCustomerGroup';
+import OrderList from '../Order/Component/orderList';
 import NewsPage from '../../Common/Shared/News/newsPage';
 import SupplierList from '../Supplier/Component/SupplierList';
 import NewSupplier from '../Supplier/Component/NewSupplier';
-import EditSupplier from '../Supplier/Component/EditSupplier.tsx';
+import EditSupplier from '../Supplier/Component/EditSupplier';
 import NewSupply from '../Supply/Component/NewSupply';
 import NewsList from "../../Common/Shared/News/NewsList";
 import SupplyList from '../Supply/Component/SupplyList';
@@ -59,7 +59,7 @@ import EditOrganizaion from '../Organization/Component/EditOrganization';
 import WareHouseType from '../WareHouse/Component/WareHouseType';
 import NewWareHouseType from '../WareHouse/Component/NewWareHouseType';
 import EditWareHouseType from '../WareHouse/Component/EditWareHouseType';
-import EditCustomer from "../../Admin/Customer/Component/EditCustomer";
+import EditCustomer from "../Customer/Component/EditCustomer";
 import Logout from '../../Common/Shared/Login/Logout';
 import ShippingCompanyList from "../Shipping/Child/ShippingCompany/Component/ShippingCompanyList";
 import NewShippingCompany from "../Shipping/Child/ShippingCompany/Component/ShippimgCompanyNew";
@@ -67,19 +67,19 @@ import ShippingContractList from "../Shipping/Child/ShippingContracts/Component/
 import NewShippingContract from "../Shipping/Child/ShippingContracts/Component/ShippingContractNew";
 import EditShippingContract from "../Shipping/Child/ShippingContracts/Component/ShippingContractEdit";
 import EditShippingCompany from '../Shipping/Child/ShippingCompany/Component/ShippingCompanyEdit';
-import EditCustomerGroupName from '../../Admin/Customer/Component/EditCustomerGroupName';
+import EditCustomerGroupName from '../Customer/Component/EditCustomerGroupName';
 import EditProductGroupName from '../Product/Component/EditProductGroupName';
 import EditWareHouseTypeName from '../WareHouse/Component/EditWareHouseTypeName';
 import OrderCustomer from '../../Client/Order/Component/OrderCustomer';
 import NotFound from "../../Common/Shared/Common/notFound";
 import UpdateShippingReports from "../Report/Component/updateShippingReports";
-import OrderDetailTest from '../../Admin/Order/Component/orderDetailtest2';
+import OrderDetailTest from '../Order/Component/orderDetailtest2';
 import CustomerOrderDetailTest from '../../Client/Order/Component/customerOrderDetailTest';
 import UpdateAllShiping from '../Report/Component/UpdateAllShiping';
 import EditAddress from "../../Common/Shared/Profile/editAddress";
 import ProceessAttachments from "../Report/Component/ProceessAttachments";
 import UsedBarBariReport from "../Report/Component/UsedBarBariReports";
-import CustomerReports from "../Report/Component/CustomersReports.tsx";
+import CustomerReports from "../Report/Component/CustomersReports";
 import OrdersReports from "../Report/Component/OrdersReports";
 import DetailCustomerAttachment from "../Report/Component/DetailCustomerAttachment";
 import AddOrder from "../Order/Component/addOrder";
@@ -89,10 +89,10 @@ import Ticket from "../../Common/Shared/Ticket/ticket_v2";
 import { addUser, userDelete } from '../../store/Slice/user/userSlice';
 import { removeRole, userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
 import ReportShipping from "../Report/Component/ReportShipping";
-import { GetCompanyChild } from './../../services/companiesService';
+import { GetCompanyChild } from '../../services/companiesService';
 import { AllCompanies } from '../../store/Slice/companies/companySlice';
 
-const AdminMainLayout = () => {
+const AdminMainLayout:React.FC = () => {
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
   const refreshPage = () => {
@@ -150,14 +150,14 @@ const AdminMainLayout = () => {
 
 
   const [collapsed, setCollapsed] = useState(true);
-  const handleCollapsedChange = (checked) => {
+  const handleCollapsedChange = () => {
     setCollapsed(!collapsed);
   };
 
   return (
     <Fragment>
 
-      <Header collapsed={collapsed} handelChange={handleCollapsedChange} />
+      <Header collapsed={collapsed} />
       <div className="main-container" id="container">
         <SideNavbar />
         <div id="content" className="main-content main-Layout">
@@ -185,8 +185,8 @@ const AdminMainLayout = () => {
                   <Route path='userlist' element={<UserList />} />
                   <Route path='editInfo/:id' element={<EditUserInfo />} />
                   <Route path='adduser' element={<AddNewUser />} />
-                  <Route path='editrole/:id' element={<EditUserRole />} />
-                  <Route path='editcustomergroup/:id' element={<EditCustomerGroup />} />
+                  {/* <Route path='editrole/:id' element={<EditUserRole />} />
+                  <Route path='editcustomergroup/:id' element={<EditCustomerGroup />} /> */}
                   <Route path='editcustomergroupName/:id' element={<EditCustomerGroupName />} />
                   <Route path='customergroup' element={<CustomersGroup />} />
                   <Route path='editCustumer/:id' element={<EditCustomer />} />
@@ -292,7 +292,7 @@ const AdminMainLayout = () => {
                   <Route path='CustomersReports' element={<CustomerReports />} />
                   <Route path='OrdersReports' element={<OrdersReports />} />
                   {/* InvoiceCreator*/}
-                  <Route path='invoice/:id' element={<InvoiceCreator />} />
+                  {/* <Route path='invoice/:id' element={<InvoiceCreator />} /> */}
 
                 </Routes>
               </div>

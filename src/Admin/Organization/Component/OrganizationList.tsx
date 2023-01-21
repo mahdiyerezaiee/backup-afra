@@ -26,7 +26,7 @@ const customStyles = {
         border: '2px ridge black'
     }
 };
-const OrganizationList = () => {
+const OrganizationList:React.FC = () => {
     const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
     const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
 
@@ -45,7 +45,7 @@ const OrganizationList = () => {
 
     const params = { Name, NationalId, RegistrationNumber}
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items? items:''
 
 
@@ -53,7 +53,7 @@ const OrganizationList = () => {
     const param = { PageSize ,PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items? items:''
 
 
@@ -75,7 +75,7 @@ const OrganizationList = () => {
 
         }
         ,
-        paramsSerializer: params => {
+        paramsSerializer: (params:any) => {
 
             return QueryString.stringify(params)
         }
@@ -96,7 +96,7 @@ const OrganizationList = () => {
     }
     let arrayOfSelectedData = [];
 
-    const getWithSearchParams = async (e) => {
+    const getWithSearchParams = async (e:any) => {
         e.preventDefault();
         try {
             let parameter = {
@@ -114,7 +114,7 @@ const OrganizationList = () => {
 
 
                 },
-                paramsSerializer: params => {
+                paramsSerializer: (params:any) => {
 
                     return QueryString.stringify(params)
                 }
@@ -136,9 +136,9 @@ const OrganizationList = () => {
 
 
     }
-    const getSelectedData = (data) => {
+    const getSelectedData = (data:any) => {
 
-        arrayOfSelectedData = data.map(item => item.original);
+        arrayOfSelectedData = data.map((item:any) => item.original);
 
 
         return (arrayOfSelectedData)
@@ -147,7 +147,7 @@ const OrganizationList = () => {
 
 
 
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -189,7 +189,7 @@ const OrganizationList = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, id: 0, active: true, createDate: new Date() } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -222,7 +222,7 @@ const OrganizationList = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: true } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: true } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -255,7 +255,7 @@ const OrganizationList = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: false } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: false } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -287,7 +287,7 @@ const OrganizationList = () => {
 
     }
 
-    const openModal = (id) => {
+    const openModal = (id:any) => {
         setIsOpen(true);
         setId(id)
 
@@ -314,7 +314,7 @@ const OrganizationList = () => {
                     PageSize,
                     PageNumber
                 },
-                paramsSerializer: params => {
+                paramsSerializer: (params:any) => {
 
                     return QueryString.stringify(params)
                 }
@@ -343,7 +343,7 @@ const OrganizationList = () => {
     }
     const navigate = useNavigate()
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editorganization/${id}`)
     }
     const deletHandler = async () => {
@@ -375,7 +375,7 @@ const OrganizationList = () => {
         , { Header: 'شناسه ملی', accessor: 'nationalId' }, {
             Header: 'شماره ثبت', accessor: 'registrationNumber'
         }, {
-            Header: 'عملیات', accessor: '', Cell: row => (
+            Header: 'عملیات', accessor: '', Cell: (row:any) => (
                 <ul className="table-controls">
                     {/*<NavLink className='btn btn-primary btn-rounded ' to={`/userrole/${row.row.original.id}`}> تعیین نقش </NavLink>*/}
 
@@ -413,8 +413,8 @@ const OrganizationList = () => {
                 </ul>
             )
         }
-    ])
-    const data = useMemo(() => organization);
+    ],[])
+    const data = useMemo(() => organization,[organization]);
 
     const handelSearchFieldClear = async () => {
         setGeData(true)
@@ -430,7 +430,7 @@ getOrganizationName()
     }
 
     if (organization) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام سازمان': item.name,
             'شناسه ملی شرکت': item.nationalId,
@@ -454,19 +454,19 @@ getOrganizationName()
 
                                 <label> نام سازمان</label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام سازمان" value={Name} onChange={e => setName(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام سازمان" value={Name} onChange={(e:any) => setName(e.target.value)} />
                             </div>
 
                             <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
                                 <label> شناسه ملی </label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی " value={NationalId} onChange={e => setNationalId(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی " value={NationalId} onChange={(e:any) => setNationalId(e.target.value)} />
                             </div>
 
                             <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
                                 <label> شماره ثبت  </label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره ثبت" value={RegistrationNumber} onChange={e => setRegistrationNumber(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره ثبت" value={RegistrationNumber} onChange={(e:any) => setRegistrationNumber(e.target.value)} />
                             </div>
 
 
@@ -515,7 +515,7 @@ getOrganizationName()
                                     x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                                <p> آیا مطمئنید  سازمان {organization.filter(item => item.id === id).map(item => item.name)}   </p>
+                                <p> آیا مطمئنید  سازمان {organization.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                                 <p>حذف شود ؟ </p>
 
 
@@ -530,7 +530,7 @@ getOrganizationName()
                         <button onClick={addNewOrganizationHandler} className="btn btn-primary m-3">تعریف سازمان جدید</button>
 
 
-                        <MyTable columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                             total={totalCount}
                             setPageSize={setPageSize}
                             PageSize={PageSize}

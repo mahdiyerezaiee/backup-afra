@@ -4,13 +4,13 @@ import { GetGroupById } from '../../../services/GroupService';
 import { SetGroup } from '../../../services/GroupService';
 import { toast } from 'react-toastify';
 import { ClipLoader } from "react-spinners";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 import  Select  from 'react-select';
 import { Formik, Form, Field } from 'formik';
 import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
 
-const EditCustomerGroupName = () => {
+const EditCustomerGroupName:React.FC = () => {
     const navigate = useNavigate()
     const params = useParams();
     const [entityTypeId, setEntityTypeId] = useState(0)
@@ -92,10 +92,10 @@ const EditCustomerGroupName = () => {
 
     }
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
-    let defaultValue = companys()[0]
+    let defaultValue:any = companys()[0]
 
     return (
 
@@ -130,7 +130,7 @@ const EditCustomerGroupName = () => {
                                     <div className="form-group mb-4 textOnInput">
                                         <label>نام گروه</label>
 
-                                        <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
+                                        <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => setName(e.target.value)} />
 
 
                                     </div>
@@ -146,7 +146,7 @@ const EditCustomerGroupName = () => {
                                                 options={companys()}
                                                 key={defaultValue}
                                                 isClearable={true}
-                                                onChange={e => {
+                                                onChange={(e:any) => {
 
 
                                                     SetcompanyId(e.value)

@@ -6,7 +6,7 @@ import ReportBlock from "../../Common/Shared/Chart/reportBlock";
 import OverDuePaymentsByAttachments from "../../Common/Shared/Common/OverDuePaymentsByAttachments";
 import ScheduleJob from "../Report/Component/ScheduleJob";
 
-const DashbordAdmin = () => {
+const DashbordAdmin:React.FC = () => {
     useEffect(()=>{
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");

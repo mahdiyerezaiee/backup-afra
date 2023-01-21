@@ -4,13 +4,16 @@ import { PaymentStructureEnums } from "../../../Common/Enums/PaymentStructureEnu
 import { AdditionalTypeId } from "../../../Common/Enums/AdditionalTypeIdEnums";
 import OrderProductSupplyConditionEdit from "./OrderProductSupplyConditionEdit";
 
-const OrderConditionEdit = ({ orderCondition, getOrderDetail, Order, productSupply }) => {
+interface Props{
+  orderCondition:any, getOrderDetail:any, Order:any, productSupply:any
+}
+const OrderConditionEdit:React.FC<Props> = ({ orderCondition, getOrderDetail, Order, productSupply }) => {
   const [cottageCode, setcottageCode] = useState('');
   const [modalIsOpen, setIsOpen] = useState(false);
   const [id, setId] = useState(0);
   const [detail, setDetail] = useState([]);
 
-  const openModal = (id, details) => {
+  const openModal = (id:number, details:any) => {
     setDetail(details)
     setId(id)
     setIsOpen(true);
@@ -42,7 +45,7 @@ const OrderConditionEdit = ({ orderCondition, getOrderDetail, Order, productSupp
   if (productSupply !== null) {
     return (
       <div className="table-responsive p-2">
-        {orderCondition.map(item => item.productSupplyConditionId !== null) ?
+        {orderCondition.map((item:any) => item.productSupplyConditionId !== null) ?
           <table
             className="table table-bordered table-hover table-striped  mt-2  mb-4">
             <thead>
@@ -64,7 +67,7 @@ const OrderConditionEdit = ({ orderCondition, getOrderDetail, Order, productSupp
             </thead>
 
             <tbody>
-              {orderCondition.map(item =>
+              {orderCondition.map((item:any) =>
                 <tr className="text-center">
                   <td>{item.productSupplyId}</td>
                   <td>{cottageCode}</td>
@@ -106,7 +109,7 @@ const OrderConditionEdit = ({ orderCondition, getOrderDetail, Order, productSupp
             </thead>
 
             <tbody>
-              {orderCondition.map(item =>
+              {orderCondition.map((item:any) =>
                 <tr className="text-center">
                   <td>{item.productSupplyId}</td>
                   <td>{cottageCode}</td>
@@ -147,7 +150,7 @@ const OrderConditionEdit = ({ orderCondition, getOrderDetail, Order, productSupp
           </tr>
         </thead>
         <tbody>
-          {orderCondition.map(item =>
+          {orderCondition.map((item:any) =>
             <tr className="text-center">
 
               <td >{item.product.name}</td>

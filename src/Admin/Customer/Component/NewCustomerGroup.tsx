@@ -6,13 +6,13 @@ import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GetGroupById, SetGroup } from '../../../services/GroupService';
 import { ClipLoader } from "react-spinners";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 import Select from 'react-select';
 import { Formik, Form, Field } from 'formik';
 import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
 
-const NewCustomerGroup = () => {
+const NewCustomerGroup:React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [userCompanies, setUserCompanies] = useState([])
@@ -77,10 +77,10 @@ const NewCustomerGroup = () => {
 
     }
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
-    let defaultValue = companys()[0]
+    let defaultValue:any = companys()[0]
     return (
         <div className='user-progress' >
             <div className='row'>
@@ -114,7 +114,7 @@ const NewCustomerGroup = () => {
                             <div className="form-group mb-4 textOnInput">
                                 <label>نام گروه</label>
 
-                                <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
 
                                 {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 

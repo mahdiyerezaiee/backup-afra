@@ -6,9 +6,10 @@ import {Navigate, NavLink, useNavigate, useParams} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validateRequired} from "../../../Utils/validitionParams";
+import { RootState } from "../../../store";
 
-const EditNews = () => {
-    const user = useSelector(state => state.user);
+const EditNews:React.FC = () => {
+    const user = useSelector((state:RootState) => state.user);
     const params = useParams()
     const navigate = useNavigate()
     const [newss, setNewss] = useState([])
@@ -26,10 +27,10 @@ const EditNews = () => {
             try {
                 const {data, status} = await GetAllNewsForUsers()
 
-                    setMessage( data.result.news.values.filter(item => item.id == params.id).map(item => item.message)[0])
+                    setMessage( data.result.news.values.filter((item:any) => item.id == params.id).map((item:any)  => item.message)[0])
 
 
-                    setTitle( data.result.news.values.filter(item => item.id == params.id).map(item => item.title)[0])
+                    setTitle( data.result.news.values.filter((item:any)  => item.id == params.id).map((item:any)  => item.title)[0])
 
 
             } catch (err) {
@@ -121,20 +122,20 @@ setLoading(false)
                                     <div>
                                         <label className="mr-2"> فعال  </label>
 
-                                        <input type="checkbox" defaultChecked={active}  onChange={e=>setActive(e.checked)} />
+                                        <input type="checkbox" defaultChecked={active}  onChange={(e:any)=>setActive(e.checked)} />
 
                                     </div>
                                 </div>
                                 <div className="form-group mb-4 textOnInput  align-content-between">
 
                                     <label >عنوان</label>
-                                    <Field  validate={validateRequired} name="title" type="text" className="form-control opacityForInput" placeholder="عنوان اعلان" value={title} onChange={e => setTitle(e.target.value)} />
+                                    <Field  validate={validateRequired} name="title" type="text" className="form-control opacityForInput" placeholder="عنوان اعلان" value={title} onChange={(e:any) => setTitle(e.target.value)} />
                                     {errors.title && touched.title && <div className="text-danger">{errors.title}</div>}
 
                                 </div>
                                 <div className="form-group mb-4 textOnInput">
                                     <label >متن</label>
-                                    <Field  validate={validateRequired} name="message"   as="textarea"  className="form-control opacityForInput" placeholder="متن اعلان" value={message} onChange={e => setMessage(e.target.value)}  rows='10'/>
+                                    <Field  validate={validateRequired} name="message"   as="textarea"  className="form-control opacityForInput" placeholder="متن اعلان" value={message} onChange={(e:any) => setMessage(e.target.value)}  rows='10'/>
                                     {errors.message && touched.message && <div className="text-danger">{errors.message}</div>}
 
                                 </div>

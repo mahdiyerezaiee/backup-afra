@@ -16,7 +16,7 @@ import {Field, Form, Formik} from "formik";
 import {validateRequired, validatNumber} from "../../../Utils/validitionParams";
 import {GetCompanyChild} from "../../../services/companiesService";
 
-const AddOrder = () => {
+const AddOrder:React.FC = () => {
     const [products, setProducts] = useState([]);
     const [customerId, setCustomerId] = useState(0)
     const [orderStatusId, setOrderStatusId] = useState(0)
@@ -24,7 +24,7 @@ const AddOrder = () => {
     const [paymentStatusId, setPaymentStatusId] = useState(0)
     const [paymentMethodId, setPaymentMethodId] = useState(0)
     const [productId, setProductId] = useState(0)
-    const [measureUnitId, setMeasureUnitId] = useState(0)
+    const [measureUnitId, setMeasureUnitId] = useState<any>(0)
     const [quantity, setQuantity] = useState(0)
     const [loading, setLoading] = useState(false);
 
@@ -65,7 +65,7 @@ const AddOrder = () => {
                 PageSize: 100000000
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -93,11 +93,11 @@ const AddOrder = () => {
         }
     }
     const mergeNames = () => {
-        let newUsers = users.map(o => ({...o, Oname: null}))
+        let newUsers = users.map((o:any) => ({...o, Oname: null}))
 
         for (let i = 0; i < newUsers.length; i++) {
             if (newUsers[i].organizationId > 0) {
-                newUsers[i].Oname = organizations.filter(item => item.id === newUsers[i].organizationId).map(item => item.name)[0]
+                newUsers[i].Oname = organizations.filter((item:any) => item.id === newUsers[i].organizationId).map((item:any) => item.name)[0]
             }
 
         }
@@ -150,7 +150,7 @@ setLoading(false)
         }
 
     }
-    const Mesures = () => {
+    const Mesures:any = () => {
         if (measureUnitId && measureUnitId > 0) {
             return (MeasureUnitSample.filter(i => i.id === measureUnitId[0]).map(data => (data.name)));
 
@@ -181,25 +181,25 @@ setLoading(false)
         getProdcutForCombo()
     }, [])
 
-    const productCombo = () => {
+    const productCombo:any = () => {
         if (products) {
-            return (products.map(data => ({label: data.name, value: data.id})))
+            return (products.map((data:any) => ({label: data.name, value: data.id})))
         } else {
             return null
         }
     }
 
     const PaymentStatus = () => {
-        return (PaymentStatusEnums.map(data => ({label: data.name, value: data.id})))
+        return (PaymentStatusEnums.map((data:any) => ({label: data.name, value: data.id})))
     }
 const statusOrder = () => {
-        return (OrderStatus.map(data => ({label: data.name, value: data.id})))
+        return (OrderStatus.map((data:any) => ({label: data.name, value: data.id})))
     }
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
-    let defaultValue = companys()[0]
+    let defaultValue:any = companys()[0]
     var formatter = new Intl.NumberFormat('en-US', {
 
 
@@ -247,7 +247,7 @@ const statusOrder = () => {
                                 <Select
                                     placeholder="مشتری"
                                     options={customerComb()}
-                                    onChange={e => {
+                                    onChange={(e:any) => {
                                         setCustomerId(e.value)
 
                                     }}
@@ -265,9 +265,9 @@ const statusOrder = () => {
                                         <Select placeholder='کالا'
                                                 className='opacityForInput border-danger'
                                                 options={productCombo()}
-                                                onChange={e => {
+                                                onChange={(e:any) => {
                                                     setProductId(e.value)
-                                                    setMeasureUnitId(products.filter(i => i.id === e.value).map(i => i.measureUnitId))
+                                                    setMeasureUnitId(products.filter((i:any) => i.id === e.value).map((i:any) => i.measureUnitId))
 
                                                 }}
                                         />
@@ -277,9 +277,9 @@ const statusOrder = () => {
                                 ) : (<Select placeholder='کالا'
                                              className='opacityForInput '
                                              options={productCombo()}
-                                             onChange={e => {
+                                             onChange={(e:any) => {
                                                  setProductId(e.value)
-                                                 setMeasureUnitId(products.filter(i => i.id === e.value).map(i => i.measureUnitId))
+                                                 setMeasureUnitId(products.filter((i:any) => i.id === e.value).map((i:any) => i.measureUnitId))
 
 
 
@@ -296,7 +296,7 @@ const statusOrder = () => {
 
                                       placeholder='نحوه پرداخت'
                                       options={paymentM()}
-                                      onChange={e => {
+                                      onChange={(e:any) => {
                                          setPaymentMethodId(e.value)
                                        }}
                                     />
@@ -311,7 +311,7 @@ const statusOrder = () => {
                                     <Select
                                         placeholder='وضعیت پرداخت'
                                         options={PaymentStatus()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setPaymentStatusId(e.value)
                                         }}
                                     />
@@ -326,7 +326,7 @@ const statusOrder = () => {
 
                                 <label>مقدار</label>
                                 <Field  validate={validatNumber} name="quantity" type="text" className="  form-control opacityForInput  mb-4" value={formatter.format(quantity)}
-                                       onChange={e => {
+                                       onChange={(e:any) => {
                                            setQuantity(e.target.value.replaceAll(",",""))
                                        }}/>
                                 {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
@@ -336,7 +336,7 @@ const statusOrder = () => {
 
                                 <label>فی</label>
                                 <Field  validate={validatNumber} name="productBasePrice" type="text" className="  form-control opacityForInput  mb-4"
-                                       value={formatter.format(productBasePrice)} onChange={e => {
+                                       value={formatter.format(productBasePrice)} onChange={(e:any) => {
                                     setProductBasePrice(e.target.value.replaceAll(",",''))
 
                                 }}/>
@@ -347,10 +347,10 @@ const statusOrder = () => {
                             <div className=" form-group mb-4 textOnInput col-lg-6 col-md-6 col-sm-11  " style={{marginBottom: "3rem", zIndex: '1'}}>
                                 <label>وضعیت سفارش</label>
                                 <Select
-maxMenuHeight="200px"
+                                    maxMenuHeight={200}
                                     placeholder='نحوه پرداخت'
                                     options={statusOrder()}
-                                    onChange={e => {
+                                    onChange={(e:any) => {
                                         setOrderStatusId(e.value)
                                     }}
                                 />
@@ -387,7 +387,7 @@ maxMenuHeight="200px"
 
                                 <label>توضیحات</label>
                                 <Field  validate={validateRequired} name="comment" as="textarea" className="form-control opacityForInput  mb-4"
-                                       value={comment} onChange={e => {
+                                       value={comment} onChange={(e:any) => {
                                     setComment(e.target.value)
 
                                 }}/>

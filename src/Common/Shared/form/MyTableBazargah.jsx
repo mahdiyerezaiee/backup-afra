@@ -6,7 +6,7 @@ import ModalGroupWork from "../Common/ModalGroupWork";
 import {disabled} from "react-widgets/PropTypes";
 
 
-const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = () => ({}) }) => {
+const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) => ({}) }) => {
 
     const [selectFunc,setSelectFunc]=useState(0);
     const [Func, SetFunc] = useState([]);
