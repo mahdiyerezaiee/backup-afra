@@ -13,13 +13,13 @@ import {Field, Form, Formik} from "formik";
 import {validatNumber} from "../../../../../Utils/validitionParams";
 
 
-const EditShippingContract = () => {
+const EditShippingContract:React.FC = () => {
     const params = useParams()
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [contractNumber, setContractNumber] = useState('')
     const[shippingCompany,SetShippingCompany]=useState([]);
-    const[shippingCompanyId,setshippingCompanyId]=useState(0)
+    const[shippingCompanyId,setshippingCompanyId]=useState<any>(0)
     const [measureUnitId, setMeasureUnitId] = useState(0)
     const [contract,setContract]=useState([])
     const [quantity, setQuantity] = useState(0)
@@ -70,14 +70,14 @@ const ShoppingContract =
 }};
 
 
-    const Mesures = () => {
-        return (MeasureUnitSample.map(data => ({label: data.name, value: data.id})));
+    const Mesures:any = () => {
+        return (MeasureUnitSample.map((data:any) => ({label: data.name, value: data.id})));
     }
-    const barbari=()=>{
-        return(shippingCompany.map(data=>({label:data.name,value:data.id}))
+    const barbari:any=()=>{
+        return(shippingCompany.map((data:any)=>({label:data.name,value:data.id}))
         );
     }
-    const submit = async (event) => {
+    const submit = async () => {
         setLoading(true)
         try {
             const {data, status} = await SetShoppingContract(ShoppingContract);
@@ -102,9 +102,9 @@ const ShoppingContract =
 setLoading(false)
 
     };
-    let MeasureId = MeasureUnitSample.filter(item => item.id === measureUnitId).map(item => item.name)
+    let MeasureId = MeasureUnitSample.filter((item:any) => item.id === measureUnitId).map((item:any) => item.name)
     let MEASURE = MeasureId[0]
-    let compnayId=shippingCompany.filter(item=>item.id===shippingCompanyId).map(item=>item.name)
+    let compnayId=shippingCompany.filter((item:any)=>item.id===shippingCompanyId).map((item:any)=>item.name)
     let COMPANY=compnayId[0]
 
     return (
@@ -143,7 +143,7 @@ setLoading(false)
 
                                     <label>شماره قرارداد</label>
                                     <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" placeholder="شماره قرارداد"
-                                            value={contractNumber} onChange={e => {
+                                            value={contractNumber} onChange={(e:any) => {
                                         setContractNumber(e.target.value)
 
                                     }}/>
@@ -154,7 +154,7 @@ setLoading(false)
                                 <div className="form-group mb-4 textOnInput">
                                     <label>مقدار</label>
                                     <Field  validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={quantity}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setQuantity(e.target.value)
 
                                             }}/>
@@ -171,7 +171,7 @@ setLoading(false)
                                         placeholder="واحد"
                                         value={{ label: MEASURE, id: measureUnitId }}
                                         options={Mesures()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setMeasureUnitId(e.value)
 
                                         }}
@@ -189,7 +189,7 @@ setLoading(false)
                                         placeholder="باربری"
                                         value={{ label: COMPANY, id: shippingCompanyId }}
                                         options={barbari()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setshippingCompanyId(e.value)
 
                                         }}

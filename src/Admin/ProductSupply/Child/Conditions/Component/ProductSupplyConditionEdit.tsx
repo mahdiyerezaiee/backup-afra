@@ -6,10 +6,13 @@ import { AdditionalTypeId } from "../../../../../Common/Enums/AdditionalTypeIdEn
 import Modal from 'react-modal';
 import ProductSupplyConditionReadOnly from "./ProductSupplyConditionRead";
 import {ClipLoader} from "react-spinners";
-import { GetCompanyChild } from './../../../../../services/companiesService';
-import { GetGroupWithCompany } from './../../../../../services/GroupService';
+import { GetCompanyChild } from '../../../../../services/companiesService';
+import { GetGroupWithCompany } from '../../../../../services/GroupService';
 
-const ProductSupplyConditionEdit = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index }) => {
+interface Props{
+    loading:any, paymentMethodId:any, setSpecial:any, customStyles:any, handleEditFormSubmit:any, setcustomerGroupId:any, setpaymentMethodId:any, setadditionalTypeId:any, editFormData:any, handleEditFormChange:any, handleCancelClick:any, index:any 
+}
+const ProductSupplyConditionEdit:React.FC<Props> = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index }) => {
     const [customerg, setCustomerg] = useState([])
     const [cu, SetCu] = useState(0)
     const [modalIsOpen, setIsOpen] = useState(true);
@@ -17,7 +20,7 @@ const ProductSupplyConditionEdit = ({ loading, paymentMethodId, setSpecial, cust
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr = []
+        let finalArr:any = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(1, companies[i].id);
@@ -53,7 +56,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
         })))
 
     }
-    const CustomerGId = (id) => {
+    const CustomerGId = (id:any) => {
         let customer = [...customerg, { id: null, name: 'عمومی' }]
         return (customer.filter(item => item.id === id).map(data => ({
             label: data.name,
@@ -62,10 +65,10 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
     }
 
-    const paymentMethod = () => {
+    const paymentMethod:any = () => {
         return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
     }
-    const PaymentId = (id) => {
+    const PaymentId = (id:any) => {
         return (PaymentStructureEnums.filter(item => item.id === id).map(data => ({
             label: data.name,
             id: data.id
@@ -80,14 +83,14 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
     }
 
-    const additionalType = (id) => {
+    const additionalType = (id:any) => {
         return (AdditionalTypeId.filter(item => item.id === id).map(data => ({
             label: data.name,
             value: data.id
         })))
 
     }
-    const openModal = async (id) => {
+    const openModal = async () => {
         setIsOpen(true);
     }
     var formatter = new Intl.NumberFormat('en-US', {
@@ -141,7 +144,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         defaultValue={PaymentId(editFormData.paymentMethodId)}
                                         placeholder="نوع پرداخت"
                                         options={paymentMethod()}
-                                        onChange={e => setpaymentMethodId(e.value)}
+                                        onChange={(e:any) => setpaymentMethodId(e.value)}
 
                                     />
 
@@ -158,7 +161,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         defaultValue={additionalType(editFormData.additionalTypeId)}
 
                                         options={additionalTypeIdS()}
-                                        onChange={e => setadditionalTypeId(e.value)}
+                                        onChange={(e:any) => setadditionalTypeId(e.value)}
 
                                     />
 
@@ -208,7 +211,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         <Select
                                             value={CustomerGId(editFormData.customerGroupId)}
                                             options={CustomerG()}
-                                            onChange={function (e) {
+                                            onChange={function (e:any) {
                                                 setcustomerGroupId(e.value)
                                                 SetCu(e.value)
                                             }}
@@ -219,7 +222,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
 
                                             options={CustomerG()}
-                                            onChange={e => setcustomerGroupId(e.value)}
+                                            onChange={(e:any) => setcustomerGroupId(e.value)}
 
                                         />
 
@@ -252,7 +255,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                             <div className="form-group mb-1 textOnInput ">
                                 <label>توضیحات</label>
 
-                                <textarea type="textarea" className="form-control opacityForInput " rows='4'
+                                <textarea  className="form-control opacityForInput " rows={4}
                                     placeholder='توضیحات تکمیلی' name="comment"
                                     defaultValue={editFormData.comment}
                                     onChange={handleEditFormChange}

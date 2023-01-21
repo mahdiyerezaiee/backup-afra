@@ -1,11 +1,11 @@
-import react, { Fragment, useEffect, useState, useRef } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 import { toast } from 'react-toastify';
 import { SetShippingCompany } from "../../../../../services/ShippingService";
 import {validatAlpha, validateRequired, validatNumber} from "../../../../../Utils/validitionParams";
 import {Field, Form, Formik} from "formik";
-const NewShippingCompany = () => {
+const NewShippingCompany:React.FC = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false);
@@ -95,7 +95,7 @@ const NewShippingCompany = () => {
 
                             <label>نام باربری</label>
                             <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="نام باربری"
-                                value={name} onChange={e => {
+                                value={name} onChange={(e:any) => {
                                     setName(e.target.value)
 
                                 }} />
@@ -105,7 +105,7 @@ const NewShippingCompany = () => {
 
                         <div className="form-group mb-4 textOnInput">
                             <label>کد</label>
-                            <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={e => {
+                            <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={(e:any) => {
                                 setCode(e.target.value)
 
                             }} />

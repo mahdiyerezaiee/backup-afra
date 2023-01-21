@@ -1,4 +1,4 @@
-import react, { Fragment, useEffect, useState, useRef } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useNavigate, NavLink, useParams } from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 
@@ -10,7 +10,7 @@ import {Field, Form, Formik} from "formik";
 import {validatAlpha, validatNumber} from "../../../../../Utils/validitionParams";
 
 
-const EditShippingCompany = () => {
+const EditShippingCompany:React.FC = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('')
     const [createDate, setCreateDate] = useState('')
@@ -125,7 +125,7 @@ setLoading(false)
 
                                     <label>نام باربری</label>
                                     <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="نام باربری"
-                                            value={name} onChange={e => {
+                                            value={name} onChange={(e:any) => {
                                         setName(e.target.value)
 
                                     }} />
@@ -135,7 +135,7 @@ setLoading(false)
 
                                 <div className="form-group mb-4 textOnInput">
                                     <label>کد</label>
-                                    <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={e => {
+                                    <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={(e:any) => {
                                         setCode(e.target.value)
 
                                     }} />

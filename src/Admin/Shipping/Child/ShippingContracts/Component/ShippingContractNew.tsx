@@ -9,11 +9,11 @@ import {Field, Form, Formik} from "formik";
 import {validatNumber} from "../../../../../Utils/validitionParams";
 
 
-const NewShippingContract = () => {
+const NewShippingContract :React.FC= () => {
     const navigate = useNavigate();
     const [contractNumber, setContractNumber] = useState('')
 const[shippingCompany,SetShippingCompany]=useState([]);
-const[shippingCompanyId,SetshippingCompanyId]=useState();
+const[shippingCompanyId,SetshippingCompanyId]=useState<any>();
     const [measureUnitId, setMeasureUnitId] = useState(0)
     const [quantity, setQuantity] = useState(0)
     const [loading, setLoading] = useState(false);
@@ -44,10 +44,10 @@ const[shippingCompanyId,SetshippingCompanyId]=useState();
         getBarbaris();
     },[])
     const Barbaries=()=>{
-        return(shippingCompany.map(data=>({label:data.name,value:data.id})))
+        return(shippingCompany.map((data:any)=>({label:data.name,value:data.id})))
     }
     const Mesures = () => {
-        return (MeasureUnitSample.map(data => ({label: data.name, value: data.id})));
+        return (MeasureUnitSample.map((data:any) => ({label: data.name, value: data.id})));
     }
     const submit = async () => {
         setLoading(true)
@@ -111,7 +111,7 @@ setLoading(false)
 
                             <label>شماره قرارداد</label>
                             <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" placeholder="شماره قرارداد"
-                                   value={contractNumber} onChange={e => {
+                                   value={contractNumber} onChange={(e:any) => {
                                 setContractNumber(e.target.value)
 
                             }}/>
@@ -122,7 +122,7 @@ setLoading(false)
                         <div className="form-group mb-4 textOnInput">
                             <label>مقدار</label>
                             <Field  validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={quantity}
-                                   onChange={e => {
+                                   onChange={(e:any) => {
                                        setQuantity(e.target.value)
 
                                    }}/>
@@ -140,7 +140,7 @@ setLoading(false)
                                         placeholder="واحد"
 
                                         options={Mesures()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setMeasureUnitId(e.value)
 
                                         }}
@@ -159,7 +159,7 @@ setLoading(false)
                                         placeholder="باربری"
 
                                         options={Barbaries()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             SetshippingCompanyId(Number(e.value))
 
                                         }}

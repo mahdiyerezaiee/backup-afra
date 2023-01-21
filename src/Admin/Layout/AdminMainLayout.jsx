@@ -46,7 +46,7 @@ import OrderList from '../../Admin/Order/Component/orderList';
 import NewsPage from '../../Common/Shared/News/newsPage';
 import SupplierList from '../Supplier/Component/SupplierList';
 import NewSupplier from '../Supplier/Component/NewSupplier';
-import EditSupplier from '../Supplier/Component/EditSupplier';
+import EditSupplier from '../Supplier/Component/EditSupplier.tsx';
 import NewSupply from '../Supply/Component/NewSupply';
 import NewsList from "../../Common/Shared/News/NewsList";
 import SupplyList from '../Supply/Component/SupplyList';

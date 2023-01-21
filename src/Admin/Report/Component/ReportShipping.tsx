@@ -10,7 +10,7 @@ import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
 import persian_fa from "react-date-object/locales/persian_fa";
 
-const ReportShipping :React.FC= () => {
+const ReportShipping: React.FC = () => {
 
     const [Unshipped, setUnshipped] = useState<any>('');
     const [HasShippingContract, setHasShippingContract] = useState<any>('');
@@ -30,21 +30,21 @@ const ReportShipping :React.FC= () => {
         SetOpen(false);
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data:any) => {
+    const getSelectedData = (data: any) => {
 
-        arrayOfSelectedData = data.map((item:any) => item.original);
+        arrayOfSelectedData = data.map((item: any) => item.original);
 
 
         return (arrayOfSelectedData)
 
     }
-    const getBulkJob = (selected:any) => {
+    const getBulkJob = (selected: any) => {
 
     }
 
 
 
-    const handelStartDate = (value:any) => {
+    const handelStartDate = (value: any) => {
         if (value === null) {
             setStartDate('')
         }
@@ -53,7 +53,7 @@ const ReportShipping :React.FC= () => {
             setStartDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
         }
     }
-    const handelEndDate = (value:any) => {
+    const handelEndDate = (value: any) => {
         if (value === null) {
             setEndDate('')
         }
@@ -62,7 +62,7 @@ const ReportShipping :React.FC= () => {
             setEndDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
         }
     }
-    const handelSubmit = async (event:any) => {
+    const handelSubmit = async (event: any) => {
         setLoading(true)
         event.preventDefault();
         try {
@@ -95,40 +95,33 @@ const ReportShipping :React.FC= () => {
     });
 
     const columns = useMemo(() => [
+        { Header: 'نام باربری', accessor: 'shippingCompanyName' },
         { Header: 'کد قرارداد باربری', accessor: 'shippingContractCode' },
+        { Header: 'شناسه خرید', accessor: 'orderId' },
+        { Header: 'شناسه بازارگاه', accessor: 'orderExtId' },
+
         {
-            Header: 'کد تخصیص', accessor: 'orderExtId', Cell: (rows:any) => {
-                if (rows.row.original.orderExtId !== null) { return (rows.row.original.orderExtId) }
-                else {
-                    return (rows.row.original.orderDetailExtId)
-                }
-            }
+            Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId'
+        }, {
+            Header: 'کد تخصیص', accessor: 'orderDetailExtId'
         },
-        {
-            Header: 'کد جزییات سفارش', accessor: 'orderDetailId', Cell: rows => {
-                if (rows.row.original.orderDetailId !== null) { return (rows.row.original.orderDetailId) }
-                else {
-                    return (rows.row.original.orderId)
-                }
-            }
-        },
-        
+
         { Header: 'وزن', accessor: 'plannedQuantity' },
         {
-            Header: 'تریلی', accessor: 'deliveryMethodId', Cell: row =>
+            Header: 'تریلی', accessor: 'deliveryMethodId', Cell: (row:any) =>
             (
                 row.row.original.deliveryMethodId === 5 ? 'بله' : 'خیر'
             )
         },
         { Header: 'نام تحویل گیرند', accessor: 'receiverName' },
         { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress' },
-        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: '' },
+        { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: 'receiverNationalCode' },
 
         { Header: 'کدپستی', accessor: 'receiverPostalCode' },
         { Header: 'تلفن دریافت کننده', accessor: 'receiverTel' },
         { Header: 'کدیکتای جهاد ', accessor: 'jahadYektaCode' },
-    ],[]);
-    const data = useMemo(() => Response,[Response]);;
+    ], []);
+    const data = useMemo(() => Response, [Response]);;
 
     if (!clicked) {
         if (!loading) {
@@ -181,17 +174,18 @@ const ReportShipping :React.FC= () => {
 
                                     </div>
                                     <div className=" col-12 ">
-                                        <div className=" row ">
+                                        <div className="  ">
 
-                                            <div className="col-6 n-chk d-flex  mb-4">
+                                            <div className="col-6   ">
 
-                                                <input type="checkbox" checked={Unshipped} onClick={(e:any) => setUnshipped(e.target.checked)} />
-                                                <label >حمل شده </label>
+                                                <input type="checkbox" checked={Unshipped} onClick={(e: any) => setUnshipped(e.target.checked)} />
+                                                <label className="ml-3">فقط حمل شده</label>
 
                                             </div>
-                                            <div className=" col-6 n-chk d-flex  mb-4">
-                                                <input type="checkbox" checked={HasShippingContract} onClick={(e:any) => setHasShippingContract(e.target.checked)} />
-                                                <label >قرارداد باربری دارد </label>
+                                            <div className=" col-6   mb-2">
+
+                                                <input type="checkbox" checked={HasShippingContract} onClick={(e: any) => setHasShippingContract(e.target.checked)} />
+                                                <label className="ml-3">فقط دارای قرارداد باربری </label>
 
                                             </div>
 
@@ -227,18 +221,21 @@ const ReportShipping :React.FC= () => {
 
     else {
         if (Response && Response.length > 0) {
-            const dataForExcel = Response.map((item:any) => ({
-                'کد قرارداد باربری':item.shippingContractCode,
-                'کد تخصیص ':(item.orderExtId!==null?item.orderExtId:item.orderDetailExtId),
-                'کد جزییات شفارش':(item.orderDetailId!==null?item.orderDetailId:item.orderId),
-                'وزن':item.plannedQuantity,
-                'تریلی':(item.deliveryMethodId === 5 ? 'بله' : 'خیر'),
-                'نام تحویل گیرنده':item.receiverName,
-                'آدرس تحویل گیرنده':item.receiverAddress,
-                'شماره/شناسه ملی':'',
-                'کد پستی':item.receiverPostalCode,
-                'تلفن تحویل گیرنده':item.receiverTel,
-                'کد یکتای جهاد':item.jahadYektaCode,
+            const dataForExcel = Response.map((item: any) => ({
+                'کد قرارداد باربری': item.shippingContractCode,
+                'نام باربری':item.shippingCompanyName,
+                'شناسه خرید':item.orderId,
+                'شناسه بازارگاه':item.orderExtId,
+                'شناسه جزییات شفارش': item.orderDetailId ,
+                'کد تخصیص ': item.orderDetailExtId ,
+                'وزن': item.plannedQuantity,
+                'تریلی': (item.deliveryMethodId === 5 ? 'بله' : 'خیر'),
+                'نام تحویل گیرنده': item.receiverName,
+                'آدرس تحویل گیرنده': item.receiverAddress,
+                'شماره/شناسه ملی': '',
+                'کد پستی': item.receiverPostalCode,
+                'تلفن تحویل گیرنده': item.receiverTel,
+                'کد یکتای جهاد': item.jahadYektaCode,
 
             }))
             return (
@@ -246,7 +243,7 @@ const ReportShipping :React.FC= () => {
                     <div>
                         <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-                        <MyTableBazargah columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
                     </div>
                     <div className="d-flex justify-content-end m-2">

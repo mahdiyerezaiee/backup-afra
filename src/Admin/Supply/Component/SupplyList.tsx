@@ -22,10 +22,10 @@ import Select from "react-select";
 import { GetDataWithSearchOrder } from "../../../services/orderService";
 import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";
 import QueryString from 'qs';
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 
 
-const SupplyList = () => {
+const SupplyList:React.FC = () => {
     const customStyles = {
         content: {
 
@@ -69,14 +69,14 @@ const SupplyList = () => {
     const param = { PageSize, PageNumber }
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items ? items : ''
 
 
     }
     const params = { supplierId, supplyTypeIds, shippingStatusIds, productId, wareHouseId, contractNumber }
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
 
 
@@ -102,15 +102,15 @@ const SupplyList = () => {
         getProducts();
     }, [])
     let arrayOfSelectedData = [];
-    const getSelectedData = (data) => {
+    const getSelectedData = (data:any) => {
 
-        arrayOfSelectedData = data.map(item => item.original);
+        arrayOfSelectedData = data.map((item:any) => item.original);
 
 
         return (arrayOfSelectedData)
 
     }
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -155,7 +155,7 @@ const SupplyList = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, id: 0, active: true, createDate: new Date() }
         })
 
@@ -188,7 +188,7 @@ const SupplyList = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, active: true }
         })
 
@@ -222,7 +222,7 @@ const SupplyList = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, active: false }
         })
 
@@ -256,21 +256,21 @@ const SupplyList = () => {
 
     }
     const shippingId = () => {
-        return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
+        return (ShippingStatusEnums.map((data:any) => ({ label: data.name, value: data.id })))
     }
     const SupplyTypes = () => {
-        return (SupplyTypesEnums.map(data => ({ label: data.name, value: data.id })));
+        return (SupplyTypesEnums.map((data:any) => ({ label: data.name, value: data.id })));
     }
-    const inputProductG = () => {
+    const inputProductG:any = () => {
         if (products) {
-            return (products.map(data => ({ label: data.name, value: data.id })))
+            return (products.map((data:any) => ({ label: data.name, value: data.id })))
         }
         else {
             return null
         }
     }
     const WareHouseG = () => {
-        return (wareHouses.map(data => ({ label: data.name, value: data.id })))
+        return (wareHouses.map((data:any) => ({ label: data.name, value: data.id })))
     }
 
     const deletHandler = async () => {
@@ -301,7 +301,7 @@ const SupplyList = () => {
     }
 
 
-    const openModal = (id) => {
+    const openModal = (id:any) => {
         setIsOpen(true);
         setId(id)
 
@@ -320,8 +320,8 @@ const SupplyList = () => {
             headers: { 'Content-Type': 'application/json' },
             params: {
                 SupplierId: supplierId,
-                SupplyTypeIds: supplyTypeIds ? supplyTypeIds.map(item => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+                SupplyTypeIds: supplyTypeIds ? supplyTypeIds.map((item:any) => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
                 ProductId: productId,
                 WareHouseId: wareHouseId,
                 ContractNumber: contractNumber,
@@ -331,7 +331,7 @@ const SupplyList = () => {
 
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -357,8 +357,8 @@ const SupplyList = () => {
             headers: { 'Content-Type': 'application/json' },
             params: {
                 SupplierId: supplierId,
-                SupplyTypeIds: supplyTypeIds ? supplyTypeIds.map(item => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+                SupplyTypeIds: supplyTypeIds ? supplyTypeIds.map((item:any) => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
                 ProductId: params.productId,
                 WareHouseId: params.wareHouseId,
                 ContractNumber: params.contractNumber,
@@ -368,7 +368,7 @@ const SupplyList = () => {
 
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -396,8 +396,8 @@ const SupplyList = () => {
             headers: { 'Content-Type': 'application/json' },
             params: {
                 SupplierId: params.supplierId,
-                SupplyTypeIds: params.supplyTypeIds ? params.supplyTypeIds.map(item => item.value) : [],
-                ShippingStatusIds: params.shippingStatusIds ? params.shippingStatusIds.map(item => item.value) : [],
+                SupplyTypeIds: params.supplyTypeIds ? params.supplyTypeIds.map((item:any) => item.value) : [],
+                ShippingStatusIds: params.shippingStatusIds ? params.shippingStatusIds.map((item:any) => item.value) : [],
                 ProductId: params.productId,
                 WareHouseId: params.wareHouseId,
                 ContractNumber: params.contractNumber,
@@ -408,7 +408,7 @@ const SupplyList = () => {
 
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -471,16 +471,16 @@ const SupplyList = () => {
         getCompanies()
         getSupplier()
     }, [getData])
-    const SupplierG = () => {
+    const SupplierG:any = () => {
         if (suppliers) {
-            return (suppliers.map(data => ({ label: data.name, value: data.id })))
+            return (suppliers.map((data:any) => ({ label: data.name, value: data.id })))
         }
         else {
             return null
         }
     }
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editsupply/${id}`)
     }
 
@@ -489,7 +489,7 @@ const SupplyList = () => {
         { Header: '#', accessor: 'id' },
         { Header: 'قراداد', accessor: 'contractNumber' },
         {
-            Header: 'نام کالا', accessor: 'product.name', Cell: row => {
+            Header: 'نام کالا', accessor: 'product.name', Cell: (row:any) => {
                 const [product, setProduct] = useState('')
                 const getProduct = async () => {
                     try {
@@ -508,21 +508,21 @@ const SupplyList = () => {
         },
 
         {
-            Header: 'مقدار', accessor: 'quantity', Cell: row => formatter.format(row.row.original.quantity)
+            Header: 'مقدار', accessor: 'quantity', Cell: (row:any) => formatter.format(row.row.original.quantity)
         }, {
-            Header: 'واحد', accessor: 'Mesures', Cell: row => {
+            Header: 'واحد', accessor: 'Mesures', Cell: (row:any) => {
 
-                return (MeasureUnitSample.filter(item => item.id === row.row.original.measureUnitId).map(item => item.name))
+                return (MeasureUnitSample.filter((item:any) => item.id === row.row.original.measureUnitId).map((item:any) => item.name))
             }
         }
         ,
 
         {
-            Header: 'انبار', accessor: 'wareHouse', Cell: row => {
-                return (wareHouses.filter(item => item.id === row.row.original.wareHouseId).map(item => item.name))
+            Header: 'انبار', accessor: 'wareHouse', Cell: (row:any) => {
+                return (wareHouses.filter((item:any) => item.id === row.row.original.wareHouseId).map((item:any) => item.name))
             }
         }, {
-            Header: 'تامین کننده', accessor: 'supplier.name', Cell: row => {
+            Header: 'تامین کننده', accessor: 'supplier.name', Cell: (row:any) => {
                 const [supplier, setSupplier] = useState('')
                 const getSupplier = async () => {
                     try {
@@ -540,9 +540,9 @@ const SupplyList = () => {
             }
         },
         {
-            Header: 'نوع تامین', accessor: 'taminType', Cell: row => {
+            Header: 'نوع تامین', accessor: 'taminType', Cell: (row:any) => {
 
-                return (SupplyTypesEnums.filter(item => item.id === row.row.original.supplyTypeId).map(item => item.name))
+                return (SupplyTypesEnums.filter((item:any) => item.id === row.row.original.supplyTypeId).map((item:any) => item.name))
 
             }
         },
@@ -550,13 +550,13 @@ const SupplyList = () => {
             Header: 'کد  کوتاژ', accessor: 'cottageCode'
         },
         {
-            Header: 'توضیحات', accessor: 'comment', Cell: row => {
+            Header: 'توضیحات', accessor: 'comment', Cell: (row:any) => {
 
                 return (<span title={row.row.original.comment}>{row.row.original.comment.substring(0, 50) + '...'}</span>)
             }
         },
         {
-            Header: 'عملیات', accessor: '11', Cell: row => {
+            Header: 'عملیات', accessor: '11', Cell: (row:any) => {
 
                 return (
                     <ul className="table-controls">
@@ -597,12 +597,12 @@ const SupplyList = () => {
                 )
             }
         }
-    ])
+    ],[])
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }
 
-    const data = useMemo(() => supplies)
+    const data = useMemo(() => supplies,[supplies])
     const handelSearchFieldClear = async () => {
         setGeData(true)
         getSupplies()
@@ -618,7 +618,7 @@ const SupplyList = () => {
 
     }
     if (supplies) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام تامین کننده': item.name
         }))
@@ -648,12 +648,12 @@ const SupplyList = () => {
                                     <label>محصول</label>
 
                                     <Select
-                                        defaultValue={products.filter(i => i.id === productId).map(data => ({ label: data.name, value: data.id }))[0]}
+                                        defaultValue={products.filter((i:any) => i.id === productId).map((data:any) => ({ label: data.name, value: data.id }))[0]}
 
                                         placeholder='محصول'
                                         options={inputProductG()}
 
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             SetProductId(e.value)
                                         }}
                                     />
@@ -743,7 +743,7 @@ const SupplyList = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
@@ -751,7 +751,7 @@ const SupplyList = () => {
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 
@@ -801,7 +801,7 @@ const SupplyList = () => {
                                     x2="6"
                                     y2="18"></line><line
                                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
-                            <p> آیا مطمئنید تامین {supplies.filter(item => item.id === id).map(item => item.name)}   </p>
+                            <p> آیا مطمئنید تامین {supplies.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -813,7 +813,7 @@ const SupplyList = () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف تامین جدید</button>
-                        <MyTable columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                             total={totalCount}
                             setPageSize={setPageSize}
                             PageSize={PageSize}
@@ -851,7 +851,7 @@ const SupplyList = () => {
                                 <label> شماره قرارداد</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره قرارداد"
-                                    value={contractNumber} onChange={e => SetContractNumber(e.target.value)} />
+                                    value={contractNumber} onChange={(e:any) => SetContractNumber(e.target.value)} />
                             </div>
 
                             <div className="col-lg-2 col-md-4  col-sm-12    mb-1  textOnInput form-group " style={{ marginBottom: "3rem" }}>
@@ -860,11 +860,11 @@ const SupplyList = () => {
 
                                     <Select
 
-                                        defaultValue={products ? products.filter(i => i.id === productId).map(data => ({ label: data.name, value: data.id }))[0] : ""}
+                                        defaultValue={products ? products.filter((i:any) => i.id === productId).map((data:any) => ({ label: data.name, value: data.id }))[0] : ""}
                                         placeholder='محصول'
                                         options={inputProductG()}
 
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             SetProductId(e.value)
                                         }}
                                     />
@@ -954,15 +954,15 @@ const SupplyList = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
-                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+                                            value={CompaniesIDs().filter((i:any) => i.value === companyId).map((i:any) => i)}
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 

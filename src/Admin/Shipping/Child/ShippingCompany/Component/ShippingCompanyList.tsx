@@ -27,7 +27,7 @@ const customStyles = {
         border: '2px ridge black'
     }
 };
-const ShoppingCompanyList = () => {
+const ShoppingCompanyList:React.FC = () => {
     const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
     const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount, setTotalCount] = useState(0);
@@ -46,7 +46,7 @@ const ShoppingCompanyList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items? items:''
 
 
@@ -57,9 +57,9 @@ const ShoppingCompanyList = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data) => {
+    const getSelectedData = (data:any) => {
 
-        arrayOfSelectedData = data.map(item => item.original);
+        arrayOfSelectedData = data.map((item:any) => item.original);
 
 
         return (arrayOfSelectedData)
@@ -78,7 +78,7 @@ const ShoppingCompanyList = () => {
 
     }
 
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -96,7 +96,7 @@ const ShoppingCompanyList = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, id: 0, active: true, createDate: new Date() } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -127,7 +127,7 @@ const ShoppingCompanyList = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: true } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: true } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -158,7 +158,7 @@ const ShoppingCompanyList = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: false } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: false } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -193,13 +193,13 @@ const ShoppingCompanyList = () => {
     }
     const getGroupForCompbo = () => {
 
-        return (shippingCompanyG.map(item => ({ label: item.name, value: item.id })))
+        return (shippingCompanyG.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
     const groups = getGroupForCompbo();
     const params = { Name, Code}
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items? items:''
 
 
@@ -220,7 +220,7 @@ const ShoppingCompanyList = () => {
 
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -257,7 +257,7 @@ setPageNumber(0)
 
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -277,7 +277,7 @@ setPageNumber(0)
             console.log(error);
         }
     }
-    const openModal = (id) => {
+    const openModal = (id:any) => {
         setIsOpen(true);
         setId(id)
 
@@ -300,7 +300,7 @@ setPageNumber(0)
 
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -323,7 +323,7 @@ setPageNumber(0)
         sessionStorage.clear()
     }, [getData])
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editshippingCompany/${id}`)
     }
     const navigate = useNavigate()
@@ -335,7 +335,7 @@ setPageNumber(0)
         { Header: 'نام شرکت', accessor: 'name' }
         , { Header: 'شماره کد', accessor: 'code' }
         , {
-            Header: 'عملیات', accessor: '11', Cell: row => {
+            Header: 'عملیات', accessor: '11', Cell: (row:any) => {
 
                 return (
                     <ul className="table-controls">
@@ -355,8 +355,8 @@ setPageNumber(0)
                 )
             }
         }
-    ])
-    const data = useMemo(() => shippingCompany);
+    ],[])
+    const data = useMemo(() => shippingCompany,[shippingCompany]);
     const handelSearchFieldClear = async () => {
 setPageNumber(0)
         setName('')
@@ -366,7 +366,7 @@ setPageNumber(0)
 
     }
     if (shippingCompany) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام شرکت': item.name,
             'کد': item.code,
@@ -446,7 +446,7 @@ setPageNumber(0)
                                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                            <p> آیا مطمئنید  کالا {shippingCompany.filter(item => item.id === id).map(item => item.name)}   </p>
+                            <p> آیا مطمئنید  کالا {shippingCompany.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -460,7 +460,7 @@ setPageNumber(0)
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف باربری جدید</button>
-                        <MyTable columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                             total={totalCount}
                             setPageSize={setPageSize}
                             PageSize={PageSize}
@@ -499,13 +499,13 @@ setPageNumber(0)
 
                                 <label> نام شرکت</label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام شرکت" value={Name} onChange={e => setName(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام شرکت" value={Name} onChange={(e:any) => setName(e.target.value)} />
                             </div>
 
                             <div className="col-lg-2 col-md-4  col-sm-12    mb-1">
                                 <label> کد </label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد " value={Code} onChange={e => setCode(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد " value={Code} onChange={(e:any) => setCode(e.target.value)} />
                             </div>
 
 

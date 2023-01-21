@@ -13,21 +13,21 @@ import {Field, Form, Formik} from "formik";
 import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
 
 
-const EditeSupply = () => {
+const EditeSupply:React.FC = () => {
     const [productId, setProductId] = useState(0);
-    const [measureUnitId, setMeasureUnitId] = useState(0);
+    const [measureUnitId, setMeasureUnitId] = useState<any>(0);
     const [cottageCode, setCottageCode] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const [wareHouseId, setWareHouseId] = useState(0);
+    const [wareHouseId, setWareHouseId] = useState<any>(0);
     const [supplyTypeId, setSupplyTypeId] = useState(0);
-    const [supplierId, setSupplierId] = useState(0);
+    const [supplierId, setSupplierId] = useState<any>(0);
     const [products, SetProducts] = useState([]);
     const [wareHouses, SetWareHouses] = useState([]);
     const [suppliers, SetSuppliers] = useState([]);
-    const [quantity, setQuantity] = useState('');
-    const [contractNumber, setContractNumber] = useState('');
-    const [shippingStatusId, setShippingStatusId] = useState('');
+    const [quantity, setQuantity] = useState<any>('');
+    const [contractNumber, setContractNumber] = useState<any>('');
+    const [shippingStatusId, setShippingStatusId] = useState<any>('');
     const [comment, setComment] = useState('');
     const navigate = useNavigate();
     const params = useParams();
@@ -90,40 +90,40 @@ const EditeSupply = () => {
     }, [])
 
     const Mesures = () => {
-        return (MeasureUnitSample.map(data => ({ label: data.name, value: data.id })));
+        return (MeasureUnitSample.map((data:any) => ({ label: data.name, value: data.id })));
     }
     const MesuresD = () => {
-        return (MeasureUnitSample.filter(item => item.id === measureUnitId).map(data => ({ label: data.name, value: data.id })));
+        return (MeasureUnitSample.filter((item:any) => item.id === measureUnitId).map((data:any) => ({ label: data.name, value: data.id })));
     }
     const SupplyTypes = () => {
-        return (SupplyTypesEnums.map(data => ({ label: data.name, value: data.id })));
+        return (SupplyTypesEnums.map((data:any) => ({ label: data.name, value: data.id })));
     }
     const SupplyTypesD = () => {
-        return (SupplyTypesEnums.filter(item => item.id === supplyTypeId).map(data => ({ label: data.name, value: data.id })));
+        return (SupplyTypesEnums.filter((item:any) => item.id === supplyTypeId).map((data:any) => ({ label: data.name, value: data.id })));
     }
     const inputWarehouses = () => {
-        return (wareHouses.map(data => ({ label: data.name, value: data.id })));
+        return (wareHouses.map((data:any) => ({ label: data.name, value: data.id })));
     }
     const inputWarehousesD = () => {
-        return (wareHouses.filter(item => item.id === wareHouseId).map(data => ({ label: data.name, value: data.id })));
+        return (wareHouses.filter((item:any) => item.id === wareHouseId).map((data:any) => ({ label: data.name, value: data.id })));
     }
     const inputProductG = () => {
-        return (products.map(data => ({ label: data.name, value: data.id })))
+        return (products.map((data:any) => ({ label: data.name, value: data.id })))
     }
     const inputProductGD = () => {
-        return (products.filter(item => item.id === productId).map(data => ({ label: data.name, value: data.id })))
+        return (products.filter((item:any) => item.id === productId).map((data:any) => ({ label: data.name, value: data.id })))
     }
     const inputSuppliers = () => {
-        return (suppliers.map(data => ({ label: data.name, value: data.id })))
+        return (suppliers.map((data:any) => ({ label: data.name, value: data.id })))
     }
     const inputSuppliersD = () => {
-        return (suppliers.filter(item => item.id === supplierId).map(data => ({ label: data.name, value: data.id })))
+        return (suppliers.filter((item:any) => item.id === supplierId).map((data:any) => ({ label: data.name, value: data.id })))
     }
     const shippingIdD = () => {
-        return (ShippingStatusEnums.filter(item => item.id === shippingStatusId).map(data => ({ label: data.name, value: data.id })))
+        return (ShippingStatusEnums.filter((item:any) => item.id === shippingStatusId).map((data:any) => ({ label: data.name, value: data.id })))
     }
     const shippingId = () => {
-        return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
+        return (ShippingStatusEnums.map((data:any) => ({ label: data.name, value: data.id })))
     }
 
     const submit = async () => {
@@ -225,7 +225,7 @@ const EditeSupply = () => {
                                         }}
                                         value={inputProductGD()} className='opacityForInput border-danger'
                                         options={inputProductG()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setProductId(e.value)
 
 
@@ -244,7 +244,7 @@ const EditeSupply = () => {
                                         }}
                                         value={MesuresD()} className='opacityForInput border-danger'
                                         options={Mesures()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setMeasureUnitId(e.value)
 
 
@@ -264,7 +264,7 @@ const EditeSupply = () => {
                                         value={inputWarehousesD()}
                                         className='opacityForInput border-danger'
                                         options={inputWarehouses()}
-                                        onChange={e => {
+                                        onChange={(e:any) => {
                                             setWareHouseId(e.value)
 
 
@@ -286,7 +286,7 @@ const EditeSupply = () => {
                                             }}
                                             value={inputSuppliersD()} className='opacityForInput border-danger'
                                             options={inputSuppliers()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setSupplierId(e.value)
 
 
@@ -305,7 +305,7 @@ const EditeSupply = () => {
                                           }}
                                             value={shippingIdD()} className='opacityForInput border-danger'
                                             options={shippingId()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setShippingStatusId(e.value)
 
 
@@ -324,7 +324,7 @@ const EditeSupply = () => {
                                           }}
                                             value={SupplyTypesD()} className='opacityForInput border-danger'
                                             options={SupplyTypes()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setSupplyTypeId(e.value)
 
 
@@ -342,17 +342,17 @@ const EditeSupply = () => {
                                     <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                         <label >مقدار</label>
                                         <Field  validate={validatNumber} name="quantity" type="text" className=" value form-control opacityForInput" value={formatter.format(quantity)}
-                                               onChange={e => {
+                                               onChange={(e:any) => {
                                                    setQuantity(e.target.value.replaceAll(",",''))
 
                                                }} />
-                                        {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
+                                        {errors.quantity && touched.quantity && <div className="text-danger">{String(errors.quantity)}</div>}
 
                                     </div>
                                     <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                         <label >کد کوتاژ</label>
                                         <Field  validate={validatNumber} name="cottageCode" className="form-control opacityForInput" value={cottageCode}
-                                               onChange={e => {
+                                               onChange={(e:any) => {
                                                    setCottageCode(e.target.value)
 
                                                }} />
@@ -362,18 +362,18 @@ const EditeSupply = () => {
                                     <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                         <label >شماره قرارداد</label>
                                         <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" value={contractNumber}
-                                               onChange={e => {
+                                               onChange={(e:any) => {
                                                    setContractNumber(e.target.value)
 
                                                }} />
                                     </div>
-                                    {errors.contractNumber && touched.contractNumber && <div className="text-danger">{errors.contractNumber}</div>}
+                                    {errors.contractNumber && touched.contractNumber && <div className="text-danger">{String(errors.contractNumber)}</div>}
 
                                 </div></div>
                             <div className="form-group mb-4 textOnInput">
                                 <label >توضیحات</label>
 
-                                <Field  validate={validatAlpha} name="comment"   as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
+                                <Field  validate={validatAlpha} name="comment"   as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={(e:any) => {
                                     setComment(e.target.value)
                                 }} />
                                 {errors.comment && touched.comment && <div className="text-danger">{errors.comment}</div>}

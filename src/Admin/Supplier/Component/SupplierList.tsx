@@ -7,7 +7,7 @@ import {
     GetDataWithSearchSupply,
     SetSupplier,
     SetSupply
-} from './../../../services/supplyService';
+} from '../../../services/supplyService';
 import MyTable from '../../../Common/Shared/Form/MyTable';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
@@ -15,10 +15,10 @@ import { ExportToExcel } from '../../../Common/Shared/Common/ExportToExcel';
 import {toast} from "react-toastify";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
-import { GetCompanyChild } from './../../../services/companiesService';
-import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import { GetCompanyChild } from '../../../services/companiesService';
+import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 
-const SupplierList = () => {
+const SupplierList:React.FC = () => {
     const customStyles = {
         content: {
 
@@ -49,7 +49,7 @@ const SupplierList = () => {
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items? items:''
 
 
@@ -58,15 +58,15 @@ const SupplierList = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -125,7 +125,7 @@ const SupplierList = () => {
     }
     const copySelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,id:0,active:true,createDate:new Date()}})
 
         let successCount=0;
         let errorCount=0;
@@ -157,7 +157,7 @@ const SupplierList = () => {
     }
     const enableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:true}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:true}})
 
         let successCount=0;
         let errorCount=0;
@@ -190,7 +190,7 @@ const SupplierList = () => {
     }
     const disableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:false}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:false}})
 
         let successCount=0;
         let errorCount=0;
@@ -249,7 +249,7 @@ const SupplierList = () => {
     }
 
 
-    const openModal = (id) => {
+    const openModal = (id:number) => {
         setIsOpen(true);
         setId(id)
        
@@ -288,7 +288,7 @@ const SupplierList = () => {
 
             }
             ,
-            paramsSerializer:params=>{
+            paramsSerializer:(params:any)=>{
 
                 return QueryString.stringify(params)
             }
@@ -306,7 +306,7 @@ const SupplierList = () => {
         }
 
     }
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editsupplier/${id}`)
     }
     const columns = useMemo(() => [
@@ -314,7 +314,7 @@ const SupplierList = () => {
         { Header: '#', accessor: 'id' },
         { Header: 'نام تامین کننده', accessor: 'name' },
         {
-            Header: 'عملیات', accessor: '11', Cell: row => {
+            Header: 'عملیات', accessor: '11', Cell: (row:any) => {
 
                 return (
                     <ul className="table-controls">
@@ -352,14 +352,14 @@ const SupplierList = () => {
                 )
             }
         }
-    ])
+    ],[])
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }
 
-    const data = useMemo(() => suppliers)
+    const data = useMemo(() => suppliers,[suppliers])
     if(suppliers){
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام تامین کننده': item.name
         }))
@@ -397,7 +397,7 @@ const SupplierList = () => {
                                                            y2="18"></line><line
                                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
-                            <p> آیا مطمئنید  تامین {suppliers.filter(item => item.id === id).map(item => item.name)}   </p>
+                            <p> آیا مطمئنید  تامین {suppliers.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -411,7 +411,7 @@ const SupplierList = () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler} >تعریف تامین کننده جدید </button>
-                        <MyTable   columns={columns} data={data} getData={rows=>setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable   columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} bulkJob={getBulkJob}
                                    total={totalCount}
                                    setPageSize={setPageSize}
                                    PageSize={PageSize}

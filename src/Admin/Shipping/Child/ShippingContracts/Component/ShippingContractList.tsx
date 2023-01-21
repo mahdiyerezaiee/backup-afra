@@ -26,7 +26,7 @@ const customStyles = {
         border: '2px ridge black'
     }
 };
-const ShoppingContractList = () => {
+const ShoppingContractList :React.FC= () => {
     const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
     const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
 
@@ -50,7 +50,7 @@ const ShoppingContractList = () => {
     const param = { PageSize ,PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items? items:''
 
 
@@ -59,9 +59,9 @@ const ShoppingContractList = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data) => {
+    const getSelectedData = (data:any) => {
 
-        arrayOfSelectedData = data.map(item => item.original);
+        arrayOfSelectedData = data.map((item:any) => item.original);
 
 
         return (arrayOfSelectedData)
@@ -69,7 +69,7 @@ const ShoppingContractList = () => {
     }
 
 
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -89,7 +89,7 @@ const ShoppingContractList = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, id: 0, active: true, createDate: new Date() }
         })
 
@@ -101,12 +101,12 @@ const ShoppingContractList = () => {
             try {
 
 
-                const { data, status } = await setShippingContract(copyData[i])
-                if (status === 200) {
+                setShippingContract(copyData[i])
+              
                     SetOpen(true)
 
                     SetStateSuccess(successCount += 1)
-                }
+                
 
 
             } catch (error) {
@@ -122,7 +122,7 @@ const ShoppingContractList = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, active: true }
         })
 
@@ -134,12 +134,12 @@ const ShoppingContractList = () => {
             try {
 
 
-                const { data, status } = await setShippingContract(copyData[i])
-                if (status === 200) {
+                setShippingContract(copyData[i])
+               
                     SetOpen(true)
 
                     SetStateSuccess(successCount += 1)
-                }
+                
 
 
             } catch (error) {
@@ -155,7 +155,7 @@ const ShoppingContractList = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => {
+        const copyData = arrayOfData.map((item:any) => {
             return { ...item, active: false }
         })
 
@@ -170,12 +170,12 @@ const ShoppingContractList = () => {
                     'shippingCompany': copyData[i]
                 }
 
-                const { data, status } = await setShippingContract(copyData[i])
-                if (status === 200) {
+                setShippingContract(copyData[i])
+            
                     SetOpen(true)
 
                     SetStateSuccess(successCount += 1)
-                }
+                
 
 
             } catch (error) {
@@ -191,7 +191,7 @@ const ShoppingContractList = () => {
     }
     const params = { CompanyName, ContractNumber,CompanyCode}
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items? items:''
 
 
@@ -212,7 +212,7 @@ const ShoppingContractList = () => {
 
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -250,7 +250,7 @@ setPageNumber(0)
 
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -270,7 +270,7 @@ setPageNumber(0)
             console.log(error);
         }
     }
-    const openModal = (id) => {
+    const openModal = (id:any) => {
         setIsOpen(true);
         setId(id)
 
@@ -293,7 +293,7 @@ setPageNumber(0)
 
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -328,7 +328,7 @@ setGeData(false)
         getShippingCompanies();
     }, [getData])
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editShippingContract/${id}`)
     }
 
@@ -343,31 +343,31 @@ setGeData(false)
         { Header: '#', accessor: 'id' },
         { Header: 'شماره قرارداد', accessor: 'contractNumber' },
         {
-            Header: 'نام شرکت', accessor: 'shippingCompanyId', Cell: rows => {
+            Header: 'نام شرکت', accessor: 'shippingCompanyId', Cell: (rows:any) => {
 
-                return (ShippingCompanies.filter(item => item.id === rows.row.original.shippingCompanyId).map(item => item.name))
+                return (ShippingCompanies.filter((item:any) => item.id === rows.row.original.shippingCompanyId).map((item:any) => item.name))
             }
         }
         , {
             Header: ' کد شماره شرکت ', accessor: 'shippingCompanyCode', Cell: rows => {
 
-                return (ShippingCompanies.filter(item => item.id === rows.row.original.shippingCompanyId).map(item => item.code))
+                return (ShippingCompanies.filter((item:any) => item.id === rows.row.original.shippingCompanyId).map((item:any) => item.code))
             }
         },
         { Header: ' مقدار ', accessor: 'quantity' },
         {
-            Header: 'واحد', accessor: 'measureUnitId', Cell: row => {
+            Header: 'واحد', accessor: 'measureUnitId', Cell: (row:any) => {
 
-                return (MeasureUnitSample.filter(item => item.id === row.row.original.measureUnitId).map(item => item.name))
+                return (MeasureUnitSample.filter((item:any) => item.id === row.row.original.measureUnitId).map((item:any) => item.name))
             }
         }
         , {
-            Header: ' تاریخ  ', accessor: 'createDate', Cell: rows => {
+            Header: ' تاریخ  ', accessor: 'createDate', Cell: (rows:any) => {
 
                 return (new Date(rows.row.original.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }))
             }
         }, {
-        Header: 'عملیات', accessor: '11', Cell: row => {
+        Header: 'عملیات', accessor: '11', Cell: (row:any) => {
 
                 return (
                     <ul className="table-controls">
@@ -389,8 +389,8 @@ setGeData(false)
                 )
             }
         }
-    ])
-    const data = useMemo(() => ShippingContract);
+    ],[])
+    const data = useMemo(() => ShippingContract,[ShippingContract]);
     const handelSearchFieldClear = async () => {
 setPageNumber(0)
         setCompanyName('')
@@ -400,7 +400,7 @@ setPageNumber(0)
      setGeData(true)
     }
     if (ShippingContract) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام شرکت': item.name,
             'کد': item.code,
@@ -488,7 +488,7 @@ setPageNumber(0)
                                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
                             <p> آیا مطمئنید
-                                کالا {ShippingContract.filter(item => item.id === id).map(item => item.name)}   </p>
+                                کالا {ShippingContract.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -500,7 +500,7 @@ setPageNumber(0)
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف قرارداد باربری جدید</button>
-                        <MyTable columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                             total={totalCount}
                             setPageSize={setPageSize}
                             PageSize={PageSize}
