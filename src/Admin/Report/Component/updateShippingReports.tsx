@@ -324,17 +324,17 @@ const UpdateShippingReports: React.FC = () => {
                         <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
 
-                        <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} rowProps={(row:any) => ({
+
+                            style: {
+                                backgroundColor: row.values.ثبت === 'ثبت شده' ? 'lightgreen' : '#ff00003b',
+
+                                cursor: "pointer"
+                            }
+                        })} bulkJob={getBulkJob} />
 
 
-                        {/*rowProps={row => ({
 
-                style: {
-                    backgroundColor: row.values.ثبت === 'ثبت شده'? 'lightgreen': '#ff00003b',
-
-                    cursor: "pointer"
-                }
-            })}     نمیتونیم ازین استفاده کنیم باید یه فکر دیگه بکنیم*/}
                     </div>
                     <div className="d-flex justify-content-end">
                         <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />

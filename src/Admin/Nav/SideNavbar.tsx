@@ -18,7 +18,7 @@ interface Props{
     collapsed:boolean
 }
 
-const SideNavbar: React.FC<Props> = () => {
+const SideNavbar: React.FC = () => {
     
 
    
@@ -113,8 +113,8 @@ const SideNavbar: React.FC<Props> = () => {
                 <SubMenu  hidden={roles.includes(7) || roles.includes(8) ? false : true} icon={<TbReport size={'2rem'} />} ref={ref16} open={show.item16 === true ? true : false} onClick={() => setShow({ ...show, item16: !show.item16, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item2: false, item11: false, item12: false, item14: false, item13: false, item7: false })} label="گزارشات">
                     <MenuItem onClick={handleHeaderClick}  ><NavLink to='ShippingReport'>حواله های باربری </NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}  ><NavLink to='UsedBarBariReports'>بارگیری </NavLink> </MenuItem>
-                    {/* <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomersReports'>  مشتریان</NavLink></MenuItem> */}
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='OrdersReports'>سفارشات</NavLink> </MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomersReports'>  مشتریان</NavLink></MenuItem>
+                    {/* <MenuItem onClick={handleHeaderClick}  > <NavLink to='OrdersReports'>سفارشات</NavLink> </MenuItem> */}
                     <MenuItem onClick={handleHeaderClick}  > <NavLink to='ProceessAttachments'>اعتبار و اسناد</NavLink> </MenuItem>
 
                 </SubMenu>
