@@ -21,23 +21,23 @@ import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 import { DeliveryMethods } from '../../../Common/Enums/DeliveryMethodsEnums';
 import { OrderStatusEnumsProgressBar } from '../../../Common/Enums/OrderStatusEnumsProgressBar';
 import FadeLoader from "react-spinners/FadeLoader";
-import { GetOrderDetailsAdmin } from './../../../services/orderService';
+import { GetOrderDetailsAdmin } from '../../../services/orderService';
 
 
-const OrderDetailTest = () => {
+const OrderDetailTest:React.FC = () => {
     const params = useParams()
-    let orderDetail = []
+    let orderDetail:any = []
     const [modalIsOpenUpload, setIsOpenUpload] = useState(false);
     const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
-    const [order, setOrder] = useState([])
+    const [order, setOrder] = useState<any>([])
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenAddress, setIsOpenAddress] = useState(false)
     const [image, setImage] = useState({})
-    const [customerDetail, setCustomerDetail] = useState([])
+    const [customerDetail, setCustomerDetail] = useState<any>([])
     const [product, setProduct] = useState([])
     const [ShippingInformation, SetShippingInformation] = useState([]);
     const [organization, setOrganization] = useState([]);
-    let [DetailAddress, setDetailAddress] = useState([]);
+    let [DetailAddress, setDetailAddress] = useState<any>([]);
     const [Shipping, SetShipping] = useState([])
     const [ShippingContracts, SetShippingContracts] = useState([])
     const [attachments, Setattachments] = useState([])
@@ -99,7 +99,7 @@ const OrderDetailTest = () => {
                 isAdmin: true
             }
             ,
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -129,17 +129,17 @@ const OrderDetailTest = () => {
             console.log('1')
         }
     }
-    const bindAdress = async (arr) => {
-        let FilnalArr = [];
+    const bindAdress = async (arr:any) => {
+        let FilnalArr:any = [];
 
         if (orderDetail.length > 1) {
             for (let i = 0; i < arr.length; i++) {
                 try {
 
                     const { data, status } = await GetAddress(11, arr[i].id)
-                    let detail = orderDetail.filter(item => item.id === arr[i].id)[0]
+                    let detail = orderDetail.filter((item:any) => item.id === arr[i].id)[0]
                     let address = data.result.addresses;
-                    const finallAddres = address.map(item =>
+                    const finallAddres = address.map((item:any) =>
                     ({
                         fullAddress: item.fullAddress,
                         postalCode: item.postalCode,
@@ -163,9 +163,9 @@ const OrderDetailTest = () => {
                 try {
 
                     const { data, status } = await GetAddress(10, arr[i].orderId)
-                    let detail = orderDetail.filter(item => item.orderId === arr[i].orderId)[0]
+                    let detail = orderDetail.filter((item:any) => item.orderId === arr[i].orderId)[0]
                     let address = data.result.addresses;
-                    const finallAddres = address.map(item =>
+                    const finallAddres = address.map((item:any) =>
                     ({
                         fullAddress: item.fullAddress,
                         postalCode: item.postalCode,
@@ -194,7 +194,7 @@ const OrderDetailTest = () => {
 
         if (Shipping) {
 
-            Shipping.forEach(item => sum += item.plannedQuantity)
+            Shipping.forEach((item:any) => sum += item.plannedQuantity)
 
         }
 
@@ -207,7 +207,7 @@ const OrderDetailTest = () => {
         var sum = 0
 
         if (Shipping) {
-            Shipping.forEach(item => sum += item.shippedQuantity)
+            Shipping.forEach((item:any) => sum += item.shippedQuantity)
         }
         return sum
     }
@@ -226,7 +226,7 @@ const OrderDetailTest = () => {
                 await bindAdress(orderDetail)
 
                 var sum = 0;
-                orderDetail.forEach(item => sum += item.quantity
+                orderDetail.forEach((item:any) => sum += item.quantity
 
                 );
                 SetOrderWeight(sum)
@@ -245,7 +245,7 @@ const OrderDetailTest = () => {
         handelGetAttachment()
 
     }, [])
-    const handelPreview = (item) => {
+    const handelPreview = (item:any) => {
         setImage(item)
         setIsOpen(true)
     }
@@ -256,7 +256,7 @@ const OrderDetailTest = () => {
         let fullname;
         if (customerDetail.organizationId > 0) {
 
-            OName = organization.filter(item => item.id === customerDetail.organizationId).map(item => item.name)
+            OName = organization.filter((item:any) => item.id === customerDetail.organizationId).map((item:any) => item.name)
             fullname = `${OName ? OName : ''}`
         }
         else {
@@ -266,7 +266,7 @@ const OrderDetailTest = () => {
         return (fullname)
     }
 
-    const dataForExcel = Shipping ? Shipping.map(item => ({
+    const dataForExcel = Shipping ? Shipping.map((item:any) => ({
 
         ' شناسه سیستم': item.id,
         'شناسه سفارش': item.orderId ? item.orderId : "--",
@@ -274,8 +274,8 @@ const OrderDetailTest = () => {
         'واحد': MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name),
         '  مقدار': item.quantity,
         'تاریخ قرارداد ': new Date(item.shippingDate).toLocaleDateString('fa-IR'),
-        'نحوه ارسال': DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name),
-        'شماره قراداد': item.shippingContractId === null ? '' : ShippingContracts.filter(i => i.id === item.shippingContractId).map(i => i.contractNumber),
+        'نحوه ارسال': DeliveryMethods.filter((i:any) => i.id === item.deliveryMethodId).map((i:any) => i.name),
+        'شماره قراداد': item.shippingContractId === null ? '' : ShippingContracts.filter((i:any) => i.id === item.shippingContractId).map((i:any) => i.contractNumber),
     })) : ''
     const update = async () => {
         setLoading(true)
@@ -290,22 +290,22 @@ const OrderDetailTest = () => {
     }
     let orderDetailId;
     let measureUnitId;
-    let detailAddress;
+    let detailAddress:any;
     var sumTakhsis = 0
 
 
     if (DetailAddress.length > 0) {
         let count = DetailAddress.length
-        orderDetailId = (DetailAddress.filter(item => item.extId === null)[0] ? DetailAddress.filter(item => item.extId === null)[0].id : DetailAddress[count - 1].id)
+        orderDetailId = (DetailAddress.filter((item:any) => item.extId === null)[0] ? DetailAddress.filter((item:any) => item.extId === null)[0].id : DetailAddress[count - 1].id)
         measureUnitId = DetailAddress[0].measureUnitId
         detailAddress = DetailAddress
 
 
-        let newArr = DetailAddress.filter(item => item.extId !== null)
+        let newArr = DetailAddress.filter((item:any) => item.extId !== null)
 
         if (newArr.length > 0) {
 
-            newArr.forEach(item => sumTakhsis += item.quantity)
+            newArr.forEach((item:any) => sumTakhsis += item.quantity)
         }
         else {
             sumTakhsis = 0
@@ -333,8 +333,8 @@ const OrderDetailTest = () => {
                                 handelPreview={handelPreview} />) : ''}
                         </> :
                             (
-                                <><OrderAddress openModalAddress={openModalAddress} setIsOpenUploadExcel={setIsOpenUploadExcel} details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} />
-                                    <OrderWayBill loading={loading} Shipping={Shipping} ShippingContracts={ShippingContracts} dataForExcel={dataForExcel} update={update} />
+                                <><OrderAddress  details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} />
+                                    <OrderWayBill loading={loading} Shipping={Shipping} dataForExcel={dataForExcel} />
                                     {attachments ? (<OrderAttachment order={order} params={params} attachments={attachments}
                                         closeModalForUpload={closeModalForUpload}
                                         modalIsOpenUpload={modalIsOpenUpload}

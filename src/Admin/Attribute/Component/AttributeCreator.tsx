@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { SetAttribute } from '../../../services/attributeService';
 import { toast } from 'react-toastify';
 
-const AttributeCreator = () => {
+const AttributeCreator:React.FC = () => {
     const [name, setName] = useState('');
     const [entityTypeId, setEntityTypeId] = useState(0);
     const [controlTypeId, setControlTypeId] = useState(0);
@@ -26,7 +26,7 @@ const AttributeCreator = () => {
             controlTypeValue
         }
     }
-    const submit = async (event) => {
+    const submit = async (event:any) => {
         event.preventDefault();
         try {
 
@@ -64,7 +64,7 @@ const AttributeCreator = () => {
                         <div className="form-group mb-4 textOnInput  ">
 
                             <label >نام ویژگی</label>
-                            <input type="text" className="form-control opacityForInput" value={name} onChange={e => setName(e.target.value)} />
+                            <input type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => setName(e.target.value)} />
 
                         </div>
                         <div className="form-group mb-4 textOnInput  ">
@@ -72,20 +72,20 @@ const AttributeCreator = () => {
 
                             <Select className='form-input opacityForInput' placeholder='انتخاب فرم'
                                 options={entityTypes()}
-                                onChange={e => setEntityTypeId(e.value)} />
+                                onChange={(e:any) => setEntityTypeId(e.value)} />
                         </div>
                         <div className="form-group mb-4 textOnInput  ">
 
 
                             <Select className='form-input ' placeholder='انتخاب ویژگی'
                                 options={Attributes()}
-                                onChange={e => setControlTypeId(e.value)} />
+                                onChange={(e:any) => setControlTypeId(e.value)} />
 
                         </div>
                         <div className="form-group mb-4 textOnInput  ">
 
                             <label >مقدار</label>
-                            <input type="text" className="form-control opacityForInput" value={controlTypeValue} onChange={e => setControlTypeValue(e.target.value)} />
+                            <input type="text" className="form-control opacityForInput" value={controlTypeValue} onChange={(e:any) => setControlTypeValue(e.target.value)} />
 
                         </div>
                         <div className='row'>

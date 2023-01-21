@@ -1,5 +1,5 @@
 import { ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails } from "../../../services/orderService";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Select from "react-select";
 import { OrderStatus } from "../../../Common/Enums/OrderStatusEnums";
@@ -24,7 +24,10 @@ const customStyles = {
     }
 
 }
-const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
+interface Props{
+    id:any, modalIsOpen:any, closeModal:any
+}
+const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
     const [order, setOrder] = useState([])
     const [loading, setLoading] = useState(false);
@@ -63,19 +66,19 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
     const PaymentStatusID = () => {
         return (PaymentStatusEnums.map(data => ({ label: data.name, value: data.id })))
     }
-    const PaymentStatusId = (id) => {
+    const PaymentStatusId = () => {
         return (PaymentStatusEnums.filter(item => item.id === paymentStatusId).map(data => ({ label: data.name, value: data.id })))
     }
     const ShippingStatusID = () => {
         return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
     }
-    const ShippingStatusId = (id) => {
+    const ShippingStatusId = () => {
         return (ShippingStatusEnums.filter(item => item.id === shippingStatusId).map(data => ({ label: data.name, value: data.id })))
     }
-    const OrderStatusId = (id) => {
+    const OrderStatusId = () => {
         return (OrderStatus.filter(item => item.id === orderStatusId).map(data => ({ label: data.name, value: data.id })))
     }
-    const handleEditFormSubmit = async (e) => {
+    const handleEditFormSubmit = async (e:any) => {
         setLoading(true)
         e.preventDefault();
 
@@ -85,9 +88,9 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
 
         }
         try {
-            const { data, staus } = await editOrder(datas)
+            const { data, status } = await editOrder(datas)
 
-            if (data.success === true) {
+            if (status === 200) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -151,8 +154,8 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
                                 placeholder="وضعیت سفارش"
                                 options={OrderStatusID()}
 
-                                onChange={e => setOrderStatusId(e.value)}
-                                maxMenuHeight="120px"
+                                onChange={(e:any) => setOrderStatusId(e.value)}
+                                maxMenuHeight={120}
                             />
 
                         </div>
@@ -167,8 +170,8 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
                                 placeholder="وضعیت پرداخت"
                                 options={PaymentStatusID()}
 
-                                onChange={e => setpaymentStatusId(e.value)}
-                                maxMenuHeight="120px"
+                                onChange={(e:any) => setpaymentStatusId(e.value)}
+                                maxMenuHeight={120}
                             />
 
                         </div>
@@ -182,8 +185,8 @@ const OrderEditList = ({ id, modalIsOpen, closeModal }) => {
                                 placeholder="وضعیت ارسال"
                                 options={ShippingStatusID()}
 
-                                onChange={e => setshippingStatusId(e.value)}
-                                maxMenuHeight="120px"
+                                onChange={(e:any) => setshippingStatusId(e.value)}
+                                maxMenuHeight={120}
                             />
 
                         </div>

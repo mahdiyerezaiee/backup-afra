@@ -3,19 +3,19 @@ import { GetAttribute } from '../../../services/attributeService';
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import MyTable from '../../../Common/Shared/Form/MyTable';
-import {DeleteGroup, GetGroupsForEntity, GetGroupWithCompany, SetGroup} from './../../../services/GroupService';
+import {DeleteGroup, GetGroupsForEntity, GetGroupWithCompany, SetGroup} from '../../../services/GroupService';
 import  Modal  from 'react-modal';
 import { ExportToExcel } from '../../../Common/Shared/Common/ExportToExcel';
 import {DeleteHouses, SetWareHouses} from "../../../services/wareHouseService";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
-import { GetCompanyChild } from './../../../services/companiesService';
-import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import { GetCompanyChild } from '../../../services/companiesService';
+import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import  Select  from 'react-select';
 
 
-const ProductGroup = () => {
+const ProductGroup:React.FC = () => {
     const customStyles = {
         content: {
 
@@ -41,13 +41,13 @@ const navigate=useNavigate();
     const [stateSuccess , SetStateSuccess ] = useState(0)
     const [stateError , SetStateError ] = useState(0)
     const[open,SetOpen]=useState(false);
-    const [userCompanies, setUserCompanies] = useState([])
+    const [userCompanies, setUserCompanies] = useState<any>([])
     let [companyId, SetcompanyId] = useState()
 
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items? items:''
 
 
@@ -64,7 +64,7 @@ const navigate=useNavigate();
 
         }
         ,
-        paramsSerializer:params=>{
+        paramsSerializer:(params:any)=>{
 
             return QueryString.stringify(params)
         }
@@ -95,15 +95,15 @@ const navigate=useNavigate();
         SetOpen(false);
     }
     let arrayOfSelectedData=[];
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -150,7 +150,7 @@ const navigate=useNavigate();
     }
     const copySelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,id:0,active:true,createDate:new Date()}})
 
         let successCount=0;
         let errorCount=0;
@@ -182,7 +182,7 @@ const navigate=useNavigate();
     }
     const enableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:true}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:true}})
 
         let successCount=0;
         let errorCount=0;
@@ -214,7 +214,7 @@ const navigate=useNavigate();
     }
     const disableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:false}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:false}})
 
         let successCount=0;
         let errorCount=0;
@@ -249,7 +249,7 @@ const navigate=useNavigate();
 
 
     }
-    const openModal =  (id) => {
+    const openModal =  (id:number) => {
         setIsOpen(true);
 setId(id)
        
@@ -257,7 +257,7 @@ setId(id)
     const closeModal = () => {
         setIsOpen(false);
     }
-    const GetProductGroup = async (companyId) => {
+    const GetProductGroup = async (companyId:any) => {
         console.log(companyId);
         if (userCompanies.length === 1) {
             try {
@@ -291,7 +291,7 @@ useEffect(()=>{
 useEffect(()=>{
     GetProductGroup(companyId);
 },[companyId])
-const editHandler = (id) => {
+const editHandler = (id:number) => {
     navigate(`/admin/editproductgroup/${id}`)
 }
 const deletHandler =async () => {
@@ -300,7 +300,7 @@ const deletHandler =async () => {
         if (status===200)
         {
            setIsOpen(false)
-           GetProductGroup();
+           GetProductGroup(companyId);
         }
     }catch (err){
         console.log(err)
@@ -309,7 +309,7 @@ const deletHandler =async () => {
 const columns=useMemo(()=>[
     { Header: '#', accessor: 'id' },
     { Header: 'نام', accessor: 'name' },
-   { Header: 'عملیات', accessor: '11', Cell: row =>
+   { Header: 'عملیات', accessor: '11', Cell: (row:any) =>
     {
 
         return(
@@ -346,19 +346,19 @@ const columns=useMemo(()=>[
 
         </ul>
     )}}
-])
+],[])
 const companys = () => {
-    return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+    return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
 }
 let defaultValue = companys()[0]
-const data=useMemo(()=>productG);
+const data=useMemo(()=>productG,[productG]);
 
 const handelForm=()=>{
 navigate('/admin/newproductgroup')
 }
     if (productG && productG.length >0) {
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام گروه': item.name,
 
@@ -425,7 +425,7 @@ navigate('/admin/newproductgroup')
                                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                            <p> آیا مطمئنید  گروه {productG.filter(item => item.id === id).map(item => item.name)}   </p>
+                            <p> آیا مطمئنید  گروه {productG.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -440,7 +440,7 @@ navigate('/admin/newproductgroup')
                     <div>
 
                         <button className="btn btn-primary m-3" onClick={handelForm}> تعریف گروه جدید</button>
-                        <MyTableBazargah columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        <MyTableBazargah columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
 

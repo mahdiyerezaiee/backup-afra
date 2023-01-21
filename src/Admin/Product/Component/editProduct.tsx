@@ -13,10 +13,10 @@ import { GetAttributeValues } from '../../../services/attributeService';
 import ProductWareHouseEdit from "../../../Common/Shared/Common/productWareHouseEdit";
 import {GetGroupsForEntity, GetGroupWithCompany} from "../../../services/GroupService";
 import {ClipLoader} from "react-spinners";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 import { Formik, Form, Field } from 'formik';
 import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
-const EditProduct = () => {
+const EditProduct:React.FC = () => {
     const params = useParams()
     const [, forceUpdate] = useState();
     const id = params.id
@@ -31,9 +31,9 @@ const EditProduct = () => {
     const [price, setPrice] = useState('')
     const [minSellableAmount, setMinSellableAmount] = useState('')
     const [maxSellableAmount, setMaxSellableAmount] = useState('')
-    const [measureUnitId, setMeasureUnitId] = useState('')
+    const [measureUnitId, setMeasureUnitId] = useState<any>('')
     const [productG, setProductG] = useState([])
-    const[attributeValue,setattributeValue]=useState({})
+    const[attributeValue,setattributeValue]=useState<any>({})
     const [isSubmit , setIsSubmit]=useState(false)
     let attvalue;
     const [loading, setLoading] = useState(false);
@@ -92,7 +92,7 @@ const EditProduct = () => {
         const response = await GetCompanyChild(); 
         let companies = response.data.result.companies 
         let arr = [] 
-        let finalArr = [] 
+        let finalArr:any = [] 
         for (let i = 0; i < companies.length; i++) {
              const { data, status } = await GetGroupWithCompany(1, companies[i].id); if (data.result.groups.length > 0) { arr.push(data.result.groups) } 
             }
@@ -118,7 +118,7 @@ const EditProduct = () => {
             console.log(error);
         }
     }
-    const submit = async (event) => {
+    const submit = async () => {
         setLoading(true)
 
         try {
@@ -179,28 +179,28 @@ const EditProduct = () => {
             WareHouses();
             GetAttValues();
             }, []);
-    const Mesures = () => {
-        return (MeasureUnitSample.map(data => ({ label: data.name, value: data.id })));
+    const Mesures:any = () => {
+        return (MeasureUnitSample.map((data:any) => ({ label: data.name, value: data.id })));
     }
     const inputWarehouses = () => {
-        return (warehouse.map(data => ({ label: data.name, value: data.id })));
+        return (warehouse.map((data:any) => ({ label: data.name, value: data.id })));
     }
-    let MeasureId = MeasureUnitSample.filter(item => item.id === measureUnitId).map(item => item.name)
+    let MeasureId = MeasureUnitSample.filter((item:any) => item.id === measureUnitId).map((item:any) => item.name)
     let MEASURE = MeasureId[0]
-    let WareHousesItem = wareHouse.filter(item => item.id !== 0).map(item => item.wareHouseName)
+    let WareHousesItem = wareHouse.filter((item:any) => item.id !== 0).map((item:any) => item.wareHouseName)
     let WAREHOUSESEITEM = WareHousesItem[0]
-    let WareHousesId = warehouse.filter(item => item.name === WAREHOUSESEITEM).map(item => item.id)
+    let WareHousesId = warehouse.filter((item:any) => item.name === WAREHOUSESEITEM).map((item:any) => item.id)
     let WAREHOUSESEID = WareHousesId[0]
 
-    const inputProductG=()=>{
-        return(group.map(data=>({label:data.name,value:data.id})))
+    const inputProductG:any=()=>{
+        return(group.map((data:any)=>({label:data.name,value:data.id})))
     }
     const currentProductG=()=>{
         if (groupId === null){
             setGroupId(0)
         }
 
-        return(group.filter(data=>data.id === groupId).map(item=>({label:item.name,id:item.id})))
+        return(group.filter((data:any)=>data.id === groupId).map((item:any)=>({label:item.name,id:item.id})))
     }
     return (
         <div className='user-progress' >
@@ -236,7 +236,7 @@ const EditProduct = () => {
                         <div className="n-chk d-flex  mb-4">
                             <div>
                                 <label className="mr-2"> فعال </label>
-                                <Field name="active" type="checkbox" defaultChecked={active} onChange={e => {
+                                <Field name="active" type="checkbox" defaultChecked={active} onChange={(e:any) => {
                                     setActive(e.checked)
 
                                 }}
@@ -248,7 +248,7 @@ const EditProduct = () => {
                                 <div className="col-lg-6 col-sm-12  mt-3">
                             <label>نام کالا</label>
                                     <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="کنجاله ، ذرت و..."
-                                           value={name} onChange={e => {
+                                           value={name} onChange={(e:any) => {
                                         setName(e.target.value)
 
                                     }} />
@@ -257,7 +257,7 @@ const EditProduct = () => {
                                 <div className="col-lg-6 col-sm-12 mt-3">
                             <label>کد بازارگاه</label>
                                     <Field name="englishName"  validate={validatNumber}  type="text" className="form-control opacityForInput" placeholder="... Corn Seed "
-                                           value={englishName} onChange={e => {
+                                           value={englishName} onChange={(e:any) => {
                                         setEnglishName(e.target.value)
 
                                     }} />
@@ -275,7 +275,7 @@ const EditProduct = () => {
 required={true}
                                         value={{ label: MEASURE, id: measureUnitId }}
                                         options={Mesures()}
-                                        onChange={e => setMeasureUnitId(e.value)}
+                                        onChange={(e:any) => setMeasureUnitId(e.value)}
                                     />
                                     {measureUnitId === 0 ? (<p className="text-danger"> لطفایک واحد  را انتخاب کنید </p>) : (<p></p>)}
                                 </div>
@@ -288,7 +288,7 @@ required={true}
                                         placeholder="گروه کالا ..."
                                         options={inputProductG()}
                                         value={currentProductG()}
-                                        onChange={e=>setGroupId(e.value)}
+                                        onChange={(e:any)=>setGroupId(e.value)}
                                     />
                                 </div>
                             </div>

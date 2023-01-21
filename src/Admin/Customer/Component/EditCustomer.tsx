@@ -9,12 +9,12 @@ import {validatAlpha, validateEmail, validatmin10, validatMobail, validatNumber}
 import {ClipLoader} from "react-spinners";
 import {PriceUnitEnums} from "../../../Common/Enums/PriceUnit";
 
-const EditCustomer = () => {
+const EditCustomer:React.FC = () => {
     const navigate = useNavigate()
     const params =useParams()
     const [userName, setUserName]=useState('')
     const [email, setEmail]=useState('')
-    const [maxValidity, setMaxValidity] = useState(0)
+    const [maxValidity, setMaxValidity] = useState<any>(0)
     const [maxValidityUnitId, setMaxValidityUnitId] = useState(null)
     const [firstName, setFirstName]=useState('')
     const [lastName, setLastName]=useState('')
@@ -30,7 +30,7 @@ const EditCustomer = () => {
     const [actionBlock, SetactionBlock] = useState(false)
     const [passwordType, setPasswordType] = useState("password");
     const [loading, setLoading] = useState(false);
-    const togglePassword = (e) => {
+    const togglePassword = (e:any) => {
         e.preventDefault()
         if (passwordType === "password") {
             setPasswordType("text")
@@ -38,7 +38,7 @@ const EditCustomer = () => {
         }
         setPasswordType("password")
     }
-    const showHandler = (e) => {
+    const showHandler = (e:any) => {
         setShow(e.target.checked)
     }
     const dataUser={
@@ -93,7 +93,7 @@ const EditCustomer = () => {
 
     },[organizationId])
    
-    const submit = async (dataUser)=>{
+    const submit = async (dataUser:any)=>{
         try {
             const {data , status} = await setCustomerInfo(dataUser)
 
@@ -115,19 +115,19 @@ const EditCustomer = () => {
         getOrganizationId()
     },[])
     const OrganizationId = () => {
-        return(organizationID.map(item=>( {label: item.name ,  value:item.id}) ))
+        return(organizationID.map((item:any)=>( {label: item.name ,  value:item.id}) ))
     }
     const OrganizationItem = () => {
-        return(organizationID.filter(item=>item.id === organizationId).map(item=>( {label: item.name ,  value:item.id}) ))
+        return(organizationID.filter((item:any)=>item.id === organizationId).map((item:any)=>( {label: item.name ,  value:item.id}) ))
     }
 
     const PriceUnitItem = () => {
-        return (PriceUnitEnums.map(item => ({ label: item.name, value: item.id })))
+        return (PriceUnitEnums.map((item:any) => ({ label: item.name, value: item.id })))
     }
     const PriceUnit = () => {
-        return (PriceUnitEnums.filter(item => item.id === maxValidityUnitId).map(item => ({ label: item.name, value: item.id }))[0])
+        return (PriceUnitEnums.filter((item:any) => item.id === maxValidityUnitId).map((item:any) => ({ label: item.name, value: item.id }))[0])
     }
-    const handelNavigate = (e) => {
+    const handelNavigate = (e:any) => {
         e.preventDefault()
         navigate(-1)
     }
@@ -241,7 +241,7 @@ const EditCustomer = () => {
                                         <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                             <label >مقدار اعتبار </label>
                                             <Field type="text" className=" formater form-control opacityForInput" placeholder="100,000" validate={validatNumber}  name='maxValidity'  />
-                                            {errors.maxValidity && touched.maxValidity && <div className="text-danger">{errors.maxValidity}</div>}
+                                            {errors.maxValidity && touched.maxValidity && <div className="text-danger">{String(errors.maxValidity)}</div>}
 
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
@@ -250,7 +250,7 @@ const EditCustomer = () => {
                                                 value={PriceUnit()}
                                                 placeholder="واحد قیمت"
                                                 options={PriceUnitItem()}
-                                                onChange={e => setMaxValidityUnitId(e.value)}
+                                                onChange={(e:any) => setMaxValidityUnitId(e.value)}
                                             />
                                         </div>
 
@@ -262,7 +262,7 @@ const EditCustomer = () => {
                                                 <Select
                                                     value={OrganizationItem()}
                                                     options={OrganizationId()}
-                                                    onChange={e => setOrganizationId(e.value)}
+                                                    onChange={(e:any) => setOrganizationId(e.value)}
                                                 />
                                             </div> : ''}
                                         <div className='col-12 textOnInputForGrp '><input type='checkbox' checked={show} onChange={showHandler} /> تغییر رمز عبور </div>
@@ -270,14 +270,14 @@ const EditCustomer = () => {
 
                                         <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                             <label >رمز عبور</label>
-                                            <Field type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" name="password" onChange={e => {
+                                            <Field type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" name="password" onChange={(e:any) => {
                                                 setPassword(e.target.value)
                                             }} />
 
                                             <div className="input-group-append ">
 
                                                 <button className=" btn-outline-primary box-shadow-none rounded" onClick={togglePassword} style={{ border: 'none' }}>
-                                                    {passwordType === "password" ? <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" fill="blue"></path> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="blue"></path> </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" /> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" /> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" /> </svg>}</button>
+                                                    {passwordType === "password" ? <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" fill="blue"></path> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="blue"></path> </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" /> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" /> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" /> </svg>}</button>
                                             </div>
                                             <hr/>
 
@@ -286,12 +286,12 @@ const EditCustomer = () => {
                                         <div className="col-1"></div>
                                         <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                             <label >تکراررمز عبور</label>
-                                            <input type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" value={passwordConfirm || ""} onChange={e => {
+                                            <input type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" value={passwordConfirm || ""} onChange={(e:any) => {
                                                 setPasswordConfirm(e.target.value)
                                             }} />
                                             <div className="input-group-append ">
                                                 <button className=" btn-outline-primary box-shadow-none rounded" onClick={togglePassword} style={{ border: 'none', outline: 'none' }}>
-                                                    {passwordType === "password" ? <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" fill="blue"></path> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="blue"></path> </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" /> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" /> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" /> </svg>}</button>
+                                                    {passwordType === "password" ? <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" fill="blue"></path> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="blue"></path> </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" /> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" /> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" /> </svg>}</button>
                                             </div>
 
                                         </div>

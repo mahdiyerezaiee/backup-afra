@@ -1,12 +1,12 @@
 import {editOrder, GetOrder, GetOrderDetails} from "../../../services/orderService";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Modal from "react-modal";
 import {OrderStatus} from "../../../Common/Enums/OrderStatusEnums";
 import {toast} from "react-toastify";
 import {GetProductSupplyConditions} from "../../../services/ProductSupplyConditionService";
 import OrderConditionEdit from "./OrderConditionEdit";
 import {ClipLoader} from "react-spinners";
-import { GetOrderDetailsAdmin } from './../../../services/orderService';
+import { GetOrderDetailsAdmin } from '../../../services/orderService';
 
 const customStyles = {
     content: {
@@ -23,9 +23,12 @@ const customStyles = {
     }
 
 }
-const OrderEdit = ({id, modalIsOpen, closeModal}) => {
-    let FilnalArr = [];
-    const [order, setOrder] = useState([])
+interface Props{
+    id:any, modalIsOpen:any, closeModal:any
+}
+const OrderEdit :React.FC<Props>= ({id, modalIsOpen, closeModal}) => {
+    let FilnalArr:any = [];
+    const [order, setOrder] = useState<any>([])
     const [OrderDetail, setOrderDetail] = useState([])
     const [paymentMethodId, setPaymentMethodId] = useState(0)
     const [shippingStatusId, setShippingStatusId] = useState(0)
@@ -33,9 +36,9 @@ const OrderEdit = ({id, modalIsOpen, closeModal}) => {
     const [orderFinalizedPrice, setOrderFinalizedPrice] = useState(0)
     const [productSupplyId, setProductSupplyId] = useState(0)
     const [orderCondition, setOrderCondition] = useState([])
-    const [comment, setComment] = useState(null);
+    const [comment, setComment] = useState<any>(null);
     const [loading, setLoading] = useState(false);
-let Id;
+let Id:any;
 if(id>0){
     Id=id
 }
@@ -61,10 +64,10 @@ if(id>0){
             let Order = data.result.orderDetails
             setOrderDetail(data.result.orderDetails)
             setProductSupplyId(data.result.orderDetails[0].productSupplyId)
-            let ids = data.result.orderDetails.map(item=>item.productSupplyId)
+            let ids = data.result.orderDetails.map((item:any)=>item.productSupplyId)
 
 
-            let productSupplyConditionIds = data.result.orderDetails.map(item=>item.productSupplyConditionId)
+            let productSupplyConditionIds = data.result.orderDetails.map((item:any)=>item.productSupplyConditionId)
             console.log(ids);
             console.log(productSupplyConditionIds);
             if (productSupplyConditionIds.length>0) {
@@ -74,7 +77,7 @@ if(id>0){
                         const {data,status} = await GetProductSupplyConditions(ids[i]);
                         let condition=data.result.productSupplyConditions.values
 
-                        const element = condition.filter(item=>item.id===productSupplyConditionIds[i])[0]
+                        const element = condition.filter((item:any)=>item.id===productSupplyConditionIds[i])[0]
 
 
 
@@ -120,15 +123,15 @@ if(id>0){
     }
 
    
-let conditionOrder=[];
+let conditionOrder:any=[];
 if(orderCondition.length>0){
 conditionOrder=orderCondition
 }
     const OrderStatusID = () => {
         return (OrderStatus.map(data => ({label: data.name, value: data.id})))
     }
-    const OrderStatusId = (id) => {
-        return (OrderStatus.filter(item => item.id === orderStatusId).map(data => ({label: data.name, value: data.id})))
+    const OrderStatusId = () => {
+        return (OrderStatus.filter((item:any) => item.id === orderStatusId).map((data:any) => ({label: data.name, value: data.id})))
     }
     useEffect(() => {
         getOrder()
@@ -159,9 +162,9 @@ conditionOrder=orderCondition
             }
         }
         try {
-            const {data, staus} = await editOrder(datas)
+            const {data, status} = await editOrder(datas)
 
-            if (data.success === true) {
+            if (status === 200) {
                 toast.success("ویرایش با موفقعیت انجام شد", {
                     position: "top-right",
                     autoClose: 5000,
@@ -216,9 +219,9 @@ conditionOrder=orderCondition
                         <div className="form-group mb-4 textOnInput">
                             <label >توضیحات</label>
 
-                            <textarea type="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={e => {
+                            <textarea  className="form-control opacityForInput " rows={4} placeholder='توضیحات تکمیلی' value={comment} onChange={(e:any) => 
                                 setComment(e.target.value)
-                            }} />
+                            } />
 
                         </div>
                     </div>

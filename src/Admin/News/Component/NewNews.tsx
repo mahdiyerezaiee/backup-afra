@@ -7,9 +7,10 @@ import {NavLink,useNavigate} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 import {validateRequired} from "../../../Utils/validitionParams";
 import {Field, Form, Formik} from "formik";
+import { RootState } from "../../../store";
 
-const NewNews = () => {
-    const user=useSelector(state=>state.user);
+const NewNews:React.FC = () => {
+    const user=useSelector((state:RootState)=>state.user);
     const [loading, setLoading] = useState(false);
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
@@ -86,20 +87,20 @@ return(
                         <div>
                             <label className="mr-2"> فعال  </label>
 
-                            <input type="checkbox" defaultChecked={active}  onChange={e=>setActive(e.checked)} />
+                            <input type="checkbox" defaultChecked={active}  onChange={(e:any)=>setActive(e.checked)} />
 
                         </div>
                     </div>
                     <div className="form-group mb-4 textOnInput  align-content-between">
 
                         <label >عنوان</label>
-                        <Field  validate={validateRequired} name="title" type="text" className="form-control opacityForInput" placeholder="عنوان اعلان" value={title} onChange={e => setTitle(e.target.value)} />
+                        <Field  validate={validateRequired} name="title" type="text" className="form-control opacityForInput" placeholder="عنوان اعلان" value={title} onChange={(e:any) => setTitle(e.target.value)} />
                         {errors.title && touched.title && <div className="text-danger">{errors.title}</div>}
 
                     </div>
                     <div className="form-group mb-4 textOnInput">
                         <label >متن</label>
-                        <Field  validate={validateRequired} name="message"   as="textarea"  className="form-control opacityForInput" placeholder="متن اعلان" value={message} onChange={e => setMessage(e.target.value)}  rows='10'/>
+                        <Field  validate={validateRequired} name="message"   as="textarea"  className="form-control opacityForInput" placeholder="متن اعلان" value={message} onChange={(e:any) => setMessage(e.target.value)}  rows='10'/>
                         {errors.message && touched.message && <div className="text-danger">{errors.message}</div>}
 
                     </div>

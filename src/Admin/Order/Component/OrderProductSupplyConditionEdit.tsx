@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { editOrderDetail } from "../../../services/orderService";
 import FadeLoader from "react-spinners/FadeLoader";
 import { toast } from 'react-toastify';
-import { GetGroupWithCompany } from './../../../services/GroupService';
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetGroupWithCompany } from '../../../services/GroupService';
+import { GetCompanyChild } from '../../../services/companiesService';
 
 
 
@@ -27,7 +27,11 @@ const customStyles = {
     }
 
 }
-const OrderProductSupplyConditionEdit = ({ modalIsOpen, closeModal, id, Detail }) => {
+
+interface Props{
+    modalIsOpen:any, closeModal:any, id:any, Detail:any
+}
+const OrderProductSupplyConditionEdit:React.FC<Props> = ({ modalIsOpen, closeModal, id, Detail }) => {
     const Navigate = useNavigate()
     const [checked, setChecked] = useState({ selectedValue: 0 })
     const [condition, setCondition] = useState([])
@@ -84,7 +88,7 @@ const OrderProductSupplyConditionEdit = ({ modalIsOpen, closeModal, id, Detail }
             setLoading(false)
         }
     }
-    const CheckedHadnler = (conditionId) => {
+    const CheckedHadnler = (conditionId:any) => {
 
 
         setChecked({ selectedValue: conditionId })
@@ -102,7 +106,7 @@ const OrderProductSupplyConditionEdit = ({ modalIsOpen, closeModal, id, Detail }
     const GetCustomerGroup = async () => {
         const response = await GetCompanyChild(); let companies = response.data.result.companies
          let arr = [] 
-         let finalArr = [] 
+         let finalArr:any = [] 
          for (let i = 0; i < companies.length; i++) {
              const { data, status } = await GetGroupWithCompany(1, companies[i].id); if (data.result.groups.length > 0) { arr.push(data.result.groups) }
              } 
@@ -115,17 +119,17 @@ const OrderProductSupplyConditionEdit = ({ modalIsOpen, closeModal, id, Detail }
 
     }, [id])
     const CustomerG = () => {
-        return (customerg.map(data => ({
+        return (customerg.map((data:any) => ({
             label: data.name,
             value: data.id
         })))
 
     }
-    const PaymentId = (id) => {
-        return (PaymentStructureEnums.filter(item => item.id === id).map(data => data.name))
+    const PaymentId = (id:any) => {
+        return (PaymentStructureEnums.filter((item:any) => item.id === id).map((data:any) => data.name))
 
     }
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         Navigate(`/admin/editproductsupply/${id}`)
     }
 
@@ -173,7 +177,7 @@ const OrderProductSupplyConditionEdit = ({ modalIsOpen, closeModal, id, Detail }
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {condition.map((contact, index) => (
+                                    {condition.map((contact:any, index:number) => (
                                         <tr className='text-center'>
 
                                             <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}>{index + 1}</td>

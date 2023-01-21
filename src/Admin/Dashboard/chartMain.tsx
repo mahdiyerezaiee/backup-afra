@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {GetPeriodicSalesReport} from "../../services/reportService";
 
 
-const ChartMain = () => {
+const ChartMain:React.FC = () => {
     const [datas , setDatas]=useState(getDataReport().datas?getDataReport().datas:[])
     const [TypeId , setTypeId]=useState(3 )
     let d = new Date();
@@ -17,7 +17,7 @@ const ChartMain = () => {
     }
 
     function getDataReport() {
-        let items = JSON.parse(sessionStorage.getItem('dataReport'));
+        let items = JSON.parse(String(sessionStorage.getItem('dataReport')));
         return items ? items : ''
 
 

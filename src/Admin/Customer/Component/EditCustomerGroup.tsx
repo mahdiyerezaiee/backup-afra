@@ -7,11 +7,10 @@ import { IoFastFood } from 'react-icons/io5';
 import { GetGroupsForEntity } from '../../../services/GroupService';
 import { CreateUser, GetUserData } from '../../../services/userService';
 import { setCustomerInfo } from '../../../services/customerService';
-import { template } from 'lodash';
 import Modal from 'react-modal';
 import {ClipLoader} from "react-spinners";
-import { GetGroupWithCompany } from './../../../services/GroupService';
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetGroupWithCompany } from '../../../services/GroupService';
+import { GetCompanyChild } from '../../../services/companiesService';
 
 const customStyles = {
     content: {
@@ -28,9 +27,12 @@ const customStyles = {
     }
 
 }
-const EditCustomerGroup = ({ id, closeModal, modalIsOpen,refresh }) => {
+interface Props{
+    id:any, closeModal:any, modalIsOpen:any,refresh:any 
+}
+const EditCustomerGroup:React.FC<Props> = ({ id, closeModal, modalIsOpen,refresh }) => {
     const [CustomerG, setCustomerG] = useState([])
-    const [userinfo, setUserInfo] = useState({});
+    const [userinfo, setUserInfo] = useState<any>({});
     const [groupId, setGroupId] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -43,7 +45,7 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen,refresh }) => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr=[]
+        let finalArr:any=[]
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(1, companies[i].id);
@@ -61,7 +63,7 @@ const EditCustomerGroup = ({ id, closeModal, modalIsOpen,refresh }) => {
         setCustomerG(finalArr);
 
     }
-let userId;
+let userId:any;
 if(id>0){
     userId=id
 }
@@ -87,7 +89,7 @@ if(id>0){
         
     }, [id])
 
-    const inputCustomerG = () => {
+    const inputCustomerG :any= () => {
         let customer = [...CustomerG, { id: null, name: 'تعیین نشده' }]
 
         return (customer.map(data => ({ label: data.name, value: data.id })))
@@ -141,7 +143,7 @@ if(id>0){
         refresh()
 
     }
-    let Group = CustomerG.filter(item => item.id === groupId).map(item => item.name)
+    let Group = CustomerG.filter((item:any) => item.id === groupId).map((item:any) => item.name)
     let groupName = Group[0] ? Group[0] : "تعیین نشده"
     return (
         <Modal
@@ -185,7 +187,7 @@ if(id>0){
                                         <Select
                                             value={{ label: groupName, value: groupId }}
                                             options={inputCustomerG()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setGroupId(e.value)
 
                                             }}

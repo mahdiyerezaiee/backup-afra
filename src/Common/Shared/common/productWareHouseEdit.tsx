@@ -5,7 +5,7 @@ import MyTable from "../Form/MyTable";
 import {useRef} from "react";
 
 interface Props{
-    id:number,
+    id:any,
     submit:boolean
 }
 const ProductWareHouse:React.FC<Props> = ({id, submit}) => {

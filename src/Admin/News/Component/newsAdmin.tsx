@@ -11,6 +11,7 @@ import Modal from "react-modal";
 import {toast} from "react-toastify";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import QueryString from "qs";
+import { RootState } from "../../../store";
 const customStyles = {
     content: {
 
@@ -25,12 +26,12 @@ const customStyles = {
         border: '2px ridge black'
     }
 };
-const NewsAdmin = () => {
+const NewsAdmin:React.FC = () => {
     const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
     const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
     const [totalCount , setTotalCount]=useState(0) ;
     const navigate = useNavigate()
-    const user = useSelector(state => state.user);
+    const user = useSelector((state:RootState) => state.user);
     const [modalIsOpen, setIsOpen] = useState(false);
 const[id,setId]=useState(0)
     const [news, setNews] = useState([])
@@ -41,7 +42,7 @@ const[id,setId]=useState(0)
     const param = { PageSize , PageNumber}
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items? items:''
 
 
@@ -58,7 +59,7 @@ const[id,setId]=useState(0)
 
             }
             ,
-            paramsSerializer:params=>{
+            paramsSerializer:(params:any)=>{
 
                 return QueryString.stringify(params)
             }
@@ -82,7 +83,7 @@ const[id,setId]=useState(0)
     let arrayOfSelectedData=[];
 
 
-    const getBulkJob=(selected)=>{
+    const getBulkJob=(selected:any)=>{
         if(selected===2){
             enableSelectedItem()
         }
@@ -125,7 +126,7 @@ const[id,setId]=useState(0)
     }
     const copySelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,id:0,active:true,createDate:new Date()}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,id:0,active:true,createDate:new Date()}})
 
         let successCount=0;
         let errorCount=0;
@@ -158,7 +159,7 @@ const[id,setId]=useState(0)
     }
     const enableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:true}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:true}})
 
         let successCount=0;
         let errorCount=0;
@@ -191,7 +192,7 @@ const[id,setId]=useState(0)
     }
     const disableSelectedItem=async()=>{
         const arrayOfData=getSelectedData(selectedRows);
-        const copyData= arrayOfData.map(item=>{return{...item,active:false}})
+        const copyData= arrayOfData.map((item:any)=>{return{...item,active:false}})
 
         let successCount=0;
         let errorCount=0;
@@ -222,16 +223,16 @@ const[id,setId]=useState(0)
 
        
     }
-    const getSelectedData=(data)=>{
+    const getSelectedData=(data:any)=>{
 
-        arrayOfSelectedData= data.map(item=>item.original);
+        arrayOfSelectedData= data.map((item:any)=>item.original);
 
 
         return(arrayOfSelectedData)
 
     }
 
-    const openModal = (id) => {
+    const openModal = (id:number) => {
         setIsOpen(true);
         setId(id)
 
@@ -279,7 +280,7 @@ const[id,setId]=useState(0)
             console.log(err)
         }
     }
-    const editHandler = (id) => {
+    const editHandler = (id:any) => {
         navigate(`/admin/editNews/${id}`)
     }
     
@@ -290,7 +291,7 @@ const[id,setId]=useState(0)
         { Header: '#', accessor: 'id' },
         { Header: 'عنوان', accessor: 'title' }
         , {
-            Header: 'متن پیام', accessor: '', Cell: row => (
+            Header: 'متن پیام', accessor: '', Cell: (row:any) => (
                 <span>{row.row.original.message.substring(0, 50)}</span>
             )
         }
@@ -387,8 +388,8 @@ const[id,setId]=useState(0)
                     </ul>)
             }
         }
-    ])
-    const data = useMemo(() => news);
+    ],[])
+    const data = useMemo(() => news,[news]);
     if(news){
         return (
             <div className='user-progress'>
@@ -409,7 +410,7 @@ const[id,setId]=useState(0)
 
 
 
-                            <p> آیا مطمئنید اعلان شماره {news.filter(item=>item.id===id).map(item=>item.id)}    </p>
+                            <p> آیا مطمئنید اعلان شماره {news.filter((item:any)=>item.id===id).map((item:any)=>item.id)}    </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -422,7 +423,7 @@ const[id,setId]=useState(0)
                     <div className="table-responsive">
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف اعلان جدید</button>
 
-                        <MyTable   columns={columns} data={data} getData={rows=>setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable   columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} bulkJob={getBulkJob}
                                    total={totalCount}
                                    setPageSize={setPageSize}
                                    PageSize={PageSize}

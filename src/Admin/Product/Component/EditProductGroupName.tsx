@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { GetGroupById } from '../../../services/GroupService';
-import { SetGroup } from './../../../services/GroupService';
+import { SetGroup } from '../../../services/GroupService';
 import { toast } from 'react-toastify';
 import { ClipLoader } from "react-spinners";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 import  Select  from 'react-select';
 
-const EditProductGroupName = () => {
+const EditProductGroupName:React.FC = () => {
     const navigate = useNavigate()
     const params = useParams();
     const [entityTypeId, setEntityTypeId] = useState(0)
@@ -50,7 +50,7 @@ console.log(userCompanies);
         getGroup();
     }, [])
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async (event:any) => {
 
         setLoading(true)
 
@@ -89,7 +89,7 @@ console.log(userCompanies);
 
     }
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
     let defaultValue = companys()[0]
@@ -112,7 +112,7 @@ console.log(userCompanies);
 
                             <div className="form-group mb-4 textOnInput">
                                 <label>نام گروه</label>
-                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => setName(e.target.value)} />
+                                <input type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => setName(e.target.value)} />
 
                             </div>
                          

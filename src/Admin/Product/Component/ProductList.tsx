@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { CSVLink } from 'react-csv';
 import { useEffect, useState } from "react";
-import { useTable } from "react-table";
 import { DeleteProduct, GetAllProducts, SetProduct } from '../../../services/productService';
 import { useMemo } from "react";
 import MyTable from "../../../Common/Shared/Form/MyTable";
@@ -9,13 +7,13 @@ import MyTable from "../../../Common/Shared/Form/MyTable";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
 import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
-import { GetGroupsForEntity, GetGroupWithCompany } from './../../../services/GroupService';
+import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import Select from 'react-select';
-import { GetProductsWithSearch } from './../../../services/productService';
+import { GetProductsWithSearch } from '../../../services/productService';
 import QueryString from "qs";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 
 
 
@@ -35,13 +33,13 @@ const customStyles = {
         border: '2px ridge black'
     }
 };
-const ProductList = () => {
+const ProductList:React.FC = () => {
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [companies, setCompanies] = useState([])
     const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : null)
     const [totalCount, setTotalCount] = useState(0);
-    const [product, setProduct] = useState([]);
+    const [product, setProduct] = useState<any>([]);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [id, setId] = useState(0)
     const [selectedRows, setSelectedRows] = useState([])
@@ -59,14 +57,14 @@ const ProductList = () => {
     const param = { PageSize, PageNumber }
 
     function getPage() {
-        let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
         return items ? items : ''
 
 
     }
     const params = { Name, EnglishName, groupIds }
     function getDefault() {
-        let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+        let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
 
 
@@ -75,9 +73,9 @@ const ProductList = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data) => {
+    const getSelectedData = (data:any) => {
 
-        arrayOfSelectedData = data.map(item => item.original);
+        arrayOfSelectedData = data.map((item:any) => item.original);
 
 
         return (arrayOfSelectedData)
@@ -88,7 +86,7 @@ const ProductList = () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr = []
+        let finalArr:any = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(2, companies[i].id);
@@ -106,7 +104,7 @@ const ProductList = () => {
 
     }
 
-    const getBulkJob = (selected) => {
+    const getBulkJob = (selected:any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -148,7 +146,7 @@ const ProductList = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, id: 0, active: true, createDate: new Date() } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -179,7 +177,7 @@ const ProductList = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: true } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: true } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -210,7 +208,7 @@ const ProductList = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map(item => { return { ...item, active: false } })
+        const copyData = arrayOfData.map((item:any) => { return { ...item, active: false } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -245,7 +243,7 @@ const ProductList = () => {
     }
     const getGroupForCompbo = () => {
 
-        return (productG.map(item => ({ label: item.name, value: item.id })))
+        return (productG.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
     const groups = getGroupForCompbo();
@@ -258,7 +256,7 @@ const ProductList = () => {
             params: {
                 Name: params.Name,
                 EnglishName: params.EnglishName,
-                GroupIds: params.groupIds ? params.groupIds.map(item => item.value) : [],
+                GroupIds: params.groupIds ? params.groupIds.map((item:any) => item.value) : [],
                 isAdmin: true,
                 active: false,
                 PageNumber: 0,
@@ -266,7 +264,7 @@ const ProductList = () => {
                 companyId
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -299,12 +297,12 @@ const ProductList = () => {
                 active: false,
                 Name: Name,
                 EnglishName: EnglishName,
-                GroupIds: groupIds ? groupIds.map(item => item.value) : [],
+                GroupIds: groupIds ? groupIds.map((item:any) => item.value) : [],
                 PageNumber,
                 PageSize,
                 companyId
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -324,7 +322,7 @@ const ProductList = () => {
             console.log(error);
         }
     }
-    const openModal = (id) => {
+    const openModal = (id:number) => {
         setIsOpen(true);
         setId(id)
 
@@ -356,14 +354,14 @@ const ProductList = () => {
             params: {
                 Name,
                 EnglishName,
-                GroupIds: groupIds ? groupIds.map(item => item.value) : [],
+                GroupIds: groupIds ? groupIds.map((item:any) => item.value) : [],
                 isAdmin: true,
                 active: false,
                 PageNumber,
                 PageSize,
 
             },
-            paramsSerializer: params => {
+            paramsSerializer: (params:any) => {
 
                 return QueryString.stringify(params)
             }
@@ -391,7 +389,7 @@ const ProductList = () => {
         getCompany()
     }, [getData])
 
-    const editHandler = (id) => {
+    const editHandler = (id:number) => {
         navigate(`/admin/editproduct/${id}`)
     }
 
@@ -433,15 +431,15 @@ const ProductList = () => {
         { Header: 'نام', accessor: 'name' }
         , { Header: 'کد بازارگاه', accessor: 'englishName' }
         , {
-            Header: 'گروه کالا', accessor: ' ', Cell: row => {
+            Header: 'گروه کالا', accessor: ' ', Cell:  (row:any) => {
 
 
 
                 if (!row.row.original.groupId) {
-                    return ('تعیین نشده')
+                    return String('تعیین نشده')
                 }
                 else {
-                    return (productG.filter(item => item.id === row.row.original.groupId).map(item => item.name))
+                    return String((productG.filter((item:any) => item.id === row.row.original.groupId).map((item:any) => item.name)))
                 }
 
             }
@@ -449,7 +447,7 @@ const ProductList = () => {
         ,
         {
             Header: 'فعال', accessor: '', isVisible: true,
-            disableFilters: true, Cell: row => {
+            disableFilters: true, Cell: (row:any) => {
                 const [active, setActive] = useState(row.row.original.active)
                 const id = row.row.original.id
                 const name = row.row.original.name
@@ -467,7 +465,7 @@ const ProductList = () => {
                     minSellableAmount
                 }
 
-                const activeHandler = async (e) => {
+                const activeHandler = async () => {
                     setActive(!active)
 
                     try {
@@ -538,11 +536,11 @@ const ProductList = () => {
                     </ul>
                 )
             }
-        }])
+        }],[])
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }
-    const data = useMemo(() => product);
+    const data = useMemo(() => product,[product]);
     const handelSearchFieldClear = () => {
         setGeData(true)
         getProducts()
@@ -559,7 +557,7 @@ const ProductList = () => {
     }
     if (product) {
 
-        const dataForExcel = data.map(item => ({
+        const dataForExcel = data.map((item:any) => ({
             'شناسه': item.id,
             'نام کالا': item.name,
             'قیمت': item.price,
@@ -623,7 +621,7 @@ const ProductList = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
@@ -631,7 +629,7 @@ const ProductList = () => {
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 
@@ -683,7 +681,7 @@ const ProductList = () => {
                                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                            <p> آیا مطمئنید  کالا {product.filter(item => item.id === id).map(item => item.name)}   </p>
+                            <p> آیا مطمئنید  کالا {product.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -697,7 +695,7 @@ const ProductList = () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف کالا جدید</button>
-                        <MyTable setPageNumber={setPageNumber} getDataBySearch={getDataByPageNumber} PageSize={PageSize} setPageSize={setPageSize} total={totalCount} PageNumber={PageNumber} columns={columns} data={data} getData={rows => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        <MyTable setPageNumber={setPageNumber} getDataBySearch={getDataByPageNumber} PageSize={PageSize} setPageSize={setPageSize} total={totalCount} PageNumber={PageNumber} columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>
@@ -769,7 +767,7 @@ const ProductList = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
@@ -777,7 +775,7 @@ const ProductList = () => {
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={e => {
+                                            onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 

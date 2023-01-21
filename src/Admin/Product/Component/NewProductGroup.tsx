@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { GetAttribute } from '../../../services/attributeService';
 import { NavLink } from 'react-router-dom';
-import { SetAttribute } from './../../../services/attributeService';
+import { SetAttribute } from '../../../services/attributeService';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { SetGroup } from './../../../services/GroupService';
+import { SetGroup } from '../../../services/GroupService';
 import {ClipLoader} from "react-spinners";
-import { GetCompanyChild } from './../../../services/companiesService';
+import { GetCompanyChild } from '../../../services/companiesService';
 import  Select  from 'react-select';
 import { Formik, Form, Field } from 'formik';
 import {validatAlpha, validatmin10, validatNumber} from "../../../Utils/validitionParams";
 
-const NewProductGroup = () => {
+const NewProductGroup:React.FC = () => {
     const navigate=useNavigate();
     const [loading, setLoading] = useState(false);
     let [companyId, SetcompanyId] = useState()
@@ -37,9 +37,9 @@ useEffect(() => {
     getCompanies()
 }, [])
 
-    const handelSubmit = async (event) => {
+    const handelSubmit = async () => {
         setLoading(true)
-        event.preventDefault();
+       
  
         try {
             const body={
@@ -74,10 +74,10 @@ useEffect(() => {
     }
 
     const companys = () => {
-        return (userCompanies.map((item) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
 
     }
-    let defaultValue = companys()[0]
+    let defaultValue:any = companys()[0]
 
 
     return (
@@ -111,7 +111,7 @@ useEffect(() => {
                                 <div className='form-group'>
 
                             <div className="input-group mb-4">
-                                <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={e => Setname(e.target.value)} />
+                                <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
 
 
                             </div>

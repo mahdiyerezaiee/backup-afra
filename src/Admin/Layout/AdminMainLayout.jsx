@@ -68,7 +68,7 @@ import NewShippingContract from "../Shipping/Child/ShippingContracts/Component/S
 import EditShippingContract from "../Shipping/Child/ShippingContracts/Component/ShippingContractEdit";
 import EditShippingCompany from '../Shipping/Child/ShippingCompany/Component/ShippingCompanyEdit';
 import EditCustomerGroupName from '../../Admin/Customer/Component/EditCustomerGroupName';
-import EditProductGroupName from '../Product/Component/EditProductGroupName';
+import EditProductGroupName from '../Product/Component/EditProductGroupName.tsx';
 import EditWareHouseTypeName from '../WareHouse/Component/EditWareHouseTypeName';
 import OrderCustomer from '../../Client/Order/Component/OrderCustomer';
 import NotFound from "../../Common/Shared/Common/notFound";
