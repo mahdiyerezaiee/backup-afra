@@ -16,9 +16,7 @@
 .css-1097eso{
     background-color: transparent!important;
 }
-.css-1nzbc76{
-  position: fixed!important;
-}
+
 .css-1nzbc76{
   overflow-y: auto;
   overflow-x: hidden;
@@ -118,6 +116,9 @@
     overflow-x: hidden!important;
   }
 @media (max-width: 992px) {
+  .css-1nzbc76{
+    position: fixed!important;
+  }
   .ps-sidebar-root{
     color: #6e82a5;
     height: calc(100vh - 30px);
