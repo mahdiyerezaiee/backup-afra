@@ -12,7 +12,7 @@ import { GetOrderDetailsAdmin } from './../services/orderService';
 
 
 
-const InvoiceCreator = ({orderId , closeModal ,customerId}) => {
+const InvoiceCreator = ({ closeModal }) => {
 
     const ref = createRef()
 const params = useParams()
