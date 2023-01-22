@@ -26,8 +26,9 @@ import TableOrderCustomer from '../../../Common/Shared/Form/TableOrderCustomer';
 import AdvancedSearch from "../../../Common/Shared/Common/AdvancedSearch";
 import {PaymentStatusEnums} from "../../../Common/Enums/PaymentStatus";
 import Select from "react-select";
+import { RootState } from '../../../store';
 
-const customStyles = {
+const customStyles:any = {
   content: {
     position:'fixed',
     inset: '-50px',
@@ -38,13 +39,13 @@ const customStyles = {
   }
 
 }
-const OrderCustomer = () => {
+const OrderCustomer:React.FC = () => {
 
   const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
   const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
   const [orderId, setOrderId] = useState(0)
-  let FilnalArr = [];
-  const roles = useSelector(state => state.roles)
+  let FilnalArr:any = [];
+  const roles = useSelector((state:RootState) => state.roles)
   const Navigate = useNavigate()
   const [selectedRows, setSelectedRows] = useState([])
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -56,8 +57,8 @@ const OrderCustomer = () => {
   const [stateSuccess, SetStateSuccess] = useState(0)
   const [stateError, SetStateError] = useState(0)
   const [open, SetOpen] = useState(false);
-  const [address, SetAddress] = useState({ active: false, id: 0 });
-  let Detail = [];
+  const [address, SetAddress] = useState<any>({ active: false, id: 0 });
+  let Detail :any= [];
   const [totalCount , setTotalCount]=useState(0) ;
 
   const [ShippingInformation, SetShippingInformation] = useState([]);
@@ -81,14 +82,14 @@ const OrderCustomer = () => {
   const param = { PageSize , PageNumber}
 
   function getPage() {
-    let items = JSON.parse(sessionStorage.getItem(`param${window.location.pathname}`));
+    let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
     return items? items:''
 
 
   }
 
   
-  const bindAdress = async (arr) => {
+  const bindAdress = async (arr:any) => {
 
     if (arr.length > 1) {
       for (let i = 0; i < arr.length; i++) {
@@ -96,9 +97,9 @@ const OrderCustomer = () => {
         try {
 
           const { data, status } = await GetAddress(11, arr[i].id)
-          let detail = Detail.filter(item => item.id === arr[i].id)[0]
+          let detail = Detail.filter((item:any) => item.id === arr[i].id)[0]
           let address = data.result.addresses;
-          const finallAddres = address.map(item =>
+          const finallAddres = address.map((item:any) =>
           ({
             fullAddress: item.fullAddress,
             postalCode: item.postalCode,
@@ -124,9 +125,9 @@ const OrderCustomer = () => {
         try {
 
           const { data, status } = await GetAddress(10, arr[i].orderId)
-          let detail = Detail.filter(item => item.orderId === arr[i].orderId)[0]
+          let detail = Detail.filter((item:any) => item.orderId === arr[i].orderId)[0]
           let address = data.result.addresses;
-          const finallAddres = address.map(item =>
+          const finallAddres = address.map((item:any) =>
           ({
             fullAddress: item.fullAddress,
             postalCode: item.postalCode,
@@ -161,7 +162,7 @@ const OrderCustomer = () => {
   const closeModal = () => {
     setIsOpen(false);
   }
-  const openModalEdit = (id) => {
+  const openModalEdit = (id:any) => {
     let ids=id
     setIdEdit(ids)
     setIsOpenEdit(true);
@@ -170,7 +171,7 @@ const OrderCustomer = () => {
   const closeModalEdit = () => {
     setIsOpenEdit(false);
   }
-  const handelStartDate = (value) => {
+  const handelStartDate = (value:any) => {
     if (value === null) {
       setStartDate('')
 
@@ -183,7 +184,7 @@ const OrderCustomer = () => {
     }
   }
 
-  const handelEndDate = (value) => {
+  const handelEndDate = (value:any) => {
     if (value === null) {
       setEndDate('')
 
@@ -208,27 +209,27 @@ const OrderCustomer = () => {
     setIsOpenUpload(false)
   }
   const shippingId = () => {
-    return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
+    return (ShippingStatusEnums.map((data:any) => ({ label: data.name, value: data.id })))
   }
   const PaymentStatus = () => {
-    return (PaymentStatusEnums.map(data => ({ label: data.name, value: data.id })))
+    return (PaymentStatusEnums.map((data:any)  => ({ label: data.name, value: data.id })))
   }
   const OrderStatusID = () => {
-    return (OrderStatus.map(data => ({ label: data.name, value: data.id })))
+    return (OrderStatus.map((data:any)  => ({ label: data.name, value: data.id })))
   }
   const paymentMethodIDs = () => {
-    return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
+    return (PaymentStructureEnums.map((data:any)  => ({ label: data.name, value: data.id })))
   }
-  let arrayOfSelectedData = [];
-  const getSelectedData = (data) => {
+  let arrayOfSelectedData:any = [];
+  const getSelectedData = (data: any) => {
 
-    arrayOfSelectedData = data.map(item => item.original);
+    arrayOfSelectedData = data.map((item:any) => item.original);
 
 
     return (arrayOfSelectedData)
 
   }
-  const getBulkJob = (selected) => {
+  const getBulkJob = (selected:any) => {
     if (selected === 2) {
       enableSelectedItem()
     }
@@ -246,7 +247,7 @@ const OrderCustomer = () => {
   }
   const copySelectedItem = async () => {
     const arrayOfData = getSelectedData(selectedRows);
-    const copyData = arrayOfData.map(item => {
+    const copyData = arrayOfData.map((item:any) => {
       return { ...item, id: 0, active: true, createDate: new Date() }
     })
 
@@ -260,12 +261,12 @@ const OrderCustomer = () => {
         let payload = {
           'organization': copyData[i]
         }
-        const { data, status } = await setOrder(copyData[i])
-        if (status === 200) {
+        setOrder(copyData[i])
+       
           SetOpen(true)
 
           SetStateSuccess(successCount += 1)
-        }
+        
 
 
       } catch (error) {
@@ -281,7 +282,7 @@ const OrderCustomer = () => {
   }
   const enableSelectedItem = async () => {
     const arrayOfData = getSelectedData(selectedRows);
-    const copyData = arrayOfData.map(item => {
+    const copyData = arrayOfData.map((item:any) => {
       return { ...item, active: true }
     })
 
@@ -295,12 +296,12 @@ const OrderCustomer = () => {
         let payload = {
           'order': copyData[i]
         }
-        const { data, status } = await setOrder(copyData[i])
-        if (status === 200) {
+        setOrder(copyData[i])
+     
           SetOpen(true)
 
           SetStateSuccess(successCount += 1)
-        }
+        
 
 
       } catch (error) {
@@ -316,7 +317,7 @@ const OrderCustomer = () => {
   }
   const disableSelectedItem = async () => {
     const arrayOfData = getSelectedData(selectedRows);
-    const copyData = arrayOfData.map(item => {
+    const copyData = arrayOfData.map((item:any) => {
       return { ...item, active: false }
     })
 
@@ -330,12 +331,12 @@ const OrderCustomer = () => {
         let payload = {
           'order': copyData[i]
         }
-        const { data, status } = await setOrder(copyData[i])
-        if (status === 200) {
+      setOrder(copyData[i])
+      
           SetOpen(true)
 
           SetStateSuccess(successCount += 1)
-        }
+        
 
 
       } catch (error) {
@@ -351,7 +352,7 @@ const OrderCustomer = () => {
   }
   const params = { paymentStatusIds, Id,ExtId,paymentMethodIds, shippingStatusIds, orderStatusIds, StartDate, EndDate, OrderDetailExtId}
   function getDefault() {
-    let items = JSON.parse(sessionStorage.getItem(`params${window.location.pathname}`));
+    let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
     return items? items:''
 
 
@@ -365,19 +366,19 @@ const OrderCustomer = () => {
       params: {
         Id:Number(Id),
         UserName: userName,
-        OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+        OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
         StartDate
         , EndDate
         , ExtId: Number(ExtId),
-        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
-        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
-        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
+        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
+        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
         OrderDetailExtId,
         PageNumber:0,
         PageSize
       }
       ,
-      paramsSerializer: params => {
+      paramsSerializer: (params:any) => {
 
         return QueryString.stringify(params)
       }
@@ -416,19 +417,19 @@ const OrderCustomer = () => {
       params: {
         Id:Number(Id),
         UserName: userName,
-        OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+        OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
         StartDate
         , EndDate
         , ExtId: Number(ExtId),
-        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
-        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
-        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
+        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
+        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
         OrderDetailExtId,
         PageNumber,
         PageSize
       }
       ,
-      paramsSerializer: params => {
+      paramsSerializer: (params:any) => {
 
         return QueryString.stringify(params)
       }
@@ -467,7 +468,7 @@ const OrderCustomer = () => {
   var formatter = new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 0, 
     minimumFractionDigits: 0, });
 
-  const showOrder = (id) => {
+  const showOrder = (id:number) => {
     Navigate(`/admin/cuoDetail/${id}`)
   }
   const getDataByPage = async () => {
@@ -477,19 +478,19 @@ const OrderCustomer = () => {
       params: {
         Id:Number(Id),
         UserName: userName,
-        OrderStatusIds: orderStatusIds ? orderStatusIds.map(item => item.value) : [],
+        OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
         StartDate
         , EndDate
         , ExtId: Number(ExtId),
-        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map(item => item.value) : [],
-        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map(item => item.value) : [],
-        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map(item => item.value) : [],
+        paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
+        PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
+        ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
         OrderDetailExtId,
         PageNumber,
         PageSize
       }
       ,
-      paramsSerializer: params => {
+      paramsSerializer: (params:any) => {
         return QueryString.stringify(params)
       }
     };
@@ -512,14 +513,14 @@ const OrderCustomer = () => {
     { Header: 'شماره سفارش', accessor: 'id' },
     ,
     {
-      Header: 'تاریخ', accessor: d => {
+      Header: 'تاریخ', accessor: (d:any) => {
         let date = new Date(d.createDate).toLocaleDateString('fa-IR', {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit'
         })
         return (`${date}`)
-      }, Cell: row => {
+      }, Cell: (row:any) => {
 
         return (new Date(row.row.original.createDate).toLocaleDateString('fa-IR', {
           year: 'numeric',
@@ -531,18 +532,18 @@ const OrderCustomer = () => {
     },
   
     {
-      Header: 'وضعیت تخصیص', accessor: 'shippingStatusId', Cell: row => {
-        return (ShippingStatusEnums.filter(item => item.id === row.row.original.shippingStatusId).map(item => item.name))
+      Header: 'وضعیت تخصیص', accessor: 'shippingStatusId', Cell: (row:any) => {
+        return (ShippingStatusEnums.filter((item:any) => item.id === row.row.original.shippingStatusId).map((item:any) => item.name))
       }
     },
     {
-      Header: 'وضعیت سفارش', accessor: 'orderStatusId', Cell: row => {
-        return (OrderStatus.filter(item => item.id === row.row.original.orderStatusId).map(item => item.name))
+      Header: 'وضعیت سفارش', accessor: 'orderStatusId', Cell: (row:any) => {
+        return (OrderStatus.filter((item:any) => item.id === row.row.original.orderStatusId).map((item:any) => item.name))
       }
     },
      {
-      Header: 'نوع پرداخت', accessor: 'paymentMethodId', Cell: row => {
-          return (PaymentStructureEnums.filter(item => item.id === row.row.original.paymentMethodId).map(item => item.name))
+      Header: 'نوع پرداخت', accessor: 'paymentMethodId', Cell: (row:any) => {
+          return (PaymentStructureEnums.filter((item:any) => item.id === row.row.original.paymentMethodId).map((item:any) => item.name))
       }
   }
     , {
@@ -569,10 +570,10 @@ const OrderCustomer = () => {
       )
     },
 
-   ])
+   ],[])
 
 
-  const data = useMemo(() => order);
+  const data = useMemo(() => order,[order]);
 
   const handelSearchFieldClear =  () => {
     setPageNumber(0)
@@ -592,7 +593,7 @@ const OrderCustomer = () => {
 
 
 
-  const formatTrProps = (state = {}) => {
+  const formatTrProps = (state:any = {}) => {
     if (modalIsOpenEdit === false) {
       return {
         onClick: async () => {
@@ -646,7 +647,7 @@ setDetailAddress([])
   }
 
 if(order){
-  const dataForExcel = data.map(item => ({
+  const dataForExcel = data.map((item:any) => ({
     'شمراه فاکتور': item.id,
     'خریدار': item.customer.firstName,
     'شماره همراه': item.customer.userName,
@@ -677,7 +678,7 @@ if(order){
       ariaHideApp={false}
 
     >
-   <InvoiceCreator orderId={idEdit} closeModal={closeModalEdit}/>
+   <InvoiceCreator closeModal={closeModalEdit}/>
     </Modal>
     <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={entity} EntityTypesId={10} comment={"مشتری عزیز لطفا عکس پیش فاکتور تایید شده خود را بگذارید (پیش فاکتور حتما باید همراه با مهر و امضا شخص خریدار باشد)"}/>
   <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
@@ -853,8 +854,8 @@ if(order){
     <div className=" statbox widget-content widget-content-area">
       <div>
 
-      <TableOrderCustomer columns={columns} data={data} getData={rows => setSelectedRows(rows)}
-          bulkJob={getBulkJob} formatRowProps={(state) => formatTrProps(state)} show={address}
+      <TableOrderCustomer columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)}
+          bulkJob={getBulkJob} formatRowProps={(state:any) => formatTrProps(state)} show={address}
           setPageSize={setPageSize}
           PageSize={PageSize}
           getDataBySearch={getDataByPage}
