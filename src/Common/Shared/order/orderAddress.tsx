@@ -229,7 +229,7 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
         let finalArr: any = [];
         try {
             setLoading(true)
-            if (typeof(details)!==undefined) {
+at/            if (typeof(details)!==undefined) {
                 for (let i = 0; i < details.length; i++) {
 
                     const { data, status } = await getExtraData(Number(details[i].extId), 1)
