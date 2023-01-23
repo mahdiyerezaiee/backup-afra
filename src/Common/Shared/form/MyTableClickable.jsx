@@ -26,7 +26,7 @@ const IndeterminateCheckbox = React.forwardRef(
         )
     }
 )
-const MyTableClick = ({columns, data, getData, bulkJob, formatRowProps, show, address,Detail, setPageNumber,PageNumber, ShippingCartInformation ,setPageSize, PageSize,getDataBySearch , total,clickableHeader}) => {
+const MyTableClick = ({showAddress ,columns, data, getData, bulkJob, formatRowProps, show, address,Detail, setPageNumber,PageNumber, ShippingCartInformation ,setPageSize, PageSize,getDataBySearch , total,clickableHeader}) => {
     const [cottageCode, setcottageCode] = useState('');
     const [Shippings , SetShippings]=useState([])
     const [Shippingcheck , SetShippingCheck]=useState([])
@@ -78,7 +78,6 @@ useEffect(()=>{
     const [Func, SetFunc] = useState([]);
     const formattedvalues = [];
 
-
     const {
         getTableProps,
         getTableBodyProps,
@@ -98,72 +97,81 @@ useEffect(()=>{
             hiddenColumns:  Func
         },
 
-    }, useGlobalFilter, useSortBy, useExpanded, usePagination, useRowSelect, hooks => {
-        hooks.visibleColumns.push(columns => [
+    }, useGlobalFilter, useSortBy, useExpanded, usePagination, useRowSelect, (hooks) => {
+        hooks.visibleColumns.push((columns) => {
+            return [
             // Let's make a column for selection
             {
                 id: 'selection',
-                // The header can use the table's getToggleAllRowsSelectedProps method
-                // to render a checkbox
-                Header: ({ getToggleAllRowsSelectedProps }) => (
+                    // The header can use the table's getToggleAllRowsSelectedProps method
+                    // to render a checkbox
+                    Header: ({getToggleAllRowsSelectedProps}) => (
                     <div>
                         <IndeterminateCheckbox{...getToggleAllRowsSelectedProps()} />
                     </div>
                 ),
-                // The cell can use the individual row's getToggleRowSelectedProps method
-                // to the render a checkbox
-                Cell: ({row}) => (
+                    // The cell can use the individual row's getToggleRowSelectedProps method
+                    // to the render a checkbox
+                    Cell:({row}) => (
                     <div>
                         <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
                     </div>
                 ),
-            },
+            }
+        ,
             {// Build our expander column
-                id: "expander", // Make sure it has an ID
-                Header: ({getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
+                id: "active", // Make sure it has an ID
+                    Header:({getToggleAllRowsExpandedProps, isAllRowsExpanded}) => (
                     <span {...getToggleAllRowsExpandedProps()}>
 
                       </span>
-                ),
-                Cell: ({row}) => (
+                ), Cell:({row}) => (
+
                     // Use Cell to render an expander for each row.
                     // We can use the getToggleRowExpandedProps prop-getter
                     // to build the expander.
 
-                    <span {...row.getToggleRowExpandedProps() } {...row.getRowProps(formatRowProps && formatRowProps(row))}>
-            {  row.id === show.id && show.active === true ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                                 className="bi bi-chevron-down" viewBox="0 0 16 16">
-                <path fillRule="evenodd"
-                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-            </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                          className="bi bi-chevron-left" viewBox="0 0 16 16">
-                <path fillRule="evenodd"
-                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
+                    <span {...row.getRowProps(formatRowProps && formatRowProps(row))}>
+            {row.id === show && showAddress === true ?
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     className="bi bi-chevron-down" viewBox="0 0 16 16">
+                    <path fillRule="evenodd"
+                          d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                              className="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fillRule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
             }
           </span>
                 )
-            },{
+            }
+        ,
+            {
                 // Build our expander column
                 id: "", // Make sure it has an ID
-                Header: ({getToggleAllRowsExpandedProps, isAllRowsExpanded}) => (
+                    Header:({getToggleAllRowsExpandedProps, isAllRowsExpanded}) => (
                     <span {...getToggleAllRowsExpandedProps()}>
 
                       </span>
 
-                ),
-                Cell: ({row}) => (
+                ), Cell:({row}) => (
                     // Use Cell to render an expander for each row.
                     // We can use the getToggleRowExpandedProps prop-getter
                     // to build the expander.
-                    <span {...row.getToggleRowExpandedProps()}>
-                        { row.original.extId >0  ? <div data-title="بازارگاه" style={{width:'10px' , height:"10px", backgroundColor: 'greenyellow'}}></div> : <div style={{width:'10px' , height:"10px", backgroundColor: 'deepskyblue'}}></div>
+                    <span>
+                        {row.original.extId > 0 ? <div data-title="بازارگاه" style={{
+                            width: '10px',
+                            height: "10px",
+                            backgroundColor: 'greenyellow'
+                        }}></div> : <div style={{width: '10px', height: "10px", backgroundColor: 'deepskyblue'}}></div>
                         }
           </span>
                 )
-            },
-            ...columns,
-        ])
+            }
+        ,
+        ...columns,]
+        })
     })
     const values= Object.values(rows.map(i =>  i.values));
 
@@ -265,28 +273,29 @@ useEffect(()=>{
                                     <tr {...row.getRowProps()}  >
                                         { // loop over the rows cells
                                             row.cells.map(cell => (
+                                                <Fragment>
 
                                                 <td {...cell.getCellProps()}>
                                                     {cell.render('Cell')}
 
                                                 </td>
-
+                                                </Fragment>
                                             ))
                                         }
 
 
                                     </tr>
-                                    {  row.id === show.id && show.active === true?
+                                    {  row.id === show && showAddress ?
 <tr >
     <td colSpan={17}   className="fadeInt   m-3    " >
-                                    {row.id === show.id && show.active === true ?
+                                    {row.id === show && showAddress  ?
 
                                                     <div className="  shadow rounded p-2  " >
                                                         {Detail.length !== 0 ?
 
-                                                        <div  className="w-85  table table-responsive   ">
+                                                        <div  className="w-85  containerT  ">
 
-                                                            <table   className="  w-100 " >
+                                                            <table   className="  table m-1 table-striped  fixed_header " >
 
                                                                 <thead  style={{color:'white'}}>
                                                                 <tr>
@@ -309,7 +318,7 @@ useEffect(()=>{
                                                                 <tr  key={index +100000}>
                                                                     <td >{item.productSupplyId}</td>
                                                                     <td >{cottageCode}</td>
-                                                                    <td >{item.product.name}</td>
+                                                                    <td >{item.product ? item.product.name : null }</td>
                                                                     <td >{item.quantity}</td>
                                                                     <td >{new  Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                                                     {/*The unit price must be read from the backend*/}

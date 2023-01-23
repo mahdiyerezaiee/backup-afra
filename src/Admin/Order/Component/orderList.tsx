@@ -66,8 +66,10 @@ const OrderList :React.FC= () => {
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
     const [open, SetOpen] = useState(false);
+    const [show, SetShow] = useState(false);
     const [overDue, SetoverDue] = useState(location.state ? true : getDefault().overDue);
-    const [address, SetAddress] = useState<any>({ active: false, id: 0 });
+    const [address, SetAddress] = useState<any>( 0 );
+
     let Detail:any = [];
     const [totalCount, setTotalCount] = useState(0);
     const [ShippingInformation, SetShippingInformation] = useState([]);
@@ -101,8 +103,11 @@ const OrderList :React.FC= () => {
 
     }
     const bindAdress = async (arr:any) => {
+        console.log(arr)
         if (arr.length > 1) {
+            FilnalArr=[]
             for (let i = 0; i < arr.length; i++) {
+
                 try {
                     const { data, status } = await GetAddress(11, arr[i].id)
                     let detail = Detail.filter((item:any) => item.id === arr[i].id)[0]
@@ -125,6 +130,8 @@ const OrderList :React.FC= () => {
 
             }
         } else {
+            FilnalArr=[]
+
             for (let i = 0; i < arr.length; i++) {
                 try {
                     const { data, status } = await GetAddress(10, arr[i].orderId)
@@ -382,7 +389,7 @@ const OrderList :React.FC= () => {
         try {
             const { data, status } = await GetDataWithSearchOrder(config);
             if (status === 200) {
-                SetAddress({ active: false })
+                SetAddress({ id: 0 })
                 setOrder(data.result.orderList.values);
                 setTotalCount(data.result.orderList.totalCount)
                 setPageNumber(0)
@@ -429,7 +436,7 @@ const OrderList :React.FC= () => {
         try {
             const { data, status } = await GetDataWithSearchOrder(config);
             if (status === 200) {
-                SetAddress({ active: false })
+                SetAddress({ id: 0 })
                 setOrder(data.result.orderList.values);
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
@@ -840,7 +847,7 @@ const OrderList :React.FC= () => {
                         data-placement="top" data-title="ویرایش"
                         onClick={function () {
                             openModalEdit(row.row.original.id)
-                            SetAddress({ active: address.active === false ? false : false })
+                            SetAddress({ id:0 })
                         }}
                         disabled={roles.includes(8) ? false : true}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -859,51 +866,57 @@ const OrderList :React.FC= () => {
             )
         }],[organizations])
 
-
     const data = useMemo(() => order,[order]);
     const formatTrProps = (state:any = {}) => {
+        const orderDetail =async () => {
+                setDetailAddress([])
+                setOrderId(state.original.id)
+
+                try {
+                    const { data, status } = await GetOrderDetailsAdmin(state.original.id)
+                    SetAddress(state.id)
+                    if (status === 200) {
+
+                        Detail = data.result.orderDetails
+                        await bindAdress(data.result.orderDetails)
+
+                    }
+                } catch (err) {
+                    console.log(err)
+                }
+                try {
+                    const { data, status } = await GetOrder(state.original.id)
+                    SetAddress(state.id)
+                    if (status === 200) {
+                        let xd = data.result.order.extraData
+                        SetShoppingCartInformation(data.result.order)
+                        if (xd === null) {
+                            SetShippingInformation([])
+
+                        } else {
+                            SetShippingInformation(JSON.parse(xd.data))
+                        }
+                    }
+                } catch (err) {
+                    console.log(err)
+                }
+            }
         if (modalIsOpenEdit === false) {
             return {
-                onClick: async (e:any) => {
-                    e.preventDefault()
-                    setDetailAddress([])
-                    setOrderId(state.original.id)
-                    try {
-                        const { data, status } = await GetOrderDetailsAdmin(state.original.id)
-                        SetAddress({ active: address.active === false ? true : false, id: state.id })
-                        if (status === 200) {
-                            Detail = data.result.orderDetails
-                            await bindAdress(Detail)
-                        }
-                    } catch (err) {
-                        console.log(err)
-                    }
-                    try {
-                        const { data, status } = await GetOrder(state.original.id)
-                        SetAddress({ active: address.active === false ? true : false, id: state.id })
-                        if (status === 200) {
-                            let xd = data.result.order.extraData
-                            SetShoppingCartInformation(data.result.order)
-                            if (xd === null) {
-                                SetShippingInformation([])
+                onClick: async () => {
+                    SetShow( oldState => !oldState)
 
-                            } else {
-                                SetShippingInformation(JSON.parse(xd.data))
-                            }
-                        }
-                    } catch (err) {
-                        console.log(err)
-                    }
+                    await orderDetail()
                 },
             }
         }
     }
+
     const handelSearchFieldClear = () => {
         SetGetOrders(true)
         GetOrders()
 
         setOrderStatusIds([])
-        SetAddress({ active: false })
         setUserName('')
         setId('')
         setNationalCode('')
@@ -1158,6 +1171,7 @@ const OrderList :React.FC= () => {
                         PageNumber={PageNumber}
                         Detail={DetailAddress}
                         clickableHeader={onHeaderClick}
+                                  showAddress={show}
 
                     />
                     <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
