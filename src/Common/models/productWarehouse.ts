@@ -1,4 +1,4 @@
-export interface ProductWareHouse{
+export interface productWareHouse{
     id?: number,
     wareHouseId?: number,
     wareHouseName?: string,
@@ -10,6 +10,6 @@ export interface ProductWareHouse{
 
 
 
-export interface ProductWareHouses extends Array<ProductWareHouse>{
+export interface ProductWareHouses extends Array<productWareHouse>{
    
 }
