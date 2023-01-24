@@ -1,7 +1,7 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState, } from "react";
 import { useSelector } from "react-redux";
-import { CreateUser, GetUserData } from "../../../services/userService";
+import { CreateUser, GetUserData, SetUserRole } from "../../../services/userService";
 import { GetAllOrganisation } from "../../../services/organisationService";
 import Select from "react-select";
 import { setCustomerInfo } from "../../../services/customerService";
@@ -19,6 +19,8 @@ import {
 } from "../../../Utils/validitionParams";
 import { RootState } from "../../../store";
 import { GetUsersRolesById } from './../../../services/userService';
+import { optionsRole } from './../../../Common/Enums/RolesEnums';
+import { GetGroupWithCompany } from "../../../services/GroupService";
 
 const EditUserInfo: React.FC = () => {
     const navigate = useNavigate()
@@ -30,7 +32,7 @@ const EditUserInfo: React.FC = () => {
     const [lastName, setLastName] = useState('')
     const [nationalCode, setNationalCode] = useState('')
     const [organizationID, setOrganizationID] = useState([])
-    const [userRole, setUserRole] = useState([])
+    const [userRole, setuserRole] = useState<any>([])
     const [user, setUser] = useState([])
     const [organizationId, setOrganizationId] = useState(null)
     const [maxValidityUnitId, setMaxValidityUnitId] = useState(null)
@@ -45,6 +47,7 @@ const EditUserInfo: React.FC = () => {
     const [groupId, setGroupId] = useState(null)
     let [companyId, SetcompanyId] = useState<any>()
     let [companyName, SetCompanyName] = useState<any>()
+    let [userG, setUserG] = useState<any>()
 
     const companies = useSelector((state: RootState) => state.companies)
 
@@ -86,13 +89,41 @@ const EditUserInfo: React.FC = () => {
             console.log(err)
         }
     }
+    const GetUsersGroup = async (companyId: any) => {
+        if (companies.length === 1) {
+            try {
+
+                const { data, status } = await GetGroupWithCompany(1, companies[0].id);
+                setUserG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+        else {
+            try {
+                const { data, status } = await GetGroupWithCompany(1, companyId);
+                setUserG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+
+
+    }
+
     const getuserRole = async (id: number) => {
 
         const { data, status } = await GetUsersRolesById(id)
 
         if (status === 200) {
-            setUserRole(data.result.userRoleIds)
-
+            setuserRole(data.result.userRoleIds)
+            if(data.result.userRoleIds[0]===2){
+                SetcompanyId(2)
+            }
         }
 
 
@@ -102,6 +133,13 @@ const EditUserInfo: React.FC = () => {
         getUserInfo()
         getuserRole(Number(params.id))
     }, [params.id])
+
+
+    useEffect(() => {
+
+        GetUsersGroup(companyId)
+
+    }, [companyId])
 
     useEffect(() => {
 
@@ -113,10 +151,20 @@ const EditUserInfo: React.FC = () => {
 
     }, [organizationId])
     console.log(userRole);
-    
+
     const submit = async (dataUser: any) => {
         setLoading(true)
-
+        try {
+            const userrole={
+                "userRoleIds": [
+                  userRole[0]
+                ],
+                "userId": Number(params.id)
+              }
+            const{data,status}=await SetUserRole(userrole)
+        } catch (error) {
+            
+        }
         try {
             const { data, status } = await setCustomerInfo(dataUser)
             if (status === 200) {
@@ -133,6 +181,9 @@ const EditUserInfo: React.FC = () => {
         } catch (err) {
             console.log(err)
         }
+
+
+  
         navigate(-1)
         setLoading(false)
 
@@ -161,6 +212,32 @@ const EditUserInfo: React.FC = () => {
         return (PriceUnitEnums.filter((item: any) => item.id === maxValidityUnitId).map((item: any) => ({ label: item.name, value: item.id }))[0])
     }
 
+    const Roles = () => {
+        return (optionsRole.map((item: any) => ({ label: item.label, value: Number(item.value) })))
+    }
+
+    let defaulRoleValue: any = Roles().filter((item: any) => item.value === userRole[0])[0]
+
+    const UserGroups:any = () => {
+        if (userG){
+            return (userG.map((item: any) => ({ label: item.name, value: item.id })))
+        }
+    }
+    let defaulGroupValue:any=()=>
+    {if(UserGroups()!==undefined ){
+
+if(UserGroups().length>0){
+
+    return(UserGroups().filter((item:any)=>item.value===groupId))
+}
+else{
+    return({label:'تعیین نشده',value:null})
+}
+    }
+    else{
+        return({label:'تعیین نشده',value:null})
+    }
+}
 
     const handelNavigate = (e: any) => {
         e.preventDefault()
@@ -172,6 +249,14 @@ const EditUserInfo: React.FC = () => {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
     });
+    const companys = () => {
+        return (companies.map((item: any) => ({ label: item.name, value: item.id })))
+
+    }
+    let allcompanies: any = companys()
+    let defaultValue: any = allcompanies.filter((item: any) => item.value === companyId)
+
+
 
     return (
 
@@ -184,7 +269,7 @@ const EditUserInfo: React.FC = () => {
                 </div>
             </div>
             <div className=' box-big row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-6 col-sm-12'>
+                <div className='widget box shadow col-md-8 col-sm-12'>
 
 
                     <Formik
@@ -203,7 +288,8 @@ const EditUserInfo: React.FC = () => {
                             maxValidityUnitId,
                             actionBlock,
                             groupId,
-                            companyId, companyName
+                            companyId:userRole[0]===2?null:companyId
+                            , companyName:userRole[0]===2?null:companyName
 
                         }}
                         enableReinitialize={true}
@@ -278,13 +364,13 @@ const EditUserInfo: React.FC = () => {
                                         </div>
 
 
-                                        <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
+                                        <div className={companies.length > 0 && (userRole[0]===7 || companies.length > 0 && userRole[0]===8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
                                             <label >مقدار اعتبار </label>
                                             <Field type="text" className=" formater form-control opacityForInput" placeholder="100,000" validate={validatNumber} name='maxValidity' />
                                             {errors.maxValidity && touched.maxValidity && <div className="text-danger">{String(errors.maxValidity)}</div>}
 
                                         </div>
-                                        <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
+                                        <div className={companies.length > 0 && (userRole[0]===7 || companies.length > 0 && userRole[0]===8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
                                             <label >واحد قیمت</label>
                                             <Select
                                                 value={PriceUnit()}
@@ -293,19 +379,94 @@ const EditUserInfo: React.FC = () => {
                                                 onChange={(e: any) => setMaxValidityUnitId(e.value)}
                                             />
                                         </div>
+                                        {companies.length > 0 && (userRole[0]===7 || companies.length > 0 && userRole[0]===8) ?
+                                            <div className="col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput">
+
+                                                <label> شرکت</label>
+                                                <Select
+                                                    defaultValue={defaultValue}
+                                                    placeholder='نام شرکت'
+                                                    options={companys()}
+                                                    key={defaultValue}
+                                                    isClearable={true}
+                                                    onChange={(e: any) => {
 
 
+                                                        SetcompanyId(e.value)
+                                                        SetCompanyName(e.label)
+
+
+                                                    }
+
+                                                    }
+
+                                                />
+
+
+                                            </div> : ''
+
+                                        }
+
+
+                                        <div className={check===true?"col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput":"col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+
+                                            <label> نقش کاربر</label>
+                                            <Select
+                                                defaultValue={defaulRoleValue}
+                                                placeholder='تعیین نقش'
+                                                options={Roles()}
+                                                key={defaulRoleValue}
+                                                isClearable={true}
+                                                onChange={(e: any) => {
+
+
+                                                    setuserRole([e.value])
+
+
+                                                }
+
+                                                }
+
+                                            />
+
+
+                                        </div>
+
+                                       
+                                        <div className={check===true?"col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput":"col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+
+                                            <label>گروه مشتری</label>
+                                            <Select
+                                                defaultValue={defaulGroupValue}
+                                                placeholder='تعیین گروه'
+                                                options={UserGroups()}
+                                                key={defaulGroupValue}
+                                                isClearable={true}
+                                                onChange={(e: any) => {
+
+
+                                                    setGroupId(e.value)
+
+
+                                                }
+
+                                                }
+
+                                            />
+
+
+                                        </div>
 
                                         {check === true ?
-                                            <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
-                                                <label >شرکت</label>
+                                            <div className="col-lg-4 col-md-4 col-sm-11 mb-4">
+                                                <label >سازمان</label>
                                                 <Select
                                                     value={OrganizationItem()}
                                                     options={OrganizationId()}
                                                     onChange={(e: any) => setOrganizationId(e.value)}
                                                 />
                                             </div> : ''}
-                                        <div className='col-12 textOnInputForGrp '><input type='checkbox' checked={show} onChange={showHandler} /> تغییر رمز عبور </div>
+                                        <div className='col-12 textOnInputForGrp mb-3 '><input type='checkbox' checked={show} onChange={showHandler} /> تغییر رمز عبور </div>
 
 
                                         <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>

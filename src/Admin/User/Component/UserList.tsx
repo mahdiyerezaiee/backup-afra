@@ -205,7 +205,6 @@ const UserList:React.FC = () => {
     }
     
 
-    console.log(Ids);
     const getCustomerGroups=async()=>{
         let newConfig={
             headers: { 'Content-Type': 'application/json' },
@@ -288,7 +287,6 @@ const UserList:React.FC = () => {
 }
     }, [Ids])
     let organiz=organizations
-    console.log(organiz);
     
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
@@ -529,7 +527,7 @@ const UserList:React.FC = () => {
                 </ul>
             )
         }
-    ],[organiz])
+    ],[organiz,users,CustomerG])
     const handelSearchFieldClear = () => {
         setGeData(true)
         getUsers()
