@@ -215,7 +215,7 @@ companyId, companyName,active
 
 
                             </div>
-                            {userCompanies ?
+                            {userCompanies.length>1 ?
                                 <div className="form-group mb-4 mt-3 textOnInput">
 
                                     <label> شرکت</label>

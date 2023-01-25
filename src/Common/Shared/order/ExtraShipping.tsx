@@ -2,6 +2,8 @@ import {getExtraData} from "../../../services/extraService";
 import Modal from 'react-modal';
 import {useEffect, useState} from "react";
 import {ExportToExcel} from "../Common/ExportToExcel";
+import { GetShippingReports } from './../../../services/ShippingService';
+import { MeasureUnitSample } from './../../Enums/MeasureUnitSample';
 
 const customStyles = {
     content: {
@@ -32,9 +34,9 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
           if (id === null){
               setExtra(null)
           }
-         const {data , status}=await getExtraData( id,2)
+         const {data , status}=await GetShippingReports(id)
 
-          setExtra(JSON.parse(data.result.extraData.data))
+          setExtra(data.result.shippingReports)
       }catch (e) {
           console.log(e)
       }
@@ -83,46 +85,36 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
                             className="table table-bordered table-hover table-striped  mt-2  mb-4"  >
                             <thead >
                             <tr style={{fontSize:'10px' }}>
-                                <th style={{fontSize:'10px' }} className="text-center">ردیف</th>
-                                <th style={{fontSize:'10px' }} className="text-center">کد باربری</th>
-                                <th style={{fontSize:'10px' }} className="text-center"> تاریخ بارنامه</th>
-                                <th style={{fontSize:'10px' }} className="text-center">شماره بارنامه</th>
-                                <th style={{fontSize:'10px' }} className="text-center">شماره سریال بارنامه</th>
-                                <th style={{fontSize:'10px' }}  className="text-center">شماره تلفن راننده</th>
-                                <th style={{fontSize:'10px' }} className="text-center">وزن بارنامه</th>
-                                <th style={{fontSize:'10px' }}  className="text-center">کد تخصیص بازارگاه</th>
-                                <th style={{fontSize:'10px' }}  className="text-center">کرایه بار</th>
+                            <th style={{fontSize:'10px' }} className="text-center">ردیف</th>
+                                <th style={{fontSize:'10px' }} className="text-center">#</th>
+                                <th style={{fontSize:'10px' }} className="text-center">شناسه حواله</th>
+                                <th style={{fontSize:'10px' }} className="text-center"> تاریخ حواله</th>
+                                <th style={{fontSize:'10px' }} className="text-center">واحد</th>
+                                <th style={{fontSize:'10px' }} className="text-center">وزن</th>
+                                <th style={{fontSize:'10px' }}  className="text-center">شماره بارنامه</th>
+                                <th style={{fontSize:'10px' }} className="text-center">سریال بارنامه</th>
                                 <th style={{fontSize:'10px' }}  className="text-center">نام راننده</th>
-                                <th style={{fontSize:'10px' }}  className="text-center"> فامیلی راننده</th>
-                                <th style={{fontSize:'10px' }}  className="text-center">پلاک</th>
-                                <th style={{fontSize:'10px' }}  className="text-center"> ساعت بارنامه</th>
-                                <th style={{fontSize:'10px' }}  className="text-center">  شناسه یا کد ملی تحویل گیرنده</th>
-                                <th style={{fontSize:'10px' }}  className="text-center"> نام تحویل گیرنده</th>
-                                <th style={{fontSize:'10px' }}  className="text-center"> شماره قرارداد</th>
-                                <th style={{fontSize:'10px' }}  className="text-center">آدرس بارنامه</th>
+                                <th style={{fontSize:'10px' }}  className="text-center">شماره راننده</th>
+                                <th style={{fontSize:'10px' }}  className="text-center">پلاک </th>
+                              
                             </tr>
                             </thead>
                             <tbody >
                             {extra.map((item:any , index:number) => (
-                                <tr  className='text-center'>
+                                <tr  className='text-center' key={item.id}>
 
                                     <td >{index + 1}</td>
-                                    <td>{item.CompanyCode}</td>
-                                    <td >{item.barDate}</td>
-                                    <td >{item.bar_n}</td>
-                                    <td >{item.bar_n_s}</td>
-                                    <td title={item.dTel} >{item.dTel.substring(0,10)}...</td>
-                                    <td >{item.netT}</td>
-                                    <td >{item.kaCode}</td>
-                                    <td >{item.kra2}</td>
-                                    <td >{item.dName}</td>
-                                    <td >{item.dFam}</td>
-                                    <td >{item.tplk}</td>
-                                    <td >{item.barTime}</td>
-                                    <td>{item.ka_E_Code}</td>
-                                    <td >{item.tarGetName}</td>
-                                    <td >{item.ghErtebat}</td>
-                                    <td title={item.barAdd} >{item.barAdd.substring(0,10)}...</td>
+                                    <td>{item.id}</td>
+                                    <td >{item.shippingId}</td>
+                                    <td >{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
+                                    <td >{MeasureUnitSample.filter((q:any)=> q.id===item.measureUnitId).map((x:any)=>x.name)}</td>
+                                    <td >{item.quantity}</td>
+                                    <td >{item.shippingNumber}</td>
+                                    <td >{item.shippingSerial}</td>
+                                    <td >{item.delivererName}</td>
+                                    <td >{item.delivererNumber}</td>
+                                    <td >{item.delivererPlaque}</td>
+                                    
 
                                 </tr>
 

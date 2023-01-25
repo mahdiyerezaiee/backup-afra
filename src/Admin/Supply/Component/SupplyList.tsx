@@ -548,7 +548,7 @@ const SupplyList:React.FC = () => {
         },
         {
             Header: 'کد  کوتاژ', accessor: 'cottageCode'
-        },
+        },{Header:'نام شرکت', accessor:'companyName'},
         {
             Header: 'توضیحات', accessor: 'comment', Cell: (row:any) => {
 

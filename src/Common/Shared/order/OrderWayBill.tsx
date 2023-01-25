@@ -181,8 +181,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                             <thead className="text-center">
                                 <tr>
                                     <th >#</th>
-                                    <th > شناسه سفارش</th>
-                                    <th>شناسه جزییات سفارش</th>
+                                   <th>شناسه</th>
                                     <th > واحد</th>
                                     <th>  مقدار حواله</th>
                                     <th> مقدار حمل شده</th>
@@ -201,8 +200,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
 
                                     <tr key={item.id} id={item.orderDetailId} onClick={()=>findeTakhsis(item.orderDetailId)}>
                                         <td  >{item.id}</td>
-                                        <td>{item.orderId ? item.orderId : "--"}</td>
-                                        <td >{item.orderDetailId ? item.orderDetailId : "--"}</td>
+                                     <td>{(item.entityTypeId===10?'سفارش':'تخصیص') + ` ${item.entityId}#`}</td>
                                         <td >{MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name)}</td>
                                         <td>{item.plannedQuantity}</td>
                                         <td >{item.shippedQuantity}</td>
@@ -210,7 +208,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                         <td>{DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name)}</td>
                                         <td >{item.shippingContractCode ? item.shippingContractCode : '--'}</td>
                                         <td >{item.shippingCompanyName ? item.shippingCompanyName : '--'}</td>
-                                        <td> <svg display={item.extId ? '' : 'none'} onClick={() => openModal(item.extId)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
+                                        <td> <svg display={item.shippedQuantity>0 ? '' : 'none'} onClick={() => openModal(item.id)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                                             width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                                                 fill="none" stroke="#000" strokeLinecap="round"
                                                 strokeLinejoin="round" strokeWidth="12" /><line

@@ -337,7 +337,7 @@ const NewProduct: React.FC = () => {
                                             {groupId === 0 ? <div className="text-danger">پر کردن فیلد الزامیست</div> : null}
 
                                         </div>
-                                        {userCompanies ?
+                                        {userCompanies.lenght>1 ?
                                             <div className="col-4  textOnInput">
 
                                                 <label> شرکت</label>

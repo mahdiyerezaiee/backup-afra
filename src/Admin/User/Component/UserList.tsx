@@ -312,7 +312,7 @@ const UserList:React.FC = () => {
         , { Header: 'کد ملی', accessor: 'nationalCode' }
         , {
             Header: 'شناسه ملی', accessor: (d:any) => {
-                let organizationss = organiz.filter((item:any) => item.id === d.organizationId).map((item:any) => item.nationalId)
+                let organizationss =organiz? organiz.filter((item:any) => item.id === d.organizationId).map((item:any) => item.nationalId):null
                 return (`${organizationss}`)
             }, Cell: (row:any) => {
 
@@ -343,7 +343,7 @@ const UserList:React.FC = () => {
                 }
 
             }
-        },
+        }
 
         , {
             Header: 'نقش کاربر', accessor: '', Cell: (row:any) => {

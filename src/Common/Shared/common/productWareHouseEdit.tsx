@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useMemo, useState } from "react";
 import MyTable from "../Form/MyTable";
 import { useRef } from "react";
+import { WareHouse } from './../../models/wareHouse';
+import { BsChevronBarContract } from "react-icons/bs";
 
 interface Props {
     id: any,
@@ -12,23 +14,18 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
     let inp: any = useRef();
 
     const [wareHouse, setWarehouse] = useState<any>([])
+    const [NewwareHouse, setNewWarehouse] = useState<any>([])
     const [active, setActive] = useState<any>([])
-    const [newWareHouse, setNewWareHouse] = useState<any>([])
-    const activity = active.map((data: any) => ({ active: data }))
+    const [Quantity, SetQuantity] = useState<number>()
+    const [inEditMode, setInEditMode] = useState({
 
-    const mergeById = (a1: any, a2: any) =>
-        a1.map((itm: any, index1: number) => ({
-            ...a2.find((item: any, index: number) => index === index1 && item),
-            ...itm,
-        }));
-    useEffect(() => {
+        status: false,
 
-        if (active.length === 0) {
-            setActive(new Array(wareHouse.length).fill(false))
-        }
-        setNewWareHouse(mergeById(wareHouse, activity))
+        rowKey: null
 
-    }, [active])
+    });
+
+
 
     const getProductWareHouse = async () => {
         try {
@@ -44,7 +41,67 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
 
     }, [])
 
+    
 
+    const onEdit = ( Id:any, currentQuantity : any) => {
+
+
+        console.log(Id);
+        console.log(inEditMode);
+        setInEditMode({
+
+            status: true,
+
+            rowKey: Id
+
+        })
+
+        
+      
+        
+        let wareHouseProduct: any = [...wareHouse]
+    
+      let arr:any=wareHouseProduct.filter((item:any)=>item.wareHouseId===Id).map((item:any)=>({...item,quantity:currentQuantity}))
+
+
+        let Arr1=wareHouseProduct.filter((item:any)=>item.wareHouseId!==Id)
+         let finnalArr=[...Arr1,...arr]
+
+        
+         setNewWarehouse(finnalArr)
+
+
+
+    }
+
+    const SetProductWare=async(id:any)=>{
+
+     
+        let wareHouseProduct: any = [...wareHouse]
+    
+      let arr:any=wareHouseProduct.filter((item:any)=>item.wareHouseId===id).map((item:any)=>({...item,quantity:Quantity}))
+
+
+        let Arr1=wareHouseProduct.filter((item:any)=>item.wareHouseId!==id)
+         let finnalArr=[...Arr1,...arr]
+
+        
+         setNewWarehouse(finnalArr)
+
+
+
+
+
+        try {
+            const body={"productWareHouses":finnalArr}
+            const {data,status}=await SetProductWareHouses(body)
+           
+        } catch (error) {
+            
+        }
+        getProductWareHouse()
+
+    }
 
     return (
         <div className='row d-flex justify-content-center '>
@@ -53,10 +110,9 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
                     <table className='table mb-4 text-center' style={{ transform: 'rotateX(180deg)' }}>
                         <thead>
                             <tr>
-                                <th>انتخاب</th>
+                               
                                 <th>شناسه</th>
                                 <th>نام</th>
-
                                 <th>مقدار</th>
                                 <th>مقدار فروش</th>
                                 <th>مقدار رزرو شده</th>
@@ -67,22 +123,22 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
                             {wareHouse.map((contact: any, index: number) => (
 
                                 <tr style={{ backgroundColor: contact.id !== 0 ? 'lightgray' : 'transparent' }} key={contact.wareHouseId}>
-                                    <td>
-
-                                        <input
-                                            type='checkbox'
-                                            id={contact.wareHouseId}
-                                            
-                                        />
-                                    </td>
+                                  
                                     <td>
                                         {contact.wareHouseId}
                                     </td>
                                     <td>
                                         {contact.wareHouseName}
                                     </td>
-                                    <td>
-                                        {contact.quantity}
+                                    <td onClick={()=>onEdit( contact.wareHouseId, Quantity )}>
+                                        {
+                                            inEditMode.status && inEditMode.rowKey === contact.wareHouseId ? (
+                                                <input type='number' value={Quantity} onChange={(e: any) => SetQuantity(Number(e.target.value))} />
+                                            ) :
+
+                                                (contact.quantity)
+                                        }
+
                                     </td>
 
 
@@ -92,7 +148,7 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
                                     <td>{contact.reservedQuantity}</td>
                                     <td>
 
-                                        <button className="border-0 bg-transparent non-hover edit-btn">  ثبت
+                                        <button onClick={()=>SetProductWare(contact.wareHouseId)}  className=" bg-transparent non-hover edit-btn">  ثبت
                                         </button></td>
 
                                 </tr>

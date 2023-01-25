@@ -126,7 +126,8 @@ CottageCode,
 
             params: {
                 CottageCode,
-                OrderId,
+                EntityId:OrderId,
+                EntityTypeId:10,
                 CreateStartDate,
                 CreateEndtDate,
                 PageNumber,
@@ -484,7 +485,8 @@ CottageCode,
 
             params: {
                 CottageCode,
-                OrderId,
+                EntityId:OrderId,
+                EntityTypeId:10,
                 CreateStartDate,
                 CreateEndtDate,
                 PageNumber,
@@ -558,8 +560,9 @@ CottageCode,
             }}
 
         ,{ Header: 'شناسه قرارداد باربری', accessor: 'shippingContractId' }
-        ,{ Header: 'نام برباری', accessor: 'companyName' }
-        ,{ Header: 'شماره قرارداد', accessor: 'contractCode' }
+        ,{Header:'نام شرکت' ,accessor:'companyName'},
+        ,{ Header: 'نام باربری', accessor: 'shippingCompanyName' }
+        ,{ Header: 'شماره قرارداد', accessor: 'shippingContractCode' }
         ,
 
     ])
