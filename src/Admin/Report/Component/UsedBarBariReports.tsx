@@ -154,7 +154,7 @@ const UsedBarBariReport:React.FC = () => {
 
 
                             <form >
-                            {companies?
+                            {companies.length>1?
                             <div className="col mb-4  form-group textOnInput">
 
                                 <label> شرکت</label>

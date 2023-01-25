@@ -16,11 +16,11 @@ export const GetShoppingContractWithCompany=(id)=>{
 }
 export const GetShoppings=(id)=>{
 
-    return http.get(`${configure}/Shipping/GetShippings?OrderId=${id}&PageNumber=0&PageSize=100000`);
+    return http.get(`${configure}/Shipping/GetShippings?EntityId=${id}&EntityTypeId=10&PageNumber=0&PageSize=100000`);
 }
 export const GetShoppingsAdmin=(id)=>{
 
-    return http.get(`${configure}/Shipping/GetShippings?OrderId=${id}&PageNumber=0&PageSize=100000&IsAdmin=true`);
+    return http.get(`${configure}/Shipping/GetShippings?EntityId=${id}&EntityTypeId=10&PageNumber=0&PageSize=100000&IsAdmin=true`);
 }
 export const SetShoppingContract=(ShoppingContract)=>{
 
@@ -57,4 +57,13 @@ export const  DeleteShipping=id =>{
         }
         }
     return http.delete(`${configure}/Shipping/DeleteShipping`,config);
+}
+
+export const GetShippingReports=id=>{
+
+
+    return http.get(`${configure}/Shipping/GetShippingReports?ShippingId=${id}`);
+
+
+
 }

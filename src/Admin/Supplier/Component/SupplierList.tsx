@@ -312,7 +312,7 @@ const SupplierList:React.FC = () => {
     const columns = useMemo(() => [
 
         { Header: '#', accessor: 'id' },
-        { Header: 'نام تامین کننده', accessor: 'name' },
+        { Header: 'نام تامین کننده', accessor: 'name' },{Header:'نام شرکت',accessor:'companyName'},
         {
             Header: 'عملیات', accessor: '11', Cell: (row:any) => {
 

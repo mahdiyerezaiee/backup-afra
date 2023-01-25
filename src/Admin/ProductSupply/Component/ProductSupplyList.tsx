@@ -443,7 +443,7 @@ const ProductSupply:React.FC = () => {
             Header: 'تاریخ اعتبار', accessor: 'date', Cell: (row:any) => {
                 return (new Date(row.row.original.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }))
             }
-        },
+        },{Header:'شرکت',accessor:'companyName'},
         {
             Header: 'توضیحات', accessor: 'comment', Cell: (row:any) => {
                 return (row.row.original.comment.substring(0, 20))

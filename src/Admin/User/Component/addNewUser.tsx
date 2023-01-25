@@ -287,7 +287,7 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                                             {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
 
                                         </div>
-                                        <div className={companies.length > 0 && userRole === 2 ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+                                        <div className={companies.length > 1 && userRole === 2 ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
 
                                             <label> نقش کاربر</label>
                                             <Select
@@ -312,7 +312,7 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
 
 
 
-                                        {companies.length > 0 ?
+                                        {companies.length > 1?
                                             <div className={userRole === 2 ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
 
                                                 <label> شرکت</label>
@@ -339,7 +339,7 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                                             </div> : ''
 
                                         }
-                                        <div hidden={userRole === 2 ? false : true} className={companies.length > 0 ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+                                        <div hidden={userRole === 2 ? false : true} className={companies.length > 1 ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
 
                                             <label>گروه مشتری</label>
                                             <Select

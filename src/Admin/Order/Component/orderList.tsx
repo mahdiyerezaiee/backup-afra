@@ -789,7 +789,8 @@ const OrderList :React.FC= () => {
                 let code = ` ${OName ? OName : '--'}`
                 return (code)
             }
-        }, {
+        },
+        {Header:'شرکتّ',accessor:'companyName'}, {
             Header: 'نحوه پرداخت', accessor: 'paymentMethodId', Cell: row => {
                 return (PaymentStructureEnums.filter((item:any) => item.id === row.row.original.paymentMethodId).map((item:any) => item.name))
             }
