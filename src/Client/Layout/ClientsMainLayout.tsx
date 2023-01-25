@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Header from '../../Common/Shared/Common/Header';
-import SideNavbar from './../../Admin/Nav/SideNavbar';
+import SideNavbar from '../../Admin/Nav/SideNavbar';
 
-const ClientsMainLayou:React.FC = () => {
+const ClientsMainLayout:React.FC = () => {
     return (
        <div>
         
@@ -11,4 +11,4 @@ const ClientsMainLayou:React.FC = () => {
     )
 }
 
-export default ClientsMainLayou
+export default ClientsMainLayout

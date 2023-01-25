@@ -200,7 +200,7 @@ const NewProduct: React.FC = () => {
 
             }
 
-            await setAttributevalue();
+            // await setAttributevalue();
 
         }
 

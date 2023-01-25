@@ -20,6 +20,8 @@ const NewWareHouse:React.FC = () => {
     const [attValuehajm, setAttValueHajm] = useState('')
     const [Addres, setAddres] = useState('');
     const [loading, setLoading] = useState(false);
+    const [active, setActive] = useState(true);
+
     const [userCompanies, setUserCompanies] = useState<any>([])
     let [companyId, SetcompanyId] = useState()
     let [companyName, SetCompanyName] = useState()
@@ -31,7 +33,7 @@ const NewWareHouse:React.FC = () => {
         "wareHouse": {
             name,
             groupId,
-companyId, companyName
+companyId, companyName,active
         }
 
     }
@@ -146,8 +148,8 @@ companyId, companyName
                 });
                 wareId = data.result.id;
 
-                setAddressForWare();
-                setAttributevalueforHajm();
+                // setAddressForWare();
+                // setAttributevalueforHajm();
                 navigate('/admin/warehouselist')
             }
             setLoading(false)
@@ -180,6 +182,7 @@ companyId, companyName
                             companyName,
                             Addres,
                             attValuehajm,
+                            active
                         }}
                         enableReinitialize={true}
                         onSubmit={values => {

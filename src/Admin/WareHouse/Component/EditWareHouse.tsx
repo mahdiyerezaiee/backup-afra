@@ -4,27 +4,31 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { NavLink, useParams } from "react-router-dom";
 import Select from 'react-select'
-import {  SetAttributeValues } from "../../../services/attributeService";
+import { SetAttributeValues } from "../../../services/attributeService";
 import { GetAttributeValues } from '../../../services/attributeService';
 import { GetGroupsForEntity, GetGroupWithCompany } from '../../../services/GroupService';
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { GetCompanyChild } from '../../../services/companiesService';
-import {Field, Form, Formik} from "formik";
-import {validatAlpha, validateRequired, validatNumber} from "../../../Utils/validitionParams";
+import { Field, Form, Formik } from "formik";
+import { validatAlpha, validateRequired, validatNumber } from "../../../Utils/validitionParams";
+import { useSelector } from 'react-redux';
+import { RootState } from "../../../store";
 
-const EditWareHouse:React.FC = () => {
+const EditWareHouse: React.FC = () => {
     const params = useParams()
     const [Addres, setAddres] = useState('');
     const [name, Setname] = useState('');
-    const[wareGid,setWareGId]=useState(0)
+    const [wareGid, setWareGId] = useState(0)
     const [wareHouseT, SetWarehouseT] = useState<any>([]);
     const [groupId, setGroupId] = useState(0);
     const [attributeIdHajm, setattributeIdHajm] = useState(0);
     const [attributeIdadd, setattributeIdadd] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [active, setActive] = useState(true);
     const [attValuehajm, setAttValueHajm] = useState('')
     let [companyId, SetcompanyId] = useState()
     let [companyName, SetCompanyName] = useState()
+    const companies = useSelector((state: RootState) => state.companies)
     const id = params.id
     const navigator = useNavigate();
     const test = {
@@ -32,7 +36,7 @@ const EditWareHouse:React.FC = () => {
         "wareHouse": {
             id,
             name,
-            groupId,companyId,companyName
+            groupId, companyId, companyName,active
         }
 
     }
@@ -43,6 +47,7 @@ const EditWareHouse:React.FC = () => {
             setWareGId(data.result.wareHouse.groupId)
             SetcompanyId(data.result.wareHouse.companyId)
             SetCompanyName(data.result.wareHouse.companyName)
+            setActive(data.result.wareHouse.active)
 
         } catch (err) {
             console.log(err)
@@ -53,24 +58,23 @@ const EditWareHouse:React.FC = () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr:any=[]
+        let finalArr: any = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(4, companies[i].id);
 
-            if(data.result.groups.length>0)
-            {
-               arr.push(data.result.groups)
+            if (data.result.groups.length > 0) {
+                arr.push(data.result.groups)
             }
 
 
         }
 
-        finalArr=Array.prototype.concat.apply([], arr);
+        finalArr = Array.prototype.concat.apply([], arr);
 
         SetWarehouseT(finalArr);
 
-      
+
 
 
     }
@@ -95,29 +99,29 @@ const EditWareHouse:React.FC = () => {
             if (status === 200) {
                 setAddres(data.result.attributeValue.value)
                 setattributeIdadd(data.result.attributeValue.id)
-               
+
             }
         } catch (error) {
 
         }
 
     }
-    
+
 
     const inputwareHouseT = () => {
-        return (wareHouseT.map((data:any) => ({ label: data.name, value: data.id })))
+        return (wareHouseT.map((data: any) => ({ label: data.name, value: data.id })))
     }
-   let WareT=wareHouseT.filter((item:any)=>item.id===wareGid).map((item:any)=>item.name)
+    let WareT = wareHouseT.filter((item: any) => item.id === wareGid).map((item: any) => item.name)
 
- let wareGPName=WareT[0]
-   
-    
+    let wareGPName = WareT[0]
+
+
     const setAddressForWare = async () => {
 
         const attribute = {
             "attributeValues": [
                 {
-                    id:attributeIdadd,
+                    id: attributeIdadd,
                     attributeTypeId: 1007,
                     entityId: params.id,
                     value: `${Addres}`
@@ -137,7 +141,7 @@ const EditWareHouse:React.FC = () => {
         const attribute = {
             "attributeValues": [
                 {
-                    id:attributeIdHajm,
+                    id: attributeIdHajm,
                     attributeTypeId: 1006,
                     entityId: params.id,
                     value: `${attValuehajm}`
@@ -166,9 +170,9 @@ const EditWareHouse:React.FC = () => {
                     draggable: true,
                     progress: undefined
                 });
-               
-                setAddressForWare();
-                setAttributevalueforHajm();
+
+                // setAddressForWare();
+                // setAttributevalueforHajm();
                 navigator('/admin/warehouselist')
             }
             setLoading(false)
@@ -181,17 +185,26 @@ const EditWareHouse:React.FC = () => {
         getWareHouse()
         GetWareHouseTypes();
         getWareHajm();
-      
+
         getWareAddress();
     }, [])
+
+
+    const companys = () => {
+        return (companies.map((item: any) => ({ label: item.name, value: item.id })))
+
+    }
+    console.log(companyId);
+    
+    let defaultValue: any = companys().filter((item: any) => item.value === companyId)
     return (
         <div className='user-progress' >
-        <div className='row'>
-            <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                <h5 >ویریش انبار</h5>
-                <p>در این بخش می توانید انبار را ویرایش کنید.</p>
+            <div className='row'>
+                <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                    <h5 >ویریش انبار</h5>
+                    <p>در این بخش می توانید انبار را ویرایش کنید.</p>
+                </div>
             </div>
-        </div>
             <div className='row d-flex justify-content-center '>
                 <div className='widget box shadow col-md-5 col-xs-12'>
 
@@ -204,76 +217,104 @@ const EditWareHouse:React.FC = () => {
                             companyName,
                             Addres,
                             attValuehajm,
+                            active
                         }}
                         enableReinitialize={true}
                         onSubmit={values => {
                             // same shape as initial values
                             handelSubmit()
                         }}>
-                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+                        {({ errors, touched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
                             <Form className='col-lg-6 col-sm-12' >                        <div className='form-group'>
 
-                            <div className=" mb-4 textOnInput">
-                                <label >انبار</label>
-                                <Field type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} name="name" validate={validatAlpha} onChange={(e:any) => Setname(e.target.value)} />
-                                {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
+                                <div className=" mb-4 textOnInput">
+                                    <label >انبار</label>
+                                    <Field type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} name="name"  onChange={(e: any) => Setname(e.target.value)} />
+                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
 
-                            </div>
-                            <div className=" mb-4 textOnInput">
+                                </div>
+                                <div className=" mb-4 textOnInput">
 
 
-                                <label>حجم انبار</label>
+                                    <label>حجم انبار</label>
 
-                                <Field name="attValuehajm"  validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={(e:any) => setAttValueHajm(e.target.value)} />
+                                    <Field name="attValuehajm" validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={(e: any) => setAttValueHajm(e.target.value)} />
 
-                                {errors.attValuehajm && touched.attValuehajm && <div className="text-danger">{errors.attValuehajm}</div>}
-
-
+                                    {errors.attValuehajm && touched.attValuehajm && <div className="text-danger">{errors.attValuehajm}</div>}
 
 
-                            </div>
-                            <div className="mb-4 textOnInput ">
 
-                                <label>گروه انبار</label>
-                               
-                                   
-                                        <Select
-                                        value={
-                                            {label:wareGPName,value:wareGid}
+
+                                </div>
+                                {companies.length>1?
+                                <div className="mb-4 textOnInput ">
+
+                                    <label> شرکت</label>
+
+
+                                    <Select
+                                    defaultValue={defaultValue}
+                                    placeholder='نام شرکت'
+                                    options={companys()}
+                                    key={defaultValue}
+                                    isClearable={true}
+                                    onChange={(e:any) => {
+
+
+                                        SetcompanyId(e.value)
+                                        SetCompanyName(e.label)
+
+
                                     }
-                                            options={inputwareHouseT()}
-                                            onChange={(e:any) =>setGroupId(e.value)}
-                                        />
 
-                                {groupId === 0 ? <div className="text-danger">پر کردن این فیلد الزامی است</div>:null}
+                                    }
+
+                                />
 
 
-                            </div>
-                            <div className='mb-4 textOnInput'>
-                                <label>آدرس</label>
-                                <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={(e:any) => {
-                                    setAddres(e.target.value)
+                                </div>:''}
+                                <div className="mb-4 textOnInput ">
 
-                                }} />
-                                {errors.Addres && touched.Addres && <div className="text-danger">{errors.Addres}</div>}
+                                    <label>گروه انبار</label>
 
-                            </div>
-                            <div className='row '>
-                                <div className='col-lg-6 col-sm-12 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
 
-                                        loading={loading}
-                                        color="#ffff"
-                                        size={15}
-                                    /></button>
+                                    <Select
+                                            
+                                            defaultValue={ {label: wareGPName, value: wareGid }}
+                                        
+                                        options={inputwareHouseT()}
+                                        onChange={(e: any) => setGroupId(e.value)}
+                                    />
+
+                                    {groupId === 0 ? <div className="text-danger">پر کردن این فیلد الزامی است</div> : null}
+
+
                                 </div>
-                                <div className='col-lg-6 col-sm-12 '>
-                                    <NavLink to='/admin/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <div className='mb-4 textOnInput'>
+                                    <label>آدرس</label>
+                                    <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={(e: any) => {
+                                        setAddres(e.target.value)
+
+                                    }} />
+                                    {errors.Addres && touched.Addres && <div className="text-danger">{errors.Addres}</div>}
+
+                                </div>
+                                <div className='row '>
+                                    <div className='col-lg-6 col-sm-12 '>
+                                        <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
+
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
+                                    </div>
+                                    <div className='col-lg-6 col-sm-12 '>
+                                        <NavLink to='/admin/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                             </Form>
                         )}
                     </Formik>

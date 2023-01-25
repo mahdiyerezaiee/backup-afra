@@ -14,9 +14,7 @@ import './styles.css'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
-interface Props{
-    collapsed:boolean
-}
+
 
 const SideNavbar: React.FC = () => {
     
