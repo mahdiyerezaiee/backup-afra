@@ -80,8 +80,9 @@ const SideNavbar: React.FC = () => {
 
 
                     <MenuItem onClick={handleHeaderClick}><NavLink to='userlist'> لیست کاربران</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}><NavLink to='customergroup'>گروه کاربران</NavLink> </MenuItem>
+
                     <MenuItem onClick={handleHeaderClick}><NavLink to='organizationlist'> لیست سازمان ها</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}><NavLink to='customergroup'>گروه ها</NavLink> </MenuItem>
 
                 </SubMenu>
 
@@ -122,10 +123,10 @@ const SideNavbar: React.FC = () => {
                 <MenuItem onClick={handleHeaderClick}><NavLink to='/reportfromsql'> ترافیک بارگیری</NavLink></MenuItem> */}
                     <MenuItem onClick={handleHeaderClick}  ><NavLink to='shippingcompanyList'>لیست باربری</NavLink> </MenuItem>
                     <MenuItem onClick={handleHeaderClick}  > <NavLink to='ShippingContract'>لیست قرارداد باربری</NavLink></MenuItem>
-                    <SubMenu label='بروزرسانی باربری' onClick={handleHeaderClick}>
-                        <MenuItem onClick={handleHeaderClick} > <NavLink to='updateShippingReports'> براساس تاریخ </NavLink></MenuItem>
-                        <MenuItem onClick={handleHeaderClick}><NavLink to='updateAllShipping'> براساس حواله </NavLink></MenuItem>
-                    </SubMenu>
+                    
+                        <MenuItem onClick={handleHeaderClick} > <NavLink to='updateShippingReports'>بروز رسانی باربری</NavLink></MenuItem>
+                        
+                    
                 </SubMenu>
                 {/* <SubMenu ref={ref8} open={show.item8 === true? true:false} onClick={() => setShow({...show , item8: !show.item8 , item1: false,item3: false,item4: false,item5: false,item6: false,item2: false,item9: false,item10: false,item7: false,item11: false,item12: false,item14: false,item13: false})} hidden={roles.includes(7)||roles.includes(5) ? false : true} icon={<FaCashRegister size='2rem' />} label='حسابداری'>
 

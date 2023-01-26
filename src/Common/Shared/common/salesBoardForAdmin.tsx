@@ -226,6 +226,7 @@ const SalesBoardForAdmin:React.FC = () => {
                                     <th className="text-center">مقدار عرضه</th>
                                     <th className="text-center">توضیحات</th>
                                     <th className="text-center">گروه مشتری</th>
+                                    <th className="text-center">نام شرکت</th>
                                     <th className="text-center">تاریخ شروع</th>
                                     <th className="text-center">تاریخ پایان</th>
 
@@ -249,6 +250,7 @@ const SalesBoardForAdmin:React.FC = () => {
                                         <td className="text-center">{formatter2.format(item.quantity)}</td>
                                         <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
                                         <td className="text-center">{groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map(((item:any) => item.gpName)) === null ? "عمومی" : [...new Set<string>(groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map((item:any) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
+                                        <td className="text-center">{item.companyName}</td>
                                         <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td className="text-center">{formatter2.format(item.orderedQuantity)}</td>

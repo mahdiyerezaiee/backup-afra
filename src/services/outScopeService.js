@@ -21,7 +21,7 @@ export const UpdateShippingReport=()=>{
     return http.post(`${configure}/OutScope/UpdateShippingReports`,JSON.stringify({}));
 }
 
-export const UpdateShippingReportByDate=(body)=>{
+export const UpdateAllShippingReport=(body)=>{
 
-    return http.post(`${configure}/OutScope/UpdateShippingReportsByDate`,JSON.stringify(body));
+    return http.post(`${configure}/OutScope/UpdateShippingReports`,JSON.stringify(body));
 }

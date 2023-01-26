@@ -36,7 +36,7 @@ const EditWareHouse: React.FC = () => {
         "wareHouse": {
             id,
             name,
-            groupId, companyId, companyName,active
+            groupId, companyId, companyName, active
         }
 
     }
@@ -44,7 +44,7 @@ const EditWareHouse: React.FC = () => {
         try {
             const { data, status } = await GetAllWareHouse(params.id)
             Setname(data.result.wareHouse.name)
-            setWareGId(data.result.wareHouse.groupId)
+            setGroupId(data.result.wareHouse.groupId)
             SetcompanyId(data.result.wareHouse.companyId)
             SetCompanyName(data.result.wareHouse.companyName)
             setActive(data.result.wareHouse.active)
@@ -111,9 +111,7 @@ const EditWareHouse: React.FC = () => {
     const inputwareHouseT = () => {
         return (wareHouseT.map((data: any) => ({ label: data.name, value: data.id })))
     }
-    let WareT = wareHouseT.filter((item: any) => item.id === wareGid).map((item: any) => item.name)
-
-    let wareGPName = WareT[0]
+    let defaultwareValue: any = inputwareHouseT().filter((item: any) => item.value === groupId)
 
 
     const setAddressForWare = async () => {
@@ -195,7 +193,7 @@ const EditWareHouse: React.FC = () => {
 
     }
     console.log(companyId);
-    
+
     let defaultValue: any = companys().filter((item: any) => item.value === companyId)
     return (
         <div className='user-progress' >
@@ -230,7 +228,7 @@ const EditWareHouse: React.FC = () => {
 
                                 <div className=" mb-4 textOnInput">
                                     <label >انبار</label>
-                                    <Field type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} name="name"  onChange={(e: any) => Setname(e.target.value)} />
+                                    <Field type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} name="name" onChange={(e: any) => Setname(e.target.value)} />
                                     {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
 
@@ -248,47 +246,47 @@ const EditWareHouse: React.FC = () => {
 
 
                                 </div>
-                                {companies.length>1?
-                                <div className="mb-4 textOnInput ">
+                                {companies.length > 1 ?
+                                    <div className="mb-4 textOnInput ">
 
-                                    <label> شرکت</label>
-
-
-                                    <Select
-                                    defaultValue={defaultValue}
-                                    placeholder='نام شرکت'
-                                    options={companys()}
-                                    key={defaultValue}
-                                    isClearable={true}
-                                    onChange={(e:any) => {
+                                        <label> شرکت</label>
 
 
-                                        SetcompanyId(e.value)
-                                        SetCompanyName(e.label)
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={companys()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={(e: any) => {
 
 
-                                    }
-
-                                    }
-
-                                />
+                                                SetcompanyId(e.value)
+                                                SetCompanyName(e.label)
 
 
-                                </div>:''}
+                                            }
+
+                                            }
+
+                                        />
+
+
+                                    </div> : ''}
                                 <div className="mb-4 textOnInput ">
 
                                     <label>گروه انبار</label>
 
 
                                     <Select
-                                            
-                                            defaultValue={ {label: wareGPName, value: wareGid }}
-                                        
+
+                                        defaultValue={defaultwareValue}
+                                        key={defaultwareValue}
                                         options={inputwareHouseT()}
                                         onChange={(e: any) => setGroupId(e.value)}
                                     />
 
-                                    {groupId === 0 ? <div className="text-danger">پر کردن این فیلد الزامی است</div> : null}
+                                   
 
 
                                 </div>

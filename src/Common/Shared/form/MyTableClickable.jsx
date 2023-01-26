@@ -287,7 +287,7 @@ useEffect(()=>{
                                     </tr>
                                     {  row.id === show && showAddress ?
 <tr >
-    <td colSpan={17}   className="fadeInt   m-3    " >
+    <td colSpan={18}   className="fadeInt   m-3    " >
                                     {row.id === show && showAddress  ?
 
                                                     <div className="  shadow rounded p-2  " >
@@ -339,7 +339,7 @@ useEffect(()=>{
                                                         </div>:null}
                                                         {/* {row.original.shippingStatusId===2?null:<Suspense><LazyShippingCom  id={row.original.id}/></Suspense>} */}
                                                         {row.original.extId > 0 ?
-                                                            <div className=" w-85  table table-responsive ">
+                                                            <div className=" w-85  table  ">
 
                                                                 <table className="w-100 " >
 

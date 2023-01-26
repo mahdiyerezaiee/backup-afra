@@ -597,7 +597,7 @@ const SupplyList:React.FC = () => {
                 )
             }
         }
-    ],[])
+    ],[wareHouses])
     const CompaniesIDs = () => {
         return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }

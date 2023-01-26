@@ -72,7 +72,7 @@ const UsedBarBariReport:React.FC = () => {
         event.preventDefault();
         if(companies.length===1){
         try {
-            const { data, status } = await GetUsedBarBariReports(StartDate, EndDate);
+            const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate,companies[0].id);
             if (status === 200) {
 
                 SetResponse(data.result.barBariUsedReports);

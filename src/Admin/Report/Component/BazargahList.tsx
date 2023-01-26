@@ -104,7 +104,8 @@ const getSelectedData=(data:any)=>{
         event.preventDefault();
         if(companies.length===1){
         try {
-            const { data, status } = await GetBazargahKharidList(StartDate, EndDate);
+            let CompanyId=companies[0].id
+            const { data, status } = await GetBazargahKharidListWithCompany(StartDate, EndDate,CompanyId);
             if (status === 200) {
 
                 SetResponse(data.result.bazarGahKharidList);

@@ -444,7 +444,7 @@ const ProductList:React.FC = () => {
 
             }
         }
-        ,{Header:'شرکت',accessor:'companyName'},
+        ,{Header:' نام شرکت',accessor:'companyName'},
         {
             Header: 'فعال', accessor: '', isVisible: true,
             disableFilters: true, Cell: (row:any) => {

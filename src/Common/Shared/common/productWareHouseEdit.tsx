@@ -86,7 +86,7 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
          let finnalArr=[...Arr1,...arr]
 
         
-         setNewWarehouse(finnalArr)
+      
 
 
 
@@ -95,6 +95,15 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
         try {
             const body={"productWareHouses":finnalArr}
             const {data,status}=await SetProductWareHouses(body)
+            if(status===200){
+                setInEditMode({
+
+                    status: false,
+            
+                    rowKey: null
+            
+                })
+            }
            
         } catch (error) {
             

@@ -379,6 +379,7 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     const data = useMemo(() => FilterData, [FilterData])
 
 
+console.log(details);
 
     if (loading) {
         return (
