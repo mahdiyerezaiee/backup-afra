@@ -6,100 +6,116 @@ import { NavLink } from 'react-router-dom';
 
 
 import FadeLoader from 'react-spinners/FadeLoader'
-import MyTableBazargah  from "../../../Common/Shared/Form/MyTableBazargah";
-import {GetUsedBarBariReports} from "../../../services/reportService";
-import {ExportToExcel} from "../../../Common/Shared/Common/ExportToExcel";
+import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
+import { GetUsedBarBariReports } from "../../../services/reportService";
+import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import  Select  from 'react-select';
+import Select from 'react-select';
 import { GetUsedBarBariReportsCompanies } from './../../../services/reportService';
 
 
-const UsedBarBariReport:React.FC = () => {
+const UsedBarBariReport: React.FC = () => {
 
-    const companies=useSelector((state:RootState)=>state.companies)
+    const companies = useSelector((state: RootState) => state.companies)
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
     const [clicked, SetClicked] = useState(false)
-    const[selectedRows,setSelectedRows]=useState([])
-    const[companyId,SetCompanyId]=useState<any>()
-    const[show,SetShow]=useState(false);
-    const[disable,setDisable]=useState(false);
-
-    const[open,SetOpen]=useState(false);
+    const [selectedRows, setSelectedRows] = useState([])
+    const [companyId, SetCompanyId] = useState<any>()
+    const [show, SetShow] = useState(false);
+    const [disable, setDisable] = useState(false);
+    const [OnlyShipping, setOnlyShipping] = useState(false)
+    const [open, SetOpen] = useState(false);
     let [loading, setLoading] = useState(false);
     let [color, setColor] = useState("#0c4088");
     const close = () => {
         SetOpen(false);
     }
-    let arrayOfSelectedData=[];
-    const getSelectedData=(data:any)=>{
+    let arrayOfSelectedData = [];
+    const getSelectedData = (data: any) => {
 
-        arrayOfSelectedData= data.map((item:any)=>item.original);
+        arrayOfSelectedData = data.map((item: any) => item.original);
 
 
-        return(arrayOfSelectedData)
-
-    }
-    const getBulkJob=(selected:any)=>{
+        return (arrayOfSelectedData)
 
     }
+    const getBulkJob = (selected: any) => {
+
+    }
 
 
 
-    const handelStartDate = (value:any) => {
+    const handelStartDate = (value: any) => {
         if (value === null) {
             setStartDate('')
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setStartDate(new Date(value.toDate().setHours(3,30,0,0)).toJSON())
+            setStartDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
         }
     }
-    const handelEndDate = (value:any) => {
+    const handelEndDate = (value: any) => {
         if (value === null) {
             setEndDate('')
         }
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setEndDate( new Date(value.toDate().setHours(27,30,0,0)).toJSON())
+            setEndDate(new Date(value.toDate().setHours(3, 30, 0, 0)).toJSON())
 
         }
     }
-    const handelSubmit = async (event:any) => {
+    const handelSubmit = async (event: any) => {
         setLoading(true)
         event.preventDefault();
-        if(companies.length===1){
-        try {
-            const { data, status } = await GetUsedBarBariReports(StartDate, EndDate);
-            if (status === 200) {
+        if (companies.length === 1) {
+            try {
+                const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate, companies[0].id,OnlyShipping);
+                if (status === 200) {
 
-                SetResponse(data.result.barBariUsedReports);
-                SetClicked(true);
-                setLoading(false)
+                    SetResponse(data.result.barBariUsedReports);
+                    SetClicked(true);
+                    setLoading(false)
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
+        }
+        else {
+
+            if (companyId) {
+                try {
+                    const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate, companyId,OnlyShipping);
+                    if (status === 200) {
+
+                        SetResponse(data.result.barBariUsedReports);
+                        SetClicked(true);
+                        setLoading(false)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+
+            }
+            else {
+                try {
+                    const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate, companies[0].id,OnlyShipping);
+                    if (status === 200) {
+
+                        SetResponse(data.result.barBariUsedReports);
+                        SetClicked(true);
+                        setLoading(false)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
         }
     }
-    else{
-
-        try {
-            const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate,companyId);
-            if (status === 200) {
-
-                SetResponse(data.result.barBariUsedReports);
-                SetClicked(true);
-                setLoading(false)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
-    }
-    const handelFrom=()=>{
+    const handelFrom = () => {
         SetClicked(false)
     }
     let formatter = new Intl.NumberFormat('fa-IR', {
@@ -119,28 +135,28 @@ const UsedBarBariReport:React.FC = () => {
     }
     const columns = useMemo(() => [
         { Header: 'کد باربری', accessor: 'companyCode' },
-        {Header:'تاریخ بارنامه',accessor:'barDate'},
+        { Header: 'تاریخ بارنامه', accessor: 'barDate' },
         { Header: 'شماره بارنامه', accessor: 'bar_n' },
         { Header: 'شماره سریال بارنامه', accessor: 'bar_n_s' },
-        { Header: 'شماره تلفن راننده', accessor: 'dTel'},
-        { Header: 'وزن بارنامه', accessor: 'netT'},
+        { Header: 'شماره تلفن راننده', accessor: 'dTel' },
+        { Header: 'وزن بارنامه', accessor: 'netT' },
         { Header: 'کد تخصیص بازارگاه', accessor: 'kaCode' },
         { Header: 'کرایه بار', accessor: 'kra2' },
         { Header: 'نام راننده', accessor: 'dName' },
         { Header: 'فامیلی راننده', accessor: 'dFam' },
         { Header: 'پلاک', accessor: 'tplk' },
-        { Header: ' ساعت بارنامه', accessor: 'barTime'},
+        { Header: ' ساعت بارنامه', accessor: 'barTime' },
         { Header: ' شناسه یا کد ملی تحویل گیرنده', accessor: 'ka_E_Code' },
         { Header: 'نام تحویل گیرنده', accessor: 'tarGetName' },
         { Header: ' شماره قرارداد', accessor: 'ghErtebat' },
-        { Header: 'آدرس بارنامه', accessor: 'barAdd'},],[]);
-    let defaultValue:any=CompaniesIDs()[0]
+        { Header: 'آدرس بارنامه', accessor: 'barAdd' },], []);
+    let defaultValue: any = CompaniesIDs()[0]
 
-    const data = useMemo(() => Response,[Response]);;
+    const data = useMemo(() => Response, [Response]);;
     console.log(data)
 
     if (!clicked) {
-        if(!loading){
+        if (!loading) {
             return (
                 <div className='user-progress' >
                     <div className='row'>
@@ -154,31 +170,43 @@ const UsedBarBariReport:React.FC = () => {
 
 
                             <form >
-                            {companies.length>1?
-                            <div className="col mb-4  form-group textOnInput">
-
-                                <label> شرکت</label>
-                                <Select
-                                    defaultValue={defaultValue}
-                                    placeholder='نام شرکت'
-                                    options={CompaniesIDs()}
-                                    key={defaultValue}
-                                    isClearable={true}
-                                    onChange={(e:any) => {
 
 
-                                        SetCompanyId(e.value)
+                                {companies.length > 1 ?
+                                    <div className="col mb-4  form-group textOnInput">
+
+                                        <label> شرکت</label>
+                                        <Select
+                                            defaultValue={defaultValue}
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            key={defaultValue}
+                                            isClearable={true}
+                                            onChange={(e: any) => {
 
 
-                                    }
-
-                                    }
-
-                                />
+                                                SetCompanyId(e.value)
 
 
-                            </div>:''}
-                                <div className='row'>
+                                            }
+
+                                            }
+
+                                        />
+
+
+                                    </div> : ''}
+
+                                <div className='form-row'>
+                                    <div className="col-lg-12 col-md-12 col-sm-12 ml-4 mb-4 form-group">
+
+
+                                        <label className="form-check-label">
+
+                                            <input type="checkbox" checked={OnlyShipping} className="form-check-input" onChange={(e: any) => setOnlyShipping(e.target.checked)} />
+                                            فقط دارای حواله
+                                        </label>
+                                    </div>
                                     <div className=" col ">
                                         <div className=" mb-4 " style={{ position: 'relative' }}>
                                             <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
@@ -194,7 +222,7 @@ const UsedBarBariReport:React.FC = () => {
 
                                             </div>
                                         </div>
-                                        {show? <p  style={{color:'red'}}> شروع تاریخ از 1401/4/1 است</p>:null}
+                                        {show ? <p style={{ color: 'red' }}> شروع تاریخ از 1401/4/1 است</p> : null}
                                     </div>
                                     <div className=" col ">
                                         <div className=" mb-4 " style={{ position: 'relative' }}>
@@ -230,11 +258,11 @@ const UsedBarBariReport:React.FC = () => {
 
             )
         }
-        else{
-            return(
-                <div style={{position:'fixed',top:'40%',left:'40%'}}>
+        else {
+            return (
+                <div style={{ position: 'fixed', top: '40%', left: '40%' }}>
                     <p>دریافت اطلاعات ...</p>
-                    <FadeLoader loading={loading} color={color}/>
+                    <FadeLoader loading={loading} color={color} />
                 </div>
             )
 
@@ -242,53 +270,53 @@ const UsedBarBariReport:React.FC = () => {
     }
 
     else {
-        if (Response && Response.length >0){
-            const dataForExcel = Response.map((item:any) => ({
+        if (Response && Response.length > 0) {
+            const dataForExcel = Response.map((item: any) => ({
 
-    'تاریخ بارنامه': item.barDate,
-    'شماره بارنامه': item.bar_n,
-    'شماره سریال بارنامه': item.bar_n_s,
-    'شماره تلفن راننده': item.dTel,
-    'وزن بارنامه': item.netT,
-    'کد تخصیص بازارگاه':item.kaCode,
-    'کرایه بار':item.kra2,
-    'کد باربری': item.companyCode,
-    'نا راننده': item.dName,
-    'فامیلی راننده': item.dFam,
-    'پلاک': item.tplk,
-    'ساعت بارنامه': item.barTime,
-    'شناسه یا کد ملی تحویل گیرنده': item.ka_E_Code,
-    'نام تحویل گیرنده':item.tarGetName,
-    'شماه قرارداد': item.ghErtebat,
-    'آدرس بارنامه': item.barAdd,
+                'تاریخ بارنامه': item.barDate,
+                'شماره بارنامه': item.bar_n,
+                'شماره سریال بارنامه': item.bar_n_s,
+                'شماره تلفن راننده': item.dTel,
+                'وزن بارنامه': item.netT,
+                'کد تخصیص بازارگاه': item.kaCode,
+                'کرایه بار': item.kra2,
+                'کد باربری': item.companyCode,
+                'نا راننده': item.dName,
+                'فامیلی راننده': item.dFam,
+                'پلاک': item.tplk,
+                'ساعت بارنامه': item.barTime,
+                'شناسه یا کد ملی تحویل گیرنده': item.ka_E_Code,
+                'نام تحویل گیرنده': item.tarGetName,
+                'شماه قرارداد': item.ghErtebat,
+                'آدرس بارنامه': item.barAdd,
 
 
-}))
-    return (
-        <div className=" statbox widget-content widget-content-area ">
-            <div>
-                <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
+            }))
+            return (
+                <div className=" statbox widget-content widget-content-area ">
+                    <div>
+                        <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-                <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}   bulkJob={getBulkJob}/>
-                {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
-            </div>
-            <div className="d-flex justify-content-end m-2">
-                <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
-            </div>
-        </div>
+                        <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
+                    </div>
+                    <div className="d-flex justify-content-end m-2">
+                        <ExportToExcel apiData={dataForExcel} fileName='لیست گزارش' />
+                    </div>
+                </div>
 
-    )
-}else {
-    return(
-        <div className=" statbox widget-content widget-content-area rounded">
-            <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
+            )
+        } else {
+            return (
+                <div className=" statbox widget-content widget-content-area rounded">
+                    <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
-            <div className='text-center mt-5'>
-                <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
-            </div>
-        </div>
-    )
-}
+                    <div className='text-center mt-5'>
+                        <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                    </div>
+                </div>
+            )
+        }
 
 
     }

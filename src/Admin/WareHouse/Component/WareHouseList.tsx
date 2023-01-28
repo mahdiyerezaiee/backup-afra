@@ -336,7 +336,7 @@ const WareHouseList:React.FC = () => {
                 return (formatter.format(attValue))
 
             }
-        },
+        },{Header:'نام شرکت',accessor:'companyName'},
         {
             Header: 'آدرس', accessor: '  ', Cell: row => {
                 const [attValue, setAttValue] = useState('')

@@ -332,7 +332,7 @@ setPageNumber(0)
     }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
-        { Header: 'نام شرکت', accessor: 'name' }
+        { Header: 'نام باربری', accessor: 'name' }
         , { Header: 'شماره کد', accessor: 'code' }
         , {
             Header: 'عملیات', accessor: '11', Cell: (row:any) => {

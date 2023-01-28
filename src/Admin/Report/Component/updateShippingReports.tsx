@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { NavLink } from "react-router-dom";
-import { UpdateShippingReport, UpdateShippingReportByDate } from "../../../services/outScopeService";
+import { UpdateShippingReport, UpdateAllShippingReport } from "../../../services/outScopeService";
 import { useNavigate } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
 import Select from 'react-select'
@@ -12,6 +12,7 @@ import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import { RadioButton } from "../../../Utils/RadioButton";
 
 
 
@@ -26,6 +27,8 @@ const UpdateShippingReports: React.FC = () => {
     let [loading, setLoading] = useState(false);
     let [clicked, setClicked] = useState(false);
     const [report, setReport] = useState([])
+    const[updateCompaniesStatus,SetUpdateCompaniesStatus]=useState(false)
+    const [reportMethod, SetReportMethod] = useState('3days')
     let color = "#0c4088"
 
     const navigator = useNavigate();
@@ -78,6 +81,8 @@ const UpdateShippingReports: React.FC = () => {
 
     }, [])
 
+    console.log(report);
+
     const handelStartDate = (value: any) => {
         if (value === null) {
             SetStartDate('')
@@ -100,12 +105,18 @@ const UpdateShippingReports: React.FC = () => {
     const handelSubmit = async (e: any) => {
         e.preventDefault();
         setLoading(true)
-        const body = {
-            startDate, endDate, shippingCompanyId
+        let body: any;
+        if (reportMethod === '3days') {
+            body = { startDate: null, endDate: null, shippingCompanyId: null,updateCompaniesStatus }
+        }
+        else {
+            body = {
+                startDate, endDate, shippingCompanyId,updateCompaniesStatus
+            }
         }
         try {
 
-            const { data, status } = await UpdateShippingReportByDate(body)
+            const { data, status } = await UpdateAllShippingReport(body)
 
             if (status === 200) {
                 toast.success("اطلاعات با موفقیت بروز رسانی شد", {
@@ -133,7 +144,11 @@ const UpdateShippingReports: React.FC = () => {
 
 
     }
+    const RadioChanger = (e: any) => {
 
+        SetReportMethod(e.target.value)
+
+    }
 
     const columns = useMemo(() => [
         { Header: 'companyCode', accessor: 'companyCode' },
@@ -178,86 +193,151 @@ const UpdateShippingReports: React.FC = () => {
     const shippingCompanySelect = () => {
         return (companies.map((data: any) => ({ label: data.name, value: data.id })))
     }
-    const data = useMemo(() => report, [report])
+    const data = report
     const handelFrom = () => {
         setClicked(false)
     }
 
     if (!clicked) {
+
+
+
+
         if (loading === false) {
-            return (
-                <div className='user-progress ' >
-                    <div className='row'>
-                        <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                            <h5 >درخواست اطلاعات </h5>
-                            <p>در این بخش می توانید اطلاعات ارسال  را از باربری دریافت کنید.</p>
+
+            return (<div className='user-progress col-12 ' >
+                <div className='row'>
+                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                        <h5 >درخواست اطلاعات </h5>
+                        <p>در این بخش می توانید اطلاعات ارسال  را از باربری دریافت کنید.</p>
+                    </div>
+                </div>
+                <div className='  '>
+                    <div className='  col-8 '>
+                        <div className=" ">
+                            <div className="m-3">
+                                <RadioButton
+                                    changed={RadioChanger}
+                                    id='1'
+                                    isSelected={reportMethod === '3days'}
+                                    label='سه روز اخیر'
+                                    value='3days'
+                                />
+                            </div>
+                            <div className="m-3">
+                                <RadioButton
+                                    changed={RadioChanger}
+                                    id='2'
+                                    isSelected={reportMethod === 'byDate'}
+                                    label='انتخاب تاریخ'
+                                    value='byDate'
+                                />
+                            </div>
+
                         </div>
                     </div>
-                    <div className='row d-flex justify-content-center '>
-                        <div className='statbox widget-content widget-content-area'>
+                    <div className="row">
 
-                            <form className="form form-group">
-                                <div className="col mb-4  " style={{ position: 'relative' }}>
-                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
-                                    <div className='form-group '>
-                                        <DatePicker
-                                            calendar={persian}
+                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
 
-                                            locale={persian_fa}
-                                            style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
-                                            value={startDate}
-                                            onChange={handelStartDate}
-                                        />
+
+                        </div >
+                        <div className="col-lg-10 col-md-10 col-sm-10 col-xs-2 ">
+
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                <form className="form form-group ml-4" >
+                                    <div className="row  ">
+                                        <div className="col-lg-4 col-md-4 col-sm-11  form-input mb-4">
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> نام باربری </label>
+
+                                            <Select
+
+                                                isDisabled={reportMethod === 'byDate' ? false : true}
+
+                                                placeholder="شرکت باربری"
+                                                options={shippingCompanySelect()}
+                                                maxMenuHeight={150}
+                                                onChange={(e: any) => {
+                                                    setshippingCompanyId(e.value)
+                                                    setDisable(false)
+
+                                                }}
+                                            />
+
+                                        </div>
+                                        <div className="col-lg-6 col-md-6 col-sm-6 ml-4 ">
+
+
+                                            <label className="form-check-label">
+
+                                                <input disabled={reportMethod === 'byDate' ? false : true} type="checkbox" checked={updateCompaniesStatus} onChange={(e:any)=>SetUpdateCompaniesStatus(e.target.checked)} className="form-check-input"  />
+                                                بروز رسانی اطلاعات شرکت های باربری
+                                            </label>
+                                        </div>
 
                                     </div>
-                                </div>
-                                <div className="col mb-4 " >
-                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
-                                    <div className='form-group '>
-                                        <DatePicker
+                                    <div className="row  ">
+                                        <div className="col-4 mb-4  " style={{ position: 'relative' }} >
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
+                                            <div className='form-group '>
+                                                <DatePicker
+                                                    calendar={persian}
+                                                    disabled={reportMethod === 'byDate' ? false : true}
 
-                                            calendar={persian}
+                                                    locale={persian_fa}
+                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                                    value={startDate}
+                                                    onChange={handelStartDate}
+                                                />
 
-                                            locale={persian_fa}
-                                            style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
-                                            value={endDate}
-                                            onChange={handelEndDate}
-                                        />
+                                            </div>
+                                        </div>
+                                        <div className="col-4 mb-4 " >
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
+                                            <div className='form-group '>
+                                                <DatePicker
+                                                    disabled={reportMethod === 'byDate' ? false : true}
+                                                    calendar={persian}
 
+                                                    locale={persian_fa}
+                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                                    value={endDate}
+                                                    onChange={handelEndDate}
+                                                />
+
+                                            </div>
+
+
+                                        </div>
                                     </div>
 
+                                </form>
 
-                                </div>
-                                <div className="col  form-input mb-4">
-                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> نام باربری </label>
 
-                                    <Select
-                                        placeholder="شرکت باربری"
-                                        options={shippingCompanySelect()}
-                                        maxMenuHeight={150}
-                                        onChange={(e: any) => {
-                                            setshippingCompanyId(e.value)
-                                            setDisable(false)
 
-                                        }}
-                                    />
 
-                                </div>
-                                <div className='row justify-content-between mt-5 mb-1'>
-
-                                    <div className='col-6 '>
-                                        <NavLink to='/admin/orderList' className="btn btn-danger float-left">بازگشت</NavLink>
-                                    </div>
-                                    <div className='col-6 '>
-                                        <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit}>تایید</button>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
 
                         </div>
+
+                    </div>
+                    <div className='row justify-content-center mt-4 mb-1'>
+
+                        <div className='mr-2'>
+                            <NavLink to='/admin' className="btn btn-danger float-left">بازگشت</NavLink>
+                        </div>
+                        <div className=' ml-4'>
+                            <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit}>تایید</button>
+                        </div>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
 
                     </div>
                 </div>
+            </div>
+
             )
         }
         else {
@@ -324,7 +404,7 @@ const UpdateShippingReports: React.FC = () => {
                         <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
 
 
-                        <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} rowProps={(row:any) => ({
+                        <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} rowProps={(row: any) => ({
 
                             style: {
                                 backgroundColor: row.values.ثبت === 'ثبت شده' ? 'lightgreen' : '#ff00003b',

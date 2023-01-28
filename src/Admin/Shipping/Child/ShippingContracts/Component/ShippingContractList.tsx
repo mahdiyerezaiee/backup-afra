@@ -343,13 +343,13 @@ setGeData(false)
         { Header: '#', accessor: 'id' },
         { Header: 'شماره قرارداد', accessor: 'contractNumber' },
         {
-            Header: 'نام شرکت', accessor: 'shippingCompanyId', Cell: (rows:any) => {
+            Header: 'نام باربری', accessor: 'shippingCompanyId', Cell: (rows:any) => {
 
                 return (ShippingCompanies.filter((item:any) => item.id === rows.row.original.shippingCompanyId).map((item:any) => item.name))
             }
         }
         , {
-            Header: ' کد شماره شرکت ', accessor: 'shippingCompanyCode', Cell: rows => {
+            Header: ' کد باربری ', accessor: 'shippingCompanyCode', Cell: rows => {
 
                 return (ShippingCompanies.filter((item:any) => item.id === rows.row.original.shippingCompanyId).map((item:any) => item.code))
             }
@@ -389,7 +389,7 @@ setGeData(false)
                 )
             }
         }
-    ],[])
+    ],[ShippingCompanies])
     const data = useMemo(() => ShippingContract,[ShippingContract]);
     const handelSearchFieldClear = async () => {
 setPageNumber(0)

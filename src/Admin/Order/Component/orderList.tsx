@@ -790,7 +790,7 @@ const OrderList :React.FC= () => {
                 return (code)
             }
         },
-        {Header:'شرکتّ',accessor:'companyName'}, {
+        {Header:'نام شرکت ',accessor:'companyName'}, {
             Header: 'نحوه پرداخت', accessor: 'paymentMethodId', Cell: row => {
                 return (PaymentStructureEnums.filter((item:any) => item.id === row.row.original.paymentMethodId).map((item:any) => item.name))
             }
@@ -1024,22 +1024,6 @@ const OrderList :React.FC= () => {
                         <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
                             <div className=" form-control-sm">
-                                <label>وضعیت سفارش</label>
-
-                                <Select
-                                    value={orderStatusIds}
-                                    placeholder='وضعیت سفارش'
-                                    options={OrderStatusID()}
-                                    isMulti
-                                    isClearable={true}
-                                    onChange={e => {
-                                        setOrderStatusIds(e)
-                                    }} />
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
-                            style={{ marginBottom: "3rem" }}>
-                            <div className=" form-control-sm">
                                 <label>وضعیت ارسال </label>
 
                                 <Select
@@ -1054,6 +1038,23 @@ const OrderList :React.FC= () => {
                                 />
                             </div>
                         </div>
+                        <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                            style={{ marginBottom: "3rem" }}>
+                            <div className=" form-control-sm">
+                                <label>وضعیت سفارش</label>
+
+                                <Select
+                                    value={orderStatusIds}
+                                    placeholder='وضعیت سفارش'
+                                    options={OrderStatusID()}
+                                    isMulti
+                                    isClearable={true}
+                                    onChange={e => {
+                                        setOrderStatusIds(e)
+                                    }} />
+                            </div>
+                        </div>
+                        
                         <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
                             <div className=" form-control-sm">
@@ -1256,25 +1257,7 @@ const OrderList :React.FC= () => {
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
                                     value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group selectIndex"
-                                style={{ marginBottom: "3rem" }}>
-                                <div className=" form-control-sm">
-                                    <label>وضعیت سفارش</label>
-
-                                    <Select
-
-                                        value={orderStatusIds}
-                                        placeholder='وضعیت سفارش'
-                                        options={OrderStatusID()}
-                                        isMulti
-
-                                        isClearable={true}
-                                        onChange={e => {
-                                            setOrderStatusIds(e)
-                                        }}
-                                    />
-                                </div>
-                            </div>
+                            
                             <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group "
                                 style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
@@ -1291,6 +1274,25 @@ const OrderList :React.FC= () => {
 
                                             setShippingStatusIds(e)
 
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group selectIndex"
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label>وضعیت سفارش</label>
+
+                                    <Select
+
+                                        value={orderStatusIds}
+                                        placeholder='وضعیت سفارش'
+                                        options={OrderStatusID()}
+                                        isMulti
+
+                                        isClearable={true}
+                                        onChange={e => {
+                                            setOrderStatusIds(e)
                                         }}
                                     />
                                 </div>

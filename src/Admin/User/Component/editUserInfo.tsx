@@ -44,7 +44,7 @@ const EditUserInfo: React.FC = () => {
     const [active, setActive] = useState(false);
     const [passwordType, setPasswordType] = useState("password");
     const [loading, setLoading] = useState(false);
-    const [groupId, setGroupId] = useState(null)
+    const [groupId, setGroupId] = useState<any>()
     let [companyId, SetcompanyId] = useState<any>()
     let [companyName, SetCompanyName] = useState<any>()
     let [userG, setUserG] = useState<any>()
@@ -70,8 +70,7 @@ const EditUserInfo: React.FC = () => {
             if (status === 200) {
                 setUser(data.result.customer)
                 setEmail(data.result.customer.email)
-                SetcompanyId(data.result.customer.companyId)
-                SetCompanyName(data.result.customer.companyName)
+               
                 setUserName(data.result.customer.userName)
                 setFirstName(data.result.customer.firstName)
                 setLastName(data.result.customer.lastName)
@@ -89,31 +88,7 @@ const EditUserInfo: React.FC = () => {
             console.log(err)
         }
     }
-    const GetUsersGroup = async (companyId: any) => {
-        if (companies.length === 1) {
-            try {
-
-                const { data, status } = await GetGroupWithCompany(1, companies[0].id);
-                setUserG(data.result.groups)
-
-            } catch (error) {
-
-            }
-
-        }
-        else {
-            try {
-                const { data, status } = await GetGroupWithCompany(1, companyId);
-                setUserG(data.result.groups)
-
-            } catch (error) {
-
-            }
-
-        }
-
-
-    }
+   
 
     const getuserRole = async (id: number) => {
 
@@ -132,15 +107,43 @@ const EditUserInfo: React.FC = () => {
     useEffect(() => {
         getUserInfo()
         getuserRole(Number(params.id))
-    }, [params.id])
+    }, [])
 
 
     useEffect(() => {
+        if(companyId!==undefined && companyId!==null){
 
         GetUsersGroup(companyId)
-
+        }
     }, [companyId])
 
+    const GetUsersGroup = async (companyId: any) => {
+
+        if  (companies.length === 1 ) {
+            try {
+
+                const { data, status } = await GetGroupWithCompany(1, companies[0].id);
+                setUserG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+        else  {
+            
+            try {
+                const { data, status } = await GetGroupWithCompany(1, companyId);
+                setUserG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+
+
+    }
     useEffect(() => {
 
 
@@ -223,21 +226,9 @@ const EditUserInfo: React.FC = () => {
             return (userG.map((item: any) => ({ label: item.name, value: item.id })))
         }
     }
-    let defaulGroupValue:any=()=>
-    {if(UserGroups()!==undefined ){
 
-if(UserGroups().length>0){
 
-    return(UserGroups().filter((item:any)=>item.value===groupId))
-}
-else{
-    return({label:'تعیین نشده',value:null})
-}
-    }
-    else{
-        return({label:'تعیین نشده',value:null})
-    }
-}
+let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===groupId):{label:'تعیین نشده',value:null}
 
     const handelNavigate = (e: any) => {
         e.preventDefault()
@@ -437,10 +428,10 @@ else{
 
                                             <label>گروه مشتری</label>
                                             <Select
-                                                defaultValue={defaulGroupValue}
+                                                defaultValue={defaultUserGroup}
                                                 placeholder='تعیین گروه'
                                                 options={UserGroups()}
-                                                key={defaulGroupValue}
+                                                key={defaultUserGroup}
                                                 isClearable={true}
                                                 onChange={(e: any) => {
 
