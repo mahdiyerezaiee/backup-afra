@@ -45,7 +45,7 @@ const EditUserInfo: React.FC = () => {
     const [passwordType, setPasswordType] = useState("password");
     const [loading, setLoading] = useState(false);
     const [groupId, setGroupId] = useState<any>()
-    let [companyId, SetcompanyId] = useState<any>()
+    let [companyId, SetcompanyId] = useState<any>(null)
     let [companyName, SetCompanyName] = useState<any>()
     let [userG, setUserG] = useState<any>()
 
@@ -62,6 +62,33 @@ const EditUserInfo: React.FC = () => {
     const showHandler = (e: any) => {
         setShow(e.target.checked)
     }
+    const GetUsersGroup = async (companyId: any) => {
+
+        if (companies.length === 1) {
+            try {
+
+                const { data, status } = await GetGroupWithCompany(1, companies[0].id);
+                setUserG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+        else {
+
+            try {
+                const { data, status } = await GetGroupWithCompany(1, companyId);
+                setUserG(data.result.groups)
+
+            } catch (error) {
+
+            }
+
+        }
+
+
+    }
 
     const getUserInfo = async () => {
 
@@ -70,7 +97,7 @@ const EditUserInfo: React.FC = () => {
             if (status === 200) {
                 setUser(data.result.customer)
                 setEmail(data.result.customer.email)
-               
+                SetcompanyId(data.result.customer.companyId)
                 setUserName(data.result.customer.userName)
                 setFirstName(data.result.customer.firstName)
                 setLastName(data.result.customer.lastName)
@@ -88,62 +115,48 @@ const EditUserInfo: React.FC = () => {
             console.log(err)
         }
     }
-   
 
+    const getGroupsbyEntity = async () => {
+
+        try {
+            const { data, status } = await GetGroupWithCompany(1, 2)
+            setUserG(data.result.groups)
+        } catch (error) {
+
+        }
+
+    }
     const getuserRole = async (id: number) => {
 
         const { data, status } = await GetUsersRolesById(id)
 
         if (status === 200) {
             setuserRole(data.result.userRoleIds)
-            if(data.result.userRoleIds[0]===2){
-                SetcompanyId(2)
-            }
+
         }
 
 
     }
 
     useEffect(() => {
+        getGroupsbyEntity()
+
         getUserInfo()
         getuserRole(Number(params.id))
     }, [])
 
 
     useEffect(() => {
-        if(companyId!==undefined && companyId!==null){
+
+
 
         GetUsersGroup(companyId)
-        }
+
+
     }, [companyId])
 
-    const GetUsersGroup = async (companyId: any) => {
-
-        if  (companies.length === 1 ) {
-            try {
-
-                const { data, status } = await GetGroupWithCompany(1, companies[0].id);
-                setUserG(data.result.groups)
-
-            } catch (error) {
-
-            }
-
-        }
-        else  {
-            
-            try {
-                const { data, status } = await GetGroupWithCompany(1, companyId);
-                setUserG(data.result.groups)
-
-            } catch (error) {
-
-            }
-
-        }
 
 
-    }
     useEffect(() => {
 
 
@@ -158,15 +171,15 @@ const EditUserInfo: React.FC = () => {
     const submit = async (dataUser: any) => {
         setLoading(true)
         try {
-            const userrole={
+            const userrole = {
                 "userRoleIds": [
-                  userRole[0]
+                    userRole[0]
                 ],
                 "userId": Number(params.id)
-              }
-            const{data,status}=await SetUserRole(userrole)
+            }
+            const { data, status } = await SetUserRole(userrole)
         } catch (error) {
-            
+
         }
         try {
             const { data, status } = await setCustomerInfo(dataUser)
@@ -186,7 +199,7 @@ const EditUserInfo: React.FC = () => {
         }
 
 
-  
+
         navigate(-1)
         setLoading(false)
 
@@ -221,14 +234,14 @@ const EditUserInfo: React.FC = () => {
 
     let defaulRoleValue: any = Roles().filter((item: any) => item.value === userRole[0])[0]
 
-    const UserGroups:any = () => {
-        if (userG){
+    const UserGroups: any = () => {
+        if (userG) {
             return (userG.map((item: any) => ({ label: item.name, value: item.id })))
         }
     }
 
 
-let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===groupId):{label:'تعیین نشده',value:null}
+    let defaultUserGroup: any = (userG) ? UserGroups().filter((item: any) => item.value === groupId) : { label: 'تعیین نشده', value: null }
 
     const handelNavigate = (e: any) => {
         e.preventDefault()
@@ -245,7 +258,8 @@ let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===
 
     }
     let allcompanies: any = companys()
-    let defaultValue: any = allcompanies.filter((item: any) => item.value === companyId)
+    
+    let defaultValue: any = allcompanies.filter((item: any) => item.value === companyId)[0]
 
 
 
@@ -279,8 +293,8 @@ let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===
                             maxValidityUnitId,
                             actionBlock,
                             groupId,
-                            companyId:userRole[0]===2?null:companyId
-                            , companyName:userRole[0]===2?null:companyName
+                            companyId: userRole[0] === 2 ? null : companyId
+                            , companyName: userRole[0] === 2 ? null : companyName
 
                         }}
                         enableReinitialize={true}
@@ -355,13 +369,13 @@ let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===
                                         </div>
 
 
-                                        <div className={companies.length > 0 && (userRole[0]===7 || companies.length > 0 && userRole[0]===8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
+                                        <div className={companies.length > 0 && (userRole[0] === 7 || companies.length > 0 && userRole[0] === 8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
                                             <label >مقدار اعتبار </label>
                                             <Field type="text" className=" formater form-control opacityForInput" placeholder="100,000" validate={validatNumber} name='maxValidity' />
                                             {errors.maxValidity && touched.maxValidity && <div className="text-danger">{String(errors.maxValidity)}</div>}
 
                                         </div>
-                                        <div className={companies.length > 0 && (userRole[0]===7 || companies.length > 0 && userRole[0]===8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
+                                        <div className={companies.length > 0 && (userRole[0] === 7 || companies.length > 0 && userRole[0] === 8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
                                             <label >واحد قیمت</label>
                                             <Select
                                                 value={PriceUnit()}
@@ -370,7 +384,7 @@ let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===
                                                 onChange={(e: any) => setMaxValidityUnitId(e.value)}
                                             />
                                         </div>
-                                        {companies.length > 0 && (userRole[0]===7 || companies.length > 0 && userRole[0]===8) ?
+                                        {companies.length > 0 && (userRole[0] === 7 || companies.length > 0 && userRole[0] === 8) ?
                                             <div className="col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput">
 
                                                 <label> شرکت</label>
@@ -399,7 +413,7 @@ let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===
                                         }
 
 
-                                        <div className={check===true?"col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput":"col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+                                        <div className={check === true ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
 
                                             <label> نقش کاربر</label>
                                             <Select
@@ -423,8 +437,8 @@ let defaultUserGroup:any=UserGroups()?UserGroups().filter((item:any)=>item.id===
 
                                         </div>
 
-                                       
-                                        <div className={check===true?"col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput":"col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+
+                                        <div className={check === true ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
 
                                             <label>گروه مشتری</label>
                                             <Select

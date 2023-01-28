@@ -108,8 +108,8 @@ const SalesBoardForAdmin:React.FC = () => {
         openModal(id)
     }
 
-    const openModal =  (id:number) => {
-        setProductSupplyConditionId(id)
+    const openModal =  (item:any) => {
+        setProductSupplyCondition(item)
 
         setIsOpen(true);
     }

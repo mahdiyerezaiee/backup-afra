@@ -7,7 +7,7 @@ import {GetPeriodicSalesReport} from "../../services/reportService";
 
 const ChartMain:React.FC = () => {
     const [datas , setDatas]=useState(getDataReport().datas?getDataReport().datas:[])
-    const [TypeId , setTypeId]=useState(3 )
+    const [TypeId , setTypeId]=useState(3)
     let d = new Date();
     d.setTime(d.getTime() +  (60 * 1000));
     let expires =  d.toUTCString();

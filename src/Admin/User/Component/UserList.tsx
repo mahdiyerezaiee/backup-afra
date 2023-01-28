@@ -38,7 +38,7 @@ const UserList:React.FC = () => {
     const [users, setUsers] = useState([]);
     const [organization, setOrganization] = useState([]);
     const [selectedRows, setSelectedRows] = useState([])
-    const [CustomerG, setCustomerG] = useState([])
+    const [CustomerG, setCustomerG] = useState<any>([])
     let [Ids, setIds] = useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [stateError, SetStateError] = useState(0)
@@ -132,6 +132,8 @@ const UserList:React.FC = () => {
         };
         const { data, status } = await GetDataWithSearch(config);
         setUsers(data.result.users.values);
+        setIds([...new Set((data.result.users.values).filter((item:any) => item.groupId !== null).map((item:any) => item.groupId))] as any)
+
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
     }
@@ -280,6 +282,8 @@ const UserList:React.FC = () => {
     const modalGroupClose = () => {
         setmodalGroupOpen(false)
     }
+    console.log(Ids);
+    
     useEffect(() => {
       
         if(Ids.length>0){
@@ -527,11 +531,10 @@ const UserList:React.FC = () => {
                 </ul>
             )
         }
-    ],[organiz,users,CustomerG])
+    ],[CustomerG,organiz])
     const handelSearchFieldClear = () => {
         setGeData(true)
         getUsers()
-
         setPageNumber(0)
         setFirstName('');
         setLastName('')

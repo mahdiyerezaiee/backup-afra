@@ -80,8 +80,8 @@ const SalesBoardForCustomer:React.FC = () => {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
     });
-    const openModal =  (id:number) => {
-        setProductSupplyConditionId(id)
+    const openModal =  (id:any) => {
+        setProductSupplyCondition(id)
 
         setIsOpen(true);
     }
