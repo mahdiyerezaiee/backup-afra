@@ -88,7 +88,7 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
                             <th style={{fontSize:'10px' }} className="text-center">ردیف</th>
                                 <th style={{fontSize:'10px' }} className="text-center">#</th>
                                 <th style={{fontSize:'10px' }} className="text-center">شناسه حواله</th>
-                                <th style={{fontSize:'10px' }} className="text-center"> تاریخ حواله</th>
+                                <th style={{fontSize:'10px' }} className="text-center"> تاریخ بارنامه</th>
                                 <th style={{fontSize:'10px' }} className="text-center">واحد</th>
                                 <th style={{fontSize:'10px' }} className="text-center">وزن</th>
                                 <th style={{fontSize:'10px' }}  className="text-center">شماره بارنامه</th>

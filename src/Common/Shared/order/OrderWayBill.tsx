@@ -6,9 +6,10 @@ import { useState, useEffect } from "react";
 import ExtraShipping from "./ExtraShipping";
 import { DeleteShipping, GetShippingCompany, GetShoppingContract } from "../../../services/ShippingService";
 import { useSelector } from 'react-redux';
-import Modal  from 'react-modal';
+import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 import { RootState } from "../../../store";
+import SetExtraShipping from "./SetExtraShipping";
 
 const customStyles = {
     content: {
@@ -25,20 +26,32 @@ const customStyles = {
     }
 };
 
-interface Props{
-    loading:any, Shipping:any, dataForExcel:any
+interface Props {
+    loading: any, Shipping: any, dataForExcel: any
 }
-const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
+const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [modalSetIsOpen, setModalSetIsopen] = useState(false);
     const [id, setId] = useState<any>(0);
+    const [shippingId, setShippingId] = useState<any>(0)
     const [completData, setCompleteData] = useState([])
     const [modalOpen, setIsModalOpen] = useState(false);
-    const[IdDelete,setIdDelete]=useState(0)
-    
-    const roles = useSelector((state:RootState) => state.roles)
-    const openModal = (id:any) => {
+    const [IdDelete, setIdDelete] = useState(0)
+
+    const roles = useSelector((state: RootState) => state.roles)
+    const openModal = (id: any) => {
         setId(id)
         setIsOpen(true);
+    }
+
+    const openSetExtraShipping = (id: number) => {
+        setModalSetIsopen(true)
+        setShippingId(id)
+    }
+    const closeSetextra=()=>{
+
+        setShippingId(null)
+        setModalSetIsopen(false)
     }
     const closeModal = () => {
         setId(null)
@@ -48,22 +61,22 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
         getShippingTotal()
 
     }, [])
-    const findeTakhsis = (id:any) => {
+    const findeTakhsis = (id: any) => {
 
-        const row:any = document.getElementById(`${id}`);
-        const ClassNames:any =document.getElementsByClassName(`findeTakhsis`)
+        const row: any = document.getElementById(`${id}`);
+        const ClassNames: any = document.getElementsByClassName(`findeTakhsis`)
         console.log(ClassNames.length !== 0)
-        if (ClassNames.length !== 0){
+        if (ClassNames.length !== 0) {
             ClassNames.item(".findeTakhsis").classList.remove(`findeTakhsis`)
         }
         row.classList.remove("findeTakhsis")
 
-    row.scrollIntoView({behavior: "smooth", block:"center"});
+        row.scrollIntoView({ behavior: "smooth", block: "center" });
 
         row.classList.add("findeTakhsis")
 
     }
-    const openModalDelet = (id:any) => {
+    const openModalDelet = (id: any) => {
         setIsModalOpen(true);
         setIdDelete(id)
 
@@ -74,13 +87,13 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
     const deletHandler = async () => {
         try {
             const { data, status } = await DeleteShipping(IdDelete)
-            if (status=== 200) {
+            if (status === 200) {
                 toast.success("حواله با موفقیت حذف شد", {
                     position: "top-right",
                     closeOnClick: true
                 });
                 closeModalDelet()
-            } 
+            }
         } catch (err) {
             console.log(err)
             closeModalDelet()
@@ -90,7 +103,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
     let color = "#0c4088"
     const getShippingTotal = async () => {
         let shippingContratctArr = []
-        let finalArr:any = []
+        let finalArr: any = []
         if (Shipping && Shipping) {
 
             for (let i = 0; i < Shipping.length; i++) {
@@ -99,7 +112,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                     const { data, status } = await GetShoppingContract(Shipping[i].shippingContractId)
 
                     let contratcs = data.result.shippingContract
-                    const rename = (({ id: contractId, ...contratcs }:any) => ({ contractId, ...contratcs }))
+                    const rename = (({ id: contractId, ...contratcs }: any) => ({ contractId, ...contratcs }))
                     contratcs = rename(contratcs)
                     let newArr = { ...Shipping[i], ...contratcs }
                     shippingContratctArr.push(newArr)
@@ -119,7 +132,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                     const { data, status } = await GetShippingCompany(shippingContratctArr[i].shippingCompanyId)
                     let company = data.result.shippingCompany
 
-                    const rename = (({ id: companyId, ...company }:any) => ({ companyId, ...company }))
+                    const rename = (({ id: companyId, ...company }: any) => ({ companyId, ...company }))
                     company = rename(company)
                     let newArr = { ...shippingContratctArr[i], ...company }
                     finalArr.push(newArr)
@@ -140,7 +153,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
         return (<div>
 
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 "  >
-            {/* <Modal
+                {/* <Modal
                         isOpen={modalOpen}
                         onRequestClose={closeModalDelet}
                         style={customStyles}
@@ -181,7 +194,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                             <thead className="text-center">
                                 <tr>
                                     <th >#</th>
-                                   <th>شناسه</th>
+                                    <th>شناسه</th>
                                     <th > واحد</th>
                                     <th>  مقدار حواله</th>
                                     <th> مقدار حمل شده</th>
@@ -190,17 +203,18 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                     <th >شماره قرارداد</th>
                                     <th >نام باربری</th>
                                     <th >مشاهده جزییات</th>
+                                    <th>ثبت بارنامه</th>
                                     {/* <th hidden={roles.includes(7) || roles.includes(8) ? false : true}>عملیات</th> */}
 
 
                                 </tr>
                             </thead>
                             <tbody className="text-center" id="havaleTable">
-                                {Shipping ? Shipping.map((item:any) =>
+                                {Shipping ? Shipping.map((item: any) =>
 
-                                    <tr key={item.id} id={item.orderDetailId} onClick={()=>findeTakhsis(item.orderDetailId)}>
+                                    <tr key={item.id} id={item.orderDetailId} onClick={() => findeTakhsis(item.orderDetailId)}>
                                         <td  >{item.id}</td>
-                                     <td>{(item.entityTypeId===10?'سفارش':'تخصیص') + ` ${item.entityId}#`}</td>
+                                        <td>{(item.entityTypeId === 10 ? 'سفارش' : 'تخصیص') + ` ${item.entityId}#`}</td>
                                         <td >{MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name)}</td>
                                         <td>{item.plannedQuantity}</td>
                                         <td >{item.shippedQuantity}</td>
@@ -208,7 +222,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                         <td>{DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name)}</td>
                                         <td >{item.shippingContractCode ? item.shippingContractCode : '--'}</td>
                                         <td >{item.shippingCompanyName ? item.shippingCompanyName : '--'}</td>
-                                        <td> <svg display={item.shippedQuantity>0 ? '' : 'none'} onClick={() => openModal(item.id)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
+                                        <td> <svg display={item.shippedQuantity > 0 ? '' : 'none'} onClick={() => openModal(item.id)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                                             width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                                                 fill="none" stroke="#000" strokeLinecap="round"
                                                 strokeLinejoin="round" strokeWidth="12" /><line
@@ -221,22 +235,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                                 d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
                                                 strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg></td>
 
-                                        {/* <td hidden={roles.includes(7) || roles.includes(8) ? false : true}>
-                                            <button onClick={() => openModalDelet(item.id)} className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="حذف">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                    viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="feather feather-trash-2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path
-                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-
-                                                </svg>
-                                            </button>
-                                        </td> */}
+                                        <td><button hidden={item.shippedQuantity === 0?false:true} className="btn-primary rounded border-0" onClick={() => openSetExtraShipping(item.id)}>ثبت بارنامه دستی</button></td>
                                     </tr>
 
                                 ) : <tr className='text-center'></tr>}
@@ -252,6 +251,7 @@ const OrderWayBill:React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                     </div>
                 }
                 <ExtraShipping id={id} modalIsOpen={modalIsOpen} closeModal={closeModal} />
+                <SetExtraShipping shippingId={shippingId} modalIsOpen={modalSetIsOpen} closeModal={closeSetextra}/>
                 <div className=" text-end  p-2" style={{ textAlign: 'left' }}>
 
                     <ExportToExcel apiData={dataForExcel} fileName='لیست بارنامه' />
