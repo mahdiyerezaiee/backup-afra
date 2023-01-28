@@ -8,6 +8,7 @@ import {
     useSortBy,
     usePagination
 } from 'react-table';
+import {useMemo} from "react";
 
 const IndeterminateCheckbox = React.forwardRef(
     ({ indeterminate, ...rest }, ref) => {
@@ -30,7 +31,19 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
 
     const [selectFunc, setSelectFunc] = useState(0);
 
-
+    const filterTypes = useMemo(
+        () => ({
+            multiple: (rows, id, filterValue) => {
+                return rows.filter((row) => {
+                    const rowValue = row.values[id];
+                    return rowValue !== undefined
+                        ? filterValue.includes(rowValue)
+                        : undefined;
+                });
+            }
+        }),
+        []
+    );
 
     const {
         getTableProps,
@@ -42,7 +55,9 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
         state,
         selectedFlatRows,
         state: {selectedRowIds }
-    } = useTable({columns, data}, useGlobalFilter, useFilters, useRowSelect, hooks => {
+    } = useTable({columns, data,
+        filterTypes
+    }, useGlobalFilter, useFilters, useRowSelect, hooks => {
         hooks.visibleColumns.push(columns => [
             // Let's make a column for selection
             {
