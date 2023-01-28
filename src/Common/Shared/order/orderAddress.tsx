@@ -442,7 +442,7 @@ console.log(details);
                                             
                                                 <td className="text-center m-1">
                                                     
-                                                    {order.extId?
+                                                    {!order.extId?
                                                     <div>
                                                     <button hidden={order.extId  ? true : false} onClick={() => openModalAddress(item.id, item.measureUnitId)} className=" border-0 bg-success " title="افزودن آدرس" >
                                                     <svg style={{ color: 'white' }} width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="currentColor"

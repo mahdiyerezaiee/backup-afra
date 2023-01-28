@@ -18,7 +18,7 @@ export function validatAlpha(value) {
     let error;
     if (!value) {
         error = 'پرکردن این فیلد الزامی می باشد';
-    } else if (!/^[A-Z  ك آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/i.test(value)) {
+    } else if (!/^[A-Z  ك 1234567890 ئوئ/پ|\- آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/i.test(value)) {
         error = 'از حروف استفاده کنید';
     }
     return error;
