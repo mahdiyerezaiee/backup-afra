@@ -30,6 +30,7 @@ const OrderDetailTest:React.FC = () => {
     const [modalIsOpenUpload, setIsOpenUpload] = useState(false);
     const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
     const [order, setOrder] = useState<any>([])
+    const [orderPaymentStatusId, setorderPaymentStatusId] = useState<any>()
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenAddress, setIsOpenAddress] = useState(false)
     const [image, setImage] = useState({})
@@ -123,6 +124,7 @@ const OrderDetailTest:React.FC = () => {
             const { data, status } = await GetOrder(Number(params.id))
             setCustomerDetail(data.result.order.customer)
             setOrder(data.result.order)
+            setorderPaymentStatusId(data.result.order.paymentStatusId)
             SetShippingInformation(JSON.parse(data.result.order.extraData.data))
         } catch (err) {
             console.log(err)
@@ -333,7 +335,7 @@ const OrderDetailTest:React.FC = () => {
                                 handelPreview={handelPreview} />) : ''}
                         </> :
                             (
-                                <><OrderAddress  details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} />
+                                <><OrderAddress   details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId}/>
                                     <OrderWayBill loading={loading} Shipping={Shipping} dataForExcel={dataForExcel} />
                                     {attachments ? (<OrderAttachment order={order} params={params} attachments={attachments}
                                         closeModalForUpload={closeModalForUpload}

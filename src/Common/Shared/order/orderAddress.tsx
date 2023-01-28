@@ -37,10 +37,10 @@ const customStyles = {
 };
 interface Props {
 
-    details: any, shipping: any, orderWeight: number, TakhsisWeight: number, getOrder: any, order: any
+    details: any, shipping: any, orderWeight: number, TakhsisWeight: number, getOrder: any, order: any,paymentStatus:number
 }
 
-const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order }) => {
+const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, TakhsisWeight, getOrder, order,paymentStatus }) => {
     const roles = useSelector((state: RootState) => state.roles)
     const [orderCondition, setOrderCondition] = useState<any>([])
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -336,15 +336,16 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
             }, disableFilters: true
         },
         {
-            Header: 'عملیات', accessor: '  ', Cell: (rows: any) => {
+            Header: 'عملیات', accessor: 'button', Cell: (rows: any) => {
 
 
 
                 if (roles.includes(7) || roles.includes(5) || roles.includes(8)) {
-                    return (
-                        <div>
+                  
+                   return  (   <div>
                             <button onClick={() => openModal(rows.row.original.id)} className="btn btn-sm btn-primary ml-1 mr-1"
-                                disabled={rows.row.original.shippingId !== null && order.paymentStatusId===1 ? true : false}
+                                disabled={rows.row.original.shippingId !== null ||paymentStatus===1  ? true : false}
+                             
 
                             >صدور حواله
                             </button>
@@ -363,18 +364,18 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
                                 </svg>
                             </button>
                         </div>
-
-                    )
+                     )
+                    
                 }
 
 
-                else { return (null) }
+                else {return('') }
             }
 
 
             , disableFilters: true,
         }
-    ], [])
+    ], [order])
 
     const data = useMemo(() => FilterData, [FilterData])
 
@@ -439,7 +440,7 @@ console.log(details);
                                             
                                                 <td className="text-center m-1">
                                                     
-                                                    {order.extId?
+                                                    {!order.extId?
                                                     <div>
                                                     <button hidden={order.extId  ? true : false} onClick={() => openModalAddress(item.id, item.measureUnitId)} className=" border-0 bg-success " title="افزودن آدرس" >
                                                     <svg style={{ color: 'white' }} width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="currentColor"

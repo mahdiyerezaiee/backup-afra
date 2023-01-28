@@ -96,6 +96,8 @@ const UsedBarBariReport: React.FC = () => {
                     }
                 } catch (error) {
                     console.log(error);
+                    setLoading(false)
+
                 }
 
             }
@@ -110,6 +112,8 @@ const UsedBarBariReport: React.FC = () => {
                     }
                 } catch (error) {
                     console.log(error);
+                    setLoading(false)
+
                 }
             }
 
@@ -152,7 +156,7 @@ const UsedBarBariReport: React.FC = () => {
         { Header: 'آدرس بارنامه', accessor: 'barAdd' },], []);
     let defaultValue: any = CompaniesIDs()[0]
 
-    const data = useMemo(() => Response, [Response]);;
+    const data:any = useMemo(() => Response, [Response]);;
     console.log(data)
 
     if (!clicked) {

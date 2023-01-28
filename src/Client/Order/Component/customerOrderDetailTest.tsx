@@ -32,6 +32,8 @@ const OrderDetailTest:React.FC = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenAddress, setIsOpenAddress] = useState(false)
     const [image, setImage] = useState({})
+    const [orderPaymentStatusId, setorderPaymentStatusId] = useState<any>()
+
     const [customerDetail, setCustomerDetail] = useState<any>([])
     const [product, setProduct] = useState([])
     const [ShippingInformation, SetShippingInformation] = useState([]);
@@ -120,6 +122,8 @@ const OrderDetailTest:React.FC = () => {
         try {
             const {data, status} = await GetOrder(params.id)
             setCustomerDetail(data.result.order.customer)
+            setorderPaymentStatusId(data.result.order.paymentStatusId)
+
             setOrder(data.result.order)
             SetShippingInformation(JSON.parse(data.result.order.extraData.data))
         } catch (err) {
@@ -319,7 +323,7 @@ const OrderDetailTest:React.FC = () => {
                             </>
                             :
                             (
-                                <><OrderAddress   details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} />
+                                <><OrderAddress   details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId}/>
                                     <OrderWayBill loading={loading} Shipping={Shipping}  dataForExcel={dataForExcel}/>
                                     {attachments ? (<OrderAttachment  order={order} params={params} attachments={attachments}
                                                                      closeModalForUpload={closeModalForUpload}
