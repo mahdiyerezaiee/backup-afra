@@ -123,7 +123,7 @@ closeModal()
 
                 <p className='text-center'>{comment}</p>
 
-                <div className="text-primary  text-center  " style={{cursor:"pointer"}}> <Link className="text-primary  text-center  "  style={{fontSize:"15px" , textAlign:"center"}} href={file} download>نمونه فایل اکسل</Link></div>
+                <div className="text-primary  text-center  " style={{cursor:"pointer"}}> <a className="text-primary  text-center  "  style={{fontSize:"15px" , textAlign:"center"}} href={file} download>نمونه فایل اکسل</a></div>
 
                 <div className="form-group mt-5  ">
                     <div className='form-row mb-5'>

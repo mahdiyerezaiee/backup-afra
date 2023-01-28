@@ -27,6 +27,7 @@ const UpdateShippingReports: React.FC = () => {
     let [loading, setLoading] = useState(false);
     let [clicked, setClicked] = useState(false);
     const [report, setReport] = useState([])
+    const[updateCompaniesStatus,SetUpdateCompaniesStatus]=useState(false)
     const [reportMethod, SetReportMethod] = useState('3days')
     let color = "#0c4088"
 
@@ -81,7 +82,7 @@ const UpdateShippingReports: React.FC = () => {
     }, [])
 
     console.log(report);
-    
+
     const handelStartDate = (value: any) => {
         if (value === null) {
             SetStartDate('')
@@ -106,11 +107,11 @@ const UpdateShippingReports: React.FC = () => {
         setLoading(true)
         let body: any;
         if (reportMethod === '3days') {
-            body ={startDate:null, endDate:null, shippingCompanyId:null}
+            body = { startDate: null, endDate: null, shippingCompanyId: null,updateCompaniesStatus }
         }
         else {
             body = {
-                startDate, endDate, shippingCompanyId
+                startDate, endDate, shippingCompanyId,updateCompaniesStatus
             }
         }
         try {
@@ -204,16 +205,16 @@ const UpdateShippingReports: React.FC = () => {
 
         if (loading === false) {
 
-            return (<div className='user-progress ' >
+            return (<div className='user-progress col-12 ' >
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
                         <h5 >درخواست اطلاعات </h5>
                         <p>در این بخش می توانید اطلاعات ارسال  را از باربری دریافت کنید.</p>
                     </div>
                 </div>
-                <div className='row d-flex justify-content-center  '>
-                    <div className='statbox widget-content widget-content-area'>
-                        <div className="row">
+                <div className='  '>
+                    <div className='  col-8 '>
+                        <div className=" ">
                             <div className="m-3">
                                 <RadioButton
                                     changed={RadioChanger}
@@ -234,71 +235,101 @@ const UpdateShippingReports: React.FC = () => {
                             </div>
 
                         </div>
-                        {reportMethod === 'byDate' ?
-                            <form className="form form-group">
-                                <div className="col mb-4  " style={{ position: 'relative' }}>
-                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
-                                    <div className='form-group '>
-                                        <DatePicker
-                                            calendar={persian}
+                    </div>
+                    <div className="row">
 
-                                            locale={persian_fa}
-                                            style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
-                                            value={startDate}
-                                            onChange={handelStartDate}
-                                        />
+                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
+
+
+                        </div >
+                        <div className="col-lg-10 col-md-10 col-sm-10 col-xs-2 ">
+
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                <form className="form form-group ml-4" >
+                                    <div className="row  ">
+                                        <div className="col-lg-4 col-md-4 col-sm-11  form-input mb-4">
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> نام باربری </label>
+
+                                            <Select
+
+                                                isDisabled={reportMethod === 'byDate' ? false : true}
+
+                                                placeholder="شرکت باربری"
+                                                options={shippingCompanySelect()}
+                                                maxMenuHeight={150}
+                                                onChange={(e: any) => {
+                                                    setshippingCompanyId(e.value)
+                                                    setDisable(false)
+
+                                                }}
+                                            />
+
+                                        </div>
+                                        <div className="col-lg-6 col-md-6 col-sm-6 ml-4 ">
+
+
+                                            <label className="form-check-label">
+
+                                                <input disabled={reportMethod === 'byDate' ? false : true} type="checkbox" checked={updateCompaniesStatus} onChange={(e:any)=>SetUpdateCompaniesStatus(e.target.checked)} className="form-check-input"  />
+                                                بروز رسانی اطلاعات شرکت های باربری
+                                            </label>
+                                        </div>
 
                                     </div>
-                                </div>
-                                <div className="col mb-4 " >
-                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
-                                    <div className='form-group '>
-                                        <DatePicker
+                                    <div className="row  ">
+                                        <div className="col-4 mb-4  " style={{ position: 'relative' }} >
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
+                                            <div className='form-group '>
+                                                <DatePicker
+                                                    calendar={persian}
+                                                    disabled={reportMethod === 'byDate' ? false : true}
 
-                                            calendar={persian}
+                                                    locale={persian_fa}
+                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                                    value={startDate}
+                                                    onChange={handelStartDate}
+                                                />
 
-                                            locale={persian_fa}
-                                            style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
-                                            value={endDate}
-                                            onChange={handelEndDate}
-                                        />
+                                            </div>
+                                        </div>
+                                        <div className="col-4 mb-4 " >
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
+                                            <div className='form-group '>
+                                                <DatePicker
+                                                    disabled={reportMethod === 'byDate' ? false : true}
+                                                    calendar={persian}
 
+                                                    locale={persian_fa}
+                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                                    value={endDate}
+                                                    onChange={handelEndDate}
+                                                />
+
+                                            </div>
+
+
+                                        </div>
                                     </div>
 
+                                </form>
 
-                                </div>
-                                <div className="col  form-input mb-4">
-                                    <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> نام باربری </label>
 
-                                    <Select
-                                        placeholder="شرکت باربری"
-                                        options={shippingCompanySelect()}
-                                        maxMenuHeight={150}
-                                        onChange={(e: any) => {
-                                            setshippingCompanyId(e.value)
-                                            setDisable(false)
 
-                                        }}
-                                    />
 
-                                </div>
-                          
-                            </form> : ''
-
-                        }
-                        
-                        <div className='row justify-content-between mt-4 mb-1'>
-
-                            <div className='col-6 '>
-                                <NavLink to='/admin' className="btn btn-danger float-left">بازگشت</NavLink>
                             </div>
-                            <div className='col-6 '>
-                                <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit}>تایید</button>
-                            </div>
+
+                        </div>
+
+                    </div>
+                    <div className='row justify-content-center mt-4 mb-1'>
+
+                        <div className='mr-2'>
+                            <NavLink to='/admin' className="btn btn-danger float-left">بازگشت</NavLink>
+                        </div>
+                        <div className=' ml-4'>
+                            <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit}>تایید</button>
                         </div>
                     </div>
-
-
                 </div>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
