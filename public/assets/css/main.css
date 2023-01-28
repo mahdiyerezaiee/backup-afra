@@ -3198,6 +3198,14 @@ input[type=number] {
     right: 0px;
   }
 }
+@keyframes changeTop {
+  0% {
+    top:-20rem;
+  }
+  100% {
+    top: 0px;
+  }
+}
 @keyframes changeLeft {
   0% {
     left:-90px;
@@ -3339,3 +3347,26 @@ animation: pulseblue 1s infinite;
   cursor: pointer;
 }
 
+.Filter{
+  position: absolute;
+  top:-20rem;
+  width: 10rem;
+
+  transition: all 2s;
+  border: 1px solid #ccc;
+  background: #FFFFFF;
+  padding: .6rem;
+}
+.input-Filter{
+  height: 6rem;
+  overflow-y: visible;
+  overflow-x: hidden;
+}
+.Open{
+  z-index: 1;
+  position: absolute;
+  top:40px;
+  width: 10rem;
+  animation: changeTop 1s linear;
+
+}

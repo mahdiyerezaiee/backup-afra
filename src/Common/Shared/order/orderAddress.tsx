@@ -106,7 +106,6 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     }
     const selectedFunc = () => {
         const arrayOfData = getSelectedData(selectedRows);
-        console.log(selectedRows)
         setorderDetailId(arrayOfData)
 
         openModal(arrayOfData)
@@ -191,7 +190,6 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     }
     let condition: any = [...orderCondition]
 
-    console.log(condition);
 
     const openModal = (id: any) => {
         setorderDetailId(id)
@@ -289,8 +287,7 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
         getOrderDetailCondition()
 
     }, [getOrder])
-    console.log(order);
-    
+
 
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id', disableFilters: true },
@@ -308,7 +305,8 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
         },
         { Header: 'شماره هماهنگی', accessor: 'receiverTel', disableFilters: true },
         { Header: 'کد پستی', accessor: 'postalCode', disableFilters: true },
-        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: SelectColumnFilter },
+        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: SelectColumnFilter, filter: "multiple"
+        },
         { Header: 'وزن', accessor: 'quantity', disableFilters: true },
         {
             Header: 'قیمت تمام شده', accessor: 'price', Cell: (rows: any) => {
@@ -505,7 +503,7 @@ console.log(details);
                             </Modal>
                             <label >  تخصیص یافته </label>
 
-                            <TakhsisTable columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)}
+                            <TakhsisTable  columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)}
                                 bulkJob={getBulkJob} />
                             <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
