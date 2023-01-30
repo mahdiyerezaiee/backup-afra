@@ -77,14 +77,14 @@ const ProductSupplyConditionReadOnly:React.FC<Props> = ({activeHandler, contact,
     return (
         <tr className='text-center'>
 
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{index + 1}</td>
+            <td  data-th="ردیف" style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{index + 1}</td>
 
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}><p className="mb-0">{PaymentId(contact.paymentMethodId)}</p></td>
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.paymentMethodId === 4 ? contact.installmentOccureCount : "-"}</td>
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.price}</td>
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{ CustomerG().filter(i => i.id === contact.customerGroupId).map(contacts => contacts.label)[0]}</td>
-            <td  style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.active === true ? (
+            <td data-th="نوع پرداخت" style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}><p className="mb-0">{PaymentId(contact.paymentMethodId)}</p></td>
+            <td data-th="تعداد اقساط" style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.paymentMethodId === 4 ? contact.installmentOccureCount : "-"}</td>
+            <td data-th="بازه"style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
+            <td data-th="فی " style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.price}</td>
+            <td data-th="گروه مشتریان"style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{ CustomerG().filter(i => i.id === contact.customerGroupId).map(contacts => contacts.label)[0]}</td>
+            <td data-th="فعال" style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}>{contact.active === true ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                      className="feather feather-check  " onClick={(event) => activeHandler(event, contact)}
@@ -101,7 +101,7 @@ const ProductSupplyConditionReadOnly:React.FC<Props> = ({activeHandler, contact,
                 </svg>)
             }</td>
 
-            <td style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}
+            <td data-th="عملیات" style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}
                 className="text-center">
                 <ul className="table-controls">
 

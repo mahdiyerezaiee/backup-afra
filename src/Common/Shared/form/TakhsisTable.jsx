@@ -143,7 +143,7 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
                         return (
                             <tr id={row.original.id} {...row.getRowProps(rowProps(row))}>
                                 {row.cells.map(cell => {
-                                    return <td  className="text-center" {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    return <td data-th={cell.column.Header} className="text-center" {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )

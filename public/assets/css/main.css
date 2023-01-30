@@ -89,8 +89,8 @@ select.form-custom::-ms-expand {
 }
 .containerT {
 
-  overflow: auto;
-
+  overflow-y: auto;
+  overflow-x: hidden;
   max-height: 300px;
   min-height: 100px;
 
@@ -98,7 +98,9 @@ select.form-custom::-ms-expand {
 .containerTSaleBoard {
   margin-left: 20%;
   margin-right: 20%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+width: 100%;
  
   max-height: 300px;
   min-height: 100px;
@@ -2738,7 +2740,7 @@ select:-webkit-autofill:focus {
   }
 
   .table-controls{
-    width: 70px;
+    /* width: 70px; */
   }
   button{
     padding: 0;
@@ -2898,6 +2900,45 @@ select:-webkit-autofill:focus {
 }
 
 @media only screen and  (max-width: 600px) {
+  .table td:first-child {
+ 
+    border-top: none!important;
+  
+  }
+  .table td:last-child {
+   
+    border-bottom: 1px solid #0045ff!important;
+  }
+  .theme-logo{
+    display: none;
+  }
+  .css-13cymwt-control input[role="combobox"]:focus{
+    font-size: 20px!important;
+
+  }
+  .css-1nmdiq5-menu{
+    position: fixed;
+    top:100px ;
+  }
+  input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+  font-size: 18px;
+}
+
   .dashbord-news:only-child {
     margin-bottom: -10px;
     padding-bottom: 10px;
@@ -2925,7 +2966,7 @@ position: fixed;
   }
 
 .table-controls{
-  width: 70px;
+  /* width: 70px; */
 }
 button{
   padding: 0;
@@ -3369,4 +3410,76 @@ animation: pulseblue 1s infinite;
   width: 10rem;
   animation: changeTop 1s linear;
 
+}
+.table {
+  margin: 1em 0;
+  min-width: 100%;
+}
+.table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.table th {
+  display: none;
+}
+.table td {
+  display: block;
+
+}
+.table td:first-child {
+
+}
+.table td:last-child {
+}
+.table td:before {
+
+  content: attr(data-th) ;
+  font-weight: bold;
+  width: 50%;
+  float: right;
+  display: inline-block;
+}
+@media (min-width: 480px) {
+  
+  .table td:before {
+    display: none;
+  }
+}
+.table th, .table td {
+  text-align: center;
+}
+@media (min-width: 480px) {
+  
+  .table th, .table td {
+    display: table-cell;
+    /* padding: .25em .5em; */
+  }
+  .table th:first-child, .table td:first-child {
+    padding-left: 0;
+  }
+  .table th:last-child, .table td:last-child {
+    padding-right: 0;
+  }
+}
+
+
+
+
+.table {
+  border-radius: .4em;
+  overflow: hidden;
+}
+.table tr {
+  border-color: #46637f;
+}
+.table th, .table td {
+  margin: .5em 1em;
+}
+@media (min-width: 480px) {
+  .table th, .table td {
+    /* padding: 1em !important; */
+  }
+}
+.table th, .table td:before {
+  color: #4468fd;
 }

@@ -70,7 +70,7 @@ const NewTicket:React.FC = () => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-4 col-xs-12'>
+                <div className=' box  col-md-4 col-xs-12'>
 
                     <Formik
                         initialValues={{

@@ -80,9 +80,9 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
 
                 <div className=" rounded  " style={{border:" 1px solid #bfc9d4" , width:'fit-content',}} >
 
-                    <div className=" p-2 table-fixed" style={{  display:"block", overflowY:'scroll', overflowX:'hidden',height:'350px', width:"100%"}}>
+                    <div className=" p-2 containerT " >
                         <table
-                            className="table table-bordered table-hover table-striped  mt-2  mb-4"  >
+                            className="table table-bordered table-hover table-striped fixed_header mt-2  mb-4"  >
                             <thead >
                             <tr style={{fontSize:'10px' }}>
                             <th style={{fontSize:'10px' }} className="text-center">ردیف</th>
@@ -103,17 +103,17 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
                             {extra.map((item:any , index:number) => (
                                 <tr  className='text-center' key={item.id}>
 
-                                    <td >{index + 1}</td>
-                                    <td>{item.id}</td>
-                                    <td >{item.shippingId}</td>
-                                    <td >{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
-                                    <td >{MeasureUnitSample.filter((q:any)=> q.id===item.measureUnitId).map((x:any)=>x.name)}</td>
-                                    <td >{item.quantity}</td>
-                                    <td >{item.shippingNumber}</td>
-                                    <td >{item.shippingSerial}</td>
-                                    <td >{item.delivererName}</td>
-                                    <td >{item.delivererNumber}</td>
-                                    <td >{item.delivererPlaque}</td>
+                                    <td  data-th="ردیف">{index + 1}</td>
+                                    <td data-th="#">{item.id}</td>
+                                    <td data-th="شناسه حواله">{item.shippingId}</td>
+                                    <td data-th="تاریخ بارنامه">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
+                                    <td data-th="واحد">{MeasureUnitSample.filter((q:any)=> q.id===item.measureUnitId).map((x:any)=>x.name)}</td>
+                                    <td data-th="وزن">{item.quantity}</td>
+                                    <td data-th="شماره بارنامه">{item.shippingNumber}</td>
+                                    <td data-th="سریال بارنامه">{item.shippingSerial}</td>
+                                    <td data-th="نام راننده">{item.delivererName}</td>
+                                    <td data-th="شماره راننده">{item.delivererNumber}</td>
+                                    <td data-th="پلاک">{item.delivererPlaque}</td>
                                     
 
                                 </tr>

@@ -49,6 +49,7 @@ const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setP
                 // to render a checkbox
                 Header: ({ getToggleAllRowsSelectedProps }) => (
                     <div>
+                        
                         <IndeterminateCheckbox{...getToggleAllRowsSelectedProps()} />
                     </div>
                 ),
@@ -183,7 +184,7 @@ const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setP
 
                                         row.cells.map(cell =>
 
-                                                (<td  {...cell.getCellProps()}>
+                                                (<td data-th={cell.column.Header} {...cell.getCellProps()}>
                                                 {cell.render('Cell')}
                                             </td>)
 

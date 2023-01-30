@@ -219,7 +219,7 @@ useEffect(()=>{
                                         { // loop over the rows cells
                                             row.cells.map(cell => (
 
-                                                <td {...cell.getCellProps()}>
+                                                <td data-th={cell.column.Header} {...cell.getCellProps()}>
                                                     {cell.render('Cell')}
 
                                                 </td>

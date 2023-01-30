@@ -52,15 +52,15 @@ const GroupCreator:React.FC = () => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-8'>
-                    <form className='form  '>
-                        <div className="form-group mb-4 textOnInput  ">
+                <div className=' col-md-8 col-lg-8 col-sm-11 m-2'>
+                    <form className='form row '>
+                        <div className=" col-md-6 col-sm-12 form-group mb-4 textOnInput  ">
 
                             <label >نام گروه</label>
                             <input type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => setName(e.target.value)} />
 
                         </div>
-                        <div className="form-group mb-4 textOnInput  ">
+                        <div className=" col-md-6 col-sm-12 form-group mb-4 textOnInput  ">
 
 
                             <Select className='form-input opacityForInput' placeholder='انتخاب موجودیت'
@@ -68,13 +68,14 @@ const GroupCreator:React.FC = () => {
                                 onChange={(e:any) => setEntityTypeId(e.value)} />
                         </div>
                    
-                        <div className='row'>
-                            <div className='col-lg-6 '>
-                                <button type="submit" className="btn btn-success float-left" onClick={submit} >تایید</button>
-                            </div>
-                            <div className='col-lg-6 '>
-                                <NavLink to='/admin' className="btn btn-danger float-right">بازگشت</NavLink>
-                            </div>
+                        <div className='col-md-6 col-sm-12 '>
+                                <button type="submit" className="btn btn-success  float-right" onClick={submit} >تایید</button>
+                                </div>
+
+                                <div className='col-md-6 col-sm-12 '>
+
+
+                                <NavLink to='/admin' className="btn btn-danger ">بازگشت</NavLink>
                         </div>
 
                     </form>

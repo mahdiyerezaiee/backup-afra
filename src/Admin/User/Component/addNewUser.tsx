@@ -201,7 +201,7 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                 </div>
             </div>
             <div className='box-big row d-flex justify-content-center'>
-                <div className='widget box shadow col-md-8 col-xs-12'>
+                <div className='col-md-8 col-xs-12'>
                     <Formik initialValues={{
 
                         userName,

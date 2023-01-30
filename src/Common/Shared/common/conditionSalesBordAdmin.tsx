@@ -89,21 +89,21 @@ const ConditionSalesBordAdmin: React.FC<Props> = ({ productSupplyConditions, han
                             {productSupplyConditions.productSupplyConditions.map((contact: any, index: number) =>
 
                                 <tr className='text-center'>
-                                    <td>{index + 1}</td>
+                                    <td data-th="ردیف">{index + 1}</td>
 
-                                    <td>
+                                    <td data-th="نوع پرداخت">
                                         <p className="mb-0">{PaymentId(contact.paymentMethodId)}</p>
                                     </td>
 
-                                    <td>{contact.paymentMethodId === 4 ? contact.installmentOccureCount : "-"}</td>
-                                    <td>{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
+                                    <td data-th="تعداد اقساط">{contact.paymentMethodId === 4 ? contact.installmentOccureCount : "-"}</td>
+                                    <td data-th="بازه">{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
 
 
-                                    <td>{contact.price}</td>
-                                    <td>{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>
+                                    <td data-th="فی">{contact.price}</td>
+                                    <td data-th="گروه مشتریان">{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>
 
-                                    <td title={contact.comment}>{contact.comment ? contact.comment.substring(0, 10) + "..." : ""}</td>
-                                    <td className="text-center">
+                                    <td data-th="توضیحات"title={contact.comment}>{contact.comment ? contact.comment.substring(0, 10) + "..." : "--"}</td>
+                                    <td data-th="عملیات"className="text-center">
                                         <ul className="table-controls">
 
                                             <li><Link to='#' className="btn btn-success" data-toggle="tooltip" data-placement="top"

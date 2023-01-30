@@ -274,7 +274,7 @@ const EditUserInfo: React.FC = () => {
                 </div>
             </div>
             <div className=' box-big row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-8 col-sm-12'>
+                <div className='col-md-8 col-sm-12'>
 
 
                     <Formik

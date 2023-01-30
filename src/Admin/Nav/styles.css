@@ -171,6 +171,9 @@
       width: 0px!important;
       min-width: 0!important;
     }
+    .ps-sidebar-root.ps-rtl .css-vj11vy .ps-menuitem-root > .ps-menu-button {
+      padding: 8px;
+  }
     .ps-sidebar-root > .css-dip3t8 {
       /*margin-top: 80px;*/
       }
@@ -247,7 +250,7 @@
     .ps-sidebar-root.ps-rtl  .css-vj11vy .css-vj11vy-item > .ps-menu-button  {
       padding: 1% 20px 1% 35px!important; }
     .ps-sidebar-root svg{
-      width: 70%!important;
+      /* width: 70%!important; */
     }
     .ps-sidebar-root.xl {
       position: fixed;

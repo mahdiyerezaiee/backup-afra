@@ -86,7 +86,7 @@ setLoading(false)
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-4 col-xs-12'>
+                <div className='   col-md-8 col-lg-8 col-sm-12 m-2'>
 
                     <Formik
                         initialValues={{
@@ -105,9 +105,9 @@ setLoading(false)
 
 
 
-                            <Form className="col-lg-8 col-sm-12">
+                            <Form className="row">
 
-                        <div className="form-group mb-4 textOnInput  align-content-between">
+                        <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput  align-content-between">
 
                             <label>شماره قرارداد</label>
                             <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" placeholder="شماره قرارداد"
@@ -119,7 +119,7 @@ setLoading(false)
 
                         </div>
 
-                        <div className="form-group mb-4 textOnInput">
+                        <div className="col-lg-6 col-sm-12 form-group mb-4 textOnInput">
                             <label>مقدار</label>
                             <Field  validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={quantity}
                                    onChange={(e:any) => {
@@ -129,10 +129,9 @@ setLoading(false)
                             {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
 
                         </div>
-                        <div className="form-group mb-4 textOnInput">
+                        <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput">
 
-                        <div className='form-row'>
-                                <div className="col-12 selectIndex">
+                        
 
                                     <label>واحد</label>
                                     <Select
@@ -147,11 +146,9 @@ setLoading(false)
                                     />
 
 
-                                </div>
 
                             </div>
-                            <div className='form-row mt-4 selectIndex'>
-                                <div className="col-12">
+                            <div className='col-lg-6 col-sm-12 form-group mb-4 textOnInput'>
 
                                     <label>باربری</label>
                                     <Select
@@ -166,32 +163,23 @@ setLoading(false)
                                     />
 
 
-                                </div>
 
-                            </div>
+                           
 
                         </div>
-                        <div className="form-group">
-                            <div className="form-check pl-0">
-                                <div className="custom-control custom-checkbox checkbox-info">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className='row justify-content-between'>
-                            <div className='col-lg-6 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-left " >تایید <ClipLoader
+                        
+                        <div className='col-lg-6 col-sm-12 '>                         
+                               <button disabled={loading} type="submit" className="btn btn-success float-right " >تایید <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
                                     size={15}
                                 /></button>
                             </div>
-                            <div className='col-lg-6 '>
-                                <NavLink to='/admin/ShippingContract'
-                                         className="btn btn-danger float-right">بازگشت</NavLink>
+                            <div className='col-lg-6 col-sm-12 '>        
+                                                    <NavLink to='/admin/ShippingContract'
+                                         className="btn btn-danger ">بازگشت</NavLink>
                             </div>
-                        </div>
 
 
                             </Form>
