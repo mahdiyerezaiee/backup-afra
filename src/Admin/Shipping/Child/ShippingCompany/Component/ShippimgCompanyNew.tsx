@@ -61,8 +61,8 @@ const NewShippingCompany:React.FC = () => {
                     <p>در این بخش می توانید باربری جدید تعریف  کنید.</p>
                 </div>
             </div>
-            <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-4 col-xs-12'>
+            <div className='  '>
+                <div className=''>
 
                     <Formik
                         initialValues={{
@@ -80,18 +80,25 @@ const NewShippingCompany:React.FC = () => {
 
 
 
-                            <Form >
+                            <Form className="">
 
-                        <div className="col-12 mb-3">
+                   <div className='row justify-content-center m-2'>
+                <div className='col-lg-11 col-md-11 col-sm-10 col-xs-10 p-3 '>
 
 
-                            <label className="form-check-label mb-3">
+                            <label className="   form-check-label mb-3">
 
                                 <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
                             فعال /غیرفعال
                             </label>
                         </div>
-                        <div className="form-group mb-4 textOnInput  align-content-between">
+                        </div>
+
+                        <div className="row d-flex justify-content-center">
+                            <div  className=" col-md-8 col-lg-8 col-sm-12 m-2">
+                            <div  className=" row">
+
+                        <div className="col-lg-6 col-sm-12  form-group mb-4 textOnInput  align-content-between">
 
                             <label>نام باربری</label>
                             <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="نام باربری"
@@ -103,7 +110,7 @@ const NewShippingCompany:React.FC = () => {
 
                         </div>
 
-                        <div className="form-group mb-4 textOnInput">
+                        <div className=" col-lg-6 col-sm-12  form-group mb-4 textOnInput">
                             <label>کد</label>
                             <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={(e:any) => {
                                 setCode(e.target.value)
@@ -113,31 +120,20 @@ const NewShippingCompany:React.FC = () => {
 
                         </div>
 
-
-
-
-                        <div className="form-group">
-                            <div className="form-check pl-0">
-                                <div className="custom-control custom-checkbox checkbox-info">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className='row justify-content-between'>
-                            <div className='col-6 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-left " >تایید <ClipLoader
+ <div className='col-lg-6 col-sm-12 '>
+                                <button disabled={loading} type="submit" className="btn btn-success float-right " >تایید <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
                                     size={15}
                                 /></button>
                             </div>
-                            <div className='col-6 '>
-                                <NavLink to='/admin/shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
+                            <div className='col-lg-6 col-sm-12  '>
+                                <NavLink to='/admin/shippingcompanyList' className="btn btn-danger ">بازگشت</NavLink>
                             </div>
-                        </div>
-
-
+                            </div>
+                            </div>
+                            </div>
                             </Form>
                         )}
                     </Formik>

@@ -369,7 +369,7 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
                 }
 
 
-                else {return('') }
+                else {return('--') }
             }
 
 
@@ -427,18 +427,18 @@ console.log(details);
                                         {condition.filter((x: any) => x.extId === null).map((item: any) =>
                                             <tr key={item.id}>
 
-                                                <td className="text-center">{item.id}</td>
-                                                <td className="text-center">{item.product.name}</td>
-                                                <td className="text-center">{item.basePrice}</td>
-                                                <td className="text-center">{formatter.format(item.quantity)}</td>
-                                                <td className="text-center">{formatter.format(item.price)}</td>
-                                                <td className="text-center">{item.productSupplyId ? item.productSupplyId : '--'}</td>
-                                                <td className="text-center">{item.paymentMethodId ? PaymentStructureEnums.filter(x => x.id === item.paymentMethodId).map(q => q.name) : '--'}</td>
-                                                <td className="text-center">{item.paymentMethodId === 4 ? `${item.installmentOccureCount} قسط ${item.installmentPeriod} روزه` : '--'}</td>
-                                                <td className="text-center">{cottageCode ? cottageCode : '--'}</td>
-                                                <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
+                                                <td data-th="  #"  className="text-center">{item.id}</td>
+                                                <td data-th="  نام کالا"  className="text-center">{item.product.name}</td>
+                                                <td data-th="  قیمت پایه"  className="text-center">{item.basePrice}</td>
+                                                <td data-th="  وزن مانده"  className="text-center">{formatter.format(item.quantity)}</td>
+                                                <td data-th="ارزش کالا "  className="text-center">{formatter.format(item.price)}</td>
+                                                <td data-th="عرضه  "  className="text-center">{item.productSupplyId ? item.productSupplyId : '--'}</td>
+                                                <td data-th="نحوه  پرداخت "  className="text-center">{item.paymentMethodId ? PaymentStructureEnums.filter(x => x.id === item.paymentMethodId).map(q => q.name) : '--'}</td>
+                                                <td  data-th="  بازه پرداخت"  className="text-center">{item.paymentMethodId === 4 ? `${item.installmentOccureCount} قسط ${item.installmentPeriod} روزه` : '--'}</td>
+                                                <td data-th="کوتاژ  "  className="text-center">{cottageCode ? cottageCode : '--'}</td>
+                                                <td data-th=" تاریخ"  className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                             
-                                                <td className="text-center m-1">
+                                                <td data-th="عملیات"  className="text-center m-1">
                                                     
                                                     {!order.extId?
                                                     <div>
@@ -455,7 +455,7 @@ console.log(details);
                                                     <button className={order.orderStatusId === 8 ? "bg-primary m-1 border-0 " : "bg-success m-1 border-0 "} hidden={order.extId  ? true : false}  onClick={() => openModalExcelAddress(item.id)} title='افزودن آدرس با اکسل'>
 
                                                         <svg style={{ color: 'white' }} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-explicit" viewBox="0 0 16 16"> <path d="M6.826 10.88H10.5V12h-5V4.002h5v1.12H6.826V7.4h3.457v1.073H6.826v2.408Z" /> <path d="M2.5 0A2.5 2.5 0 0 0 0 2.5v11A2.5 2.5 0 0 0 2.5 16h11a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 13.5 0h-11ZM1 2.5A1.5 1.5 0 0 1 2.5 1h11A1.5 1.5 0 0 1 15 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 13.5v-11Z" /> </svg>
-                                                    </button> </div>:''}
+                                                    </button> </div>:'--'}
                                                 </td>
 
                                             </tr>

@@ -61,7 +61,7 @@ return(
             </div>
         </div>
         <div className='row d-flex justify-content-center '>
-            <div className='widget box shadow col-lg-4'>
+            <div className=' box  col-lg-4'>
 
 
                 <Formik

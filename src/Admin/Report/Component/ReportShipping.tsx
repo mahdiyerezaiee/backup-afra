@@ -135,47 +135,12 @@ const ReportShipping: React.FC = () => {
                             <p>در این بخش می توانید گزارش حواله ها دریافت کنید.</p>
                         </div>
                     </div>
-                    <div className='row d-flex justify-content-center '>
-                        <div className='widget box shadow col-lg-4 col-sm-12'>
+                    <div className=''>
+                        <div className=' '>
 
 
                             <form >
-                                <div className='row'>
-                                    <div className=" col ">
-                                        <div className=" mb-4 " style={{ position: 'relative' }}>
-                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
-                                            <div className='form-group '>
-                                                <DatePicker
-                                                    calendar={persian}
-
-                                                    locale={persian_fa}
-                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
-                                                    value={StartDate}
-                                                    onChange={handelStartDate}
-                                                />
-
-                                            </div>
-                                        </div>
-                                        {show ? <p style={{ color: 'red' }}> شروع تاریخ از 1401/4/1 است</p> : null}
-                                    </div>
-                                    <div className=" col ">
-                                        <div className=" mb-4 " style={{ position: 'relative' }}>
-                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>تا تاریخ </label>
-                                            <div className='form-group '>
-                                                <DatePicker
-
-                                                    calendar={persian}
-
-                                                    locale={persian_fa}
-                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
-                                                    value={EndDate}
-                                                    onChange={handelEndDate}
-                                                />
-
-                                            </div></div>
-
-                                    </div>
-                                    <div className=" col-12 ">
+                            <div className=" col-12 ">
                                         <div className="  ">
 
                                             <div className="col-6   ">
@@ -192,16 +157,58 @@ const ReportShipping: React.FC = () => {
                                             </div>
 
                                         </div>
+                                        </div>
+                                <div className='row d-flex justify-content-center '>
+                                    <div className=" col-md-8 col-lg-8 col-sm-11 m-2 ">
+                                    <div className='row  '>
+
+                                        <div className="col-lg-6 col-sm-12  mb-4 " style={{ position: 'relative' }}>
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
+                                            <div className='form-group '>
+                                                <DatePicker
+                                                    calendar={persian}
+
+                                                    locale={persian_fa}
+                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                                    value={StartDate}
+                                                    onChange={handelStartDate}
+                                                />
+
+                                            </div>
+                                        </div>
+                                        {show ? <p style={{ color: 'red' }}> شروع تاریخ از 1401/4/1 است</p> : null}
+                                  
+                                    <div className=" col-lg-6 col-sm-12 ">
+                                        <div className=" mb-4 " style={{ position: 'relative' }}>
+                                            <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>تا تاریخ </label>
+                                            <div className='form-group '>
+                                                <DatePicker
+
+                                                    calendar={persian}
+
+                                                    locale={persian_fa}
+                                                    style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                                    value={EndDate}
+                                                    onChange={handelEndDate}
+                                                />
+
+                                            </div></div>
+
                                     </div>
-                                </div>
-                                <div className='row justify-content-between'>
+                                   
+
+                                
                                     <div className='col-6 '>
-                                        <button type="submit" disabled={disable} className="btn btn-success float-left " onClick={handelSubmit} >تایید</button>
+                                        <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit} >تایید</button>
                                     </div>
                                     <div className='col-6 '>
-                                        <NavLink to='/admin' className="btn btn-danger float-right">بازگشت</NavLink>
+                                        <NavLink to='/admin' className="btn btn-danger ">بازگشت</NavLink>
                                     </div>
+                                    
                                 </div>
+                                </div>
+                                </div>
+
                             </form>
                         </div>
                     </div>

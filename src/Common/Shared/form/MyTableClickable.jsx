@@ -275,7 +275,7 @@ useEffect(()=>{
                                             row.cells.map(cell => (
                                                 <Fragment>
 
-                                                <td {...cell.getCellProps()}>
+                                                <td data-th={cell.column.Header} {...cell.getCellProps()}>
                                                     {cell.render('Cell')}
 
                                                 </td>
@@ -306,7 +306,7 @@ useEffect(()=>{
                                                                     <th bgcolor="#247881"> تاریخ </th>
                                                                     <th bgcolor="#247881">فی</th>
                                                                     <th bgcolor="#247881">آدرس</th>
-                                                                    <th bgcolor="#247881">کد پستی</th>
+                                                                    <th bgcolor="#247881"پستی>کد </th>
                                                                     <th bgcolor="#247881">تلفن</th>
                                                                     <th bgcolor="#247881">موبایل</th>
                                                                     <th bgcolor="#247881">خریدار</th>
@@ -316,18 +316,18 @@ useEffect(()=>{
                                                                 <tbody className='table table-stripped' >
                                                                 {Detail.map((item, index)=>
                                                                 <tr  key={index +100000}>
-                                                                    <td >{item.productSupplyId}</td>
-                                                                    <td >{cottageCode}</td>
-                                                                    <td >{item.product ? item.product.name : null }</td>
-                                                                    <td >{item.quantity}</td>
-                                                                    <td >{new  Date(item.createDate).toLocaleDateString('fa-IR')}</td>
+                                                                    <td data-th={"عرضه"}>{item.productSupplyId}</td>
+                                                                    <td data-th={"کوتاژ"}>{cottageCode?cottageCode:"--"}</td>
+                                                                    <td data-th={"کالا"}>{item.product ? item.product.name : null }</td>
+                                                                    <td data-th="وزن خرید">{item.quantity}</td>
+                                                                    <td data-th="تاریخ">{new  Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                                                     {/*The unit price must be read from the backend*/}
-                                                                    <td >{item.basePrice}</td>
-                                                                    <td title={item.fullAddress}>{item.fullAddress?item.fullAddress.substring(0,20)+ "...":""}</td>
-                                                                    <td >{item.postalCode}</td>
-                                                                    <td >{item.receiverTel}</td>
-                                                                    <td >{item.receiverMobile}</td>
-                                                                    <td title={item.receiverName} >{item.receiverName? item.receiverName.substring(0,20) +" ...": ""}</td>
+                                                                    <td data-th="فی">{item.basePrice}</td>
+                                                                    <td data-th="آدرس" title={item.fullAddress}>{item.fullAddress?item.fullAddress.substring(0,20)+ "...":""}</td>
+                                                                    <td data-th="کد پستی" >{item.postalCode}</td>
+                                                                    <td data-th="تلفن">{item.receiverTel}</td>
+                                                                    <td data-th="موبایل ">{item.receiverMobile?item.receiverMobile:"--"}</td>
+                                                                    <td data-th="خریدار" title={item.receiverName} >{item.receiverName? item.receiverName.substring(0,20) +" ...": ""}</td>
 
 
                                                                 </tr>
@@ -362,33 +362,33 @@ useEffect(()=>{
                                                                     <tbody>
                                                                     { address.length === 0 ? null :address.map((address , index)=>
 
-                                                                        <tr key={index +2000}>
-                                                                            <td >
+                                                                        <tr  key={index +2000}>
+                                                                            <td data-th="کد تخصیص"  >
                                                                                 {address.AllocationId}
                                                                             </td>
-                                                                            <td >
+                                                                            <td data-th="شناسه بازارگاه" >
                                                                                 {address.Id}
                                                                             </td>
-                                                                            <td >
+                                                                            <td data-th="وزن خرید" >
                                                                                 {address.Qty}
-                                                                            </td>  <td >
+                                                                            </td>  <td  data-th="وزن بارنامه شده" >
                                                                             {address.WBarnameShode}
                                                                         </td>
-                                                                            <td >
+                                                                            <td data-th="وزن بارنامه نشده" >
                                                                                 {address.WBarnameNashode}
                                                                             </td>
 
-                                                                            <td  >
+                                                                            <td data-th="شناسه  واریز "  >
                                                                                 {address.SellerAcc}
                                                                             </td>
 
-                                                                            <td >
+                                                                            <td data-th="شماره پیگیری  " >
                                                                                 {address.TraceCode}
                                                                             </td>
-                                                                        <td>
+                                                                        <td data-th="کد ملی تحویل گیرنده" >
                                                                             {address.ReceiverId}
                                                                         </td>
-                                                                            <td >
+                                                                            <td data-th="کد  یکتا"  >
                                                                                 {address.BuyerUniqueId}
                                                                             </td>
                                                                         </tr>

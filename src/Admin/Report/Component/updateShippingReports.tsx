@@ -276,8 +276,8 @@ const UpdateShippingReports: React.FC = () => {
                                         </div>
 
                                     </div>
-                                    <div className="row  ">
-                                        <div className="col-4 mb-4  " style={{ position: 'relative' }} >
+                                    <div className="row mt-2 ">
+                                        <div className="col-lg-4 col-md-6 col-sm-6 mb-4  " style={{ position: 'relative' }} >
                                             <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
                                             <div className='form-group '>
                                                 <DatePicker
@@ -292,7 +292,7 @@ const UpdateShippingReports: React.FC = () => {
 
                                             </div>
                                         </div>
-                                        <div className="col-4 mb-4 " >
+                                        <div className="col-lg-4  col-md-6 col-sm-6 mb-4 " >
                                             <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> تا تاریخ</label>
                                             <div className='form-group '>
                                                 <DatePicker

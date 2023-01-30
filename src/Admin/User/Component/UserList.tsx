@@ -303,17 +303,22 @@ const UserList:React.FC = () => {
                 let fullname = `${fName ? fName : ''} ${lName ? lName : ''} `;
                 return (fullname)
             }, Cell: (row:any) => {
-
+                if (row.row.original.firstName){
                 let fName = row.row.original.firstName;
                 let lName = row.row.original.lastName;
 
                 let fullname = `${fName ? fName : ''} ${lName ? lName : ''} `;
 
-                return (fullname)
+                return (fullname) 
+                }else {
+
+                    return ('--')
+                }
+
 
             }
         }
-        , { Header: 'کد ملی', accessor: 'nationalCode' }
+        , { Header: 'کد ملی', accessor: 'nationalCode' , Cell:(row:any)=>row.row.original.nationalCode ?row.row.original.nationalCode:"--"  }
         , {
             Header: 'شناسه ملی', accessor: (d:any) => {
                 let organizationss =organiz? organiz.filter((item:any) => item.id === d.organizationId).map((item:any) => item.nationalId):null

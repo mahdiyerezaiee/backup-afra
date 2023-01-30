@@ -91,8 +91,8 @@ setLoading(false)
                     <p>در این بخش می توانید باربری جدید تعریف  کنید.</p>
                 </div>
             </div>
-            <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-4 col-xs-12'>
+            <div className=' '>
+                <div className=' '>
 
                     <Formik
                         initialValues={{
@@ -110,65 +110,61 @@ setLoading(false)
 
 
 
-                            <Form >
+<Form className="">
 
-                                <div className="col-12 mb-3">
-
-
-                                    <label className="form-check-label mb-3">
-
-                                        <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
-                                        فعال /غیرفعال
-                                    </label>
-                                </div>
-                                <div className="form-group mb-4 textOnInput  align-content-between">
-
-                                    <label>نام باربری</label>
-                                    <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="نام باربری"
-                                            value={name} onChange={(e:any) => {
-                                        setName(e.target.value)
-
-                                    }} />
-                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
-
-                                </div>
-
-                                <div className="form-group mb-4 textOnInput">
-                                    <label>کد</label>
-                                    <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={(e:any) => {
-                                        setCode(e.target.value)
-
-                                    }} />
-                                    {errors.code && touched.code && <div className="text-danger">{errors.code}</div>}
-
-                                </div>
+<div className='row justify-content-center m-2'>
+<div className='col-lg-11 col-md-11 col-sm-11 col-xs-11 p-3 '>
 
 
+         <label className="   form-check-label mb-3">
 
+             <input type="checkbox" checked={check} className="form-check-input" onChange={e => setChek(e.target.checked)} />
+         فعال /غیرفعال
+         </label>
+     </div>
+     </div>
 
-                                <div className="form-group">
-                                    <div className="form-check pl-0">
-                                        <div className="custom-control custom-checkbox checkbox-info">
+     <div className="row d-flex justify-content-center">
+         <div  className=" col-md-8 col-lg-8 col-sm-12 m-2">
+         <div  className=" row">
 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='row justify-content-between'>
-                                    <div className='col-6 '>
-                                        <button disabled={loading} type="submit" className="btn btn-success float-left " >تایید <ClipLoader
+     <div className="col-lg-6 col-sm-12  form-group mb-4 textOnInput  align-content-between">
 
-                                            loading={loading}
-                                            color="#ffff"
-                                            size={15}
-                                        /></button>
-                                    </div>
-                                    <div className='col-6 '>
-                                        <NavLink to='/admin/shippingcompanyList' className="btn btn-danger float-right">بازگشت</NavLink>
-                                    </div>
-                                </div>
+         <label>نام باربری</label>
+         <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="نام باربری"
+             value={name} onChange={(e:any) => {
+                 setName(e.target.value)
 
+             }} />
+         {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
-                            </Form>
+     </div>
+
+     <div className=" col-lg-6 col-sm-12  form-group mb-4 textOnInput">
+         <label>کد</label>
+         <Field  validate={validatNumber} name="code"  type="text" className="form-control opacityForInput" value={code} onChange={(e:any) => {
+             setCode(e.target.value)
+
+         }} />
+         {errors.code && touched.code && <div className="text-danger">{errors.code}</div>}
+
+     </div>
+
+<div className='col-lg-6 col-sm-12 '>
+             <button disabled={loading} type="submit" className="btn btn-success float-right " >تایید <ClipLoader
+
+                 loading={loading}
+                 color="#ffff"
+                 size={15}
+             /></button>
+         </div>
+         <div className='col-lg-6 col-sm-12  '>
+             <NavLink to='/admin/shippingcompanyList' className="btn btn-danger ">بازگشت</NavLink>
+         </div>
+         </div>
+         </div>
+         </div>
+         </Form>
                         )}
                     </Formik>
                 </div >

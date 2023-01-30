@@ -241,21 +241,20 @@ const SalesBoardForAdmin:React.FC = () => {
 
 
                                     <tr key={item.id} className="SalesBoard">
-                                        <td className="text-center">{item.id}</td>
-                                        <td className="text-center">{item.cottageCode}</td>
-
-                                        <td className="text-center">{item.product.name}</td>
-                                        <td className="text-center">{formatter.format(item.price)}</td>
-                                        <td className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnit).map(e => e.name)}</td>
-                                        <td className="text-center">{formatter2.format(item.quantity)}</td>
-                                        <td className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : ''} </td>
-                                        <td className="text-center">{groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map(((item:any) => item.gpName)) === null ? "عمومی" : [...new Set<string>(groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map((item:any) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
-                                        <td className="text-center">{item.companyName}</td>
-                                        <td className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                        <td className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                        <td className="text-center">{formatter2.format(item.orderedQuantity)}</td>
-                                        <td className="text-center">{formatter2.format(item.remainedQuantity)}</td>
-                                        <td className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item)}>درخواست
+                                    <td data-th="#" className="text-center">{item.id}</td>
+                                    <td data-th="شماره کوتاژ" className="text-center">{item.cottageCode}</td>
+<td data-th="محصول" className="text-center">{item.product.name}</td>
+<td data-th="قیمت" className="text-center">{formatter.format(item.price)}</td>
+<td data-th="واحد" className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnit).map(e => e.name)}</td>
+<td data-th="مقدار عرضه" className="text-center">{formatter2.format(item.quantity)}</td>
+<td data-th="توضیحات" className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : '--'} </td>
+<td data-th="گروه مشتری" className="text-center">{groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map(((item:any) => item.gpName)) === null ? "عمومی" : [...new Set<string>(groupReturn(productCondistion).filter((data:any) => data.productSupplyId === item.id).map((item:any) => { return (`${"\xa0\xa0"}   ${item.gpName.length === 0 ? 'عمومی' : item.gpName} `) }))]}</td>
+<td data-th="نام شرکت" className="text-center">{item.companyName}</td>
+<td data-th="تاریخ شروع" className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                        <td data-th="تاریخ پایان" className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+                                        <td data-th="درخواستی"className="text-center">{formatter2.format(item.orderedQuantity)}</td>
+                                        <td data-th="مانده "className="text-center">{formatter2.format(item.remainedQuantity)}</td>
+                                        <td data-th=" عملیات"className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item)}>درخواست
                                         </button>) : (<button className="btn btn-success" disabled={userRole.includes(1) ? true : false} onClick={() => openModalCondition(item ,item.id)}>شرایط پرداخت</button>)}</td>
 
 
