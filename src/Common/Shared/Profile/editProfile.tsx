@@ -99,11 +99,11 @@ const backHandel=(e:any)=>{
                 </div>
             </div>
 
+            
 
+                            <div className='mt-5 user-progress row d-flex justify-content-center col-12'>
 
-                            <div className='row d-flex justify-content-center col-12'>
-
-                                <div className='widget box shadow col-md-6 col-xs-12'>
+                                <div className='mt-5 col-md-8 col-xs-12'>
                                     <Formik initialValues={{
                                         id: userinfo.id,
                                         userName: userinfo.userName,
@@ -124,8 +124,8 @@ const backHandel=(e:any)=>{
                                     }}>
                                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                                            <Form>
-                                        <div className="form-group textOnInput  align-content-between">
+                                            <Form className="row">
+                                        <div className="col-lg-6 form-group textOnInput  align-content-between">
 
                                             <label>نام</label>
                                             <Field type="text" className="form-control opacityForInput"
@@ -133,13 +133,13 @@ const backHandel=(e:any)=>{
                                             {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
 
                                         </div>
-                                        <div className="form-group mb-4 textOnInput">
+                                        <div className="col-lg-6 form-group mb-4 textOnInput">
                                             <label>نام خانوادگی</label>
                                             <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی"  name="lastName" validate={validatAlpha} />
                                             {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
 
                                         </div>
-                                        <div className="form-group mb-4 textOnInput">
+                                        <div className="col-lg-6 form-group mb-4 textOnInput">
                                             <label>کد ملی</label>
                                             <Field type="text" className="form-control opacityForInput" placeholder="0070090602" name="nationalCode"  validate={validatmin10}/>
                                             {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
@@ -147,19 +147,21 @@ const backHandel=(e:any)=>{
                                         </div>
 
 
-                                        <div className="form-group mb-4 textOnInput">
+                                        <div className="col-lg-6 form-group mb-4 textOnInput">
                                             <label>ایمیل</label>
                                             <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name='email' validate={validateEmail}/>
                                             {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
 
                                         </div>
-                                        <div><input type='checkbox' checked={show}  onClick={showHandler}/> تغییر رمز عبور </div>
+                                        <div className="col-12"><input type='checkbox' checked={show}  onClick={showHandler}/> تغییر رمز عبور </div>
                                         {show === true?
-                                            <>
-                                                <div className="input-group col-12 mb-5 mt-4 textOnInputForGrp rounded"
+                                           <div className="col-12">
+                                             <div className="row">
+                                                <div className=" col-lg-6 input-group mb-5 mt-4 textOnInputForGrp rounded"
                                                      hidden={!show}>
+                                                       
                                                 <label >رمز عبور</label>
-                                                <Field  type={passwordType}  className="form-control opacityForInput" placeholder="*******" validate={validatPassword} name="password" />
+                                                <Field  type={passwordType}  className=" form-control opacityForInput" placeholder="*******" validate={validatPassword} name="password" />
                                                     {errors.password && touched.password && <div className="text-danger">{errors.password}</div>}
 
                                                     <div className="input-group-append ">
@@ -189,10 +191,10 @@ const backHandel=(e:any)=>{
                                                         </svg>}</button>
                                                 </div>
                                             </div>
-                                                <div className="input-group col-12  mt-4 textOnInputForGrp rounded"
+                                                <div className=" input-group col-6 mb-5 mt-4 textOnInputForGrp rounded"
                                                      hidden={!show}>
                                                 <label >تکرار مرز عبور</label>
-                                                <input type={passwordType} className="form-control opacityForInput" placeholder="*******" value={passwordConfirm} onChange={(e:any) => {
+                                                <input type={passwordType} className="  form-control opacityForInput" placeholder="*******" value={passwordConfirm} onChange={(e:any) => {
                                                     setPasswordConfirm(e.target.value)
                                                 }} />
                                                 <div className="input-group-append ">
@@ -227,9 +229,9 @@ const backHandel=(e:any)=>{
                                             </div>
                                                 {password !== passwordConfirm ?
                                                     <span  className="text-danger ">رمز عبور برابر نیست</span> : ''}
-                                            </>:''
+                                            </div></div>:''
                                         }
-
+<div className="col-12"> 
                                         <div className='row justify-content-between mt-4'>
                                             <div >
                                                     <button   type="submit"  className="btn btn-success">ذخیره تغییرات</button>
@@ -237,6 +239,7 @@ const backHandel=(e:any)=>{
                                                 <div >
                                                     <button  onClick={backHandel} className="btn btn-primary">بازگشت</button>
                                                 </div>
+                                            </div>
                                             </div>
 
                                     </Form>

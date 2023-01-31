@@ -120,15 +120,15 @@ const NewShippingCompany:React.FC = () => {
 
                         </div>
 
- <div className='col-lg-6 col-sm-12 '>
-                                <button disabled={loading} type="submit" className="btn btn-success float-right " >تایید <ClipLoader
+ <div className='col-6 '>
+                             <button disabled={loading} type="submit" className="btn btn-success float-right " >تایید <ClipLoader
 
                                     loading={loading}
                                     color="#ffff"
                                     size={15}
                                 /></button>
                             </div>
-                            <div className='col-lg-6 col-sm-12  '>
+                            <div className='col-6  '>
                                 <NavLink to='/admin/shippingcompanyList' className="btn btn-danger ">بازگشت</NavLink>
                             </div>
                             </div>

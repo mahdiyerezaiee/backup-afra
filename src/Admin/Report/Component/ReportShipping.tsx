@@ -159,7 +159,7 @@ const ReportShipping: React.FC = () => {
                                         </div>
                                         </div>
                                 <div className='row d-flex justify-content-center '>
-                                    <div className=" col-md-8 col-lg-8 col-sm-11 m-2 ">
+                                    <div className=" col-md-6 col-lg-6 col-sm-11 m-2 ">
                                     <div className='row  '>
 
                                         <div className="col-lg-6 col-sm-12  mb-4 " style={{ position: 'relative' }}>

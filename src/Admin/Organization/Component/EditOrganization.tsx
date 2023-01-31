@@ -66,7 +66,7 @@ setLoading(false)
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-lg-5 col-sm-12'>
+                <div className=' col-lg-8 col-sm-12 m-2'>
 
 
                     <Formik
@@ -85,7 +85,7 @@ setLoading(false)
                         }}>
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                            <Form className="form col"  >
+                            <Form className="row"  >
                                 <div className="n-chk">
 
 
@@ -95,7 +95,7 @@ setLoading(false)
                     </label> */}
                                 </div>
 
-                                <div className="form-group mb-4 textOnInput ">
+                                <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput ">
 
                                     <label >شماره ملی شرکت</label>
                                     <div className='form-row justify-content-center'>
@@ -108,7 +108,7 @@ setLoading(false)
 
 
                                 </div>
-                                <div className="form-group mb-4 textOnInput ">
+                                <div className="col-lg-6 col-sm-12 form-group mb-4 textOnInput ">
                                     <label >نام شرکت</label>
                                     <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name}
                                            onChange={(e:any) => {
@@ -120,7 +120,7 @@ setLoading(false)
 
                                 </div>
 
-                                <div className="form-group mb-4 textOnInput ">
+                                <div className="col-lg-12 col-sm-12 form-group mb-4 textOnInput ">
                                     <label >شماره ثبت</label>
                                     <Field validate={validatNumber} name="registrationNumber" type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e:any) => {
                                         setcompanyRegister(e.target.value)
@@ -134,9 +134,9 @@ setLoading(false)
 
 
 
-                                <div className='row justify-content-between'>
-                                    <div >
-                                        <button type="submit" disabled={loading} className="btn btn-success "  >
+                                
+                                    <div className='col-6 '>
+                                        <button type="submit" disabled={loading} className="btn btn-success float-right"  >
                                             تایید
 
                                             <ClipLoader
@@ -147,10 +147,10 @@ setLoading(false)
                                             />
                                         </button>
                                     </div>
-                                    <div >
+                                    <div className='col-6 ' >
                                         <NavLink to='/admin/organizationlist' className="btn btn-danger">بازگشت</NavLink>
                                     </div>
-                                </div>
+                                
 
 
 

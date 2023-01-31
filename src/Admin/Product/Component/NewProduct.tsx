@@ -240,7 +240,7 @@ const NewProduct: React.FC = () => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-6 col-xs-12'>
+                <div className='   col-md-6 col-xs-12 m-2'>
 
                     <Formik
                         initialValues={{
@@ -262,8 +262,8 @@ const NewProduct: React.FC = () => {
                         }}>
                         {({ errors, touched, setFieldTouched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
-                            <Form className="col-8">
-                                <div className="n-chk d-flex  mb-4">
+                            <Form className="row ">
+                                <div className="col-lg-12 col-sm-12 n-chk d-flex  mb-4">
 
                                     <div>
                                         <label className="mr-2"> فعال </label>
@@ -276,7 +276,7 @@ const NewProduct: React.FC = () => {
 
                                     </div>
                                 </div>
-                                <div className="form-group mb-4 textOnInput  align-content-between">
+                                <div className="col-lg-6 col-sm-12 form-group mb-4 textOnInput  align-content-between">
 
                                     <label>نام کالا</label>
                                     <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="کنجاله ، ذرت و..."
@@ -287,7 +287,7 @@ const NewProduct: React.FC = () => {
                                     {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                                 </div>
-                                <div className="form-group mb-4 textOnInput">
+                                <div className="col-lg-6 col-sm-12 form-group mb-4 textOnInput">
                                     <label>کد بازارگاه</label>
                                     <Field name="englishName" validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="... Corn Seed "
                                         value={englishName} onChange={(e: any) => {
@@ -298,9 +298,9 @@ const NewProduct: React.FC = () => {
 
                                 </div>
 
-                                <div className="form-group mb-4 textOnInput">
+                                <div className=" col-lg-12 col-sm-12  form-group mb-4 textOnInput">
                                     <div className='form-row'>
-                                        <div className={userCompanies.length === 1 ? 'col-6' : 'col-4'}>
+                                        <div className={userCompanies.length === 1 ? 'col-lg-6' : 'col-lg-4'}>
 
                                             <label>واحد</label>
 
@@ -318,7 +318,7 @@ const NewProduct: React.FC = () => {
 
                                         </div>
 
-                                        <div className={userCompanies.length === 1 ? 'col-6' : 'col-4'} >
+                                        <div className={userCompanies.length === 1 ? 'col-lg-6' : 'col-lg-4'} >
                                             <label>گروه کالا</label>
 
                                             <Select
@@ -337,8 +337,8 @@ const NewProduct: React.FC = () => {
                                             {groupId === 0 ? <div className="text-danger">پر کردن فیلد الزامیست</div> : null}
 
                                         </div>
-                                        {userCompanies.lenght>1 ?
-                                            <div className="col-4  textOnInput">
+                                        {userCompanies.lenght !== 1 ?
+                                            <div className="col-lg-4  textOnInput">
 
                                                 <label> شرکت</label>
                                                 <Select
@@ -366,16 +366,10 @@ const NewProduct: React.FC = () => {
                                 </div>
 
 
-                                <div className="form-group">
-                                    <div className="form-check pl-0">
-                                        <div className="custom-control custom-checkbox checkbox-info">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='row justify-content-between'>
+                               
+                              
                                     <div className='col-6 '>
-                                        <button type="submit" disabled={loading && measureUnitId === 0} className="btn btn-success float-left " >تایید  <ClipLoader
+                                        <button type="submit" disabled={loading && measureUnitId === 0} className="btn btn-success float-right " >تایید  <ClipLoader
 
                                             loading={loading}
                                             color="#ffff"
@@ -383,9 +377,10 @@ const NewProduct: React.FC = () => {
                                         /></button>
                                     </div>
                                     <div className='col-6 '>
-                                        <NavLink to='/admin/productList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                        <NavLink to='/admin/productList' className="btn btn-danger ">بازگشت</NavLink>
                                     </div>
-                                </div>
+                                
+                               
 
 
                             </Form>

@@ -133,13 +133,13 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
 
                                 <tr style={{ backgroundColor: contact.id !== 0 ? 'lightgray' : 'transparent' }} key={contact.wareHouseId}>
                                   
-                                    <td>
+                                    <td data-th="شناسه">
                                         {contact.wareHouseId}
                                     </td>
-                                    <td>
+                                    <td data-th="نام">
                                         {contact.wareHouseName}
                                     </td>
-                                    <td onClick={()=>onEdit( contact.wareHouseId, Quantity )}>
+                                    <td data-th="مقدار" onClick={()=>onEdit( contact.wareHouseId, Quantity )}>
                                         {
                                             inEditMode.status && inEditMode.rowKey === contact.wareHouseId ? (
                                                 <input type='number' value={Quantity} onChange={(e: any) => SetQuantity(Number(e.target.value))} />
@@ -153,9 +153,9 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
 
 
 
-                                    <td>{contact.consumableQuantity}</td>
-                                    <td>{contact.reservedQuantity}</td>
-                                    <td>
+                                    <td data-th="مقدار فروش">{contact.consumableQuantity}</td>
+                                    <td data-th="مقدار رزرو شده">{contact.reservedQuantity}</td>
+                                    <td data-th="عملیات">
 
                                         <button onClick={()=>SetProductWare(contact.wareHouseId)}  className=" bg-transparent non-hover edit-btn">  ثبت
                                         </button></td>

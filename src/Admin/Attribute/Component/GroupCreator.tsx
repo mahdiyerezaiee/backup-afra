@@ -68,11 +68,11 @@ const GroupCreator:React.FC = () => {
                                 onChange={(e:any) => setEntityTypeId(e.value)} />
                         </div>
                    
-                        <div className='col-md-6 col-sm-12 '>
+                        <div className='col-6  '>
                                 <button type="submit" className="btn btn-success  float-right" onClick={submit} >تایید</button>
                                 </div>
 
-                                <div className='col-md-6 col-sm-12 '>
+                                <div className='col-6  '>
 
 
                                 <NavLink to='/admin' className="btn btn-danger ">بازگشت</NavLink>

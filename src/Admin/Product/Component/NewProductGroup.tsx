@@ -89,7 +89,7 @@ useEffect(() => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-4 col-xs-12'>
+                <div className='col-md-8 col-xs-12 m-2'>
 
 
                     <Formik
@@ -108,9 +108,9 @@ useEffect(() => {
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
                             <Form  >
-                                <div className='form-group'>
+                                <div className='row'>
 
-                            <div className="input-group mb-4">
+                            <div className=" col-lg-6 input-group mb-4">
                                 <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
 
 
@@ -118,7 +118,7 @@ useEffect(() => {
                                     {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                                     {userCompanies?
-                            <div className="form-group mb-3 mt-3 textOnInput">
+                            <div className="col-lg-6 form-group mb-3  textOnInput">
 
                                 <label> شرکت</label>
                                 <Select
@@ -142,9 +142,10 @@ useEffect(() => {
 
 
                             </div>:''}
+                            <div className='col-12 '>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
+                                    <button type="submit" disabled={loading} className="btn btn-success float-right"  >ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -152,8 +153,9 @@ useEffect(() => {
                                     /></button>
                                 </div>
                                 <div className='col-6 '>
-                                    <NavLink to='/admin/productgroup' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin/productgroup' className="btn btn-danger float-left">بازگشت</NavLink>
                                 </div>
+                            </div>
                             </div>
                         </div>
                             </Form>

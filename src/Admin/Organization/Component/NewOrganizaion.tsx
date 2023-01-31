@@ -57,7 +57,7 @@ setLoading(false)
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-lg-4 col-sm-12'>
+                <div className='col-lg-8 col-sm-12 m-2'>
 
 
                     <Formik
@@ -76,7 +76,7 @@ setLoading(false)
                         }}>
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                            <Form className="form col"  >
+                            <Form className="row"  >
                         <div className="n-chk">
 
 
@@ -86,64 +86,62 @@ setLoading(false)
                     </label> */}
                         </div>
 
-                        <div className="form-group mb-4 textOnInput ">
+                        <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput ">
 
-                            <label >شماره ملی شرکت</label>
-                            <div className='form-row justify-content-center'>
-                                <Field validate={validatNumber} type="text" className="form-control opacityForInput col" name="nationalId" value={nationalId} onChange={(e:any) => { SetnationalId(e.target.value); }} placeholder="12345678912" />
-
-
-                            </div>
-                            {errors.nationalId && touched.nationalId && <div className="text-danger">{errors.nationalId}</div>}
+                                    <label >شماره ملی شرکت</label>
+                                    <div className='form-row justify-content-center'>
+                                        <Field validate={validatNumber} type="text" className="form-control opacityForInput col" name="nationalId" value={nationalId} onChange={(e:any) => { SetnationalId(e.target.value); }} placeholder="12345678912" />
 
 
+                                    </div>
+                                    {errors.nationalId && touched.nationalId && <div className="text-danger">{errors.nationalId}</div>}
 
-                        </div>
-                        <div className="form-group mb-4 textOnInput ">
-                            <label >نام شرکت</label>
-                            <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={companyName}
-                                onChange={(e:any) => {
-                                    setcompanyName(e.target.value)
 
-                                }} placeholder="نام شرکت" />
 
-                            {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
+                                </div>
+                                <div className="col-lg-6 col-sm-12 form-group mb-4 textOnInput ">
+                                    <label >نام شرکت</label>
+                                    <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={companyName}
+                                           onChange={(e:any) => {
+                                            setcompanyName(e.target.value)
 
-                        </div>
+                                           }} placeholder="نام شرکت" />
 
-                                <div className="form-group mb-4 textOnInput ">
-                            <label >شماره ثبت</label>
-                            <Field validate={validatNumber} name="registrationNumber" type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e:any) => {
-                                setcompanyRegister(e.target.value)
+                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
-                            }} placeholder="شماره ثبت" />
+                                </div>
+
+                                <div className="col-lg-12 col-sm-12 form-group mb-4 textOnInput ">
+                                    <label >شماره ثبت</label>
+                                    <Field validate={validatNumber} name="registrationNumber" type="text" className="form-control opacityForInput"  value={companyRegister} onChange={(e:any) => {
+                                        setcompanyRegister(e.target.value)
+
+                                    }} placeholder="شماره ثبت" />
                                     {errors.registrationNumber && touched.registrationNumber && <div className="text-danger">{errors.registrationNumber}</div>}
 
 
-                        </div>
+                                </div>
 
 
 
 
-                        <div className='row justify-content-between'>
-                            <div >
-                                <button type="submit" disabled={loading} className="btn btn-success "  >
-                                    تایید
+                                
+                                    <div className='col-6 '>
+                                        <button type="submit" disabled={loading} className="btn btn-success float-right"  >
+                                            تایید
 
-                                    <ClipLoader
+                                            <ClipLoader
 
-                                        loading={loading}
-                                        color="#ffff"
-                                        size={15}
-                                    />
-                                    </button>
-                            </div>
-                            <div >
-                                <NavLink to='/admin/organizationlist' className="btn btn-danger">بازگشت</NavLink>
-                            </div>
-                        </div>
-
-
+                                                loading={loading}
+                                                color="#ffff"
+                                                size={15}
+                                            />
+                                        </button>
+                                    </div>
+                                    <div className='col-6 ' >
+                                        <NavLink to='/admin/organizationlist' className="btn btn-danger">بازگشت</NavLink>
+                                    </div>
+                                
 
 
                             </Form>

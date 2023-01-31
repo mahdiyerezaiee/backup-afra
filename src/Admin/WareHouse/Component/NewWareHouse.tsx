@@ -172,7 +172,7 @@ companyId, companyName,active
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-5 col-xs-12'>
+                <div className=' col-md-8 col-xs-12 m-2'>
 
                     <Formik
                         initialValues={{
@@ -191,10 +191,10 @@ companyId, companyName,active
                         }}>
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
-                            <Form className='col-lg-6 col-sm-12' >
-                        <div className='form-group'>
+                            <Form className='' >
+                        <div className='row'>
 
-                            <div className=" mb-4 textOnInput">
+                            <div className=" col-lg-6 col-sm-12 mb-4 textOnInput">
                                 <label >انبار</label>
                                 <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
 
@@ -202,7 +202,7 @@ companyId, companyName,active
 
                             </div>
 
-                            <div className=" mb-4 textOnInput">
+                            <div className=" col-lg-6 col-sm-12 mb-4 textOnInput">
 
 
                                 <label>حجم انبار</label>
@@ -216,7 +216,7 @@ companyId, companyName,active
 
                             </div>
                             {userCompanies.length>1 ?
-                                <div className="form-group mb-4 mt-3 textOnInput">
+                                <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput">
 
                                     <label> شرکت</label>
                                     <Select
@@ -241,7 +241,7 @@ companyId, companyName,active
 
 
                                 </div> : ''}
-                            <div className="mb-4 textOnInput ">
+                            <div className=" col-lg-6 col-sm-12 mb-4 textOnInput ">
 
                                 <label>گروه انبار</label>
 
@@ -261,7 +261,7 @@ companyId, companyName,active
 
                             </div>
 
-                            <div className='mb-4 textOnInput'>
+                            <div className='col-lg-12 col-sm-12 mb-4 textOnInput'>
                                 <label>آدرس</label>
                                 <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={(e:any) => {
                                     setAddres(e.target.value)
@@ -270,19 +270,20 @@ companyId, companyName,active
                                 {errors.Addres && touched.Addres && <div className="text-danger">{errors.Addres}</div>}
 
                             </div>
-
+                            <div className='col-lg-12 col-sm-12'>
                             <div className='row '>
-                                <div className='col-lg-6 col-sm-12'>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
+                                <div className='col-6 '>
+                                    <button type="submit" disabled={loading} className="btn btn-success float-right"  >ثبت<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
                                         size={15}
                                     /></button>
                                 </div>
-                                <div className='col-lg-6 col-sm-12 '>
-                                    <NavLink to='/admin/warehouselist' className="btn btn-danger float-right">بازگشت</NavLink>
+                                <div className='col-6  '>
+                                    <NavLink to='/admin/warehouselist' className="btn btn-danger ">بازگشت</NavLink>
                                 </div>
+                            </div>
                             </div>
                         </div>
                             </Form>

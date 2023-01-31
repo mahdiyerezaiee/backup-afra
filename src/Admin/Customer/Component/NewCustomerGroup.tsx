@@ -90,7 +90,7 @@ const NewCustomerGroup:React.FC = () => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-4 col-xs-12 textOnInput'>
+                <div className=' col-md-8 col-xs-12 textOnInput  m-2'>
 
 
                     <Formik
@@ -109,9 +109,9 @@ const NewCustomerGroup:React.FC = () => {
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
                             <Form  >
-                        <div className='form-group '>
+                        <div className=' form-row '>
 
-                            <div className="form-group mb-4 textOnInput">
+                            <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput">
                                 <label>نام گروه</label>
 
                                 <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" placeholder="گروه" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
@@ -120,7 +120,7 @@ const NewCustomerGroup:React.FC = () => {
 
                             </div>
                             {userCompanies?
-                            <div className="form-group mb-3 mt-3 textOnInput">
+                            <div className=" col-lg-6 col-sm-12 form-group mb-3  textOnInput">
 
                                 <label> شرکت</label>
                                 <Select
@@ -144,9 +144,10 @@ const NewCustomerGroup:React.FC = () => {
 
 
                             </div>:''}
+                            <div className='col-12 '>
                             <div className='row '>
                                 <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left" > ثبت
+                                    <button type="submit" disabled={loading} className="btn btn-success float-right" > ثبت
 
                                         <ClipLoader
 
@@ -156,8 +157,9 @@ const NewCustomerGroup:React.FC = () => {
                                         /></button>
                                 </div>
                                 <div className='col-6 '>
-                                    <NavLink to='/admin/customergroup' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <NavLink to='/admin/customergroup' className="btn btn-danger">بازگشت</NavLink>
                                 </div>
+                            </div>
                             </div>
                         </div>
 

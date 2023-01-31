@@ -170,14 +170,14 @@ const UsedBarBariReport: React.FC = () => {
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
-                        <div className='widget box shadow col-lg-4 col-sm-12'>
+                        <div className=' col-lg-6 col-sm-12 m-2'>
 
 
-                            <form >
+                            <form  className='row'>
 
 
                                 {companies.length > 1 ?
-                                    <div className="col mb-4  form-group textOnInput">
+                                    <div className="col-lg-6 mb-4  form-group textOnInput">
 
                                         <label> شرکت</label>
                                         <Select
@@ -200,17 +200,17 @@ const UsedBarBariReport: React.FC = () => {
 
 
                                     </div> : ''}
-
-                                <div className='form-row'>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 ml-4 mb-4 form-group">
+                                    <div className="col-lg-6 col-md-6 col-sm-12  mb-4 form-group">
 
 
-                                        <label className="form-check-label">
+<label className="form-check-label">
 
-                                            <input type="checkbox" checked={OnlyShipping} className="form-check-input" onChange={(e: any) => setOnlyShipping(e.target.checked)} />
-                                            فقط دارای حواله
-                                        </label>
-                                    </div>
+    <input type="checkbox" checked={OnlyShipping} className="form-check-input" onChange={(e: any) => setOnlyShipping(e.target.checked)} />
+    فقط دارای حواله
+</label>
+</div>
+                                <div className=' col-12 form-row'>
+                                    
                                     <div className=" col ">
                                         <div className=" mb-4 " style={{ position: 'relative' }}>
                                             <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>از تاریخ </label>
@@ -246,13 +246,15 @@ const UsedBarBariReport: React.FC = () => {
 
                                     </div>
                                 </div>
+                                <div className='col-12'>
                                 <div className='row justify-content-between'>
                                     <div className='col-6 '>
-                                        <button type="submit" disabled={disable} className="btn btn-success float-left " onClick={handelSubmit} >تایید</button>
+                                        <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit} >تایید</button>
                                     </div>
                                     <div className='col-6 '>
-                                        <NavLink to='/admin' className="btn btn-danger float-right">بازگشت</NavLink>
+                                        <NavLink to='/admin' className="btn btn-danger ">بازگشت</NavLink>
                                     </div>
+                                </div>
                                 </div>
                             </form>
                         </div>
