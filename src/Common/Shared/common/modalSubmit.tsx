@@ -10,7 +10,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
     const [check,setCheck]=useState(false)
     console.log(productSupplyConditionId)
     return(
-      <>
+      <div className="modalAddToCart">
           <div className="d-block clearfix mb-2" onClick={closeModal}><svg
               xmlns="http://www.w3.org/2000/svg"
               width="24" height="24"
@@ -25,13 +25,13 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
               x1="6" y1="6" x2="18" y2="18"></line></svg></div>
           <h4 className="text-center mb-2">{modalInfo.product.name}</h4>
           <p className="text-center text-primary">لطفا مقدار درخواست را به کیلوگرم وارد کنید</p>
-          <p className="text-center m-1" >
+          <p className="quantity-field" >
 
-              <button className="btn-sm btn-light border-0 bg-transparent non-hover p-2" onClick={() => setquantity(Number(quantity) + 1000)}>+
+              <button className="value-button increase-button" onClick={() => setquantity(Number(quantity) + 1000)}>+
               </button>
-              <input  className="form-control opacityForInput col-4 d-inline" placeholder="وزن سفارش" step={100}
+              <input  className="number" placeholder="وزن سفارش" step={100}
                       type="text" value={quantity} onChange={(e:any) => setquantity(Number(e.target.value))} />
-              <button className="btn-sm btn-light border-0 bg-transparent non-hover p-2"  onClick={() =>quantity>=1000 ?setquantity(Number(quantity) - 1000):""}>--
+              <button className="value-button decrease-button "  onClick={() =>quantity>=1000 ?setquantity(Number(quantity) - 1000):""}>--
               </button>
           </p>
           {modalInfo.productSupplyConditions.length !==0 ? (
@@ -59,7 +59,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
 
                   </p>
               </div>:""}
-                  <h5 className="text-center ">قیمت کل :   { modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price) ? formatter.format( modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price)* quantity ):formatter.format( modalInfo.price * quantity)}</h5>
+                  <h5 className="text-center mt-2 ">قیمت کل :   { modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price) ? formatter.format( modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price)* quantity ):formatter.format( modalInfo.price * quantity)}</h5>
                   {modalInfo.comment ? <button disabled={  loading ?true : quantity >=  modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.maxSellableAmount) && check  ? false : true}
                                                className="btn btn-success  float-left" onClick={submitHandler}>اضافه به سبدخرید
                           <ClipLoader
@@ -82,7 +82,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
                    </div>):(<div><h5 className="text-center ">قیمت کل :   {formatter.format(modalInfo.price * quantity)}</h5> <button className="btn btn-primary text-sm-center d-block m-auto" onClick={submitHandler}>اضافه به سبدخرید
           </button>  </div>) }
 
-      </>
+      </div>
   )
 }
 export  default  ModalSubmit

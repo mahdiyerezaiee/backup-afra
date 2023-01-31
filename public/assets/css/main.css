@@ -79,6 +79,20 @@ select.form-custom::-ms-expand {
   float: left;
 
 }
+.blurShowMore{
+  position: absolute;
+  bottom: 5%;
+  left: 0%;
+  width: 100%;
+  height: 80px;
+  background: transparent;
+  backdrop-filter: blur(5px);
+}
+.showMore a{
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+}
 .dashbord-news{
   margin-bottom: 10px;
   padding-bottom: 10px;
@@ -2412,7 +2426,9 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   padding-right: 64px;
   margin-bottom: 0;
 }
-
+.css-13cymwt-control{
+  min-height: 44px!important;
+}
 .mediae {
   /*padding: 16px 12px;*/
   -webkit-transition: background-color .2s linear;
@@ -2768,12 +2784,12 @@ select:-webkit-autofill:focus {
 
   .btn-danger{
     font-size: 10px;
-    width: 100%;
+    /* width: 100%; */
 
   }
   .btn-success{
     font-size: 10px;
-    width: 100%;
+    /* width: 100%; */
 
   }
   .ProductSupplyCondition-table{
@@ -2900,6 +2916,20 @@ select:-webkit-autofill:focus {
 }
 
 @media only screen and  (max-width: 600px) {
+  .blurShowMore{
+    position: absolute;
+    bottom: 0;
+    left: 0%;
+    width: 100%;
+    height: 80px;
+    background: transparent;
+    backdrop-filter: blur(5px);
+  }
+  .showMore a{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+  }
   .table td:first-child {
  
     border-top: none!important;
@@ -2994,12 +3024,12 @@ button{
 
   .btn-danger{
   font-size: 10px ;
-    width: 100% ;
+    /* width: 100% ; */
 
   }
   .btn-success{
   font-size: 10px ;
-    width: 100% ;
+    /* width: 100% ; */
 
   }
 .ProductSupplyCondition-table{
@@ -3096,12 +3126,12 @@ button{
   }
   .footer-car-shop{
     position: absolute;
-    bottom: 10%;
+    bottom: 3%;
   }
   .cart-shop2{
     padding: 10px;
     position: fixed;
-    height:calc(95vh - 100px) ;
+    height:calc(100vh - 100px) ;
     left: 8rem;
     background-color: white;
     transition: left 0.8s ease 0s;
@@ -3482,4 +3512,77 @@ animation: pulseblue 1s infinite;
 }
 .table th, .table td:before {
   color: #4468fd;
+}
+.quantity-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px; 
+  height: 40px;
+  margin: 0 auto;    
+}
+
+.quantity-field .value-button{ 
+  border: 1px solid #ddd;
+  margin: 0px;
+  width: 40px;
+  height: 100%;   
+  padding: 0;
+  background: #eee; 
+  outline: none;
+  cursor: pointer;
+}
+
+.quantity-field .value-button:hover {
+  background: rgb(230, 230, 230);
+}
+
+.quantity-field .value-button:active{
+  background: rgb(210, 210, 210);
+}
+
+.quantity-field .decrease-button {
+  margin-right: -4px;
+  border-radius: 8px 0 0 8px;
+}
+
+.quantity-field .increase-button {
+  margin-left: -4px;
+  border-radius: 0 8px 8px 0;
+}
+ 
+.quantity-field .number{
+  display: inline-block;
+  text-align: center;
+  border: none;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 0px;
+  width: 100px;
+  height: 100%;
+  line-height: 40px;
+  font-size: 11pt;
+  box-sizing: border-box; 
+  background: white;
+  font-family: calibri;
+}
+
+.quantity-field .number::selection{
+  background: none;
+}
+
+/*
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+*/
+.modalAddToCart{
+  width: 20rem;
+  height: 15rem;
+}
+
+.modalAddToCart h5{
+  margin: 2rem auto;
 }

@@ -404,7 +404,7 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                                         </div>
                                         <div className="col-12">
                                             <div className='row'>
-                                                <div className='col-lg-6 col-md-6 col-sm-11 '>
+                                                <div className='col-6  '>
                                                     {show === true ?
                                                         <button type="submit" className="btn btn-success  " disabled={password === passwordConfirm ? false : true} >تایید</button> :
                                                         <button type="submit" className="btn btn-success  " disabled={!loading ? false : true} >تایید
@@ -416,7 +416,7 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                                                             />
                                                         </button>}
                                                 </div>
-                                                <div className='col-lg-6 col-md-6 col-sm-11 '>
+                                                <div className='col-6  '>
                                                     <NavLink to='/admin/userlist' className="btn btn-danger float-right">بازگشت</NavLink>
                                                 </div>
                                             </div>

@@ -507,7 +507,7 @@ const EditUserInfo: React.FC = () => {
 
                                         <div className="col-12">
                                             <div className='row'>
-                                                <div className='col-lg-6 col-md-6 col-sm-12 mb-1 '>
+                                                <div className='col-6  mb-1 '>
                                                     {show === true ?
                                                         <button type="submit" className="btn btn-success  " disabled={password !== passwordConfirm} >تایید</button> :
                                                         <button type="submit" className="btn btn-success  " disabled={!loading ? false : true} >تایید
@@ -519,7 +519,7 @@ const EditUserInfo: React.FC = () => {
                                                             />
                                                         </button>}
                                                 </div>
-                                                <div className='col-lg-6 col-md-6 col-sm-12 mb-1'>
+                                                <div className='col-6 mb-1'>
                                                     <button onClick={handelNavigate} className="btn btn-danger   float-right">بازگشت</button>
                                                 </div>
                                             </div>

@@ -153,9 +153,9 @@ code {
   width: 50%;
   flex-grow: 8;
   /*margin-top: 80px;*/
-  margin-bottom: 0;
-  margin-right: 6px;
-  margin-left: -23px;
+  margin-bottom: auto;
+  margin-right: 40px;
+  margin-left: 0px;
   -webkit-transition: .3s ease all;
   transition: .3s ease all; }
 
@@ -1214,6 +1214,8 @@ code {
     .navbar .navbar-item .nav-item form.form-inline input.search-form-control {
       padding-top: 8px; } }
 @media (max-width: 600px) {
+  .layout-top-spacing {
+    margin-top: 5%; }
   #content {
     margin-right: 13px; }
   .layout-px-spacing {

@@ -14,7 +14,8 @@ import { Link } from 'react-router-dom';
 import { GetCompanyChild } from '../../../services/companiesService';
 import ConditionSalesBordCustomer from "./conditionSalesBordCustomer";
 import { RootState } from "../../../store";
-
+import {RxDoubleArrowDown} from "react-icons/rx"
+import {RxDoubleArrowUp} from "react-icons/rx"
 
 const customStyles = {
     content: {
@@ -236,7 +237,7 @@ const SalesBoardForAdmin:React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {productSupply && productSupply.slice(0, showMore ? productSupply.length : 5).map((item:any , index:number) =>
+                            {productSupply && productSupply.slice(0, showMore ? productSupply.length : 6).map((item:any , index:number) =>
                                     <Fragment key={index + "_frag"}>
 
 
@@ -277,13 +278,16 @@ const SalesBoardForAdmin:React.FC = () => {
                             </tbody>
                         </table>
 
-                        {productSupply.length <= 5 ? null : <Link to='#'
-                            className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center text-danger text-m"
+                        {productSupply.length <= 5 ? null :
+                        <div className={!showMore ?"showMore":""}> 
+                            <div className={!showMore ?"blurShowMore":""}> </div>
+                            <Link to='#'
+                            className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center  text-m"
                             onClick={() => setShowMore(!showMore)}
                             style={{ fontSize: 'medium', fontWeight: 'bold' }}
                         >
-                            کلیک برای نمایش {showMore ? "کمتر" : "بیشتر"} ...
-                        </Link>}
+                             {showMore ? <RxDoubleArrowUp size="2rem"/> : <RxDoubleArrowDown size="2rem"/> } 
+                        </Link> </div>}
 
 
                     </div>

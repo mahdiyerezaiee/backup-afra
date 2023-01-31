@@ -206,9 +206,16 @@ const statusOrder = () => {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0, });
     return (
+        <div className='user-progress'>
+        <div className='row'>
+            <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                <h5>ویرایش عرضه شماره </h5>
+                <p>در این بخش می توانید عرضه را ویرایش کنید</p>
 
+            </div>
+        </div>
         <div className='row d-flex justify-content-center '>
-            <div className='widget box shadow col-md-6 col-xs-12'>
+            <div className='col-lg-8 col-xs-12 m-2'>
                 <Formik
                     initialValues={{
                         customerId,
@@ -234,7 +241,7 @@ const statusOrder = () => {
 
 
 
-                        <Form className="col-lg-8 col-sm-12">
+                        <Form className="">
                     <div className="n-chk d-flex  mb-4">
 
                     </div>
@@ -399,16 +406,10 @@ const statusOrder = () => {
                     </div>
 
 
-                    <div className="form-group">
-                        <div className="form-check pl-0">
-                            <div className="custom-control custom-checkbox checkbox-info">
-
-                            </div>
-                        </div>
-                    </div>
+                   
                     <div className='row justify-content-between'>
-                        <div className='col-lg-6 col-md-6 col-sm-11  '>
-                            <button  disabled={loading} className="btn btn-success float-left " >تایید
+                        <div className='col-6   '>
+                            <button  disabled={loading} className="btn btn-success float-right " >تایید
                                 <ClipLoader
 
                                     loading={loading}
@@ -416,8 +417,8 @@ const statusOrder = () => {
                                     size={15}
                                 /></button>
                         </div>
-                        <div className='col-lg-6 col-md-6 col-sm-11  '>
-                            <NavLink to='/admin/orderList' className="btn btn-danger float-right">بازگشت</NavLink>
+                        <div className='col-6   '>
+                            <NavLink to='/admin/orderList' className="btn btn-danger ">بازگشت</NavLink>
                         </div>
                     </div>
 
@@ -426,6 +427,7 @@ const statusOrder = () => {
                     )}
                 </Formik>
             </div>
+        </div>
         </div>
     )
 }

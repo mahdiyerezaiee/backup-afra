@@ -140,7 +140,7 @@ setLoading(false)
 
                                 </div>
                                 <div className='row'>
-                                    <div className='col-lg-6 '>
+                                    <div className='col-6 '>
                                         <button disabled={loading} type="submit" className="btn btn-success float-left"  >تایید  <ClipLoader
 
                                             loading={loading}
@@ -148,7 +148,7 @@ setLoading(false)
                                             size={15}
                                         /></button>
                                     </div>
-                                    <div className='col-lg-6 '>
+                                    <div className='col-6 '>
                                         <NavLink to='/admin/user-news' className="btn btn-danger float-right">بازگشت</NavLink>
                                     </div>
                                 </div>

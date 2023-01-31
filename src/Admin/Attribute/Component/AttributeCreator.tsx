@@ -88,10 +88,10 @@ const AttributeCreator:React.FC = () => {
                             <input type="text" className="form-control opacityForInput" value={controlTypeValue} onChange={(e:any) => setControlTypeValue(e.target.value)} />
 
                         </div>
-                        <div className='col-lg-6 col-sm-12 '>
+                        <div className='col-6  '>
                                 <button type="submit" className="btn btn-success float-right" onClick={submit} >تایید</button>
                                 </div>
-                                <div className='col-lg-6 col-sm-12 '>
+                                <div className='col-6  '>
 
                                 <NavLink to='/admin' className="btn btn-danger  ">بازگشت</NavLink>
                         </div>

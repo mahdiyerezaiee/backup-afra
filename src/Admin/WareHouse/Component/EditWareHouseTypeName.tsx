@@ -76,7 +76,7 @@ const handelSubmit=async()=>{
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-12 col-md-6 col-xs-12'>
+                <div className='col-lg-6 col-xs-12 m-2'>
                     <Formik
                         initialValues={{
                             id:Number(params.id),

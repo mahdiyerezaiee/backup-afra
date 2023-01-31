@@ -230,7 +230,7 @@ const EditProduct: React.FC = () => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-8 col-xs-12'>
+                <div className='col-md-8 col-xs-12 m-2'>
                     <Formik
                         initialValues={{
                             id,
@@ -252,8 +252,9 @@ const EditProduct: React.FC = () => {
                         }}>
                         {({ errors, touched, setFieldTouched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
-                            <Form className="col-12">
-                                <div className="n-chk d-flex  mb-4">
+<Form className="row ">
+<div className="col-lg-12 col-sm-12 n-chk d-flex  mb-4">
+
                                     <div>
                                         <label className="mr-2"> فعال </label>
                                         <Field name="active" type="checkbox" defaultChecked={active} onChange={(e: any) => {
@@ -263,7 +264,7 @@ const EditProduct: React.FC = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group mb-4 textOnInput  align-content-between">
+                                <div className="col-lg-12 col-sm-12  form-group mb-4 textOnInput  align-content-between">
                                     <div className='form-row'>
                                         <div className="col-lg-6 col-sm-12  mt-3">
                                             <label>نام کالا</label>
@@ -287,7 +288,7 @@ const EditProduct: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className="form-group mb-4 textOnInput">
+                                <div className=" col-lg-12 col-sm-12  form-group mb-4 textOnInput">
                                     <div className='form-row'>
                                         <div className={companies.length > 1?"col-lg-4 col-sm-12 mt-3":"col-lg-6 col-sm-12 mt-3"}>
                                             <label>واحد</label>
@@ -335,9 +336,9 @@ const EditProduct: React.FC = () => {
                                         </div> : ''}
                                     </div>
                                 </div>
-                                <div className='row '>
-                                    <div className='col-6 '>
-                                        <button type="submit" disabled={loading} className="btn btn-success float-left ">تایید  <ClipLoader
+                              
+                                <div className='col-6 '>
+                                        <button type="submit" disabled={loading && measureUnitId === 0} className="btn btn-success float-right " >تایید  <ClipLoader
 
                                             loading={loading}
                                             color="#ffff"
@@ -345,9 +346,8 @@ const EditProduct: React.FC = () => {
                                         /></button>
                                     </div>
                                     <div className='col-6 '>
-                                        <NavLink to='/admin/productList' className="btn btn-danger float-right">بازگشت</NavLink>
+                                        <NavLink to='/admin/productList' className="btn btn-danger ">بازگشت</NavLink>
                                     </div>
-                                </div>
                             </Form>
                         )}
                     </Formik>

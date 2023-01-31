@@ -177,7 +177,7 @@ const EditeSupply:React.FC = () => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-7 col-xs-12'>
+                <div className=' col-lg-8 col-xs-12 m-2'>
                     <Formik
                         initialValues={{
                             id: params.id,
@@ -200,8 +200,8 @@ const EditeSupply:React.FC = () => {
                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
 
-                            <Form  className='col'>
-                        <div className="n-chk d-flex  mb-4">
+                            <Form  className='row'>
+                        <div className="col-12 n-chk d-flex  mb-4">
 
                             {/* <div>
                                 <label className="mr-2"> فعال  </label>
@@ -212,7 +212,7 @@ const EditeSupply:React.FC = () => {
 
 
                         </div>
-                        <div className="form-group  textOnInput ">
+                        <div className=" col-lg-12 col-md-12 col-sm-11 form-group  textOnInput ">
                             <div className='form-row mb-4'>
 
                                 <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
@@ -381,17 +381,12 @@ const EditeSupply:React.FC = () => {
                             </div>
 
                         </div>
-                        <div className="form-group">
-                            <div className="form-check pl-0">
-                                <div className="custom-control custom-checkbox checkbox-info">
-
-                                </div>
-                            </div>
-                        </div>
+                       
+                        <div className='col-lg-12 col-md-12 col-sm-12  '>
                         <div className='row justify-content-between'>
-                            <div className='col-lg-6 col-md-6 col-sm-11  '>
+                            <div className='col-6   '>
 
-                                  <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-left " >تایید<ClipLoader
+                                  <button disabled={productId === 0 || wareHouseId === 0 || supplierId === 0 || measureUnitId === 0 || supplyTypeId === 0 ? true : false} type="submit" className="btn btn-success float-right " >تایید<ClipLoader
 
                                         loading={loading}
                                         color="#ffff"
@@ -400,9 +395,10 @@ const EditeSupply:React.FC = () => {
 
 
                             </div>
-                            <div className='col-lg-6 col-md-6 col-sm-11  '>
-                                <NavLink to='/admin/supply' className="btn btn-danger float-right">بازگشت</NavLink>
+                            <div className='col-6   '>
+                                <NavLink to='/admin/supply' className="btn btn-danger ">بازگشت</NavLink>
                             </div>
+                        </div>
                         </div>
                     </Form>
                         )}

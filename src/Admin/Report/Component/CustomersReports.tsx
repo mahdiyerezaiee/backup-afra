@@ -104,7 +104,7 @@ const CustomerReports:React.FC = () => {
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
-                        <div className='widget box shadow col-lg-4 col-sm-12'>
+                        <div className=' col-lg-6 col-sm-12 m-2'>
 
 
                             <form >
@@ -146,10 +146,10 @@ const CustomerReports:React.FC = () => {
                                 </div>
                                 <div className='row justify-content-between'>
                                     <div className='col-6 '>
-                                        <button type="submit" disabled={disable} className="btn btn-success float-left " onClick={handelSubmit} >تایید</button>
+                                        <button type="submit" disabled={disable} className="btn btn-success float-right " onClick={handelSubmit} >تایید</button>
                                     </div>
                                     <div className='col-6 '>
-                                        <NavLink to='/admin' className="btn btn-danger float-right">بازگشت</NavLink>
+                                        <NavLink to='/admin' className="btn btn-danger ">بازگشت</NavLink>
                                     </div>
                                 </div>
                             </form>

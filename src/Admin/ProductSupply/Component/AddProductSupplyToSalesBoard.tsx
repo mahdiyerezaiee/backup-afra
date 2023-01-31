@@ -218,7 +218,7 @@ const AddProductSupplyToSalesBoard: React.FC = () => {
                 </div>
             </div>
             <div className='row d-flex justify-content-center '>
-                <div className='widget box shadow col-md-6 col-xs-12'>
+                <div className=' col-md-8 col-xs-12 m-2'>
                     <Formik
                         initialValues={{
                             id:0,
@@ -417,15 +417,15 @@ const AddProductSupplyToSalesBoard: React.FC = () => {
 
 
                                 <div className='row justify-content-between'>
-                                    <div className='col-lg-6 col-sm-12  '>
-                                        <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
+                                    <div className='col-6  '>
+                                        <button type="submit" disabled={loading} className="btn btn-success float-right"  >ثبت<ClipLoader
 
                                             loading={loading}
                                             color="#ffff"
                                             size={15}
                                         /></button>                                </div>
-                                    <div className='col-lg-6 col-sm-12 '>
-                                        <NavLink to='/admin/productSupply' className="btn btn-danger float-right">بازگشت</NavLink>
+                                    <div className='col-6  '>
+                                        <NavLink to='/admin/productSupply' className="btn btn-danger ">بازگشت</NavLink>
                                     </div>
                                 </div>
 
