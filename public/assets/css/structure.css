@@ -154,7 +154,7 @@ code {
   flex-grow: 8;
   /*margin-top: 80px;*/
   margin-bottom: auto;
-  margin-right: 40px;
+  margin-right: 1%;
   margin-left: 0px;
   -webkit-transition: .3s ease all;
   transition: .3s ease all; }
@@ -186,7 +186,7 @@ code {
   padding-bottom: 40px; }
 
 .layout-px-spacing {
-  padding: 0 10px 20px 30px !important;
+  padding: 0 10px 20px 12px !important;
   }
 
 .widget.box .widget-header {
