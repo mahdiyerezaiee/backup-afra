@@ -94,13 +94,13 @@ const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order , attachments, han
                         <tbody>
                         {orderDetail.map((item:any)=>
                             <tr key={item.id} className="" >
-                                <td className="text-center">{item.productSupplyId}</td>
-                                <td className="text-center">{cottageCode}</td>
-                                <td className="text-center">{item.product.name}</td>
-                                <td className="text-center">{item.quantity}</td>
-                                <td className="text-center">{formatter.format(item.basePrice)}</td>
-                                <td className="text-center">{PaymentStructureEnums.filter(i=> i.id === order.paymentMethodId).map(i=> i.name)[0]}</td>
-                                <td className="text-center">{formatter.format(item.price)}</td>
+                                <td data-th="شماره عرضه" className="text-center">{item.productSupplyId}</td>
+                                <td data-th="شماره کوتاژ" className="text-center">{cottageCode}</td>
+                                <td data-th=" نام کالا"  className="text-center">{item.product.name}</td>
+                                <td data-th="وزن" className="text-center">{item.quantity}</td>
+                                <td data-th=" فی" className="text-center">{formatter.format(item.basePrice)}</td>
+                                <td data-th="نوع پرداخت" className="text-center">{PaymentStructureEnums.filter(i=> i.id === order.paymentMethodId).map(i=> i.name)[0]}</td>
+                                <td data-th=" مبلغ کل" className="text-center">{formatter.format(item.price)}</td>
                             </tr>
                         )}
                         </tbody>

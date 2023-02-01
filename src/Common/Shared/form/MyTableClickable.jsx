@@ -103,13 +103,17 @@ useEffect(()=>{
             // Let's make a column for selection
             {
                 id: 'selection',
-                    // The header can use the table's getToggleAllRowsSelectedProps method
+                accessor: 'انتخاب',
+                header: 'انتخاب',
+
+                // The header can use the table's getToggleAllRowsSelectedProps method
                     // to render a checkbox
                     Header: ({getToggleAllRowsSelectedProps}) => (
                     <div>
                         <IndeterminateCheckbox{...getToggleAllRowsSelectedProps()} />
                     </div>
                 ),
+
                     // The cell can use the individual row's getToggleRowSelectedProps method
                     // to the render a checkbox
                     Cell:({row}) => (
@@ -120,9 +124,9 @@ useEffect(()=>{
             }
         ,
             {// Build our expander column
-                id: "active", // Make sure it has an ID
-                    Header:({getToggleAllRowsExpandedProps, isAllRowsExpanded}) => (
-                    <span {...getToggleAllRowsExpandedProps()}>
+                id: "expander", // Make sure it has an ID
+                    Header:({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
+                        <span {...getToggleAllRowsExpandedProps()}>
 
                       </span>
                 ), Cell:({row}) => (
@@ -131,18 +135,17 @@ useEffect(()=>{
                     // We can use the getToggleRowExpandedProps prop-getter
                     // to build the expander.
 
-                    <span {...row.getRowProps(formatRowProps && formatRowProps(row))}>
-            {row.id === show && showAddress === true ?
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     className="bi bi-chevron-down" viewBox="0 0 16 16">
+                    <span className="Expanded" {...row.getToggleRowExpandedProps()}>
+
+            {row.isExpanded ?
+                <svg {...row.getRowProps(formatRowProps && formatRowProps(row))} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      className="bi bi-chevron-down" viewBox="0 0 16 16">
                     <path fillRule="evenodd"
-                          d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              className="bi bi-chevron-left" viewBox="0 0 16 16">
+                          d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+                : <svg  {...row.getRowProps(formatRowProps && formatRowProps(row))} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  className="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fillRule="evenodd"
-                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                </svg>
-            }
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>}
           </span>
                 )
             }
@@ -152,21 +155,19 @@ useEffect(()=>{
                 id: "", // Make sure it has an ID
                     Header:({getToggleAllRowsExpandedProps, isAllRowsExpanded}) => (
                     <span {...getToggleAllRowsExpandedProps()}>
-
-                      </span>
-
-                ), Cell:({row}) => (
+                    </span>
+                    ), Cell:({row}) => (
                     // Use Cell to render an expander for each row.
                     // We can use the getToggleRowExpandedProps prop-getter
                     // to build the expander.
                     <span>
-                        {row.original.extId > 0 ? <div data-title="بازارگاه" style={{
+                        {row.original.extId > 0 ? <div  data-title="بازارگاه" style={{
                             width: '10px',
                             height: "10px",
                             backgroundColor: 'greenyellow'
                         }}></div> : <div style={{width: '10px', height: "10px", backgroundColor: 'deepskyblue'}}></div>
                         }
-          </span>
+                    </span>
                 )
             }
         ,
@@ -275,7 +276,7 @@ useEffect(()=>{
                                             row.cells.map(cell => (
                                                 <Fragment>
 
-                                                <td data-th={cell.column.Header} {...cell.getCellProps()}>
+                                                <td data-th={cell.column.Header? cell.column.Header: cell.column.header} {...cell.getCellProps()}>
                                                     {cell.render('Cell')}
 
                                                 </td>
@@ -285,12 +286,12 @@ useEffect(()=>{
 
 
                                     </tr>
-                                    {  row.id === show && showAddress ?
+                                    {  row.id === show && showAddress && row.isExpanded ?
 <tr >
     <td colSpan={18}   className="fadeInt   m-3    " >
-                                    {row.id === show && showAddress  ?
+                                    {row.id === show && showAddress && row.isExpanded ?
 
-                                                    <div className="  shadow rounded p-2  " >
+                                                    <div className="  expanded shadow rounded p-2  " >
                                                         {Detail.length !== 0 ?
 
                                                         <div  className="w-85  containerT  ">

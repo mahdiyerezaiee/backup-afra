@@ -16,7 +16,11 @@
 .css-1097eso{
     background-color: transparent!important;
 }
-
+.main-Layout{
+  height: calc(100vh - 100px);
+  overflow-y:scroll;
+  overflow-x: hidden;
+}
 .css-1nzbc76{
   overflow-y: auto;
   overflow-x: hidden;
@@ -208,7 +212,12 @@
           left: auto;
           right: 0; } }
   @media (max-width: 576px) {
-
+    .main-Layout{
+      margin: auto;
+      height: calc(100vh - 100px);
+      overflow-y:scroll;
+      overflow-x: hidden;
+    }
     .ps-sidebar-root.sm {
       position: fixed;
       left: -270px; }
@@ -543,8 +552,4 @@
 
 .react-slidedown.closed {
   display: none; }
-.main-Layout{
-  height: calc(100vh - 100px);
-  overflow-y:scroll;
-  overflow-x: hidden;
-}
+

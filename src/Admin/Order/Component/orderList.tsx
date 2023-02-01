@@ -901,7 +901,9 @@ const OrderList :React.FC= () => {
                 } catch (err) {
                     console.log(err)
                 }
-            }
+            document.getElementsByClassName('expanded')[0].scrollIntoView({ behavior: "smooth", block: "center" })
+
+        }
         if (modalIsOpenEdit === false) {
             return {
                 onClick: async () => {
