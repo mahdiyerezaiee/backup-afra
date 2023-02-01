@@ -209,8 +209,8 @@ const statusOrder = () => {
         <div className='user-progress'>
         <div className='row'>
             <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                <h5>ویرایش عرضه شماره </h5>
-                <p>در این بخش می توانید عرضه را ویرایش کنید</p>
+                <h5>تعریف سفارش </h5>
+                <p>در این بخش می توانید سفارش  جدید تعریف کنید</p>
 
             </div>
         </div>
