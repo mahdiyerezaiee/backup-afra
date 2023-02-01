@@ -85,7 +85,7 @@ select.form-custom::-ms-expand {
 }
 
 .modalAddToCart h5{
-  margin: 2rem auto;
+  margin: 2rem auto!important;
 }
 .blurShowMore{
   position: absolute;
@@ -2744,7 +2744,14 @@ select:-webkit-autofill:focus {
 
 }
 @media only screen and (max-width: 922px) {
+  .containerT {
 
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 300px;
+    min-height: 100px;
+
+  }
   .a4 {
     margin-top: 100px;}
   .a4 .btn{
