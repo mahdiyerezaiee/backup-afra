@@ -1215,7 +1215,7 @@ code {
       padding-top: 8px; } }
 @media (max-width: 600px) {
   .layout-top-spacing {
-    margin-top: 5%; }
+    margin-top: 0; }
   #content {
     margin-right: 13px; }
   .layout-px-spacing {

@@ -49,7 +49,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
 
 
                       </p>
-                  </div>: modalInfo.productSupplyConditions && modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.comment)[0] ? <div className="form-group" style={{width: '510px'}}>
+                  </div>: modalInfo.productSupplyConditions && modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.comment)[0] ? <div className="form-group" >
                   <p ><b style={{fontSize: 'medium'}}> توضیحات</b> : { modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.comment) }</p>
                   <p className="text-center">
 
@@ -59,9 +59,9 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
 
                   </p>
               </div>:""}
-                  <h5 className="text-center mt-2 ">قیمت کل :   { modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price) ? formatter.format( modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price)* quantity ):formatter.format( modalInfo.price * quantity)}</h5>
+                  <h5 className="text-center mt-2  ">قیمت کل :   { modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price) ? formatter.format( modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=>item.price)* quantity ):formatter.format( modalInfo.price * quantity)}</h5>
                   {modalInfo.comment ? <button disabled={  loading ?true : quantity >=  modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.maxSellableAmount) && check  ? false : true}
-                                               className="btn btn-success  float-left" onClick={submitHandler}>اضافه به سبدخرید
+                                               className="btn btn-success  " onClick={submitHandler}>اضافه به سبدخرید
                           <ClipLoader
 
                               loading={loading}
@@ -69,7 +69,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
                               size={15}
                           /></button>:
                       <button disabled={  loading ?true :quantity >=  modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.minSellableAmount) && quantity <= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.maxSellableAmount)  ? false : true}
-                              className="btn btn-success  float-left" onClick={submitHandler}>اضافه به سبدخرید
+                              className="btn btn-success m-auto d-block " onClick={submitHandler}>اضافه به سبدخرید
                           <ClipLoader
 
                               loading={loading}
@@ -79,7 +79,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
                   }
 
 
-                   </div>):(<div><h5 className="text-center ">قیمت کل :   {formatter.format(modalInfo.price * quantity)}</h5> <button className="btn btn-primary text-sm-center d-block m-auto" onClick={submitHandler}>اضافه به سبدخرید
+                   </div>):(<div><h5 className="text-center m-auto d-block ">قیمت کل :   {formatter.format(modalInfo.price * quantity)}</h5> <button className="btn btn-primary text-sm-center d-block m-auto" onClick={submitHandler}>اضافه به سبدخرید
           </button>  </div>) }
 
       </div>

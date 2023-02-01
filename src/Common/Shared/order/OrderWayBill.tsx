@@ -65,7 +65,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
 
         const row: any = document.getElementById(`${id}`);
         const ClassNames: any = document.getElementsByClassName(`findeTakhsis`)
-        console.log(ClassNames.length !== 0)
+
         if (ClassNames.length !== 0) {
             ClassNames.item(".findeTakhsis").classList.remove(`findeTakhsis`)
         }

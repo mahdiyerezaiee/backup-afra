@@ -79,6 +79,14 @@ select.form-custom::-ms-expand {
   float: left;
 
 }
+.modalAddToCart{
+  width: 20rem;
+  /*height: 15rem;*/
+}
+
+.modalAddToCart h5{
+  margin: 2rem auto;
+}
 .blurShowMore{
   position: absolute;
   bottom: 5%;
@@ -87,7 +95,7 @@ select.form-custom::-ms-expand {
   height: 80px;
   background: transparent;
   backdrop-filter: blur(5px);
-}
+  -webkit-backdrop-filter: blur(5px) ;}
 .showMore a{
   position: absolute;
   bottom: 10%;
@@ -2916,6 +2924,16 @@ select:-webkit-autofill:focus {
 }
 
 @media only screen and  (max-width: 600px) {
+  .Expanded{
+    display: none;
+  }
+  .modalAddToCart{
+    width: 100%;
+  }
+
+  .modalAddToCart h5{
+    margin: 2rem auto;
+  }
   .blurShowMore{
     position: absolute;
     bottom: 0;
@@ -2927,8 +2945,8 @@ select:-webkit-autofill:focus {
   }
   .showMore a{
     position: absolute;
-    bottom: 0;
-    left: 50%;
+    bottom: 10px;
+    left: 48%;
   }
   .table td:first-child {
  
@@ -3578,11 +3596,5 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 */
-.modalAddToCart{
-  width: 20rem;
-  height: 15rem;
-}
 
-.modalAddToCart h5{
-  margin: 2rem auto;
-}
+

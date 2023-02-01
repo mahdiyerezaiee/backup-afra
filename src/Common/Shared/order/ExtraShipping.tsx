@@ -45,7 +45,8 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
     useEffect(()=>{
        getExter()
     },[id])
-    if (extra){
+    console.log(extra)
+    if (extra && extra !== 0 ){
         const dataForExcel = extra.map((item:any) => ({
 
         'تاریخ بارنامه': item.barDate,
