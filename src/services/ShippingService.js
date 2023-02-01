@@ -70,7 +70,7 @@ export const GetShippingReports=id=>{
 export const SetShippingReport=(body)=>{
 
 
-    return http.post(`${configure}/Shipping/Shipping/SetShippingReport`,JSON.stringify(body));
+    return http.post(`${configure}/Shipping/SetShippingReport`,JSON.stringify(body));
 
 
 
