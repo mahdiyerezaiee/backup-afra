@@ -3,15 +3,15 @@ import Switch from 'react-switch';
 import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {  DeleteItemCart, DeleteItemCarts, GetShoppingCart } from "../../../services/cartShoppingService";
-import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
+import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 
-import Setting from "../../Setting/setting";
+import Setting from "../../../Common/Setting/setting";
 import { SetOrder } from "../../../services/orderService";
-import NewsHeader from "../News/newsHeader";
+import NewsHeader from "../../../Common/Shared/News/newsHeader";
 import { toast } from 'react-toastify';
 import { GiHamburgerMenu } from "react-icons/gi"
 import { BiX } from "react-icons/bi"
-import { PaymentStructureEnums } from "../../Enums/PaymentStructureEnums";
+import { PaymentStructureEnums } from "../../../Common/Enums/PaymentStructureEnums";
 import { ClipLoader } from "react-spinners";
 import { Link } from 'react-router-dom';
 import { useProSidebar } from 'react-pro-sidebar';
@@ -24,7 +24,7 @@ interface Props{
 } 
 
 
-const Header:React.FC<Props> = ({ collapsed }) => {
+const HeaderClient:React.FC<Props> = ({ collapsed }) => {
     const ref:any = useRef()
     const { collapseSidebar } = useProSidebar();
     const refNews:any = useRef()
@@ -181,7 +181,6 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                         : <BiX size="2rem" onClick={() => collapseSidebar()} />
                     }
                 </div>
-                <div className="mr-3 ml-3">{user.companyName?user.companyName:null}</div>
                 <div className="mr-3 ml-3">{""}{dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>
                 <ul className="navbar-item flex-row search-ul ">
 
@@ -450,4 +449,4 @@ const Header:React.FC<Props> = ({ collapsed }) => {
 
     )
 }
-export default Header;
+export default HeaderClient;

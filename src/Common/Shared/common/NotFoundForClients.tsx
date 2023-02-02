@@ -1,10 +1,13 @@
 import  React  from 'react';
-import { useNavigate ,Link} from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 
-const NotFound:React.FC = () => {
+const NotFoundForClients:React.FC = () => {
+
+
     const navigate=useNavigate()
-  return(<div className="page-wrap d-flex flex-row align-items-center">
+
+  return( <div className="page-wrap d-flex flex-row align-items-center">
   <div className="container">
       <div className="row justify-content-center">
           <div className="col-md-12 text-center">
@@ -16,4 +19,4 @@ const NotFound:React.FC = () => {
   </div>
 </div>)
 }
-export default NotFound
+export default NotFoundForClients

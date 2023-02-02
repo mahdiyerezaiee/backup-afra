@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100vh;
     object-fit: cover;
-    position: fixed;
+    position: none;
     left: 0;
     right: 0;
     top: 0;
@@ -29,3 +29,24 @@
 
 
 }
+
+.curve{
+    width: 100%;
+    height: 3vh;
+    position: relative;
+    top: -31vh;
+  }
+  
+  .half-circle {
+    width: 100vw;
+    height: 3vh;
+    position: absolute;
+    left: 50vw;
+    transform: translateX(-50%);
+    border-top: 1px solid red;
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    background: rgb(241, 242, 243);;
+  }

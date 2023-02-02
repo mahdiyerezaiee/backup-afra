@@ -86,7 +86,8 @@ const LoginWithPassword:React.FC<Props> = ({ value, onchange, setShows }) => {
                     localStorage.setItem('refresh', data.result.refresh);
 
                     axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
-
+                    const response=await GetUsersRoles()
+                    localStorage.setItem('ur',response.data.result.userRoleIds)
                     toast.success("ورود موفقیت آمیز بود", {
                         position: "top-right",
                         autoClose: 5000,
@@ -97,8 +98,13 @@ const LoginWithPassword:React.FC<Props> = ({ value, onchange, setShows }) => {
                         progress: undefined
                     });
 
-                    navigate('/admin')
-
+                    if( response.data.result.userRoleIds.includes(2)){
+                   
+                    navigate('/client')
+                    }
+                    else{
+                        navigate('/admin')
+                    }
                 }
 
 
