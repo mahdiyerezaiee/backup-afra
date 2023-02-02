@@ -15,8 +15,12 @@ import AdminMainLayout from '../Admin/Layout/AdminMainLayout';
 import LoginWithPassword from '../Common/Shared/Login/loginWithPassword';
 import { addUser } from '../store/Slice/user/userSlice';
 import { userRoles } from '../store/Slice/user/userRole/userRoleSlice';
+import ClientsMainLayout from './../Client/Layout/ClientsMainLayout';
+import PrivateRouteClients from './../Utils/PrivateRouteClients';
+import SysPlus from './../Landing/SysPlus';
 
 const MainLazyLoad = lazy(() => import('../Admin/Layout/AdminMainLayout'))
+
 
 const AdminPannel: React.FC = () => {
   const token = localStorage.getItem('Token');
@@ -27,10 +31,12 @@ const AdminPannel: React.FC = () => {
     <Routes>
 
       <Route path='/admin/*' element={<PrivateRoute><AdminMainLayout /></PrivateRoute>} />
+      <Route path='/client/*' element={<PrivateRouteClients><ClientsMainLayout /></PrivateRouteClients>} />
 
-      <Route path='/' element={token?<Login/>:<Navigate to='/admin'/>} /> 
+      <Route path='/' element={<SysPlus/>} /> 
       <Route path='/login' element={<Login />} />
-      // <Route path='/verify' element={<CodeForMobile />} />
+      <Route path='/*' element={<NotFound/>}/>
+     <Route path='/verify' element={<CodeForMobile />} />
 
       <Route path='/logout' element={<Logout />} />
 

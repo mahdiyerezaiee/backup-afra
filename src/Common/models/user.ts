@@ -1,5 +1,6 @@
 export  interface NewUser {
     companyId?: number
+    companyName?:string
     id?: number,
     userName?: string,
     email?: string,
