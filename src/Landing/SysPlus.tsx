@@ -4,7 +4,6 @@ import "./style.css"
 import { Fragment } from 'react';
 
 const video = require("../Common/Shared/Assets/img/Home.mp4")
-const roundShape = require("../Common/Shared/Assets/img/shape.png")
 
 
 
