@@ -33,9 +33,9 @@ const SysPlus: React.FC = () => {
         </div>
 
       </div>
-      <div className="curve">
-        <div className="half-circle"></div>
-      </div>
+      {/*<div className="curve">*/}
+      {/*  <div className="half-circle"></div>*/}
+      {/*</div>*/}
     </Fragment>
   )
 }

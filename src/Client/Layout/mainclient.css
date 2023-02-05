@@ -1,4 +1,4 @@
-
+/* 
 /*
 Template Name: Sbidu - Bid & Auction HTML Template
 Template URI: http://pixner.net/sbidu/
@@ -85,7 +85,7 @@ Text Domain:
 */
 
 
-html {
+/*html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
@@ -823,7 +823,7 @@ input[type="submit"] {
 }
 
 /*Section Header*/
-.mb-30-none {
+/*.mb-30-none {
     margin-bottom: -30px !important;
 }
 
@@ -999,7 +999,7 @@ input[type="submit"] {
 }
 
 /*Section-Header Starts Here*/
-.section-bg {
+/*.section-bg {
     background: #f1f3fd;
 }
 
@@ -1621,7 +1621,7 @@ input[type="submit"] {
 }
 
 /*Footer Section Starts Here*/
-footer {
+/*footer {
     position: relative;
 }
 
@@ -1901,7 +1901,7 @@ footer {
 }
 
 /*Header Sectionn Starts Here*/
-.header-top-wrapper {
+/*.header-top-wrapper {
     justify-content: space-between;
 }
 
@@ -2330,7 +2330,7 @@ header {
 }
 
 /*Cart Area Sidebar Starts*/
-.cart-sidebar-area {
+/*.cart-sidebar-area {
     background-color: #0a3d62;
     max-width: 350px;
     width: 100%;
@@ -2478,7 +2478,7 @@ header {
 }
 
 /*Banner Section One Starts Here*/
-.banner-section {
+/*.banner-section {
     position: relative;
     padding: 220px 0 240px;
     overflow: hidden;
@@ -2593,7 +2593,7 @@ header {
 }
 
 /*Banner Section Two Starts Here*/
-.banner-section-2 {
+/*.banner-section-2 {
     position: relative;
     overflow: hidden;
     padding: 220px 0 240px;
@@ -2684,7 +2684,7 @@ header {
 }
 
 /*Browse Slider Seciton Starts Here*/
-.browse-item {
+/*.browse-item {
     display: block;
     border-radius: 10px;
     box-shadow: 2.034px 6.84px 10px 0px rgba(55, 34, 154, 0.3);
@@ -2721,7 +2721,7 @@ header {
 }
 
 /*Banner Section Four Starts Here*/
-.bot-0 {
+/*.bot-0 {
     bottom: 0;
 }
 
@@ -2891,7 +2891,7 @@ header {
 }
 
 /*Banner Section 5 Starts Here*/
-.banner-section-5 {
+/*.banner-section-5 {
     position: relative;
     overflow: hidden;
     padding: 240px 0 120px;
@@ -2997,7 +2997,7 @@ header {
 }
 
 /*Hero Section Starts Here*/
-.hero-section {
+/*.hero-section {
     position: relative;
     padding: 190px 0 505px;
     overflow: hidden;
@@ -3068,7 +3068,7 @@ header {
 }
 
 /*Sidebar Widget Starts Here*/
-.widget {
+/*.widget {
     background: #ffffff;
     padding: 30px;
     border-radius: 5px;
@@ -3193,7 +3193,7 @@ header {
 }
 
 /*Client Section Starts Here*/
-.client-item {
+/*.client-item {
     background: #ffffff;
     margin: 15px;
     border-radius: 20px;
@@ -3253,7 +3253,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*How Section Starts Here*/
-.how-wrapper {
+/*.how-wrapper {
     padding: 60px;
     border-radius: 20px;
 }
@@ -3358,7 +3358,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Art & Electronics Auction Section Starts Here*/
-.auction-item-1 {
+/*.auction-item-1 {
     border: 1px solid #d4d7f5;
     border-radius: 10px;
     padding: 10px;
@@ -3504,7 +3504,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Coins & Bullions Auction Section Starts Here*/
-.auction-item-2 {
+/*.auction-item-2 {
     padding: 10px 10px 30px;
     border-radius: 10px;
     background-color: #ffffff;
@@ -3716,7 +3716,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Jewelry Section Starts Here*/
-.jewelry-bg, .car-bg {
+/*.jewelry-bg, .car-bg {
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -3736,7 +3736,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Call In Section Starts Here*/
-.call-wrapper {
+/*.call-wrapper {
     padding: 80px 80px 50px;
     border-radius: 20px;
     justify-content: space-between;
@@ -3774,7 +3774,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Popular Auction Section Starts Here*/
-.auction-item-3 {
+/*.auction-item-3 {
     margin-bottom: 40px;
 }
 
@@ -3937,7 +3937,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Real Estate Auction Starts Here*/
-.auction-item-4 {
+/*.auction-item-4 {
     border-radius: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -4238,7 +4238,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Upcoming Auction Section Starts Here*/
-.filter-wrapper {
+/*.filter-wrapper {
     box-shadow: 0px 14px 10px 0px #ece8fd;
     margin-bottom: 40px;
 }
@@ -4706,7 +4706,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Upcoming Auction Section Starts Here*/
-.auction-item-7 {
+/*.auction-item-7 {
     padding: 15px;
     width: 100%;
 }
@@ -5125,7 +5125,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Trending Auction Starts Here*/
-.auction-item-6 {
+/*.auction-item-6 {
     margin-bottom: 30px;
 }
 
@@ -5347,7 +5347,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Fetured Auction Section Starts Here*/
-.auction-item-8 {
+/*.auction-item-8 {
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0px 9px 20px 0px rgba(22, 26, 57, 0.36);
@@ -5646,7 +5646,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Team Section Starts Here*/
-.team-item {
+/*.team-item {
     max-width: 220px;
     margin: 0 auto 30px;
     padding: 0 15px;
@@ -5716,7 +5716,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Overview Section Starts Here*/
-.expert-item {
+/*.expert-item {
     text-align: center;
     margin-bottom: 40px;
 }
@@ -5744,7 +5744,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Counter Section Starts Here*/
-.counter-item {
+/*.counter-item {
     text-align: center;
     padding: 28px 30px 30px;
     border: 1px solid rgba(181, 156, 228, 0.5);
@@ -5762,7 +5762,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*About Section Starts Here*/
-.about-content {
+/*.about-content {
     position: relative;
     z-index: 1;
 }
@@ -5875,7 +5875,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Account Section Starts Here*/
-.login-with {
+/*.login-with {
     margin: -15px;
     margin-bottom: 20px;
 }
@@ -6074,7 +6074,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Contact Section Starts Here*/
-.contact-wrapper {
+/*.contact-wrapper {
     position: relative;
     background: #ffffff;
     background-color: #ffffff;
@@ -6168,7 +6168,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Error Section Starts Here*/
-.error-section {
+/*.error-section {
     min-height: 100vh;
     justify-content: center;
     align-items: center;
@@ -6197,7 +6197,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Faq Section Menu Starts Here*/
-.sticky-menu {
+/*.sticky-menu {
     position: sticky;
     top: 120px;
 }
@@ -6775,7 +6775,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Product Details Section Starts Here*/
-.product-bottom-slider {
+/*.product-bottom-slider {
     width: calc(100% - 100px);
     margin: 0 auto;
 }
@@ -7623,7 +7623,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Dashboard Section Starts Here*/
-.dashboard-widget {
+/*.dashboard-widget {
     border-radius: 20px;
     background-color: #ffffff;
     box-shadow: 0px 6px 18px 0px rgba(16, 5, 54, 0.17);
@@ -7856,7 +7856,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Profile Section Starts Here*/
-.dash-pro-item .header {
+/*.dash-pro-item .header {
     justify-content: space-between;
     margin-bottom: 30px;
 }
@@ -8014,7 +8014,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Alert Section Starts Here*/
-.alert-widget ul {
+/*.alert-widget ul {
     padding: 23px 0 20px;
     margin-bottom: -50px;
 }
@@ -8065,7 +8065,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Refferral Section Starts Here*/
-.referral-form {
+/*.referral-form {
     position: relative;
 }
 
@@ -8288,7 +8288,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*All Animation Ends Here*/
-.scrollToTop {
+/*.scrollToTop {
     width: 35px;
     height: 35px;
     line-height: 35px;
@@ -8702,7 +8702,7 @@ button.custom-button {
 }
 
 /* inner ripple */
-@keyframes inner-ripple {
+/*@keyframes inner-ripple {
     0% {
         transform: scale(1);
         filter: alpha(opacity=50);
@@ -8840,4 +8840,98 @@ button.custom-button {
 
     .countdown{font-size: 12px;}
 
-/*All Animation Ends Here*/
+All Animation Ends Here */
+.navbar-mian{
+   min-height: auto!important;
+    margin: auto;
+    padding: 0;
+    box-shadow: none;
+    border-bottom: 2px solid lightgray;
+}
+.navbar-mian .navbar-nav{
+    width: 75%;
+    margin: auto;
+}
+.nav-link:hover{
+    color: blue!important;
+}
+.Header-Client {
+background-color: #f8f8f8;
+}
+.Header-Client .navbar{
+    box-shadow: none;
+    width: 80%;
+    margin: auto;
+  
+}
+.main-container-Client{
+    width: 75%;
+    min-height: calc(80vh - 100px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 80px;
+    align-content: flex-end;
+    align-items: stretch;
+    margin:20px auto;
+}
+#content-Client{
+    width: 50%;
+    flex-grow: 8;
+    /* margin-top: 80px; */
+    margin-bottom: auto;
+    /* margin-right: 1%; */
+    margin-left: 0px;
+    -webkit-transition: .3s ease all;
+    transition: .3s ease all;
+}
+.main-Layout-Client{
+    height: calc(80vh - 100px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+
+}
+.main-content-Client .layout-top-spacing{
+      
+margin-top:0px ;        }
+@media only screen and  (max-width: 600px) {
+    .Header-Client .navbar{
+        box-shadow: none;
+        width: 100%;
+        margin: auto;
+      
+    }
+    .navbar-toggler{
+        margin:19px
+    }
+    body{
+        overflow-y: auto;
+    }
+    .main-container-Client{
+        width: 93%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        margin-top: 80px;
+        align-content: flex-end;
+        align-items: stretch;
+        margin: 50px auto;
+      
+    }
+    .main-Layout-Client{
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+    .main-content-Client{
+        margin: 10px auto;
+
+    }
+    .main-content-Client .layout-px-spacing{
+      
+width: 390px;
+    }
+}

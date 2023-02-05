@@ -1,0 +1,76 @@
+.client-sideBar{
+position: absolute;
+    height: auto;
+    max-height: 80vh;
+    min-height: 70vh;
+    margin: auto;
+    box-shadow: none;
+
+}
+.client-sideBar> .css-dip3t8{
+    height:auto;
+    max-height: 80vh;
+    box-shadow: none;
+    border: 1px solid lightgrey;
+    border-radius:10px;
+    min-height: 70vh;
+    margin: auto;
+    background: #FFFFFF!important;
+
+}
+
+.client-sideBar .ps-menu-label{
+    text-align: right;
+}
+.client-sideBar .info-client{
+    border-bottom: 3px solid lightgrey;
+}
+.client-sideBar .css-vj11vy .ps-menuitem-root > .ps-menu-button {
+    margin-left:  1rem;
+    margin-right:  1rem;
+    border-bottom: 1px solid rgba(211, 211, 211, 0.473);
+padding: 0px;
+}
+.client-sideBar .css-vj11vy .ps-menuitem-root:hover {
+    background-color: #f8f8f8;
+    color: transparent;
+    border-right: 2px solid blue;
+
+}
+.client-sideBar .ps-menu-root .ps-menuitem-root> .ps-menu-button:focus  {
+    background-color: #f8f8f8;
+    color: transparent;
+border-right: 2px solid blue;
+}
+.client-sideBar .css-vj11vy a:hover {
+    color: initial;
+    }
+    .client-sideBar .css-vj11vy a {
+        color: initial;
+        }
+.client-sideBar .css-1bdadyq:hover {
+    background: initial;
+}
+@media only screen and  (max-width: 600px) {
+    .client-sideBar {
+        min-width: 350px!important;
+        min-height: 50vh;
+background-color: transparent!important;
+    }
+
+
+    .client-sideBar> .css-dip3t8 {
+        height: auto;
+        max-height: 80vh;
+        box-shadow: none;
+        border: 1px solid lightgrey;
+        border-radius: 10px;
+        min-height: 50vh;
+        margin: auto;
+        background: #FFFFFF!important;
+        width: 100%;
+    }
+    .client-sideBar .css-vj11vy {
+        height: auto;
+    }
+}
