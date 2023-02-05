@@ -33,7 +33,7 @@ const SysPlus: React.FC = () => {
         </div>
 
       </div>
-     
+
     </Fragment>
   )
 }

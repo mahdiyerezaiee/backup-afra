@@ -165,7 +165,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
     return (
 
 
-        <div className="header-container fixed-top">
+        <div className="header-container Header-Client ">
 
             <header className="header navbar navbar-expand-sm">
                 <ul className="navbar-item flex-row">
@@ -176,11 +176,11 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                     </li>
                 </ul>
 
-                <div className="block ">
-                {collapsed ? <GiHamburgerMenu size="2rem" onClick={() => collapseSidebar()} />
-                        : <BiX size="2rem" onClick={() => collapseSidebar()} />
-                    }
-                </div>
+                {/*<div className="block ">*/}
+                {/*{collapsed ? <GiHamburgerMenu size="2rem" onClick={() => collapseSidebar()} />*/}
+                {/*        : <BiX size="2rem" onClick={() => collapseSidebar()} />*/}
+                {/*    }*/}
+                {/*</div>*/}
                 <div className="mr-3 ml-3">{""}{dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>
                 <ul className="navbar-item flex-row search-ul ">
 
@@ -443,6 +443,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                     </li>
 
                 </ul>
+              
             </header>
 
         </div>

@@ -25,7 +25,15 @@
 .dark-mode .header {
     color: #BDBDD7;
     background-color:#060818 !important;
+
+}
+.dark-mode .navbar-mian{
+    color: #BDBDD7;
+    background-color:#060818 !important;
     border-bottom:3px solid #142138!important;
+}
+.dark-mode .Header-Client{
+    background-color:#060818 !important;
 
 }
 .dark-mode span{
@@ -62,6 +70,14 @@
         }
 .dark-mode .ps-sidebar-root .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item{
     background-color:#233649!important;
+
+}
+.dark-mode .client-sideBar .css-vj11vy .ps-menuitem-root:hover{
+    background-color: #365388;
+
+}
+.dark-mode .client-sideBar .pro-menu .pro-menu-item > .pro-inner-item:focus {
+    background-color: #365388;
 
 }
 .dark-mode .ps-sidebar-root .pro-menu .pro-menu-item > .pro-inner-item:focus {
@@ -105,6 +121,14 @@ box-shadow: none!important;
 .dark-mode .ps-sidebar-root .css-dip3t8{
     background-color:#060818!important;
     border-left:3px solid #142138!important;
+
+}
+.dark-mode .navbar-toggler{
+    color:#ffff!important;
+}
+.dark-mode .client-sideBar .css-dip3t8{
+    background-color:#060818!important;
+    border:3px solid #142138!important;
 
 }
 .dark-mode .navbar .navbar-item .nav-item.dropdown a svg{

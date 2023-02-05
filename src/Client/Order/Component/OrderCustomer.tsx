@@ -665,11 +665,7 @@ if(order){
   return (
   <div>
 
-    <div className='row'>
-      <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-
-      </div>
-    </div>
+    
     <Modal
       isOpen={modalIsOpenEdit}
       onRequestClose={closeModalEdit}
@@ -688,7 +684,7 @@ if(order){
                         <form className='form-row textOnInput'>
 
 
-                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                            <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
 
                                 <label style={{
                                     position: 'absolute',
@@ -710,7 +706,7 @@ if(order){
 
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                            <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
 
                                 <label style={{
                                     position: 'absolute',
@@ -732,7 +728,7 @@ if(order){
 
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                            <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
                                 <label>شماره سفارش</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="سفارش"
@@ -741,19 +737,19 @@ if(order){
 
 
 
-                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                            <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه خرید بازارگاه</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه خرید"
                                        value={ExtId} onChange={e => setExtId(e.target.value)} />
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                            <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
                                 <label> کد تخصیص</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
                                        value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت سفارش</label>
 
@@ -773,7 +769,7 @@ if(order){
                             </div>
 
 
-                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت ارسال </label>
 
@@ -792,7 +788,7 @@ if(order){
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت پرداخت </label>
 
@@ -812,7 +808,7 @@ if(order){
                                 </div>
                             </div>
 
-                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+                            <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>  نحوه پرداخت </label>
 
@@ -835,14 +831,14 @@ if(order){
                         </form>
                       <div className="  filter-btn ">
                         <div className=" row  ">
-                          <div className="col-6 ">
+                          <div className="col-7 m-0 p-0 ">
                           <button onClick={handelSearchFieldClear}
                                   className="  btn-sm btn-danger ">حذف فیلتر
                           </button>
                         </div>
-                        <div className="col-6">
+                        <div className="col-5 m-0 px-1">
                           <button onClick={getDataBySearch}
-                                  className="  btn-sm  btn-primary">جستجو
+                                  className=" w-100 btn-sm  btn-primary">جستجو
                           </button>
                         </div>
                       </div></div>
@@ -878,13 +874,8 @@ if(order){
 else{
   return(
       <div className='user-progress'>
-        <div className='row'>
-          <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-
-
-          </div>
-        </div>
-        <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+       
+        <div className=" statbox widget-content widget-content-area mb-1    rounded">
 
           <AdvancedSearch>
             <br />
@@ -892,7 +883,7 @@ else{
             <form className='form-row textOnInput'>
 
 
-              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+              <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
 
                 <label style={{
                   position: 'absolute',
@@ -914,7 +905,7 @@ else{
 
                 </div>
               </div>
-              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+              <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
 
                 <label style={{
                   position: 'absolute',
@@ -936,25 +927,25 @@ else{
 
                 </div>
               </div>
-              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+              <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
                 <label>شماره سفارش</label>
 
                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="سفارش"
                        value={Id} onChange={e => setId(e.target.value)} />
               </div>
-              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+              <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
                 <label> شناسه خرید بازارگاه</label>
 
                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه خرید"
                        value={ExtId} onChange={e => setExtId(e.target.value)} />
               </div>
-              <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+              <div className="col-lg-4 col-md-4  col-sm-12  mb-1">
                 <label> کد تخصیص</label>
 
                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
                        value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
               </div>
-              <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+              <div className="col-lg-4 col-md-4  col-sm-12   mb-3 textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
                 <div className=" form-control-sm">
                   <label>وضعیت سفارش</label>
 
@@ -974,7 +965,7 @@ else{
               </div>
 
 
-              <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group " style={{marginBottom:"3rem"}}>
+              <div className="col-lg-4 col-md-4  col-sm-12   mb-3 textOnInput form-group " style={{marginBottom:"3rem"}}>
                 <div className=" form-control-sm">
                   <label>وضعیت ارسال </label>
 
@@ -993,7 +984,7 @@ else{
                   />
                 </div>
               </div>
-              <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
+              <div className="col-lg-4 col-md-4  col-sm-12    textOnInput form-group " style={{marginBottom:"3rem"}}>
                 <div className=" form-control-sm">
                   <label>وضعیت پرداخت </label>
 
@@ -1012,7 +1003,7 @@ else{
                   />
                 </div>
               </div>
-              <div className="col-lg-2 col-md-4  col-sm-12  mb-3  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
+              <div className="col-lg-4 col-md-4  col-sm-12  mb-3  textOnInput form-group selectIndex" style={{marginBottom:"3rem"}}>
                 <div className=" form-control-sm">
                   <label> نحوه پرداخت </label>
 
@@ -1035,12 +1026,12 @@ else{
             </form>
             <div className="  filter-btn ">
               <div className=" row  ">
-                <div className="col-6 ">
+                <div className="col-7 ">
                 <button onClick={handelSearchFieldClear}
                         className="  btn-sm btn-danger ">حذف فیلتر
                 </button>
               </div>
-              <div className="col-6">
+              <div className="col-5">
                 <button onClick={getDataBySearch}
                         className="  btn-sm  btn-primary">جستجو
                 </button>
