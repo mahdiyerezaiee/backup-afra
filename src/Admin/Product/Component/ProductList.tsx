@@ -547,7 +547,7 @@ const ProductList:React.FC = () => {
         setPageNumber(0)
         setName('')
         setEnglishName('')
-        SetGroupId([])
+        SetGroupId(null)
         setCompanyId(null)
         sessionStorage.clear();
 

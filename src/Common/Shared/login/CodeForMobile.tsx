@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import OtpInput from 'react-otp-input';
 import { toast } from 'react-toastify';
-import { SetUserRole, verifyUser } from '../../../services/userService';
+import { GetUsersRoles, SetUserRole, verifyUser } from '../../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../services/userService';
@@ -84,15 +84,16 @@ const CodeForMobile:React.FC = () => {
                 localStorage.setItem('token', data.result.token);
                 localStorage.setItem('refresh', data.result.refresh);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
+                const response=await GetUsersRoles()
                 
                 
-
-
-
-
-                history('/admin');
-
-
+                if( response.data.result.userRoleIds.every((Item:any)=>Item<=2)){
+                   
+                    history('/client')
+                    }
+                    else{
+                        history('/admin')
+                    }
             }
             
 
