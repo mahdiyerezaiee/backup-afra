@@ -76,7 +76,7 @@ const chackAllValue = () => {
 
     for (let i = 0; i < ref.current.length; i++) {
 
-        ref.current[i].checked = false;
+        ref.current[i].checked = true;
     }
 
 }

@@ -110,12 +110,15 @@ select.form-custom::-ms-expand {
   overflow-y:auto
 }
 .containerT {
-
+width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 300px;
   min-height: 100px;
 
+}
+.fixed_header {
+  overflow: scroll!important;
 }
 .containerTSaleBoard {
   margin-left: 20%;
@@ -136,7 +139,7 @@ width: 100%;
 
 .fixed_header thead tr {
 position: sticky;
-  top: -5px;
+  top: 0px;
   background: rgb(220 220 255)!important;
   z-index: 1;
   border: 1px solid rgb(220 220 255)!important;
@@ -3448,7 +3451,7 @@ animation: pulseblue 1s infinite;
   top:-20rem;
   width: 10rem;
 
-  transition: all 2s;
+  /* transition: all 2s; */
   border: 1px solid #ccc;
   background: #FFFFFF;
   padding: .6rem;
@@ -3463,7 +3466,7 @@ animation: pulseblue 1s infinite;
   position: absolute;
   top:40px;
   width: 10rem;
-  animation: changeTop 1s linear;
+  /* animation: changeTop 1s linear; */
 
 }
 .table {
