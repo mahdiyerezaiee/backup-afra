@@ -188,7 +188,7 @@ setLoading(false)
                                 </tr>
                             </thead>
                             <tbody >
-                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 6).map((item:any , index:number) =>
+                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item:any , index:number) =>
                                     <Fragment key={index + "_frag"}>
 
                                     <tr key={item.id}>
@@ -225,8 +225,8 @@ setLoading(false)
                         </table>
 
 
-                        {productSupply && productSupply.length <= 5 ? null:  <div className="showMore"> 
-                            <div className="blurShowMore"> </div>
+                        {productSupply && productSupply.length <= 5 ? null:  <div className=""> 
+                            <div className=""> </div>
                             <Link to='#'
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center  text-m"
                             onClick={() => setShowMore(!showMore)}

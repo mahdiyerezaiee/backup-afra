@@ -237,7 +237,7 @@ const SalesBoardForAdmin:React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {productSupply && productSupply.slice(0, showMore ? productSupply.length : 6).map((item:any , index:number) =>
+                            {productSupply && productSupply.slice(0, showMore ? productSupply.length :5).map((item:any , index:number) =>
                                     <Fragment key={index + "_frag"}>
 
 
@@ -279,8 +279,8 @@ const SalesBoardForAdmin:React.FC = () => {
                         </table>
 
                         {productSupply.length <= 5 ? null :
-                        <div className={!showMore ?"showMore":""}> 
-                            <div className={!showMore ?"blurShowMore":""}> </div>
+                        <div className=""> 
+                            <div className=""> </div>
                             <Link to='#'
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center  text-m"
                             onClick={() => setShowMore(!showMore)}
