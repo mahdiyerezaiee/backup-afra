@@ -30,9 +30,9 @@ export const GetOrdersReports=(StartDate , EndDate)=>{
 
     return http.get(`${configure}/Report/GetOrdersReports?StartDate=${StartDate}&EndDate=${EndDate}`);
 }
-export const GetShippingReports=(StartDate , EndDate,Unshipped,HasShippingContract)=>{
+export const GetShippingReports=(searchParams)=>{
 
-    return http.get(`${configure}/Report/ShippingReports?StartDate=${StartDate}&EndDate=${EndDate}&HasShippingContract=${HasShippingContract}&Unshipped=${Unshipped}`);
+    return http.get(`${configure}/Report/ShippingReports`,searchParams);
 }
 export const GetnProceessAttachments=()=>{
 

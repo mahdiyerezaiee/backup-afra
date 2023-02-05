@@ -9,11 +9,12 @@ import FadeLoader from 'react-spinners/FadeLoader'
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
 import persian_fa from "react-date-object/locales/persian_fa";
+import  QueryString  from 'qs';
 
 const ReportShipping: React.FC = () => {
 
-    const [Unshipped, setUnshipped] = useState<any>('');
-    const [HasShippingContract, setHasShippingContract] = useState<any>('');
+    const [Unshipped, setUnshipped] = useState<any>(false);
+    const [HasShippingContract, setHasShippingContract] = useState<any>(false);
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
@@ -66,8 +67,25 @@ const ReportShipping: React.FC = () => {
         setLoading(true)
         event.preventDefault();
         try {
+            let config = {
 
-            const { data, status } = await GetShippingReports(StartDate, EndDate, Unshipped ? Unshipped : false, HasShippingContract ? HasShippingContract : false);
+                headers: { 'Content-Type': 'application/json' },
+    
+                params: {
+                    StartDate,EndDate,
+                    Unshipped: Unshipped===true?Unshipped:null,
+                    HasShippingContract:HasShippingContract===true?HasShippingContract:null
+                    
+    
+                },
+                paramsSerializer: (params:any) => {
+    
+                    return QueryString.stringify(params)
+                }
+    
+    
+            };
+            const { data, status } = await GetShippingReports(config);
             if (status === 200) {
 
                 SetResponse(data.result.shippingReport);
