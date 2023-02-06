@@ -27,7 +27,7 @@ const UpdateShippingReports: React.FC = () => {
     let [loading, setLoading] = useState(false);
     let [clicked, setClicked] = useState(false);
     const [report, setReport] = useState([])
-    const[updateCompaniesStatus,SetUpdateCompaniesStatus]=useState(false)
+    const[updateCompaniesStatus,SetUpdateCompaniesStatus]=useState(true)
     const [reportMethod, SetReportMethod] = useState('3days')
     let color = "#0c4088"
 
@@ -193,7 +193,7 @@ const UpdateShippingReports: React.FC = () => {
     const shippingCompanySelect = () => {
         return (companies.map((data: any) => ({ label: data.name, value: data.id })))
     }
-    const data = report
+    const data = useMemo(()=>report,[report])
     const handelFrom = () => {
         setClicked(false)
     }

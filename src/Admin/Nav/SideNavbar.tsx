@@ -10,11 +10,11 @@ import { NavLink,Link } from 'react-router-dom';
 import { CgFileDocument } from 'react-icons/cg';
 import { TbReport } from 'react-icons/tb';
 import { IoSettingsOutline } from 'react-icons/io5'
-import './styles.css'
+
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
-
+require('./styles.css')
 
 const SideNavbar: React.FC = () => {
     

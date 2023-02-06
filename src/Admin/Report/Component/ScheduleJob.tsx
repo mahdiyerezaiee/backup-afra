@@ -60,7 +60,7 @@ GetData()
 
                 <p><span style={{fontSize:"15px"}}><b>{item.type} :</b></span>{item.message}</p>
         <span  className="">
-            {new  Date(item.createDate).toLocaleDateString() === new  Date().toLocaleDateString() ?  " امروز" + "  " +  new  Date(item.createDate).toLocaleTimeString('fa-IR') :new  Date(item.createDate).toLocaleString('fa-IR') === new  Date().toLocaleString('fa-IR') ?"همین الان" :new  Date(item.createDate).toLocaleString('fa-IR')   }
+            {new  Date(item.createDate).toLocaleDateString('fa-IR') === new Date().toLocaleDateString('fa-IR') ?  " امروز" + "  " +  new  Date(item.createDate).toLocaleTimeString('fa-IR') :new  Date(item.createDate).toLocaleString('fa-IR') === new  Date().toLocaleString('fa-IR') ?"همین الان" :new  Date(item.createDate).toLocaleString('fa-IR')   }
         </span>
     </div>
     </div>
