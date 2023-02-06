@@ -17,7 +17,8 @@ export const ExportToExcel:React.FC<Props> = ({ apiData, fileName }) => {
 
   const exportToCSV = (apiData:any, fileName:any) => {
     const ws = XLSX.utils.json_to_sheet(apiData);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] ,Workbook: { Views: [{RTL:true}, {RTL:true} ]} };
+    
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const data = new Blob([excelBuffer], { type: fileType });
     FileSaver.saveAs(data, fileName + fileExtension);
