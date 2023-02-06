@@ -13,8 +13,8 @@ import  QueryString  from 'qs';
 
 const ReportShipping: React.FC = () => {
 
-    const [Unshipped, setUnshipped] = useState<any>(false);
-    const [HasShippingContract, setHasShippingContract] = useState<any>(false);
+    const [Unshipped, setUnshipped] = useState<any>(true);
+    const [HasShippingContract, setHasShippingContract] = useState<any>(true);
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
@@ -66,6 +66,7 @@ const ReportShipping: React.FC = () => {
     const handelSubmit = async (event: any) => {
         setLoading(true)
         event.preventDefault();
+        
         try {
             let config = {
 
@@ -115,15 +116,19 @@ const ReportShipping: React.FC = () => {
     });
 
     const columns = useMemo(() => [
-        { Header: 'نام باربری', accessor: 'shippingCompanyName' },
-        { Header: 'کد قرارداد باربری', accessor: 'shippingContractCode' },
-        { Header: 'شناسه خرید', accessor: 'orderId' },
-        { Header: 'شناسه بازارگاه', accessor: 'orderExtId' },
+        { Header: ' باربری', accessor: 'shippingCompanyName' },
+        { Header: ' قرارداد ', accessor: 'shippingContractCode' },
+        {Header:'تاریخ',accessor:'createDate',Cell:(rows:any)=>{
+
+            return(new Date(rows.row.original.createDate).toLocaleDateString('fa-IR',{ year: 'numeric', month: '2-digit', day: '2-digit' }))
+        }},
+        { Header: ' سفارش', accessor: 'orderId' },
+        { Header: 'ش.بازارگاه', accessor: 'orderExtId' },
 
         {
-            Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId'
+            Header: 'ش.ج.سفارش', accessor: 'orderDetailId'
         }, {
-            Header: 'کد تخصیص', accessor: 'orderDetailExtId'
+            Header: ' تخصیص', accessor: 'orderDetailExtId'
         },
 
         { Header: 'وزن', accessor: 'plannedQuantity' },
@@ -133,12 +138,12 @@ const ReportShipping: React.FC = () => {
                 row.row.original.deliveryMethodId === 5 ? 'بله' : 'خیر'
             )
         },
-        { Header: 'نام تحویل گیرند', accessor: 'receiverName' },
-        { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress' },
+        { Header: ' تحویل گیرنده', accessor: 'receiverName' },
+        { Header: 'آدرس تحویل ', accessor: 'receiverAddress' },
         { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: 'receiverNationalCode' },
 
         { Header: 'کدپستی', accessor: 'receiverPostalCode' },
-        { Header: 'تلفن دریافت کننده', accessor: 'receiverTel' },
+        { Header: 'تلفن هماهنگی', accessor: 'receiverTel' },
         { Header: 'کدیکتای جهاد ', accessor: 'jahadYektaCode' },
     ], []);
     const data = useMemo(() => Response, [Response]);;
@@ -249,19 +254,20 @@ const ReportShipping: React.FC = () => {
     else {
         if (Response && Response.length > 0) {
             const dataForExcel = Response.map((item: any) => ({
-                'کد قرارداد باربری': item.shippingContractCode,
-                'نام باربری':item.shippingCompanyName,
-                'شناسه خرید':item.orderId,
-                'شناسه بازارگاه':item.orderExtId,
-                'شناسه جزییات شفارش': item.orderDetailId ,
-                'کد تخصیص ': item.orderDetailExtId ,
+                ' قرارداد ': item.shippingContractCode,
+                ' باربری':item.shippingCompanyName,
+                'تاریخ':(new Date(item.createDate).toLocaleDateString('fa-IR',{ year: 'numeric', month: '2-digit', day: '2-digit' })),
+                'سفارش':item.orderId,
+                'ش.بازارگاه':item.orderExtId,
+                'ش.ج.شفارش': item.orderDetailId ,
+                'تخصیص ': item.orderDetailExtId ,
                 'وزن': item.plannedQuantity,
                 'تریلی': (item.deliveryMethodId === 5 ? 'بله' : 'خیر'),
-                'نام تحویل گیرنده': item.receiverName,
-                'آدرس تحویل گیرنده': item.receiverAddress,
-                'شماره/شناسه ملی': '',
+                ' تحویل گیرنده': item.receiverName,
+                'آدرس تحویل ': item.receiverAddress,
+                ' شماره/شناسه ملی تحویل گیرنده': item.receiverNationalCode,
                 'کد پستی': item.receiverPostalCode,
-                'تلفن تحویل گیرنده': item.receiverTel,
+                'تلفن هماهنگی': item.receiverTel,
                 'کد یکتای جهاد': item.jahadYektaCode,
 
             }))
