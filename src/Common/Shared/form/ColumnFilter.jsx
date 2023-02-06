@@ -88,7 +88,6 @@ return (
                 <div className="parent1">
                     <div className="parent2">
                         <div className="parent3">
-              <div className="text-left my-2 p-1">  <HiFilter size="1rem"/> فیلتر</div>
                 <div className="mx-0 my-auto input-Filter border-bottom text-dark">
                     <div className="m-1  text-left ">
                     <input

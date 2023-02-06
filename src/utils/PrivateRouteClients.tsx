@@ -18,9 +18,19 @@ const PrivateRouteClients : React.FC<Props>= ({children}:Props) => {
     useEffect(() => {
         userRoles()
     }, [])
+useEffect(()=>{
+    userRole.every((item: any) => item <= 2)?
+    document.body.classList.add('clientBody')
+    :
+    document.body.classList.remove('clientBody')
 
 
-    return token && userRole.every((item: any) => item <= 2)  ? children : <Navigate to="/login"/>
+},[userRole])
+
+    return token && userRole.every((item: any) => item <= 2)  ?
+     children 
+     : 
+     <Navigate to="/login"/>
 };
 
 export default PrivateRouteClients;

@@ -641,13 +641,13 @@ input[type="submit"] {
     font-weight: 700;
     padding: 0;
 }
-
+*/
 .bg_img {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
-
+/*
 .right_center {
     background-position: left center;
 }
@@ -703,7 +703,7 @@ input[type="submit"] {
     position: absolute;
     content: "";
 }
-
+*/
 .padding-top {
     padding-top: 80px;
 }
@@ -993,7 +993,7 @@ input[type="submit"] {
 .mw-500 {
     max-width: 500px;
 }
-
+*/
 .oh {
     overflow: hidden;
 }
@@ -1089,7 +1089,7 @@ input[type="submit"] {
 .nice-select:after {
     width: 10px;
     height: 10px;
-}
+}*/
 
 .pos-rel {
     position: relative;
@@ -1123,7 +1123,7 @@ input[type="submit"] {
 .mb--70 {
     margin-bottom: -70px;
 }
-
+/*
 @media (max-width: 991px) {
     .pb-max-lg-0 {
         padding-bottom: 0 !important;
@@ -1624,7 +1624,7 @@ input[type="submit"] {
 /*footer {
     position: relative;
 }
-
+*/
 .footer-top-shape {
     position: absolute;
     top: 0;
@@ -1645,7 +1645,7 @@ input[type="submit"] {
 .footer-top-shape img {
     width: 100%;
 }
-
+/*
 .newslater-area {
     position: relative;
     z-index: 1;
@@ -1778,7 +1778,7 @@ input[type="submit"] {
 .footer-widget .links-list li a:hover {
     color: #ee4730;
 }
-
+*/
 .copyright-area {
     border-top: 1px solid rgba(255, 255, 255, 0.302);
 }
@@ -1795,15 +1795,14 @@ input[type="submit"] {
     margin-bottom: 25px;
     padding-right: 15px;
     padding-left: 15px;
+    display: inline-block;
 }
 
 .footer-bottom-wrapper .logo a {
     display: block;
 }
 
-.footer-bottom-wrapper .logo img {
-    width: 100%;
-}
+
 
 .footer-bottom-wrapper .gateway-area {
     margin: -8px;
@@ -1814,7 +1813,7 @@ input[type="submit"] {
     padding: 8px;
 }
 
-.footer-bottom-wrapper .copyright p {
+.footer-bottom-wrapper .copyright span {
     margin: 0 !important;
     color: rgba(255, 255, 255, 0.9);
 }
@@ -1824,7 +1823,7 @@ input[type="submit"] {
         width: 150px;
     }
 }
-
+/*
 .anime-wrapper {
     position: absolute;
     top: 0;
@@ -2997,7 +2996,7 @@ header {
 }
 
 /*Hero Section Starts Here*/
-/*.hero-section {
+.hero-section {
     position: relative;
     padding: 190px 0 505px;
     overflow: hidden;
@@ -3017,7 +3016,7 @@ header {
         padding-bottom: 300px;
     }
 }
-
+/*
 @media (min-width: 992px) {
     .pb-lg-400 {
         padding-bottom: 400px !important;
@@ -3028,14 +3027,17 @@ header {
     }
 }
 
+
+*/
 .hero-bg {
     position: absolute;
     bottom: 0;
     top: 0;
     right: 0;
     left: 0;
+    background-image: url(./hero-bg.png);
 }
-
+/*
 .breadcrumb {
     background: transparent;
     padding: 0;
@@ -5863,7 +5865,7 @@ div[class*="auction"] .custom-button {
 .mt--100 {
     margin-top: -100px;
 }
-
+*/
 .mt--240 {
     margin-top: -240px;
 }
@@ -5873,7 +5875,7 @@ div[class*="auction"] .custom-button {
         margin-top: -440px;
     }
 }
-
+/*
 /*Account Section Starts Here*/
 /*.login-with {
     margin: -15px;
@@ -7181,14 +7183,14 @@ div[class*="auction"] .custom-button {
 
 .mb-40-60 {
     margin-bottom: 40px;
-}
+}*/
 
 @media (min-width: 768px) {
     .mb-40-60 {
         margin-bottom: 60px;
     }
 }
-
+/*
 .tab-details-content .title {
     margin: 0;
     margin-bottom: 30px;
@@ -8841,28 +8843,103 @@ button.custom-button {
     .countdown{font-size: 12px;}
 
 All Animation Ends Here */
+.clientBody{
+    overflow: auto;
+    background-color: white;
+}
+.clientBody header{
+    min-height: 52px!important;
+}
+.clientBody footer{
+    position: relative;
+}
+.clientBody .cart-shop2 {
+    width: 20rem;
+    top: 0!important;
+    position: fixed;
+    height: 100vh;
+    left: 8rem;
+    background-color: white;
+    transition: all 1s;
+    border: 1px solid #c5c5c5;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.clientBody #messageDropdown svg{
+    stroke-width: 0px;
+}
+.clientBody .chat-system .user-list-box{
+    width: 56%;
+}
+.clientBody .page-title h3{
+    color: #ffffff;
+}
+.clientBody .page-title:before{
+    background-color: #ffffff;
+}
+.headerClient{
+    color:white;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+.navbar-mian li{
+    font-size: 15px!important;
+    font-weight: 600;
+    padding: 15px;
+}
 .navbar-mian{
+    width: 80%;
    min-height: auto!important;
     margin: auto;
     padding: 0;
     box-shadow: none;
-    border-bottom: 2px solid lightgray;
+    border: none;
+    color: white;
+    background-color:transparent;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
-.navbar-mian .navbar-nav{
-    width: 75%;
-    margin: auto;
+.navbar-mian .navbar-logo{
+width: 60px;
+height: 60px;
+}
+.navbar-mian .scrolltop{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 99;
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+}
+.navbar-mian .nav-link{
+    color: white;
+
 }
 .nav-link:hover{
-    color: blue!important;
+    border-bottom: 1px solid white;
 }
 .Header-Client {
-background-color: #f8f8f8;
+border-bottom: 1px solid white;
 }
 .Header-Client .navbar{
     box-shadow: none;
     width: 80%;
     margin: auto;
-  
+    background-color: transparent;
+
+  border: none;
+}
+.header-container .cart-shop2{
+    z-index: 5;
 }
 .main-container-Client{
     width: 75%;
@@ -8875,6 +8952,7 @@ background-color: #f8f8f8;
     align-content: flex-end;
     align-items: stretch;
     margin:20px auto;
+    position: relative;
 }
 #content-Client{
     width: 50%;
@@ -8887,16 +8965,51 @@ background-color: #f8f8f8;
     transition: .3s ease all;
 }
 .main-Layout-Client{
-    height: calc(80vh - 100px);
+    /* height: calc(80vh - 100px);
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: scroll; */
 
 
 }
 .main-content-Client .layout-top-spacing{
       
-margin-top:0px ;        }
+margin-top:0px ;     
+   }
+   
+.sticky-menu {
+    position: sticky!important;
+    top: 120px;
+}
+.pos-rel .container {
+    position: relative;
+    z-index: 1;
+}
 @media only screen and  (max-width: 600px) {
+    .clientBody .navbar-collapse{
+        display: block;
+    background: #ffffff;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    z-index: 9;
+    transform-origin: top;
+    -webkit-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    transform: scaleY(0);
+    visibility: hidden;
+    }
+    .show{
+        -webkit-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    transform: scaleY(1)!important;
+    visibility: visible!important;
+    }
+    .navbar-mian .nav-link{
+        color:black;
+    
+    }
+
     .Header-Client .navbar{
         box-shadow: none;
         width: 100%;

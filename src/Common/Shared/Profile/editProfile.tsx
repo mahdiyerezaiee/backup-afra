@@ -101,7 +101,7 @@ const backHandel=(e:any)=>{
 
             
 
-                            <div className='mt-5 user-progress row d-flex justify-content-center col-12'>
+                            <div className='mt-5 mx-auto p-5 bg-light rounded row d-flex justify-content-center col-12'>
 
                                 <div className='mt-5 col-md-8 col-xs-12'>
                                     <Formik initialValues={{

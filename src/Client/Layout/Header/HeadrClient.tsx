@@ -16,6 +16,7 @@ import { ClipLoader } from "react-spinners";
 import { Link } from 'react-router-dom';
 import { useProSidebar } from 'react-pro-sidebar';
 import { RootState } from '../../../store';
+import{BsBasket} from "react-icons/bs"
 interface Props{
 
     collapsed:boolean
@@ -168,13 +169,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
         <div className="header-container Header-Client ">
 
             <header className="header navbar navbar-expand-sm">
-                <ul className="navbar-item flex-row">
-                    <li className="nav-item theme-logo">
-                        <NavLink to="/admin">
-                            <img src="/assets/img/afralogo.png" className="navbar-logo" alt="logo" />
-                        </NavLink>
-                    </li>
-                </ul>
+                
 
                 {/*<div className="block ">*/}
                 {/*{collapsed ? <GiHamburgerMenu size="2rem" onClick={() => collapseSidebar()} />*/}
@@ -186,20 +181,15 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
 
                 </ul>
                 <ul className="navbar-item flex-row navbar-dropdown ">
-                    <li className="nav-item m-auto">
+                    {/* <li className="nav-item m-auto">
                         <Setting />
-                    </li>
+                    </li> */}
                     <li className="nav-item dropdown message-dropdown">
                         <div ref={ref}>
                             <Link to='#' className="nav-link dropdown-toggle" id="messageDropdown"
                                 onClick={() => setShow(oldState => !oldState)}>
 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="currentColor"
-                                    className="bi bi-cart" viewBox="0 0 16 16" id="IconChangeColor">
-                                    <path
-                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                                        id="mainIconPathAttribute"></path>
-                                </svg>
+                               <BsBasket color='white' strokeWidth="0" />
                                 <span className="badge badge-primary">{cartShopping.length}</span>
 
                             </Link>
@@ -331,7 +321,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
 
                     </li>
 
-                    <li className="nav-item dropdown notification-dropdown">
+                    {/* <li className="nav-item dropdown notification-dropdown">
                         <div ref={refNews}>
                             <Link to='#' className="nav-link dropdown-toggle" id="messageDropdown"
                                 onClick={() => {
@@ -358,16 +348,16 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                                 <NewsHeader />
                             )}
                         </div>
-                    </li>
+                    </li> */}
 
                     <li className="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
                         <Link to='#' className="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                className="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                className="bi bi-person-circle" viewBox="0 0 16 16" color='white'>
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" fill='white' />
                                 <path fillRule="evenodd"
-                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" fill='white'/>
                             </svg>                        </Link>
                         <div className="dropdown-menu position-absolute animated fadeInUp"
                             aria-labelledby="userProfileDropdown">
