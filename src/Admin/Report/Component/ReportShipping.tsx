@@ -149,8 +149,8 @@ const ReportShipping: React.FC = () => {
                 <div className='user-progress' >
                     <div className='row'>
                         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                            <h5 >درخواست اطلاعات </h5>
-                            <p>در این بخش می توانید گزارش حواله ها دریافت کنید.</p>
+                            <h5 > گزارش  تخصیص و ارسال کالا </h5>
+                            <p>در این بخش می توانید  گزارش  تخصیص و ارسال کالا را دریافت کنید.</p>
                         </div>
                     </div>
                     <div className=''>
@@ -159,18 +159,18 @@ const ReportShipping: React.FC = () => {
 
                             <form >
                             <div className=" col-12 ">
-                                        <div className="  ">
+                                        <div className=" col-xl-12 col-md-12 mb-4  col-xs-12  ">
 
-                                            <div className="col-6   ">
+                                            <div className="col-xl-6 col-md-6  col-xs-12 ">
 
                                                 <input type="checkbox" checked={Unshipped} onClick={(e: any) => setUnshipped(e.target.checked)} />
-                                                <label className="ml-3">فقط حمل شده</label>
+                                                <label className="ml-3">فقط تخصیص هایی که کالای آن حمل شده است را نمایش بده </label>
 
                                             </div>
-                                            <div className=" col-6   mb-2">
+                                            <div className=" col-xl-6 col-md-6  col-xs-12  ">
 
                                                 <input type="checkbox" checked={HasShippingContract} onClick={(e: any) => setHasShippingContract(e.target.checked)} />
-                                                <label className="ml-3">فقط دارای قرارداد باربری </label>
+                                                <label className="ml-3">فقط تخصیص هایی که برای آنها حواله باربری صادر شده است را نمایش بده</label>
 
                                             </div>
 

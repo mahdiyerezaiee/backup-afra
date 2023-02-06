@@ -6,7 +6,7 @@ import ModalGroupWork from "../Common/ModalGroupWork";
 import {disabled} from "react-widgets/PropTypes";
 
 
-const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) => ({}) }) => {
+const MySimpleTable = ({ columns, data ,getData,bulkJob ,  rowProps = (row) => ({}) }) => {
 
     const [selectFunc,setSelectFunc]=useState(0);
     const [Func, SetFunc] = useState([]);
@@ -39,25 +39,25 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) =>
             hiddenColumns:  Func
         }, }, useGlobalFilter, useSortBy, usePagination, useRowSelect, hooks => {
         hooks.visibleColumns.push(columns => [
-            // Let's make a column for selection
-            // {
-            //     id: 'selection',
-            //     // The header can use the table's getToggleAllRowsSelectedProps method
-            //     // to render a checkbox
-            //     Header: ({ getToggleAllPageRowsSelectedProps }) => (
-            //         <div>
+           
+            {
+                id: 'selection',
+                // The header can use the table's getToggleAllRowsSelectedProps method
+                // to render a checkbox
+                Header: ({ getToggleAllPageRowsSelectedProps }) => (
+                    <div>
                         
-            //             <CheckBox {...getToggleAllPageRowsSelectedProps()} />
-            //         </div>
-            //     ),
-            //     // The cell can use the individual row's getToggleRowSelectedProps method
-            //     // to the render a checkbox
-            //     Cell: ({ row }) => (
-            //         <div>
-            //             <CheckBox {...row.getToggleRowSelectedProps()} />
-            //         </div>
-            //     ),
-            // },
+                        <CheckBox {...getToggleAllPageRowsSelectedProps()} />
+                    </div>
+                ),
+                // The cell can use the individual row's getToggleRowSelectedProps method
+                // to the render a checkbox
+                Cell: ({ row }) => (
+                    <div>
+                        <CheckBox {...row.getToggleRowSelectedProps()} />
+                    </div>
+                ),
+            },
             ...columns,
         ])
     })
@@ -115,7 +115,7 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) =>
                         ))}
                     </select>
                 </div>
-                {/* <div className='d-block clearfix mt-3 float-left'>
+                <div className='d-block clearfix mt-3 float-left'>
                     <span  className=" py-3" style={{fontSize:'smaller'}} > اقدام دسته جمعی: </span>
                     {page.find(item =>item.original.active === true || item.original.active === false) ?
                         <select
@@ -150,7 +150,7 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) =>
                             ))}
                         </select> }
                     <button className='btn-sm btn-light' onClick={()=>bulkJob(selectFunc)}>ثبت</button>
-                </div> */}
+                </div>
 
                 <table className='table mb-4 ' {...getTableProps()}
                     // style={{ transform:'rotateX(180deg)'}}
@@ -246,4 +246,4 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) =>
 
 }
 
-export default MyTableBazargah
+export default MySimpleTable

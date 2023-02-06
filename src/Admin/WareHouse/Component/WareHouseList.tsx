@@ -13,6 +13,7 @@ import {DeleteSupplier, SetSupplier} from "../../../services/supplyService";
 import ModalGroupWork from "../../../Common/Shared/Common/ModalGroupWork";
 import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { GetCompanyChild } from '../../../services/companiesService';
+import MySimpleTable from './../../../Common/Shared/Form/MySimpleTable';
 
 const customStyles = {
     content: {
@@ -480,7 +481,7 @@ const WareHouseList:React.FC = () => {
                         <button className="btn btn-primary m-3" onClick={formHandler}> تعریف انبار جدید</button>
 
 
-                        <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} bulkJob={getBulkJob}/>
+                        <MySimpleTable columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)} bulkJob={getBulkJob}/>
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>

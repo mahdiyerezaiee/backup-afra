@@ -165,8 +165,8 @@ const UsedBarBariReport: React.FC = () => {
                 <div className='user-progress' >
                     <div className='row'>
                         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                            <h5 >درخواست اطلاعات </h5>
-                            <p>در این بخش می توانید گزارش بارگیری دریافت کنید.</p>
+                            <h5 > گزارش بارنامه های صادر شده</h5>
+                            <p>در این بخش می توانید  گزارش بارنامه های صادر شده را دریافت کنید.</p>
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
@@ -206,7 +206,7 @@ const UsedBarBariReport: React.FC = () => {
 <label className="form-check-label">
 
     <input type="checkbox" checked={OnlyShipping} className="form-check-input" onChange={(e: any) => setOnlyShipping(e.target.checked)} />
-    فقط دارای حواله
+    فقط بارنامه هایی که بر مبنای حواله حمل صادر شده اند  را نمایش بده
 </label>
 </div>
                                 <div className=' col-12 form-row'>
