@@ -21,7 +21,6 @@ const UserProfile:React.FC = () => {
   useEffect(() => {
     getProvince();
   }, []);
-  console.log(user);
   const cities = province.filter((data:any) => data.parentId !== null);
   const CitiesrenderList = (id:any) => {
     return (cities.filter((item:any) => item.id === id).map((data:any) => data.name))
@@ -37,13 +36,28 @@ const UserProfile:React.FC = () => {
     setAddress(data.result.addresses);
   }
   const navitage = () => {
-    Navigate("/admin/editProfile")
+    if(roles[0]  <= 2){
+      Navigate("/client/editProfile")
+
+    }else{
+      Navigate("/admin/editProfile")
+
+    }
   }
   const navigateOrganization = () => {
+    if(roles[0]  <= 2){
+    Navigate(`/client/editorganization/${user.organizationId}`)
+  }else{
     Navigate(`/admin/editorganization/${user.organizationId}`)
   }
+  }
   const navitageAddress = (id:any) => {
+    if(roles[0]  <= 2){
+    Navigate(`/client/editAddress/${id}`)
+  }else{
     Navigate(`/admin/editAddress/${id}`)
+
+  }
   }
   const getOrganiz = async () => {
 
@@ -64,7 +78,7 @@ const UserProfile:React.FC = () => {
 
     <div className="row layout-spacing">
 
-      <div className="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
+      <div className={roles[0]  <= 2?"col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing":"col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing"}>
 
         <div className="user-profile layout-spacing">
           <div className="widget-content widget-content-area">
@@ -128,7 +142,7 @@ const UserProfile:React.FC = () => {
 
 
       </div>
-      <div className="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
+      <div className={roles[0]  <= 2?"col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing":"col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing"}>
 
         <div className="skills layout-spacing ">
           <div className="widget-content widget-content-area">

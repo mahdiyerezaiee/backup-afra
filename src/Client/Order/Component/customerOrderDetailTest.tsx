@@ -336,7 +336,7 @@ const OrderDetailTest:React.FC = () => {
                 </div>
                 <div className="py-5 ">
                     <button className="btn btn-danger  float-right m-1 ">
-                        <NavLink className="text-light" to='/cuoList'>بازگشت</NavLink>
+                        <NavLink className="text-light" to='/client/coulist'>بازگشت</NavLink>
                     </button>
                 </div>
                 <AddAdressCustomerForOrder isOpenAddress={isOpenAddress} closeModal={closeModalAddress} orderDetailId={orderDetailId}orderMeasuerId={measureUnitId}   />

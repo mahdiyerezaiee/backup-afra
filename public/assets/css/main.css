@@ -114,7 +114,7 @@ width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 300px;
-  min-height: 100px;
+  min-height: 250px;
 
 }
 .fixed_header {

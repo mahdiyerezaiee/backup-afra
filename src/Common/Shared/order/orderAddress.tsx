@@ -305,7 +305,7 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
         },
         { Header: 'شماره هماهنگی', accessor: 'receiverTel', disableFilters: true },
         { Header: 'کد پستی', accessor: 'postalCode', disableFilters: true },
-        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: FilterData.length > 4 ? SelectColumnFilter : "" , filter: "multiple"
+        { Header: 'قیمت پایه', accessor: 'basePrice', Filter: SelectColumnFilter  , filter: "multiple"
         },
         { Header: 'وزن', accessor: 'quantity', disableFilters: true },
         {

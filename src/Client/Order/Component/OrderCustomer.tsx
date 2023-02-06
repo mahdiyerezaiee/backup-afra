@@ -553,7 +553,7 @@ const OrderCustomer:React.FC = () => {
     },
     {
       Header: 'مشاهده جزییات ', accessor: '', Cell: row => (
-          <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/admin/cuoDetail/${row.row.original.id}`}>
+          <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/client/cuoDetail/${row.row.original.id}`}>
           <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
             width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
               fill="none" stroke="#000" strokeLinecap="round"
