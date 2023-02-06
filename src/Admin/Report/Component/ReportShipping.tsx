@@ -13,8 +13,8 @@ import  QueryString  from 'qs';
 
 const ReportShipping: React.FC = () => {
 
-    const [Unshipped, setUnshipped] = useState<any>(false);
-    const [HasShippingContract, setHasShippingContract] = useState<any>(false);
+    const [Unshipped, setUnshipped] = useState<any>(true);
+    const [HasShippingContract, setHasShippingContract] = useState<any>(true);
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
     const [Response, SetResponse] = useState([]);
@@ -66,6 +66,7 @@ const ReportShipping: React.FC = () => {
     const handelSubmit = async (event: any) => {
         setLoading(true)
         event.preventDefault();
+        
         try {
             let config = {
 
@@ -115,15 +116,19 @@ const ReportShipping: React.FC = () => {
     });
 
     const columns = useMemo(() => [
-        { Header: 'نام باربری', accessor: 'shippingCompanyName' },
-        { Header: 'کد قرارداد باربری', accessor: 'shippingContractCode' },
-        { Header: 'شناسه خرید', accessor: 'orderId' },
-        { Header: 'شناسه بازارگاه', accessor: 'orderExtId' },
+        { Header: ' باربری', accessor: 'shippingCompanyName' },
+        { Header: ' قرارداد ', accessor: 'shippingContractCode' },
+        {Header:'تاریخ',accessor:'createDate',Cell:(rows:any)=>{
+
+            return(new Date(rows.row.original.createDate).toLocaleDateString('fa-IR',{ year: 'numeric', month: '2-digit', day: '2-digit' }))
+        }},
+        { Header: ' سفارش', accessor: 'orderId' },
+        { Header: 'ش.بازارگاه', accessor: 'orderExtId' },
 
         {
-            Header: 'شناسه جزییات سفارش', accessor: 'orderDetailId'
+            Header: 'ش.ج.سفارش', accessor: 'orderDetailId'
         }, {
-            Header: 'کد تخصیص', accessor: 'orderDetailExtId'
+            Header: ' تخصیص', accessor: 'orderDetailExtId'
         },
 
         { Header: 'وزن', accessor: 'plannedQuantity' },
@@ -133,12 +138,12 @@ const ReportShipping: React.FC = () => {
                 row.row.original.deliveryMethodId === 5 ? 'بله' : 'خیر'
             )
         },
-        { Header: 'نام تحویل گیرند', accessor: 'receiverName' },
-        { Header: 'آدرس تحویل گیرنده', accessor: 'receiverAddress' },
+        { Header: ' تحویل گیرنده', accessor: 'receiverName' },
+        { Header: 'آدرس تحویل ', accessor: 'receiverAddress' },
         { Header: 'شناسه ملی/کد ملی تحویل گیرنده ', accessor: 'receiverNationalCode' },
 
         { Header: 'کدپستی', accessor: 'receiverPostalCode' },
-        { Header: 'تلفن دریافت کننده', accessor: 'receiverTel' },
+        { Header: 'تلفن هماهنگی', accessor: 'receiverTel' },
         { Header: 'کدیکتای جهاد ', accessor: 'jahadYektaCode' },
     ], []);
     const data = useMemo(() => Response, [Response]);;
@@ -149,8 +154,8 @@ const ReportShipping: React.FC = () => {
                 <div className='user-progress' >
                     <div className='row'>
                         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                            <h5 >درخواست اطلاعات </h5>
-                            <p>در این بخش می توانید گزارش حواله ها دریافت کنید.</p>
+                            <h5 > گزارش  تخصیص و ارسال کالا </h5>
+                            <p>در این بخش می توانید  گزارش  تخصیص و ارسال کالا را دریافت کنید.</p>
                         </div>
                     </div>
                     <div className=''>
@@ -159,18 +164,18 @@ const ReportShipping: React.FC = () => {
 
                             <form >
                             <div className=" col-12 ">
-                                        <div className="  ">
+                                        <div className=" col-xl-12 col-md-12 mb-4  col-xs-12  ">
 
-                                            <div className="col-6   ">
+                                            <div className="col-xl-6 col-md-6  col-xs-12 ">
 
                                                 <input type="checkbox" checked={Unshipped} onClick={(e: any) => setUnshipped(e.target.checked)} />
-                                                <label className="ml-3">فقط حمل شده</label>
+                                                <label className="ml-3">فقط تخصیص هایی که کالای آن حمل شده است را نمایش بده </label>
 
                                             </div>
-                                            <div className=" col-6   mb-2">
+                                            <div className=" col-xl-6 col-md-6  col-xs-12  ">
 
                                                 <input type="checkbox" checked={HasShippingContract} onClick={(e: any) => setHasShippingContract(e.target.checked)} />
-                                                <label className="ml-3">فقط دارای قرارداد باربری </label>
+                                                <label className="ml-3">فقط تخصیص هایی که برای آنها حواله باربری صادر شده است را نمایش بده</label>
 
                                             </div>
 
@@ -249,19 +254,20 @@ const ReportShipping: React.FC = () => {
     else {
         if (Response && Response.length > 0) {
             const dataForExcel = Response.map((item: any) => ({
-                'کد قرارداد باربری': item.shippingContractCode,
-                'نام باربری':item.shippingCompanyName,
-                'شناسه خرید':item.orderId,
-                'شناسه بازارگاه':item.orderExtId,
-                'شناسه جزییات شفارش': item.orderDetailId ,
-                'کد تخصیص ': item.orderDetailExtId ,
+                ' قرارداد ': item.shippingContractCode,
+                ' باربری':item.shippingCompanyName,
+                'تاریخ':(new Date(item.createDate).toLocaleDateString('fa-IR',{ year: 'numeric', month: '2-digit', day: '2-digit' })),
+                'سفارش':item.orderId,
+                'ش.بازارگاه':item.orderExtId,
+                'ش.ج.شفارش': item.orderDetailId ,
+                'تخصیص ': item.orderDetailExtId ,
                 'وزن': item.plannedQuantity,
                 'تریلی': (item.deliveryMethodId === 5 ? 'بله' : 'خیر'),
-                'نام تحویل گیرنده': item.receiverName,
-                'آدرس تحویل گیرنده': item.receiverAddress,
-                'شماره/شناسه ملی': '',
+                ' تحویل گیرنده': item.receiverName,
+                'آدرس تحویل ': item.receiverAddress,
+                ' شماره/شناسه ملی تحویل گیرنده': item.receiverNationalCode,
                 'کد پستی': item.receiverPostalCode,
-                'تلفن تحویل گیرنده': item.receiverTel,
+                'تلفن هماهنگی': item.receiverTel,
                 'کد یکتای جهاد': item.jahadYektaCode,
 
             }))

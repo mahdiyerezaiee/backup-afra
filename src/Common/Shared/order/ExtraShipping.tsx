@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import {ExportToExcel} from "../Common/ExportToExcel";
 import { GetShippingReports } from './../../../services/ShippingService';
 import { MeasureUnitSample } from './../../Enums/MeasureUnitSample';
+import { LoadingBar } from "react-redux-loading-bar";
+import  FadeLoader  from 'react-spinners/FadeLoader';
 
 const customStyles = {
     content: {
@@ -28,17 +30,22 @@ interface Props{
 }
 const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
     const [extra , setExtra] = useState<any>([])
+    const [loading,setLoading]=useState(false)
     const getExter = async () => {
 
       try {
           if (id === null){
               setExtra(null)
           }
+          setLoading(true)
          const {data , status}=await GetShippingReports(id)
+           if(status===200){
 
-          setExtra(data.result.shippingReports)
+            setLoading(false)
+          setExtra(data.result.shippingReports)}
       }catch (e) {
           console.log(e)
+          setLoading(false)
       }
     }
 
@@ -46,6 +53,8 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
        getExter()
     },[id])
     console.log(extra)
+
+    if(!loading){
     if (extra && extra !== 0 ){
         const dataForExcel = extra.map((item:any) => ({
 
@@ -157,6 +166,25 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
                 </div>
             </div>
         </Modal>)
+    }}
+
+    else{
+        return (
+            <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Selected Option"
+            ariaHideApp={false}
+
+        >
+            <div className="loadingAddress" >
+                <div className="boxloadingAddress">
+                    <p>دریافت اطلاعات ...</p>
+                    <FadeLoader loading={loading} color={"#ccc"} />
+                </div>
+            </div>
+            </Modal>)
     }
 
 }

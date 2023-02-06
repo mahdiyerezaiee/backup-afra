@@ -8,6 +8,7 @@ import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { GetCompanyChild } from '../../../services/companiesService';
 import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import  Select  from 'react-select';
+import MySimpleTable from './../../../Common/Shared/Form/MySimpleTable';
 
 const WareHouseType :React.FC= () => {
 
@@ -385,7 +386,7 @@ const WareHouseType :React.FC= () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={handelForm}>تعریف گروه</button>
-                        <MyTableBazargah columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}  bulkJob={getBulkJob}/>
+                        <MySimpleTable columns={columns} data={data} getData={(rows:any)=>setSelectedRows(rows)}  bulkJob={getBulkJob}/>
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
                     </div>
                 </div>

@@ -26,7 +26,7 @@ const UsedBarBariReport: React.FC = () => {
     const [companyId, SetCompanyId] = useState<any>()
     const [show, SetShow] = useState(false);
     const [disable, setDisable] = useState(false);
-    const [OnlyShipping, setOnlyShipping] = useState(false)
+    const [OnlyShipping, setOnlyShipping] = useState(true)
     const [open, SetOpen] = useState(false);
     let [loading, setLoading] = useState(false);
     let [color, setColor] = useState("#0c4088");
@@ -70,8 +70,10 @@ const UsedBarBariReport: React.FC = () => {
     const handelSubmit = async (event: any) => {
         setLoading(true)
         event.preventDefault();
-        if (companies.length === 1) {
+      
+        if (companies.length === 1 ) {
             try {
+                
                 const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate, companies[0].id,OnlyShipping);
                 if (status === 200) {
 
@@ -101,22 +103,7 @@ const UsedBarBariReport: React.FC = () => {
                 }
 
             }
-            else {
-                try {
-                    const { data, status } = await GetUsedBarBariReportsCompanies(StartDate, EndDate, companies[0].id,OnlyShipping);
-                    if (status === 200) {
-
-                        SetResponse(data.result.barBariUsedReports);
-                        SetClicked(true);
-                        setLoading(false)
-                    }
-                } catch (error) {
-                    console.log(error);
-                    setLoading(false)
-
-                }
-            }
-
+           
         }
     }
     const handelFrom = () => {
@@ -147,7 +134,7 @@ const UsedBarBariReport: React.FC = () => {
         { Header: 'کد تخصیص بازارگاه', accessor: 'kaCode' },
         { Header: 'کرایه بار', accessor: 'kra2' },
         { Header: 'نام راننده', accessor: 'dName' },
-        { Header: 'فامیلی راننده', accessor: 'dFam' },
+        { Header: 'نام خانوادگی راننده', accessor: 'dFam' },
         { Header: 'پلاک', accessor: 'tplk' },
         { Header: ' ساعت بارنامه', accessor: 'barTime' },
         { Header: ' شناسه یا کد ملی تحویل گیرنده', accessor: 'ka_E_Code' },
@@ -155,7 +142,6 @@ const UsedBarBariReport: React.FC = () => {
         { Header: ' شماره قرارداد', accessor: 'ghErtebat' },
         { Header: 'آدرس بارنامه', accessor: 'barAdd' },], []);
     let defaultValue: any = CompaniesIDs()[0]
-
     const data:any = useMemo(() => Response, [Response]);;
     console.log(data)
 
@@ -165,8 +151,8 @@ const UsedBarBariReport: React.FC = () => {
                 <div className='user-progress' >
                     <div className='row'>
                         <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                            <h5 >درخواست اطلاعات </h5>
-                            <p>در این بخش می توانید گزارش بارگیری دریافت کنید.</p>
+                            <h5 > گزارش بارنامه های صادر شده</h5>
+                            <p>در این بخش می توانید  گزارش بارنامه های صادر شده را دریافت کنید.</p>
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
@@ -181,14 +167,15 @@ const UsedBarBariReport: React.FC = () => {
 
                                         <label> شرکت</label>
                                         <Select
-                                            defaultValue={defaultValue}
-                                            placeholder='نام شرکت'
+                                           
+                                            placeholder=' لطفا نام شرکت را انتخاب کنید'
                                             options={CompaniesIDs()}
-                                            key={defaultValue}
+                                         
+                                            
                                             isClearable={true}
                                             onChange={(e: any) => {
 
-
+                                                
                                                 SetCompanyId(e.value)
 
 
@@ -206,7 +193,7 @@ const UsedBarBariReport: React.FC = () => {
 <label className="form-check-label">
 
     <input type="checkbox" checked={OnlyShipping} className="form-check-input" onChange={(e: any) => setOnlyShipping(e.target.checked)} />
-    فقط دارای حواله
+    فقط بارنامه هایی که بر مبنای حواله حمل صادر شده اند  را نمایش بده
 </label>
 </div>
                                 <div className=' col-12 form-row'>
@@ -287,8 +274,8 @@ const UsedBarBariReport: React.FC = () => {
                 'کد تخصیص بازارگاه': item.kaCode,
                 'کرایه بار': item.kra2,
                 'کد باربری': item.companyCode,
-                'نا راننده': item.dName,
-                'فامیلی راننده': item.dFam,
+                'نام راننده': item.dName,
+                'نام خانوادگی راننده': item.dFam,
                 'پلاک': item.tplk,
                 'ساعت بارنامه': item.barTime,
                 'شناسه یا کد ملی تحویل گیرنده': item.ka_E_Code,
