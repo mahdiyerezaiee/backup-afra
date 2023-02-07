@@ -57,7 +57,9 @@ const OrderCustomer:React.FC = () => {
   const [stateSuccess, SetStateSuccess] = useState(0)
   const [stateError, SetStateError] = useState(0)
   const [open, SetOpen] = useState(false);
-  const [address, SetAddress] = useState<any>({ active: false, id: 0 });
+  const [show, SetShow] = useState(false);
+
+  const [address, SetAddress] = useState<any>( 0 );
   let Detail :any= [];
   const [totalCount , setTotalCount]=useState(0) ;
 
@@ -92,6 +94,8 @@ const OrderCustomer:React.FC = () => {
   const bindAdress = async (arr:any) => {
 
     if (arr.length > 1) {
+      FilnalArr=[]
+
       for (let i = 0; i < arr.length; i++) {
 
         try {
@@ -120,6 +124,8 @@ const OrderCustomer:React.FC = () => {
       }
     }
     else {
+      FilnalArr=[]
+
       for (let i = 0; i < arr.length; i++) {
 
         try {
@@ -390,6 +396,7 @@ const OrderCustomer:React.FC = () => {
       const { data, status } = await GetDataWithSearchOrder(config);
       if (status === 200) {
         setPageNumber(0)
+        SetAddress( 0 )
         setOrder(data.result.orderList.values);
         setTotalCount(data.result.orderList.totalCount)
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
@@ -441,6 +448,7 @@ const OrderCustomer:React.FC = () => {
      
         const { data, status } = await GetDataWithSearchOrder(config);
       SetGetOrders(false)
+      SetAddress( 0 )
 
       setOrder(data.result.orderList.values)
       setTotalCount(data.result.orderList.totalCount)
@@ -498,7 +506,7 @@ const OrderCustomer:React.FC = () => {
     try {
       const {data, status} = await GetDataWithSearchOrder(config);
       if (status === 200) {
-        SetAddress({active: false})
+        SetAddress( 0)
         setOrder(data.result.orderList.values);
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
       }
@@ -578,7 +586,7 @@ const OrderCustomer:React.FC = () => {
   const handelSearchFieldClear =  () => {
     setPageNumber(0)
     setOrderStatusIds([])
-    SetAddress({active: false})
+    SetAddress({id: 0})
     setId('')
     setStartDate('')
     setEndDate('')
@@ -591,60 +599,63 @@ const OrderCustomer:React.FC = () => {
   }
 
 
-
-
   const formatTrProps = (state:any = {}) => {
-    if (modalIsOpenEdit === false) {
-      return {
-        onClick: async () => {
-setDetailAddress([])
-          setOrderId(state.original.id)
-          try {
-            const { data, status } = await GetOrderDetails(state.original.id)
-            SetAddress({ active: address.active === false ? true : false, id: state.id })
+    const orderDetail =async () => {
+      setDetailAddress([])
+      setOrderId(state.original.id)
+      try {
+        const { data, status } = await GetOrderDetails(state.original.id)
+        SetAddress(state.id)
+              
 
-            if (status === 200) {
-              Detail = data.result.orderDetails
-              setOrderDetail(Detail)
-              await bindAdress(Detail)
-
-
-            }
+        if (status === 200) {
+          Detail = data.result.orderDetails
+          setOrderDetail(Detail)
+          await bindAdress(data.result.orderDetails)
 
 
-          } catch (err) {
-            console.log(err)
+        }
+
+
+      } catch (err) {
+        console.log(err)
+      }
+
+
+      try {
+        const { data, status } = await GetOrder(state.original.id)
+        SetAddress( state.id )
+                
+
+        if (status === 200) {
+          let xd = data.result.order.extraData
+          SetShoppingCartInformation(data.result.order)
+          if (xd === null) {
+            SetShippingInformation([])
+
+          } else {
+            SetShippingInformation(JSON.parse(xd.data))
+
           }
+        }
 
 
-          try {
-            const { data, status } = await GetOrder(state.original.id)
-            SetAddress({ active: address.active === false ? true : false, id: state.id })
-
-            if (status === 200) {
-              let xd = data.result.order.extraData
-              SetShoppingCartInformation(data.result.order)
-              if (xd === null) {
-                SetShippingInformation([])
-
-              } else {
-                SetShippingInformation(JSON.parse(xd.data))
-
-              }
-            }
-
-
-          } catch (err) {
-            console.log(err)
-          }
-        },
-
-
+      } catch (err) {
+        console.log(err)
       }
     }
+    if (modalIsOpenEdit === false) {
+        return {
+            onClick: async () => {
+                SetShow( oldState => !oldState)
 
+                await orderDetail()
+            },
+        }
+    }
+}
 
-  }
+  
 
 if(order){
   const dataForExcel = data.map((item:any) => ({
@@ -858,6 +869,7 @@ if(order){
           setPageNumber={setPageNumber}
           PageNumber={PageNumber}
           Detail={DetailAddress}
+          showAddress={show}
                       total={totalCount}
         />
 

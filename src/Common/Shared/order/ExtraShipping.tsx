@@ -29,7 +29,7 @@ interface Props{
     closeModal:any
 }
 const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
-    const [extra , setExtra] = useState<any>([])
+    const [extra , setExtra] = useState<any>(null)
     const [loading,setLoading]=useState(false)
     const getExter = async () => {
 
@@ -42,7 +42,13 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
            if(status===200){
 
             setLoading(false)
+            if(data.result.shippingReports.length>0){
           setExtra(data.result.shippingReports)}
+          else {
+            setExtra(null)
+          }
+        
+        }
       }catch (e) {
           console.log(e)
           setLoading(false)
@@ -55,7 +61,7 @@ const ExtraShipping:React.FC<Props> = ({id ,modalIsOpen,closeModal }) => {
     console.log(extra)
 
     if(!loading){
-    if (extra && extra !== 0 ){
+    if (extra && extra !== null ){
         const dataForExcel = extra.map((item:any) => ({
 
         'تاریخ بارنامه': item.barDate,
