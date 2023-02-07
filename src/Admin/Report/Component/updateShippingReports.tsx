@@ -129,7 +129,7 @@ const UpdateShippingReports: React.FC = () => {
                     progress: undefined
                 });
 
-                setReport(data.result.report)
+                setReport(data.result.reports)
                 setDisable(true)
                 setLoading(false)
                 setClicked(true)
@@ -351,7 +351,7 @@ const UpdateShippingReports: React.FC = () => {
         }
     }
     else {
-        if (report) {
+        if (report.length>0 && loading===false) {
             const dataForExcel = data.map((item: any) => ({
                 'companyCode': item.companyCode,
                 'barDel': item.barDel,

@@ -21,7 +21,8 @@ const PrivateRouteClients : React.FC<Props>= ({children}:Props) => {
 
 
     return token && userRole.every((item: any) => item <= 2)  ?
-     children 
+    children 
+
      : 
      <Navigate to="/login"/>
 };
