@@ -139,6 +139,7 @@ const AdminMainLayout:React.FC = () => {
 
 
   }
+  document.body.classList.remove('clientBody')
 
   const getUserCompanies=async()=>{
     const {data,status}=await GetCompanyChild()
