@@ -8877,6 +8877,16 @@ All Animation Ends Here */
 .clientBody .page-title:before{
     background-color: #ffffff;
 }
+.clientBody .table > tbody > tr > td {
+    font-size: 13px!important;
+}
+.clientBody .table > tbody > tr > th {
+    font-size: 12px!important;
+}
+.clientBody .table button {
+    font-size: 11px!important;
+}
+
 .headerClient{
     color:white;
     position: absolute;
