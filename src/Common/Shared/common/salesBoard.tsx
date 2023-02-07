@@ -131,10 +131,10 @@ const SalesBoardForCustomer:React.FC = () => {
 setLoading(false)
     }
 
-    if (productSupply !== null) {
+    if (productSupply.length !== 0) {
 
         return (<div className=''>
-            <div className=" statbox widget-content widget-content-area" >
+            <div className=" dashboard-widget" >
                 <div className="row " >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2 " >
                     <h4 className="text-center" style={{color:'#027f00'}}>
@@ -243,8 +243,8 @@ setLoading(false)
         </div>)
     }
     else {
-        return <div className="m-5 d-flex justify-content-center">
-            <table className="table">
+        return <div className="m-5 d-flex justify-content-center ">
+            <table className="table bg-light">
                 <thead>
                     <tr >
                         <th className="text-center">

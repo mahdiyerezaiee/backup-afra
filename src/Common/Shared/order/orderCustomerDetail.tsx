@@ -115,7 +115,7 @@ window.location.reload()
 
                 <div className=" buttons   text-end  p-2 mt-4" >
 
-                    <Link  to={`/admin/invoice/${order.id}`} className={newAttachmnet.length > 0?  "btn-primary   btn m-1" : order.orderStatusId === 4 ?"btn-success   btn m-1" : "btn-primary   btn m-1"} hidden={order.orderStatusId ===  1 }  >دریافت پیش فاکتور</Link>
+                    <Link  to={`/client/invoice/${order.id}`} className={newAttachmnet.length > 0?  "btn-primary   btn m-1" : order.orderStatusId === 4 ?"btn-success   btn m-1" : "btn-primary   btn m-1"} hidden={order.orderStatusId ===  1 }  >دریافت پیش فاکتور</Link>
                     <button className="btn-success  m-1 btn " hidden={newAttachmnet.length > 0?false:true} disabled={order.orderStatusId ===  5   } onClick={handelSubmit}>درخواست بررسی اسناد ارائه شده </button>
                 </div>
             </div>

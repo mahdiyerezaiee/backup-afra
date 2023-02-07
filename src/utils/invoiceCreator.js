@@ -1,6 +1,6 @@
 
 import './style.css';
-import {GetAllOrganisation, GetAllOrganisationCode} from "../services/organisationService";
+import {GetAllOrganisation, GetAllOrganisationCode ,GetOrganisationById} from "../services/organisationService";
 import {GetAddress} from "../services/addressService";
 import {GetOrder, GetOrderDetails} from "../services/orderService";
 import {MeasureUnitSample} from "../Common/Enums/MeasureUnitSample";
@@ -8,11 +8,12 @@ import {useEffect, useState , createRef} from "react";
 import Pdf from "react-to-pdf";
 import {useNavigate, useParams} from "react-router-dom";
 import { GetOrderDetailsAdmin } from './../services/orderService';
-
-
+import {useSelector} from "react-redux";
+import { RootState } from '../store';
 
 
 const InvoiceCreator = ({ closeModal }) => {
+    const roles = useSelector((state:RootState) => state.roles)
 
     const ref = createRef()
 const params = useParams()
@@ -33,18 +34,27 @@ const params = useParams()
         hotfixes:'1'
     };
     const handelNavigate = (e) => {
+
         e.preventDefault()
-        navigate(-1)
-        document.getElementsByClassName('main-Layout')[0].style.overflow="auto"
+        if(roles[0] <= 2 ){
+return null
+        }else{
+            navigate(-1)
+            document.getElementsByClassName('main-Layout')[0].style.overflow="auto"
+        }
+       
 
     }
-    console.log(params);
     const getOrder = async () => {
         try {
             const { data, status } = await GetOrder(params.id)
             setOrder(data.result.order)
             SetCustomer(data.result.order.customer)
+            getAddress(data.result.order.customerId)
+           if(data.result.order.customer.organizationId) {
+            getOrganization(data.result.order.customer.organizationId)
 
+           }
         } catch (error) {
             console.log(error);
         }
@@ -60,17 +70,23 @@ const params = useParams()
             var zoomLevel = Math.min(zoomHeight ,zoomWidth);
             // stop zooming when book fits page
             if (zoomLevel >= 1) return;
+            if(roles[0] <= 2 ){
+                document.getElementsByClassName('page')[0].style.width= "auto";
+                document.getElementsByClassName('page')[0].style.height= "auto";
+                document.getElementsByClassName('a4')[0].style.transform= "scale(1)";
 
+            }else{
                 document.getElementsByClassName('a4')[0].style.transform= "scale(" + zoomLevel + ")";
 
-
+            }
 
 
 
 
 
         }
-        document.getElementsByClassName("main-Layout")[0].scrollTo(0,0);
+        if(roles[0] > 2 ){
+        document.getElementsByClassName("main-Layout")[0].scrollTo(0,0);}
         adjustZoom();
         window.addEventListener("resize", adjustZoom);
 
@@ -79,7 +95,7 @@ const params = useParams()
     const GetOrderDetail = async () => {
         try {
 
-            const { data, status } = await GetOrderDetailsAdmin(params.id);
+            const { data, status } = await GetOrderDetails(params.id);
             if (status === 200) {
                 setOrderDetail(data.result.orderDetails)
             }
@@ -89,9 +105,9 @@ const params = useParams()
         }
 
     }
-    const getOrganization = async () => {
+    const getOrganization = async (organizationId) => {
         try {
-            const {data, status} = await GetAllOrganisation();
+            const { data, status } = await GetOrganisationById(organizationId)
             if (status === 200) {
 
                 SetOrganisations(data.result.organizationLists.values)
@@ -102,41 +118,23 @@ const params = useParams()
         }
     }
 
+const getAddress=async(id)=>{
+    try {
 
-
-
-    useEffect(()=>{
-        const getAddress=async()=>{
-            try {
-
-                const {data,status}=await GetAddress(1,order.customerId)
-                SetAddress(data.result.addresses)
-            } catch (error) {
-                console.log(error);
-            }
-
-        }
-        getOrder()
-        GetOrderDetail()
-        getOrganization()
-        getAddress()
-
-    },[params.id])
-useEffect(()=>{
-    const getAddress=async()=>{
-        try {
-
-            const {data,status}=await GetAddress(1,order.customerId)
-            SetAddress(data.result.addresses)
-        } catch (error) {
-            console.log(error);
-        }
-
+        const {data,status}=await GetAddress(1,id)
+        SetAddress(data.result.addresses)
+    } catch (error) {
+        console.log(error);
     }
 
+}
 
-    getAddress()
-},[order])
+    useEffect(()=>{
+       
+        getOrder()
+        GetOrderDetail()
+
+    },[params.id])
 
     const Fullname=()=>{
 
@@ -275,7 +273,7 @@ useEffect(()=>{
                         <div className="w-100">
 
                             <table
-                                className="w-100 table table-bordered  text-sm-center small h-auto " style={{width:"100%"}}>
+                                className="w-100  table-bordered  text-sm-center small h-auto " style={{width:"100%"}}>
                                 <thead>
                                 <tr>
                                     <td>ردیف</td>
@@ -381,17 +379,20 @@ useEffect(()=>{
             </div>
             <div className="row">
             <button onClick={handelNavigate}
-                    className="btn btn-danger col-lg-5  float-right mb-2 ">بازگشت</button>
+                    className="btn btn-danger col-lg-5   mb-2 ">بازگشت</button>
                 <div className="col-lg-2"/>
             <Pdf targetRef={ref} filename="code-example.pdf" options={options} y={-1} scale={1} >
                 {({toPdf}) =><> <button  onClick={function (){
                     document.getElementsByClassName('a4')[0].style.transform= "scale(1 )";
+                    document.getElementsByClassName('page')[0].style.width= "29.7cm";
+                    document.getElementsByClassName('page')[0].style.height= "21cm";
+
 
                     toPdf()
                     setOrder([])
                     closeModal()
 
-                }} className="btn btn-info  float-left  col-lg-5  mb-2  float-left" >دریافت فایل
+                }} className="btn btn-info  float-left  col-lg-5  mb-2  " >دریافت فایل
                     پی دی اف </button>
 
                     <br/>
