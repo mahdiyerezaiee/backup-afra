@@ -43,6 +43,7 @@ const ClientsMainLayout: React.FC = () => {
       refreshPage();
     }
   }
+  document.body.classList.add('clientBody')
 
   const getUserRole = async () => {
     const { data, status } = await GetUsersRoles();

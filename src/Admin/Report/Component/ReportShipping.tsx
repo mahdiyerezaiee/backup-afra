@@ -169,13 +169,13 @@ const ReportShipping: React.FC = () => {
                                             <div className="col-xl-6 col-md-6  col-xs-12 ">
 
                                                 <input type="checkbox" checked={Unshipped} onClick={(e: any) => setUnshipped(e.target.checked)} />
-                                                <label className="ml-3">فقط تخصیص هایی که کالای آن حمل شده است را نمایش بده </label>
+                                                <label className="ml-3">فقط  حمل شده  </label>
 
                                             </div>
                                             <div className=" col-xl-6 col-md-6  col-xs-12  ">
 
                                                 <input type="checkbox" checked={HasShippingContract} onClick={(e: any) => setHasShippingContract(e.target.checked)} />
-                                                <label className="ml-3">فقط تخصیص هایی که برای آنها حواله باربری صادر شده است را نمایش بده</label>
+                                                <label className="ml-3">فقط دارای قرارداد باربری</label>
 
                                             </div>
 
