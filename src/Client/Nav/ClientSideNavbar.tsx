@@ -12,7 +12,7 @@ import {Link, NavLink} from "react-router-dom";
 const ClientSideNavbar: React.FC = () => {
     const user = useSelector((state:RootState) => state.user);
     return (
-    <Sidebar defaultCollapsed={false} className="client-sideBar sticky-menu dashboard-widget">
+    <Sidebar defaultCollapsed={false} className="client-sideBar sticky-menu ">
         <div className="m-2 text-center   text-black-50 p-3 info-client">
             <div className="circle pb-3 ">
                 <FaUserCircle size="5rem" color="lightgray"/>
