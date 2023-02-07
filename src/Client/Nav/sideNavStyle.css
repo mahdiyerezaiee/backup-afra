@@ -99,7 +99,10 @@ padding: 23px;
         min-height: 50vh;
 background-color: transparent!important;
     }
-
+    .client-sideBar svg{
+        width: auto!important;
+        color: rgb(76, 46, 209);
+    }
 
     .client-sideBar> .css-dip3t8 {
         height: auto;
