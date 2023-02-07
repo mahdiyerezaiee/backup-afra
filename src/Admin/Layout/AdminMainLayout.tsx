@@ -292,7 +292,7 @@ const AdminMainLayout:React.FC = () => {
                   <Route path='CustomersReports' element={<CustomerReports />} />
                   <Route path='OrdersReports' element={<OrdersReports />} />
                   {/* InvoiceCreator*/}
-                  {/* <Route path='invoice/:id' element={<InvoiceCreator />} /> */}
+                  <Route path='invoice/:id' element={<InvoiceCreator closeModal={null} />} />
 
                 </Routes>
               </div>

@@ -19,6 +19,7 @@ import UserProfile from "../../Common/Shared/Profile/userProfile";
 import EditProfile from "../../Common/Shared/Profile/editProfile";
 import EditAddress from "../../Common/Shared/Profile/editAddress";
 import DashbordCustomer from "../Dashboard/Component/dashbordCustomer";
+import InvoiceCreator from "../../Utils/invoiceCreator";
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
@@ -43,6 +44,7 @@ const ClientsMainLayout: React.FC = () => {
       refreshPage();
     }
   }
+  document.body.classList.add('clientBody')
 
   const getUserRole = async () => {
     const { data, status } = await GetUsersRoles();
@@ -89,6 +91,8 @@ const ClientsMainLayout: React.FC = () => {
 
                 <Route path="coulist" element={<OrderCustomer />} />
                 <Route path="cuoDetail/:id" element={<OrderDetailTest />} />
+                <Route path='invoice/:id' element={<InvoiceCreator closeModal={null} />} />
+
                 {/* Ticket*/}
 
                 <Route path="ticket" element={<Ticket />} />

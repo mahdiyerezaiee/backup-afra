@@ -7625,7 +7625,7 @@ div[class*="auction"] .custom-button {
 }
 
 /*Dashboard Section Starts Here*/
-/*.dashboard-widget {
+.dashboard-widget {
     border-radius: 20px;
     background-color: #ffffff;
     box-shadow: 0px 6px 18px 0px rgba(16, 5, 54, 0.17);
@@ -7699,7 +7699,7 @@ div[class*="auction"] .custom-button {
 .dashboard-widget .dashboard-title .title {
     padding-bottom: 20px;
 }
-
+/*
 .dashboard-menu li {
     padding: 0;
     margin-bottom: 1px;
@@ -7726,7 +7726,7 @@ div[class*="auction"] .custom-button {
 .dashboard-menu li a:hover, .dashboard-menu li a.active {
     background: #f7f6fc;
 }
-
+*/
 .dashboard-item {
     border-radius: 20px;
     background-color: white;
@@ -7744,7 +7744,7 @@ div[class*="auction"] .custom-button {
 .dashboard-item .thumb img {
     max-width: 100%;
 }
-
+/*
 .dashboard-purchasing-tabs .nav-tabs {
     margin-bottom: 25px;
 }
@@ -8887,6 +8887,24 @@ All Animation Ends Here */
     font-size: 11px!important;
 }
 
+.clientBody .dashboard-item svg{
+    margin-bottom: 20px;
+    color: rgb(255 154 92);
+    stroke-width: 0px;
+}
+.clientBody .dashboard-item p{
+font-size: larger;
+font-weight: 600;
+}
+.clientBody .page{
+    height: auto;
+    width: auto;
+}
+@media (min-width: 1200px){
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1296px;
+}
+}
 .headerClient{
     color:white;
     position: absolute;
