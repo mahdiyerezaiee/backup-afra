@@ -16,7 +16,7 @@ const ClientSideNavbar: React.FC = () => {
         <div className="m-2 text-center   text-black-50 p-3 info-client">
             <div className="circle pb-3 ">
                 <FaUserCircle size="5rem" color="lightgray"/>
-                <Link to="editProfile"><TiPencil size="1.5rem" color="white" className="edit-svg"/></Link>
+                <Link to="userProfile"><TiPencil size="1.5rem" color="white" className="edit-svg"/></Link>
             </div>
             <h5 className="text-center">
 {user.firstName} { user.lastName}

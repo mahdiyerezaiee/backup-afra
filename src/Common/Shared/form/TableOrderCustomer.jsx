@@ -23,7 +23,7 @@ const IndeterminateCheckbox = React.forwardRef(
         )
     }
 )
-const TableOrderCustomer = ({columns, data, getData, bulkJob, formatRowProps, show,Detail, setPageNumber,PageNumber ,setPageSize, PageSize,getDataBySearch , total}) => {
+const TableOrderCustomer = ({showAddress ,columns, data, getData, bulkJob, formatRowProps, show,Detail, setPageNumber,PageNumber ,setPageSize, PageSize,getDataBySearch , total}) => {
     const [cottageCode, setcottageCode] = useState('');
 
 
@@ -84,27 +84,26 @@ useEffect(()=>{
             {
                 // Build our expander column
                 id: "expander", // Make sure it has an ID
-                Header: ({getToggleAllRowsExpandedProps, isAllRowsExpanded}) => (
+                Header:({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
                     <span {...getToggleAllRowsExpandedProps()}>
 
-                      </span>
+                  </span>
+            ), Cell:({row}) => (
 
-                ),
-                Cell: ({row}) => (
-                    // Use Cell to render an expander for each row.
-                    // We can use the getToggleRowExpandedProps prop-getter
-                    // to build the expander.
-                    <span {...row.getToggleRowExpandedProps()} {...row.getRowProps(formatRowProps && formatRowProps(row))}>
-            { row.id === show.id && show.active=== true ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                                 className="bi bi-chevron-down" viewBox="0 0 16 16">
-                <path fillRule="evenodd"
-                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-            </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                          className="bi bi-chevron-left" viewBox="0 0 16 16">
-                <path fillRule="evenodd"
-                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
-            }
+                // Use Cell to render an expander for each row.
+                // We can use the getToggleRowExpandedProps prop-getter
+                // to build the expander.
+
+                <span className="Expanded" {...row.getToggleRowExpandedProps()}>
+             {row.isExpanded ?
+                <svg {...row.getRowProps(formatRowProps && formatRowProps(row))} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      className="bi bi-chevron-down" viewBox="0 0 16 16">
+                    <path fillRule="evenodd"
+                          d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+                : <svg  {...row.getRowProps(formatRowProps && formatRowProps(row))} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  className="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fillRule="evenodd"
+                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>}
           </span>
                 )
             },{
@@ -229,10 +228,10 @@ useEffect(()=>{
 
 
                                     </tr>
-                                    {row.id === show.id && show.active === true ?
+                                    {row.id === show && showAddress && row.isExpanded ?
                                     <tr className="p-4 m-3 ">
                                         <td    colSpan={15}   className="fadeInt   m-3    " >
-                                    {row.id === show.id && show.active === true ?
+                                    {row.id === show && showAddress && row.isExpanded ?
 
                                                     <div className="  shadow rounded p-2  " >
 
@@ -259,11 +258,11 @@ useEffect(()=>{
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody className='table table-stripped' >
-                                                                {Detail.map(item=>
-                                                                <tr  key={item.id}>
+                                                                {Detail.map((item ,i)=>
+                                                                <tr  key={i}>
                                                                     <td >{item.productSupplyId}</td>
                                                                     <td >{cottageCode}</td>
-                                                                    <td >{item.product.name}</td>
+                                                                    <td >{item.product ?item.product.name :null}</td>
                                                                     <td >{item.quantity}</td>
                                                                     <td >{new  Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                                                     {/*The unit price must be read from the backend*/}
