@@ -28,7 +28,7 @@ const ClientsMainLayout: React.FC = () => {
   useEffect(() => {
     fetchApi();
     getUserRole();
-    getUserCompanies();
+    // getUserCompanies();
   }, []);
   const dispatch = useDispatch();
   async function fetchApi() {
@@ -55,12 +55,12 @@ const ClientsMainLayout: React.FC = () => {
     }
   };
 
-  const getUserCompanies = async () => {
-    const { data, status } = await GetCompanyChild();
-    if (status === 200) {
-      dispatch(AllCompanies(data.result.companies));
-    }
-  };
+  // const getUserCompanies = async () => {
+  //   const { data, status } = await GetCompanyChild();
+  //   if (status === 200) {
+  //     dispatch(AllCompanies(data.result.companies));
+  //   }
+  // };
 
   return (
     <Fragment>
