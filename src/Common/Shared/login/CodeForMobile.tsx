@@ -9,15 +9,15 @@ import { decodeToken } from '../../../Utils/decodeToken';
 import './customCss.css';
 import Countdown from 'react-countdown';
 import { ShowTimer } from '../Common/ShowTimer';
-import  axios  from 'axios';
-const afra=require( './afra.jpg');
+import axios from 'axios';
+const afra = require('./afra.jpg');
 
 
 
 
 
 
-const CodeForMobile:React.FC = () => {
+const CodeForMobile: React.FC = () => {
     const history = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ const CodeForMobile:React.FC = () => {
     const [isSubmit, setIssubmit] = useState(false);
     const [timer, setTimer] = useState(120);
     const timeOutCallback = useCallback(() => setTimer(currTimer => currTimer - 1), []);
-    const otpCodeResender = async (event:any) => {
+    const otpCodeResender = async (event: any) => {
         event.preventDefault();
 
         const mobile = localStorage.getItem('mobile');
@@ -54,7 +54,7 @@ const CodeForMobile:React.FC = () => {
 
     const handelSubmit = async () => {
 
-      
+
         const user = {
             verificationCode: Code,
             phoneNumber: localStorage.getItem('mobile')
@@ -84,18 +84,22 @@ const CodeForMobile:React.FC = () => {
                 localStorage.setItem('token', data.result.token);
                 localStorage.setItem('refresh', data.result.refresh);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
-                const response=await GetUsersRoles()
-                
-                
-                if( response.data.result.userRoleIds.every((Item:any)=>Item<=2)){
-                   
+                const response = await GetUsersRoles()
+
+
+                if (response.data.result.userRoleIds.every((Item: any) => Item <= 2)) {
+
                     history('/client')
-                    }
-                    else{
-                        history('/admin')
-                    }
+                    document.body.classList.add('clientBody')
+
+                }
+                else {
+                    history('/admin')
+                    document.body.classList.remove('clientBody')
+
+                }
             }
-            
+
 
 
 
@@ -105,12 +109,12 @@ const CodeForMobile:React.FC = () => {
         catch (error) {
             setLoading(true)
 
-         
+
             setIssubmit(false)
             setLoading(false)
         }
     }
-    const handleChang = (num:any) => {
+    const handleChang = (num: any) => {
 
         setCode(num);
         num.length === 5 ? setIssubmit(true) : setIssubmit(false)
@@ -143,13 +147,13 @@ const CodeForMobile:React.FC = () => {
                                 <OtpInput
 
                                     containerStyle={{ display: 'flex' }}
-                                    inputStyle={{  width: ""}}
+                                    inputStyle={{ width: "" }}
                                     value={Code}
                                     numInputs={5}
                                     shouldAutoFocus={true}
                                     separator={<span> </span>}
                                     onChange={handleChang}
-className="otpInput"
+                                    className="otpInput"
 
                                 />
                                 <hr />
