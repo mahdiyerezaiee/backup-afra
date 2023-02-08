@@ -28,9 +28,10 @@ const ClientsMainLayout: React.FC = () => {
   };
   useEffect(() => {
     fetchApi();
-    getUserRole();
+   getUserRole();
     // getUserCompanies();
   }, []);
+
   const dispatch = useDispatch();
   async function fetchApi() {
     const { data, status } = await GetUserInfo();
@@ -38,6 +39,7 @@ const ClientsMainLayout: React.FC = () => {
       if (status === 200) {
         localStorage.setItem("connect", data.result.customer.id);
         localStorage.setItem("com", data.result.customer.companyId);
+        
         dispatch(addUser(data.result.customer));
       }
     } catch (error) {
@@ -47,6 +49,7 @@ const ClientsMainLayout: React.FC = () => {
   document.body.classList.add('clientBody')
 
   const getUserRole = async () => {
+    localStorage.removeItem('rd')
     const { data, status } = await GetUsersRoles();
     try {
       if (status === 200) {
@@ -57,12 +60,12 @@ const ClientsMainLayout: React.FC = () => {
     }
   };
 
-  // const getUserCompanies = async () => {
-  //   const { data, status } = await GetCompanyChild();
-  //   if (status === 200) {
-  //     dispatch(AllCompanies(data.result.companies));
-  //   }
-  // };
+  const getUserCompanies = async () => {
+    const { data, status } = await GetCompanyChild();
+    if (status === 200) {
+      dispatch(AllCompanies(data.result.companies));
+    }
+  };
 
   return (
     <Fragment>

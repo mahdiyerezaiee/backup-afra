@@ -100,7 +100,7 @@ const AdminMainLayout:React.FC = () => {
   }
   useEffect(() => {
     fetchApi();
-    // getUserRole();
+      getUserRole();
     getUserCompanies()
   }, [])
   const dispatch = useDispatch();
@@ -120,25 +120,27 @@ const AdminMainLayout:React.FC = () => {
   
   }
 
-  // const getUserRole = async () => {
+  const getUserRole = async () => {
 
 
-  //   const { data, status } = await GetUsersRoles()
-  //   try {
-  //     if (status === 200) {
-  //       dispatch(userRoles(data.result.userRoleIds))
+    const { data, status } = await GetUsersRoles()
+    try {
+      if (status === 200) {
+        dispatch(userRoles(data.result.userRoleIds))
+
+        localStorage.setItem('rd',JSON.stringify(data.result.userRoleIds))
 
 
-  //     }
-  //   } catch (error) {
+      }
+    } catch (error) {
     
   
-  //       refreshPage()
+        refreshPage()
       
-  //   }
+    }
 
 
-  // }
+  }
   document.body.classList.remove('clientBody')
 
   const getUserCompanies=async()=>{

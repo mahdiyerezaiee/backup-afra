@@ -170,7 +170,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
             <header className="header navbar navbar-expand-sm">
                 <ul className="navbar-item flex-row">
                     <li className="nav-item theme-logo">
-                        <NavLink to="/admin">
+                        <NavLink to="/client">
                             <img src="/assets/img/afralogo.png" className="navbar-logo" alt="logo" />
                         </NavLink>
                     </li>
