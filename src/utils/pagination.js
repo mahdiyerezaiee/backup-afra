@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import './style.css'
-const Pagination = ({PageNumber , setPageNumber , getDataBySearch , pageOptions , PageSize, total}) => {
+const Pagination = ({PageNumber , setPageNumber , getDataBySearch  , PageSize, total}) => {
 
     const nextPageHandler = () => {
         setPageNumber(Number(PageNumber) + 1)

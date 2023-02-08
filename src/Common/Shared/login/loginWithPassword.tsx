@@ -98,16 +98,10 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                     progress: undefined
                 });
 
-                if (response.data.result.userRoleIds.every((Item: any) => Item <= 2)) {
+                dispatch(userRoles(response.data.result.userRoleIds))
 
                     navigate('/client')
-                    document.body.classList.add('clientBody')
-                }
-                else {
-                    navigate('/admin')
-                    document.body.classList.remove('clientBody')
-
-                }
+                  
             }
 
 

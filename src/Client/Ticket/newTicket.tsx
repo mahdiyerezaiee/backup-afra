@@ -61,7 +61,7 @@ const NewTicket:React.FC = () => {
         Navigate("/client/ticket")
     }
     return(
-        <div className='user-progress' >
+        <div className='dashboard-widget' >
             <div className='row'>
                 <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
                     <h5 >تعریف تیکت جدید</h5>

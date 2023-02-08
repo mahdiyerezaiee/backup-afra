@@ -71,11 +71,11 @@ const SideNavbar: React.FC = () => {
 
                 <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}>داشبورد</MenuItem>
 
-                <SubMenu hidden={roles.includes(1) ? false : true} icon={<FiUsers size={'2rem'} />} label="تکمیل اطلاعات" >
+                {/* <SubMenu hidden={roles.includes(1) ? false : true} icon={<FiUsers size={'2rem'} />} label="تکمیل اطلاعات" >
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-align-justify" />}><NavLink to='identitypannel'> احراز هویت</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-upload" />}>  بارگزاری مدارک</MenuItem>
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-pencil-square" />}><NavLink to="editProfile" > ویرایش اطلاعات</NavLink></MenuItem>
-                </SubMenu>
+                </SubMenu> */}
                 <SubMenu ref={ref1} open={show.item1 === true ? true : false} onClick={() => setShow({ ...show, item1: !show.item1, item2: false, item3: false, item4: false, item5: false, item6: false, item7: false, item8: false, item9: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(8) ? false : true} icon={<FiUsers size={'2rem'} />} label='کاربران'>
 
 
@@ -133,7 +133,7 @@ const SideNavbar: React.FC = () => {
               </SubMenu> */}
                 <MenuItem hidden={roles.includes(7) || roles.includes(5) || roles.includes(8) ? false : true} icon={<FaCashRegister size='2rem' />} >حسابداری</MenuItem>
                 
-                <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2)?false:true } routerLink={<Link to='cuoList'/>} icon={<FaRegHandshake size={'2rem'} /> }>سفارش ها</MenuItem>
+                {/* <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2)?false:true } routerLink={<Link to='cuoList'/>} icon={<FaRegHandshake size={'2rem'} /> }>سفارش ها</MenuItem> */}
                 
 
 
@@ -141,7 +141,7 @@ const SideNavbar: React.FC = () => {
                 <SubMenu ref={ref12} open={show.item12 === true ? true : false} onClick={() => setShow({ ...show, item12: !show.item12, item16: false, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item13: false, item14: false })} hidden={(roles.includes(2) || roles.includes(7) || roles.includes(8)) || roles.includes(5) ? false : true} icon={<MdSupportAgent size='2rem' />} label="پشتیبانی" >
                     <MenuItem onClick={handleHeaderClick} hidden={roles.includes(7) || roles.includes(8) || roles.includes(5) ? false : true}><NavLink to="user-news" >اطلاعیه و اعلان ها</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick} routerLink={<Link to='ticket'></Link>} >لیست تیکت ها</MenuItem>
-                    <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) || roles.includes(1) ? false : true}  routerLink={<Link to='newTicket'></Link>}>ثبت تیکت جدید </MenuItem>
+                    {/* <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) || roles.includes(1) ? false : true}  routerLink={<Link to='newTicket'></Link>}>ثبت تیکت جدید </MenuItem> */}
 
                 </SubMenu>
 
