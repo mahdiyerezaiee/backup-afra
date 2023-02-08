@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { ImTab } from "react-icons/im";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import { Navigate } from "react-router-dom";
 import { GetUsersRoles } from "../services/userService";
 import { RootState } from "../store";
+import { userRoles } from "../store/Slice/user/userRole/userRoleSlice";
 interface Props {
     children: JSX.Element
 }
 
 const PrivateRoute: React.FC<Props> = ({ children }: Props) => {
-    let [userRole, SetUserRole] = useState([])
+  
+   
     const token = localStorage.getItem("token")
     const roles = useSelector((state:RootState) => state.roles);
+    
+    const role=JSON.parse(String(localStorage.getItem("rd")))
+    
 
-    const userRoles = async () => {
-
-        const { data, status } = await GetUsersRoles()
-        SetUserRole(data.result.userRoleIds)
-
-    }
-    useEffect(() => {
-        userRoles()
-    }, [])
-
- console.log(roles);
  
 
+   
+console.log(roles);
+
+
+if(roles.length>0){
     return token && roles.some((item: any) => item > 2) ? children : <Navigate to="/client" />
+}
+else
+{
+    return token && role.some((item: any) => item > 2) ? children : <Navigate to="/client" />
+
+}
 };
 
 export default PrivateRoute;

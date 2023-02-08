@@ -24,6 +24,10 @@ const MainLazyLoad = lazy(() => import('../Admin/Layout/AdminMainLayout'))
 
 const AdminPannel: React.FC = () => {
   const token = localStorage.getItem('Token');
+  const dispatch=useDispatch()
+
+
+  
 
   return (
     
@@ -31,7 +35,7 @@ const AdminPannel: React.FC = () => {
     <Routes>
 
       <Route path='/admin/*' element={<PrivateRoute><AdminMainLayout /></PrivateRoute>} />
-      <Route path='/client/*' element={<PrivateRouteClients><ClientsMainLayout /></PrivateRouteClients>} />
+      <Route path='/client/*' element={<ClientsMainLayout /> }/>
 
       <Route path='/' element={<SysPlus/>} /> 
       <Route path='/login' element={<Login />} />
