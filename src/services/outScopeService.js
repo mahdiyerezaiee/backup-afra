@@ -26,3 +26,8 @@ export const UpdateAllShippingReport=(body)=>{
     return http.post(`${configure}/OutScope/UpdateShippingReports`,JSON.stringify(body));
 }
 
+export const SyncShippingsWithBazargah=(body)=>{
+
+    return http.post(`${configure}/OutScope/SyncShippingsWithBazargah`,JSON.stringify(body));
+}
+

@@ -35,7 +35,7 @@ const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, clos
 
             orderId:id,
             orderStatusId,
-
+            isAdmin:true
 
         }
         if(orderStatusId!==13){
