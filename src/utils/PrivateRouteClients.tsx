@@ -6,24 +6,12 @@ import { GetUsersRoles } from "../services/userService";
 }
 
 const PrivateRouteClients : React.FC<Props>= ({children}:Props) => {
-    let [userRole, SetUserRole] = useState([])
 
     const token = localStorage.getItem("token")
-    const userRoles = async () => {
-
-        const { data, status } = await GetUsersRoles()
-        SetUserRole(data.result.userRoleIds)
-
-    }
-    useEffect(() => {
-        userRoles()
-    }, [])
-
-
-    return token && userRole.every((item: any) => item <= 2)  ?
+    
+    return token    ?
     children 
-
-     : 
+ : 
      <Navigate to="/login"/>
 };
 

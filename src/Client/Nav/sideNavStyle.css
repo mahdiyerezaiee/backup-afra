@@ -80,11 +80,36 @@ position: absolute;
 padding: 23px;
 }
 
-.client-sideBar .css-vj11vy .ps-menuitem-root > .ps-menu-button:hover  {
-    background-color: #f8f8f8;
+.client-sideBar .css-vj11vy .ps-menuitem-root:hover  {
+    background-color: mediumslateblue;
     color: initial;
+
+}
+.client-sideBar .css-vj11vy .ps-menuitem-root:hover svg  {
+    color: white;
+
+}
+.client-sideBar .css-vj11vy .ps-menuitem-root:hover span  {
+    color: white;
     border-radius: 10px;
 
+}
+.client-sideBar .css-vj11vy .bg-light-success:hover svg  {
+    color: white!important;
+
+}
+.client-sideBar .css-vj11vy .bg-light-danger:hover svg   {
+    color: white!important;
+
+}
+.client-sideBar .css-vj11vy .bg-light-success > .ps-menu-button:hover  {
+    background-color: transparent!important;
+}
+.client-sideBar .css-vj11vy .bg-light-success:hover  {
+    background-color: green!important;
+}
+.client-sideBar .css-vj11vy .bg-light-danger:hover  {
+    background-color:red!important;
 }
 .client-sideBar .css-vj11vy a:hover {
     color: initial;

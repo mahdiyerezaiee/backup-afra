@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ImTab } from "react-icons/im";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { GetUsersRoles } from "../services/userService";
+import { RootState } from "../store";
 interface Props {
     children: JSX.Element
 }
@@ -9,6 +11,7 @@ interface Props {
 const PrivateRoute: React.FC<Props> = ({ children }: Props) => {
     let [userRole, SetUserRole] = useState([])
     const token = localStorage.getItem("token")
+    const roles = useSelector((state:RootState) => state.roles);
 
     const userRoles = async () => {
 
@@ -20,9 +23,10 @@ const PrivateRoute: React.FC<Props> = ({ children }: Props) => {
         userRoles()
     }, [])
 
+ console.log(roles);
  
 
-    return token && userRole.every((item: any) => item > 2) ? children : <Navigate to="/login" />
+    return token && roles.some((item: any) => item > 2) ? children : <Navigate to="/client" />
 };
 
 export default PrivateRoute;

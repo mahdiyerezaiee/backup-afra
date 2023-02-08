@@ -93,7 +93,7 @@ const EditAddress:React.FC = () => {
 
     }
   return(
-    <div className='user-progress' >
+    <div className='dashboard-widget user-progress' >
     <div className='row d-flex justify-content-center col-12'>
 
               <div className='mt-5 col-md-7 col-xs-12 m-2'>

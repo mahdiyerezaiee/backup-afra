@@ -91,7 +91,7 @@ const backHandel=(e:any)=>{
 }
     return (
 
-        <div className="layout-px-spacing">
+        <div className="  layout-px-spacing">
 
             <div className="page-header">
                 <div className="page-title">
@@ -101,7 +101,7 @@ const backHandel=(e:any)=>{
 
             
 
-                            <div className='mt-5 mx-auto p-5 bg-light rounded row d-flex justify-content-center col-12'>
+                            <div className='mt-5 mx-auto p-5 dashboard-widget bg-light rounded row d-flex justify-content-center col-12'>
 
                                 <div className='mt-5 col-md-8 col-xs-12'>
                                     <Formik initialValues={{
