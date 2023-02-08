@@ -212,7 +212,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                             <tbody className="text-center" id="havaleTable">
                                 {Shipping ? Shipping.map((item: any) =>
 
-                                    <tr key={item.id} id={item.orderDetailId} onClick={() => findeTakhsis(item.orderDetailId)}>
+                                    <tr key={item.id} id={item.entityId} onClick={() => findeTakhsis(item.entityId)}>
                                         <td data-th="  #"  >{item.id}</td>
                                         <td data-th="  شناسه"  >{(item.entityTypeId === 10 ? 'سفارش' : 'تخصیص') + ` ${item.entityId}#`}</td>
                                         <td data-th="واحد" >{MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name)}</td>
@@ -235,7 +235,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                                 d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
                                                 strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>:"--"}</td>
 
-                                        <td data-th="ثبت بارنامه">{item.shippedQuantity === 0?<button hidden={item.shippedQuantity === 0?false:true} className="btn-primary rounded border-0" onClick={() => openSetExtraShipping(item.id)}>ثبت بارنامه دستی</button>:"--"}</td>
+                                        <td data-th="ثبت بارنامه"><button hidden={roles.some((item:any)=>item>2)?false:true} className="btn-primary rounded border-0" onClick={() => openSetExtraShipping(item.id)}>ثبت بارنامه دستی</button></td>
                                     </tr>
 
                                 ) : <tr className='text-center'></tr>}

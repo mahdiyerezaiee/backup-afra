@@ -17,6 +17,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import ModalGroupWork from "../Common/ModalGroupWork";
 import Modal from 'react-modal';
 import { RootState } from "../../../store";
+import { SyncShippingsWithBazargah } from "../../../services/outScopeService";
 
 
 const file = require("../../../Admin/Order/Component/addressFile.xlsx")
@@ -222,6 +223,30 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     const closeModalIsOpenUploadExcel = () => {
         setIsOpenUploadExcel(false)
     }
+    const syncButton=async(orderId:number,orderDetailId?:number)=>{
+
+const body={
+    orderId,orderDetailId
+}
+
+
+
+try {
+
+    const{data,status}=await SyncShippingsWithBazargah(body)
+    if(status===200){
+        toast.success(data.result.syncResult, {
+            position: "top-right",
+            closeOnClick: true
+        });
+
+    }
+
+} catch (error) {
+    
+}
+
+    }
     const getDetails = async () => {
 
         let finalArr: any = [];
@@ -342,13 +367,15 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
 
                 if (roles.includes(7) || roles.includes(5) || roles.includes(8)) {
                   
-                   return  (   <div>
-                            <button onClick={() => openModal(rows.row.original.id)} className="btn btn-sm btn-primary ml-1 mr-1"
-                                disabled={rows.row.original.shippingId !== null ||paymentStatus===1  ? true : false}
+                   return  (   <div className="text-nowrap">
+                            <button onClick={() => openModal(rows.row.original.id)} className="btn-small  btn-primary "
+                                hidden={rows.row.original.shippingId !== null   ? true : false}
+                                disabled={paymentStatus===1  ? true : false}
                              
 
                             >صدور حواله
                             </button>
+                            <button className="btn btn-sm btn-warning ml-1 mr-1" onClick={()=>syncButton(rows.row.original.orderId,rows.row.original.id)} hidden={rows.row.original.shippingId !== null ||paymentStatus===1  ? false : true}> تطابق با بازارگاه</button>
                             <button disabled={rows.row.original.shippingId !== null ? true : false} onClick={() => openModalDelet(rows.row.original.id)} className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="حذف">
                                 <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20}
                                     viewBox="0 0 24 24" fill="none"
