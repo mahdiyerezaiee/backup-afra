@@ -37,6 +37,8 @@ const params = useParams()
 
         e.preventDefault()
         if(roles[0] <= 2 ){
+            navigate(-1)
+
 return null
         }else{
             navigate(-1)
