@@ -134,19 +134,20 @@ setLoading(false)
     if (productSupply.length !== 0) {
 
         return (<div className=''>
-            <div className=" dashboard-widget" >
+            <div className=" " >
                 <div className="row " >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2 " >
                     <h4 className="text-center" style={{color:'#027f00'}}>
-                        کالای قابل عرضه به گروه مشتریان (
+                        {/* کالای قابل عرضه به گروه مشتریان (
                        عمومی
-                        {/*{!groupInfo    ?  "عمومی" : groupInfo && groupInfo.name}*/}
+                        {!groupInfo    ?  "عمومی" : groupInfo && groupInfo.name}
                         )
+                         */ }
                     </h4>
                     </div>
                 </div>
-                <div className="   ">
-                    <div className="table-responsive overflow-hidden" >
+                <div className=" tab-content  ">
+                    <div className="tab-pane fade show active" >
                         <Modal
                             isOpen={modalIsOpen}
                             onRequestClose={closeModal}
@@ -158,71 +159,45 @@ setLoading(false)
                             <ModalSubmit  loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={productSupplyCondition} closeModal={closeModal}  quantity={quantity} submitHandler={submitHandler}
                                 setquantity={setquantity} />
                         </Modal>
-                        {/*<Modal*/}
-                        {/*    isOpen={modalIsOpenCondition}*/}
-                        {/*    onRequestClose={closeModalCobdition}*/}
-                        {/*    style={customStyles}*/}
-                        {/*    contentLabel="Selected Option"*/}
-                        {/*    ariaHideApp={false}*/}
+                       <div className="row mb-30-none justify-content-center">
+                       {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item:any , index:number) =>
 
-                        {/*>*/}
+                       <div className="col-sm-10 col-md-12 m-1">
 
-                        {/*</Modal>*/}
-
-                        <table className="table mb-4 SalesBoard " >
-                            <thead>
-                                <tr>
-                                    <th className="text-center">#</th>
-                                    <th className="text-center">شماره کوتاژ</th>
-                                    <th className="text-center">محصول</th>
-                                    <th className="text-center">قیمت</th>
-                                    <th className="text-center">واحد</th>
-                                    <th className="text-center">مقدار عرضه</th>
-                                    <th className="text-center">توضیحات</th>
-
-                                    <th className="text-center">تاریخ شروع</th>
-                                    <th className="text-center">تاریخ پایان</th>
-                                    
-                                     <th className="text-center">باقی مانده</th>
-                                    <th className="text-center">عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {productSupply && productSupply.slice(0, showMore? productSupply.length : 5).map((item:any , index:number) =>
-                                    <Fragment key={index + "_frag"}>
-
-                                    <tr key={item.id}>
-                                        <td data-th="#" className="text-center">{item.id}</td>
-                                        <td data-th="شماره کوتاژ" className="text-center">{item.cottageCode}</td>
-                                        <td data-th="محصول" className="text-center">{item.product.name}</td>
-                                        <td data-th="قیمت" className="text-center">{formatter.format(item.price)}</td>
-                                        <td data-th="واحد" className="text-center">{MeasureUnitSample.filter(e => e.id === item.product.measureUnitId).map(e => e.name)}</td>
-                                        <td data-th="مقدار عرضه" className="text-center">{formatter2.format(item.quantity)}</td>
-                                        <td data-th="توضیحات"className="text-center">{item.comment.substring(0, 40)} {item.comment ? "..." : '--'} </td>
-                                        <td data-th="تاریخ شروع" className="text-center">{new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
-                                        <td data-th="تاریخ پایان"className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td> 
-                                        <td data-th="باقی مانده"className="text-center">{formatter2.format(item.remainedQuantity)}</td>
-                                        <td data-th="عملیات"className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item)}>ثبت درخواست
-                                            </button>) : (<button  className=" btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item , item.id)}>شرایط پرداخت</button>)}</td>
-
-
-                                    </tr>
-
-                                                {modalIsOpenCondition === true && productSupplyConditionId === item.id?
-                                                    <tr >
-                                                        <td colSpan={17}   className="fadeInt   m-3    " >
+                                    <div className="  auction-item-2 text-center m-auto  ">
+                                    <div className="auction-content">
+                                        <div className=" row bid-area">
+                                            <div className="col-lg-10">
+                                            <div className="row">
+                                       <span className="col-lg-4 m-auto p-2"><b>شماره کوتاژ </b>: {item.cottageCode}</span>
+                                       <span className=" col-lg-4 m-auto p-2 "> <b>محصول</b>: {item.product.name}</span>
+                                       <span className="col-lg-4 m-auto p-2"> <b>قیمت</b>: {formatter.format(item.price)}</span>
+                                       <span className="col-lg-4 m-auto p-2"><b>واحد</b> : {MeasureUnitSample.filter(e => e.id === item.product.measureUnitId).map(e => e.name)}</span>
+                                       <span className="col-lg-4 m-auto p-2"> <b>مقدار عرضه</b> : {formatter2.format(item.quantity)}</span>
+                                       <span title={item.comment} className="col-lg-4 m-auto p-2"><b>توضیحات</b> : {item.comment.substring(0, 40)} {item.comment ? "..." : '--'}</span>
+                                       <span className="col-lg-4 m-auto p-2"><b>تاریخ شروع</b>  : {new Date(item.createDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</span>
+                                       <span className="col-lg-4 m-auto p-2"> <b>تاریخ پایان</b>  :{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</span>
+                                       <span className="col-lg-4 m-auto p-2"> <b>باقی  مانده</b>  :{formatter2.format(item.remainedQuantity)}</span>
+                                       </div>
+                                       </div>
+                                       <span className="col-lg-2  m-auto button-auction" >  {item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item)}>ثبت درخواست
+                                            </button>) : (<button  className=" btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModalCondition(item , item.id)}>شرایط پرداخت</button>)}</span>
+                                      
+                                            </div>
+                                            </div>
+                                    </div>
+                                    {modalIsOpenCondition === true && productSupplyConditionId === item.id?
+                                                   <div className="client-table-condition" >
                                                     <ConditionSalesBordCustomer  closeModal={closeModalCobdition} productSupplyConditions={productSupplyCondition} handelClick={handelClick} />
-                                                        </td>
-
-                                                    </tr>
+                                                    </div>  
                                                             :null
                                                 }
 
-
-                                    </Fragment>
+                                </div>
                                 )}
-                            </tbody>
-                        </table>
+                       </div>
+
+                       
 
 
                         {productSupply && productSupply.length <= 5 ? null:  <div className=""> 

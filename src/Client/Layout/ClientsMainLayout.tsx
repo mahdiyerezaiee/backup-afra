@@ -89,8 +89,8 @@ const ClientsMainLayout: React.FC = () => {
                 <Route path="/" element={<DashbordCustomer />} />
                 {/* Sales&Order&Bazargah*/}
 
-                <Route path="coulist" element={<OrderCustomer />} />
-                <Route path="cuoDetail/:id" element={<OrderDetailTest />} />
+                <Route path="orderlist" element={<OrderCustomer />} />
+                <Route path="orderDetail/:id" element={<OrderDetailTest />} />
                 <Route path='invoice/:id' element={<InvoiceCreator closeModal={null} />} />
 
                 {/* Ticket*/}

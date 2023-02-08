@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {Menu, MenuItem, Sidebar, SubMenu} from 'react-pro-sidebar'
 import "./sideNavStyle.css"
 import {FaUserCircle, FaUserCog} from "react-icons/fa"
@@ -7,10 +7,24 @@ import {RootState} from "../../store";
 import {RiDashboardLine} from "react-icons/ri";
 import {FaRegHandshake} from "react-icons/fa";
 import{TiPencil} from "react-icons/ti"
-import {MdSupportAgent} from "react-icons/md"
-import {Link, NavLink} from "react-router-dom";
+import {MdOutlineAdminPanelSettings, MdSupportAgent} from "react-icons/md"
+import {Link, NavLink, useNavigate} from "react-router-dom";
+import { ImExit } from 'react-icons/im';
+import { SlOrganization } from 'react-icons/sl';
+import { GetUsersRoles } from '../../services/userService';
 const ClientSideNavbar: React.FC = () => {
     const user = useSelector((state:RootState) => state.user);
+    let [userRole, SetUserRole] = useState([])
+    const token = localStorage.getItem("token")
+const roles = useSelector((state:RootState) => state.roles);
+    const navigate=useNavigate();
+    // console.log(roles.some((i:any)=>i > 2));
+    const sideChanger=()=>{
+
+  document.body.classList.remove('clientBody')
+  navigate('/admin')
+        
+    }
     return (
     <Sidebar defaultCollapsed={false} className="client-sideBar sticky-menu ">
         <div className="m-2 text-center   text-black-50 p-3 info-client">
@@ -27,17 +41,16 @@ const ClientSideNavbar: React.FC = () => {
         </div>
       <Menu >
           <MenuItem icon={<RiDashboardLine size={'1.2rem'} />} routerLink={<Link to="/client" />}>داشبورد</MenuItem>
-          <MenuItem icon={<FaRegHandshake size={'1.2rem'} />} routerLink={<Link to="/client/coulist" />}>سفارشات</MenuItem>
+          <MenuItem icon={<FaRegHandshake size={'1.2rem'} />} routerLink={<Link to="orderlist" />}> سفارشات من</MenuItem>
+          <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={<Link to="ticket" />}> تیکت های من</MenuItem>
+          <MenuItem icon={<FaUserCog size='2rem' />} routerLink={<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>
+          <MenuItem icon={<SlOrganization size='2rem' />} routerLink={<Link to="" />}>    سازمان</MenuItem>
+          <MenuItem hidden={roles.some((item: any ) => item > 2) ? false : true } className='bg-light-success' icon={<MdOutlineAdminPanelSettings size='2rem' color='green'/>} onClick={sideChanger}>    ورود به پنل ادمین</MenuItem>
 
-          <SubMenu     icon={<MdSupportAgent size='2rem' />} label="پشتیبانی" >
-                    <MenuItem  routerLink={<Link to='ticket'></Link>} >لیست تیکت ها</MenuItem>
-                    <MenuItem   routerLink={<Link to='newTicket'></Link>}>ثبت تیکت جدید </MenuItem>
+          <MenuItem className='bg-light-danger' icon={<ImExit size='2rem' color='red' />} routerLink={<Link to='/logout'></Link>}  > خروج از سامانه</MenuItem>
 
-                </SubMenu>
-                <SubMenu  icon={<FaUserCog size='2rem' />} label="حساب کاربری" >
-                    <MenuItem  icon={<i className="fa fa-hashtag" />} routerLink={<Link to='userProfile'></Link>}  >اطلاعات کاربری </MenuItem>
-                    <MenuItem  icon={<i className="fa fa-share-square-o" />} routerLink={<Link to='/logout'></Link>}  > خروج از سامانه</MenuItem>
-                </SubMenu>
+          
+          
 
       </Menu>
 

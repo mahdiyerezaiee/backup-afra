@@ -16,11 +16,11 @@ const Dashboard :React.FC= () => {
       <DashbordGuess/>
     )
   }
-  else if (roles.length>0 && roles.includes(2)) {
+  else if (roles.length===1 && roles[0]===2) {
     return(
     <DashbordCustomer/>)
   }
-  else if (roles.includes(7)||roles.includes(3)||roles.includes(4) ||roles.includes(5) ||roles.includes(6) ||roles.includes(8)) {
+  else if (roles.some((item:any)=>item>2)) {
     return(
     <DashbordAdmin/>)
   }

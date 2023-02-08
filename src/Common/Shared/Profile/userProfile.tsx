@@ -81,7 +81,7 @@ const UserProfile:React.FC = () => {
       <div className={roles[0]  <= 2?"col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing":"col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing"}>
 
         <div className="user-profile layout-spacing">
-          <div className="widget-content widget-content-area">
+          <div className=" dashboard-widget widget-content widget-content-area dashboard-widget">
             <div className="d-flex justify-content-between">
               <h3 className="">اطلاعات</h3>
 
@@ -145,7 +145,7 @@ const UserProfile:React.FC = () => {
       <div className={roles[0]  <= 2?"col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing":"col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing"}>
 
         <div className="skills layout-spacing ">
-          <div className="widget-content widget-content-area">
+          <div className=" dashboard-widget widget-content widget-content-area">
             <h3 className=""> آدرس</h3>
 
             {address.map((item:any) =>
