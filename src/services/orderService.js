@@ -10,6 +10,7 @@ export const ChangeOrderStatus=(orderStatus)=>{
 
     return http.post(`${configure}/Order/ChangeOrderStatus`,JSON.stringify(orderStatus));
 }
+
 export const GetAllOrders=()=>{
 
     return http.get(`${configure}/Order/GetOrders`);

@@ -84,7 +84,7 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
         const datas = {
 
-            "order": { ...order, paymentStatusId, orderStatusId, shippingStatusId,customer:null,extraData:null }
+            "order": { ...order, paymentStatusId, orderStatusId, shippingStatusId,customer:null,extraData:null,isAdmin:true }
 
         }
         try {

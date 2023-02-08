@@ -5,6 +5,7 @@ import {ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails} from "../../../
 
 import {toast} from "react-toastify";
 import {ClipLoader} from "react-spinners";
+import { CreateInvoice } from './../../../services/invoiceService';
 const customStyles = {
     content: {
 
@@ -26,6 +27,7 @@ interface Props{
 }
 const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, closeModal}) => {
     const [loading, setLoading] = useState(false);
+    const [comment,setComment]=useState('')
 
     const handleEditFormSubmit =async () => {
         setLoading(true)
@@ -36,11 +38,17 @@ const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, clos
 
 
         }
+        if(orderStatusId!==13){
         try {
-            const {data, status} = await ChangeOrderStatus(datas)
+            const invoiceData={
+                entityTypeId: 10,
+                entityId: id,
+                comment
+            }
+            const {data,status}=await CreateInvoice(invoiceData)
+            if(status===200){
 
-            if (status === 200) {
-                toast.success("ویرایش با موفقعیت انجام شد", {
+                toast.success(`فاکتور با شماره ${data.result.invoiceId} ثبت شد.`, {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -49,8 +57,17 @@ const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, clos
                     draggable: true,
                     progress: undefined
                 });
+
+            }
+        } catch (error) {
+            
+        }
+    }
+        try {
+            const {data, status} = await ChangeOrderStatus(datas)
+
                 closeModal()
-            }}catch (e) {
+            }catch (e) {
            
 
             console.log(e)
@@ -82,20 +99,30 @@ const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, clos
                                            y2="18"></line><line
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div >
-                <div className="card-body p-0" style={{ height: '5rem', width: '20rem' }}>
+                <div className="card-body p-0" style={orderStatusId!==13?{ height: '15rem', width: '20rem' }:{height: '5rem', width: '20rem'}}>
 
                     <div className="row">
 
 
-                            <div className=" col-12 text-center">
-                                {orderStatusId === 12? <span>آیا مطمئن هستید که این درخواست این سفارش را رد کنید</span> : <span>آیا مطمئن هستید که این درخواست این سفارش را تایید کنید</span>}
+                            <div className=" col-12 text-center mb-2">
+                                {orderStatusId === 13? <span>آیا مطمئن هستید که این درخواست این سفارش را رد کنید</span> : <span> آیا مطمئن هستید که این درخواست این سفارش را تایید کنید توجه کنید  با تایید شما صورت حساب برای مشتری صادر می شود</span>}
 
                             </div>
 
+                           
 
 
                     </div>
-
+                    {orderStatusId!==13?
+                                 <div className="form-group mt-4 textOnInput">
+                                 <label >توضیحات</label>
+     
+                                 <textarea  className="form-control opacityForInput " rows={4} placeholder='توضیحات تکمیلی' value={comment} onChange={(e:any) => 
+                                     setComment(e.target.value)
+                                 } />
+     
+                             </div>  :''
+                            }
 
 
             </div>

@@ -212,7 +212,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                             <tbody className="text-center" id="havaleTable">
                                 {Shipping ? Shipping.map((item: any) =>
 
-                                    <tr key={item.id} id={item.orderDetailId} onClick={() => findeTakhsis(item.orderDetailId)}>
+                                    <tr key={item.id} id={item.entityId} onClick={() => findeTakhsis(item.entityId)}>
                                         <td data-th="  #"  >{item.id}</td>
                                         <td data-th="  شناسه"  >{(item.entityTypeId === 10 ? 'سفارش' : 'تخصیص') + ` ${item.entityId}#`}</td>
                                         <td data-th="واحد" >{MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name)}</td>

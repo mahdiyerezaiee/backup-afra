@@ -25,3 +25,4 @@ export const UpdateAllShippingReport=(body)=>{
 
     return http.post(`${configure}/OutScope/UpdateShippingReports`,JSON.stringify(body));
 }
+

@@ -6,7 +6,7 @@ import InvoiceCreator from "../../../Utils/invoiceCreator";
 import Modal from "react-modal";
 import ImageFileUploader from "../../../Utils/ImageFileUploader";
 import {OrderStatus} from "../../Enums/OrderStatusEnums";
-import { editOrder } from '../../../services/orderService';
+import { ChangeOrderStatus, editOrder } from '../../../services/orderService';
 import { toast } from 'react-toastify';
 import config from "../../../services/config.json"
 import {Link} from "react-router-dom";
@@ -57,10 +57,16 @@ let newAttachmnet=attachments.filter((item:any)=>item.deleted===false)
         e.preventDefault()
 
         const body={
-            "order":{...order,orderStatusId:5}
+            orderId: order.id,
+            orderStatusId: 5,
+            paymentStatusId: null,
+            conditionalPaymentTypeId: null,
+            conditionPaymentComment: null,
+            isAdmin:null
+
         }
         try {
-            const{data,status}=await editOrder(body)
+            const{data,status}=await ChangeOrderStatus(body)
 
             if(data.success===true){
                 toast.success("درخواست با موفقیت ارسال شد", {
