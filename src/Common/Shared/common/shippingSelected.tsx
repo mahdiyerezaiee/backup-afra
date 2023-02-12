@@ -75,10 +75,8 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
     }
     const handelSubmit = async (e:any) => {
         setLoading(true)
-        console.log('hi im here');
         e.preventDefault();
         let body = {}
-        console.log(orderDetailId);
         if (!Array.isArray(orderDetailId)) {
             body = {
                 orderDetailId: orderDetailId,
