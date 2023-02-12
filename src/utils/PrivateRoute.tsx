@@ -27,10 +27,13 @@ console.log(roles);
 if(roles.length>0){
     return token && roles.some((item: any) => item > 2) ? children : <Navigate to="/client" />
 }
-else
+else if(role)
 {
     return token && role.some((item: any) => item > 2) ? children : <Navigate to="/client" />
 
+}
+else{
+    return token? <Navigate to="/client" />:<Navigate to="/"/>
 }
 };
 
