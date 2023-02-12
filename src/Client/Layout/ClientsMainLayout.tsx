@@ -20,6 +20,7 @@ import EditProfile from "../../Common/Shared/Profile/editProfile";
 import EditAddress from "../../Common/Shared/Profile/editAddress";
 import DashbordCustomer from "../Dashboard/Component/dashbordCustomer";
 import InvoiceCreator from "../../Utils/invoiceCreator";
+import NotFound from './../../Common/Shared/Common/notFound';
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
@@ -90,6 +91,7 @@ const ClientsMainLayout: React.FC = () => {
             <div className=" col-lg-9">
               <Routes>
                 <Route path="/" element={<DashbordCustomer />} />
+                <Route path="/*" element={<NotFound />} />
                 {/* Sales&Order&Bazargah*/}
 
                 <Route path="orderlist" element={<OrderCustomer />} />

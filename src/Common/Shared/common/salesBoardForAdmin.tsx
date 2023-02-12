@@ -184,7 +184,7 @@ const SalesBoardForAdmin:React.FC = () => {
 
     if (productSupply !== null) {
 
-        return (<div className='user-progress'>
+        return (<div className=''>
             <div className=" statbox widget-content widget-content-area">
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2">
@@ -237,7 +237,7 @@ const SalesBoardForAdmin:React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {productSupply && productSupply.slice(0, showMore ? productSupply.length :5).map((item:any , index:number) =>
+                            {productSupply && productSupply.slice(0, showMore ? productSupply.length :6).map((item:any , index:number) =>
                                     <Fragment key={index + "_frag"}>
 
 
@@ -279,8 +279,8 @@ const SalesBoardForAdmin:React.FC = () => {
                         </table>
 
                         {productSupply.length <= 5 ? null :
-                        <div className=""> 
-                            <div className=""> </div>
+                        <div className="blurShowMore"> 
+                            <div className="showMore"> </div>
                             <Link to='#'
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center  text-m"
                             onClick={() => setShowMore(!showMore)}
