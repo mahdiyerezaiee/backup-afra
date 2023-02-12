@@ -18,7 +18,11 @@ import ModalGroupWork from "../Common/ModalGroupWork";
 import Modal from 'react-modal';
 import { RootState } from "../../../store";
 import { SyncShippingsWithBazargah } from "../../../services/outScopeService";
+<<<<<<< HEAD
 import InvoiceSetForOrder from './InvoiceSetForOrder';
+=======
+import CraeteInvoceOrderDetail from "../Common/CreateInvoceOrdeDetail";
+>>>>>>> master
 
 
 const file = require("../../../Admin/Order/Component/addressFile.xlsx")
@@ -51,6 +55,8 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     const [IsOpenInvoce, SetIsOpenInvoice] = useState(false);
     const [open, SetOpen] = useState(false);
     const [modalOpen, setIsModalOpen] = useState(false);
+    const [modalOpenInvoice, setIsModalOpenInvoice] = useState(false);
+
     const [IdDelete, setIdDelete] = useState(0)
     const [measureUnitId, setmeasureUnitId] = useState(0)
     const [orderDetailId, setorderDetailId] = useState([]);
@@ -71,15 +77,24 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
         return (arrayOfSelectedData)
     }
     const getBulkJob = (selected: any) => {
-        const arrayOfData = getSelectedData(selectedRows);
+    const arrayOfData = getSelectedData(selectedRows);
+
+    if(selected === 2){
 
         setorderDetailId(arrayOfData)
 
         openModal(arrayOfData)
+    }if(selected === 3){
+openInvoceModal(arrayOfData)
+    }
+        }
+    const openInvoceModal=(id:any)=>{
+        setIsModalOpenInvoice(true)
+        setorderDetailId(id)
 
-
-
-
+    }
+    const ColseInvoceModal =()=>{
+        setIsModalOpenInvoice(false)
     }
     const openModalDelet = (id: any) => {
         setIsModalOpen(true);
@@ -433,7 +448,7 @@ try {
             <div>
                 <ShippingSelected modalIsOpen={modalIsOpen} closeModal={closeModal} orderDetailId={orderDetailId} Order={order} />
                 <FinancialConfirmation id={order.id} modalIsOpen={IsOpen} closeModal={closeModalFinancialConfirmation} />
-
+<CraeteInvoceOrderDetail modalIsOpen={modalOpenInvoice} closeModal={ColseInvoceModal} orderDetailId={orderDetailId} Order={order}/>
                 <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark mt-4   ">
                     <label>جزییات سفارش </label>
 

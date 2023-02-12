@@ -996,28 +996,29 @@ const OrderList :React.FC= () => {
                                 />
                             </div>
                         </div>
-                        <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                        <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label>شماره سفارش</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="سفارش"
                                 value={Id} onChange={(e:any) => setId(e.target.value)} /></div>
-                        <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                        <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> کد ملی</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
                                 maxLength={11} value={nationalCode}
                                 onChange={(e:any) => setNationalCode(e.target.value)} /></div>
-                        <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                        <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> شناسه ملی</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
                                 maxLength={11} value={organizationNationalId}
                                 onChange={(e:any) => setOrganizationNationalId(e.target.value)} /></div>
-                        <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                        <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> شناسه خرید بازارگاه</label>
+
 
                             <input className="form-control opacityForInput  mb-4" type="text"
                                 placeholder="شناسه خرید"
                                 value={ExtId} onChange={(e:any) => setExtId(e.target.value)} />
                         </div>
-                        <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                        <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> کد تخصیص</label>
 
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
