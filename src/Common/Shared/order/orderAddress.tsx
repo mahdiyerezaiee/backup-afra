@@ -18,6 +18,7 @@ import ModalGroupWork from "../Common/ModalGroupWork";
 import Modal from 'react-modal';
 import { RootState } from "../../../store";
 import { SyncShippingsWithBazargah } from "../../../services/outScopeService";
+import InvoiceSetForOrder from './InvoiceSetForOrder';
 
 
 const file = require("../../../Admin/Order/Component/addressFile.xlsx")
@@ -47,11 +48,13 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     const [modalIsOpen, setIsOpen] = useState(false);
     const [FilterData, setFilterData] = useState<any>([])
     const [IsOpen, SetIsOpen] = useState(false);
+    const [IsOpenInvoce, SetIsOpenInvoice] = useState(false);
     const [open, SetOpen] = useState(false);
     const [modalOpen, setIsModalOpen] = useState(false);
     const [IdDelete, setIdDelete] = useState(0)
     const [measureUnitId, setmeasureUnitId] = useState(0)
     const [orderDetailId, setorderDetailId] = useState([]);
+    const [OrderId, setOrderId] = useState(0);
     const [completeDdata, SetCompletedData] = useState([])
     const [productSupplyId, setProductSupplyId] = useState(0)
     const [stateSuccess, SetStateSuccess] = useState(0)
@@ -202,6 +205,10 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     const openModalFinancialConfirmation = () => {
 
         SetIsOpen(true);
+    } 
+     const openModelInvoice = (id:any) => {
+        setOrderId(id)
+        SetIsOpenInvoice(true);
     }
     const closeModalFinancialConfirmation = () => {
         getOrder()
@@ -210,6 +217,10 @@ const OrderAddress: React.FC<Props> = ({ details, shipping, orderWeight, Takhsis
     const closeModalAddress = () => {
 
         setIsOpenAddress(false);
+    }
+    const CloseModalInvoice = () => {
+
+        SetIsOpenInvoice(false);
     }
     const openModalAddress = (id: any, measureId: any) => {
         setorderDetailId(id)
@@ -534,13 +545,16 @@ try {
                             <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                         </div>) : ''}
+                        
                     <div className=" text-end  p-2" style={{ textAlign: 'left' }}>
 
                         {roles.includes(7) || roles.includes(5) || roles.includes(8) ? <button className="btn-success m-1 btn " hidden={order.orderStatusId === 8 ? false : true} onClick={openModalFinancialConfirmation}>تایید مالی</button> : null}
+                        {roles.includes(7) || roles.includes(5) || roles.includes(8)? <button className="btn btn-info" onClick={()=>openModelInvoice(order.id)}>صدور فاکتور تجمیعی</button>:''}
+
                     </div>
-
-                </div>
-
+                 
+                </div> 
+                <InvoiceSetForOrder closeModal={CloseModalInvoice} isOpenInvoice={IsOpenInvoce}  orderId={OrderId}/>
                 <AddAdressCustomerForOrder isOpenAddress={isOpenAddress} closeModal={closeModalAddress} orderDetailId={orderDetailId} orderMeasuerId={measureUnitId} />
                 <ExcelFileUploader modalIsOpen={modalIsOpenUploadExcel} closeModal={closeModalIsOpenUploadExcel}
                     EntityId={orderDetailId} EntityTypesId={11}

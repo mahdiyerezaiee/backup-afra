@@ -49,7 +49,7 @@ const InvoiceList: React.FC = () => {
 
     const [stateError, SetStateError] = useState(0)
     const [invoices, SetInvoice] = useState([])
-    const [Ids, setIds] = useState([])
+    const [Ids, setIds] = useState<any>([])
     const [EntityTypeId, SetEntityTypeId] = useState(getDefault().EntityTypeId)
     const [EntityId, SetEntityId] = useState(getDefault().EntityId)
     const [PriceUnitId, SetPriceUnitId] = useState(getDefault().PriceUnitId)
@@ -792,7 +792,7 @@ const InvoiceList: React.FC = () => {
                                      <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label>شناسه فاکتور </label>
                                 <input className="form-control opacityForInput  mb-4" type="number" placeholder="شناسه فاکتور "
-                                    value={Ids} onChange={(e: any) => setIds(e.target.value)} /></div>
+                                    value={Ids} onChange={(e: any) => setIds([e.target.value])} /></div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> کد ملی</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
