@@ -32,8 +32,8 @@ const CraeteInvoceOrderDetail:React.FC<Props>=({ modalIsOpen , closeModal , orde
     const [loading, setLoading] = useState(false);
     const [paymentMethodId, setPaymentMethodId] = useState<any>(0);
     const [installmentStartDate, setInstallmentStartDate] = useState<any>(new Date());
-    const [installmentPeriod, setInstallmentPeriod] = useState(0);
-    const [installmentOccureCount, setInstallmentOccureCount] = useState(0);
+    const [installmentPeriod, setInstallmentPeriod] = useState<any>(null);
+    const [installmentOccureCount, setInstallmentOccureCount] = useState<any>(null);
     const [comment, setComment] = useState<any>(null);
     const handelStartDate = (value:any) => {
         if (value === null) {
@@ -59,7 +59,7 @@ const CraeteInvoceOrderDetail:React.FC<Props>=({ modalIsOpen , closeModal , orde
                     "entityTypeId": 11,
                     "entityId": orderDetailId[i].id,
                     "paymentMethodId": paymentMethodId,
-                    "installmentStartDate": installmentStartDate,
+                    "installmentStartDate": paymentMethodId!==4?null:installmentStartDate,
                     "installmentPeriod": installmentPeriod,
                     "installmentOccureCount": installmentOccureCount,
                     "comment": comment
