@@ -38,31 +38,7 @@ const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, clos
             isAdmin:true
 
         }
-        if(orderStatusId!==13){
-        try {
-            const invoiceData={
-                entityTypeId: 10,
-                entityId: id,
-                comment
-            }
-            const {data,status}=await CreateInvoice(invoiceData)
-            if(status===200){
-
-                toast.success(`فاکتور با شماره ${data.result.invoiceId} ثبت شد.`, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-
-            }
-        } catch (error) {
-            
-        }
-    }
+       
         try {
             const {data, status} = await ChangeOrderStatus(datas)
 
@@ -105,7 +81,7 @@ const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, clos
 
 
                             <div className=" col-12 text-center mb-2">
-                                {orderStatusId === 13? <span>آیا مطمئن هستید که این درخواست این سفارش را رد کنید</span> : <span> آیا مطمئن هستید که این درخواست این سفارش را تایید کنید توجه کنید  با تایید شما صورت حساب برای مشتری صادر می شود</span>}
+                                {orderStatusId === 13? <span>آیا مطمئن هستید که این درخواست این سفارش را رد کنید</span> : <span> آیا مطمئن هستید که این درخواست این سفارش را تایید کنید</span>}
 
                             </div>
 
@@ -113,16 +89,7 @@ const OrderConfirmation:React.FC<Props> = ({orderStatusId ,id, modalIsOpen, clos
 
 
                     </div>
-                    {orderStatusId!==13?
-                                 <div className="form-group mt-4 textOnInput">
-                                 <label >توضیحات</label>
-     
-                                 <textarea  className="form-control opacityForInput " rows={4} placeholder='توضیحات تکمیلی' value={comment} onChange={(e:any) => 
-                                     setComment(e.target.value)
-                                 } />
-     
-                             </div>  :''
-                            }
+                    
 
 
             </div>

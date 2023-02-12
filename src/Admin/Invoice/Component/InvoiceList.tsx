@@ -16,6 +16,8 @@ import { PriceUnitEnums } from './../../../Common/Enums/PriceUnit';
 import { PaymentStatusEnums } from './../../../Common/Enums/PaymentStatus';
 import MyTable from './../../../Common/Shared/Form/MyTable';
 import ModalGroupWork from './../../../Common/Shared/Common/ModalGroupWork';
+import { InvoceTypes } from './../../../Common/Enums/InvoiceTypeIdEnums';
+import { PaymentStructureEnums } from './../../../Common/Enums/PaymentStructureEnums';
 
 
 
@@ -49,7 +51,7 @@ const InvoiceList: React.FC = () => {
 
     const [stateError, SetStateError] = useState(0)
     const [invoices, SetInvoice] = useState([])
-    const [Ids, setIds] = useState([])
+    const [Ids, setIds] = useState<any>([])
     const [EntityTypeId, SetEntityTypeId] = useState(getDefault().EntityTypeId)
     const [EntityId, SetEntityId] = useState(getDefault().EntityId)
     const [PriceUnitId, SetPriceUnitId] = useState(getDefault().PriceUnitId)
@@ -418,6 +420,12 @@ const InvoiceList: React.FC = () => {
         GetIvoices()
 
     }, [getData])
+    let formatterForMoney = new Intl.NumberFormat('fa-IR', {
+        
+        currency: 'IRR'
+
+
+    });
     const CompaniesIDs = () => {
         return (companies.map(data => ({ label: data.name, value: data.id })))
     }
@@ -435,15 +443,42 @@ const InvoiceList: React.FC = () => {
         { Header: '#', accessor: 'id' },
         { Header: 'نام و نام خانوادگی', accessor: 'customerName' },
         { Header: 'نام سازمان', accessor: 'organizationName' },
-        { Header: 'نوع صورتحساب', accessor: 'invoiceTypeId' },
-        { Header: 'نوع موجودیت', accessor: 'entityTypeId' },
+        {
+            Header: 'نوع صورتحساب', accessor: 'invoiceTypeId', Cell: (rows: any) => {
+
+                return (InvoceTypes.filter((item: any) => (item.id === rows.row.original.invoiceTypeId)).map((item: any) => (item.name)))
+
+            }
+        },
         { Header: 'شناسه ', accessor: 'entityId' },
-        { Header: 'قیمت', accessor: 'price' },
-        { Header: 'واحد', accessor: 'priceUnitId' },
-        { Header: 'وضعیت پرداخت', accessor: 'paymentStatusId' },
-        { Header: 'نوع پرداخت', accessor: 'paymentMethodId' },
-        { Header: 'تاریخ ', accessor: 'createDate' },
-        { Header: 'تاریخ پرداخت ', accessor: 'installmentStartDate' },
+        {
+            Header: 'قیمت', accessor: 'price', Cell: (rows: any) => {
+
+                return (formatterForMoney.format(rows.row.original.price))
+
+            }
+        },
+        { Header: 'واحد', accessor: 'priceUnitId',Cell:(rows:any)=>{
+
+            return(PriceUnitEnums.filter((i:any)=>i.id===rows.row.original.priceUnitId).map((i:any)=>i.name))
+        } },
+        { Header: 'وضعیت پرداخت', accessor: 'paymentStatusId' ,Cell:(rows:any)=>{
+
+            return(PaymentStatusEnums.filter((i:any)=>i.id===rows.row.original.paymentStatusId).map((i:any)=>i.name))
+        }},
+        { Header: 'نوع پرداخت', accessor: 'paymentMethodId',Cell:(rows:any) =>{
+
+
+            return(PaymentStructureEnums.filter((i:any)=>i.id===rows.row.original.paymentMethodId).map((i:any)=>i.name))
+        }},
+        { Header: 'تاریخ ثبت ', accessor: 'createDate' ,Cell:(rows:any)=>{
+
+            return(new Date(rows.row.original.createDate).toLocaleDateString('fa-IR'))
+        }},
+        { Header: 'تاریخ پرداخت ', accessor: 'installmentStartDate',Cell:(rows:any)=>{
+
+            return(new Date(rows.row.original.installmentStartDate).toLocaleDateString('fa-IR'))
+        } },
         { Header: 'دوره اقساط ', accessor: 'installmentPeriod' },
         { Header: 'تعداد اقساط ', accessor: 'installmentOccureCount' },
         { Header: 'توضیحات', accessor: 'comment' }
@@ -527,8 +562,8 @@ const InvoiceList: React.FC = () => {
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label>شماره موبایل</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره موبایل"
-                                    value={CustomerUserName} onChange={(e: any) => SetCustomerUserName(e.target.value)} /></div> 
-                                     <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                    value={CustomerUserName} onChange={(e: any) => SetCustomerUserName(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label>شناسه فاکتور </label>
                                 <input className="form-control opacityForInput  mb-4" type="number" placeholder="شناسه فاکتور "
                                     value={Ids} onChange={(e: any) => setIds(e.target.value)} /></div>
@@ -756,7 +791,7 @@ const InvoiceList: React.FC = () => {
                     ariaHideApp={false}>
                 </Modal>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
-                <AdvancedSearch>
+                    <AdvancedSearch>
                         <br />
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
@@ -788,11 +823,11 @@ const InvoiceList: React.FC = () => {
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label>شماره موبایل</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره موبایل"
-                                    value={CustomerUserName} onChange={(e: any) => SetCustomerUserName(e.target.value)} /></div> 
-                                     <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                    value={CustomerUserName} onChange={(e: any) => SetCustomerUserName(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label>شناسه فاکتور </label>
                                 <input className="form-control opacityForInput  mb-4" type="number" placeholder="شناسه فاکتور "
-                                    value={Ids} onChange={(e: any) => setIds(e.target.value)} /></div>
+                                    value={Ids} onChange={(e: any) => setIds([e.target.value])} /></div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> کد ملی</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"

@@ -335,7 +335,10 @@ const OrderDetailTest:React.FC = () => {
                                 handelPreview={handelPreview} />) : ''}
                         </> :
                             (
-                                <><OrderAddress   details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId}/>
+                                <>
+                                
+                                <OrderAddress   details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId}/>
+                                
                                     <OrderWayBill loading={loading} Shipping={Shipping} dataForExcel={dataForExcel} />
                                     {attachments ? (<OrderAttachment order={order} params={params} attachments={attachments}
                                         closeModalForUpload={closeModalForUpload}
