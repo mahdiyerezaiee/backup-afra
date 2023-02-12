@@ -18,11 +18,9 @@ import ModalGroupWork from "../Common/ModalGroupWork";
 import Modal from 'react-modal';
 import { RootState } from "../../../store";
 import { SyncShippingsWithBazargah } from "../../../services/outScopeService";
-<<<<<<< HEAD
 import InvoiceSetForOrder from './InvoiceSetForOrder';
-=======
 import CraeteInvoceOrderDetail from "../Common/CreateInvoceOrdeDetail";
->>>>>>> master
+
 
 
 const file = require("../../../Admin/Order/Component/addressFile.xlsx")
