@@ -100,7 +100,7 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
                         setSelectFunc(Number(e.target.value))
                     }}
                 >
-                    {[{id:1,name:'انتخاب'},{id: 2, name: 'صدور حواله '}].map(item => (
+                    {[{id:1,name:'انتخاب'},{id: 2, name: 'صدور حواله '},{id: 3, name: 'صدور فاکتور بر اساس جزییات سفارش '}].map(item => (
                         <option key={item.id} value={item.id}>
                             {item.name}
                         </option>
