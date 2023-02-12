@@ -33,8 +33,8 @@ const InvoiceSetForOrder: React.FC<Props> = ({ closeModal, isOpenInvoice, orderI
   const [loading, setLoading] = useState(false);
   const [paymentMethodId, setPaymentMethodId] = useState<any>(0);
   const [installmentStartDate, setInstallmentStartDate] = useState<any>(new Date());
-  const [installmentPeriod, setInstallmentPeriod] = useState(0);
-  const [installmentOccureCount, setInstallmentOccureCount] = useState(0);
+  const [installmentPeriod, setInstallmentPeriod] = useState<any>(null);
+  const [installmentOccureCount, setInstallmentOccureCount] = useState<any>(null);
   const [comment, setComment] = useState<any>(null);
 
 
@@ -61,7 +61,7 @@ const handelSubmit=async()=>{
     entityTypeId:10,
     entityId: orderId,
     paymentMethodId,
-    installmentStartDate,
+    installmentStartDate:paymentMethodId!==4?null:installmentStartDate,
     installmentPeriod,
     installmentOccureCount,
     comment
