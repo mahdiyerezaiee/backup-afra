@@ -44,8 +44,9 @@ const roles = useSelector((state:RootState) => state.roles);
           <MenuItem icon={<FaRegHandshake size={'1.2rem'} />} routerLink={<Link to="orderlist" />}> سفارشات من</MenuItem>
           <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={<Link to="ticket" />}> تیکت های من</MenuItem>
           <MenuItem icon={<FaUserCog size='2rem' />} routerLink={<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>
-          <MenuItem icon={<SlOrganization size='2rem' />} routerLink={<Link to="" />}>    سازمان</MenuItem>
+          <MenuItem icon={<SlOrganization size='2rem' />} routerLink={<Link to="organization" />}>    سازمان</MenuItem>
           <MenuItem hidden={roles.some((item: any ) => item > 2) ? false : true } className='bg-light-success' icon={<MdOutlineAdminPanelSettings size='2rem' color='green'/>} onClick={sideChanger}>    ورود به پنل ادمین</MenuItem>
+
 
           <MenuItem className='bg-light-danger' icon={<ImExit size='2rem' color='red' />} routerLink={<Link to='/logout'></Link>}  > خروج از سامانه</MenuItem>
 

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { GetAddress, GetAllProvince } from "../../../services/addressService";
 import { ImUser } from "react-icons/im"
-import { GetAllOrganisation,GetOrganisationById } from "../../../services/organisationService";
-import { RootState } from "../../../store";
+import { GetOrganisationById } from "../../services/organisationService";
+import { RootState } from "../../store";
+import { GetAddress, GetAllProvince } from "../../services/addressService";
 const UserProfile:React.FC = () => {
   const Navigate = useNavigate()
   const user = useSelector((state:RootState) => state.user);
@@ -36,28 +36,21 @@ const UserProfile:React.FC = () => {
     setAddress(data.result.addresses);
   }
   const navitage = () => {
-    if(roles.every(item=>(item  <= 2))){
+   
       Navigate("/client/editProfile")
 
-    }else{
-      Navigate("/admin/editProfile")
-
-    }
+   
+      
   }
   const navigateOrganization = () => {
-    if(roles.some(item=>(item  <= 2))){
+   
     Navigate(`/client/editorganization/${user.organizationId}`)
-  }else{
-    Navigate(`/admin/editorganization/${user.organizationId}`)
-  }
+  
   }
   const navitageAddress = (id:any) => {
-    if(roles.some(item=>(item  <= 2)) ){
+    
     Navigate(`/client/editAddress/${id}`)
-  }else{
-    Navigate(`/admin/editAddress/${id}`)
-
-  }
+  
   }
   const getOrganiz = async () => {
 
@@ -78,7 +71,7 @@ const UserProfile:React.FC = () => {
 
     <div className="row layout-spacing">
 
-      <div className={roles[0]  <= 2?"col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing":"col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing"}>
+      <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing" >
 
         <div className="user-profile layout-spacing">
           <div className=" dashboard-widget widget-content widget-content-area dashboard-widget">
@@ -168,7 +161,7 @@ const UserProfile:React.FC = () => {
         </div>
       </div>
 
-      {organizm && user.organizationId?
+      {/* {organizm && user.organizationId?
         <div className="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
 
           <div className="user-profile layout-spacing">
@@ -209,7 +202,7 @@ const UserProfile:React.FC = () => {
               </div>
             </div>
           </div>
-        </div> : ''}
+        </div> : ''} */}
     </div>
 
   )
