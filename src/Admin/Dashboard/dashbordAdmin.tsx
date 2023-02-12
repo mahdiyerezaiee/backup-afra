@@ -24,7 +24,7 @@ const DashbordAdmin:React.FC = () => {
                 // }
             }
         }
-
+        window.scrollTo(0, 0);
         document.getElementsByClassName("main-Layout")[0].addEventListener("scroll", reveal);
     },[window])
   return(

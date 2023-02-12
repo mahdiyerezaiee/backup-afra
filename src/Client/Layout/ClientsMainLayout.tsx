@@ -15,12 +15,15 @@ import HeaderClientMian from "./Header/headerClientMian";
 import OrderDetailTest from "../Order/Component/customerOrderDetailTest";
 import Ticket from "../Ticket/ticket_v2";
 import NewTicket from "../Ticket/newTicket";
-import UserProfile from "../../Common/Shared/Profile/userProfile";
-import EditProfile from "../../Common/Shared/Profile/editProfile";
-import EditAddress from "../../Common/Shared/Profile/editAddress";
+
 import DashbordCustomer from "../Dashboard/Component/dashbordCustomer";
 import InvoiceCreator from "../../Utils/invoiceCreator";
 import NotFound from './../../Common/Shared/Common/notFound';
+import UserProfile from "../Profile/userProfile";
+import EditProfile from "../Profile/editProfile";
+import EditAddress from "../Profile/editAddress";
+import OrganizationClient from "../organition/organizationClient";
+import EditOrganizaion from "../organition/EditOrganization";
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
@@ -107,6 +110,9 @@ const ClientsMainLayout: React.FC = () => {
                 <Route path="userProfile" element={<UserProfile />} />
                 <Route path="editProfile" element={<EditProfile />} />
                 <Route path="editAddress/:id" element={<EditAddress />} />
+                {/*organization */}
+                <Route path="organization" element={<OrganizationClient/>}/>
+                <Route path="editorganization/:id" element={<EditOrganizaion/>}/>
               </Routes>
             </div>
           </div>
