@@ -1,15 +1,73 @@
-import React,{useState,useMemo} from 'react'
-import  QueryString  from 'qs';
+import React, { useState, useMemo, useEffect } from 'react'
+import QueryString from 'qs';
 import { GetInvoicesWithSearch } from '../../../services/invoiceService';
 import { accessor } from 'react-widgets/esm/PropTypes';
+import DatePicker from 'react-multi-date-picker';
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
+import AdvancedSearch from './../../../Common/Shared/Common/AdvancedSearch';
+import Modal from 'react-modal';
+import Select from 'react-select';
+import { DateObject } from 'react-multi-date-picker';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { EntityTypes } from '../../../Common/Enums/EntityTypesEnums';
+import { PriceUnitEnums } from './../../../Common/Enums/PriceUnit';
+import { PaymentStatusEnums } from './../../../Common/Enums/PaymentStatus';
+import MyTable from './../../../Common/Shared/Form/MyTable';
+import ModalGroupWork from './../../../Common/Shared/Common/ModalGroupWork';
 
-const InvoiceList:React.FC = () => {
+
+
+
+
+const customStyles = {
+    content: {
+
+        inset: '50% auto auto 50%',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '5%',
+        border: '2px ridge black'
+    }
+
+}
+
+const InvoiceList: React.FC = () => {
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [totalCount, setTotalCount] = useState(0);
     const [selectedRows, setSelectedRows] = useState([])
     const [getData, setGeData] = useState(false)
-    const [invoices,SetInvoice]=useState([])
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [stateSuccess, SetStateSuccess] = useState(0)
+    const [open, SetOpen] = useState(false);
+
+    const [stateError, SetStateError] = useState(0)
+    const [invoices, SetInvoice] = useState([])
+    const [Ids, setIds] = useState([])
+    const [EntityTypeId, SetEntityTypeId] = useState(getDefault().EntityTypeId)
+    const [EntityId, SetEntityId] = useState(getDefault().EntityId)
+    const [PriceUnitId, SetPriceUnitId] = useState(getDefault().PriceUnitId)
+    const [MinPrice, SetMinPrice] = useState(getDefault().MinPrice)
+    const [MaxPrice, SetMaxPrice] = useState(getDefault().MaxPrice)
+    const [PaymentStatusId, SetPaymentStatusId] = useState(getDefault().PaymentStatusId)
+    const [StartDate, SetStartDate] = useState(getDefault().StartDate)
+    const [EndDate, SetEndDate] = useState(getDefault().EndDate)
+    const [CompanyId, SetCompanyId] = useState(getDefault().CompanyId)
+    const [CustomerUserName, SetCustomerUserName] = useState(getDefault().CustomerUserName)
+    const [CustomerFirstName, SetCustomerFirstName] = useState(getDefault().CustomerFirstName)
+    const [CustomerLastName, SetCustomerLastName] = useState(getDefault().CustomerLastName)
+    const [CustomerNationalCode, SetCustomerNationalCode] = useState(getDefault().CustomerNationalCode)
+    const [OrganizationName, SetOrganizationName] = useState(getDefault().OrganizationName)
+    const [OrganizationNationalId, SetOrganizationNationalId] = useState(getDefault().OrganizationNationalId)
+
+
+    const companies = useSelector((state: RootState) => state.companies)
 
 
     const param = { PageSize, PageNumber }
@@ -20,22 +78,25 @@ const InvoiceList:React.FC = () => {
 
 
     }
-    const params = { }
+    const params = { EntityTypeId, EntityId, PriceUnitId, MinPrice, MaxPrice, PaymentStatusId, StartDate, EndDate, CompanyId, CustomerUserName, CustomerFirstName, CustomerLastName, CustomerNationalCode, OrganizationName, OrganizationNationalId }
     function getDefault() {
         let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
 
     }
+    const close = () => {
+        SetOpen(false);
+    }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data:any) => {
+    const getSelectedData = (data: any) => {
 
-        arrayOfSelectedData = data.map((item:any) => item.original);
+        arrayOfSelectedData = data.map((item: any) => item.original);
 
 
         return (arrayOfSelectedData)
 
     }
-    const getBulkJob = (selected:any) => {
+    const getBulkJob = (selected: any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -48,6 +109,9 @@ const InvoiceList:React.FC = () => {
         if (selected === 5) {
             disableSelectedItem()
         }
+    }
+    const closeModal = () => {
+        setIsOpen(false);
     }
     const DeleteSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
@@ -80,7 +144,7 @@ const InvoiceList:React.FC = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => {
+        const copyData = arrayOfData.map((item: any) => {
             return { ...item, id: 0, active: true, createDate: new Date() }
         })
 
@@ -113,7 +177,7 @@ const InvoiceList:React.FC = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => {
+        const copyData = arrayOfData.map((item: any) => {
             return { ...item, active: true }
         })
 
@@ -147,7 +211,7 @@ const InvoiceList:React.FC = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => {
+        const copyData = arrayOfData.map((item: any) => {
             return { ...item, active: false }
         })
 
@@ -180,7 +244,124 @@ const InvoiceList:React.FC = () => {
 
 
     }
+    const handelStartDate = (value: any) => {
+        if (value === null) {
+            SetStartDate('')
+        }
+        //تغییرات روی تاریخ رو اینجا اعمال کنید
+        if (value instanceof DateObject) {
+            SetStartDate(new Date(value.toDate().setHours(3, 30, 0, 0)))
 
+
+
+        }
+    }
+    const handelEndDate = (value: any) => {
+        if (value === null) {
+            SetEndDate('')
+        }
+        //تغییرات روی تاریخ رو اینجا اعمال کنید
+        if (value instanceof DateObject) {
+            SetEndDate(new Date(value.toDate().setHours(3, 30, 0, 0)))
+        }
+    }
+    const getDataBySearch = async () => {
+        let config = {
+
+            headers: { 'Content-Type': 'application/json' },
+            params: {
+                Ids,
+                EntityTypeId,
+                EntityId,
+                PriceUnitId,
+                MinPrice,
+                MaxPrice,
+                PaymentStatusId,
+                StartDate,
+                EndDate,
+                CompanyId,
+                CustomerUserName,
+                CustomerFirstName,
+                CustomerLastName, CustomerNationalCode,
+                OrganizationName,
+                OrganizationNationalId,
+                IsAdmin: true,
+                PageNumber,
+                PageSize
+
+
+            }
+            ,
+            paramsSerializer: (params: any) => {
+
+                return QueryString.stringify(params)
+            }
+
+        };
+
+        try {
+            const { data, status } = await GetInvoicesWithSearch(config);
+            if (status === 200) {
+                SetInvoice(data.result.invoices.values)
+                setTotalCount(data.result.invoices.totalCount)
+
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const getDataByPage = async () => {
+        let config = {
+
+            headers: { 'Content-Type': 'application/json' },
+            params: {
+                Ids,
+                EntityTypeId,
+                EntityId,
+                PriceUnitId,
+                MinPrice,
+                MaxPrice,
+                PaymentStatusId,
+                StartDate,
+                EndDate,
+                CompanyId,
+                CustomerUserName,
+                CustomerFirstName,
+                CustomerLastName, CustomerNationalCode,
+                OrganizationName,
+                OrganizationNationalId,
+                IsAdmin: true,
+                PageNumber,
+                PageSize
+
+
+            }
+            ,
+            paramsSerializer: (params: any) => {
+
+                return QueryString.stringify(params)
+            }
+
+        };
+
+        try {
+            const { data, status } = await GetInvoicesWithSearch(config);
+            if (status === 200) {
+                SetInvoice(data.result.invoices.values)
+                setTotalCount(data.result.invoices.totalCount)
+
+                sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
     const GetIvoices = async () => {
         if (getData) {
             sessionStorage.clear()
@@ -191,14 +372,29 @@ const InvoiceList:React.FC = () => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                
+                Ids,
+                EntityTypeId,
+                EntityId,
+                PriceUnitId,
+                MinPrice,
+                MaxPrice,
+                PaymentStatusId,
+                StartDate,
+                EndDate,
+                CompanyId,
+                CustomerUserName,
+                CustomerFirstName,
+                CustomerLastName, CustomerNationalCode,
+                OrganizationName,
+                OrganizationNationalId,
+                IsAdmin: true,
                 PageNumber,
                 PageSize
 
 
             }
             ,
-            paramsSerializer: (params:any) => {
+            paramsSerializer: (params: any) => {
 
                 return QueryString.stringify(params)
             }
@@ -211,33 +407,571 @@ const InvoiceList:React.FC = () => {
                 setGeData(false)
                 SetInvoice(data.result.invoices.values)
                 setTotalCount(data.result.invoices.totalCount)
-            
+
             }
         } catch (err) {
             console.log(err)
         }
 
     }
+    useEffect(() => {
+        GetIvoices()
 
-const columns=useMemo(()=>[
-    {Header:'#' ,accessor:'id'},
-    {Header:'نام و نام خانوادگی' ,accessor:'customerName'},
-    {Header:'نام سازمان' ,accessor:'organizationName'},
-    {Header:'نوع صورتحساب' ,accessor:'invoiceTypeId'},
-    {Header:'نوع موجودیت' ,accessor:'entityTypeId'},
-    {Header:'شناسه ' ,accessor:'entityId'},
-    {Header:'قیمت' ,accessor:'price'},
-    {Header:'واحد' ,accessor:'priceUnitId'},
-    {Header:'نوع پرداخت' ,accessor:'paymentStatusId'},
-    {Header:'' ,accessor:'paymentStatusId'},
-    {Header:'نوع پرداخت' ,accessor:'paymentStatusId'},
-    {Header:'نوع پرداخت' ,accessor:'paymentStatusId'},
+    }, [getData])
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
+    }
+    const EntityTypesIDs = () => {
+
+        return (EntityTypes.filter((item: any) => item.id === 10 || item.id === 11).map((data: any) => ({ label: data.name, value: data.id })))
+    }
+    const PriceUnitIDS = () => {
+        return (PriceUnitEnums.map((data: any) => ({ label: data.name, value: data.id })))
+    }
+    const PaymentStatusIds = () => {
+        return (PaymentStatusEnums.map((data: any) => ({ label: data.name, value: data.id })))
+    }
+    const columns = useMemo(() => [
+        { Header: '#', accessor: 'id' },
+        { Header: 'نام و نام خانوادگی', accessor: 'customerName' },
+        { Header: 'نام سازمان', accessor: 'organizationName' },
+        { Header: 'نوع صورتحساب', accessor: 'invoiceTypeId' },
+        { Header: 'نوع موجودیت', accessor: 'entityTypeId' },
+        { Header: 'شناسه ', accessor: 'entityId' },
+        { Header: 'قیمت', accessor: 'price' },
+        { Header: 'واحد', accessor: 'priceUnitId' },
+        { Header: 'وضعیت پرداخت', accessor: 'paymentStatusId' },
+        { Header: 'نوع پرداخت', accessor: 'paymentMethodId' },
+        { Header: 'تاریخ ', accessor: 'createDate' },
+        { Header: 'تاریخ پرداخت ', accessor: 'installmentStartDate' },
+        { Header: 'دوره اقساط ', accessor: 'installmentPeriod' },
+        { Header: 'تعداد اقساط ', accessor: 'installmentOccureCount' },
+        { Header: 'توضیحات', accessor: 'comment' }
 
 
-],[])
-  return (
-    <div>InvoiceList</div>
-  )
+
+    ], [])
+
+    const data = useMemo(() => invoices, [invoices])
+
+
+    const handelSearchFieldClear = () => {
+        setGeData(true)
+        GetIvoices()
+        setIds([])
+        SetOrganizationName('')
+        SetOrganizationNationalId('')
+        SetCustomerFirstName('')
+        SetCustomerLastName('')
+        SetCustomerNationalCode('')
+        SetCustomerUserName('')
+        SetEndDate('')
+        SetStartDate('')
+        SetMaxPrice('')
+        SetEntityId(null)
+        SetEntityTypeId([])
+        SetMinPrice('')
+        SetPriceUnitId('')
+        SetPaymentStatusId(null)
+
+        SetCompanyId(null)
+        sessionStorage.clear()
+
+        setPageNumber(0)
+    }
+    if (invoices) {
+        return (
+            <div className="rounded">
+
+                <div className='row'>
+                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12  '>
+                    </div>
+                </div>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Selected Option"
+                    ariaHideApp={false}>
+                </Modal>
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+                    <AdvancedSearch>
+                        <br />
+                        <form className='form-row textOnInput'>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+
+                                <label className="date-piker-form" >از تاریخ </label>
+                                <div className='form-group  '>
+                                    <DatePicker
+                                        calendar={persian}
+                                        locale={persian_fa}
+                                        style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                        value={StartDate}
+                                        onChange={handelStartDate}
+                                    />
+
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label className="date-piker-form"  >تا تاریخ </label>
+                                <div className='form-group  '>
+                                    <DatePicker
+                                        calendar={persian}
+                                        locale={persian_fa}
+                                        style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                        value={EndDate}
+                                        onChange={handelEndDate}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>شماره موبایل</label>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره موبایل"
+                                    value={CustomerUserName} onChange={(e: any) => SetCustomerUserName(e.target.value)} /></div> 
+                                     <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>شناسه فاکتور </label>
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="شناسه فاکتور "
+                                    value={Ids} onChange={(e: any) => setIds(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> کد ملی</label>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
+                                    maxLength={11} value={CustomerNationalCode}
+                                    onChange={(e: any) => SetCustomerNationalCode(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> شناسه ملی</label>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
+                                    maxLength={11} value={OrganizationNationalId}
+                                    onChange={(e: any) => SetOrganizationNationalId(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> نام مشتری</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text"
+                                    placeholder="نام مشتری"
+                                    value={CustomerFirstName} onChange={(e: any) => SetCustomerFirstName(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> نام خانوادگی مشتری</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام خانوادگی مشتری"
+                                    value={CustomerLastName} onChange={(e: any) => SetCustomerLastName(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>نام سازمان</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام سازمان"
+                                    value={OrganizationName} onChange={(e: any) => SetOrganizationName(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>حداقل قیمت</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداقل قیمت"
+                                    value={MinPrice} onChange={(e: any) => SetMinPrice(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>حداکثر قیمت</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداکثر قیمت"
+                                    value={MaxPrice} onChange={(e: any) => SetMaxPrice(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label>نوع فاکتور</label>
+                                    {EntityTypeId && EntityTypeId === null ?
+                                        <Select
+
+                                            placeholder="نوع فاکتور"
+                                            options={EntityTypesIDs()}
+
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetEntityTypeId(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            placeholder="نوع فاکتور"
+                                            options={EntityTypesIDs()}
+                                            value={EntityTypesIDs().filter((i: any) => i.value === EntityTypeId).map((i: any) => i)}
+
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetEntityTypeId(e.value)
+                                            }}
+                                        />}
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label>واحد پول </label>
+                                    {PriceUnitId && PriceUnitId === null ?
+                                        <Select
+
+                                            placeholder='واحد پول '
+                                            options={PriceUnitIDS()}
+
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetPriceUnitId(e.value)
+                                            }} /> :
+                                        <Select
+
+                                            placeholder='واحد پول '
+                                            options={PriceUnitIDS()}
+                                            value={PriceUnitIDS().filter((i: any) => i.value === PriceUnitId).map((i: any) => i)}
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetPriceUnitId(e.value)
+                                            }} />
+                                    }
+                                </div>
+                            </div>
+
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label>وضعیت پرداخت </label>
+
+                                    {PaymentStatusId && PaymentStatusId === null ?
+                                        <Select
+
+                                            placeholder='وضعیت پرداخت'
+                                            options={PaymentStatusIds()}
+
+
+                                            onChange={(e: any) => {
+                                                SetPaymentStatusId(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={PaymentStatusIds().filter((i: any) => i.value === PaymentStatusId).map((i: any) => i)}
+                                            placeholder='وضعیت پرداخت'
+                                            options={PaymentStatusIds()}
+
+
+                                            onChange={(e: any) => {
+                                                SetPaymentStatusId(e.value)
+                                            }}
+                                        />}
+                                </div>
+                            </div>
+
+
+                            {companies.length > 1 ? <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
+
+                                    {CompanyId && CompanyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={(e: any) => {
+                                                SetCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter((i: any) => i.value === CompanyId).map((i: any) => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={(e: any) => {
+                                                SetCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
+
+                        </form>
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                    <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </AdvancedSearch>
+                </div>
+                <div className=" statbox widget-content widget-content-area">
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                        contentLabel="Selected Option"
+                        ariaHideApp={false}
+
+                    >
+
+
+
+
+                        {/*<button className="btn btn-success float-right" onClick={closeModal}>خیر</button>*/}
+
+                    </Modal>
+                    <div>
+
+                        <MyTable columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob}
+                            total={totalCount}
+                            setPageSize={setPageSize}
+                            PageSize={PageSize}
+                            getDataBySearch={getDataByPage}
+                            setPageNumber={setPageNumber}
+                            PageNumber={PageNumber}
+                        />
+
+                        <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
+
+                    </div>
+                    <div className="d-flex justify-content-end">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        )
+    }
+    else {
+        return (
+            <div className="rounded">
+
+                <div className='row'>
+                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12  '>
+                    </div>
+                </div>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Selected Option"
+                    ariaHideApp={false}>
+                </Modal>
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+                <AdvancedSearch>
+                        <br />
+                        <form className='form-row textOnInput'>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+
+                                <label className="date-piker-form" >از تاریخ </label>
+                                <div className='form-group  '>
+                                    <DatePicker
+                                        calendar={persian}
+                                        locale={persian_fa}
+                                        style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                        value={StartDate}
+                                        onChange={handelStartDate}
+                                    />
+
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label className="date-piker-form"  >تا تاریخ </label>
+                                <div className='form-group  '>
+                                    <DatePicker
+                                        calendar={persian}
+                                        locale={persian_fa}
+                                        style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
+                                        value={EndDate}
+                                        onChange={handelEndDate}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>شماره موبایل</label>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره موبایل"
+                                    value={CustomerUserName} onChange={(e: any) => SetCustomerUserName(e.target.value)} /></div> 
+                                     <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>شناسه فاکتور </label>
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="شناسه فاکتور "
+                                    value={Ids} onChange={(e: any) => setIds(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> کد ملی</label>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
+                                    maxLength={11} value={CustomerNationalCode}
+                                    onChange={(e: any) => SetCustomerNationalCode(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> شناسه ملی</label>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
+                                    maxLength={11} value={OrganizationNationalId}
+                                    onChange={(e: any) => SetOrganizationNationalId(e.target.value)} /></div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> نام مشتری</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text"
+                                    placeholder="نام مشتری"
+                                    value={CustomerFirstName} onChange={(e: any) => SetCustomerFirstName(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> نام خانوادگی مشتری</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام خانوادگی مشتری"
+                                    value={CustomerLastName} onChange={(e: any) => SetCustomerLastName(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>نام سازمان</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام سازمان"
+                                    value={OrganizationName} onChange={(e: any) => SetOrganizationName(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>حداقل قیمت</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداقل قیمت"
+                                    value={MinPrice} onChange={(e: any) => SetMinPrice(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label>حداکثر قیمت</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداکثر قیمت"
+                                    value={MaxPrice} onChange={(e: any) => SetMaxPrice(e.target.value)} />
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label>نوع فاکتور</label>
+                                    {EntityTypeId && EntityTypeId === null ?
+                                        <Select
+
+                                            placeholder="نوع فاکتور"
+                                            options={EntityTypesIDs()}
+
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetEntityTypeId(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            placeholder="نوع فاکتور"
+                                            options={EntityTypesIDs()}
+                                            value={EntityTypesIDs().filter((i: any) => i.value === EntityTypeId).map((i: any) => i)}
+
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetEntityTypeId(e.value)
+                                            }}
+                                        />}
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label>واحد پول </label>
+                                    {PriceUnitId && PriceUnitId === null ?
+                                        <Select
+
+                                            placeholder='واحد پول '
+                                            options={PriceUnitIDS()}
+
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetPriceUnitId(e.value)
+                                            }} /> :
+                                        <Select
+
+                                            placeholder='واحد پول '
+                                            options={PriceUnitIDS()}
+                                            value={PriceUnitIDS().filter((i: any) => i.value === PriceUnitId).map((i: any) => i)}
+                                            isClearable={true}
+                                            onChange={(e: any) => {
+                                                SetPriceUnitId(e.value)
+                                            }} />
+                                    }
+                                </div>
+                            </div>
+
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label>وضعیت پرداخت </label>
+
+                                    {PaymentStatusId && PaymentStatusId === null ?
+                                        <Select
+
+                                            placeholder='وضعیت پرداخت'
+                                            options={PaymentStatusIds()}
+
+
+                                            onChange={(e: any) => {
+                                                SetPaymentStatusId(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={PaymentStatusIds().filter((i: any) => i.value === PaymentStatusId).map((i: any) => i)}
+                                            placeholder='وضعیت پرداخت'
+                                            options={PaymentStatusIds()}
+
+
+                                            onChange={(e: any) => {
+                                                SetPaymentStatusId(e.value)
+                                            }}
+                                        />}
+                                </div>
+                            </div>
+
+
+                            {companies.length > 1 ? <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
+
+                                    {CompanyId && CompanyId === null ?
+                                        <Select
+
+                                            options={CompaniesIDs()}
+                                            onChange={(e: any) => {
+                                                SetCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter((i: any) => i.value === CompanyId).map((i: any) => i)}
+
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={(e: any) => {
+                                                SetCompanyId(e.value)
+                                                console.log(e);
+
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
+
+                        </form>
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                    <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </AdvancedSearch>
+                </div>
+                <div className=" statbox widget-content widget-content-area">
+                    <div>
+                        <div className='text-center mt-5'>
+                            <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        )
+    }
 }
 
 export default InvoiceList

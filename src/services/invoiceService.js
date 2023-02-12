@@ -11,6 +11,6 @@ export const CreateInvoice=(invoiceData)=>{
 
 export const GetInvoicesWithSearch=(url)=>{
 
-    return http.post(`${configure}/Invoice/GetInvoices`,url);
+    return http.get(`${configure}/Invoice/GetInvoices`,url);
 
 }
