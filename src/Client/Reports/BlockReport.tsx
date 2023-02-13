@@ -98,17 +98,17 @@ return(<div className="  dashboard-widget" >
     <div className='col-lg-3 dashboard-item   m-2 text-center  rounded '>
         <FaShoppingBasket size="4rem"/>
 <p>تعداد سفارشات </p>
-        <p>{order.length}</p>
+        <p>{order ? order.length :"0"}</p>
     </div>
     <div className='col-lg-3 dashboard-item   m-2 text-center  rounded '>
         <SlSupport size="4rem"/>
 <p>تعداد تیکت ها</p>
-        <p>{ticket.length}</p>
+        <p>{ticket ? ticket.length :"0"}</p>
     </div>
     <div className='col-lg-3 dashboard-item  m-2 text-center  rounded '>
         <FaHandHoldingMedical size="4rem"/>
 <p>تعداد عرضه </p>
-        <p>{productSupply.length}</p>
+        <p>{productSupply ? productSupply.length :"0"}</p>
     </div>
     </div>
 </div>)

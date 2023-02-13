@@ -125,7 +125,7 @@ const backHandel=(e:any)=>{
                                         {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
 
                                             <Form className="row">
-                                        <div className="col-lg-6 form-group textOnInput  align-content-between">
+                                        <div className="col-lg-6 form-group  mb-4  textOnInput  align-content-between">
 
                                             <label>نام</label>
                                             <Field type="text" className="form-control opacityForInput"

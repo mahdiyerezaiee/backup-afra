@@ -128,7 +128,7 @@ const EditAddress:React.FC = () => {
                       </div>
 
                       <div className="form-row mb-4 textOnInput">
-                          <div className="form-group col-md-4">
+                          <div className="form-group col-md-4 mb-4">
                               <label >تلفن </label>
                               <Field  validate={validatNumber} name="receiverTel" type="text" className="form-control" id="inputCity"  value={receiverTel}  onChange={(e:any) => {
                                   setreceiverTel(e.target.value)
@@ -138,7 +138,7 @@ const EditAddress:React.FC = () => {
 
                           </div>
 
-                          <div className="form-group col-md-4">
+                          <div className="form-group col-md-4 mb-4">
 
                               <label > موبایل</label>
                               <Field  validate={validatMobail} name="receiverMobile"  type="text" className="form-control" id="inputZip"  value={receiverMobile}  onChange={(e:any)=> {
@@ -148,7 +148,7 @@ const EditAddress:React.FC = () => {
                               {errors.receiverMobile && touched.receiverMobile && <div className="text-danger">{errors.receiverMobile}</div>}
 
                           </div>
-                          <div className="form-group col-md-4">
+                          <div className="form-group col-md-4 mb-4">
 
                               <label >کد پستی</label>
                               <Field  validate={validatmin10} name="postalCode" type="text" className="form-control" id="inputZip" value={postalCode}  onChange={(e:any)=> {

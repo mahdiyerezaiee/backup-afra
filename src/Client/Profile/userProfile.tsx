@@ -28,7 +28,7 @@ const UserProfile:React.FC = () => {
   useEffect(() => {
     fetchApi();
  
-    getOrganiz()
+    // getOrganiz()
 
   }, [])
   async function fetchApi() {
@@ -52,21 +52,20 @@ const UserProfile:React.FC = () => {
     Navigate(`/client/editAddress/${id}`)
   
   }
-  const getOrganiz = async () => {
+  // const getOrganiz = async () => {
 
-    try {
-      const { data, status } = await GetOrganisationById(user.organizationId)
-      setOrganization(data.result.organizationLists.values)
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //   try {
+  //     const { data, status } = await GetOrganisationById(user.organizationId)
+  //     setOrganization(data.result.organizationLists.values)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  let organizm:any = {}
-  if (user.organizationId) {
-    organizm =organization
-  }
-  console.log(address);
+  // let organizm:any = {}
+  // if (user.organizationId) {
+  //   organizm =organization
+  // }
   return (
 
     <div className="row layout-spacing">

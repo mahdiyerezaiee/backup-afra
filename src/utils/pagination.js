@@ -8,7 +8,7 @@ const Pagination = ({PageNumber , setPageNumber , getDataBySearch  , PageSize, t
     }
     const endPageHandler = () => {
         if(total%PageSize===0){
-            setPageNumber(Math.floor(total/PageSize)-1)
+            setPageNumber(Math.floor(total/PageSize) - 1)
         }
         else{
             setPageNumber(Math.floor(total/PageSize))
@@ -45,12 +45,11 @@ const Pagination = ({PageNumber , setPageNumber , getDataBySearch  , PageSize, t
             <button className='    Pagination btn   m-1' title='صفحه قبلی'   onClick={backPageHandler}
                     disabled={PageNumber === 0 ? true : false }   >      صفحه قبلی
             </button>
-            <span className="mt-3"> {  PageNumber ===0 ? PageNumber + 1 : PageNumber+1 } از {  Math.floor(total/PageSize) ===0 ?  Math.floor(total/PageSize) +1: Math.floor(total/PageSize) +1  }</span>
-            <button className=' Pagination  btn   m-1' title='صفحه بعدی' onClick={nextPageHandler}
-                    disabled={ PageNumber === ((total%PageSize)===0?(Math.floor(total/PageSize)-1):(Math.floor(total/PageSize))) ? true : false  }   > صفحه بعدی
+            <span className="mt-3"> {  PageNumber + 1  } از { total%PageSize ===0 ?  Math.floor(total/PageSize) : Math.floor(total/PageSize) +1 }</span>            <button className=' Pagination  btn   m-1' title='صفحه بعدی' onClick={nextPageHandler}
+                    disabled={ PageNumber === ((total%PageSize) === 0 ?(Math.floor(total/PageSize) - 1):(Math.floor(total/PageSize))) ? true : false  }   > صفحه بعدی
             </button>
             <button className='  Pagination  btn   m-1' title='صفحه آخر' onClick={endPageHandler}
-                    disabled={ PageNumber ===((total%PageSize)===0?(Math.floor(total/PageSize)-1):(Math.floor(total/PageSize))) ? true : false  }   > صفحه آخر
+                    disabled={ PageNumber === ((total%PageSize) === 0?(Math.floor(total/PageSize) - 1):(Math.floor(total/PageSize))) ? true : false  }   > صفحه آخر
             </button>
 
 
