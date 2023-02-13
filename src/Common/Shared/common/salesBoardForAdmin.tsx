@@ -279,8 +279,8 @@ const SalesBoardForAdmin:React.FC = () => {
                         </table>
 
                         {productSupply.length <= 5 ? null :
-                        <div className="blurShowMore"> 
-                            <div className="showMore"> </div>
+                        <div className={!showMore ? "blurShowMore" :""}> 
+                            <div className={!showMore ? "showMore": ""}> </div>
                             <Link to='#'
                             className=" bold d-block text-buttonColor   cursor-pointer m-auto text-center  text-m"
                             onClick={() => setShowMore(!showMore)}

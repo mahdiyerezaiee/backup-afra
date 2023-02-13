@@ -17,6 +17,7 @@ import InvoiceCreator from "../../../Utils/invoiceCreator";
 import ImageFileUploader from "../../../Utils/ImageFileUploader";
 import { RootState } from '../../../store';
 import Pagination from '../../../Utils/pagination';
+import { AiOutlineWarning } from 'react-icons/ai';
 
 const customStyles:any = {
   content: {
@@ -126,72 +127,10 @@ useEffect(() => {
     }
 
   }
-  const columns = useMemo(() => [
-
-    { Header: 'شماره سفارش', accessor: 'id' },
-    ,
-    {
-      Header: 'تاریخ', accessor: (d:any) => {
-        let date = new Date(d.createDate).toLocaleDateString('fa-IR', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        })
-        return (`${date}`)
-      }, Cell: (row:any) => {
-
-        return (new Date(row.row.original.createDate).toLocaleDateString('fa-IR', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        }))
-      }
-
-    },
   
-    {
-      Header: 'وضعیت تخصیص', accessor: 'shippingStatusId', Cell: (row:any) => {
-        return (ShippingStatusEnums.filter((item:any) => item.id === row.row.original.shippingStatusId).map((item:any) => item.name))
-      }
-    },
-    {
-      Header: 'وضعیت سفارش', accessor: 'orderStatusId', Cell: (row:any) => {
-        return (OrderStatus.filter((item:any) => item.id === row.row.original.orderStatusId).map((item:any) => item.name))
-      }
-    },
-     {
-      Header: 'نوع پرداخت', accessor: 'paymentMethodId', Cell: (row:any) => {
-          return (PaymentStructureEnums.filter((item:any) => item.id === row.row.original.paymentMethodId).map((item:any) => item.name))
-      }
-  }
-    , {
-      Header: 'مبلغ-ریال',
-      accessor: 'orderFinalizedPrice',
-      Cell: row => (formatter.format(row.row.original.orderFinalizedPrice))
-    },
-    {
-      Header: 'مشاهده جزییات ', accessor: '', Cell: row => (
-          <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/client/cuoDetail/${row.row.original.id}`}>
-          <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
-            width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
-              fill="none" stroke="#000" strokeLinecap="round"
-              strokeLinejoin="round" strokeWidth="12" /><line
-              x1="154.2" y1="149.3" x2="161.3" y2="189.6" fill="none" stroke="#000" strokeLinecap="round"
-              strokeLinejoin="round" strokeWidth="12" /><line x1="101.7" y1="149.2" x2="94.6" y2="189.6"
-                fill="none" stroke="#000" strokeLinecap="round"
-                strokeLinejoin="round" strokeWidth="12" /><line
-              x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="#000" strokeLinecap="round"
-              strokeLinejoin="round" strokeWidth="12" /><path
-              d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
-              strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>
-        </Link>
-      )
-    },
-
-   ],[])
 
 
-  const data = useMemo(() => order,[order]);
+  
 
 if(order){
   const dataForExcel = order.map((item:any) => ({
@@ -279,30 +218,10 @@ if(order){
 }
   
 else{
-  return(
-      <div className='user-progress dashboard-widget'>
-       
-       
-
-        <div className=" statbox widget-content widget-content-area">
-          <div>
-
-
-
-
-            <div className='text-center mt-5'>
-              <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
-            </div>
-
-
-
-
-          </div>
-        </div>
-
-
-      </div>
-  )
+  return(<div className="text-center dashboard-widget">
+  <AiOutlineWarning  size="5rem " color="gold"/>
+<div>اطلاعاتی برای نمایش وجود ندارد</div>
+</div>)
 }
 
 }

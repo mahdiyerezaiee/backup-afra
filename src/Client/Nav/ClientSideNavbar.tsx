@@ -12,6 +12,7 @@ import {Link, NavLink, useNavigate} from "react-router-dom";
 import { ImExit } from 'react-icons/im';
 import { SlOrganization } from 'react-icons/sl';
 import { GetUsersRoles } from '../../services/userService';
+import { TbFileInvoice } from 'react-icons/tb';
 const ClientSideNavbar: React.FC = () => {
     const user = useSelector((state:RootState) => state.user);
     let [userRole, SetUserRole] = useState([])
@@ -45,6 +46,8 @@ const roles = useSelector((state:RootState) => state.roles);
           <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={<Link to="ticket" />}> تیکت های من</MenuItem>
           <MenuItem icon={<FaUserCog size='2rem' />} routerLink={<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>
           <MenuItem icon={<SlOrganization size='2rem' />} routerLink={<Link to="organization" />}>    سازمان</MenuItem>
+          <MenuItem icon={<TbFileInvoice size='2rem' />} routerLink={<Link to="invoice" />}>    صورت حساب</MenuItem>
+
           <MenuItem hidden={roles.some((item: any ) => item > 2) ? false : true } className='bg-light-success' icon={<MdOutlineAdminPanelSettings size='2rem' color='green'/>} onClick={sideChanger}>    ورود به پنل ادمین</MenuItem>
 
 
