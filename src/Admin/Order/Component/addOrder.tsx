@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from "react";
+import {useState, useRef, useEffect, Fragment} from "react";
 import {addOrder} from "../../../services/orderService";
 import Select from "react-select";
 import {NavLink, useNavigate} from "react-router-dom";
@@ -11,11 +11,30 @@ import {GetAllOrganisation} from "../../../services/organisationService";
 import QueryString from "qs";
 import {toast} from "react-toastify";
 import {OrderStatus} from "../../../Common/Enums/OrderStatusEnums";
-import {ClipLoader} from "react-spinners";
+import {ClipLoader, FadeLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validateRequired, validatNumber} from "../../../Utils/validitionParams";
 import {GetCompanyChild} from "../../../services/companiesService";
+import { GetDataWithSearchSupply } from "../../../services/supplyService";
+import { GetAllProductWithSearch } from "../../../services/productSupplyService";
+import Modal from 'react-modal';
+import { GetGroupWithCompany } from "../../../services/GroupService";
 
+const customStyles = {
+    content: {
+
+        inset: '50% auto auto 50%',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '5%',
+        border: '2px ridge black'
+    }
+
+}
 const AddOrder:React.FC = () => {
     const [products, setProducts] = useState([]);
     const [customerId, setCustomerId] = useState(0)
@@ -27,13 +46,23 @@ const AddOrder:React.FC = () => {
     const [measureUnitId, setMeasureUnitId] = useState<any>(0)
     const [quantity, setQuantity] = useState(0)
     const [loading, setLoading] = useState(false);
+    const [modalIsOpen, setIsmodalIsOpen] = useState(false);
+    const [withSupply, setWithSupply] = useState(false);
 
+    const [productSupply, setProductSupply] = useState<any>([]);
+    const [productSupplyId, setProductSupplyId] = useState(0);
+    const [statusCondition ,setStatusCondition] = useState(true)
     const [productBasePrice, setProductBasePrice] = useState(0)
     const [users, setUsers] = useState([])
     const [organizations, setOrganizations] = useState([])
     let [companyId, SetcompanyId] = useState()
     let [companyName, SetCompanyName] = useState()
     const [userCompanies, setUserCompanies] = useState([])
+    const Navigate = useNavigate()
+    const [checked, setChecked] = useState({ selectedValue: 0 })
+    const [condition, setCondition] = useState<any>([])
+    const [customerg, setCustomerg] = useState([])
+    let color = "#0c4088";
     const getCompanies = async () => {
         try {
             const { data, status } = await GetCompanyChild()
@@ -47,8 +76,30 @@ const AddOrder:React.FC = () => {
         }
 
     }
+    const getProductSupply = async () => {
+       
+        let config = {
 
+            headers: { 'Content-Type': 'application/json' },
+            params: {
+              
+                PageNumber:0,
+                PageSize:100000000,
+                IsAdmin: true,
+
+
+            }
+        };
+        try {
+            const { data, status } = await GetAllProductWithSearch(config);
+            setProductSupply(data.result.productSupplies.values)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
     useEffect(() => {
+        getProductSupply()
         getUser();
         getOrganizations()
         getCompanies()
@@ -120,11 +171,12 @@ const AddOrder:React.FC = () => {
         productId,
         measureUnitId: measureUnitId && measureUnitId[0],
         quantity:Number(quantity),
-        productSupplyId:null,
-        productSupplyConditionId:null,
+        productSupplyId:productSupplyId !== 0 ? productSupplyId : null ,
+        productSupplyConditionId:checked.selectedValue ?checked.selectedValue : null,
         productBasePrice:Number(productBasePrice),
         companyId,companyName
     }
+
 
     const navigate = useNavigate()
     const SubmitOrder = async () => {
@@ -176,8 +228,19 @@ setLoading(false)
 
         }
     }
+    const GetCustomerGroup = async () => {
+        const response = await GetCompanyChild(); let companies = response.data.result.companies
+         let arr = [] 
+         let finalArr:any = [] 
+         for (let i = 0; i < companies.length; i++) {
+             const { data, status } = await GetGroupWithCompany(1, companies[i].id); if (data.result.groups.length > 0) { arr.push(data.result.groups) }
+             } 
+             finalArr = Array.prototype.concat.apply([], arr);
+              setCustomerg(finalArr);
+    }
 
     useEffect(() => {
+        GetCustomerGroup()
         getProdcutForCombo()
     }, [])
 
@@ -188,7 +251,13 @@ setLoading(false)
             return null
         }
     }
-
+const prodcutSupplyCombo:any = ()=>{
+    if (productSupply) {
+        return (productSupply.map((data:any) => ({label: data.name + "#" + data.id, value: data.id})))
+    } else {
+        return null
+    } 
+}
     const PaymentStatus = () => {
         return (PaymentStatusEnums.map((data:any) => ({label: data.name, value: data.id})))
     }
@@ -196,7 +265,18 @@ const statusOrder = () => {
         return (OrderStatus.map((data:any) => ({label: data.name, value: data.id})))
     }
     const companys = () => {
-        return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))
+        return (userCompanies.map((item:any) => ({ label: item.name , value: item.id })))
+
+    }
+    const CustomerG = () => {
+        return (customerg.map((data:any) => ({
+            label: data.name,
+            value: data.id
+        })))
+
+    }
+    const PaymentId = (id:any) => {
+        return (PaymentStructureEnums.filter((item:any) => item.id === id).map((data:any) => data.name))
 
     }
     let defaultValue:any = companys()[0]
@@ -205,14 +285,126 @@ const statusOrder = () => {
 
         maximumFractionDigits: 0,
         minimumFractionDigits: 0, });
+      const disabledBtn=( productSupplyId:any )=>{
+       let s:boolean = true
+        let supply = productSupply.find((i:any) => i.id  === productSupplyId )
+
+        if(supply === undefined){
+           setStatusCondition(true)
+
+        }else{
+            productSupply.find((i:any) => i.id  === productSupplyId ).productSupplyConditions.length === 0   ? s = true  : s = false  
+            setStatusCondition(s);
+ 
+            productSupply.find((i:any) => i.id  === productSupplyId ).productSupplyConditions.length !== 0   ? setCondition(productSupply.find((i:any) => i.id  === productSupplyId ).productSupplyConditions)   : setCondition(null) 
+            
+        }
+      setStatusCondition(s);
+       
+      }  
+      const closeModal = () => {
+        setIsmodalIsOpen(false)
+      }
+      const CheckedHadnler = (conditionId:any) => {
+
+
+        setChecked({ selectedValue: conditionId })
+
+
+    }
+   
+    
     return (
         <div className='user-progress'>
+             <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Selected Option"
+            ariaHideApp={false}
+
+
+        >
+            {loading === true ? <div >
+                <p>ثبت تغییرات ...</p>
+                <FadeLoader loading={loading} color={color} />
+            </div> :
+
+                <div className=" rounded  " style={{ border: " 1px solid #bfc9d4" }} >
+                   
+                        <div className="table-responsive p-2">
+                            <table
+                                className="table table-bordered table-hover table-striped  mt-2  mb-4">
+                                <thead>
+                                    <tr style={{ fontSize: '10px' }}>
+
+                                        <th style={{ fontSize: '10px' }} className="text-center">ردیف</th>
+                                        <th style={{ fontSize: '10px' }} className="text-center">نوع پرداخت</th>
+                                        <th style={{ fontSize: '10px' }} className="text-center">تعداد اقساط</th>
+                                        <th style={{ fontSize: '10px' }} className="text-center">بازه</th>
+                                        <th style={{ fontSize: '10px' }} className="text-center">فی</th>
+
+                                        <th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>
+                                        <th style={{ fontSize: '10px' }} className="text-center">فعال</th>
+                                        <th style={{ fontSize: '10px' }} className="text-center">انتخاب</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {condition && condition.map((contact:any, index:number) => (
+                                        <tr className='text-center'>
+
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}>{index + 1}</td>
+
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}><p className="mb-0">{PaymentId(contact.paymentMethodId)}</p></td>
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}>{contact.paymentMethodId === 4 ? contact.installmentOccureCount : "-"}</td>
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}>{contact.paymentMethodId === 4 ? contact.installmentPeriod : "-"}</td>
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}>{contact.price}</td>
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}>{contact.customerGroupId ? CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label) : "عمومی"}</td>
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}>{contact.active === true ? (
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                                    className="feather feather-check  "
+                                                    style={{ color: 'green' }}>
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            ) : (
+                                                <svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
+                                                    fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                                    className="feather feather-x  danger "
+                                                    style={{ color: 'red' }}>
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>)
+                                            }</td>
+                                            <td style={{ backgroundColor: contact.special === true ? 'lightgreen' : 'transparent' }}><input type="radio" name={contact.id} checked={  checked.selectedValue === contact.id ? true:false } value={contact.id} id={contact.id} onChange={(e) => CheckedHadnler(contact.id)} /></td>
+
+                                        </tr>
+
+                                    ))}
+
+                                </tbody>
+                            </table>
+                            <div className="row  m-auto ">
+                                <button className="col-4 btn-sm btn-success" onClick={()=>{setIsmodalIsOpen(false)}} >ثبت </button>
+                              
+                            </div>
+
+                        </div>
+                </div>}
+
+        </Modal>
         <div className='row'>
             <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
                 <h5>تعریف سفارش </h5>
                 <p>در این بخش می توانید سفارش  جدید تعریف کنید</p>
 
             </div>
+            <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                <input type="checkbox" checked={withSupply} onClick={(e:any)=>{setWithSupply(!withSupply)}}/>
+                {" "} {" "}<label>ثبت سفارش از عرضه</label>
+
+            </div>
+            
         </div>
         <div className='row d-flex justify-content-center '>
             <div className='col-lg-8 col-xs-12 m-2'>
@@ -227,7 +419,7 @@ const statusOrder = () => {
                         productId,
                         measureUnitId: measureUnitId && measureUnitId[0],
                         quantity:Number(quantity),
-                        productSupplyId:null,
+                        productSupplyId,
                         productSupplyConditionId:null,
                         productBasePrice:Number(productBasePrice),
                         companyId,companyName
@@ -248,7 +440,7 @@ const statusOrder = () => {
 
                     <div className="form-group mb-4 textOnInput ">
                         <div className='form-row'>
-                            <div className="col-lg-6 col-md-6 col-sm-11  selectIndex" style={{zIndex: '3'}}>
+                            <div className={withSupply ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex":"col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex"} style={{zIndex: '3'}}>
                                 <label>مشتری</label>
 
                                 <Select
@@ -263,7 +455,7 @@ const statusOrder = () => {
 
                             </div>
 
-                            <div className="col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex" style={{zIndex: '3'}}>
+                            <div className={withSupply ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex":"col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex"} style={{zIndex: '3'}}>
 
                                 <label>نام کالا</label>
 
@@ -294,7 +486,48 @@ const statusOrder = () => {
                                 />)}
 
                             </div>
+                            {withSupply ? 
+                            <div className="col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex" style={{zIndex: '3'}}>
 
+<label>عرضه </label>
+
+
+{productSupplyId === 0 ? (
+    <div className="row">
+        <Select placeholder='عرضه'
+        
+                className=' col-9 opacityForInput border-danger pr-2'
+                options={prodcutSupplyCombo()}
+                onChange={(e:any) => {
+                    setProductSupplyId(e.value)
+                     
+                    disabledBtn(e.value)
+
+                }}
+        />
+        <button  className="btn-sm col-3 btn-success  " disabled={true} style={{width:"19%"}} > افزودن شرط</button>
+        <p style={{color: 'red'}}>لطفا این فیلد را پر کنید</p>
+
+    </div>
+) : (
+    <div className="row">
+<Select placeholder='عرضه'
+             className='col-9 opacityForInput pr-2 '
+             options={prodcutSupplyCombo()}
+             onChange={(e:any) => {
+                setProductSupplyId(e.value)
+               disabledBtn(e.value)
+
+
+             }}
+/>
+<button disabled={statusCondition} onClick={()=>{setIsmodalIsOpen(true)}} className=" col-3 btn btn-sm btn-success "  style={{width:"19%"}}> افزودن شرط</button>
+</div>
+
+)}
+
+
+</div>: null}
 
 
                             <div className="col-lg-6 col-md-6 col-sm-11 " style={{marginBottom: "3rem", zIndex: '2'}}>
