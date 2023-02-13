@@ -105,14 +105,14 @@ window.location.reload()
                         <tbody>
                         {orderDetail.map((item:any)=>
                             <tr className="" >
-                                <td className="text-center">{item.productSupplyId}</td>
-                                <td className="text-center">{cottageCode}</td>
-                                <td className="text-center">{item.product.name}</td>
-                                <td className="text-center">{item.quantity}</td>
-                                <td className="text-center">{item.price / item.quantity}</td>
-                                <td className="text-center">{PaymentStructureEnums.filter(i=> i.id === order.paymentMethodId).map(i=> i.name)[0]}</td>
-                                <td className="text-center">{item.price}</td>
-                                <td className="text-center">{OrderStatus.filter(i=> i.id === order.orderStatusId).map(i=> i.name)}</td>
+                                <td data-th="شماره عرضه"className="text-center">{item.productSupplyId}</td>
+                                <td data-th="شماره کورتاژ" className="text-center">{cottageCode}</td>
+                                <td data-th="نام کالا" className="text-center">{item.product.name}</td>
+                                <td data-th="وزن " className="text-center">{item.quantity}</td>
+                                <td data-th=" فی" className="text-center">{item.price / item.quantity}</td>
+                                <td data-th="نوع پرداخت" className="text-center">{PaymentStructureEnums.filter(i=> i.id === order.paymentMethodId).map(i=> i.name)[0]}</td>
+                                <td data-th=" مبلغ کل" className="text-center">{item.price}</td>
+                                <td data-th=" وضعیت" className="text-center">{OrderStatus.filter(i=> i.id === order.orderStatusId).map(i=> i.name)}</td>
                             </tr>
                         )}
                         </tbody>

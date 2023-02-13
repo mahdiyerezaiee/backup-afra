@@ -9125,6 +9125,41 @@ margin-top:0px ;
     height: 100%;
 }
 @media only screen and  (max-width: 600px) {
+    .bid-area .col-lg-10:before{
+        background: none;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        box-shadow: none;
+        
+        content: " ";
+        display: block;
+        height: 12px;
+        position: absolute;
+        left: -1%;
+        top: -1%;
+        width: 16px;
+        z-index: 10;
+        /* box-shadow: inset 0px -3px 3px 0px rgb(22 26 57 / 36%); */
+      
+    }
+    
+    .bid-area .col-lg-10:after{
+        background: none;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        box-shadow: none;
+          content: " ";
+        display: block;
+        height: 12px;
+        position: absolute;
+        left: -1%;
+        bottom: -1%;
+        width: 16px;
+        z-index: 10;
+        /* box-shadow: inset 0px 3px 1px 0px rgb(22 26 57 / 36%); */
+        /* border-top-left-radius: 10px;
+        border-top-right-radius: 10px */
+    }
     .bid-area .col-lg-10{
         border-left: none;
     }

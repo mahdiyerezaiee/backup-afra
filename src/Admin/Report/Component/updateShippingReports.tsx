@@ -27,7 +27,7 @@ const UpdateShippingReports: React.FC = () => {
     let [loading, setLoading] = useState(false);
     let [clicked, setClicked] = useState(false);
     const [report, setReport] = useState([])
-    const[updateCompaniesStatus,SetUpdateCompaniesStatus]=useState(true)
+    const[updateCompaniesStatus,SetUpdateCompaniesStatus]=useState(false)
     const [reportMethod, SetReportMethod] = useState('3days')
     let color = "#0c4088"
 
