@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 import { RootState } from "../../../store";
-import SetExtraShipping from "./SetExtraShipping";
+// import SetExtraShipping from "./SetExtraShipping";
 
 const customStyles = {
     content: {
@@ -251,7 +251,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                     </div>
                 }
                 <ExtraShipping id={id} modalIsOpen={modalIsOpen} closeModal={closeModal} />
-                <SetExtraShipping shippingId={shippingId} modalIsOpen={modalSetIsOpen} closeModal={closeSetextra}/>
+                {/* <SetExtraShipping shippingId={shippingId} modalIsOpen={modalSetIsOpen} closeModal={closeSetextra}/> */}
                 <div className=" text-end  p-2" style={{ textAlign: 'left' }}>
 
                     <ExportToExcel apiData={dataForExcel} fileName='لیست بارنامه' />
