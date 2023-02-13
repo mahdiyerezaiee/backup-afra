@@ -9,11 +9,15 @@ const video = require("../Common/Shared/Assets/img/Home.mp4")
 
 const SysPlus: React.FC = () => {
   const navigate = useNavigate()
-
+const token=localStorage.getItem('token')
   const handelNavigate = (e: any) => {
     e.preventDefault()
+    if(token){
+      navigate('/client')
+    }
+    else{
     navigate('/login')
-
+    }
 
   }
   return (
