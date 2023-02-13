@@ -203,7 +203,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                     <th >شماره قرارداد</th>
                                     <th >نام باربری</th>
                                     <th >مشاهده جزییات</th>
-                                    <th>ثبت بارنامه</th>
+                                    {/* <th>ثبت بارنامه</th> */}
                                     {/* <th hidden={roles.includes(7) || roles.includes(8) ? false : true}>عملیات</th> */}
 
 
@@ -222,7 +222,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                         <td data-th="نحوه ارسال">{DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name)}</td>
                                         <td data-th="شماره قراداد">{item.shippingContractCode ? item.shippingContractCode : '--'}</td>
                                         <td data-th="نام باربری">{item.shippingCompanyName ? item.shippingCompanyName : '--'}</td>
-                                        <td data-th="مشاهده جزییات"> {item.shippedQuantity > 0 ?<svg display={item.shippedQuantity > 0 ? '' : 'none'} onClick={() => openModal(item.id)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
+                                        <td data-th="مشاهده جزییات"> <svg  onClick={() => openModal(item.id)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                                             width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                                                 fill="none" stroke="#000" strokeLinecap="round"
                                                 strokeLinejoin="round" strokeWidth="12" /><line
@@ -233,9 +233,9 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                                 x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="#000" strokeLinecap="round"
                                                 strokeLinejoin="round" strokeWidth="12" /><path
                                                 d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
-                                                strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>:"--"}</td>
+                                                strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg></td>
 
-                                        <td data-th="ثبت بارنامه"><button hidden={roles.some((item:any)=>item>2)?false:true} className="btn-primary rounded border-0" onClick={() => openSetExtraShipping(item.id)}>ثبت بارنامه دستی</button></td>
+                                        {/* <td data-th="ثبت بارنامه"><button hidden={roles.some((item:any)=>item>2)?false:true} className="btn-primary rounded border-0" onClick={() => openSetExtraShipping(item.id)}>ثبت بارنامه دستی</button></td> */}
                                     </tr>
 
                                 ) : <tr className='text-center'></tr>}

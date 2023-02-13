@@ -61,8 +61,8 @@ const FinancialConfirmation:React.FC<Props> = ({ id, modalIsOpen, closeModal }) 
             orderStatusId: 3,
             paymentStatusId,
             conditionalPaymentTypeId,
-            conditionPaymentComment: StatusId === 2 ? conditionPaymentComment : null
-
+            conditionPaymentComment: StatusId === 2 ? conditionPaymentComment : null,
+            IsAdmin:true
         }
 
         try {
