@@ -24,6 +24,7 @@ import EditProfile from "../Profile/editProfile";
 import EditAddress from "../Profile/editAddress";
 import OrganizationClient from "../organition/organizationClient";
 import EditOrganizaion from "../organition/EditOrganization";
+import InvoiceClient from "../invoice/invoiceClient";
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
@@ -113,6 +114,8 @@ const ClientsMainLayout: React.FC = () => {
                 {/*organization */}
                 <Route path="organization" element={<OrganizationClient/>}/>
                 <Route path="editorganization/:id" element={<EditOrganizaion/>}/>
+                {/* invoice */}
+                <Route path="invoice" element={<InvoiceClient/>}/>
               </Routes>
             </div>
           </div>

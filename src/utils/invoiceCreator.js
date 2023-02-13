@@ -62,7 +62,6 @@ return null
         }
 
     }
-
     useEffect(()=>{
         function adjustZoom() {
             var   documentWidth= window.innerWidth;
@@ -72,7 +71,7 @@ return null
             var zoomLevel = Math.min(zoomHeight ,zoomWidth);
             // stop zooming when book fits page
             if (zoomLevel >= 1) return;
-            if(roles[0] <= 2 ){
+            if(roles.every(i=>i >= 2 )  ){
                 document.getElementsByClassName('page')[0].style.width= "auto";
                 document.getElementsByClassName('page')[0].style.height= "auto";
                 document.getElementsByClassName('a4')[0].style.transform= "scale(1)";
@@ -87,7 +86,7 @@ return null
 
 
         }
-        if(roles[0] > 2 ){
+        if(!window.location.pathname.includes("/client/invoice/")){
         document.getElementsByClassName("main-Layout")[0].scrollTo(0,0);}
         adjustZoom();
         window.addEventListener("resize", adjustZoom);
