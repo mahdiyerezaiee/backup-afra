@@ -706,9 +706,7 @@ const OrderList :React.FC= () => {
 
 
 
-    const columns = useMemo(() => [
-
-        {
+    const columns = useMemo(() => [ {
             Header: 'شماره سفارش', accessor: 'id',
         },
         ,
@@ -822,17 +820,17 @@ const OrderList :React.FC= () => {
         {
             Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
                 <Link className="border-0 bg-transparent non-hover edit-btn" to={`/admin/orderDetail/${row.row.original.id}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
-                        width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
-                            fill="none" stroke="#000" strokeLinecap="round"
+                    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" width='25' height='25' viewBox="0 0 256 256"><rect
+                        width="256" height="256" stroke="none" fill="none"/><line x1="201.1" y1="127.3" x2="224" y2="166.8"
+                            fill="none" stroke="currentColor" strokeLinecap="round"
                             strokeLinejoin="round" strokeWidth="12" /><line
-                            x1="154.2" y1="149.3" x2="161.3" y2="189.6" fill="none" stroke="#000" strokeLinecap="round"
+                            x1="154.2" y1="149.3" x2="161.3" y2="189.6" fill="none" stroke="currentColor" strokeLinecap="round"
                             strokeLinejoin="round" strokeWidth="12" /><line x1="101.7" y1="149.2" x2="94.6" y2="189.6"
-                                fill="none" stroke="#000" strokeLinecap="round"
+                                fill="none" stroke="currentColor" strokeLinecap="round"
                                 strokeLinejoin="round" strokeWidth="12" /><line
-                            x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="#000" strokeLinecap="round"
+                            x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="currentColor" strokeLinecap="round"
                             strokeLinejoin="round" strokeWidth="12" /><path
-                            d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
+                            d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="currentColor"
                             strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>
                 </Link>
             </div>

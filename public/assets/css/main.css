@@ -3328,6 +3328,9 @@ opacity: 0;
 .orderCustomerInfo{
   background:#ffffd9;
 }
+.orderCustomerInfo label{
+  background-color: transparent;
+}
 .ReactModal__Content{
   position: relative;
   animation: modal 1s linear;
