@@ -30,26 +30,17 @@ const customStyles:any = {
   }
 }
 const OrderCustomer:React.FC = () => {
-const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
-  const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:5)
-  const [orderId, setOrderId] = useState(0)
-  const roles = useSelector((state:RootState) => state.roles)
+const [PageNumber, setPageNumber] = useState( 0)
+  const [PageSize, setPageSize] = useState(5)
   const Navigate = useNavigate()
- const [modalIsOpenEdit, setIsOpenEdit] = useState(false);
-  const [modalIsOpenUpload, setIsOpenUpload] = useState(false);
-  const [getOrders, SetGetOrders] = useState(false);
+
+const [getOrders, SetGetOrders] = useState(false);
   const [totalCount , setTotalCount]=useState(0) ;
 const [order, setOrder] = useState([])
 const[entity,setEntity]=useState(0)
   const param = { PageSize , PageNumber}
- function getPage() {
-    let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
-    return items? items:''}
-const closeModalEdit = () => {
-    setIsOpenEdit(false);}
- const closeModalForUpload=()=>{
-    setIsOpenUpload(false)
-  }
+ 
+
  
   
 useEffect(() => {
@@ -150,23 +141,7 @@ if(order){
   }))
   return (
   <div>
-
-    
-    <Modal
-      isOpen={modalIsOpenEdit}
-      onRequestClose={closeModalEdit}
-      style={customStyles}
-      contentLabel="Selected Option"
-      ariaHideApp={false}
-
-    >
-   <InvoiceCreator closeModal={closeModalEdit}/>
-    </Modal>
-    <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={entity} EntityTypesId={10} comment={"مشتری عزیز لطفا عکس پیش فاکتور تایید شده خود را بگذارید (پیش فاکتور حتما باید همراه با مهر و امضا شخص خریدار باشد)"}/>
-  
-
-
-    <div className="  ">
+<div className="  ">
       <div>
         {order.map((item:any) =>
           <div className="col-sm-10 col-md-12 m-1">
@@ -184,7 +159,10 @@ if(order){
              <span className="col-lg-4 m-auto p-2"><b>مبلغ-ریال</b> : {formatter.format(item.orderFinalizedPrice)}</span>
              </div>
              </div>
-             <span className="col-lg-2 text-center  m-auto button-auction" > <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/client/orderDetail/${item.id}`}>
+             <span className="col-lg-2 text-center  m-auto button-auction" >
+              <Link className=' btn-primary btn-sm' to={`/client/invoice`} state="fromOrderClient" > <b className='text-light' onClick={ ()=>sessionStorage.setItem(`param/client/invoice`, JSON.stringify([item.id]))}>صورتحساب های این سفارش </b> </Link>
+              <br/><br/><br/>
+               <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/client/orderDetail/${item.id}`}>
           <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
             width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
               fill="none" stroke="#000" strokeLinecap="round"

@@ -7,7 +7,7 @@ import {RootState} from "../../store";
 import {RiDashboardLine} from "react-icons/ri";
 import {FaRegHandshake} from "react-icons/fa";
 import{TiPencil} from "react-icons/ti"
-import {MdOutlineAdminPanelSettings, MdSupportAgent} from "react-icons/md"
+import {MdOutlineAdminPanelSettings, MdPayment, MdSupportAgent} from "react-icons/md"
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import { ImExit } from 'react-icons/im';
 import { SlOrganization } from 'react-icons/sl';
@@ -46,7 +46,8 @@ const roles = useSelector((state:RootState) => state.roles);
           <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={<Link to="ticket" />}> تیکت های من</MenuItem>
           <MenuItem icon={<FaUserCog size='2rem' />} routerLink={<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>
           <MenuItem icon={<SlOrganization size='2rem' />} routerLink={<Link to="organization" />}>    سازمان</MenuItem>
-          <MenuItem icon={<TbFileInvoice size='2rem' />} routerLink={<Link to="invoice" />}>    صورت حساب</MenuItem>
+          <MenuItem icon={<TbFileInvoice size='2rem' />} routerLink={<Link to="invoice" />}>    صورتحساب های من</MenuItem>
+          <MenuItem icon={<MdPayment size='2rem' />} routerLink={<Link to="payment" />}>    پرداخت های من</MenuItem>
 
           <MenuItem hidden={roles.some((item: any ) => item > 2) ? false : true } className='bg-light-success' icon={<MdOutlineAdminPanelSettings size='2rem' color='green'/>} onClick={sideChanger}>    ورود به پنل ادمین</MenuItem>
 

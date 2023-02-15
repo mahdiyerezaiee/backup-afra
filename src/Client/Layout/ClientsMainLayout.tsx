@@ -27,6 +27,7 @@ import EditOrganizaion from "../organition/EditOrganization";
 import InvoiceClient from "../invoice/invoiceClient";
 import PaymentMethods from "../paymentMethods/paymentMethods";
 import PaymentMethodComponent from "../paymentMethods/paymentMethods";
+import PaymentList from "../payment/paymentList";
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
@@ -88,7 +89,7 @@ const ClientsMainLayout: React.FC = () => {
           data-background="./hero-bg.png"
         ></div>
       </div>
-      <section className="dashboard-section padding-bottom mt--240 mt-lg--440 pos-rel">
+      <section className="dashboard-section padding-bottom  mt-lg--440 pos-rel">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-sm-10 col-md-7 col-lg-3">
@@ -119,6 +120,7 @@ const ClientsMainLayout: React.FC = () => {
                 {/* invoice */}
                 <Route path="invoice" element={<InvoiceClient/>}/>
                 <Route path="PaymentMethod" element={<PaymentMethodComponent/>}/>
+                <Route path="payment" element={<PaymentList/>}/>
               </Routes>
             </div>
           </div>

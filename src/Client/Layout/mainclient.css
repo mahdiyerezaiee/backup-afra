@@ -8914,7 +8914,7 @@ font-weight: 600;
     width: auto;
 }
 .container{
-    max-width: 90%;
+    max-width: 98%;
 }
 @media (max-width: 1200px){
 .container, .container-lg, .container-md, .container-sm, .container-xl {
