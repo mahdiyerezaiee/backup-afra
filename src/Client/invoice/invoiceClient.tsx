@@ -36,7 +36,7 @@ if(invoices){
 setNewInvoices(mergeById(invoices, activity))
 }
 
-    }, [])
+    }, [active])
     const checkValueee = (position:any) => {
       const updatedCheckedState = active.map((item:any, index:any) =>
           index === position ? !item : item

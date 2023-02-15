@@ -8,6 +8,8 @@ import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums"
 
 const PaymentMethodComponent: React.FC = () => {
   const [paymentId, setPaymentId] = useState([]);
+  const [currentTab, setCurrentTab] = useState(1);
+
   let payments = JSON.parse(
     String(sessionStorage.getItem(`param/client/PaymentMethod`))
   );
@@ -34,6 +36,11 @@ const PaymentMethodComponent: React.FC = () => {
   useEffect(() => {
     paymentMethodsGroup();
   }, []);
+  const handleTabClick = (id:any) => {
+    setCurrentTab(id);
+}
+console.log(currentTab);
+
   if (payments) {
     return (
       <div className="row">
@@ -42,44 +49,45 @@ const PaymentMethodComponent: React.FC = () => {
             <div className=" icon-tab">
               <ul
                 className="nav nav-tabs  mb-3 mt-3"
-                id="iconTab"
-                role="tablist"
+                // id="iconTab"
+                // role="tablist"
               >
-                {paymentId.map((item:any)=>
+                {paymentId.map((item:any ,i:any)=>
 
                
                 <li className="nav-item">
-                  <a
-                    className="nav-link active"
-                    id="icon-home-tab"
-                    data-toggle="tab"
-                    href={item.tabIndex}
-                    role="tab"
-                    aria-controls="icon-home"
-                    aria-selected="true"
+                  <button
+                  onClick={()=>handleTabClick(item.tabIndex)}
+                  key={i} 
+                  id={item.tabIndex} 
+                  
+                 className={currentTab === item.tabIndex ?"nav-link active " :" nav-link "}
+                   
                   >
                   {item.tabName}
-                  </a>
+                  </button>
                 </li>
                  )}
               </ul>
-              <div className="tab-content" id="iconTabContent-1">
-              {paymentId.map((item:any)=>
-                <div
-                  className={item.tabIndex ===1 ?"tab-pane fade p-2 show active ": "tab-pane fade p-2"}
-                  id={item.tabIndex}
-                  role="tabpanel"
-                  aria-labelledby="icon-home-tab"
-                >
+              <div className="tab-content" >
+              {paymentId.map((item:any) =>
+        
+         <div id={item.tabIndex} 
+
+                 className={currentTab === item.tabIndex ?"tab-pane fade p-2 show active " :"null" }>
+                 {currentTab === item.tabIndex && 
+                  <div>
                     <h6 className="float-left "><b>مجموع اسناد قابل پرداخت:</b> {item.totalValue}</h6>   
                     <h6 className="float-right"><b>    نحوه پرداخت: </b> {PaymentStructureEnums.filter((i:any)=> i.id === item.paymentMethodId).map((i:any)=> i.name)}</h6>   
 
                   <p className="mb-4 d-block clearfixed">
                     {item.message}
-                  </p>
+                  </p> 
+                  </div>}
 
                  
                 </div>
+
               )}
               </div>
             </div>
