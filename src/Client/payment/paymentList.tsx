@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetPayments } from "../../services/PaymentService";
+import { GetPayments } from "../../services/paymentService";
 import Pagination from "../../Utils/pagination";
 import QueryString from 'qs';
 import { Link } from "react-router-dom";
