@@ -14,3 +14,8 @@ export const GetInvoicesWithSearch=(url)=>{
     return http.get(`${configure}/Invoice/GetInvoices`,url);
 
 }
+export const GetPaymentMethods=(url)=>{
+
+    return http.get(`${configure}/Invoice/GetPaymentMethods`,url);
+
+}

@@ -4,12 +4,14 @@ import loginSlice from "./Slice/login/loginSlice";
 import productReducer from "./Slice/productSlice/productSlice"
 import userRoleSlice from "./Slice/user/userRole/userRoleSlice";
 import UserSlice from "./Slice/user/userSlice";
+import PaymentSlice from "./Slice/PaymentMethods/PaymentMethods";
 export const  store = configureStore({
     reducer:{
         product: productReducer,
         user:UserSlice,
         login:loginSlice,
         roles:userRoleSlice,
+        payment:PaymentSlice,
         companies:companySlice
     }
 })
