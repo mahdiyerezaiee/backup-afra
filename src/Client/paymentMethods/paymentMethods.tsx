@@ -5,6 +5,7 @@ import { RootState } from "../../store";
 import QueryString from "qs";
 import { useEffect, useState } from "react";
 import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
+import ImageUploaderForPayment from "../../Utils/ImageUploaderForPayment";
 
 const PaymentMethodComponent: React.FC = () => {
   const [paymentId, setPaymentId] = useState([]);
@@ -36,10 +37,10 @@ const PaymentMethodComponent: React.FC = () => {
   useEffect(() => {
     paymentMethodsGroup();
   }, []);
-  const handleTabClick = (id:any) => {
+  const handleTabClick = (id: any) => {
     setCurrentTab(id);
-}
-console.log(currentTab);
+  }
+  console.log(currentTab);
 
   if (payments) {
     return (
@@ -49,46 +50,49 @@ console.log(currentTab);
             <div className=" icon-tab">
               <ul
                 className="nav nav-tabs  mb-3 mt-3"
-                // id="iconTab"
-                // role="tablist"
+              // id="iconTab"
+              // role="tablist"
               >
-                {paymentId.map((item:any ,i:any)=>
+                {paymentId.map((item: any, i: any) =>
 
-               
-                <li className="nav-item">
-                  <button
-                  onClick={()=>handleTabClick(item.tabIndex)}
-                  key={i} 
-                  id={item.tabIndex} 
-                  
-                 className={currentTab === item.tabIndex ?"nav-link active " :" nav-link "}
-                   
-                  >
-                  {item.tabName}
-                  </button>
-                </li>
-                 )}
+
+                  <li className="nav-item">
+                    <button
+                      onClick={() => handleTabClick(item.tabIndex)}
+                      key={i}
+                      id={item.tabIndex}
+
+                      className={currentTab === item.tabIndex ? "nav-link active " : " nav-link "}
+
+                    >
+                      {item.tabName}
+                    </button>
+                  </li>
+                )}
               </ul>
               <div className="tab-content" >
-              {paymentId.map((item:any) =>
-        
-         <div id={item.tabIndex} 
+                {paymentId.map((item: any) =>
 
-                 className={currentTab === item.tabIndex ?"tab-pane fade p-2 show active " :"null" }>
-                 {currentTab === item.tabIndex && 
-                  <div>
-                    <h6 className="float-left "><b>مجموع اسناد قابل پرداخت:</b> {item.totalValue}</h6>   
-                    <h6 className="float-right"><b>    نحوه پرداخت: </b> {PaymentStructureEnums.filter((i:any)=> i.id === item.paymentMethodId).map((i:any)=> i.name)}</h6>   
+                  <div id={item.tabIndex}
 
-                  <p className="mb-4 d-block clearfixed">
-                    {item.message}
-                  </p> 
-                  </div>}
+                    className={currentTab === item.tabIndex ? "tab-pane fade p-2 show active " : "null"}>
+                    {currentTab === item.tabIndex &&
+                      <div>
+                        <h6 className="float-left "><b>مجموع اسناد قابل پرداخت:</b> {item.totalValue}</h6>
+                        <h6 className="float-right"><b>    نحوه پرداخت: </b> {PaymentStructureEnums.filter((i: any) => i.id === item.paymentMethodId).map((i: any) => i.name)}</h6>
 
-                 
-                </div>
+                        <p className="mb-4 d-block clearfixed">
+                          {item.message}
+                        </p>
+                      <br></br>                     
+                      < ImageUploaderForPayment data={paymentId} index={item.tabIndex} Ids={payments}/>
+                     </div>}
 
-              )}
+                    
+
+                  </div>
+
+                )}
               </div>
             </div>
           </div>
