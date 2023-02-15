@@ -9256,3 +9256,6 @@ margin-top:0px ;
 width: 390px;
     }
 }
+.clearfixed{
+    clear: both;
+}

@@ -709,7 +709,7 @@ const OrderList :React.FC= () => {
     const columns = useMemo(() => [ {
             Header: 'شماره سفارش', accessor: 'id',
         },
-        ,
+        
         {
             Header: 'تاریخ', accessor: 'CreateDate'
             , Cell: (row:any) => {

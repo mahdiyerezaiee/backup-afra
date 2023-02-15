@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { GetInvoicesWithSearch } from "../../services/invoiceService";
+import { Link, useNavigate } from "react-router-dom";
+import { GetInvoicesWithSearch, GetPaymentMethods } from "../../services/invoiceService";
 import Pagination from "../../Utils/pagination";
 import QueryString from 'qs';
 import { AiOutlineWarning } from "react-icons/ai";
@@ -8,13 +8,44 @@ import { InvoceTypes } from "../../Common/Enums/InvoiceTypeIdEnums";
 import { PriceUnitEnums } from "../../Common/Enums/PriceUnit";
 import { PaymentStatusEnums } from "../../Common/Enums/PaymentStatus";
 import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
+import { PaymentMethod } from "../../store/Slice/PaymentMethods/PaymentMethods";
+import { useDispatch } from "react-redux";
 
 const InvoiceClient:React.FC =()=>{
     const [invoices, SetInvoice] = useState([])
     const [totalCount, setTotalCount] = useState(0);
     const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
     const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:5)
-    const param = { PageSize , PageNumber}
+    const [active, setActive] = useState<any>([])
+    const activity = active.map((data:any )=> ({active: data}))
+    const [newInvoices , setNewInvoices] = useState<any>([])
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
+    const mergeById = (a1:any, a2:any) =>
+        a1.map((itm:any, index1:any) => ({
+            ...a2.find((item:any, index:any) => index === index1 && item),
+            ...itm,
+        }));
+    useEffect(() => {
+if(invoices){
+
+  if (active.length === 0) {
+    setActive(new Array( invoices.length ).fill(false))
+}
+setNewInvoices(mergeById(invoices, activity))
+}
+
+    }, [])
+    const checkValueee = (position:any) => {
+      const updatedCheckedState = active.map((item:any, index:any) =>
+          index === position ? !item : item
+      );
+      setActive(updatedCheckedState);
+  }
+const filterInvoice = newInvoices.filter((item:any )=> item.active === true).map((item:any)=>  item)
+const finallInvoice= filterInvoice.map((item:any)=> item.id )
+  const param = { PageSize , PageNumber}
  function getPage() {
     let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
     return items? items:''}
@@ -66,23 +97,86 @@ const InvoiceClient:React.FC =()=>{
         }
     
       }
+      const paymentMethodsGroup = async () => {
+        let config = {
+          headers: { 'Content-Type': 'application/json' },
+          params: {
+            InvoiceIds:finallInvoice
+          },
+          paramsSerializer: (params:any) => {
+            return QueryString.stringify(params)
+          }
+        };
+    
+        try {
+            const { data, status } = await GetPaymentMethods(config);
+            if (status === 200) {
+               dispatch(PaymentMethod(finallInvoice))
+               sessionStorage.setItem(`param/client/PaymentMethod`, JSON.stringify(finallInvoice));
+
+navigate("/client/PaymentMethod")
+            }
+        } catch (err) {
+          console.log(err)
+        }
+    
+      }
+      const paymentMethodSingel = async (id:any) => {
+        let config = {
+          headers: { 'Content-Type': 'application/json' },
+          params: {
+            InvoiceIds:id
+          },
+          paramsSerializer: (params:any) => {
+            return QueryString.stringify(params)
+          }
+        };
+    
+        try {
+            const { data, status } = await GetPaymentMethods(config);
+            if (status === 200) {
+             
+              dispatch(PaymentMethod([id]))
+              sessionStorage.setItem(`param/client/PaymentMethod`, JSON.stringify([id]));
+
+              navigate("/client/PaymentMethod")
+            }
+        } catch (err) {
+          console.log(err)
+        }
+    
+      }
       let formatterForMoney = new Intl.NumberFormat('fa-IR', {
-        
-        currency: 'IRR'
-
-
-    });
-   if(invoices){return (
+           currency: 'IRR'
+        });
+   if(invoices){
+    return (
     <div>
-   <div className="  ">
+   <div className=" text-right ">
+   <button className="border-0 btn-success btn non-hover mb-2" onClick={paymentMethodsGroup} hidden={finallInvoice.length === 0 ? true :false}>
+پرداخت دسته جمعی
+               </button>
         <div>
-          {invoices.map((item:any) =>
+          {invoices.map((item:any , index:any) =>
             <div className="col-sm-10 col-md-12 m-1">
+
   
             <div className="  auction-item-2 text-center  ">
             <div className="auction-content">
                 <div className=" row bid-area">
-                    <div className="col-lg-12">
+                    <span className="col-lg-1 text-center  m-auto button-auction" > 
+                    <input
+                                            id={`custom-checkbox-${index}`}
+                                            checked={active[index]}
+                                            type="checkbox"
+                                            required
+                                            value={item}
+                                            name={item}
+                                            onClick={(event) => checkValueee(index)}
+                                        />
+                     </span> 
+              
+                    <div className="col-lg-10">
                     <div className="row">
                <span className="col-lg-3 m-auto p-2"><b>نوع صورتحساب  </b>: {InvoceTypes.filter((i: any) => (i.id === item.invoiceTypeId)).map((item: any) => (item.name))}</span>
                <span className=" col-lg-3 m-auto p-2 "> <b>شناسه</b>: {item.entityId}</span>
@@ -102,20 +196,11 @@ const InvoiceClient:React.FC =()=>{
 
                </div>
                </div>
-               {/* <span className="col-lg-2 text-center  m-auto button-auction" > <Link className="border-0 bg-transparent non-hover edit-btn"  to={`/client/orderDetail/${item.id}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
-              width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
-                fill="none" stroke="#000" strokeLinecap="round"
-                strokeLinejoin="round" strokeWidth="12" /><line
-                x1="154.2" y1="149.3" x2="161.3" y2="189.6" fill="none" stroke="#000" strokeLinecap="round"
-                strokeLinejoin="round" strokeWidth="12" /><line x1="101.7" y1="149.2" x2="94.6" y2="189.6"
-                  fill="none" stroke="#000" strokeLinecap="round"
-                  strokeLinejoin="round" strokeWidth="12" /><line
-                x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="#000" strokeLinecap="round"
-                strokeLinejoin="round" strokeWidth="12" /><path
-                d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
-                strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>
-          </Link> </span> */}
+               <span className="col-lg-1 text-center  m-auto button-auction" > 
+               <button className="border-0 btn-success btn-sm non-hover "  onClick={()=>{paymentMethodSingel(item.id)}} hidden={finallInvoice.length === 0 ? false :true}>
+پرداخت
+               </button>
+           </span> 
               
                     </div>
                     </div>
