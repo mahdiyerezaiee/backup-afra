@@ -92,6 +92,8 @@ import ReportShipping from "../Report/Component/ReportShipping";
 import { GetCompanyChild } from '../../services/companiesService';
 import { AllCompanies } from '../../store/Slice/companies/companySlice';
 import InvoiceList from './../Invoice/Component/InvoiceList';
+import PaymentList from '../../Client/payment/paymentList';
+import PaymentsList from './../Payment/Component/PaymentsList';
 
 const AdminMainLayout:React.FC = () => {
   const [isloading, setIsloading] = useState(true);
@@ -247,7 +249,7 @@ const AdminMainLayout:React.FC = () => {
 
                   <Route path='cuoDetail/:id' element={<CustomerOrderDetailTest />} />
                   <Route path='InvoiceList' element={<InvoiceList/>}/>
-
+                  <Route path='PaymentLists' element={<PaymentsList/>}/>
 
 
 
