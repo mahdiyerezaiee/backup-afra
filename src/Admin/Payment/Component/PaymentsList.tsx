@@ -19,8 +19,14 @@ import MyTable from '../../../Common/Shared/Form/MyTable';
 import ModalGroupWork from '../../../Common/Shared/Common/ModalGroupWork';
 import { InvoceTypes } from '../../../Common/Enums/InvoiceTypeIdEnums';
 import { PaymentStructureEnums } from '../../../Common/Enums/PaymentStructureEnums';
-import { GetPayments } from '../../../services/paymentService';
+import { ChangePaymentStatus, GetPayments } from '../../../services/paymentService';
 import ChangePayment from './ChangePayment';
+import { PaidEnum } from './../../../Common/Enums/PaidEnum';
+import { ConfirmedEnum } from './../../../Common/Enums/ConfirmedEnum';
+import { HasAttchmentEnum } from './../../../Common/Enums/HasAttchmentEnum';
+import ImagePriviewerForPayment from '../../../Utils/ImagePriviewerForPayment';
+import AdminImagePreviwerForPaymentList from './../../../Utils/AdminImagePreviwerForPaymentList';
+import { toast } from 'react-toastify';
 
 
 
@@ -43,6 +49,7 @@ const customStyles = {
 }
 
 const PaymentsList: React.FC = () => {
+
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [totalCount, setTotalCount] = useState(0);
@@ -68,14 +75,14 @@ const PaymentsList: React.FC = () => {
     const [MaxPaymentDueDate, SetMaxPaymentDueDate] = useState(getDefault().MaxPaymentDueDate)
     const [TrackingCode, SetTrackingCode] = useState(getDefault().TrackingCode)
     const [CustomerName, SetCustomerName] = useState(getDefault().CustomerName)
-    const [HasAttachment, setHasAttachment] = useState(false)
-    const [Paid, setPaid] = useState(false)
-    const [Confirmed, setConfirmed] = useState(false)
+    const [HasAttachment, setHasAttachment] = useState(getDefault().HasAttachment)
+    const [Paid, setPaid] = useState(getDefault().Paid)
+    const [Confirmed, setConfirmed] = useState(getDefault().Confirmed)
     const [OrganizationName, SetOrganizationName] = useState(getDefault().OrganizationName)
     const [OrganizationNationalId, SetOrganizationNationalId] = useState(getDefault().OrganizationNationalId)
-    const[IsOpenEdit,setIsOpenEdit]=useState(false)
-    const[EditPayment,setEditPayment]=useState()
-    const[PaymentStatus,setPaymentStatus]=useState(0)
+    const [IsOpenEdit, setIsOpenEdit] = useState(false)
+    const [EditPayment, setEditPayment] = useState()
+    const [Id, setId] = useState(0)
 
     const companies = useSelector((state: RootState) => state.companies)
 
@@ -88,7 +95,7 @@ const PaymentsList: React.FC = () => {
 
 
     }
-    const params = { InvoiceId, EntityTypeId, EntityId, PaymentMethodId, PaymentStatusId, PriceUnitId, MinPrice, MaxPrice, MinCreateDate, MaxCreateDate, MinPaymentDueDate, MaxPaymentDueDate, TrackingCode }
+    const params = { InvoiceId, EntityTypeId, EntityId, PaymentMethodId, PaymentStatusId, PriceUnitId, MinPrice, MaxPrice, MinCreateDate, MaxCreateDate, MinPaymentDueDate, MaxPaymentDueDate, TrackingCode, HasAttachment, Paid, Confirmed }
     function getDefault() {
         let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
@@ -123,9 +130,10 @@ const PaymentsList: React.FC = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
-    const openModalEdit = (peyment:any,paymentStatus:number) => {
-        setEditPayment(peyment)
-        setPaymentStatus(paymentStatus)
+    const openModalEdit = (id: number) => {
+
+        setId(id)
+
         setIsOpenEdit(true);
     }
     const closeModalEdit = () => {
@@ -324,9 +332,9 @@ const PaymentsList: React.FC = () => {
                 CustomerName,
                 OrganizationName,
                 TrackingCode,
-                HasAttachment:HasAttachment===false?null:HasAttachment,
-                Paid:Paid===false?null:Paid,
-                Confirmed:Confirmed===false?null:Confirmed,
+                HasAttachment,
+                Paid,
+                Confirmed,
                 OrganizationNationalId,
                 IsAdmin: true,
                 PageNumber,
@@ -376,13 +384,14 @@ const PaymentsList: React.FC = () => {
                 CustomerName,
                 OrganizationName,
                 TrackingCode,
-                HasAttachment:HasAttachment===false?null:HasAttachment,
-                Paid:Paid===false?null:Paid,
-                Confirmed:Confirmed===false?null:Confirmed,
+                HasAttachment,
+                Paid,
+                Confirmed,
                 OrganizationNationalId,
                 IsAdmin: true,
                 PageNumber,
                 PageSize
+
 
             }
             ,
@@ -433,9 +442,9 @@ const PaymentsList: React.FC = () => {
                 CustomerName,
                 OrganizationName,
                 TrackingCode,
-                HasAttachment:HasAttachment===false?null:HasAttachment,
-                Paid:Paid===false?null:Paid,
-                Confirmed:Confirmed===false?null:Confirmed,
+                HasAttachment,
+                Paid,
+                Confirmed,
                 OrganizationNationalId,
                 IsAdmin: true,
                 PageNumber,
@@ -491,6 +500,16 @@ const PaymentsList: React.FC = () => {
     const PaumentMrthodIds = () => {
         return (PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id })))
     }
+    const Paids = () => {
+        return (PaidEnum.map((data: any) => ({ label: data.name, value: data.value })))
+    }
+    const Confirms = () => {
+        return (ConfirmedEnum.map((data: any) => ({ label: data.name, value: data.value })))
+    }
+    const HasAttach = () => {
+        return (HasAttchmentEnum.map((data: any) => ({ label: data.name, value: data.value })))
+
+    }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
         { Header: 'شناسه مشتری', accessor: 'customerId' },
@@ -535,49 +554,162 @@ const PaymentsList: React.FC = () => {
                 return (new Date(rows.row.original.paymentDueDate).toLocaleDateString('fa-IR'))
             }
         },
-        { Header: 'تایید سند', accessor: 'confirmed',Cell:(Rows:any)=>{
 
-            return(Rows.row.original.confirmed?'بله':'خیر')
-
-        } },
-        { Header: 'تایید پرداخت', accessor: 'paid',Cell:(Rows:any)=>{
-
-            return(Rows.row.original.paid?'بله':'خیر')
-
-         }},
-        { Header: 'دارای سند', accessor: 'hasAttachment',Cell:(Rows:any)=>{
-
-            return(Rows.row.original.hasAttachment?'بله':'خیر')
-
-         }},
 
         { Header: 'توضیحات', accessor: 'comment' },
         {
-            Header: 'عملیات', accessor: '', Cell: row => (
+            Header: ' وضعیت پرداخت', accessor: '', Cell: (row: any) => {
+                const [active, setActive] = useState(row.row.original.paid)
+                const id = row.row.original.id
+                const paymentStatusId = row.row.original.paymentStatusId
+                const confirm = row.row.original.confirmed
+                const activeChang = {
 
-                <div className=" btn-group">
+                    "paymentId": id,
+                    "paymentStatusId": paymentStatusId,
+                    "confirmed": confirm,
+                    "paid": !active
 
-                    <button className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip"
-                        data-placement="top" data-title="ویرایش"
-                        onClick={function () {
-                            openModalEdit(row.row.original,row.row.original.paymentStatusId)
-                      
-                        }}
+                }
+
+                const activeHandler = async () => {
+                    setActive(!active);
+                    try {
+                        const { data, status } = await ChangePaymentStatus(activeChang)
+                        if(status===200){
+                            toast.success('وضعیت پرداخت با موفقیت تغییر کرد',
+                            {
+                                position: "top-right",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: false,
+                                draggable: true,
+                                progress: undefined
+                            })
+                        }
+                    } catch (err) {
+                        console.log(err)
+                    }
+
+
+                }
+                if (active === true) {
+                    return (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                            className="feather feather-check  " onClick={ activeHandler} style={{ color: 'green' }}>
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>)
+                } else {
+                    return (<svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
+                        fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="feather feather-x  danger " onClick={ activeHandler} style={{ color: 'red' }}>
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>)
+                }
+
+
+            }
+        }, {
+            Header: ' وضعیت تایید', accessor: '', Cell: (row: any) => {
+                const [active, setActive] = useState(row.row.original.confirmed)
+                const id = row.row.original.id
+                const paymentStatusId = row.row.original.paymentStatusId
+                const paid = row.row.original.paid
+                const activeChang = {
+
+                    "paymentId": id,
+                    "paymentStatusId": paymentStatusId,
+                    "confirmed": !active,
+                    "paid": paid
+
+                }
+
+                const activeHandler = async () => {
+                    setActive(!active);
+
+                   
+                    
+                    try {
+                        const { data, status } = await ChangePaymentStatus(activeChang)
+                        if(status===200){
+                            toast.success('وضعیت تایید با موفقیت تغییر کرد',
+                            {
+                                position: "top-right",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: false,
+                                draggable: true,
+                                progress: undefined
+                            })
+                        }
+                    } catch (err) {
+                        console.log(err)
+                    }
+
+
+                }
+                if (active === true) {
+                    return (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                            className="feather feather-check  "onClick={ activeHandler} style={{ color: 'green' }}>
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>)
+                } else {
+                    return (<svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
+                        fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="feather feather-x  danger " onClick={ activeHandler} style={{ color: 'red' }}>
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>)
+                }
+
+
+            }
+        },
+        {
+            Header: 'مشاهده سند', accessor: '', Cell: (row: any) => {
+
+                if (row.row.original.hasAttachment) {
+                    return (<div className=" btn-group">
+
+                        <button className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip"
+                            data-placement="top" data-title="ویرایش"
+                            onClick={function () {
+                                openModalEdit(row.row.original.id)
+
+                            }}
                         >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="feather feather-edit-2">
-                            <path
-                                d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                        </svg>
-                    </button>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width='25' height='25' viewBox="0 0 256 256"><rect
+                                width="256" height="256" stroke="none" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
+                                    fill="none" stroke="currentColor" strokeLinecap="round"
+                                    strokeLinejoin="round" strokeWidth="12" /><line
+                                    x1="154.2" y1="149.3" x2="161.3" y2="189.6" fill="none" stroke="currentColor" strokeLinecap="round"
+                                    strokeLinejoin="round" strokeWidth="12" /><line x1="101.7" y1="149.2" x2="94.6" y2="189.6"
+                                        fill="none" stroke="currentColor" strokeLinecap="round"
+                                        strokeLinejoin="round" strokeWidth="12" /><line
+                                    x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="currentColor" strokeLinecap="round"
+                                    strokeLinejoin="round" strokeWidth="12" /><path
+                                    d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="currentColor"
+                                    strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>
+                        </button>
 
 
-                </div>
+                    </div>)
+                }
+                else {
+                    return (null)
+                }
 
-            )}
+
+            }
+        }
 
 
 
@@ -599,9 +731,9 @@ const PaymentsList: React.FC = () => {
         SetMinPaymentDueDate('')
         SetMaxPaymentDueDate('')
         SetMaxPrice('')
-        setHasAttachment(false)
-        setPaid(false)
-        setConfirmed(false)
+        setHasAttachment(null)
+        setPaid(null)
+        setConfirmed(null)
         SetTrackingCode(null)
         SetEntityId(null)
         SetEntityTypeId([])
@@ -617,7 +749,7 @@ const PaymentsList: React.FC = () => {
     if (payments) {
         return (
             <div className="rounded">
-<ChangePayment payment={EditPayment} closeModal={closeModalEdit} modalIsOpen={IsOpenEdit}  paymentStatus={PaymentStatus}/>
+                <AdminImagePreviwerForPaymentList id={Id} closeModal={closeModalEdit} modalIsOpen={IsOpenEdit} />
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12  '>
                     </div>
@@ -811,12 +943,12 @@ const PaymentsList: React.FC = () => {
                             <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                                 style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
-                                    <label>وضعیت پرداخت </label>
+                                    <label>نوع پرداخت </label>
 
                                     {PaymentMethodId && PaymentMethodId === null ?
                                         <Select
 
-                                            placeholder='وضعیت پرداخت'
+                                            placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
 
 
@@ -826,7 +958,7 @@ const PaymentsList: React.FC = () => {
                                         /> : <Select
 
                                             value={PaumentMrthodIds().filter((i: any) => i.value === PaymentMethodId).map((i: any) => i)}
-                                            placeholder='وضعیت پرداخت'
+                                            placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
 
 
@@ -838,24 +970,90 @@ const PaymentsList: React.FC = () => {
                             </div>
 
 
-                            <div className="col-lg-2 col-md-2  col-sm-12 mt-4">
-                                <label className="checkbox-inline ml-3">
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> وضعیت سند </label>
 
-                                    <input id='attachment' type="checkbox" checked={HasAttachment} onChange={(e: any) => setHasAttachment(e.target.checked)} /> دارای سند</label>
+                                    {HasAttachment && HasAttachment === null ?
+                                        <Select
+
+                                            placeholder=' وضعیت سند '
+                                            options={HasAttach()}
+
+
+                                            onChange={(e: any) => {
+                                                setHasAttachment(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={HasAttach().filter((i: any) => i.value === HasAttachment).map((i: any) => i)}
+                                            placeholder=' وضعیت سند '
+                                            options={HasAttach()}
+
+
+                                            onChange={(e: any) => {
+                                                setHasAttachment(e.value)
+                                            }}
+                                        />}
+                                </div>
                             </div>
-                            <div className=" col-lg-2 col-md-2  col-sm-12 mt-4 ">
-                                <label className=" checkbox-inline ml-3">
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> وضعیت مالی </label>
 
-                                    <input type="checkbox" className='' checked={Paid} onChange={(e: any) => setPaid(e.target.checked)} /> پرداخت شده</label>
+                                    {Paid && Paid === null ?
+                                        <Select
 
+                                            placeholder=' وضعیت مالی '
+                                            options={Paids()}
+
+
+                                            onChange={(e: any) => {
+                                                setPaid(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={Paids().filter((i: any) => i.value === Paid).map((i: any) => i)}
+                                            placeholder=' وضعیت مالی '
+                                            options={Paids()}
+
+
+                                            onChange={(e: any) => {
+                                                setPaid(e.value)
+                                            }}
+                                        />}
+                                </div>
                             </div>
-                            <div className=" col-lg-2 col-md-2  col-sm-12 mt-4 ">
-                                <label className=" checkbox-inline ml-3">
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> وضعیت تایید </label>
 
-                                    <input type="checkbox" className='' checked={Confirmed} onChange={(e: any) => setConfirmed(e.target.checked)} /> تاییدیه سند</label>
+                                    {Confirmed && Confirmed === null ?
+                                        <Select
 
+                                            placeholder=' وضعیت تایید '
+                                            options={Confirms()}
+
+
+                                            onChange={(e: any) => {
+                                                setConfirmed(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={Confirms().filter((i: any) => i.value === Confirmed).map((i: any) => i)}
+                                            placeholder=' وضعیت تایید '
+                                            options={Confirms()}
+
+
+                                            onChange={(e: any) => {
+                                                setConfirmed(e.value)
+                                            }}
+                                        />}
+                                </div>
                             </div>
-
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">
@@ -929,7 +1127,7 @@ const PaymentsList: React.FC = () => {
                     ariaHideApp={false}>
                 </Modal>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
-                <AdvancedSearch>
+                    <AdvancedSearch>
                         <br />
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
@@ -1110,12 +1308,12 @@ const PaymentsList: React.FC = () => {
                             <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                                 style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
-                                    <label>وضعیت پرداخت </label>
+                                    <label>نوع پرداخت </label>
 
                                     {PaymentMethodId && PaymentMethodId === null ?
                                         <Select
 
-                                            placeholder='وضعیت پرداخت'
+                                            placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
 
 
@@ -1125,7 +1323,7 @@ const PaymentsList: React.FC = () => {
                                         /> : <Select
 
                                             value={PaumentMrthodIds().filter((i: any) => i.value === PaymentMethodId).map((i: any) => i)}
-                                            placeholder='وضعیت پرداخت'
+                                            placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
 
 
@@ -1137,24 +1335,90 @@ const PaymentsList: React.FC = () => {
                             </div>
 
 
-                            <div className="col-lg-2 col-md-2  col-sm-12 mt-4">
-                                <label className="checkbox-inline ml-3">
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> وضعیت سند </label>
 
-                                    <input id='attachment' type="checkbox" checked={HasAttachment} onChange={(e: any) => setHasAttachment(e.target.checked)} /> دارای سند</label>
+                                    {HasAttachment && HasAttachment === null ?
+                                        <Select
+
+                                            placeholder=' وضعیت سند '
+                                            options={HasAttach()}
+
+
+                                            onChange={(e: any) => {
+                                                setHasAttachment(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={HasAttach().filter((i: any) => i.value === HasAttachment).map((i: any) => i)}
+                                            placeholder=' وضعیت سند '
+                                            options={HasAttach()}
+
+
+                                            onChange={(e: any) => {
+                                                setHasAttachment(e.value)
+                                            }}
+                                        />}
+                                </div>
                             </div>
-                            <div className=" col-lg-2 col-md-2  col-sm-12 mt-4 ">
-                                <label className=" checkbox-inline ml-3">
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> وضعیت مالی </label>
 
-                                    <input type="checkbox" className='' checked={Paid} onChange={(e: any) => setPaid(e.target.checked)} /> پرداخت شده</label>
+                                    {Paid && Paid === null ?
+                                        <Select
 
+                                            placeholder=' وضعیت مالی '
+                                            options={Paids()}
+
+
+                                            onChange={(e: any) => {
+                                                setPaid(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={Paids().filter((i: any) => i.value === Paid).map((i: any) => i)}
+                                            placeholder=' وضعیت مالی '
+                                            options={Paids()}
+
+
+                                            onChange={(e: any) => {
+                                                setPaid(e.value)
+                                            }}
+                                        />}
+                                </div>
                             </div>
-                            <div className=" col-lg-2 col-md-2  col-sm-12 mt-4 ">
-                                <label className=" checkbox-inline ml-3">
+                            <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> وضعیت تایید </label>
 
-                                    <input type="checkbox" className='' checked={Confirmed} onChange={(e: any) => setConfirmed(e.target.checked)} /> تاییدیه سند</label>
+                                    {Confirmed ?
+                                        <Select
 
+                                            placeholder=' وضعیت تایید '
+                                            options={Confirms()}
+
+
+                                            onChange={(e: any) => {
+                                                setConfirmed(e.value)
+                                            }}
+                                        /> : <Select
+
+                                            value={Confirms().filter((i: any) => i.value === Confirmed).map((i: any) => i)}
+                                            placeholder=' وضعیت تایید '
+                                            options={Confirms()}
+
+
+                                            onChange={(e: any) => {
+                                                setConfirmed(e.value)
+                                            }}
+                                        />}
+                                </div>
                             </div>
-
                         </form>
                         <div className="  filter-btn ">
                             <div className=" row  ">

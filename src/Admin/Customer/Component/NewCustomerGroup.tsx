@@ -56,7 +56,7 @@ const NewCustomerGroup:React.FC = () => {
             }
 
             const { data, status } = await SetGroup(body)
-            if (data.success === 200) {
+            if (status === 200) {
                 toast.success('گروه جدید ایجاد شد',
                     {
                         position: "top-right",

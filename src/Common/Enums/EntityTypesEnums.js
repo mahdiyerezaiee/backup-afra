@@ -15,8 +15,11 @@ export const EntityTypes = [
     { name: ' آدرس', id: 13 },
     { name: 'ضمیمه', id: 14 },
     { name: 'اعلان ها', id: 15 },
-    { name: 'فاکتور', id: 16 },
-    { name: 'پرداخت', id: 17 }
+    { name: 'باربری', id: 16 },
+    { name: 'قرارداد باربری', id: 17 },
+    { name: 'قرارداد باربری', id: 18 },
+    { name: 'فاکتور', id: 19 },
+    { name: 'پرداخت', id: 20 },
 
 ]
 
@@ -36,7 +39,10 @@ export const EntityTypes = [
 //     ShoppingCart,
 //     Address,
 //     Attachment,
-//     News,   Invoice,
-   // Payment
+//     News,
+//     ShippingCompany,
+//     ShippingContract,
+//     ShippingReport,
+//     Invoice,
+//     Payment
 // }
-

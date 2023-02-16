@@ -29,6 +29,7 @@ const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids
         }
     }
 
+    console.log(images);
     if (images.length > 0) {
         submited(true)
         const handelSubmit = async (e) => {
@@ -50,7 +51,7 @@ const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids
                     try {
                         const formData = new FormData()
                         formData.append('Files', images[0])
-                        formData.append('EntityTypeId', 17)
+                        formData.append('EntityTypeId', 20)
                         formData.append('EntityId', data.result.payment.id)
                         const response = await attachmentUpload(formData)
                     } catch (error) {
