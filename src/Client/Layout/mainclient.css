@@ -9169,21 +9169,18 @@ height: calc(1.2em + 1.2rem + 2px) ;
 
 
 }
-.btn-imgPrivi{
+/* .btn-imgPrivi{
 
     transform: rotate(90deg); 
-}
-.btn-imgPrivi:hover{
+} */
+/* .btn-imgPrivi:hover{
 border: 1px solid #43b055;
 background-color: #ffffff;
 color: #43b055!important;
     transform: rotate(90deg); 
-}
+} */
 @media only screen and  (max-width: 600px) {
-    .labelPayment {
-        position: absolute;
-        bottom: 4%;
-    }
+    
     .bid-area .col-lg-10:before{
         background: none;
         border-bottom-left-radius: 16px;
@@ -9356,6 +9353,9 @@ width: 390px;
    width: 100%;
    height: 100%;
         transform: rotate(0deg); 
+    }
+    .mt-lg--440 {
+        margin-top: -312px;
     }
 }
 .clearfixed{
