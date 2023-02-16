@@ -17,7 +17,6 @@ import { BsTrash } from "react-icons/bs";
 
 const InvoiceClient: React.FC = () => {
   const location = useLocation();
-console.log(location);
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -28,8 +27,8 @@ console.log(location);
   const [active, setActive] = useState<any>([]);
   const activity = active.map((data: any) => ({ active: data }));
   const [newInvoices, setNewInvoices] = useState<any>([]);
-  const [invoiceOrder, SetInvoiceOrder] = useState<any>( location.state === "fromOrderClient" ? JSON.parse(String(sessionStorage.getItem(`param/client/invoice`))) : null);
-  const [invoicePaymentId, SetInvoicePaymentId] = useState<any>( location.state === "fromPaymentClient" ? JSON.parse(String(sessionStorage.getItem(`param/client/invoice/paymentId`))) : null);
+  let invoiceOrder= location.state === "fromOrderClient" ? JSON.parse(String(sessionStorage.getItem(`param/client/invoice`))) : null
+  let invoicePaymentId = location.state === "fromPaymentClient" ? JSON.parse(String(sessionStorage.getItem(`param/client/invoice/paymentId`))) : null;
   const mergeById = (a1: any, a2: any) =>
     a1.map((itm: any, index1: any) => ({
       ...a2.find((item: any, index: any) => index === index1 && item),
@@ -91,11 +90,7 @@ console.log(location);
   useEffect(() => {
     GetIvoices();
   }, [location.state]);
-  const deleteOrderId = () => {
-    sessionStorage.removeItem(`param${window.location.pathname}`);
-    SetInvoiceOrder(null);
-    GetIvoices();
-  };
+  
   const getDataByPage = async () => {
     let config = {
       headers: { "Content-Type": "application/json" },
@@ -216,7 +211,7 @@ console.log(location);
                         )}
                       </span>
 
-                      <div className="col-lg-10">
+                      <div className="col-lg-9">
                         <div className="row">
                           <span className="col-lg-3 m-auto p-2">
                             <b>نوع صورتحساب </b>:{" "}
@@ -279,20 +274,20 @@ console.log(location);
                           </span>
                         </div>
                       </div>
-                      <span className="col-lg-1 text-center  m-auto button-auction">
+                      <span className="col-lg-2 text-center  m-auto button-auction">
                         {item.paymentStatusId === 3 ? (
                           <Link
                           className="border-0 bg-transparent non-hover edit-btn"
                           to={`/client/payment`}
                       state="fromInvoiceClient"
                         >
-                          <button className="border-0 btn-success btn-sm non-hover "   onClick={ ()=>sessionStorage.setItem(`param/client/payment/invoice`, JSON.stringify([item.id]))}>
+                          <button className="border-0 bg-transparent  non-hover "   onClick={ ()=>sessionStorage.setItem(`param/client/payment/invoice`, JSON.stringify([item.id]))}>
                             {" "}
                             مشاهده پرداخت ها
                           </button></Link>
                         ) : (
                           <button
-                            className="border-0 btn-success btn-sm non-hover "
+                            className="border-0 btn-success btn non-hover "
                             onClick={() => {
                               paymentMethodSingel(item.id);
                             }}
