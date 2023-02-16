@@ -2,7 +2,7 @@
 position: absolute;
     height: auto;
     max-height: 80vh;
-    min-height: 70vh;
+    /* min-height: 70vh; */
     margin:10px auto;
     box-shadow: none;
     min-width: 100%!important;
@@ -18,7 +18,7 @@ position: absolute;
 }
 .client-sideBar> .css-dip3t8{
     height:auto;
-    max-height: 80vh;
+    /* max-height: 80vh; */
     box-shadow: none;
     border-radius: 20px;
     background-color: #ffffff;
