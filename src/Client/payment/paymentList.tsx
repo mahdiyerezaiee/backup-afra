@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { GetPayments } from "../../services/paymentService";
 import Pagination from "../../Utils/pagination";
 import QueryString from 'qs';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
 import { AiOutlineWarning } from "react-icons/ai";
 import { PaymentStatusEnums } from "../../Common/Enums/PaymentStatus";
 import { PriceUnitEnums } from "../../Common/Enums/PriceUnit";
 
 const PaymentList: React.FC = () => {
+  const location = useLocation();
+
   const [PageNumber, setPageNumber] = useState(
     getPage().PageNumber ? getPage().PageNumber : 0
   );
@@ -17,6 +19,8 @@ const PaymentList: React.FC = () => {
   );
   const [payments, setPayments] = useState([]);
   const [totalCount , setTotalCount]=useState(0) ;
+  let invoicePaymentId = location.state === "fromInvoiceClient" ? JSON.parse(String(sessionStorage.getItem(`param/client/payment/invoice`))) : null;
+
 
   const param = { PageSize, PageNumber };
   function getPage() {
@@ -26,6 +30,7 @@ const PaymentList: React.FC = () => {
     return items ? items : "";
   }
  
+ console.log(invoicePaymentId);
  
   const getDataByPage = async () => {
     let config = {
@@ -56,8 +61,21 @@ const PaymentList: React.FC = () => {
   }
 
   const GetPayment = async () => {
+    let config = {
+      headers: { 'Content-Type': 'application/json' },
+      params: {
+        
+        InvoiceId:location.state ? invoicePaymentId && invoicePaymentId[0]: '',
+        PageNumber,
+        PageSize
+      }
+      ,
+      paramsSerializer: (params:any) => {
+        return QueryString.stringify(params)
+      }
+    };
     try {
-      const { data, status } = await GetPayments();
+      const { data, status } = await GetPayments(config);
       setPayments(data.result.payments.values);
       setTotalCount(data.result.payments.totalCount)
     } catch (err) {
@@ -73,6 +91,14 @@ const PaymentList: React.FC = () => {
   if(payments){
   return (
     <div>
+       <div className="text-left pb-3">
+      
+          {location.state === "fromInvoiceClient" ? <span className="bg-light rounded p-2  ">
+            {" "}
+            پرداخت های صورتحساب {invoicePaymentId && invoicePaymentId[0]}{" "}
+            
+          </span> :null}
+        </div>
       <div className="  ">
         <div>
           {payments.map((item: any) => (
@@ -226,7 +252,7 @@ const PaymentList: React.FC = () => {
           <Pagination
             setPageNumber={setPageNumber}
             PageNumber={PageNumber}
-            getDataBySearch={getDataByPage}
+            getDataBySearch={location.state === "fromInvoiceClient" ? GetPayment:getDataByPage}
             PageSize={PageSize}
             total={totalCount}
           />
@@ -236,10 +262,23 @@ const PaymentList: React.FC = () => {
   );}
   
   else{
-    return(<div className="text-center dashboard-widget">
+    return(
+      <div>
+        <div className="text-left pb-3">
+      
+      {location.state === "fromInvoiceClient" ? <span className="bg-light rounded p-2  ">
+        {" "}
+        پرداخت های صورتحساب {invoicePaymentId && invoicePaymentId[0]}{" "}
+        
+      </span> :null}
+    </div>
+      
+    <div className="text-center dashboard-widget">
     <AiOutlineWarning  size="5rem " color="gold"/>
   <div>اطلاعاتی برای نمایش وجود ندارد</div>
-  </div>)
+  </div>
+  </div>
+  )
   }
 };
 export default PaymentList;

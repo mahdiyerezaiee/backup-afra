@@ -5885,7 +5885,7 @@ div[class*="auction"] .custom-button {
 
 @media (min-width: 992px) {
     .mt-lg--440 {
-        margin-top: -440px;
+        margin-top: -503px;
     }
 }
 /*
@@ -9080,7 +9080,44 @@ margin-top:0px ;
     /* border-top-left-radius: 10px;
     border-top-right-radius: 10px */
 }
- 
+.bid-area .col-lg-9{
+    border-left: 2px dotted lightgrey;
+}
+.bid-area .col-lg-9:before{
+    background: linear-gradient(0deg,#e6e6e6 80%,hsla(0,0%,90%,0));
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: inset 0 -1px 0 0 rgb(29 27 27 / 11%);
+    
+    content: " ";
+    display: block;
+    height: 12px;
+    position: absolute;
+    left: -1%;
+    top: -1%;
+    width: 16px;
+    z-index: 10;
+    /* box-shadow: inset 0px -3px 3px 0px rgb(22 26 57 / 36%); */
+  
+}
+
+.bid-area .col-lg-9:after{
+    background: linear-gradient(180deg,#e6e6e6 80%,hsla(0,0%,90%,0));
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: inset 0 1px 0 0 rgb(25 25 25 / 10%);
+      content: " ";
+    display: block;
+    height: 12px;
+    position: absolute;
+    left: -1%;
+    bottom: -1%;
+    width: 16px;
+    z-index: 10;
+    /* box-shadow: inset 0px 3px 1px 0px rgb(22 26 57 / 36%); */
+    /* border-top-left-radius: 10px;
+    border-top-right-radius: 10px */
+}
 
 @keyframes top {
     0% {
@@ -9124,7 +9161,29 @@ margin-top:0px ;
 .auction-item-2 .auction-content{
     height: 100%;
 }
+.priviewImg  .form-control
+.rmdp-input
+{
+width: auto;
+height: calc(1.2em + 1.2rem + 2px) ;
+
+
+}
+.btn-imgPrivi{
+
+    transform: rotate(90deg); 
+}
+.btn-imgPrivi:hover{
+border: 1px solid #43b055;
+background-color: #ffffff;
+color: #43b055!important;
+    transform: rotate(90deg); 
+}
 @media only screen and  (max-width: 600px) {
+    .labelPayment {
+        position: absolute;
+        bottom: 4%;
+    }
     .bid-area .col-lg-10:before{
         background: none;
         border-bottom-left-radius: 16px;
@@ -9161,6 +9220,44 @@ margin-top:0px ;
         border-top-right-radius: 10px */
     }
     .bid-area .col-lg-10{
+        border-left: none;
+    }
+    .bid-area .col-lg-9:before{
+        background: none;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        box-shadow: none;
+        
+        content: " ";
+        display: block;
+        height: 12px;
+        position: absolute;
+        left: -1%;
+        top: -1%;
+        width: 16px;
+        z-index: 10;
+        /* box-shadow: inset 0px -3px 3px 0px rgb(22 26 57 / 36%); */
+      
+    }
+    
+    .bid-area .col-lg-9:after{
+        background: none;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        box-shadow: none;
+          content: " ";
+        display: block;
+        height: 12px;
+        position: absolute;
+        left: -1%;
+        bottom: -1%;
+        width: 16px;
+        z-index: 10;
+        /* box-shadow: inset 0px 3px 1px 0px rgb(22 26 57 / 36%); */
+        /* border-top-left-radius: 10px;
+        border-top-right-radius: 10px */
+    }
+    .bid-area .col-lg-9{
         border-left: none;
     }
     .button-supply{
@@ -9254,6 +9351,11 @@ margin-top:0px ;
     .main-content-Client .layout-px-spacing{
       
 width: 390px;
+    }
+    .btn-imgPrivi{
+   width: 100%;
+   height: 100%;
+        transform: rotate(0deg); 
     }
 }
 .clearfixed{
