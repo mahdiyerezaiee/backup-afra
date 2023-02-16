@@ -99,17 +99,17 @@ console.log(trackingCode ,1111,price );
                         <Form className="">
                     <div className='row border rounded mt-2 py-4 priviewImg '>
                         <div className="col-md-4">
-                            <img src={URL.createObjectURL(item)} className='img-fluid rounded pl-4' />
+                            <img src={URL.createObjectURL(item)} className='img-fluid rounded ' />
                         </div>
 
                         <div className="col-md-7 row mb-4 textOnInput mt-2 ">
-                            <div className="col-md-6">
+                            <div className="col-md-6 mt-4 mb-4" >
                                 <label>مبلغ</label>
                                 <Field  validate={validatNumber} name="price" type='number' className='form-control' value={price} onChange={e => setPrice(e.target.value)} />
                                 {errors.price && touched.price && <div className="text-danger">{errors.price}</div>}
 
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-6 mt-4 mb-4">
                                 <label>شماره پیگیری</label>
 
                                 <Field  validate={validateRequired} name="trackingCode" type='text' className='form-control' value={trackingCode} onChange={e => SettrackingCode(e.target.value)} />
