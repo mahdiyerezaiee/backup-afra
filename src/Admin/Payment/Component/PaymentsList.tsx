@@ -551,7 +551,14 @@ const PaymentsList: React.FC = () => {
         {
             Header: 'تاریخ سررسید ', accessor: 'paymentDueDate', Cell: (rows: any) => {
 
+               
+                
+                if(rows.row.original.paymentDueDate!==null){
                 return (new Date(rows.row.original.paymentDueDate).toLocaleDateString('fa-IR'))
+                }
+                else{
+                    return('')
+                }
             }
         },
 
@@ -713,7 +720,7 @@ const PaymentsList: React.FC = () => {
 
 
 
-    ], [])
+    ], [payments])
 
     const data = useMemo(() => payments, [payments])
 
