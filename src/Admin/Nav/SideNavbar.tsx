@@ -106,6 +106,7 @@ const SideNavbar: React.FC = () => {
                     <MenuItem onClick={handleHeaderClick}> <NavLink to="orderList">سفارشات</NavLink></MenuItem>
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="addOrder">ثبت سفارش</NavLink></MenuItem>
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="InvoiceList">صورتحساب</NavLink></MenuItem>
+                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="PaymentLists">پرداخت ها</NavLink></MenuItem>
                     <MenuItem><NavLink to='bazargah'>  بازارگاه </NavLink></MenuItem>
 
                 </SubMenu>
