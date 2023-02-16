@@ -608,10 +608,16 @@ const InvoiceList: React.FC = () => {
                                 <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداکثر قیمت"
                                     value={MaxPrice} onChange={(e: any) => SetMaxPrice(e.target.value)} />
                             </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> شناسه</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداکثر قیمت"
+                                    value={EntityId} onChange={(e: any) => SetEntityId(e.target.value)} />
+                            </div>
                             <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                                 style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
-                                    <label>نوع فاکتور</label>
+                                    <label>صادر شده برای</label>
                                     {EntityTypeId && EntityTypeId === null ?
                                         <Select
 
@@ -791,7 +797,7 @@ const InvoiceList: React.FC = () => {
                     ariaHideApp={false}>
                 </Modal>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
-                    <AdvancedSearch>
+                <AdvancedSearch>
                         <br />
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
@@ -827,7 +833,7 @@ const InvoiceList: React.FC = () => {
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label>شناسه فاکتور </label>
                                 <input className="form-control opacityForInput  mb-4" type="number" placeholder="شناسه فاکتور "
-                                    value={Ids} onChange={(e: any) => setIds([e.target.value])} /></div>
+                                    value={Ids} onChange={(e: any) => setIds(e.target.value)} /></div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> کد ملی</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
@@ -869,10 +875,16 @@ const InvoiceList: React.FC = () => {
                                 <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداکثر قیمت"
                                     value={MaxPrice} onChange={(e: any) => SetMaxPrice(e.target.value)} />
                             </div>
+                            <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
+                                <label> شناسه</label>
+
+                                <input className="form-control opacityForInput  mb-4" type="number" placeholder="حداکثر قیمت"
+                                    value={EntityId} onChange={(e: any) => SetEntityId(e.target.value)} />
+                            </div>
                             <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                                 style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
-                                    <label>نوع فاکتور</label>
+                                    <label>صادر شده برای</label>
                                     {EntityTypeId && EntityTypeId === null ?
                                         <Select
 
