@@ -24,13 +24,20 @@
 }
 .dark-mode .header {
     color: #BDBDD7;
-    background-color:#060818 !important;
+    background-color:#060818!important;
 
 }
 .dark-mode .navbar-mian{
     color: #BDBDD7;
-    background-color:#060818 !important;
+    background-color:#060818!important;
     border-bottom:3px solid #142138!important;
+}
+.dark-mode .css-1lt71pg:hover{
+    background-color: transparent!important;
+}
+.dark-mode .css-z5rm24{
+    background-color:#060818!important;
+
 }
 .dark-mode .Header-Client{
     background-color:#060818 !important;

@@ -25,14 +25,20 @@ const ImageUploaderForPayment = ({data,index,Ids}) => {
             <label for="PaymentFile">
                 <BiAddToQueue size="2rem"/>
                 </label>
-        </div>:<div className='d-flex justify-content-end' >  
-        <p className='text-nowrap text-danger TextPayment' >لطفا پیش از بارگزاری اطلاعات پرداخت جدید ، اطلاعات بارگزاری شده را ثبت نهایی فرمایید</p>
-            <input disabled={true}  type="file" className="custom-file-input" id="PaymentFile" accept='image/*' onChange={onchange}  />
-            <label  for="PaymentFile" className='labelPayment'>
-            <BiAddToQueue size="2rem"/>
-
+        </div>:<div className='row' >  
+        <div className='col-lg-4  labelPayment'>
+        <p className='   text-danger TextPayment' >لطفا پیش از بارگزاری اطلاعات پرداخت جدید ، اطلاعات بارگزاری شده را ثبت نهایی فرمایید</p>
+          </div>
+      <input disabled={true}  type="file" className="col-lg-4 custom-file-input" id="PaymentFile" accept='image/*' onChange={onchange}  />
+      <div className='col-lg-4  labelPayment'>
+            <label  for="PaymentFile" className='float-right' >
+                
+            <BiAddToQueue size="2rem" />
+           
                 </label>
+                </div>
         </div>}
+
 
 
 
