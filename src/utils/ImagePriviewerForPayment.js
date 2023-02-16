@@ -5,7 +5,8 @@ import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
 import { CreatePayment } from './../services/paymentService';
 import { attachmentUpload } from './../services/attachmentService';
-
+import {Field, Form, Formik} from "formik";
+import { validateRequired, validatNumber } from './validitionParams';
 const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids }) => {
 
     const [invoiceIds, SetinvoiceIds] = useState([])
@@ -74,30 +75,49 @@ const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids
 
 
 
-
+console.log(trackingCode ,1111,price );
 
         return (
             <div>
                 {images.map(item => (
-                    <div className='form-row border rounded mt-2 p-3'>
-                        <div className="col-md-2">
-                            <img src={URL.createObjectURL(item)} className='img-thumbnail' />
+                    <Formik
+                    initialValues={{
+                       price,
+                       trackingCode,
+
+                    }}
+                    enableReinitialize={true}
+                    onSubmit={values => {
+                        // same shape as initial values
+                        handelSubmit()
+                    }}>
+                    {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+
+
+
+                        <Form className="">
+                    <div className='row border rounded mt-2 py-4 priviewImg '>
+                        <div className="col-md-4">
+                            <img src={URL.createObjectURL(item)} className='img-fluid rounded pl-4' />
                         </div>
-                        <div className="col-md-8 form-row mb-4 textOnInput mt-2 ">
+
+                        <div className="col-md-7 row mb-4 textOnInput mt-2 ">
                             <div className="col-md-6">
                                 <label>مبلغ</label>
-                                <input type='number' className='form-control' value={price} onChange={e => setPrice(e.target.value)} />
+                                <Field  validate={validatNumber} name="price" type='number' className='form-control' value={price} onChange={e => setPrice(e.target.value)} />
+                                {errors.price && touched.price && <div className="text-danger">{errors.price}</div>}
 
                             </div>
                             <div className="col-md-6">
                                 <label>شماره پیگیری</label>
 
-                                <input type='text' className='form-control' value={trackingCode} onChange={e => SettrackingCode(e.target.value)} />
+                                <Field  validate={validateRequired} name="trackingCode" type='text' className='form-control' value={trackingCode} onChange={e => SettrackingCode(e.target.value)} />
+                                {errors.trackingCode && touched.trackingCode && <div className="text-danger">{errors.trackingCode}</div>}
+
                             </div>
                             <div className="col-md-6 mt-4">
                                 {currentPayment[0].shouldPickFromInvoices ? <><lable></lable>
                                     <Select
-
                                         options={Invoices()}
                                         isMulti
                                         isClearable={true}
@@ -106,8 +126,9 @@ const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids
                             </div>
                             <div className="col-md-6 mt-4">
                                 {currentPayment[0].shouldAnnounceDueDate ? <><label className="date-piker-form" >سررسید</label>
-                                    <div className='form-group  '>
+                                    <div className='  '>
                                         <DatePicker
+                                        
                                             calendar={persian}
                                             locale={persian_fa}
                                             style={{ height: '45.39px', width: '100%', textAlign: 'center' }}
@@ -118,13 +139,19 @@ const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids
                                     </div></> : ''}
                             </div>
                         </div>
-                        <div className="col-md-2 mt-4 ml-2" >
-                            <button className='btn btn-sm btn-success' onClick={handelSubmit}>ثبت</button>
+                        <div className="col-md-1 m-auto" >
+                            <button className='btn btn-sm btn-success  btn-imgPrivi ' type='submit' >ثبت</button>
                         </div>
 
 
 
-                    </div>))
+                    </div>
+                    
+                    </Form>
+                    )}
+                </Formik>
+                    ))
+
                 }
 
                 {serverPayments.length > 0 ? <div><table className='table text-center table-striped'>
