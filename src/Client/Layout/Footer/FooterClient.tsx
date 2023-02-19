@@ -5,7 +5,8 @@ const FooterClient:React.FC= () => {
 
         <footer className="bg_img padding-top oh" data-background="/assets/img/footer-bg.jpg" style={{backgroundImage: `url(/assets/img/footer-bg.jpg)`}}>
         <div className="footer-top-shape">
-            <img src="/assets/img/footer-top-shape.png" alt="css"/>
+        <img className='light-mode-footer' src="/assets/img/footer-top-shape.png" alt="css"/>
+        <img className='dark-mode-footer' src="/assets/img/footer-top-shape-dark-mode.png" alt="css"/>
         </div>
         
         

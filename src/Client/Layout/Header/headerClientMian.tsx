@@ -4,7 +4,7 @@ import {AiOutlineMenu} from "react-icons/ai"
 const HeaderClientMian:React.FC = () => {
  
 return(
-    <nav className="navbar navbar-mian navbar-expand-lg  " >
+    <nav className="navbar navbar-mian navbar-expand-lg navbar-client " >
         <a className="navbar-brand" href="#">
         {/* <NavLink to="/client">
                             <img src="/assets/img/afralogo.png" className="navbar-logo" alt="logo" />

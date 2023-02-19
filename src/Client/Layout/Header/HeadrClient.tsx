@@ -181,9 +181,9 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
 
                 </ul>
                 <ul className="navbar-item flex-row navbar-dropdown ">
-                    {/* <li className="nav-item m-auto">
+                    <li className="nav-item m-auto">
                         <Setting />
-                    </li> */}
+                    </li>
                     <li className="nav-item dropdown message-dropdown">
                         <div ref={ref}>
                             <Link to='#' className="nav-link dropdown-toggle" id="messageDropdown"

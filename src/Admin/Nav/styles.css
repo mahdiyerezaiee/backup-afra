@@ -161,6 +161,14 @@
     left: auto;
     right: 0; } }
   @media (max-width: 600px) {
+    .ps-sidebar-root > .css-dip3t8 {
+      background: #fafafa!important;
+      height:  calc(100vh - 100px);
+      position: relative;
+      overflow-y: auto!important;
+      overflow-x: hidden!important;
+      /*margin-top: 80px;*/
+      z-index: 101; }
     .css-vj11vy{
       height: calc(100vh - 30px);
       overflow-y: auto;

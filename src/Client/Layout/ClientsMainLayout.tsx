@@ -55,7 +55,6 @@ const ClientsMainLayout: React.FC = () => {
     }
   }
   document.body.classList.add('clientBody')
-  document.body.classList.remove('dark-mode')
 
   const getUserRole = async () => {
     localStorage.removeItem('rd')

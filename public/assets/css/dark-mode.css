@@ -27,6 +27,45 @@
     background-color:#060818!important;
 
 }
+.dark-mode .client-sideBar span{
+    color: white!important;
+}
+.dark-mode .dashboard-widget{
+    background-color:#060818!important;
+    border:3px solid #142138!important;
+
+}
+.dark-mode .dashboard-item{
+    background-color:#142138!important;
+ 
+}
+.dark-mode .bg-light{
+    background-color:#060818!important;
+
+}
+.dark-mode .bg-light-success{
+   
+    background-color: transparent!important;
+}
+.dark-mode .light-mode-footer{
+    display:none;
+}
+.dark-mode .bg-light-danger{
+    background-color: transparent!important;
+}
+.dark-mode .bid-area .col-lg-10 {
+    border-left: 2px dotted #142138!important;
+}
+.dark-mode .bid-area .col-lg-10:before {
+    display: none;
+}
+.dark-mode .bid-area .col-lg-10::after {
+    display: none;
+}
+.dark-mode .auction-item-2{
+    background-color:#060818!important;
+    border:3px solid #142138!important;
+}
 .dark-mode .navbar-mian{
     color: #BDBDD7;
     background-color:#060818!important;
@@ -40,7 +79,24 @@
 
 }
 .dark-mode .Header-Client{
-    background-color:#060818 !important;
+    background-color: transparent !important;
+    border-bottom:3px solid #142138!important;
+
+}
+.dark-mode .Header-Client header{
+    background-color: transparent !important;
+color: white;
+
+}
+ .dark-mode .navbar-client{
+    background-color: transparent !important;
+    border-bottom: none!important;
+    color: white;
+
+}
+.dark-mode .navbar-client a{
+ 
+    color: white!important;
 
 }
 .dark-mode span{
@@ -539,3 +595,6 @@ border: transparent!important;
 .dark-mode .loadingAddress{
     background: #1a1c2d!important;
 }
+.dark-mode .edit-svg {
+    color: white;
+    background: mediumslateblue;}
