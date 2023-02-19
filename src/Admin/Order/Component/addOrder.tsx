@@ -440,7 +440,7 @@ const statusOrder = () => {
 
                     <div className="form-group mb-4 textOnInput ">
                         <div className='form-row'>
-                            <div className={withSupply ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex":"col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex"} style={{zIndex: '3'}}>
+                            <div className={withSupply ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex":"col-lg-6 col-md-6 col-sm-11  mb-4 "} style={{zIndex: '3'}}>
                                 <label>مشتری</label>
 
                                 <Select
@@ -455,7 +455,7 @@ const statusOrder = () => {
 
                             </div>
 
-                            <div className={withSupply ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex":"col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex"} style={{zIndex: '3'}}>
+                            <div className={withSupply ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex":"col-lg-6 col-md-6 col-sm-11  mb-4 "} style={{zIndex: '3'}}>
 
                                 <label>نام کالا</label>
 
@@ -530,7 +530,7 @@ const statusOrder = () => {
 </div>: null}
 
 
-                            <div className="col-lg-6 col-md-6 col-sm-11 " style={{marginBottom: "3rem", zIndex: '2'}}>
+                            <div className="col-lg-6 col-md-6 col-sm-11 selectedIndex " style={{marginBottom: "3rem", zIndex: '2'}}>
                                 <label>نحوه پرداخت</label>
                                 <Select
 
@@ -544,7 +544,7 @@ const statusOrder = () => {
 
                             </div>
 
-                            <div className="col-lg-6 col-md-6  col-sm-6   selectIndex textOnInput form-group "
+                            <div className="col-lg-6 col-md-6  col-sm-6    textOnInput form-group "
                                  style={{marginBottom: "3rem"}}>
                                 <div className=" form-control-sm">
                                     <label>وضعیت پرداخت </label>

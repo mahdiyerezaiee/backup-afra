@@ -81,3 +81,8 @@ export const DeleteOrderDetail=(id)=>{
 
     return http.delete(`${configure}/Order/DeleteOrderDetail`,config);
 }
+
+export const SetOrderReserve=(body)=>{
+
+    return http.post(`${configure}/Order/SetOrderReserved`,JSON.stringify(body))
+}
