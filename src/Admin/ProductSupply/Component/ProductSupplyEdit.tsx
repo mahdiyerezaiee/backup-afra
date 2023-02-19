@@ -13,6 +13,8 @@ import ProductSupplyCondition from "../Child/Conditions/Component/ProductSupplyC
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 
 const ProductSupplyEdit:React.FC = () => {
@@ -37,6 +39,11 @@ const ProductSupplyEdit:React.FC = () => {
     const [active, setActive] = useState(true);
     const [cottageCode, setcottageCode] = useState('');
     const [loading, setLoading] = useState(false);
+    const companies = useSelector((state: RootState) => state.companies)
+
+    let [companyId, SetcompanyId] = useState<any>()
+    let [companyName, SetCompanyName] = useState<any>()
+
 
     const getProductSupply = async () => {
         try {
@@ -55,6 +62,8 @@ const ProductSupplyEdit:React.FC = () => {
             setWarHouseName( data.result.productSupply.wareHouse.wareHouseName)
             setWarHouseId(data.result.productSupply.wareHouse.wareHouseId)
             setproductWareHouseId(data.result.productSupply.productWareHouseId)
+            SetcompanyId(data.result.productSupply.companyId)
+            SetCompanyName(data.result.productSupply.companyName)
         } catch (err) {
             console.log(err)
         }
@@ -138,6 +147,10 @@ const ProductSupplyEdit:React.FC = () => {
 
     }
 
+    const CompaniesIDs = () => {
+        return (companies.map((item: any) => ({ label: item.name, value: item.id })))
+
+    }
 
     const handleChangeExpire = (value:any) => {
 
@@ -289,17 +302,31 @@ const ProductSupplyEdit:React.FC = () => {
 
                                 <div className="col-md-6 col-xs-12  mb-4">
                                     <label>انبار</label>
-                                    <Select
+                                    {productWareHouseId === 0 ? (
+                                        <>
+                                            <Select
+                                                value={wareCombo().filter((i:any) => i.value === productWareHouseId).map((i:any) => i)}
+                                                // placeholder='کالا'
+                                               
+                                                options={wareCombo()}
+                                                onChange={(e:any) => {
+                                                    setproductWareHouseId(e.value)
+                                                   
+                                                }}
+                                            />
+                                            <p style={{color: 'red'}}>لطفا این فیلد را پر کنید</p>
 
+                                        </>
+                                    ) : (<Select
+                                        value={wareCombo()}
+                                     
                                         options={wareCombo()}
-                                        defaultValue={WareHouse()}
-                                        placeholder="انبار"
-
                                         onChange={(e:any) => {
                                             setproductWareHouseId(e.value)
-
+                                           
                                         }}
-                                    />
+                                    />)}
+
 
                                 </div>
 
@@ -311,7 +338,7 @@ const ProductSupplyEdit:React.FC = () => {
 
                         <div className="form-group mb-4 textOnInput">
                             <div className='form-row'>
-                                <div className='col-12 mb-4'>
+                                <div className={companies.length > 1 ? 'col-lg-6 col-md-6 col-sm-11 mb-4 ':'col-lg-12 col-md-12 col-sm-11 mb-4 '}>
                                     <label > شناسه عرضه</label>
                                     <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => {
                                         setName(e.target.value)
@@ -320,6 +347,34 @@ const ProductSupplyEdit:React.FC = () => {
                                     {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                                 </div>
+                                {companies.length > 1 ? <div className="col-lg-6 col-md-6 col-sm-11 mb-4   textOnInput form-group "
+                                                style={{ marginBottom: "3rem" }}>
+                                                <div className=" form-control-sm">
+                                                    <label> نام شرکت </label>
+
+                                                    {companyId && companyId === null ?
+                                                        <Select
+
+                                                            options={CompaniesIDs()}
+                                                            onChange={(e: any) => {
+                                                                SetcompanyId(e.value)
+                                                            }}
+                                                        /> : <Select
+                                                            value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
+
+                                                            placeholder='نام شرکت'
+                                                            options={CompaniesIDs()}
+                                                            onChange={(e: any) => {
+                                                                SetcompanyId(e.value)
+                                                                SetCompanyName(e.lable)
+                                                                console.log(e);
+
+                                                            }}
+                                                        />}
+                                                {companyId === 0 ? <span className="text-danger">یک شرکت را انتخاب کنید</span> : ''}
+
+                                                </div>
+                                            </div> : ''}
                                 <div className="col-6">
                                     <label >شماره کوتاژ</label>
                                     <Field  validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={(e:any) => {
