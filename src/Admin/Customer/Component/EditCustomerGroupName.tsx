@@ -27,7 +27,8 @@ const EditCustomerGroupName:React.FC = () => {
             const { data, status } = await GetGroupById(params.id)
             setName(data.result.group.name)
             setEntityTypeId(data.result.group.entityTypeId)
-
+            SetcompanyId(data.result.group.companyId)
+            SetCompanyName(data.result.group.companyName)
         } catch (error) {
             console.log(error);
         }
@@ -36,8 +37,7 @@ const EditCustomerGroupName:React.FC = () => {
         try {
             const { data, status } = await GetCompanyChild()
             setUserCompanies(data.result.companies)
-            SetcompanyId(data.result.companies[0].id)
-            SetCompanyName(data.result.companies[0].name)
+         
 
 
         } catch (error) {
@@ -136,31 +136,35 @@ const EditCustomerGroupName:React.FC = () => {
                                     </div>
                                     {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
-                                    {userCompanies?
-                                        <div className=" col-lg-6 col-sm-12 form-group mb-3 textOnInput">
+                                   
+                                    {userCompanies.length > 1 ? <div className="col-lg-3 col-md-3 col-sm-11 mb-3   textOnInput form-group "
+                                                style={{ marginBottom: "3rem" }}>
+                                                <div className=" form-control-sm">
+                                                    <label> نام شرکت </label>
 
-                                            <label> شرکت</label>
-                                            <Select
-                                                defaultValue={defaultValue}
-                                                placeholder='نام شرکت'
-                                                options={companys()}
-                                                key={defaultValue}
-                                                isClearable={true}
-                                                onChange={(e:any) => {
+                                                    {companyId && companyId === null ?
+                                                        <Select
 
+                                                            options={companys()}
+                                                            onChange={(e: any) => {
+                                                                SetcompanyId(e.value)
+                                                            }}
+                                                        /> : <Select
+                                                            value={companys().filter((i: any) => i.value === companyId).map((i: any) => i)}
 
-                                                    SetcompanyId(e.value)
-                                                    SetCompanyName(e.label)
+                                                            placeholder='نام شرکت'
+                                                            options={companys()}
+                                                            onChange={(e: any) => {
+                                                                SetcompanyId(e.value)
+                                                                SetCompanyName(e.lable)
+                                                                console.log(e);
 
+                                                            }}
+                                                        />}
+                                                {companyId === 0 ? <span className="text-danger">یک شرکت را انتخاب کنید</span> : ''}
 
-                                                }
-
-                                                }
-
-                                            />
-
-
-                                        </div>:''}
+                                                </div>
+                                            </div> : ''}
                                         <div className='col-12 '>
                             <div className='row '>
                                 <div className='col-6 '>

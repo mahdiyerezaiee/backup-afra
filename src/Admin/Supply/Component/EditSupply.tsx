@@ -11,6 +11,8 @@ import { ShippingStatusEnums } from "../../../Common/Enums/ShippingStatusEnums";
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
+import { RootState } from '../../../store';
+import { useSelector } from 'react-redux';
 
 
 const EditeSupply:React.FC = () => {
@@ -31,6 +33,9 @@ const EditeSupply:React.FC = () => {
     const [comment, setComment] = useState('');
     const navigate = useNavigate();
     const params = useParams();
+    const companies = useSelector((state: RootState) => state.companies)
+    const [companyId, setCompanyId] = useState<any>(0)
+    const [companyName, setCompanyName] = useState('')
     const getSupply = async () => {
         try {
             const { data, status } = await GetSupply(params.id)
@@ -44,6 +49,8 @@ const EditeSupply:React.FC = () => {
             setSupplyTypeId(data.result.supply.supplyTypeId)
             setShippingStatusId(data.result.supply.shippingStatusId)
             setCottageCode(data.result.supply.cottageCode)
+            setCompanyId(data.result.supply.companyId)
+            setCompanyName(data.result.supply.companyName)
         } catch (err) {
             console.log(err)
         }
@@ -125,6 +132,10 @@ const EditeSupply:React.FC = () => {
     const shippingId = () => {
         return (ShippingStatusEnums.map((data:any) => ({ label: data.name, value: data.id })))
     }
+    const CompaniesIDs = () => {
+        return (companies.map((item: any) => ({ label: item.name, value: item.id })))
+
+    }
 
     const submit = async () => {
         setLoading(true)
@@ -141,7 +152,7 @@ const EditeSupply:React.FC = () => {
                     wareHouseId,
                     contractNumber,
                     cottageCode,
-                    comment
+                    comment,companyId,companyName
                 }
 
             }
@@ -190,7 +201,7 @@ const EditeSupply:React.FC = () => {
                             wareHouseId,
                             contractNumber,
                             cottageCode,
-                            comment
+                            comment,companyId,companyName
                         }}
                         enableReinitialize={true}
                         onSubmit={values => {
@@ -339,7 +350,7 @@ const EditeSupply:React.FC = () => {
                             </div>
                             <div className="form-group mb-4 textOnInput  ">
                                 <div className='form-row'>
-                                    <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
+                                    <div className={companies.length > 1 ?"col-lg-3 col-md-3 col-sm-11 mb-3":"col-lg-4 col-md-4 col-sm-11 mb-3"}>
                                         <label >مقدار</label>
                                         <Field  validate={validatNumber} name="quantity" type="text" className=" value form-control opacityForInput" value={formatter.format(quantity)}
                                                onChange={(e:any) => {
@@ -349,7 +360,7 @@ const EditeSupply:React.FC = () => {
                                         {errors.quantity && touched.quantity && <div className="text-danger">{String(errors.quantity)}</div>}
 
                                     </div>
-                                    <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
+                                    <div className={companies.length > 1 ?"col-lg-3 col-md-3 col-sm-11 mb-3":"col-lg-4 col-md-4 col-sm-11 mb-3"}>
                                         <label >کد کوتاژ</label>
                                         <Field  validate={validatNumber} name="cottageCode" className="form-control opacityForInput" value={cottageCode}
                                                onChange={(e:any) => {
@@ -359,7 +370,7 @@ const EditeSupply:React.FC = () => {
                                         {errors.cottageCode && touched.cottageCode && <div className="text-danger">{errors.cottageCode}</div>}
 
                                     </div>
-                                    <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
+                                    <div className={companies.length > 1 ?"col-lg-3 col-md-3 col-sm-11 mb-3":"col-lg-4 col-md-4 col-sm-11 mb-3"}>
                                         <label >شماره قرارداد</label>
                                         <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" value={contractNumber}
                                                onChange={(e:any) => {
@@ -369,6 +380,35 @@ const EditeSupply:React.FC = () => {
                                     </div>
                                     {errors.contractNumber && touched.contractNumber && <div className="text-danger">{String(errors.contractNumber)}</div>}
 
+
+                                    {companies.length > 1 ? <div className="col-lg-3 col-md-3 col-sm-11 mb-3   textOnInput form-group "
+                                                style={{ marginBottom: "3rem" }}>
+                                                <div className=" form-control-sm">
+                                                    <label> نام شرکت </label>
+
+                                                    {companyId && companyId === null ?
+                                                        <Select
+
+                                                            options={CompaniesIDs()}
+                                                            onChange={(e: any) => {
+                                                                setCompanyId(e.value)
+                                                            }}
+                                                        /> : <Select
+                                                            value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
+
+                                                            placeholder='نام شرکت'
+                                                            options={CompaniesIDs()}
+                                                            onChange={(e: any) => {
+                                                                setCompanyId(e.value)
+                                                                setCompanyName(e.lable)
+                                                                console.log(e);
+
+                                                            }}
+                                                        />}
+                                                {companyId === 0 ? <span className="text-danger">یک شرکت را انتخاب کنید</span> : ''}
+
+                                                </div>
+                                            </div> : ''}
                                 </div></div>
                             <div className="form-group mb-4 textOnInput">
                                 <label >توضیحات</label>

@@ -1,8 +1,8 @@
-import React, { useRef, useState, FormEvent } from 'react'
+import React, { useRef, useState, FormEvent ,useEffect} from 'react'
 import { Menu, MenuItem, Sidebar, SubMenu, useProSidebar } from 'react-pro-sidebar'
 import { FaWarehouse, FaRegHandshake, FaUserCog, FaCashRegister, FaShippingFast } from 'react-icons/fa';
 import { FiUsers } from 'react-icons/fi';
-import { BsReceiptCutoff, BsBoxSeam } from 'react-icons/bs';
+import { BsReceiptCutoff, BsBoxSeam, BsWindowSidebar } from 'react-icons/bs';
 import { RiShipLine, RiDashboardLine } from 'react-icons/ri'
 import { GiMineTruck } from 'react-icons/gi';
 import { MdSupportAgent } from 'react-icons/md';
@@ -19,12 +19,27 @@ require('./styles.css')
 const SideNavbar: React.FC = () => {
     
 
-   
+   const [width,setWidth]=useState(window.innerWidth)
+   const { collapseSidebar } = useProSidebar();
+   const getSize=()=>{
+     setWidth(window.innerWidth)
+   }
+   useEffect(()=>{
+
+window.addEventListener('resize',getSize)
+
+   },[])
     const roles = useSelector((state: RootState) => state.roles)
 
+    console.log(width);
+    
 
     const handleHeaderClick = (event: any) => {
 
+        if(width<600){
+
+            collapseSidebar()
+        }
         event.stopPropagation();
     };
     const ref1 = useRef<HTMLLIElement>(null)
@@ -65,9 +80,9 @@ const SideNavbar: React.FC = () => {
 
 
     return (
-        <Sidebar defaultCollapsed={true} rtl={true} >
+        <Sidebar defaultCollapsed={true} rtl={true}  >
 
-            <Menu >
+            <Menu  >
 
                 <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}>داشبورد</MenuItem>
 
@@ -101,8 +116,8 @@ const SideNavbar: React.FC = () => {
                     <MenuItem onClick={handleHeaderClick} ><NavLink to="supplierList">لیست تامین کنندگان</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}><NavLink to="supply">لیست تامین </NavLink></MenuItem>
                 </SubMenu>
-                <SubMenu ref={ref6} open={show.item6 === true ? true : false} onClick={() => setShow({ ...show, item6: !show.item6, item1: false, item3: false, item4: false, item5: false, item2: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(4) || roles.includes(3) || roles.includes(8) ? false : true} label='فروش' icon={<FaRegHandshake size='2rem' />}>
-                    <MenuItem onClick={handleHeaderClick}><NavLink to="productSupply">عرضه</NavLink></MenuItem>
+                <SubMenu ref={ref6} open={show.item6 === true ? true : false}  onClick={() => setShow({ ...show, item6: !show.item6, item1: false, item3: false, item4: false, item5: false, item2: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(4) || roles.includes(3) || roles.includes(8) ? false : true} label='فروش' icon={<FaRegHandshake size='2rem' />}>
+                    <MenuItem onClick={handleHeaderClick}><NavLink to="productSupply" >عرضه</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}> <NavLink to="orderList">سفارشات</NavLink></MenuItem>
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="addOrder">ثبت سفارش</NavLink></MenuItem>
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="InvoiceList">صورتحساب</NavLink></MenuItem>
