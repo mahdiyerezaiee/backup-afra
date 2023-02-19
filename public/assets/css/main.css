@@ -2934,6 +2934,25 @@ select:-webkit-autofill:focus {
 }
 
 @media only screen and  (max-width: 600px) {
+  .tarikh{
+    display: none;
+  }
+  .button-video {
+    position: fixed;
+    top: 29%;
+    right: 31%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: calc(50vh - 80px);
+    z-index: 100;
+    padding: 0px 12px;
+    border-radius: 10px 0 0 10px;
+}
+.video-section{
+  position: fixed;
+}
   .Expanded{
     display: none;
   }

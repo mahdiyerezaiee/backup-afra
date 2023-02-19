@@ -182,7 +182,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                     }
                 </div>
                 <div className="mr-3 ml-3">{user.companyName?user.companyName:null}</div>
-                <div className="mr-3 ml-3">{""}{dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>
+                <div className="mr-3 ml-3 tarikh">{""}{dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>
                 <ul className="navbar-item flex-row search-ul ">
 
                 </ul>
