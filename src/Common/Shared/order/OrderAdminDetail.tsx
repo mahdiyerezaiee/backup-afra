@@ -6,6 +6,7 @@ import OrderConfirmation from "./orderConfirmation";
 import Modal from "react-modal";
 import InvoiceCreator from "../../../Utils/invoiceCreator";
 import {Link} from "react-router-dom";
+import ReserveOrder from "./ReserveOrder";
 const customStyles = {
     content: {
         position:'fixed',
@@ -112,13 +113,14 @@ const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order , attachments, han
                     <button className="btn-danger   btn m-1" onClick={()=>{openModal(13)}}>رد درخواست </button>
                     <button className={ order.orderStatusId === 5?"btn-primary   btn m-1 ":"btn-success   btn m-1 "} onClick={()=>openModalEdit(order.id)}>صدور پیش فاکتور </button>
                     <Link  to={`/admin/invoice/${order.id}`} className= "btn-primary   btn m-1" hidden={order.orderStatusId ===  1?true:false } >دریافت پیش فاکتور</Link>
-
+                    <button className="btn btn-warning" disabled={order.reserved===true?true:false} onClick={()=>openModalinvoice(order.id)}>رزرو سفارش</button>
                     <button className="btn-success  m-1 btn "hidden={order.orderStatusId===5?false:true} onClick={()=>{openModal(8)}}>تایید درخواست </button>
                 </div>
             </div>
 
             <OrderConfirmation id={order.id} modalIsOpen={modalIsOpen} closeModal={closeModal} orderStatusId={id}/>
             <OrderEdit id={order.id} closeModal={closeModalEdit} modalIsOpen={modalIsOpenEdit} />
+            <ReserveOrder id={order.id} closeModal={closeModalinvoice} modalIsOpen={modalIsOpeninvoice} />
 
 
         </div> )
