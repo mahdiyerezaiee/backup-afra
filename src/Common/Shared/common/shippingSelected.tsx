@@ -175,7 +175,7 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
             style={customStyles}
             contentLabel="Selected Option"
             ariaHideApp={false}>
-            <div style={{ height: '15rem', width: '20rem' }}>
+            <div style={{ height: '20rem', width: '20rem' }}>
                 <h6>ارسال درخواست</h6>
                 <p>در ااین بخش میتونید اطلاعات سفارش را برای باربری ارسال نمایید</p>
                 <div className="form-group mt-4 textOnInput ">
