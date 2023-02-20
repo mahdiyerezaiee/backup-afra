@@ -23,6 +23,8 @@ import EditUserRole from './editUserRole';
 import { GetCompanyChild } from '../../../services/companiesService';
 import { GetGroupWithCompany } from '../../../services/GroupService';
 import { GetUsersRolesById } from '../../../services/userService';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const UserList:React.FC = () => {
 
@@ -46,7 +48,9 @@ const UserList:React.FC = () => {
     const [modalGroupOpen, setmodalGroupOpen] = useState(false)
     const [modalRoleOpen, setmodalRoleOpen] = useState(false)
     const [getData, setGeData] = useState(false)
-    const params = { UserName, FirstName, NationalCode, LastName, userRole }
+    const companies=useSelector((state:RootState)=>state.companies)
+    const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : null)
+    const params = { UserName, FirstName, NationalCode, LastName, userRole,companyId }
 
     function getDefault() {
         let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
@@ -88,7 +92,7 @@ const UserList:React.FC = () => {
             LastName: params.LastName,
             NationalCode: params.NationalCode,
             PageNumber: 0,
-            PageSize
+            PageSize,companyId
 
 
         }
@@ -123,7 +127,7 @@ const UserList:React.FC = () => {
                 LastName: LastName,
                 NationalCode: NationalCode,
                 PageNumber,
-                PageSize
+                PageSize,companyId
             }
             ,
             paramsSerializer: (params:any) => {
@@ -352,6 +356,8 @@ const UserList:React.FC = () => {
                 }
 
             }
+        },{
+            Header:'نام شرکت',accessor:'companyName'
         }
 
         , {
@@ -445,7 +451,8 @@ const UserList:React.FC = () => {
                     "createDate": row.row.original.createDate,
                     "nationalCode": row.row.original.nationalCode,
                     "organizationId": row.row.original.organizationId,
-
+                    "companyId":row.row.original.companyId,
+                    "companyName":row.row.original.companyName,
                     "islegal": row.row.original.islegal,
                     "groupId": row.row.original.groupId,
                     id,
@@ -546,11 +553,15 @@ const UserList:React.FC = () => {
         setUserName('')
         setNationalCode('')
         setUserRole([])
+        setCompanyId(null)
         sessionStorage.clear();
 
 
     }
     const data = useMemo(() => users,[users]);
+    const CompaniesIDs = () => {
+        return (companies.map(data => ({ label: data.name, value: data.id })))
+    }
 
     if (users) {
         const dataForExcel = data.map((item:any) => ({
@@ -598,7 +609,7 @@ const UserList:React.FC = () => {
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی" value={NationalCode} onChange={e => setNationalCode(e.target.value)} />
                             </div>
-                            <div className="col-lg-4 col-md-6  col-sm-12 mb-4  selectIndex">
+                            <div className={companies.length > 1 ?"col-lg-2 col-md-3  col-sm-12 mb-4  selectIndex":"col-lg-4 col-md-6  col-sm-12 mb-4  selectIndex"}>
                                 <label> نقش کاربر</label>
                                 <Select
                                     value={userRole}
@@ -609,6 +620,31 @@ const UserList:React.FC = () => {
                                     onChange={e => setUserRole(e)}
                                 />
                             </div>
+                            {companies.length > 1 ? <div className="col-lg-2 col-md-3  col-sm-12 mb-4     form-group "
+                            style={{ marginBottom: "3rem" }}>
+                            
+                                <label> نام شرکت </label>
+
+                                {companyId && companyId === null ?
+                                    <Select
+
+                                        options={CompaniesIDs()}
+                                        onChange={(e:any) => {
+                                            setCompanyId(e.value)
+                                        }}
+                                    /> : <Select
+                                        value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+
+                                        placeholder='نام شرکت'
+                                        options={CompaniesIDs()}
+                                        onChange={(e:any) => {
+                                            setCompanyId(e.value)
+                                            console.log(e);
+
+                                        }}
+                                    />}
+                           
+                        </div> : ''}
 
 
                         </form>
