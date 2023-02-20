@@ -112,7 +112,7 @@ const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order , attachments, han
 
                     <button className="btn-danger   btn m-1" onClick={()=>{openModal(13)}}>رد درخواست </button>
                     <button className={ order.orderStatusId === 5?"btn-primary   btn m-1 ":"btn-success   btn m-1 "} onClick={()=>openModalEdit(order.id)}>صدور پیش فاکتور </button>
-                    <Link  to={`/admin/invoice/${order.id}`} className= "btn-primary   btn m-1" hidden={order.orderStatusId ===  1?true:false } >دریافت پیش فاکتور</Link>
+                    <Link  to={`/admin/invoiceAdmin/${order.id}`} className= "btn-primary   btn m-1" hidden={order.orderStatusId ===  1?true:false } >دریافت پیش فاکتور</Link>
                     <button className="btn btn-warning" disabled={order.reserved===true?true:false} onClick={()=>openModalinvoice(order.id)}>رزرو سفارش</button>
                     <button className="btn-success  m-1 btn "hidden={order.orderStatusId===5?false:true} onClick={()=>{openModal(8)}}>تایید درخواست </button>
                 </div>
