@@ -3,7 +3,7 @@ import { addOrder } from "../../../services/orderService";
 import Select from "react-select";
 import { NavLink, useNavigate } from "react-router-dom";
 import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
-import { GetAllProducts, GetProducts } from "../../../services/productService";
+import { GetAllProducts, GetProducts, GetProductsWithCompanyForCombos } from "../../../services/productService";
 import { PaymentStatusEnums } from "../../../Common/Enums/PaymentStatus";
 import { GetAllUsers, GetDataWithSearch } from "../../../services/userService";
 import { PaymentStructureEnums } from "../../../Common/Enums/PaymentStructureEnums";
@@ -58,7 +58,7 @@ const AddOrder: React.FC = () => {
   const [organizations, setOrganizations] = useState([]);
   let [companyId, SetcompanyId] = useState();
   let [companyName, SetCompanyName] = useState();
-  const [userCompanies, setUserCompanies] = useState([]);
+  const [userCompanies, setUserCompanies] = useState<any>([]);
   const Navigate = useNavigate();
   const [checked, setChecked] = useState({ selectedValue: 0 });
   const [condition, setCondition] = useState<any>([]);
@@ -79,6 +79,7 @@ const AddOrder: React.FC = () => {
         PageNumber: 0,
         PageSize: 100000000,
         IsAdmin: true,
+        CompanyId:companyId?companyId:userCompanies[0].id
       },
     };
     try {
@@ -94,6 +95,13 @@ const AddOrder: React.FC = () => {
     getOrganizations();
     getCompanies();
   }, []);
+
+  useEffect(() => {
+    getProductSupply();
+    getProdcutForCombo()
+   
+  }, [companyId]);
+ 
 
   const getUser = async () => {
     let configs = {
@@ -238,13 +246,24 @@ const AddOrder: React.FC = () => {
     }
   };
   const getProdcutForCombo = async () => {
+    if(companyId){
     try {
-      const { data, status } = await GetAllProducts();
+      const { data, status } = await GetProductsWithCompanyForCombos(companyId);
       if (status === 200) {
         setProducts(data.result.products.values);
       }
     } catch (error) {
       console.log(error);
+    }}
+    else{
+      try {
+        const { data, status } = await GetProductsWithCompanyForCombos(userCompanies[0].id);
+        if (status === 200) {
+          setProducts(data.result.products.values);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   const GetCustomerGroup = async () => {
@@ -641,6 +660,24 @@ const AddOrder: React.FC = () => {
 
                 <div className="form-group mb-4 textOnInput ">
                   <div className="form-row">
+                  {userCompanies.length > 1 ? (
+                      <div className="col-12 mb-4  textOnInput">
+                        <label> شرکت</label>
+                        <Select
+                          defaultValue={defaultValue}
+                          placeholder="نام شرکت"
+                          options={companys()}
+                          key={defaultValue}
+                          isClearable={true}
+                          onChange={(e) => {
+                            SetcompanyId(e.value);
+                            SetCompanyName(e.label);
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <div
                       className={
                         withSupply
@@ -906,24 +943,7 @@ const AddOrder: React.FC = () => {
                         }}
                       />
                     </div>
-                    {userCompanies.length > 1 ? (
-                      <div className="col-12 mb-4  textOnInput">
-                        <label> شرکت</label>
-                        <Select
-                          defaultValue={defaultValue}
-                          placeholder="نام شرکت"
-                          options={companys()}
-                          key={defaultValue}
-                          isClearable={true}
-                          onChange={(e) => {
-                            SetcompanyId(e.value);
-                            SetCompanyName(e.label);
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                    
 
                     <div className="col-12">
                       <label>توضیحات</label>

@@ -12,6 +12,10 @@ export const GetProducts=()=>{
 
     return http.get(`${configure}/Product/GetProducts?Active=true&isAdmin=true&PageSize=10000000`);
 }
+export const GetProductsWithCompanyForCombos=(companyId)=>{
+
+    return http.get(`${configure}/Product/GetProducts?Active=true&isAdmin=true&PageSize=10000000&CompanyId=${companyId}`);
+}
 
 export const SetProduct=(product)=>{
 
