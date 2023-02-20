@@ -28,6 +28,7 @@ const UpdateShippingReports: React.FC = () => {
     let [clicked, setClicked] = useState(false);
     const [report, setReport] = useState([])
     const[updateCompaniesStatus,SetUpdateCompaniesStatus]=useState(false)
+    const[useExistingData,SetuseExistingData]=useState(false)
     const [reportMethod, SetReportMethod] = useState('3days')
     let color = "#0c4088"
 
@@ -107,11 +108,11 @@ const UpdateShippingReports: React.FC = () => {
         setLoading(true)
         let body: any;
         if (reportMethod === '3days') {
-            body = { startDate: null, endDate: null, shippingCompanyId: null,updateCompaniesStatus }
+            body = { startDate: null, endDate: null, shippingCompanyId: null,updateCompaniesStatus,useExistingData:null }
         }
         else {
             body = {
-                startDate, endDate, shippingCompanyId,updateCompaniesStatus
+                startDate, endDate, shippingCompanyId,updateCompaniesStatus,useExistingData
             }
         }
         try {
@@ -265,7 +266,8 @@ const UpdateShippingReports: React.FC = () => {
                                             />
 
                                         </div>
-                                        <div className="col-lg-6 col-md-6 col-sm-6 ml-4 ">
+                                        <div className="row m-1" >
+                                        <div className="col-lg-12 col-md-12 col-sm-12 ml-4 ">
 
 
                                             <label className="form-check-label">
@@ -273,6 +275,18 @@ const UpdateShippingReports: React.FC = () => {
                                                 <input disabled={reportMethod === 'byDate' ? false : true} type="checkbox" checked={updateCompaniesStatus} onChange={(e:any)=>SetUpdateCompaniesStatus(e.target.checked)} className="form-check-input"  />
                                                 بروز رسانی اطلاعات شرکت های باربری
                                             </label>
+                                            
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 ml-4 ">
+
+
+                                            <label className="form-check-label">
+
+                                                <input disabled={reportMethod === 'byDate' ? false : true} type="checkbox" checked={useExistingData} onChange={(e:any)=>SetuseExistingData(e.target.checked)} className="form-check-input"  />
+                                                استفاده از اطلاعات موجود
+                                            </label>
+                                            
+                                        </div>
                                         </div>
 
                                     </div>
