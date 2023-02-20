@@ -368,10 +368,10 @@ navigate('/admin/newproductgroup')
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
                     {userCompanies.length > 1 ?
-                            <AdvancedSearch>
+                            
                                 <form className='form-row textOnInput'>
 
-                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                    <div className="col-lg-4 col-md-4 col-sm-4 m-4  selectIndex">
                                         <label> شرکت</label>
                                         <Select
                                             defaultValue={defaultValue}
@@ -395,7 +395,7 @@ navigate('/admin/newproductgroup')
 
                                 </form>
 
-                            </AdvancedSearch> : ''}
+                           : ''}
 
 
                     </div>
@@ -460,10 +460,10 @@ navigate('/admin/newproductgroup')
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
 
                     {userCompanies.length > 1 ?
-                            <AdvancedSearch>
+                         
                                 <form className='form-row textOnInput'>
 
-                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                    <div className="col-lg-4 col-md-4 col-sm-4  m-4 selectIndex">
                                         <label> شرکت</label>
                                         <Select
                                             defaultValue={defaultValue}
@@ -487,7 +487,7 @@ navigate('/admin/newproductgroup')
 
                                 </form>
 
-                            </AdvancedSearch> : ''}
+                             : ''}
 
                     </div>
                 </div>

@@ -314,9 +314,9 @@ const WareHouseType :React.FC= () => {
         return (
             <div className='user-progress'>
                 <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-4'>
                     {userCompanies.length > 1 ?
-                            <AdvancedSearch>
+                          
                                 <form className='form-row textOnInput'>
 
                                     <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
@@ -343,7 +343,7 @@ const WareHouseType :React.FC= () => {
 
                                 </form>
 
-                            </AdvancedSearch> : ''}
+                             : ''}
 
                     </div>
                 </div>
@@ -395,14 +395,14 @@ const WareHouseType :React.FC= () => {
     else{
         return(
             <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+                <div className='row '>
+                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-4'>
 
                     {userCompanies.length > 1 ?
-                            <AdvancedSearch>
-                                <form className='form-row textOnInput'>
+                            
+                                <form className='form-row textOnInput  '>
 
-                                    <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
+                                    <div className="col-lg-4 col-md-4 col-sm-4 selectIndex">
                                         <label> شرکت</label>
                                         <Select
                                             defaultValue={defaultValue}
@@ -426,7 +426,7 @@ const WareHouseType :React.FC= () => {
 
                                 </form>
 
-                            </AdvancedSearch> : ''}
+                           : ''}
                     </div>
                 </div>
                 <div className=" statbox widget-content widget-content-area">
