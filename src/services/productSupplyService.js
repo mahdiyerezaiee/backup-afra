@@ -43,3 +43,7 @@ export const GetAllProductWithSearch=(searchParams)=>{
 }
 
 
+export const ChangeProductSupplyAction=(obj)=>{
+
+    return http.post(`${configure}/Product/ChangeProductSupplyActive` ,JSON.stringify(obj));
+}

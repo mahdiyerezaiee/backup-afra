@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
+    ChangeProductSupplyAction,
     DeleteProductSupply,
     GetAllProductSupplyForAdmin,
     GetAllProductWithSearch,
@@ -456,57 +457,15 @@ const ProductSupply:React.FC = () => {
                 const id = row.row.original.id
 
                 const activeChang = {
-                    productSupply: {
-                        id,
-                        name: row.row.original.name,
-                        productId: row.row.original.productId,
-                        productWareHouseId: row.row.original.productWareHouseId,
-                        createDate: row.row.original.createDate,
-                        endDate: row.row.original.endDate,
-                        measureUnitId: row.row.original.measureUnitId,
-                        quantity: row.row.original.quantity,
-                        active: !active,
-                        comment: row.row.original.comment,
-                        price: row.row.original.price,
-                        minSellableAmount: row.row.original.minSellableAmount,
-                        maxSellableAmount: row.row.original.maxSellableAmount,
-                        usedAttributes: row.row.original.usedAttributes,
-                        paymentMethodId: row.row.original.paymentMethodId,
-                        installmentOccureCount: row.row.original.installmentOccureCount,
-                        installmentPeriod: row.row.original.installmentPeriod,
-                        installmentStartDate: row.row.original.installmentStartDate,
-                        cottageCode: row.row.original.cottageCode,
-                        product: {
-                            id: row.row.original.product.id,
-                            name: row.row.original.product.name,
-                            englishName: row.row.original.product.englishName,
-                            price: row.row.original.product.price,
-                            active: row.row.original.product.active,
-                            minSellableAmount: row.row.original.product.minSellableAmount,
-                            maxSellableAmount: row.row.original.product.maxSellableAmount,
-                            measureUnitId: row.row.original.product.measureUnitId,
-                            groupId: row.row.original.product.groupId,
-                            measureUnit: row.row.original.product.measureUnit
-                        },
-                        wareHouse: null
-                        // wareHouse: {
-
-                        //     wareHouseId: row.row.original.wareHouse.wareHouseId,
-                        //     wareHouseName: row.row.original.wareHouse.wareHouseName,
-                        //     productId: row.row.original.wareHouse.productId,
-                        //     quantity: row.row.original.wareHouse.quantity,
-                        //     consumableQuantity: row.row.original.wareHouse.consumableQuantity,
-                        //     reservedQuantity: row.row.original.wareHouse.reservedQuantity
-                        // }
-                    }
-
-                }
+                    "productSupplyId": row.row.original.id,
+                    "active": !active
+                  }
 
                 const activeHandler = async () => {
                     setActive(!active)
 
                     try {
-                        const { data, status } = await SetProductSupply(activeChang)
+                        const { data, status } = await ChangeProductSupplyAction(activeChang)
 
                         // if (status === 200){
                         //
