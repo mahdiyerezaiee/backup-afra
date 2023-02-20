@@ -22,6 +22,8 @@ import { GetDataWithSearchSupply } from "../../../services/supplyService";
 import { GetAllProductWithSearch } from "../../../services/productSupplyService";
 import Modal from "react-modal";
 import { GetGroupWithCompany } from "../../../services/GroupService";
+import { useSelector } from 'react-redux';
+import { RootState } from "../../../store";
 
 const customStyles = {
   content: {
@@ -64,6 +66,7 @@ const AddOrder: React.FC = () => {
   const [condition, setCondition] = useState<any>([]);
   const [customerg, setCustomerg] = useState([]);
   let color = "#0c4088";
+  const companies=useSelector((state:RootState)=>state.companies)
   const getCompanies = async () => {
     try {
       const { data, status } = await GetCompanyChild();
@@ -72,6 +75,21 @@ const AddOrder: React.FC = () => {
       SetCompanyName(data.result.companies[0].name);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    getCompanies();
+    getUser();
+    getOrganizations();
+ 
+
+  }, []);
+
+  useEffect(() => {
+    getProductSupply();
+    getProdcutForCombo()
+   
+  }, [companyId]);
+ 
   const getProductSupply = async () => {
     let config = {
       headers: { "Content-Type": "application/json" },
@@ -79,7 +97,7 @@ const AddOrder: React.FC = () => {
         PageNumber: 0,
         PageSize: 100000000,
         IsAdmin: true,
-        CompanyId:companyId
+        CompanyId:companyId?companyId:companies[0].id
       },
     };
     try {
@@ -89,20 +107,6 @@ const AddOrder: React.FC = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getCompanies();
-    getProductSupply();
-    getUser();
-    getOrganizations();
-  }, []);
-
-  useEffect(() => {
-    getProductSupply();
-    getProdcutForCombo()
-   
-  }, [companyId]);
- 
-
   const getUser = async () => {
     let configs = {
       headers: { "Content-Type": "application/json" },
