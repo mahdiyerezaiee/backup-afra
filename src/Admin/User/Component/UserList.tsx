@@ -589,8 +589,9 @@ const UserList:React.FC = () => {
 
                         <form className='form-row textOnInput'>
 
-                            <label>نام</label>
                             <div className="col-lg-2 col-md-4  col-sm-12    mb-1">
+                            <label>نام</label>
+
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام " value={FirstName} onChange={e => setFirstName(e.target.value)} />
                             </div>
 

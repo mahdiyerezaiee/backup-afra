@@ -19,24 +19,7 @@ import { ProSidebarProvider } from 'react-pro-sidebar';
 
 
 const App:React.FC=()=>{
-  const [mode, setMode] = useState(getDefaultMode());
-
-  function getDefaultMode() {
-      const savedMode = localStorage.getItem('mode');
-      return savedMode ? savedMode : 'light';
-  }
-  useEffect(()=>{
-      const body = document.body
-      if (mode === 'dark'){
-          body.classList.add('dark-mode')
-      }else {
-          body.classList.remove('dark-mode')
-
-      }
-      localStorage.setItem('mode', mode); // mode saved to local storage
-
-  },[mode])
-
+ 
  
 
 

@@ -80,10 +80,27 @@
 }
 
 .dark-mode .auction-item-2 {
-    background-color: #060818 !important;
+    background-color: #1a1c2d  !important;
     border: 3px solid #142138 !important;
 }
+.dark-mode .auction-content b {
+    color: mediumslateblue;
+}
+.dark-mode .bg-light-warning {
+    background-color: #060818!important;
+    
 
+}
+.dark-mode .client-table-condition {
+   
+    background-color: #1a1c2d!important;
+   
+}
+.dark-mode  .dashboard-item svg{
+    margin-bottom: 20px;
+    color: rgb(126 130 255)!important;
+    stroke-width: 0px;
+}
 .dark-mode .navbar-mian {
     color: #BDBDD7;
     background-color: #060818 !important;
@@ -192,10 +209,10 @@
 
 }
 
-.dark-mode .ps-sidebar-root .ps-menu-root .ps-menuitem-root>.ps-menu-button:hover {
+/* .dark-mode .ps-sidebar-root .ps-menu-root .ps-menuitem-root>.ps-menu-button:hover {
     background-color: #365388;
 
-}
+} */
 
 .dark-mode .user-progress {
     background-color: #060818 !important;
@@ -360,11 +377,11 @@
 }
 
 .dark-mode .ps-sidebar-root .css-dip3t8 {
-    background-color: #060818 !important;
+    background-color: #060818!important;
 }
 
 .dark-mode .css-ewdv3l {
-    background-color: #060818 !important;
+    background-color: #060818!important;
 }
 
 .dark-mode ul button {
@@ -386,9 +403,12 @@
 
 .dark-mode .chat-system .user-list-box {
 
-    background-color: transparent;
+    background-color: #060818!important;
 }
+.dark-mode .people .person{
+    border-bottom: 1px dashed white!important;
 
+}
 .dark-mode input {
     border: 1px solid #3b82f6;
     background-color: transparent !important;
@@ -499,8 +519,8 @@
 
 }
 
-.dark-mode .table>thead>tr>th {
-    color: #51b6ff;
+.dark-mode .clientBody .user-list-box {
+    background-color: #0e1726!important;
 }
 
 .dark-mode .form-control:focus {
@@ -774,12 +794,15 @@ select:-webkit-autofill:focus {
 .dark-mode .loadingAddress {
     background: #1a1c2d !important;
 }
-.dark-mode   .ps-sidebar-root svg{
+.dark-mode   .admin-sideBar svg{
     color: inherit!important;
 }
-.dark-mode   .ps-sidebar-root svg:hover{
+/* .dark-mode .client-sideBar svg{
+    color: white!important;
+} */
+/* .dark-mode   .ps-sidebar-root svg:hover{
     color: #19a255!important;
-}
+} */
 .dark-mode .edit-svg {
     color: white;
     background: mediumslateblue;
@@ -796,4 +819,10 @@ select:-webkit-autofill:focus {
 .dark-mode .dark-mode-footer {
 
     display: block;
+}
+@media only screen and  (max-width: 600px) {
+
+.dark-mode .navbar-collapse {
+    display: block;
+    background:#060818!important;}
 }

@@ -80,7 +80,7 @@ window.addEventListener('resize',getSize)
 
 
     return (
-        <Sidebar defaultCollapsed={true} rtl={true}  >
+        <Sidebar defaultCollapsed={true} rtl={true} className="admin-sideBar"  >
 
             <Menu  >
 
