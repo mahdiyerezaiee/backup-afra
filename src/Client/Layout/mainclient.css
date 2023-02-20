@@ -9364,3 +9364,6 @@ width: 390px;
 .clearfixed{
     clear: both;
 }
+.dark-mode-footer{
+    display: none;
+}

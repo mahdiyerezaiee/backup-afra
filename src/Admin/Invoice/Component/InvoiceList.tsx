@@ -531,7 +531,7 @@ const InvoiceList: React.FC = () => {
                 </Modal>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
                     <AdvancedSearch>
-                        <br />
+                      
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
@@ -798,7 +798,7 @@ const InvoiceList: React.FC = () => {
                 </Modal>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
                 <AdvancedSearch>
-                        <br />
+                      
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
