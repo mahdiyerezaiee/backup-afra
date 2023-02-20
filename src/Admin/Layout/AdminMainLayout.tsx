@@ -94,6 +94,7 @@ import { AllCompanies } from '../../store/Slice/companies/companySlice';
 import InvoiceList from './../Invoice/Component/InvoiceList';
 import PaymentList from '../../Client/payment/paymentList';
 import PaymentsList from './../Payment/Component/PaymentsList';
+import InvoiceCreatorForAdmin from './../../Utils/invoiceCreatorForAdmin';
 
 const AdminMainLayout:React.FC = () => {
   const [isloading, setIsloading] = useState(true);
@@ -300,6 +301,7 @@ const AdminMainLayout:React.FC = () => {
                   <Route path='OrdersReports' element={<OrdersReports />} />
                   {/* InvoiceCreator*/}
                   <Route path='invoice/:id' element={<InvoiceCreator closeModal={null} />} />
+                  <Route path='invoiceAdmin/:id' element={<InvoiceCreatorForAdmin closeModal={null} />} />
 
                 </Routes>
               </div>
