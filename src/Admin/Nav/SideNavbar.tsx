@@ -84,7 +84,7 @@ window.addEventListener('resize',getSize)
 
             <Menu  >
 
-                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}>داشبورد</MenuItem>
+                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}  onClick={handleHeaderClick}>داشبورد</MenuItem>
 
                 {/* <SubMenu hidden={roles.includes(1) ? false : true} icon={<FiUsers size={'2rem'} />} label="تکمیل اطلاعات" >
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-align-justify" />}><NavLink to='identitypannel'> احراز هویت</NavLink></MenuItem>
