@@ -74,6 +74,11 @@ select.form-custom::-ms-expand {
 .filter-btn{
   display: block;
 }
+.form-row .filter-btn .row{
+  width: 100%;
+  float: none;
+
+}
 .filter-btn .row{
   width: 20%;
   float: left;
