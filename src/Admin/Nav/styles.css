@@ -48,8 +48,9 @@
 }
 
  .css-6a03ny{
-   width: auto!important;
-   height: auto!important;
+   /* width: auto!important;
+   height: auto!important; */
+   min-width: auto!important;
  }
 .css-18owulr:hover  .css-6a03ny {
   animation: swing ease-in-out 0.5s 1 alternate!important;
@@ -296,7 +297,7 @@
     /*.ps-sidebar-root.ps-rtl  .css-vj11vy .css-vj11vy-item > .ps-menu-button  {*/
     /*  padding: 5% 20px 5% 35px!important; }*/
     .ps-sidebar-root svg{
-      width: 100%!important;
+      /* width: 100%!important; */
     }
     .ps-sidebar-root.xxl {
       position: fixed;
