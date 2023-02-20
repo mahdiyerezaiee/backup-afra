@@ -22,6 +22,8 @@ import { GetDataWithSearchSupply } from "../../../services/supplyService";
 import { GetAllProductWithSearch } from "../../../services/productSupplyService";
 import Modal from "react-modal";
 import { GetGroupWithCompany } from "../../../services/GroupService";
+import { useSelector } from 'react-redux';
+import { RootState } from "../../../store";
 
 const customStyles = {
   content: {
@@ -64,6 +66,7 @@ const AddOrder: React.FC = () => {
   const [condition, setCondition] = useState<any>([]);
   const [customerg, setCustomerg] = useState([]);
   let color = "#0c4088";
+  const companies=useSelector((state:RootState)=>state.companies)
   const getCompanies = async () => {
     try {
       const { data, status } = await GetCompanyChild();
@@ -72,6 +75,21 @@ const AddOrder: React.FC = () => {
       SetCompanyName(data.result.companies[0].name);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    getCompanies();
+    getUser();
+    getOrganizations();
+ 
+
+  }, []);
+
+  useEffect(() => {
+    getProductSupply();
+    getProdcutForCombo()
+   
+  }, [companyId]);
+ 
   const getProductSupply = async () => {
     let config = {
       headers: { "Content-Type": "application/json" },
@@ -79,7 +97,7 @@ const AddOrder: React.FC = () => {
         PageNumber: 0,
         PageSize: 100000000,
         IsAdmin: true,
-        CompanyId:companyId?companyId:userCompanies[0].id
+        CompanyId:companyId?companyId:companies[0].id
       },
     };
     try {
@@ -89,20 +107,6 @@ const AddOrder: React.FC = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getProductSupply();
-    getUser();
-    getOrganizations();
-    getCompanies();
-  }, []);
-
-  useEffect(() => {
-    getProductSupply();
-    getProdcutForCombo()
-   
-  }, [companyId]);
- 
-
   const getUser = async () => {
     let configs = {
       headers: { "Content-Type": "application/json" },
@@ -307,7 +311,7 @@ const AddOrder: React.FC = () => {
         
         const{measureUnitId , price}=supplyP[0]
 
-        let productP = products.filter((i:any )=> i.id === supplyP[0].productId).map((data: any) => ({
+        let productP :any= products.filter((i:any )=> i.id === supplyP[0].productId).map((data: any) => ({
             label: data.name,
             value: data.id,
           }));
@@ -672,6 +676,10 @@ const AddOrder: React.FC = () => {
                           onChange={(e) => {
                             SetcompanyId(e.value);
                             SetCompanyName(e.label);
+                            setPaymentMethodId(0)
+                            setMeasureUnitId(0)
+                            setProductBasePrice(0)
+                            setProductSupplyId(0)
                           }}
                         />
                       </div>
@@ -681,10 +689,10 @@ const AddOrder: React.FC = () => {
                     <div
                       className={
                         withSupply
-                          ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex"
-                          : "col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex"
+                          ? "col-lg-4 col-md-6 col-sm-11  mb-4  "
+                          : "col-lg-6 col-md-6 col-sm-11  mb-4 "
                       }
-                      style={{ zIndex: "3" }}
+                      
                     >
                       <label>مشتری</label>
 
@@ -703,10 +711,10 @@ const AddOrder: React.FC = () => {
                     <div
                       className={
                         withSupply
-                          ? "col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex"
-                          : "col-lg-6 col-md-6 col-sm-11  mb-4 selectIndex"
+                          ? "col-lg-4 col-md-6 col-sm-11  mb-4 "
+                          : "col-lg-6 col-md-6 col-sm-11  mb-4 "
                       }
-                      style={{ zIndex: "3" }}
+                      
                     >
                       <label>نام کالا</label>
 {productSupplyId !== 0 ?
@@ -743,7 +751,7 @@ const AddOrder: React.FC = () => {
                       ) : (
                         <Select
                           placeholder="کالا"
-                          className="opacityForInput "
+                          className=" "
                           options={productCombo()}
                           onChange={(e: any) => {
                             setProductId(e.value);
@@ -758,7 +766,7 @@ const AddOrder: React.FC = () => {
                     </div>
                     {withSupply ? (
                       <div
-                        className="col-lg-4 col-md-6 col-sm-11  mb-4 selectIndex"
+                        className="col-lg-4 col-md-6 col-sm-11  mb-4 "
                         style={{ zIndex: "3" }}
                       >
                         <label>عرضه </label>
@@ -769,6 +777,7 @@ const AddOrder: React.FC = () => {
                               placeholder="عرضه"
                               className=" col-9 opacityForInput border-danger pr-2"
                               options={prodcutSupplyCombo()}
+                              isClearable={true}
                               onChange={(e: any) => {
                                 setProductSupplyId(e.value);
 
@@ -793,8 +802,10 @@ const AddOrder: React.FC = () => {
                               placeholder="عرضه"
                               className="col-9 opacityForInput pr-2 "
                               options={prodcutSupplyCombo()}
+                              isClearable={true}
                               onChange={(e: any) => {
                                 setProductSupplyId(e.value);
+                                
                                 disabledBtn(e.value);
                               }}
                             />
@@ -816,8 +827,8 @@ const AddOrder: React.FC = () => {
 
                     {!statusCondition ? (
                       <div
-                        className="col-lg-6 col-md-6 col-sm-11 "
-                        style={{ marginBottom: "3rem", zIndex: "2" }}
+                        className="col-lg-6 col-md-6 col-sm-11 mb-4"
+                       
                       >
                         <label>نحوه پرداخت</label>
                         <Select
@@ -832,8 +843,8 @@ const AddOrder: React.FC = () => {
                       </div>
                     ) : (
                       <div
-                        className="col-lg-6 col-md-6 col-sm-11 "
-                        style={{ marginBottom: "3rem", zIndex: "2" }}
+                        className="col-lg-6 col-md-6 col-sm-11 mb-4"
+                       
                       >
                         <label>نحوه پرداخت</label>
                         <Select
@@ -846,7 +857,7 @@ const AddOrder: React.FC = () => {
                       </div>
                     )}
                     <div
-                      className="col-lg-6 col-md-6  col-sm-6   selectIndex textOnInput form-group "
+                      className="col-lg-6 col-md-6  col-sm-6    textOnInput form-group "
                       style={{ marginBottom: "3rem" }}
                     >
                       <div className=" form-control-sm">
@@ -931,7 +942,7 @@ const AddOrder: React.FC = () => {
                     }
                     <div
                       className=" form-group mb-4 textOnInput col-lg-6 col-md-6 col-sm-11  "
-                      style={{ marginBottom: "3rem", zIndex: "1" }}
+                    
                     >
                       <label>وضعیت سفارش</label>
                       <Select

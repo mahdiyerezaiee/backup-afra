@@ -201,8 +201,8 @@ const SalesBoardForAdmin:React.FC = () => {
                             ariaHideApp={false}
 
                         >
-                            <ModalSubmit loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={productSupplyCondition} closeModal={closeModal}  quantity={quantity} submitHandler={submitHandler}
-                                setquantity={setquantity} />
+                            {/* <ModalSubmit loading={loading} productSupplyConditionId={productSupplyConditionId} formatter={formatter} modalInfo={productSupplyCondition} closeModal={closeModal}  quantity={quantity} submitHandler={submitHandler}
+                                setquantity={setquantity} /> */}
                         </Modal>
                         {/*<Modal*/}
                         {/*    isOpen={modalIsOpenCondition}*/}
@@ -255,8 +255,7 @@ const SalesBoardForAdmin:React.FC = () => {
                                         <td data-th="تاریخ پایان" className="text-center">{new Date(item.endDate).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
                                         <td data-th="درخواستی"className="text-center">{formatter2.format(item.orderedQuantity)}</td>
                                         <td data-th="مانده "className="text-center">{formatter2.format(item.remainedQuantity)}</td>
-                                        <td data-th=" عملیات"className="text-center">{item.productSupplyConditions.length === 0 ? (<button className="btn btn-success" disabled={userRole[0] === 1 ? true : false} onClick={() => openModal(item)}>درخواست
-                                        </button>) : (<button className="btn btn-success" disabled={userRole.includes(1) ? true : false} onClick={() => openModalCondition(item ,item.id)}>شرایط پرداخت</button>)}</td>
+                                        <td data-th=" عملیات"className="text-center">{item.productSupplyConditions.length === 0 ? (<div></div>) : (<button className="btn btn-success" disabled={userRole.includes(1) ? true : false} onClick={() => openModalCondition(item ,item.id)}>شرایط پرداخت</button>)}</td>
 
 
 

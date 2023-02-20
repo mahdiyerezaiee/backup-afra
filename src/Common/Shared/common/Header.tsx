@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Switch from 'react-switch';
 import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {  DeleteItemCart, DeleteItemCarts, GetShoppingCart } from "../../../services/cartShoppingService";
+import { DeleteItemCart, DeleteItemCarts, GetShoppingCart } from "../../../services/cartShoppingService";
 import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
 
 import Setting from "../../Setting/setting";
@@ -16,35 +16,35 @@ import { ClipLoader } from "react-spinners";
 import { Link } from 'react-router-dom';
 import { useProSidebar } from 'react-pro-sidebar';
 import { RootState } from '../../../store';
-interface Props{
+interface Props {
 
-    collapsed:boolean
-
-
-} 
+    collapsed: boolean
 
 
-const Header:React.FC<Props> = ({ collapsed }) => {
-    const ref:any = useRef()
+}
+
+
+const Header: React.FC<Props> = ({ collapsed }) => {
+    const ref: any = useRef()
     const { collapseSidebar } = useProSidebar();
-    const refNews:any = useRef()
+    const refNews: any = useRef()
     const Navigate = useNavigate()
-    const user = useSelector((state:RootState) => state.user);
+    const user = useSelector((state: RootState) => state.user);
     const [cartShopping, setCartShopping] = useState([])
     const [theme, setTheme] = useState(false)
     const [show, setShow] = useState(false)
     const [showNews, setShowNews] = useState(false)
-    const roles = useSelector((state:RootState) => state.roles);
+    const roles = useSelector((state: RootState) => state.roles);
     const [loading, setLoading] = useState(false);
 
-    const handleHeaderClick = (event:any) => {
+    const handleHeaderClick = (event: any) => {
 
         event.stopPropagation();
     };
 
     useEffect(() => {
 
-        const checkIfClickedOutside = (e:any) => {
+        const checkIfClickedOutside = (e: any) => {
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
             if (show && ref.current && !ref.current.contains(e.target)) {
@@ -66,7 +66,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
     }, [show])
     useEffect(() => {
 
-        const checkIfClickedOutside =(e:any)=> {
+        const checkIfClickedOutside = (e: any) => {
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
             if (show && ref.current && !ref.current.contains(e.target)) {
@@ -92,7 +92,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
 
     }
 
-    const deleteItemHandler = async (id:number) => {
+    const deleteItemHandler = async (id: number) => {
 
         try {
             const { data, status } = await DeleteItemCart(id, Number(localStorage.getItem('connect')))
@@ -146,7 +146,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
         }
         setLoading(false)
     }
-    const MeasureUnit = (id:number) => {
+    const MeasureUnit = (id: number) => {
         return (MeasureUnitSample.filter(item => item.id === id).map(item => item.name))
     }
     let formatter = new Intl.NumberFormat('fa-IR', {
@@ -177,11 +177,11 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                 </ul>
 
                 <div className="block ">
-                {collapsed ? <GiHamburgerMenu size="2rem" onClick={() => collapseSidebar()} />
+                    {collapsed ? <GiHamburgerMenu size="2rem" onClick={() => collapseSidebar()} />
                         : <BiX size="2rem" onClick={() => collapseSidebar()} />
                     }
                 </div>
-                <div className="mr-3 ml-3">{user.companyName?user.companyName:null}</div>
+                <div className="mr-3 ml-3">{user.companyName ? user.companyName : null}</div>
                 <div className="mr-3 ml-3 tarikh">{""}{dayName} {""}{new Date().toLocaleDateString("fa-IR")}</div>
                 <ul className="navbar-item flex-row search-ul ">
 
@@ -190,7 +190,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                     <li className="nav-item m-auto">
                         <Setting />
                     </li>
-                    <li className="nav-item dropdown message-dropdown">
+                    {/* <li className="nav-item dropdown message-dropdown">
                         <div ref={ref}>
                             <Link to='#' className="nav-link dropdown-toggle" id="messageDropdown"
                                 onClick={() => setShow(oldState => !oldState)}>
@@ -227,7 +227,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                                 <div >
                                     {cartShopping.length !== 0 ?
 
-                                        Array.from({ length: 10 } && cartShopping.map((item:any, i) =>
+                                        Array.from({ length: 10 } && cartShopping.map((item: any, i) =>
 
                                             show && (
 
@@ -250,7 +250,6 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                                                             <div className="user-img">
                                                                 <div className="avatar avatar-xl">
                                                                     <span className="avatar-title rounded-circle">
-                                                                        {/* <img className="img-fluid" style={{width:"100px" , height:'100px'}} src="/assets/img/000000.png"/> */}
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -311,7 +310,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
 
                                 </svg></span>
                                 <p className="font-weight-bolder  " style={{ fontSize: '0.8rem' }}> مبلغ قابل پرداخت
-                                    :{formatter.format(cartShopping.reduce((total, item:any) => total + (item.price), 0))} ریال</p>
+                                    :{formatter.format(cartShopping.reduce((total, item: any) => total + (item.price), 0))} ریال</p>
                                 <p>
                                     <button
                                         onClick={setOrder} disabled={loading ? true : cartShopping.length > 0 ? false : true} className="btn btn-primary  float-left mt-3">ارسال درخواست
@@ -330,7 +329,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                             </div>
                         </div>
 
-                    </li>
+                    </li> */}
 
                     <li className="nav-item dropdown notification-dropdown">
                         <div ref={refNews}>
@@ -354,7 +353,7 @@ const Header:React.FC<Props> = ({ collapsed }) => {
                             <span className="badge badge-success"></span>
                         </div>
                         <div className="  row cart-shop2 ql-direction-rtl  "
-                            style={{  top: "80px", left: showNews == true ? "1rem" : "-60rem"}}>
+                            style={{ top: "80px", left: showNews == true ? "1rem" : "-60rem" }}>
                             {showNews && (
                                 <NewsHeader />
                             )}

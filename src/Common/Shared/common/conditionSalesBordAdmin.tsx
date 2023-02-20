@@ -82,7 +82,6 @@ const ConditionSalesBordAdmin: React.FC<Props> = ({ productSupplyConditions, han
 
                                 <th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>
                                 <th style={{ fontSize: '10px' }} className="text-center">توضیحات</th>
-                                <th style={{ fontSize: '10px' }} className="text-center">عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,15 +102,15 @@ const ConditionSalesBordAdmin: React.FC<Props> = ({ productSupplyConditions, han
                                     <td data-th="گروه مشتریان">{CustomerG().filter(i => i.value === contact.customerGroupId).map(contacts => contacts.label)}</td>
 
                                     <td data-th="توضیحات"title={contact.comment}>{contact.comment ? contact.comment.substring(0, 10) + "..." : "--"}</td>
-                                    <td data-th="عملیات"className="text-center">
+                                    {/* <td data-th="عملیات"className="text-center">
                                         <ul className="table-controls">
 
                                             <li><Link to='#' className="btn btn-success" data-toggle="tooltip" data-placement="top"
-                                                onClick={() => handelClick(productSupplyConditions, contact.id)} >
+                                                 >
                                                 ثبت درخواست                           </Link></li>
 
                                         </ul>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             )}
 

@@ -84,7 +84,7 @@ window.addEventListener('resize',getSize)
 
             <Menu  >
 
-                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}>داشبورد</MenuItem>
+                <MenuItem icon={<RiDashboardLine size={'2rem'} />} routerLink={<Link to="/admin" />}  onClick={handleHeaderClick}>داشبورد</MenuItem>
 
                 {/* <SubMenu hidden={roles.includes(1) ? false : true} icon={<FiUsers size={'2rem'} />} label="تکمیل اطلاعات" >
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-align-justify" />}><NavLink to='identitypannel'> احراز هویت</NavLink></MenuItem>
@@ -148,7 +148,7 @@ window.addEventListener('resize',getSize)
                 {/* <SubMenu ref={ref8} open={show.item8 === true? true:false} onClick={() => setShow({...show , item8: !show.item8 , item1: false,item3: false,item4: false,item5: false,item6: false,item2: false,item9: false,item10: false,item7: false,item11: false,item12: false,item14: false,item13: false})} hidden={roles.includes(7)||roles.includes(5) ? false : true} icon={<FaCashRegister size='2rem' />} label='حسابداری'>
 
               </SubMenu> */}
-                <MenuItem hidden={roles.includes(7) || roles.includes(5) || roles.includes(8) ? false : true} icon={<FaCashRegister size='2rem' />} >حسابداری</MenuItem>
+                {/* <MenuItem hidden={roles.includes(7) || roles.includes(5) || roles.includes(8) ? false : true} icon={<FaCashRegister size='2rem' />} >حسابداری</MenuItem> */}
                 
                 {/* <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2)?false:true } routerLink={<Link to='cuoList'/>} icon={<FaRegHandshake size={'2rem'} /> }>سفارش ها</MenuItem> */}
                 
