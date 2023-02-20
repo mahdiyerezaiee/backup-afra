@@ -107,7 +107,7 @@ const ConditionSalesBordAdmin: React.FC<Props> = ({ productSupplyConditions, han
                                         <ul className="table-controls">
 
                                             <li><Link to='#' className="btn btn-success" data-toggle="tooltip" data-placement="top"
-                                                onClick={() => handelClick(productSupplyConditions, contact.id)} >
+                                                 >
                                                 ثبت درخواست                           </Link></li>
 
                                         </ul>
