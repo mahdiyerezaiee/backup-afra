@@ -1,23 +1,24 @@
-import React, {useState, useEffect} from 'react'
-import {useNavigate, useParams} from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import Select from 'react-select';
-import {GetProducts, getEditProduct} from '../../../services/productService';
-import {GetProductWareHouses} from '../../../services/prodcutWarehouse';
-import DatePicker, {DateObject} from 'react-multi-date-picker';
+import { GetProducts, getEditProduct } from '../../../services/productService';
+import { GetProductWareHouses } from '../../../services/prodcutWarehouse';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
-import {GetAllProductSupply, SetProductSupply} from '../../../services/productSupplyService';
-import {toast} from 'react-toastify';
+import { GetAllProductSupply, SetProductSupply } from '../../../services/productSupplyService';
+import { toast } from 'react-toastify';
 
 import ProductSupplyCondition from "../Child/Conditions/Component/ProductSupplyCondition";
-import {ClipLoader} from "react-spinners";
-import {Field, Form, Formik} from "formik";
-import {validatAlpha, validatNumber} from "../../../Utils/validitionParams";
+import { ClipLoader } from "react-spinners";
+import { Field, Form, Formik } from "formik";
+import { validatAlpha, validatNumber } from "../../../Utils/validitionParams";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { GetProductsWithCompanyForCombos } from './../../../services/productService';
 
 
-const ProductSupplyEdit:React.FC = () => {
+const ProductSupplyEdit: React.FC = () => {
     const params = useParams()
     const [, forceUpdate] = useState();
 
@@ -35,7 +36,7 @@ const ProductSupplyEdit:React.FC = () => {
     const [endDate, setendDate] = useState(new Date())
     const [warHouseName, setWarHouseName] = useState<any>('');
     const [warHouseId, setWarHouseId] = useState<any>();
-    const[createDate,setCreateDate]=useState(new Date());
+    const [createDate, setCreateDate] = useState(new Date());
     const [active, setActive] = useState(true);
     const [cottageCode, setcottageCode] = useState('');
     const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ const ProductSupplyEdit:React.FC = () => {
 
     const getProductSupply = async () => {
         try {
-            const {data, status} = await GetAllProductSupply(params.id)
+            const { data, status } = await GetAllProductSupply(params.id)
             setPrice(data.result.productSupply.price)
             setName(data.result.productSupply.name)
             setcottageCode(data.result.productSupply.cottageCode)
@@ -59,7 +60,7 @@ const ProductSupplyEdit:React.FC = () => {
             setProductIdItem(data.result.productSupply.productId)
             setComment(data.result.productSupply.comment)
             setCreateDate(data.result.productSupply.createDate)
-            setWarHouseName( data.result.productSupply.wareHouse.wareHouseName)
+            setWarHouseName(data.result.productSupply.wareHouse.wareHouseName)
             setWarHouseId(data.result.productSupply.wareHouse.wareHouseId)
             setproductWareHouseId(data.result.productSupply.productWareHouseId)
             SetcompanyId(data.result.productSupply.companyId)
@@ -73,10 +74,25 @@ const ProductSupplyEdit:React.FC = () => {
         getProductSupply()
     }, [])
 
+    console.log(productWareHouseId);
+
     const getProdcutForCombo = async () => {
 
+        if(companyId){
         try {
-            const {data, status} = await GetProducts();
+            const { data, status } = await GetProductsWithCompanyForCombos(companyId);
+            if (status === 200) {
+                setProducts(data.result.products.values)
+
+
+            }
+        } catch (error) {
+            console.log(error)
+
+        }}
+        else{
+            try{
+            const { data, status } = await GetProductsWithCompanyForCombos(companies[0].id);
             if (status === 200) {
                 setProducts(data.result.products.values)
 
@@ -86,12 +102,13 @@ const ProductSupplyEdit:React.FC = () => {
             console.log(error)
 
         }
+        }
 
     }
-    const Prodcutware = async (id:any) => {
+    const Prodcutware = async (id: any) => {
 
         try {
-            const {data, status} = await GetProductWareHouses(id);
+            const { data, status } = await GetProductWareHouses(id);
             if (status === 200) {
 
                 setProductwarehouse(data.result.productWareHouses);
@@ -109,14 +126,19 @@ const ProductSupplyEdit:React.FC = () => {
 
 
     }, [])
-    useEffect(()=>{
+    useEffect(() => {
+        getProdcutForCombo();
+
+
+    }, [companyId])
+    useEffect(() => {
         Prodcutware(productId)
         ProductMeasure()
 
 
-    },[productId])
+    }, [productId])
     const ProductMeasure = async () => {
-        const {data, status} = await getEditProduct(productValue[0].id);
+        const { data, status } = await getEditProduct(productValue[0].id);
         if (status === 200) {
 
             setmeasureUnitId(data.result.product.measureUnitId)
@@ -124,23 +146,23 @@ const ProductSupplyEdit:React.FC = () => {
 
     }
 
-    const productCombo:any = () => {
-        return (products.map((data:any) => ({label: data.name, value: data.id})))
+    const productCombo: any = () => {
+        return (products.map((data: any) => ({ label: data.name, value: data.id })))
     }
     const product = () => {
-        return (products.filter((item:any) => item.id === productId).map((data:any) => ({label: data.name, id: data.id})))
+        return (products.filter((item: any) => item.id === productId).map((data: any) => ({ label: data.name, id: data.id })))
     }
-    let productValue:any=product()
+    let productValue: any = product()
 
-    const wareCombo:any = () => {
+    const wareCombo: any = () => {
 
-        return (Productwarehouse.filter((data:any) => data.id !== 0).map((data:any) => ({
+        return (Productwarehouse.filter((data: any) => data.id !== 0).map((data: any) => ({
             label: data.wareHouseName,
             value: data.id
         })))
     }
     const WareHouse = () => {
-        return (Productwarehouse.filter((data:any) => data.id === productWareHouseId).map((data:any) => ({
+        return (Productwarehouse.filter((data: any) => data.id === productWareHouseId).map((data: any) => ({
             label: data.wareHouseName,
             id: data.wareHouseId
         })))
@@ -152,11 +174,11 @@ const ProductSupplyEdit:React.FC = () => {
 
     }
 
-    const handleChangeExpire = (value:any) => {
+    const handleChangeExpire = (value: any) => {
 
         //تغییرات روی تاریخ رو اینجا اعمال کنید
         if (value instanceof DateObject) {
-            setendDate(value.add(270,'minute').toDate())
+            setendDate(value.add(270, 'minute').toDate())
 
         }
     }
@@ -165,9 +187,6 @@ const ProductSupplyEdit:React.FC = () => {
 
     const handelSubmit = async () => {
         setLoading(true)
-        const getwareId = () => {
-            return Productwarehouse.filter((data:any) => data.id !== 0).map((data:any) => data.id)[0]
-        }
 
         const body = {
             "productSupply": {
@@ -183,7 +202,7 @@ const ProductSupplyEdit:React.FC = () => {
                 comment,
                 name,
                 price,
-                
+                companyId,companyName
 
 
             },
@@ -194,21 +213,21 @@ const ProductSupplyEdit:React.FC = () => {
 
         try {
 
-                const {data, status} = await SetProductSupply(body)
-                if (status === 200) {
-                    toast.success("اطلاعات با موفقیت ثبت شد", {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined
-                    });
+            const { data, status } = await SetProductSupply(body)
+            if (status === 200) {
+                toast.success("اطلاعات با موفقیت ثبت شد", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });
 
-                    navigate(-1)
+                navigate(-1)
 
-                }
+            }
 
             setLoading(false)
         } catch (error) {
@@ -216,7 +235,7 @@ const ProductSupplyEdit:React.FC = () => {
         }
 
     }
-    const handelNavigate = (e:any) => {
+    const handelNavigate = (e: any) => {
         e.preventDefault()
         navigate(-1)
     }
@@ -224,7 +243,8 @@ const ProductSupplyEdit:React.FC = () => {
 
 
         maximumFractionDigits: 0,
-        minimumFractionDigits: 0, });
+        minimumFractionDigits: 0,
+    });
 
     return (
         <div className='user-progress'>
@@ -252,6 +272,7 @@ const ProductSupplyEdit:React.FC = () => {
                             comment,
                             name,
                             price,
+                            companyId,companyName
 
                         }}
                         enableReinitialize={true}
@@ -259,152 +280,159 @@ const ProductSupplyEdit:React.FC = () => {
                             // same shape as initial values
                             handelSubmit()
                         }}>
-                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+                        {({ errors, touched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
 
 
-                            <Form >                
-                                        <div className="form-group mt-1 mb-3 textOnInput ">
-                            <div className='form-row'>
+                            <Form >
+                                <div className="form-group mt-1 mb-3 textOnInput ">
+                                    <div className='form-row'>
 
-                                <div className="col-md-6 col-xs-12 mb-4">
-                                    <label> نام کالا</label>
+                                        <div className="col-md-6 col-xs-12 mb-4">
+                                            <label> نام کالا</label>
 
-                                    {productId === 0 ? (
-                                        <>
-                                            <Select
+                                            {productId === 0 ? (
+                                                <>
+                                                    <Select
+                                                        value={product()}
+                                                        // placeholder='کالا'
+                                                        className='opacityForInput border-danger'
+                                                        options={productCombo()}
+                                                        onChange={(e: any) => {
+                                                            setProductId(e.value)
+                                                            Prodcutware(e.value)
+                                                        }}
+                                                    />
+                                                    <p style={{ color: 'red' }}>لطفا این فیلد را پر کنید</p>
+
+                                                </>
+                                            ) : (<Select
                                                 value={product()}
-                                                // placeholder='کالا'
-                                                className='opacityForInput border-danger'
+
+                                                className='opacityForInput '
                                                 options={productCombo()}
-                                                onChange={(e:any) => {
+                                                onChange={(e: any) => {
                                                     setProductId(e.value)
                                                     Prodcutware(e.value)
+
                                                 }}
-                                            />
-                                            <p style={{color: 'red'}}>لطفا این فیلد را پر کنید</p>
-
-                                        </>
-                                    ) : (<Select
-                                        value={product()}
-
-                                        className='opacityForInput '
-                                        options={productCombo()}
-                                        onChange={(e:any) => {
-                                            setProductId(e.value)
-                                            Prodcutware(e.value)
-
-                                        }}
-                                    />)}
+                                            />)}
 
 
-                                </div>
+                                        </div>
 
-                                <div className="col-md-6 col-xs-12  mb-4">
-                                    <label>انبار</label>
-                                    {productWareHouseId === 0 ? (
-                                        <>
+                                        <div className="col-md-6 col-xs-12  mb-4">
+                                            <label>انبار</label>
+                                            {productWareHouseId !== null ? (
+                                                <>
+                                                    <Select
+                                                        value={wareCombo().filter((i: any) => i.value === productWareHouseId).map((i: any) => i)}
+                                                        // placeholder='کالا'
+
+                                                        options={wareCombo()}
+                                                        onChange={(e: any) => {
+                                                            setproductWareHouseId(e.value)
+
+                                                        }}
+                                                    />
+
+
+                                                </>
+                                            ) : (<>
                                             <Select
-                                                value={wareCombo().filter((i:any) => i.value === productWareHouseId).map((i:any) => i)}
-                                                // placeholder='کالا'
-                                               
+                                                value={wareCombo()}
+
                                                 options={wareCombo()}
-                                                onChange={(e:any) => {
+                                                onChange={(e: any) => {
                                                     setproductWareHouseId(e.value)
-                                                   
+
                                                 }}
                                             />
-                                            <p style={{color: 'red'}}>لطفا این فیلد را پر کنید</p>
+                                            <p style={{ color: 'red' }}>لطفا این فیلد را پر کنید</p>
 
-                                        </>
-                                    ) : (<Select
-                                        value={wareCombo()}
-                                     
-                                        options={wareCombo()}
-                                        onChange={(e:any) => {
-                                            setproductWareHouseId(e.value)
-                                           
-                                        }}
-                                    />)}
+                                            </>
+                                            )
+                                            
+                                            }
+                                            
 
-
-                                </div>
+                                        </div>
 
 
 
-                            </div>
-
-                        </div>
-
-                        <div className="form-group mb-4 textOnInput">
-                            <div className='form-row'>
-                                <div className={companies.length > 1 ? 'col-lg-6 col-md-6 col-sm-11 mb-4 ':'col-lg-12 col-md-12 col-sm-11 mb-4 '}>
-                                    <label > شناسه عرضه</label>
-                                    <Field  validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => {
-                                        setName(e.target.value)
-
-                                    }} />
-                                    {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
+                                    </div>
 
                                 </div>
-                                {companies.length > 1 ? <div className="col-lg-6 col-md-6 col-sm-11 mb-4   textOnInput form-group "
-                                                style={{ marginBottom: "3rem" }}>
-                                                <div className=" form-control-sm">
-                                                    <label> نام شرکت </label>
 
-                                                    {companyId && companyId === null ?
-                                                        <Select
-
-                                                            options={CompaniesIDs()}
-                                                            onChange={(e: any) => {
-                                                                SetcompanyId(e.value)
-                                                            }}
-                                                        /> : <Select
-                                                            value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
-
-                                                            placeholder='نام شرکت'
-                                                            options={CompaniesIDs()}
-                                                            onChange={(e: any) => {
-                                                                SetcompanyId(e.value)
-                                                                SetCompanyName(e.lable)
-                                                                console.log(e);
-
-                                                            }}
-                                                        />}
-                                                {companyId === 0 ? <span className="text-danger">یک شرکت را انتخاب کنید</span> : ''}
-
-                                                </div>
-                                            </div> : ''}
-                                <div className="col-6">
-                                    <label >شماره کوتاژ</label>
-                                    <Field  validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={(e:any) => {
-                                        setcottageCode(e.target.value)
-
-                                    }} />
-                                    {errors.cottageCode && touched.cottageCode && <div className="text-danger">{errors.cottageCode}</div>}
-
-                                </div>
-                                <div className="col-6">
-                                    <label >مقدار عرضه</label>
-                                    <Field  validate={validatNumber} name="quantity"  type="text" className="form-control opacityForInput" value={formatter.format(quantity)}
-                                            onChange={(e:any) => {
-                                                setQuantity(Number(e.target.value.replaceAll("," ,"")))
+                                <div className="form-group mb-4 textOnInput">
+                                    <div className='form-row'>
+                                        <div className={companies.length > 1 ? 'col-lg-6 col-md-6 col-sm-11 mb-4 ' : 'col-lg-12 col-md-12 col-sm-11 mb-4 '}>
+                                            <label > شناسه عرضه</label>
+                                            <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={(e: any) => {
+                                                setName(e.target.value)
 
                                             }} />
-                                    {errors.quantity && touched.quantity && <div className="text-danger">{String(errors.quantity)}</div>}
-                                </div>
+                                            {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
-                            </div></div>
+                                        </div>
+                                        {companies.length > 1 ? <div className="col-lg-6 col-md-6 col-sm-11 mb-4   textOnInput form-group "
+                                            style={{ marginBottom: "3rem" }}>
+                                            <div className=" form-control-sm">
+                                                <label> نام شرکت </label>
+
+                                                {companyId && companyId === null ?
+                                                    <Select
+
+                                                        options={CompaniesIDs()}
+                                                        onChange={(e: any) => {
+                                                            SetcompanyId(e.value)
+                                                        }}
+                                                    /> : <Select
+                                                        value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
+
+                                                        placeholder='نام شرکت'
+                                                        options={CompaniesIDs()}
+                                                        onChange={(e: any) => {
+                                                            SetcompanyId(e.value)
+                                                            SetCompanyName(e.lable)
+                                                            console.log(e);
+
+                                                        }}
+                                                    />}
+                                                {companyId === 0 ? <span className="text-danger">یک شرکت را انتخاب کنید</span> : ''}
+
+                                            </div>
+                                        </div> : ''}
+                                        <div className="col-6">
+                                            <label >شماره کوتاژ</label>
+                                            <Field validate={validatNumber} name="cottageCode" type="text" className="form-control opacityForInput" value={cottageCode} onChange={(e: any) => {
+                                                setcottageCode(e.target.value)
+
+                                            }} />
+                                            {errors.cottageCode && touched.cottageCode && <div className="text-danger">{errors.cottageCode}</div>}
+
+                                        </div>
+                                        <div className="col-6">
+                                            <label >مقدار عرضه</label>
+                                            <Field validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={formatter.format(quantity)}
+                                                onChange={(e: any) => {
+                                                    setQuantity(Number(e.target.value.replaceAll(",", "")))
+
+                                                }} />
+                                            {errors.quantity && touched.quantity && <div className="text-danger">{String(errors.quantity)}</div>}
+                                        </div>
+
+                                    </div></div>
                                 <div className="form-group mb-4 textOnInput  ">
                                     <div className='form-row'>
 
                                         <div className="col-6">
                                             <label >قیمت</label>
-                                            <Field  validate={validatNumber} name="price" type="text" className="form-control opacityForInput" value={formatter.format(price)}
-                                                    onChange={(e:any) => {
-                                                        setPrice(Number(e.target.value.replaceAll(",","")))
+                                            <Field validate={validatNumber} name="price" type="text" className="form-control opacityForInput" value={formatter.format(price)}
+                                                onChange={(e: any) => {
+                                                    setPrice(Number(e.target.value.replaceAll(",", "")))
 
-                                                    }} />
+                                                }} />
                                             {errors.price && touched.price && <div className="text-danger">{String(errors.price)}</div>}
 
                                         </div>
@@ -432,7 +460,7 @@ const ProductSupplyEdit:React.FC = () => {
                                 <div className="form-group mb-4 textOnInput">
                                     <label >توضیحات</label>
 
-                                    <Field  validate={validatNumber} name="comment"  as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={(e:any) => {
+                                    <Field validate={validatNumber} name="comment" as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={(e: any) => {
                                         setComment(e.target.value)
 
                                     }} />
@@ -442,30 +470,30 @@ const ProductSupplyEdit:React.FC = () => {
 
 
                                 <div className='form-group mb-4 textOnInput'>
-                            <label>شرایط پرداخت</label>
-                            <ProductSupplyCondition quantity={quantity} />
-                        </div>
+                                    <label>شرایط پرداخت</label>
+                                    <ProductSupplyCondition quantity={quantity} />
+                                </div>
 
-                        <div className='row '>
+                                <div className='row '>
 
 
 
-                            <div className='col-6  '>
-                                <button type="submit" disabled={loading} className="btn btn-success float-right" onClick={handelSubmit} >ثبت<ClipLoader
+                                    <div className='col-6  '>
+                                        <button type="submit" disabled={loading} className="btn btn-success float-right" onClick={handelSubmit} >ثبت<ClipLoader
 
-                                    loading={loading}
-                                    color="#ffff"
-                                    size={15}
-                                /></button>
-                            </div>
-                            <div className='col-6 '>
-                                <button onClick={handelNavigate}
-                                        className="btn btn-danger ">بازگشت</button>
-                            </div>
-                        </div>
+                                            loading={loading}
+                                            color="#ffff"
+                                            size={15}
+                                        /></button>
+                                    </div>
+                                    <div className='col-6 '>
+                                        <button onClick={handelNavigate}
+                                            className="btn btn-danger ">بازگشت</button>
+                                    </div>
+                                </div>
 
-                    </Form>
-                            )}
+                            </Form>
+                        )}
                     </Formik>
                 </div>
             </div>

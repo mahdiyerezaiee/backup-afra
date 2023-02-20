@@ -16,6 +16,7 @@ import { Field, Form, Formik } from "formik";
 import { validatAlpha, validatNumber } from "../../../Utils/validitionParams";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { GetProductsWithCompanyForCombos } from './../../../services/productService';
 
 
 
@@ -53,9 +54,9 @@ const AddProductSupplyToSalesBoard: React.FC = () => {
 
 
     const getProdcutForCombo = async () => {
-
+if(companyId){
         try {
-            const { data, status } = await GetAllProducts();
+            const { data, status } = await GetProductsWithCompanyForCombos(companyId);
             if (status === 200) {
                 setProducts(data.result.products.values)
 
@@ -65,6 +66,20 @@ const AddProductSupplyToSalesBoard: React.FC = () => {
         catch (error) {
             console.log(error)
 
+        }}
+        else{
+            try {
+                const { data, status } = await GetProductsWithCompanyForCombos(companies[0].id);
+                if (status === 200) {
+                    setProducts(data.result.products.values)
+    
+    
+                }
+            }
+            catch (error) {
+                console.log(error)
+    
+            }
         }
     }
 
@@ -91,6 +106,11 @@ const AddProductSupplyToSalesBoard: React.FC = () => {
         getProdcutForCombo();
         GetCustomerGroup();
     }, [])
+    useEffect(() => {
+
+        getProdcutForCombo();
+       
+    }, [companyId])
     const ProductMeasure = async (id: any) => {
         const { data, status } = await getEditProduct(id);
         if (status === 200) {

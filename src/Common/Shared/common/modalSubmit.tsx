@@ -10,7 +10,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
     const [check,setCheck]=useState(false)
     console.log(productSupplyConditionId)
     return(
-      <div className="modalAddToCart">
+      <div className="modalAddToCart text-center">
           <div className="d-block clearfix mb-2" onClick={closeModal}><svg
               xmlns="http://www.w3.org/2000/svg"
               width="24" height="24"
@@ -40,7 +40,7 @@ const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,clos
                       <p className="text-danger text-center mt-3">مقدار از حداقل مجاز سفارش کمتراست</p>)}
                   { quantity <= modalInfo.productSupplyConditions.filter((i:any)=> i.id === productSupplyConditionId ).map((item:any)=> item.maxSellableAmount) ? (<p></p>) : (
                       <p className="text-danger text-center mt-3">مقدار از حداکثر مجاز سفارش بیشتراست</p>)}
-                  {modalInfo.comment  ?<div className="form-group" style={{width: '510px'}}>
+                  {modalInfo.comment  ?<div className="form-group" >
                       <p ><b style={{fontSize: 'medium'}}> توضیحات</b> : {  modalInfo.comment}</p>
                       <p className="text-center">
 

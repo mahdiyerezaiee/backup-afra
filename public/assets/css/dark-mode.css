@@ -78,6 +78,33 @@
 .dark-mode .bid-area .col-lg-10::after {
     display: none;
 }
+.dark-mode .bid-area .col-lg-9 {
+    border-left: 2px dotted #142138 !important;
+}
+
+.dark-mode .bid-area .col-lg-9:before {
+    display: none;
+}
+
+.dark-mode .bid-area .col-lg-9::after {
+    display: none;
+}
+.dark-mode .nav-tabs {
+    border-bottom: 1px solid #dee2e6!important;
+}
+.dark-mode .nav-tabs .nav-item{
+    border-top:1px solid white!important;
+    border-right: 1px solid white!important;
+    border-left: 1px solid white!important;
+
+}
+.dark-mode .nav-tabs .nav-link.active {
+    background-color:#060818!important;
+}
+.dark-mode .TextPayment{
+    color: red!important;
+}
+
 
 .dark-mode .auction-item-2 {
     background-color: #1a1c2d  !important;
