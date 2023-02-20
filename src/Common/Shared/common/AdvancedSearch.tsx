@@ -1,5 +1,6 @@
 import { useState } from "react"
-
+import { isNullOrUndefined } from "util"
+import {IoIosArrowUp} from "react-icons/io"
 
 interface Props{
 
@@ -7,53 +8,41 @@ interface Props{
 }
 const AdvancedSearch:React.FC<Props> = ({children}) => {
 const [show , setShow] = useState(false)    
+console.log(children[0].props.children);
 
     return(
-         <div id="iconsAccordion" className="accordion-icons">
-                                    <section className="mb-0 mt-0">
-                                    <div className=" mb-4  pt-1  " >
-                                   
-                                    <div className='form-row textOnInput mt-5'>
-                                    {children && children[0].props.children.length > 6 ? 
- children && children[0].props.children.slice(0,show?6:5).map((i:any)=> i) : null}
- {show ? null :
+         <div >
+                                    <section className="mb-2 mt-2">
+                                    <div className=" mb-5  pt-3  " >
+    
+                                    
+                                    {children && children[0].props.children.length >= 7 ? <div className='form-row textOnInput mt-5'>
+{ children && children[0].props.children.slice(0,show?children[0].props.children.length:6).map((i:any)=> i)}</div> : children}
  
-<div className="col-lg-2">
-{ children && children[0].props.children.length > 6 ?  children[1] : null}
 
-</div>}
+                                    
+                                    <div className="pb-3">
 
+                                    { children && children[0].props.children.length >= 7 ?  children[1] : null}
 
                                     </div>
- 
-                                    {children && children[0].props.children.length > 6 ?   <div onClick={()=>setShow(!show)}  data-toggle="collapse" data-target="#iconAccordion100" aria-expanded="true" aria-controls="iconAccordionOne" role="menu" className="icons text-advance d-inline float-right text-primary ml-2">
-                                            {/* <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+
+                                    {children && children[0].props.children.length >= 7 ?   <div onClick={()=>setShow(!show)}  className="icons text-advance d-inline float-right pt-2 text-primary m-2">
+                                            { show ? <IoIosArrowUp size="1.5rem"/> :<svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
                                                  strokeLinecap="round" strokeLinejoin="round"
                                                  className="feather feather-chevron-down">
                                                 <polyline points="6 9 12 15 18 9"></polyline>
-                                            </svg> */}
-                                            <b>  جستجوی پیشرفته</b>
+                                            </svg> }
                                           
                                             </div>:null}
+                                   
                                             </div>  
+                                           
                                     </section>
-                                    <div id="iconAccordion100" className={children && children[0].props.children.length > 6 ? "collapse  m-4":"collapse show  m-4"}  data-parent="#iconsAccordion">
                                     
-                                    {children && children[0].props.children.length > 6 ? 
-                                    <>
-                                    <form className='form-row textOnInput mt-5'>
- {children && children[0].props.children.slice(show?6:5,children[0].props.children.length).map((i:any)=> i) }
- </form>
- { children && children[0].props.children.length > 6 ? children && children[1] : null}</>
- : children}
-
-
-
-{/* { children && children[0].props.children.length > 6 ? <div className="col-lg-2 col-md-4  col-sm-12  ">{children && children[1]}</div>  : null} */}
-
-                                        {/* {children} */}
-                                    </div>
+                                
+                                    
                                 </div>
   
   

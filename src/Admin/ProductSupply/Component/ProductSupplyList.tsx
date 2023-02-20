@@ -576,7 +576,7 @@ const ProductSupply:React.FC = () => {
 
 
 
-                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
+                            <div className={companies.length === 1 ? "col-lg-2 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
 
                                 <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}>تاریخ ایجاد</label>
                                 <div className='form-group  '>
@@ -591,7 +591,7 @@ const ProductSupply:React.FC = () => {
 
                                 </div>
                             </div>
-                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
+                            <div className={companies.length === 1 ? "col-lg-2 col-md-4  col-sm-12  mb-1" : "col-lg-3 col-md-3  col-sm-12  mb-1"}>
                                 <label> کد کوتاژ</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد کوتاژ" value={CottageCode} onChange={(e:any) => setCottageCode(e.target.value)} />
@@ -599,7 +599,7 @@ const ProductSupply:React.FC = () => {
 
 
 
-                            <div className={companies.length === 1 ? "col-lg-4 col-md-4  col-sm-12  mb-1  textOnInput form-group" : "col-lg-3 col-md-3  col-sm-12  mb-1  textOnInput form-group"}
+                            <div className={companies.length === 1 ? "col-lg-2 col-md-4  col-sm-12  mb-1  textOnInput form-group" : "col-lg-3 col-md-3  col-sm-12  mb-1  textOnInput form-group"}
                             >
                                 <div className=" form-control-sm">
                                     <label> کالا </label>

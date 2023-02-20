@@ -167,7 +167,7 @@ setLoading(false)
                                     <div className="  auction-item-2 text-center m-auto  ">
                                     <div className="auction-content">
                                         <div className=" row bid-area">
-                                            <div className="col-lg-10">
+                                            <div className={modalIsOpenCondition === true && productSupplyConditionId === item.id? "col-md-10" : "col-lg-10"}>
                                             <div className="row">
                                        <span className="col-lg-4 m-auto p-2"><b>شماره کوتاژ </b>: {item.cottageCode}</span>
                                        <span className=" col-lg-4 m-auto p-2 "> <b>محصول</b>: {item.product.name}</span>

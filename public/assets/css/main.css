@@ -3003,9 +3003,9 @@ select:-webkit-autofill:focus {
    /* margin-bottom: 100px; */
     /* border-bottom: 1px solid #0045ff!important; */
   }
-  .theme-logo{
+  /* .theme-logo{
     display: none;
-  }
+  } */
   .css-13cymwt-control input[role="combobox"]:focus{
     font-size: 20px!important;
 
@@ -3473,6 +3473,7 @@ select:valid {
   }
 }
 .text-advance{
+  clear: both;
   margin-top: .5rem;
   text-align: center;
 }

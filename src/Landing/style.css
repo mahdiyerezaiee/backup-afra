@@ -2,18 +2,22 @@
     width: 100vw;
     height: 100vh;
     object-fit: cover;
-    position: none;
+    position: relative;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-
+overflow: hidden;
 }
 .video-section {
     position: relative;
 
-/* width: 100vw;
-height: 100vh; */
+width: 100vw;
+height: 100vh;
+}
+.video-section video {
+
+width: 100vw;
 }
 body{
     overflow: hidden;
