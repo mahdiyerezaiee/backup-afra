@@ -1,44 +1,19 @@
+import React, { useEffect, useState } from 'react'
 import Select from "react-select";
-import React, { useRef, useState, useEffect } from "react";
-import { GetGroupsForEntity } from "../../../../../services/GroupService";
-import { PaymentStructureEnums } from "../../../../../Common/Enums/PaymentStructureEnums";
-import { AdditionalTypeId } from "../../../../../Common/Enums/AdditionalTypeIdEnums";
-import {
-    DeleteProductSupplyCondition,
-    GetProductSupplyConditions,
-    SetProductSupplyConditions
-} from "../../../../../services/ProductSupplyConditionService";
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import ProductSupplyConditionReadOnly from "./ProductSupplyConditionRead";
-import ProductSupplyConditionEdit from "./ProductSupplyConditionEdit";
-import Modal from 'react-modal';
-import { ClipLoader } from "react-spinners";
-import { Link } from "react-router-dom";
-import { GetCompanyChild } from '../../../../../services/companiesService';
+import { ClipLoader } from 'react-spinners'
+import { toast } from 'react-toastify'
+import { AdditionalTypeId } from '../../../../../Common/Enums/AdditionalTypeIdEnums'
+import { PaymentStructureEnums } from '../../../../../Common/Enums/PaymentStructureEnums'
+import { GetCompanyChild } from '../../../../../services/companiesService'
 import { GetGroupWithCompany } from '../../../../../services/GroupService';
-
-const customStyles: any = {
-    content: {
-
-        inset: '50% auto auto 50%',
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '5%',
-        border: '2px ridge black'
-    }
-};
-
+import { GetProductSupplyConditions, SetProductSupplyConditions } from '../../../../../services/ProductSupplyConditionService'
 interface Props {
-    quantity: any
+    id: any,
+    quantity:any,
+    setConditionS:any,
+    getSupply:any
 }
-const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
-    const params = useParams()
-
+const ConditionForOrder:React.FC<Props>= ({id , quantity , setConditionS , getSupply}) => {
     const [paymentMethodId, setpaymentMethodId] = useState<any>(0)
     const [additionalTypeId, setadditionalTypeId] = useState<any>(0)
     const [customerGroupId, setcustomerGroupId] = useState<any>(0)
@@ -78,12 +53,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         additionalTypeId,
         customerGroupId,
     });
-    const openModal = async () => {
-        setpaymentMethodId(0)
-        setcustomerGroupId(0)
-        setadditionalTypeId(0)
-        setIsOpen(true);
-    }
+    
     const closeModal = () => {
         setIsOpen(false);
     }
@@ -122,7 +92,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
 
     const GetProductSupplyC = async () => {
         try {
-            const { data, status } = await GetProductSupplyConditions(params.id);
+            const { data, status } = await GetProductSupplyConditions(id);
             if (status === 200) {
                 setCondition(data.result.productSupplyConditions.values)
             }
@@ -138,19 +108,13 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         newFormData[fieldName] = fieldValue;
         setAddFormData(newFormData);
     };
-    const handleEditFormChange = (event: any) => {
-        const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value.replaceAll(",", '');
-        const newFormData: any = { ...editFormData };
-        newFormData[fieldName] = fieldValue;
-        setEditFormData(newFormData);
-    };
+   
     const body = {
         productSupplyCondition: {
             minSellableAmount: Number(addFormData.minSellableAmount),
             maxSellableAmount: quantity,
             paymentMethodId,
-            productSupplyId: Number(params.id),
+            productSupplyId: Number(id),
             installmentPeriod: addFormData.installmentPeriod,
             installmentOccureCount: addFormData.installmentOccureCount,
             installmentStartDate: new Date(),
@@ -171,8 +135,9 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         try {
 
             const { data, status } = await SetProductSupplyConditions(body)
-            console.log(status)
             if (status === 200) {
+                getSupply()
+
                 closeModal()
                 toast.success("شرایط جدید عرضه افزوده شد", {
                     position: "top-right",
@@ -189,6 +154,8 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
             console.log(err)
         }
         setShow(!show)
+        setConditionS()
+
     }
     const editedContact = {
         productSupplyCondition: {
@@ -197,7 +164,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
             minSellableAmount: editFormData.minSellableAmount,
             maxSellableAmount: editFormData.maxSellableAmount,
             paymentMethodId,
-            productSupplyId: Number(params.id),
+            productSupplyId: Number(id),
             installmentPeriod: editFormData.installmentPeriod,
             installmentOccureCount: editFormData.installmentOccureCount,
             installmentStartDate: new Date(),
@@ -213,146 +180,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         }
     };
 
-    const handleEditFormSubmit = async () => {
-
-        setLoading(true)
-        try {
-            const { data, status } = await SetProductSupplyConditions(editedContact)
-            console.log(data)
-            if (data.result.message === "ProductSupplyCondition saved completed") {
-                GetProductSupplyC()
-                setLoading(false)
-            }
-
-        } catch (err) {
-            console.log(err)
-        }
-        const newContacts: any = [...condition];
-
-        const index = condition.findIndex((contact: any) => contact.id === editContactId);
-
-        newContacts[index] = editedContact;
-
-        setCondition(newContacts);
-
-        setEditContactId(null);
-    };
-    const setActiveHandler = async (editedContact: any) => {
-        try {
-
-            const { data, status } = await SetProductSupplyConditions(editedContact)
-            if (status === 200) {
-                GetProductSupplyC()
-
-            }
-
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    const activeHandler = (event: any, condition: any) => {
-        event.preventDefault();
-        let ids = condition.id
-        setId(ids);
-        const formValues = {
-            minSellableAmount: condition.minSellableAmount,
-            maxSellableAmount: condition.maxSellableAmount,
-            paymentMethodId: condition.paymentMethodId,
-            installmentPeriod: condition.installmentPeriod,
-            installmentOccureCount: condition.installmentOccureCount,
-            comment: condition.comment,
-            active: condition.active,
-            special: condition.special,
-            additionalAmount: condition.additionalAmount,
-            additionalTypeId: condition.additionalTypeId,
-            customerGroupId: condition.customerGroupId,
-        };
-        setEditFormData(formValues);
-
-        if (Id !== null) {
-            setActive(!active)
-            const editedContact = {
-                productSupplyCondition: {
-                    id: Id,
-
-                    minSellableAmount: editFormData.minSellableAmount,
-                    maxSellableAmount: editFormData.maxSellableAmount,
-                    paymentMethodId: editFormData.paymentMethodId,
-                    productSupplyId: Number(params.id),
-                    installmentPeriod: editFormData.installmentPeriod,
-                    installmentOccureCount: editFormData.installmentOccureCount,
-                    installmentStartDate: new Date(),
-                    comment: editFormData.comment,
-                    active,
-                    special: editFormData.special,
-                    additionalAmount: editFormData.additionalAmount,
-                    additionalTypeId: editFormData.additionalTypeId,
-                    orderDetails: null,
-                    shoppingCartItems: null,
-                    productSupply: null,
-                    customerGroupId: editFormData.customerGroupId,
-                }
-            };
-
-            setActiveHandler(editedContact)
-            setId(null);
-
-        }
-
-
-    };
-
-    const handleEditClick = (event: any, condition: any) => {
-        event.preventDefault();
-        setEditContactId(condition.id);
-
-        const formValues = {
-            minSellableAmount: condition.minSellableAmount,
-            maxSellableAmount: condition.maxSellableAmount,
-            paymentMethodId: condition.paymentMethodId,
-            installmentPeriod: condition.installmentPeriod,
-            installmentOccureCount: condition.installmentOccureCount,
-            comment: condition.comment,
-            active: condition.active,
-            special: condition.special,
-            additionalAmount: condition.additionalAmount,
-            additionalTypeId: condition.additionalTypeId,
-            customerGroupId: condition.customerGroupId,
-        };
-        console.log(formValues)
-        setEditFormData(formValues);
-    };
-    const handleCancelClick = () => {
-        setEditContactId(null);
-
-    };
-    const handleDeleteClick = async (id: any) => {
-        try {
-            const { data, status } = await DeleteProductSupplyCondition(id)
-            if (data.success === true) {
-                toast.success("شرط با موفقیت حذف شد", {
-                    position: "top-right",
-                    closeOnClick: true
-                });
-                GetProductSupplyC()
-            }
-            if (data.success === false) {
-
-                toast.error("این شرط به یک یا چند سفارش اختصاص داده شده است", {
-                    position: "top-right",
-                    closeOnClick: true
-                });
-            }
-        } catch (err) {
-            console.log(err)
-            toast.error("این شرط به یک یا چند سفارش اختصاص داده شده است", {
-                position: "top-right",
-                closeOnClick: true
-            });
-        }
-    }
-    const CustomerG = () => {
+ const CustomerG = () => {
         let customer = [...customerg, { id: null, name: 'همه' }]
         return (customer.map(data => ({
             label: data.name,
@@ -372,85 +200,8 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         })))
 
     }
-
-    return (
-        <div className=" rounded ProductSupplyCondition " style={{ border: " 1px solid #bfc9d4" }}>
-            {condition === null ? (<span className="d-block text-center p-5">هیچ شرطی یافت نشد</span>) : (
-                <div className=" ProductSupplyCondition-table table table-bordered table-hover table-striped  p-2">
-                    <table
-                        className="  mt-2  mb-4">
-                        <thead>
-                            <tr style={{ fontSize: '10px' }}>
-
-                                <th style={{ fontSize: '10px' }} className="text-center">ردیف</th>
-                                <th style={{ fontSize: '10px' }} className="text-center">نوع پرداخت</th>
-                                <th style={{ fontSize: '10px' }} className="text-center">تعداد اقساط</th>
-                                <th style={{ fontSize: '10px' }} className="text-center">بازه</th>
-                                <th style={{ fontSize: '10px' }} className="text-center">فی</th>
-
-                                <th style={{ fontSize: '10px' }} className="text-center">گروه مشتریان</th>
-                                <th style={{ fontSize: '10px' }} className="text-center">فعال</th>
-                                <th style={{ fontSize: '10px' }} className="text-center">عملیات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {condition.map((contact: any, index: any) => (
-
-
-                                editContactId === contact.id ? (
-
-                                    <ProductSupplyConditionEdit
-                                        customStyles={customStyles}
-                                        handleEditFormSubmit={handleEditFormSubmit}
-                                        setcustomerGroupId={setcustomerGroupId}
-                                        setpaymentMethodId={setpaymentMethodId}
-                                        setadditionalTypeId={setadditionalTypeId}
-                                        paymentMethodId={paymentMethodId}
-                                        editFormData={contact}
-                                        index={index}
-                                        loading={loading}
-                                        handleEditFormChange={handleEditFormChange}
-                                        handleCancelClick={handleCancelClick}
-                                        setSpecial={setSpecial}
-                                    />
-                                ) : (
-
-
-                                    <ProductSupplyConditionReadOnly
-                                        activeHandler={activeHandler}
-                                        index={index}
-                                        contact={contact}
-                                        handleEditClick={handleEditClick}
-                                        handleDeleteClick={handleDeleteClick}
-                                    />
-
-
-                                )
-
-                            ))}
-                        </tbody>
-                    </table>
-                </div>)}
-            <div className='d-block  '>
-
-
-
-
-                <Link to='#' style={{ marginTop: '-1.2rem', marginLeft: '.6rem', background: 'white' }} className=" ProductSupplyCondition-add border-0      float-right " data-title="افزودن شرط" onClick={() => openModal()}>
-                    <svg style={{ width: '24px', height: '38px' }} xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        className="bi bi-plus-circle" viewBox="0 0 17 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                    </svg>
-                </Link>
-            </div>
-            <Modal isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Selected Option"
-                ariaHideApp={false}>
-                <div >
+  return (
+    <div >
 
 
                     <div>
@@ -591,9 +342,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
                                             /></button>
                                     </div>
                                     <div className='col-6 '>
-                                        <button className="btn btn-danger float-right "
-                                            onClick={closeModal}>بازگشت
-                                        </button>
+                                        <button className="btn btn-primary float-right " onClick={()=>setConditionS()}> بازگشت</button>
                                     </div>
                                 </div>
 
@@ -605,8 +354,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
                     </div>
 
                 </div>
-            </Modal>
-        </div>
-    )
+  )
 }
-export default ProductSupplyCondition
+
+export default ConditionForOrder
