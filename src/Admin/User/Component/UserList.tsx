@@ -447,7 +447,7 @@ const UserList:React.FC = () => {
                     "email": row.row.original.email,
                     "firstName": row.row.original.firstName,
                     "lastName": row.row.original.lastName,
-                    "requireInfo": true,
+                    "requireInfo": row.row.original.requireInfo,
                     "createDate": row.row.original.createDate,
                     "nationalCode": row.row.original.nationalCode,
                     "organizationId": row.row.original.organizationId,
@@ -455,6 +455,9 @@ const UserList:React.FC = () => {
                     "companyName":row.row.original.companyName,
                     "islegal": row.row.original.islegal,
                     "groupId": row.row.original.groupId,
+                    "actionBlock":row.row.original.actionBlock,
+                    "maxValidityUnitId":row.row.original.maxValidityUnitId,
+                    "maxValidity":row.row.original.maxValidity,
                     id,
                     "active": !active,
                 }
