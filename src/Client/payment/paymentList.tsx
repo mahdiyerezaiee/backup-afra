@@ -30,7 +30,6 @@ const PaymentList: React.FC = () => {
     return items ? items : "";
   }
  
- console.log(invoicePaymentId);
  
   const getDataByPage = async () => {
     let config = {

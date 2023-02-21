@@ -76,7 +76,6 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
 
 
             const { status, data } = await loginUser(user);
-            console.log(data, status);
             if (status === 200) {
 
 

@@ -95,6 +95,7 @@ import InvoiceList from './../Invoice/Component/InvoiceList';
 import PaymentList from '../../Client/payment/paymentList';
 import PaymentsList from './../Payment/Component/PaymentsList';
 import InvoiceCreatorForAdmin from './../../Utils/invoiceCreatorForAdmin';
+import { GridLoader } from 'react-spinners';
 
 const AdminMainLayout:React.FC = () => {
   const [isloading, setIsloading] = useState(true);
@@ -115,11 +116,14 @@ const AdminMainLayout:React.FC = () => {
         localStorage.setItem('connect', data.result.customer.id)
         localStorage.setItem('com',data.result.customer.companyId)
         dispatch(addUser(data.result.customer));
+        setIsloading(false)
+
       }
     } catch (error) {
       
         refreshPage()
-      
+        setIsloading(false)
+
     }
   
   }
@@ -163,7 +167,11 @@ const AdminMainLayout:React.FC = () => {
 
   return (
     <Fragment>
-
+{isloading ? <div className="loadingAddress">
+        <div className="boxloadingAddress">
+          <GridLoader loading={isloading} color="#4236d6" />
+        </div>
+      </div> : null}
       <Header collapsed={collapsed} />
       <div className="main-container" id="container">
         <SideNavbar />

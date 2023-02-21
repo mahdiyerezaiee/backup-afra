@@ -36,7 +36,6 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
     const [shippingContractId, setShippingContractId] = useState(0);
     let [loading, setLoading] = useState(false);
     const roles = useSelector((state:RootState) => state.roles)
-    console.log(orderDetailId)
     const getShippingCompany = async () => {
         try {
             const { data, status } = await GetAllShippingCompanies();
@@ -118,14 +117,12 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
             }}
         else {
             let notShipped=orderDetailId.filter(item=>item.shippingId===null)
-            console.log(notShipped);
             for (let i = 0; i < notShipped.length; i++) {
                 body = {
                     orderDetailId: notShipped[i].id,
                     shippingContractId,
                     "byPassContractLimit": false
                 }
-                console.log('hi im here');
 
                 const { data, status } = await SyncWithSender(body)
                 try {

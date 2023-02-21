@@ -286,7 +286,6 @@ const UserList:React.FC = () => {
     const modalGroupClose = () => {
         setmodalGroupOpen(false)
     }
-    console.log(Ids);
     
     useEffect(() => {
       

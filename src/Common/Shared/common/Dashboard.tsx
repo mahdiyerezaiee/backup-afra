@@ -9,7 +9,6 @@ import { AppDispatch, RootState } from '../../../store';
 
 const Dashboard :React.FC= () => {
     const roles=useSelector((state:RootState) => state.roles);
-    console.log(roles);
 
   if (roles.length>0 && roles.includes(1)) {
     return (

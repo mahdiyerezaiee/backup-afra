@@ -8,7 +8,6 @@ interface Props{
 
 const ModalSubmit:React.FC<Props> = ({ loading , modalInfo , submitHandler ,closeModal,quantity, setquantity , formatter, productSupplyConditionId }) => {
     const [check,setCheck]=useState(false)
-    console.log(productSupplyConditionId)
     return(
       <div className="modalAddToCart text-center">
           <div className="d-block clearfix mb-2" onClick={closeModal}><svg

@@ -31,7 +31,6 @@ window.addEventListener('resize',getSize)
    },[])
     const roles = useSelector((state: RootState) => state.roles)
 
-    console.log(width);
     
 
     const handleHeaderClick = (event: any) => {

@@ -8,7 +8,6 @@ interface Props{
 }
 const AdvancedSearch:React.FC<Props> = ({children}) => {
 const [show , setShow] = useState(false)    
-console.log(children[0].props.children);
 
     return(
          <div >

@@ -39,7 +39,6 @@ const ChangePayment: React.FC<Props> = ({ payment, modalIsOpen, closeModal,payme
     const [paid, Setpaid] = useState(false)
 
 
-    // console.log(getOrder)
 
 
 
@@ -95,7 +94,6 @@ const ChangePayment: React.FC<Props> = ({ payment, modalIsOpen, closeModal,payme
         }
     }
 
-    console.log(payment);
 
     return (
         <Modal

@@ -456,9 +456,7 @@ const OrderList :React.FC= () => {
 
 
 
-                // console.log(e.target);
                 // siblings = e.target.parentNode.getElementsByTagName('th');
-                // console.log(siblings);
                 // for(let i = 0;i<siblings.length;i++){
                 //     siblings[i].innerText = siblings[i].innerText.replace('🔼', '').replace('🔽', '');
                 // }
@@ -475,7 +473,6 @@ const OrderList :React.FC= () => {
                         }
 
                         else if (e.target.children[0].innerText === '🔼') {
-                            console.log('hiiii');
                             SortColumn = 'id'
                             SortingDirectionId = 2
                             e.target.children[0].innerText = '🔽'

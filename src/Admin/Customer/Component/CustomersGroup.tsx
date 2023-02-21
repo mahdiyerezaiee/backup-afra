@@ -243,7 +243,6 @@ export const CustomersGroup:React.FC = () => {
     // }
 
     const GetCustomerGroup = async (companyId:number) => {
-        console.log(companyId);
         if (userCompanies.length === 1) {
             try {
 
@@ -361,7 +360,6 @@ export const CustomersGroup:React.FC = () => {
     }
     let defaultValue = companys()[0]
 
-    console.log(customerg);
     const data = useMemo(() => customerg,[customerg]);
     const handelForm = () => {
         navigate('/admin/newcustomergroup')

@@ -66,7 +66,6 @@ const AddNewUser: React.FC = () => {
     }
     
     const GetUsersGroup = async (companyId: any) => {
-        console.log(companyId);
         if (companies.length === 1) {
             try {
 

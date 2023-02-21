@@ -37,7 +37,6 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
     const [shippingStatusId, setshippingStatusId] = useState(0)
 
 
-// console.log(getOrder)
     
     const getOrder = async () => {
         try {
@@ -58,7 +57,6 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
         getOrder()
     }, [modalIsOpen])
 
-    console.log({ ...order, paymentStatusId, orderStatusId, shippingStatusId });
 
     const OrderStatusID = () => {
         return (OrderStatus.map(data => ({ label: data.name, value: data.id })))

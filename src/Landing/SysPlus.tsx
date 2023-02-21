@@ -10,7 +10,6 @@ const SysPlus: React.FC = () => {
     
       if (window.innerWidth <= 600) {
         let vid:any= document.getElementById('video');
-        console.log(vid);
         
         let wrap:any = document.getElementById('videowrapper');
         vid.removeAttribute("autoPlay");

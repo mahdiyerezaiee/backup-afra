@@ -128,7 +128,6 @@ const OrderDetailTest:React.FC = () => {
             SetShippingInformation(JSON.parse(data.result.order.extraData.data))
         } catch (err) {
             console.log(err)
-            console.log('1')
         }
     }
     const bindAdress = async (arr:any) => {
@@ -189,7 +188,6 @@ const OrderDetailTest:React.FC = () => {
         }
 
     }
-    console.log(params.id);
     const returnHavaleSum = () => {
 
         var sum = 0

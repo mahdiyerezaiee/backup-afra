@@ -12,7 +12,6 @@ interface Props {
 
 const ConditionSalesBordCustomer:React.FC<Props> = ({closeModal, productSupplyConditions, handelClick }) => {
 
-    console.log(productSupplyConditions)
     const [customerg, setCustomerg] = useState([])
     const [Condition, setCondition] = useState([])
     // const GetCustomerGroup = async () => {

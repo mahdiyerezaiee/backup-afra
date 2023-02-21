@@ -192,7 +192,6 @@ const EditWareHouse: React.FC = () => {
         return (companies.map((item: any) => ({ label: item.name, value: item.id })))
 
     }
-    console.log(companyId);
 
     let defaultValue: any = companys().filter((item: any) => item.value === companyId)
     return (

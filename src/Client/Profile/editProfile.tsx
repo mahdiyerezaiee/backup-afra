@@ -83,7 +83,6 @@ const [userInfo , setUserInfo]=useState({})
 
         }
     }
-    console.log(userInfo)
 const backHandel=(e:any)=>{
     e.preventDefault()
 

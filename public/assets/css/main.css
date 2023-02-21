@@ -153,9 +153,9 @@ position: sticky;
 }
 .loadingAddress {
   position: fixed;
-background:  #f1f2f3;
+background:  #3533335b;
 inset: 0px;
-  z-index: 4;
+  z-index: 10000000000;
 }
 .boxloadingAddress {
   position:absolute;
@@ -3656,5 +3656,12 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 */
-
+.loader{
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  position:relative;
+  z-index: 10;
+ 
+}
 

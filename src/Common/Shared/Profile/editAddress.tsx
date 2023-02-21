@@ -28,7 +28,6 @@ const EditAddress:React.FC = () => {
         setreceiverTel(address.receiverTel)
         setProvinceId(address.provinceId)
     }
-    console.log(provinceId)
 
     const getProvince = async () => {
 

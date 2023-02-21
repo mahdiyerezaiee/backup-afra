@@ -166,7 +166,6 @@ const EditUserInfo: React.FC = () => {
 
 
     }, [organizationId])
-    console.log(userRole);
 
     const submit = async (dataUser: any) => {
         setLoading(true)

@@ -68,8 +68,6 @@ if(id>0){
 
 
             let productSupplyConditionIds = data.result.orderDetails.map((item:any)=>item.productSupplyConditionId)
-            console.log(ids);
-            console.log(productSupplyConditionIds);
             if (productSupplyConditionIds.length>0) {
                 let conditions=[];
                 for (let i = 0; i < ids.length; i++) {
@@ -89,12 +87,10 @@ if(id>0){
                     }
                 }
 
-                console.log(conditions);
                 for (let i = 0; i < Order.length; i++) {
 
 
                     //   let ff = conditions.filter(item => item.id === Order[i].productSupplyConditionId)
-                    //   console.log(ff);
                     const merged = conditions.map(item =>
                         ({
                             conditionId:item.id,

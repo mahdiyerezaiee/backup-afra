@@ -13,7 +13,6 @@ const ImageUploaderForPayment = ({data,index,Ids}) => {
 
     }
 
-    console.log(child);
     
 
     return (
