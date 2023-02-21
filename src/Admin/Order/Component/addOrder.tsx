@@ -24,6 +24,7 @@ import Modal from "react-modal";
 import { GetGroupWithCompany } from "../../../services/GroupService";
 import { useSelector } from 'react-redux';
 import { RootState } from "../../../store";
+import ConditionForOrder from "../../ProductSupply/Child/ConditionForOrder/Component/ConditionForOrder";
 
 const customStyles = {
   content: {
@@ -48,6 +49,7 @@ const AddOrder: React.FC = () => {
   const [productId, setProductId] = useState(0);
   const [measureUnitId, setMeasureUnitId] = useState<any>(0);
   const [quantity, setQuantity] = useState(0);
+  const [quantityCondition, setQuantityConditio] = useState(0);
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setIsmodalIsOpen] = useState(false);
   const [withSupply, setWithSupply] = useState(false);
@@ -55,6 +57,8 @@ const AddOrder: React.FC = () => {
   const [productSupply, setProductSupply] = useState<any>([]);
   const [productSupplyId, setProductSupplyId] = useState(0);
   const [statusCondition, setStatusCondition] = useState(true);
+  const [addCondition, setAddCondition] = useState(false);
+
   const [productBasePrice, setProductBasePrice] = useState(0);
   const [users, setUsers] = useState([]);
   const [organizations, setOrganizations] = useState([]);
@@ -103,6 +107,10 @@ const AddOrder: React.FC = () => {
     try {
       const { data, status } = await GetAllProductWithSearch(config);
       setProductSupply(data.result.productSupplies.values);
+      if(productSupplyId !== 0){
+        setCondition(data.result.productSupplies.values.find((i: any) => i.id === productSupplyId).productSupplyConditions)
+
+      }
     } catch (error) {
       console.log(error);
     }
@@ -303,19 +311,15 @@ const AddOrder: React.FC = () => {
     
   };
   const productComboSupply: any = () => {
-    if(productSupplyId > 0 ){
+    if(productSupplyId !== 0 ){
         
-        let supplyP = productSupply
-        .filter((i: any) => i.id === productSupplyId)
-        .map((item: any) => item);
-        
-        const{measureUnitId , price}=supplyP[0]
-
-        let productP :any= products.filter((i:any )=> i.id === supplyP[0].productId).map((data: any) => ({
-            label: data.name,
-            value: data.id,
-          }));
-        setProductId(productP[0].value);
+        let supplyP = productSupply.filter((i: any) => i.id === productSupplyId).map((item: any) => item);
+        const{ measureUnitId , price , product }= supplyP[0]
+        let productP = {
+            label: product.name,
+            value: product.id,
+          }
+          setProductId(productP  ? productP.value : 0);
         setMeasureUnitId(measureUnitId)
         setProductBasePrice(price)
         return products.filter((i:any )=> i.id === supplyP[0].productId).map((data: any) => ({
@@ -396,12 +400,25 @@ const AddOrder: React.FC = () => {
     }
     setStatusCondition(s);
   };
+const openModal =() =>{
+setIsmodalIsOpen(true)
+if(productSupplyId !== 0 ){
+  let supply = productSupply.find((i: any) => i.id === productSupplyId);
+const {quantity} = supply
+
+setQuantityConditio(quantity)
+}
+}
   const closeModal = () => {
     setIsmodalIsOpen(false);
   };
   const CheckedHadnler = (conditionId: any) => {
     setChecked({ selectedValue: conditionId });
   };
+ const backTooTable =()=>{
+  setAddCondition(false)
+  getProductSupply()
+}
 
   return (
     <div className="user-progress">
@@ -418,9 +435,25 @@ const AddOrder: React.FC = () => {
             <FadeLoader loading={loading} color={color} />
           </div>
         ) : (
-          <div className=" rounded  " style={{ border: " 1px solid #bfc9d4" }}>
+          addCondition === true? <ConditionForOrder  getSupply={getProductSupply} setConditionS={backTooTable} id={productSupplyId}  quantity={quantityCondition}/>
+          :
+        condition.length === 0 ? ( <div>
+          <div className='text-center mt-5'>
+              <h6>اطلاعاتی جهت نمایش موجود نیست</h6>
+              <button
+                  className="col-6 btn-sm btn-primary"
+                  onClick={() => {
+                    setAddCondition(true);
+                  }}>
+                  افزودن شرط{" "}
+                </button>
+          </div>
+
+      </div>):  
+         ( <div className=" rounded  " style={{ border: " 1px solid #bfc9d4" }}>
+ 
             <div className="table-responsive p-2">
-              <table className="table table-bordered table-hover table-striped  mt-2  mb-4">
+              <table className=" table-bordered table-hover table-striped  mt-2  mb-4">
                 <thead>
                   <tr style={{ fontSize: "10px" }}>
                     <th style={{ fontSize: "10px" }} className="text-center">
@@ -595,18 +628,30 @@ const AddOrder: React.FC = () => {
                     ))}
                 </tbody>
               </table>
+
               <div className="row  m-auto ">
                 <button
-                  className="col-4 btn-sm btn-success"
+                  className="col-6 btn-sm btn-success"
                   onClick={() => {
                     setIsmodalIsOpen(false);
                   }}
                 >
                   ثبت{" "}
                 </button>
+                <button
+                  className="col-6 btn-sm btn-primary"
+                  onClick={() => {
+                    setAddCondition(true);
+                  }}
+                >
+                  افزودن شرط{" "}
+                </button>
               </div>
+
             </div>
-          </div>
+            
+
+          </div>)
         )}
       </Modal>
       <div className="row">
@@ -717,7 +762,7 @@ const AddOrder: React.FC = () => {
                       
                     >
                       <label>نام کالا</label>
-{productSupplyId !== 0 ?
+{productSupplyId !== 0  ?
                         <>
                           <Select
                             placeholder="کالا"
@@ -756,9 +801,7 @@ const AddOrder: React.FC = () => {
                           onChange={(e: any) => {
                             setProductId(e.value);
                             setMeasureUnitId(
-                              products
-                                .filter((i: any) => i.id === e.value)
-                                .map((i: any) => i.measureUnitId)
+                              products.filter((i: any) => i.id === e.value).map((i: any) => i.measureUnitId)
                             );
                           }}
                         />
@@ -810,10 +853,7 @@ const AddOrder: React.FC = () => {
                               }}
                             />
                             <button
-                              disabled={statusCondition}
-                              onClick={() => {
-                                setIsmodalIsOpen(true);
-                              }}
+                              onClick={openModal}
                               className=" col-3 btn btn-sm btn-success "
                               style={{ width: "19%" }}
                             >
