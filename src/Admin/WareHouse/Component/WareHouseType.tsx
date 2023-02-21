@@ -204,7 +204,7 @@ const WareHouseType :React.FC= () => {
                 SetcompanyId(data.result.companies[0].id)
             }
         } catch (error) {
-            console.log();
+            console.log(error);
         }
     }
     const openModal =  (id:number) => {
@@ -216,7 +216,6 @@ const WareHouseType :React.FC= () => {
         setIsOpen(false);
     }
     const GetWareHouseGroup = async (companyId:any) => {
-        console.log(companyId);
         if (userCompanies.length === 1) {
             try {
 

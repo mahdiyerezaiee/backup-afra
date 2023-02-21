@@ -127,7 +127,6 @@ if(companyId){
     }
     const wareCombo = () => {
 
-        console.log(Productwarehouse);
 
 
         return (Productwarehouse.filter((item:any)=>(item.id!==0)).map((data: any) => ({ label: data.wareHouseName, value: data.id })))

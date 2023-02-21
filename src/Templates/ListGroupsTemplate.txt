@@ -5,7 +5,6 @@
  ///getGroups
  
 //  const GetProductGroup = async (companyId) => {
-//         console.log(companyId);
 //         if (userCompanies.length === 1) {
 //             try {
 

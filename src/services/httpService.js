@@ -21,7 +21,6 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 const refresh = localStorage.getItem('refresh');
 const connect=localStorage.getItem('connect')
 
-console.log(token);
 const refreshR = {
   token
   , refresh

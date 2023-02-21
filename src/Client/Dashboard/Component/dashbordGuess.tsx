@@ -2,13 +2,20 @@ import {NavLink} from "react-router-dom";
 import {Table} from "react-bootstrap";
 import News from '../../../Common/Shared/News/news';
 import SalesBoard from "../../../Common/Shared/Common/salesBoard";
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
+import { GridLoader } from "react-spinners";
 
 const DashbordGuess:React.FC = () => {
-
-
-
-    return (
+    const [loading , setLoading]= useState(false)
+    if(loading){
+     return(
+            <div style={{position:'fixed',top:'40%',left:'40%'}}>
+                <p>دریافت اطلاعات ...</p>
+                <GridLoader loading={loading} color="#4236d6" />
+        </div>
+        )
+    }else{ 
+        return (
     <Fragment><div>
         <div className=" statbox widget-content widget-content-area">
             <div className="card component-card_2 m-2">
@@ -23,9 +30,9 @@ const DashbordGuess:React.FC = () => {
                
     </div>
     <hr/>
-    <SalesBoard/>
+    <SalesBoard setloading={setLoading} />
     <hr/>
-    <News/>
-    </Fragment>)
+    <News />
+    </Fragment>)}
 }
 export default DashbordGuess

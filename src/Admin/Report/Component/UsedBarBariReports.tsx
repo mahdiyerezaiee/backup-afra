@@ -143,7 +143,6 @@ const UsedBarBariReport: React.FC = () => {
         { Header: 'آدرس بارنامه', accessor: 'barAdd' },], []);
     let defaultValue: any = CompaniesIDs()[0]
     const data:any = useMemo(() => Response, [Response]);;
-    console.log(data)
 
     if (!clicked) {
         if (!loading) {

@@ -211,7 +211,7 @@ const ConditionForOrder:React.FC<Props>= ({id , quantity , setConditionS , getSu
                             <div className="card-body p-0 ">
 
                                 <div className="form-row">
-                                    <div className="n-chk d-flex  ">
+                                    <div className="n-chk d-flex mt-1 ">
 
                                         <div>
                                             <label className="mr-2 mb-4 text-danger"> شرایط خاص </label>
@@ -227,7 +227,7 @@ const ConditionForOrder:React.FC<Props>= ({id , quantity , setConditionS , getSu
 
                                 </div>
 
-                                <div className="form-row">
+                                <div className="form-row mt-1">
                                     <div className="  form-group col-md-6 col-xs-12 textOnInput  " >
 
                                         <label>نوع پرداخت</label>
@@ -265,7 +265,7 @@ const ConditionForOrder:React.FC<Props>= ({id , quantity , setConditionS , getSu
                                 </div>
 
                                 {paymentMethodId === 4 ?
-                                    <div className='form-row'>
+                                    <div className='form-row mt-1'>
                                         <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                             <label>تعداد اقساط</label>
                                             <input type="number" className="form-control opacityForInput"
@@ -284,7 +284,7 @@ const ConditionForOrder:React.FC<Props>= ({id , quantity , setConditionS , getSu
                                     :
                                     ''
                                 }
-                                <div className='form-row'>
+                                <div className='form-row mt-1'>
                                     <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                         <label>مقدار افزایش</label>
                                         <input type="number" className="form-control opacityForInput"
@@ -305,7 +305,7 @@ const ConditionForOrder:React.FC<Props>= ({id , quantity , setConditionS , getSu
 
                                     </div>
                                 </div>
-                                <div className="form-row">
+                                <div className="form-row mt-1">
                                     <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                         <label>حداقل سفارش</label>
                                         <input type="number" className="form-control opacityForInput"
@@ -322,7 +322,7 @@ const ConditionForOrder:React.FC<Props>= ({id , quantity , setConditionS , getSu
 
                                 </div>
 
-                                <div className="form-group  textOnInput ">
+                                <div className="form-group  textOnInput mt-1 ">
                                     <label>توضیحات</label>
 
                                     <textarea  className="form-control opacityForInput " rows={4}

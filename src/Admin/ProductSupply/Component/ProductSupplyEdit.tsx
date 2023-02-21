@@ -74,7 +74,6 @@ const ProductSupplyEdit: React.FC = () => {
         getProductSupply()
     }, [])
 
-    console.log(productWareHouseId);
 
     const getProdcutForCombo = async () => {
 

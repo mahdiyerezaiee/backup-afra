@@ -297,12 +297,8 @@ CottageCode,
                 var siblings=[];
 
 
-                console.log(SortColumn);
-                console.log(SortingDirectionId);
 
-                // console.log(e.target);
                 // siblings = e.target.parentNode.getElementsByTagName('th');
-                // console.log(siblings);
                 // for(let i = 0;i<siblings.length;i++){
                 //     siblings[i].innerText = siblings[i].innerText.replace('🔼', '').replace('🔽', '');
                 // }

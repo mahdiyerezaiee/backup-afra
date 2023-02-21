@@ -14,7 +14,6 @@ import { RootState } from '../store';
 
 const InvoiceCreatorForAdmin = ({ closeModal }) => {
     const roles = useSelector((state) => state.roles)
-console.log(roles);
     const ref = createRef()
 const params = useParams()
     const [order, setOrder] = useState({});
@@ -102,7 +101,7 @@ return null
             }
 
         } catch (error) {
-            console.log(error,1);
+            console.log(error);
         }
 
     }

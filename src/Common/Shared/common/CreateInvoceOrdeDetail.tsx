@@ -47,7 +47,6 @@ const CraeteInvoceOrderDetail:React.FC<Props>=({ modalIsOpen , closeModal , orde
 
         }
     }
-    console.log(orderDetailId);
     
     const handelSubmit = async (e:any) => {
         setLoading(true)

@@ -37,7 +37,6 @@ const getCompanies = async () => {
     }
 
 }
-console.log(userCompanies);
     const getGroup = async () => {
 
         try {

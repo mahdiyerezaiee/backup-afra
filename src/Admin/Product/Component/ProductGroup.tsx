@@ -258,7 +258,6 @@ setId(id)
         setIsOpen(false);
     }
     const GetProductGroup = async (companyId:any) => {
-        console.log(companyId);
         if (userCompanies.length === 1) {
             try {
 

@@ -19,7 +19,6 @@ const ClientSideNavbar: React.FC = () => {
     const token = localStorage.getItem("token")
 const roles = useSelector((state:RootState) => state.roles);
     const navigate=useNavigate();
-    // console.log(roles.some((i:any)=>i > 2));
     const sideChanger=()=>{
 
   document.body.classList.remove('clientBody')

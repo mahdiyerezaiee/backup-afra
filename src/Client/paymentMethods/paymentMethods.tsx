@@ -40,7 +40,6 @@ const PaymentMethodComponent: React.FC = () => {
   const handleTabClick = (id: any) => {
     setCurrentTab(id);
   }
-  console.log(currentTab);
 
   if (payments) {
     return (

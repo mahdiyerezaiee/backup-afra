@@ -14,7 +14,6 @@ const loginSlice=createSlice({
     reducers:{
 
         loginWithPassword:(state , action:PayloadAction<LoginModelWithPass>)=>{
-console.log(action.payload);
 
            return{
             ...action.payload

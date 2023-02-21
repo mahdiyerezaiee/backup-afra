@@ -73,7 +73,6 @@ const UserProfile:React.FC = () => {
   if (user.organizationId) {
     organizm =organization
   }
-  console.log(address);
   return (
 
     <div className="row layout-spacing">
@@ -168,7 +167,7 @@ const UserProfile:React.FC = () => {
         </div>
       </div>
 
-      {organizm && user.organizationId?
+      {/* {organizm && user.organizationId?
         <div className="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
 
           <div className="user-profile layout-spacing">
@@ -209,7 +208,7 @@ const UserProfile:React.FC = () => {
               </div>
             </div>
           </div>
-        </div> : ''}
+        </div> : ''} */}
     </div>
 
   )

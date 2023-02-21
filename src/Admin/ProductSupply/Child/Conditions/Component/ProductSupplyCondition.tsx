@@ -171,7 +171,6 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         try {
 
             const { data, status } = await SetProductSupplyConditions(body)
-            console.log(status)
             if (status === 200) {
                 closeModal()
                 toast.success("شرایط جدید عرضه افزوده شد", {
@@ -218,7 +217,6 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         setLoading(true)
         try {
             const { data, status } = await SetProductSupplyConditions(editedContact)
-            console.log(data)
             if (data.result.message === "ProductSupplyCondition saved completed") {
                 GetProductSupplyC()
                 setLoading(false)
@@ -320,7 +318,6 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
             additionalTypeId: condition.additionalTypeId,
             customerGroupId: condition.customerGroupId,
         };
-        console.log(formValues)
         setEditFormData(formValues);
     };
     const handleCancelClick = () => {

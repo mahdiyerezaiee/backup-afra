@@ -46,8 +46,6 @@ const ProductWareHouse: React.FC<Props> = ({ id, submit }) => {
     const onEdit = ( Id:any, currentQuantity : any) => {
 
 
-        console.log(Id);
-        console.log(inEditMode);
         setInEditMode({
 
             status: true,

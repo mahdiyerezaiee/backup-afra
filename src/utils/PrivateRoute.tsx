@@ -21,7 +21,6 @@ const PrivateRoute: React.FC<Props> = ({ children }: Props) => {
  
 
    
-console.log(roles);
 
 
 if(roles.length>0){

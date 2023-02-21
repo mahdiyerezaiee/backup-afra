@@ -29,7 +29,6 @@ const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids
         }
     }
 
-    console.log(images);
     if (images.length > 0) {
         submited(true)
         const handelSubmit = async (e) => {
@@ -76,7 +75,6 @@ const ImagePriviewerForPayment = ({ images, submited, file, payments, Index, Ids
 
 
 
-console.log(trackingCode ,1111,price );
 
         return (
             <div>
