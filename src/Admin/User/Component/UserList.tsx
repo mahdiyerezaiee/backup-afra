@@ -543,7 +543,7 @@ const UserList:React.FC = () => {
                 </ul>
             )
         }
-    ],[CustomerG,organiz])
+    ],[CustomerG,organiz,users])
     const handelSearchFieldClear = () => {
         setGeData(true)
         getUsers()
