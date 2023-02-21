@@ -18,6 +18,8 @@ import MyTable from './../../../Common/Shared/Form/MyTable';
 import ModalGroupWork from './../../../Common/Shared/Common/ModalGroupWork';
 import { InvoceTypes } from './../../../Common/Enums/InvoiceTypeIdEnums';
 import { PaymentStructureEnums } from './../../../Common/Enums/PaymentStructureEnums';
+import PaymentModalForInvoices from '../../Payment/Component/PaymentModalForInvoices';
+import { AiOutlineDollar } from 'react-icons/ai';
 
 
 
@@ -67,7 +69,8 @@ const InvoiceList: React.FC = () => {
     const [CustomerNationalCode, SetCustomerNationalCode] = useState(getDefault().CustomerNationalCode)
     const [OrganizationName, SetOrganizationName] = useState(getDefault().OrganizationName)
     const [OrganizationNationalId, SetOrganizationNationalId] = useState(getDefault().OrganizationNationalId)
-
+    const[modalOpenPayment,SetModalOpenPayment]=useState<boolean>(false)
+    const[id,SetId]=useState(0)
 
     const companies = useSelector((state: RootState) => state.companies)
 
@@ -258,6 +261,13 @@ const InvoiceList: React.FC = () => {
 
         }
     }
+    const OpenPaymentModal=(id:any)=>{
+        SetId(id)
+        SetModalOpenPayment(true)
+    }
+    const closePaymnetModal=()=>{
+SetModalOpenPayment(false)
+    }
     const handelEndDate = (value: any) => {
         if (value === null) {
             SetEndDate('')
@@ -421,7 +431,7 @@ const InvoiceList: React.FC = () => {
 
     }, [getData])
     let formatterForMoney = new Intl.NumberFormat('fa-IR', {
-        
+
         currency: 'IRR'
 
 
@@ -458,30 +468,50 @@ const InvoiceList: React.FC = () => {
 
             }
         },
-        { Header: 'واحد', accessor: 'priceUnitId',Cell:(rows:any)=>{
+        {
+            Header: 'واحد', accessor: 'priceUnitId', Cell: (rows: any) => {
 
-            return(PriceUnitEnums.filter((i:any)=>i.id===rows.row.original.priceUnitId).map((i:any)=>i.name))
-        } },
-        { Header: 'وضعیت پرداخت', accessor: 'paymentStatusId' ,Cell:(rows:any)=>{
+                return (PriceUnitEnums.filter((i: any) => i.id === rows.row.original.priceUnitId).map((i: any) => i.name))
+            }
+        },
+        {
+            Header: 'وضعیت پرداخت', accessor: 'paymentStatusId', Cell: (rows: any) => {
 
-            return(PaymentStatusEnums.filter((i:any)=>i.id===rows.row.original.paymentStatusId).map((i:any)=>i.name))
-        }},
-        { Header: 'نوع پرداخت', accessor: 'paymentMethodId',Cell:(rows:any) =>{
+                return (PaymentStatusEnums.filter((i: any) => i.id === rows.row.original.paymentStatusId).map((i: any) => i.name))
+            }
+        },
+        {
+            Header: 'نوع پرداخت', accessor: 'paymentMethodId', Cell: (rows: any) => {
 
 
-            return(PaymentStructureEnums.filter((i:any)=>i.id===rows.row.original.paymentMethodId).map((i:any)=>i.name))
-        }},
-        { Header: 'تاریخ ثبت ', accessor: 'createDate' ,Cell:(rows:any)=>{
+                return (PaymentStructureEnums.filter((i: any) => i.id === rows.row.original.paymentMethodId).map((i: any) => i.name))
+            }
+        },
+        {
+            Header: 'تاریخ ثبت ', accessor: 'createDate', Cell: (rows: any) => {
 
-            return(new Date(rows.row.original.createDate).toLocaleDateString('fa-IR'))
-        }},
-        { Header: 'تاریخ پرداخت ', accessor: 'installmentStartDate',Cell:(rows:any)=>{
+                return (new Date(rows.row.original.createDate).toLocaleDateString('fa-IR'))
+            }
+        },
+        {
+            Header: 'تاریخ پرداخت ', accessor: 'installmentStartDate', Cell: (rows: any) => {
 
-            return(new Date(rows.row.original.installmentStartDate).toLocaleDateString('fa-IR'))
-        } },
+                return (new Date(rows.row.original.installmentStartDate).toLocaleDateString('fa-IR'))
+            }
+        },
         { Header: 'دوره اقساط ', accessor: 'installmentPeriod' },
         { Header: 'تعداد اقساط ', accessor: 'installmentOccureCount' },
-        { Header: 'توضیحات', accessor: 'comment' }
+        { Header: 'توضیحات', accessor: 'comment' },
+        {
+            Header: ' پرداخت ها', accessor: 'getPayment', Cell: (row: any) => {
+
+
+                return (
+                    <button className='border-0 bg-transparent ' onClick={()=>OpenPaymentModal(row.row.original.id)} ><AiOutlineDollar size={"1.5rem"}/></button>
+                )
+
+            }
+        }
 
 
 
@@ -529,9 +559,10 @@ const InvoiceList: React.FC = () => {
                     contentLabel="Selected Option"
                     ariaHideApp={false}>
                 </Modal>
+                <PaymentModalForInvoices modalOpen={modalOpenPayment} closeModal={closePaymnetModal} InvoiceId={id} />
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
                     <AdvancedSearch>
-                      
+
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
@@ -797,8 +828,8 @@ const InvoiceList: React.FC = () => {
                     ariaHideApp={false}>
                 </Modal>
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
-                <AdvancedSearch>
-                      
+                    <AdvancedSearch>
+
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
