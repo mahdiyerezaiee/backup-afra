@@ -568,13 +568,12 @@ const PaymentsList: React.FC = () => {
             Header: ' وضعیت پرداخت', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.paid)
                 const id = row.row.original.id
-                const paymentStatusId = row.row.original.paymentStatusId
-                const confirm = row.row.original.confirmed
+             
                 const activeChang = {
 
                     "paymentId": id,
-                    "paymentStatusId": paymentStatusId,
-                    "confirmed": confirm,
+                    "paymentStatusId": null,
+                    "confirmed": null,
                     "paid": !active
 
                 }
@@ -624,14 +623,13 @@ const PaymentsList: React.FC = () => {
             Header: ' وضعیت تایید', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.confirmed)
                 const id = row.row.original.id
-                const paymentStatusId = row.row.original.paymentStatusId
-                const paid = row.row.original.paid
+               
                 const activeChang = {
 
                     "paymentId": id,
-                    "paymentStatusId": paymentStatusId,
+                    "paymentStatusId": null,
                     "confirmed": !active,
-                    "paid": paid
+                    "paid": null
 
                 }
 
