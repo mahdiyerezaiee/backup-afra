@@ -33,7 +33,7 @@ const customStyles = {
         border: '2px ridge black'
     }
 };
-const ProductList:React.FC = () => {
+const ProductList: React.FC = () => {
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [companies, setCompanies] = useState([])
@@ -73,9 +73,9 @@ const ProductList:React.FC = () => {
         SetOpen(false);
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data:any) => {
+    const getSelectedData = (data: any) => {
 
-        arrayOfSelectedData = data.map((item:any) => item.original);
+        arrayOfSelectedData = data.map((item: any) => item.original);
 
 
         return (arrayOfSelectedData)
@@ -86,7 +86,7 @@ const ProductList:React.FC = () => {
         const response = await GetCompanyChild();
         let companies = response.data.result.companies
         let arr = []
-        let finalArr:any = []
+        let finalArr: any = []
         for (let i = 0; i < companies.length; i++) {
 
             const { data, status } = await GetGroupWithCompany(2, companies[i].id);
@@ -104,7 +104,7 @@ const ProductList:React.FC = () => {
 
     }
 
-    const getBulkJob = (selected:any) => {
+    const getBulkJob = (selected: any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -146,7 +146,7 @@ const ProductList:React.FC = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
+        const copyData = arrayOfData.map((item: any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -177,7 +177,7 @@ const ProductList:React.FC = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => { return { ...item, active: true } })
+        const copyData = arrayOfData.map((item: any) => { return { ...item, active: true } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -208,7 +208,7 @@ const ProductList:React.FC = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => { return { ...item, active: false } })
+        const copyData = arrayOfData.map((item: any) => { return { ...item, active: false } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -243,7 +243,7 @@ const ProductList:React.FC = () => {
     }
     const getGroupForCompbo = () => {
 
-        return (productG.map((item:any) => ({ label: item.name, value: item.id })))
+        return (productG.map((item: any) => ({ label: item.name, value: item.id })))
 
     }
     const groups = getGroupForCompbo();
@@ -256,14 +256,14 @@ const ProductList:React.FC = () => {
             params: {
                 Name: params.Name,
                 EnglishName: params.EnglishName,
-                GroupIds: params.groupIds ? params.groupIds.map((item:any) => item.value) : [],
+                GroupIds: params.groupIds ? params.groupIds.map((item: any) => item.value) : [],
                 isAdmin: true,
                 PageNumber: 0,
                 PageSize,
                 companyId
 
             },
-            paramsSerializer: (params:any) => {
+            paramsSerializer: (params: any) => {
 
                 return QueryString.stringify(params)
             }
@@ -295,12 +295,12 @@ const ProductList:React.FC = () => {
                 isAdmin: true,
                 Name: Name,
                 EnglishName: EnglishName,
-                GroupIds: groupIds ? groupIds.map((item:any) => item.value) : [],
+                GroupIds: groupIds ? groupIds.map((item: any) => item.value) : [],
                 PageNumber,
                 PageSize,
                 companyId
             },
-            paramsSerializer: (params:any) => {
+            paramsSerializer: (params: any) => {
 
                 return QueryString.stringify(params)
             }
@@ -320,7 +320,7 @@ const ProductList:React.FC = () => {
             console.log(error);
         }
     }
-    const openModal = (id:number) => {
+    const openModal = (id: number) => {
         setIsOpen(true);
         setId(id)
 
@@ -352,14 +352,14 @@ const ProductList:React.FC = () => {
             params: {
                 Name,
                 EnglishName,
-                GroupIds: groupIds ? groupIds.map((item:any) => item.value) : [],
+                GroupIds: groupIds ? groupIds.map((item: any) => item.value) : [],
                 isAdmin: true,
-                
+
                 PageNumber,
                 PageSize,
 
             },
-            paramsSerializer: (params:any) => {
+            paramsSerializer: (params: any) => {
 
                 return QueryString.stringify(params)
             }
@@ -387,7 +387,7 @@ const ProductList:React.FC = () => {
         getCompany()
     }, [getData])
 
-    const editHandler = (id:number) => {
+    const editHandler = (id: number) => {
         navigate(`/admin/editproduct/${id}`)
     }
 
@@ -429,7 +429,7 @@ const ProductList:React.FC = () => {
         { Header: 'نام', accessor: 'name' }
         , { Header: 'کد بازارگاه', accessor: 'englishName' }
         , {
-            Header: 'گروه کالا', accessor: ' ', Cell:  (row:any) => {
+            Header: 'گروه کالا', accessor: ' ', Cell: (row: any) => {
 
 
 
@@ -437,15 +437,15 @@ const ProductList:React.FC = () => {
                     return String('تعیین نشده')
                 }
                 else {
-                    return String((productG.filter((item:any) => item.id === row.row.original.groupId).map((item:any) => item.name)))
+                    return String((productG.filter((item: any) => item.id === row.row.original.groupId).map((item: any) => item.name)))
                 }
 
             }
         }
-        ,{Header:' نام شرکت',accessor:'companyName'},
+        , { Header: ' نام شرکت', accessor: 'companyName' },
         {
             Header: 'فعال', accessor: '', isVisible: true,
-            disableFilters: true, Cell: (row:any) => {
+            disableFilters: true, Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.active)
                 const id = row.row.original.id
                 const name = row.row.original.name
@@ -460,7 +460,12 @@ const ProductList:React.FC = () => {
                     englishName,
                     price,
                     maxSellableAmount,
-                    minSellableAmount
+                    minSellableAmount,
+                    "measureUnitId": row.row.original.measureUnitId,
+                    "groupId": row.row.original.groupId,
+                    "measureUnit": 1,
+                    "companyId": row.row.original.companyId,
+                    "companyName":row.row.original.companyName
                 }
 
                 const activeHandler = async () => {
@@ -534,11 +539,11 @@ const ProductList:React.FC = () => {
                     </ul>
                 )
             }
-        }],[productG])
+        }], [productG])
     const CompaniesIDs = () => {
-        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
+        return (companies.map((data: any) => ({ label: data.name, value: data.id })))
     }
-    const data = useMemo(() => product,[product]);
+    const data = useMemo(() => product, [product]);
     const handelSearchFieldClear = () => {
         setGeData(true)
         getProducts()
@@ -555,7 +560,7 @@ const ProductList:React.FC = () => {
     }
     if (product) {
 
-        const dataForExcel = data.map((item:any) => ({
+        const dataForExcel = data.map((item: any) => ({
             'شناسه': item.id,
             'نام کالا': item.name,
             'قیمت': item.price,
@@ -619,7 +624,7 @@ const ProductList:React.FC = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={(e:any) => {
+                                            onChange={(e: any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
@@ -627,7 +632,7 @@ const ProductList:React.FC = () => {
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={(e:any) => {
+                                            onChange={(e: any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 
@@ -679,7 +684,7 @@ const ProductList:React.FC = () => {
                                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                            <p> آیا مطمئنید  کالا {product.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
+                            <p> آیا مطمئنید  کالا {product.filter((item: any) => item.id === id).map((item: any) => item.name)}   </p>
                             <p>حذف شود ؟ </p>
 
 
@@ -693,7 +698,7 @@ const ProductList:React.FC = () => {
                     </Modal>
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف کالا جدید</button>
-                        <MyTable setPageNumber={setPageNumber} getDataBySearch={getDataByPageNumber} PageSize={PageSize} setPageSize={setPageSize} total={totalCount} PageNumber={PageNumber} columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
+                        <MyTable setPageNumber={setPageNumber} getDataBySearch={getDataByPageNumber} PageSize={PageSize} setPageSize={setPageSize} total={totalCount} PageNumber={PageNumber} columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob} />
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
 
                     </div>
@@ -765,7 +770,7 @@ const ProductList:React.FC = () => {
                                         <Select
 
                                             options={CompaniesIDs()}
-                                            onChange={(e:any) => {
+                                            onChange={(e: any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
@@ -773,7 +778,7 @@ const ProductList:React.FC = () => {
 
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
-                                            onChange={(e:any) => {
+                                            onChange={(e: any) => {
                                                 setCompanyId(e.value)
                                                 console.log(e);
 
