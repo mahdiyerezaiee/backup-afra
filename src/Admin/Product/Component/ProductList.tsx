@@ -258,7 +258,6 @@ const ProductList:React.FC = () => {
                 EnglishName: params.EnglishName,
                 GroupIds: params.groupIds ? params.groupIds.map((item:any) => item.value) : [],
                 isAdmin: true,
-                active: false,
                 PageNumber: 0,
                 PageSize,
                 companyId
@@ -294,7 +293,6 @@ const ProductList:React.FC = () => {
 
             params: {
                 isAdmin: true,
-                active: false,
                 Name: Name,
                 EnglishName: EnglishName,
                 GroupIds: groupIds ? groupIds.map((item:any) => item.value) : [],
@@ -356,7 +354,7 @@ const ProductList:React.FC = () => {
                 EnglishName,
                 GroupIds: groupIds ? groupIds.map((item:any) => item.value) : [],
                 isAdmin: true,
-                active: false,
+                
                 PageNumber,
                 PageSize,
 

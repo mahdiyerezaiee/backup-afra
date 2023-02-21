@@ -38,5 +38,5 @@ export const  DeleteProduct=id =>{
 
 export const GetProductsWithSearch=(searchParams)=>{
 
-    return http.get(`${configure}/Product/GetProducts?Active=true&isAdmin=true`,searchParams)
+    return http.get(`${configure}/Product/GetProducts`,searchParams)
 }

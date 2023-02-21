@@ -13,8 +13,8 @@ import { RootState } from '../store';
 
 
 const InvoiceCreator = ({ closeModal }) => {
-    const roles = useSelector((state:RootState) => state.roles)
-
+    const roles = useSelector((state) => state.roles)
+    
     const ref = createRef()
 const params = useParams()
     const [order, setOrder] = useState({});
