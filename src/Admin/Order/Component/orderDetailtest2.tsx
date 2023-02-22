@@ -28,7 +28,7 @@ import { DeliveryMethods } from "../../../Common/Enums/DeliveryMethodsEnums";
 import { OrderStatusEnumsProgressBar } from "../../../Common/Enums/OrderStatusEnumsProgressBar";
 import FadeLoader from "react-spinners/FadeLoader";
 import { GetOrderDetailsAdmin } from "../../../services/orderService";
-import InvoicesForOrder from './../../../Common/Shared/order/InvoicesForOrder';
+import InvoicesForOrder from "../../../Common/Shared/order/InvoicesForOrder";
 
 const OrderDetailTest: React.FC = () => {
   const params = useParams();

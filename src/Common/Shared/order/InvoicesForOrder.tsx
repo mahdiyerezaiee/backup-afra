@@ -29,6 +29,7 @@ setLoading(true)
 
             headers: { 'Content-Type': 'application/json' },
             params: {
+                EntityTypeId:10,
                 EntityId: id,
                 IsAdmin: true,
                 PageNumber: 0,
