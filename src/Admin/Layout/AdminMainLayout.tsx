@@ -98,6 +98,7 @@ import InvoiceCreatorForAdmin from './../../Utils/invoiceCreatorForAdmin';
 import { GridLoader } from 'react-spinners';
 import CreditList from '../Credit/Component/CreditList';
 import CreditDetails from './../Credit/Component/CreditDetails';
+import CreateNewCredit from './../Credit/Component/CreateNewCredit';
 
 const AdminMainLayout: React.FC = () => {
   const [isloading, setIsloading] = useState(true);
@@ -263,6 +264,8 @@ const AdminMainLayout: React.FC = () => {
                   <Route path='PaymentLists' element={<PaymentsList />} />
                   <Route path='Credits' element={<CreditList />} />
                   <Route path='CreditDetails/:id' element={<CreditDetails />} />
+                  <Route path='newCredit' element={<CreateNewCredit />} />
+
 
 
 
