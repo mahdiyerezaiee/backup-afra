@@ -46,10 +46,10 @@ const OrderAttAchment:React.FC<Props> = ({order,params  ,handelPreview , modalIs
     };
    
     
-      const showAddressOrder = () => {
+      const showAtt = () => {
         setShow(!show);
       };
-      const CollapsAddressOrder = () => {
+      const CollapsAtt = () => {
         setShow(!show);
         handelGetAttachment();
 
@@ -62,17 +62,18 @@ const OrderAttAchment:React.FC<Props> = ({order,params  ,handelPreview , modalIs
                 <div className=" col-6  ">
                 <h4 className="float-left">فایل ضمیمه </h4>
 
+
                 </div>
                 <div className="  col-6   ">
                   {show === true ? (
                     <IoIosArrowUp
                       size="1.5rem"
                       className="float-right"
-                      onClick={showAddressOrder}
+                      onClick={showAtt}
                     />
                   ) : (
                     <svg
-                      onClick={CollapsAddressOrder}
+                      onClick={CollapsAtt}
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
@@ -156,11 +157,11 @@ const OrderAttAchment:React.FC<Props> = ({order,params  ,handelPreview , modalIs
                       <IoIosArrowUp
                         size="1.5rem"
                         className="float-right"
-                        onClick={showAddressOrder}
+                        onClick={showAtt}
                       />
                     ) : (
                       <svg
-                        onClick={CollapsAddressOrder}
+                        onClick={CollapsAtt}
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
@@ -180,7 +181,7 @@ const OrderAttAchment:React.FC<Props> = ({order,params  ,handelPreview , modalIs
                 {show ? (
                   <div>
                     <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
-                      <label>اطلاعات حواله </label>
+                      
                       <span className="text-center">
                         اطلاعاتی برای نمایش موجود نیست
                       </span>

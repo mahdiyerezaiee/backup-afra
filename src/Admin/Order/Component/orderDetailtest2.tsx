@@ -7,10 +7,10 @@ import {
   GetAllOrganisationCode,
 } from "../../../services/organisationService";
 import { GetAddress } from "../../../services/addressService";
-import {
+import { 
   GetShoppingContracts,
   GetShoppings,
-  GetShoppingsAdmin,
+  GetShoppingsAdmin ,
 } from "../../../services/ShippingService";
 import { GetAttachments } from "../../../services/attachmentService";
 import ImagePreviewer from "../../../Utils/ImagePreviewer";
@@ -28,6 +28,7 @@ import { DeliveryMethods } from "../../../Common/Enums/DeliveryMethodsEnums";
 import { OrderStatusEnumsProgressBar } from "../../../Common/Enums/OrderStatusEnumsProgressBar";
 import FadeLoader from "react-spinners/FadeLoader";
 import { GetOrderDetailsAdmin } from "../../../services/orderService";
+import InvoicesForOrder from './../../../Common/Shared/order/InvoicesForOrder';
 
 const OrderDetailTest: React.FC = () => {
   const params = useParams();
@@ -54,9 +55,9 @@ const OrderDetailTest: React.FC = () => {
       SetShipping(data.result.shippings.values);
     } catch (e) {
       console.log(e);
-    }
-  };
-  
+
+
+    }}
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -92,20 +93,22 @@ const OrderDetailTest: React.FC = () => {
       SetShippingInformation(JSON.parse(data.result.order.extraData.data));
     } catch (err) {
       console.log(err);
-    }
-  };
-  const bindAdress = async (arr: any) => {
-    let FilnalArr: any = [];
+    }}
+   
+    let entityId = params.id
+   
+  const bindAdress = async (arr:  any) => {
+    let FilnalArr:  any = [];
 
     if (orderDetail.length > 1) {
       for (let i = 0; i < arr.length; i++) {
         try {
           const { data, status } = await GetAddress(11, arr[i].id);
           let detail = orderDetail.filter(
-            (item: any) => item.id === arr[i].id
+            (item:  any) => item.id === arr[i].id
           )[0];
           let address = data.result.addresses;
-          const finallAddres = address.map((item: any) => ({
+          const finallAddres = address.map((item:  any) => ({
             fullAddress: item.fullAddress,
             postalCode: item.postalCode,
             receiverTel: item.receiverTel,
@@ -125,10 +128,10 @@ const OrderDetailTest: React.FC = () => {
         try {
           const { data, status } = await GetAddress(10, arr[i].orderId);
           let detail = orderDetail.filter(
-            (item: any) => item.orderId === arr[i].orderId
+            (item:  any) => item.orderId === arr[i].orderId
           )[0];
           let address = data.result.addresses;
-          const finallAddres = address.map((item: any) => ({
+          const finallAddres = address.map((item:  any) => ({
             fullAddress: item.fullAddress,
             postalCode: item.postalCode,
             receiverTel: item.receiverTel,
@@ -149,7 +152,7 @@ const OrderDetailTest: React.FC = () => {
     var sum = 0;
 
     if (Shipping) {
-      Shipping.forEach((item: any) => (sum += item.plannedQuantity));
+      Shipping.forEach((item:  any) => (sum += item.plannedQuantity));
     }
 
     return sum;
@@ -159,7 +162,7 @@ const OrderDetailTest: React.FC = () => {
     var sum = 0;
 
     if (Shipping) {
-      Shipping.forEach((item: any) => (sum += item.shippedQuantity));
+      Shipping.forEach((item:  any) => (sum += item.shippedQuantity));
     }
     return sum;
   };
@@ -174,7 +177,7 @@ const OrderDetailTest: React.FC = () => {
         await bindAdress(orderDetail);
 
         var sum = 0;
-        orderDetail.forEach((item: any) => (sum += item.quantity));
+        orderDetail.forEach((item:  any) => (sum += item.quantity));
         SetOrderWeight(sum);
       }
     } catch (err) {
@@ -187,7 +190,7 @@ const OrderDetailTest: React.FC = () => {
     GetShipping();
     getOrganizationName();
   }, []);
-  const handelPreview = (item: any) => {
+  const handelPreview = (item:  any) => {
     setImage(item);
     setIsOpen(true);
   };
@@ -198,8 +201,8 @@ const OrderDetailTest: React.FC = () => {
     let fullname;
     if (customerDetail.organizationId > 0) {
       OName = organization
-        .filter((item: any) => item.id === customerDetail.organizationId)
-        .map((item: any) => item.name);
+        .filter((item:  any) => item.id === customerDetail.organizationId)
+        .map((item:  any) => item.name);
       fullname = `${OName ? OName : ""}`;
     } else {
       fullname = `${fName ? fName : ""} ${lName ? lName : ""}`;
@@ -218,25 +221,26 @@ const OrderDetailTest: React.FC = () => {
       }
     } catch (e) {
       console.log(e);
-    }
-  };
+   
+   
+  }}
   let orderDetailId;
   let measureUnitId;
-  let detailAddress: any;
+  let detailAddress:  any;
   var sumTakhsis = 0;
 
   if (DetailAddress.length > 0) {
     let count = DetailAddress.length;
-    orderDetailId = DetailAddress.filter((item: any) => item.extId === null)[0]
-      ? DetailAddress.filter((item: any) => item.extId === null)[0].id
+    orderDetailId = DetailAddress.filter((item:  any) => item.extId === null)[0]
+      ? DetailAddress.filter((item:  any) => item.extId === null)[0].id
       : DetailAddress[count - 1].id;
     measureUnitId = DetailAddress[0].measureUnitId;
     detailAddress = DetailAddress;
 
-    let newArr = DetailAddress.filter((item: any) => item.extId !== null);
+    let newArr = DetailAddress.filter((item:  any) => item.extId !== null);
 
     if (newArr.length > 0) {
-      newArr.forEach((item: any) => (sumTakhsis += item.quantity));
+      newArr.forEach((item:  any) => (sumTakhsis += item.quantity));
     } else {
       sumTakhsis = 0;
     }
@@ -246,102 +250,52 @@ const OrderDetailTest: React.FC = () => {
     (item) => item.id === order.orderStatusId
   ).map((item) => item.number)[0];
 
-  return (
-    <Fragment>
-      <div className="user-progress">
-        <div>
-          <div className="shadow border border-2">
-            <OrderCustomerInfo
-              order={order}
-              product={product}
-              customerDetail={customerDetail}
-              customerName={customerName}
-            />
-            {number !== 12 || number >= 4 ? (
-              <OrderInfo
-                orderWeight={OrderWeight}
-                TakhsisWeight={sumTakhsis}
-                havalehWeight={returnHavaleSum()}
-                barbariWeight={returnBarbariSum()}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-          <div className=" statbox widget-content widget-content-area text-dark ">
-            <ProgressBar number={number} id={order.orderStatusId} />
-            {number === 12 || number < 4 ? (
-              <>
-                <OrderAdminDetail
-                  getOrder={getOrder}
-                  handelPreview={handelPreview}
-                  order={order}
-                  orderDetail={DetailAddress}
-                />
-               
-                  <OrderAttachment
-                    order={order}
-                    params={params}
-                    closeModalForUpload={closeModalForUpload}
-                    modalIsOpenUpload={modalIsOpenUpload}
-                    setIsOpenUpload={setIsOpenUpload}
-                    handelPreview={handelPreview}
-                  />
-               
-              </>
-            ) : (
-              <>
-                <OrderAddress
-                  details={detailAddress}
-                  orderWeight={OrderWeight}
-                  TakhsisWeight={sumTakhsis}
-                  getOrder={getOrder}
-                  order={order}
-                  paymentStatus={orderPaymentStatusId}
-                />
+    return (
+        <Fragment>
+            <div className='user-progress'>
+                <div>
+                    <div className="shadow border border-2" >
+                        <OrderCustomerInfo order={order} product={product} customerDetail={customerDetail} customerName={customerName} />
+                        {number !== 12 || number >= 4 ? <OrderInfo orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} havalehWeight={returnHavaleSum()} barbariWeight={returnBarbariSum()} /> : ''}
+                    </div>
+                    <div className=" statbox widget-content widget-content-area text-dark ">
+                        <ProgressBar number={number} id={order.orderStatusId} />
+                        {number === 12 || number < 4 ? <><OrderAdminDetail getOrder={getOrder} handelPreview={handelPreview}  order={order} orderDetail={DetailAddress} />
+                           <OrderAttachment order={order} params={params} 
+                                closeModalForUpload={closeModalForUpload}
+                                modalIsOpenUpload={modalIsOpenUpload}
+                                setIsOpenUpload={setIsOpenUpload}
+                                handelPreview={handelPreview} />
+                        </> :
+                            (
+                                <>
 
-                <OrderWayBill
-                  loading={loading}
-                  idOrder={params.id}
-                />
-              
-                  <OrderAttachment
-                    order={order}
-                    params={params}
-                  
-                    closeModalForUpload={closeModalForUpload}
-                    modalIsOpenUpload={modalIsOpenUpload}
-                    setIsOpenUpload={setIsOpenUpload}
-                    handelPreview={handelPreview}
-                  />
-                
-              </>
-            )}
-            <ImagePreviewer
-              modalIsOpen={isOpen}
-              closeModal={closeModal}
-              item={image}
-              isUser={false}
-              orderStatus={number}
-            />
-          </div>
-        </div>
-        <div className="py-5 ">
-          <button className="btn btn-danger  float-right m-1 ">
-            <NavLink className="text-light" to="/admin/orderList">
-              بازگشت
-            </NavLink>
-          </button>
-        </div>
-        <ExcelFileUploader
-          modalIsOpen={modalIsOpenUploadExcel}
-          closeModal={closeModalIsOpenUploadExcel}
-          EntityId={orderDetailId}
-          EntityTypesId={11}
-          comment={"لطفا فایل اکسل مطابق نمونه اطلاعات ارسال را بارگزاری کنید"}
-        />
-      </div>
-    </Fragment>
-  );
-};
-export default OrderDetailTest;
+                                    <OrderAddress details={detailAddress} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId} />
+                                    <OrderWayBill loading={loading} idOrder={params.id}  />
+
+                                     <OrderAttachment order={order} params={params} 
+                                        closeModalForUpload={closeModalForUpload}
+                                        modalIsOpenUpload={modalIsOpenUpload}
+                                        setIsOpenUpload={setIsOpenUpload}
+                                        handelPreview={handelPreview} />  
+                                    <InvoicesForOrder Order={order} />
+
+                                </>)}
+
+                        <ImagePreviewer modalIsOpen={isOpen} closeModal={closeModal} item={image} isUser={false} orderStatus={number} />
+
+                    </div>
+                </div>
+                <div className="py-5 ">
+                    <button className="btn btn-danger  float-right m-1 ">
+                        <NavLink className="text-light" to='/admin/orderList'>بازگشت</NavLink>
+                    </button>
+                </div>
+                <ExcelFileUploader modalIsOpen={modalIsOpenUploadExcel} closeModal={closeModalIsOpenUploadExcel}
+                    EntityId={orderDetailId} EntityTypesId={11}
+                    comment={'لطفا فایل اکسل مطابق نمونه اطلاعات ارسال را بارگزاری کنید'} />
+            </div>
+        </Fragment>
+    )
+}
+export default OrderDetailTest
