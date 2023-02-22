@@ -436,6 +436,7 @@ SetModalOpenPayment(false)
 
 
     });
+    console.log(invoices)
     const CompaniesIDs = () => {
         return (companies.map(data => ({ label: data.name, value: data.id })))
     }
@@ -490,13 +491,21 @@ SetModalOpenPayment(false)
         {
             Header: 'تاریخ ثبت ', accessor: 'createDate', Cell: (rows: any) => {
 
-                return (new Date(rows.row.original.createDate).toLocaleDateString('fa-IR'))
+                if(rows.row.original.createDate!==null){
+                return (new Date(rows.row.original.createDate).toLocaleDateString('fa-IR'))}
+                else{
+                  return(  null)
+                }
             }
         },
         {
-            Header: 'تاریخ پرداخت ', accessor: 'installmentStartDate', Cell: (rows: any) => {
+            Header: 'تاریخ سررسید ', accessor: 'installmentStartDate', Cell: (rows: any) => {
 
-                return (new Date(rows.row.original.installmentStartDate).toLocaleDateString('fa-IR'))
+                if(rows.row.original.installmentStartDate!==null){
+                    return (new Date(rows.row.original.installmentStartDate).toLocaleDateString('fa-IR'))}
+                    else{
+                      return( null)
+                    }
             }
         },
         { Header: 'دوره اقساط ', accessor: 'installmentPeriod' },

@@ -20,6 +20,8 @@ export const EntityTypes = [
     { name: 'قرارداد باربری', id: 18 },
     { name: 'فاکتور', id: 19 },
     { name: 'پرداخت', id: 20 },
+    { name: 'اعتبار', id: 21 },
+    { name: 'اعضای اعتبار', id: 22 },
 
 ]
 
@@ -44,5 +46,7 @@ export const EntityTypes = [
 //     ShippingContract,
 //     ShippingReport,
 //     Invoice,
-//     Payment
+//     Payment,
+//     Credit,
+//     CreditMember
 // }
