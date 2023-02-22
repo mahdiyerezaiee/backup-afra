@@ -317,7 +317,9 @@ SetModalOpenPayment(false)
                 SetInvoice(data.result.invoices.values)
                 setTotalCount(data.result.invoices.totalCount)
 
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+
 
             }
 
@@ -438,7 +440,7 @@ SetModalOpenPayment(false)
     });
     console.log(invoices)
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
     }
     const EntityTypesIDs = () => {
 

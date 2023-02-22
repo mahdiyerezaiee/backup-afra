@@ -25,6 +25,7 @@ const InvoicesForOrder: React.FC<Props> = ({ Order }) => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
+                EntityTypeId:10,
                 EntityId: id,
                 IsAdmin: true,
                 PageNumber: 0,

@@ -96,8 +96,10 @@ import PaymentList from '../../Client/payment/paymentList';
 import PaymentsList from './../Payment/Component/PaymentsList';
 import InvoiceCreatorForAdmin from './../../Utils/invoiceCreatorForAdmin';
 import { GridLoader } from 'react-spinners';
+import CreditList from '../Credit/Component/CreditList';
+import CreditDetails from './../Credit/Component/CreditDetails';
 
-const AdminMainLayout:React.FC = () => {
+const AdminMainLayout: React.FC = () => {
   const [isloading, setIsloading] = useState(true);
   const navigate = useNavigate();
   const refreshPage = () => {
@@ -105,7 +107,7 @@ const AdminMainLayout:React.FC = () => {
   }
   useEffect(() => {
     fetchApi();
-      getUserRole();
+    getUserRole();
     getUserCompanies()
   }, [])
   const dispatch = useDispatch();
@@ -114,18 +116,18 @@ const AdminMainLayout:React.FC = () => {
     try {
       if (status === 200) {
         localStorage.setItem('connect', data.result.customer.id)
-        localStorage.setItem('com',data.result.customer.companyId)
+        localStorage.setItem('com', data.result.customer.companyId)
         dispatch(addUser(data.result.customer));
         setIsloading(false)
 
       }
     } catch (error) {
-      
-        refreshPage()
-        setIsloading(false)
+
+      refreshPage()
+      setIsloading(false)
 
     }
-  
+
   }
 
   const getUserRole = async () => {
@@ -136,24 +138,24 @@ const AdminMainLayout:React.FC = () => {
       if (status === 200) {
         dispatch(userRoles(data.result.userRoleIds))
 
-        localStorage.setItem('rd',JSON.stringify(data.result.userRoleIds))
+        localStorage.setItem('rd', JSON.stringify(data.result.userRoleIds))
 
 
       }
     } catch (error) {
-    
-  
-        refreshPage()
-      
+
+
+      refreshPage()
+
     }
 
 
   }
   document.body.classList.remove('clientBody')
 
-  const getUserCompanies=async()=>{
-    const {data,status}=await GetCompanyChild()
-    if(status===200){
+  const getUserCompanies = async () => {
+    const { data, status } = await GetCompanyChild()
+    if (status === 200) {
 
       dispatch(AllCompanies(data.result.companies))
     }
@@ -167,7 +169,7 @@ const AdminMainLayout:React.FC = () => {
 
   return (
     <Fragment>
-{isloading ? <div className="loadingAddress">
+      {isloading ? <div className="loadingAddress">
         <div className="boxloadingAddress">
           <GridLoader loading={isloading} color="#4236d6" />
         </div>
@@ -257,9 +259,10 @@ const AdminMainLayout:React.FC = () => {
                   <Route path='cuoList' element={<OrderCustomer />} />
 
                   <Route path='cuoDetail/:id' element={<CustomerOrderDetailTest />} />
-                  <Route path='InvoiceList' element={<InvoiceList/>}/>
-                  <Route path='PaymentLists' element={<PaymentsList/>}/>
-
+                  <Route path='InvoiceList' element={<InvoiceList />} />
+                  <Route path='PaymentLists' element={<PaymentsList />} />
+                  <Route path='Credits' element={<CreditList />} />
+                  <Route path='CreditDetails/:id' element={<CreditDetails />} />
 
 
 
@@ -310,6 +313,8 @@ const AdminMainLayout:React.FC = () => {
                   {/* InvoiceCreator*/}
                   <Route path='invoice/:id' element={<InvoiceCreator closeModal={null} />} />
                   <Route path='invoiceAdmin/:id' element={<InvoiceCreatorForAdmin closeModal={null} />} />
+
+
 
                 </Routes>
               </div>
