@@ -7,6 +7,8 @@ import { PaymentStatusEnums } from './../../Enums/PaymentStatus';
 import { PaymentStructureEnums } from './../../Enums/PaymentStructureEnums';
 import { AiOutlineDollar } from 'react-icons/ai';
 import PaymentModalForInvoices from './../../../Admin/Payment/Component/PaymentModalForInvoices';
+import { GridLoader } from 'react-spinners';
+import { IoIosArrowUp } from "react-icons/io";
 
 
 interface Props {
@@ -18,9 +20,11 @@ const InvoicesForOrder: React.FC<Props> = ({ Order }) => {
     const [Invoices, SetInvoice] = useState<any>([])
     const[modalOpenPayment,SetModalOpenPayment]=useState<boolean>(false)
     const[RowId,SetId]=useState(0)
+    const [show, setShow] = useState(false);
+    let [loading, setLoading] = useState(true);
 
     const getInvoice = async () => {
-
+setLoading(true)
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
@@ -45,19 +49,18 @@ const InvoicesForOrder: React.FC<Props> = ({ Order }) => {
             if (status === 200) {
 
                 SetInvoice(data.result.invoices.values)
-
+setLoading(false)
 
             }
         } catch (err) {
+            setLoading(false)
+
             console.log(err)
         }
 
     }
 
-    useEffect(() => {
-        getInvoice()
-
-    }, [id])
+  
 
     let formatterForMoney = new Intl.NumberFormat('fa-IR', {
 
@@ -72,10 +75,63 @@ const InvoicesForOrder: React.FC<Props> = ({ Order }) => {
     const closePaymnetModal=()=>{
 SetModalOpenPayment(false)
     }
+    const showInvoice = () => {
+        setShow(!show);
+      };
+      const CollapsInvoice = () => {
+        setShow(!show);
+        if(id){
+            getInvoice()
 
-    if (Invoices) {
+        }
+
+      };
+    if (Invoices && show) {
         return (
 
+            <section className="mb-2 mt-2">
+        <div className=" mb-1  p-3 border rounded">
+          <div className="row">
+            <div className=" col-6  ">
+              <h4 className="float-left">صورتحسابها </h4>
+            </div>
+            <div className="  col-6   ">
+              {show === true ? (
+                <IoIosArrowUp
+                  size="1.5rem"
+                  className="float-right"
+                  onClick={showInvoice}
+                />
+              ) : (
+                <svg
+                  onClick={CollapsInvoice}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="float-right feather feather-chevron-down"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              )}
+            </div>
+          </div>
+          { loading  ? (
+            <div className="w-100">
+              {/* <div className=" m-auto"> */}
+              <GridLoader
+                loading={loading}
+                color="#4236d6"
+                className="m-auto GridLoader position-relative  "
+              />
+              {/* </div> */}
+            </div>
+          ) : (
             <div>
 
                 <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 "  >
@@ -125,17 +181,56 @@ SetModalOpenPayment(false)
                         </table>
                     </div>
                 </div>
-            </div>
+            </div>)}
+            </div></section>
 
         )
     }
     else {
-        return (<div>
-            <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
-                <label>صورتحسابها  </label>
-                <span className="text-center" >صورتحساب موجود نیست</span>
-
-            </div>   </div>
+        return ( 
+        <section className="mb-2 mt-2">
+        <div className="   p-3 border rounded  ">
+          <div className="row">
+            <div className=" col-6  ">
+              <span className="float-left">صورتحسابها</span>
+            </div>
+            <div className="  col-6   ">
+              {show ? (
+                <IoIosArrowUp
+                  size="1.5rem"
+                  className="float-right"
+                  onClick={showInvoice}
+                />
+              ) : (
+                <svg
+                  onClick={CollapsInvoice}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="float-right feather feather-chevron-down"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              )}
+            </div>
+          </div>
+          {show ? (
+            <div>
+              <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
+                <span className="text-center">
+                  اطلاعاتی برای نمایش موجود نیست
+                </span>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </section>
         )
     }
 }

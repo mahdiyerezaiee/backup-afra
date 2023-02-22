@@ -241,9 +241,9 @@ const InvoiceClient: React.FC = () => {
                           </span>
                           <span className="col-lg-3 m-auto p-2">
                             <b>تاریخ پرداخت</b> :{" "}
-                            {new Date(
+                            {item.installmentStartDate !==null ?new Date(
                               item.installmentStartDate
-                            ).toLocaleDateString("fa-IR")}
+                            ).toLocaleDateString("fa-IR"):"--"}
                           </span>
                           <span className="col-lg-3 m-auto p-2">
                             <b>دوره اقساط </b> : {item.installmentPeriod}

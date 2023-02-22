@@ -10,6 +10,8 @@ import { ChangeOrderStatus, editOrder } from '../../../services/orderService';
 import { toast } from 'react-toastify';
 import config from "../../../services/config.json"
 import {Link} from "react-router-dom";
+import { GetAttachments } from "../../../services/attachmentService";
+import QueryString from 'qs';
 
 const customStyles = {
     content: {
@@ -24,14 +26,51 @@ const customStyles = {
     
 }
 interface Props{
-    orderDetail:any ,order:any , attachments:any
+    orderDetail:any ,order:any ,params:any
 }
-const OrderCustomerDetail:React.FC<Props> = ({orderDetail ,order , attachments}) => {
+const OrderCustomerDetail:React.FC<Props> = ({orderDetail ,order ,params }) => {
     const [cottageCode, setcottageCode] = useState('');
     const [idEdit, setIdEdit] = useState(0);
     const [modalIsOpenEdit, setIsOpenEdit] = useState(false);
-let newAttachmnet=attachments.filter((item:any)=>item.deleted===false)
+    const [attachments, Setattachments] = useState([])
 
+let newAttachmnet=attachments.filter((item:any)=>item.deleted===false)
+let entityId = params.id
+
+const handelGetAttachment = async () => {
+    let config = {
+
+        headers: {'Content-Type': 'application/json'},
+        params: {
+
+            entityTypeId: 10,
+            entityId: entityId,
+            isAdmin: true
+        }
+        ,
+        paramsSerializer: (params:any) => {
+
+            return QueryString.stringify(params)
+        }
+    };
+    try {
+        const {data, status} = await GetAttachments(config)
+        if (status === 200) {
+
+            Setattachments(data.result.attachments)
+        }
+
+    } catch (error) {
+
+        console.log(error);
+    }
+
+
+}
+useEffect(() => {
+
+    handelGetAttachment()
+}, [])
     const getSupplyCode = async () => {
         try {
             const {data , status}= await GetAllProductSupply(orderDetail[0].productSupplyId)
