@@ -4,12 +4,11 @@ import FadeLoader from "react-spinners/FadeLoader";
 import { ExportToExcel } from "../Common/ExportToExcel";
 import { useState, useEffect } from "react";
 import ExtraShipping from "./ExtraShipping";
-import { DeleteShipping, GetShippingCompany, GetShoppingContract } from "../../../services/ShippingService";
 import { useSelector } from 'react-redux';
-import Modal from 'react-modal';
-import { toast } from 'react-toastify';
 import { RootState } from "../../../store";
-// import SetExtraShipping from "./SetExtraShipping";
+import { GetShoppingContracts, GetShoppingsAdmin } from "../../../services/ShippingService";
+import { IoIosArrowUp } from "react-icons/io";
+import { GridLoader } from "react-spinners";
 
 const customStyles = {
     content: {
@@ -27,40 +26,63 @@ const customStyles = {
 };
 
 interface Props {
-    loading: any, Shipping: any, dataForExcel: any
+    loading: any, idOrder:any
 }
-const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
+const OrderWayBill: React.FC<Props> = ({ loading , idOrder}) => {
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [modalSetIsOpen, setModalSetIsopen] = useState(false);
     const [id, setId] = useState<any>(0);
-    const [shippingId, setShippingId] = useState<any>(0)
-    const [completData, setCompleteData] = useState([])
-    const [modalOpen, setIsModalOpen] = useState(false);
-    const [IdDelete, setIdDelete] = useState(0)
+    const [Shipping, SetShipping] = useState([]);
+  const [ShippingContracts, SetShippingContracts] = useState([]);
+  const [show , setShow] = useState(false)    
+  const [Loading, setLoading] = useState(true);
 
-    const roles = useSelector((state: RootState) => state.roles)
     const openModal = (id: any) => {
         setId(id)
         setIsOpen(true);
     }
 
-    const openSetExtraShipping = (id: number) => {
-        setModalSetIsopen(true)
-        setShippingId(id)
-    }
-    const closeSetextra=()=>{
-
-        setShippingId(null)
-        setModalSetIsopen(false)
-    }
     const closeModal = () => {
         setId(null)
         setIsOpen(false);
     }
-    useEffect(() => {
-        getShippingTotal()
+    const GetShipping = async () => {
+        try {
+            setLoading(true)
+          const { data, status } = await GetShoppingsAdmin(idOrder);
+          SetShipping(data.result.shippings.values)
+       
+          setLoading(false)
 
-    }, [])
+        } catch (e) {
+          console.log(e);
+          setLoading(false)
+
+        }
+      };
+      const ShippingContract = async () => {
+        try {
+            setLoading(true)
+
+          const { data, status } = await GetShoppingContracts();
+          SetShippingContracts(data.result.shippings.values)
+          setLoading(false)
+        } catch (e) {
+          console.log(e)
+          setLoading(false)
+
+        }
+      };
+     
+      const showOrderWayBill = () => {
+     
+         setShow(!show)
+       
+      }
+      const CollapsOrderWayBill =()=>{
+        setShow(!show)
+        GetShipping();
+        ShippingContract()
+      }
     const findeTakhsis = (id: any) => {
 
         const row: any = document.getElementById(`${id}`);
@@ -76,117 +98,60 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
         row.classList.add("findeTakhsis")
 
     }
-    const openModalDelet = (id: any) => {
-        setIsModalOpen(true);
-        setIdDelete(id)
-
-    }
-    const closeModalDelet = () => {
-        setIsModalOpen(false);
-    }
-    const deletHandler = async () => {
-        try {
-            const { data, status } = await DeleteShipping(IdDelete)
-            if (status === 200) {
-                toast.success("حواله با موفقیت حذف شد", {
-                    position: "top-right",
-                    closeOnClick: true
-                });
-                closeModalDelet()
-            }
-        } catch (err) {
-            console.log(err)
-            closeModalDelet()
-
-        }
-    }
+    
     let color = "#0c4088"
-    const getShippingTotal = async () => {
-        let shippingContratctArr = []
-        let finalArr: any = []
-        if (Shipping && Shipping) {
-
-            for (let i = 0; i < Shipping.length; i++) {
-
-                if (Shipping[i].shippingContractId) {
-                    const { data, status } = await GetShoppingContract(Shipping[i].shippingContractId)
-
-                    let contratcs = data.result.shippingContract
-                    const rename = (({ id: contractId, ...contratcs }: any) => ({ contractId, ...contratcs }))
-                    contratcs = rename(contratcs)
-                    let newArr = { ...Shipping[i], ...contratcs }
-                    shippingContratctArr.push(newArr)
-
-
-
-                }
-                else {
-                    shippingContratctArr.push(...Shipping)
-                }
-
-            }
-
-            for (let i = 0; i < shippingContratctArr.length; i++) {
-                if (shippingContratctArr[i].shippingCompanyId) {
-
-                    const { data, status } = await GetShippingCompany(shippingContratctArr[i].shippingCompanyId)
-                    let company = data.result.shippingCompany
-
-                    const rename = (({ id: companyId, ...company }: any) => ({ companyId, ...company }))
-                    company = rename(company)
-                    let newArr = { ...shippingContratctArr[i], ...company }
-                    finalArr.push(newArr)
-                }
-                else {
-                    finalArr.push(...Shipping)
-                }
-
-            }
-
-
-            setCompleteData(finalArr)
-
-
-        }
-    }
-    if (Shipping) {
-        return (<div>
+   
+    if (Shipping && show ) {
+        const dataForExcel = Shipping
+        ? Shipping.map((item: any) => ({
+            " شناسه سیستم": item.id,
+            "شناسه سفارش": item.orderId ? item.orderId : "--",
+            "شناسه جزییات سفارش": item.orderDetailId ? item.orderDetailId : "--",
+            واحد: MeasureUnitSample.filter((i) => i.id === item.measureUnitId).map(
+              (item) => item.name
+            ),
+            "  مقدار": item.quantity,
+            "تاریخ قرارداد ": new Date(item.shippingDate).toLocaleDateString(
+              "fa-IR"
+            ),
+            "نحوه ارسال": DeliveryMethods.filter(
+              (i: any) => i.id === item.deliveryMethodId
+            ).map((i: any) => i.name),
+            "شماره قراداد":
+              item.shippingContractId === null
+                ? ""
+                : ShippingContracts.filter(
+                    (i: any) => i.id === item.shippingContractId
+                  ).map((i: any) => i.contractNumber),
+          }))
+        : "";
+        return (
+            <section className=" mt-2">
+                
+            <div className="  p-3 border rounded" >
+                <div className="row">
+                <div className=" col-6  ">
+                <h4 className="float-left">حواله</h4> 
+  
+                </div>
+            <div   className="  col-6   ">
+                                            { show === true? <IoIosArrowUp size="1.5rem" className="float-right" onClick={showOrderWayBill} />:  <svg onClick={CollapsOrderWayBill}  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                                                 strokeLinecap="round" strokeLinejoin="round"
+                                                 className="float-right feather feather-chevron-down">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>}
+                                          
+                                            </div>
+                                            </div>
+                                            {show === true && Loading ? <div className="w-100">
+                                             {/* <div className=" m-auto"> */}
+                                               <GridLoader loading={Loading} color="#4236d6" className="m-auto GridLoader position-relative  " />
+                                             {/* </div> */}
+                                           </div> :  <div>
 
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 "  >
-                {/* <Modal
-                        isOpen={modalOpen}
-                        onRequestClose={closeModalDelet}
-                        style={customStyles}
-                        contentLabel="Selected Option"
-                        ariaHideApp={false}
-
-                    >
-                        <div className="text-center">
-                            <div className="d-block clearfix mb-2 " onClick={closeModalDelet}><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24"
-                                viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="feather feather-x close"
-                                data-dismiss="alert"><line x1="18" y1="6"
-                                    x2="6"
-                                    y2="18"></line><line
-                                        x1="6" y1="6" x2="18" y2="18"></line></svg></div>
-
-
-                            <p > آیا مطمئنید  حواله {Shipping.filter(item => item.id === IdDelete).map(item => item.id)}   </p>
-                            <p>حذف شود ؟ </p>
-
-
-
-
-                            <button className="btn btn-danger " onClick={deletHandler}>حذف
-                            </button>
-
-                        </div>
-                    </Modal> */}
+              
                 <label>اطلاعات حواله </label>
                 {loading === false ?
                     <div className="containerT p-2 ">
@@ -203,10 +168,7 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                     <th >شماره قرارداد</th>
                                     <th >نام باربری</th>
                                     <th >مشاهده جزییات</th>
-                                    {/* <th>ثبت بارنامه</th> */}
-                                    {/* <th hidden={roles.includes(7) || roles.includes(8) ? false : true}>عملیات</th> */}
-
-
+                                 
                                 </tr>
                             </thead>
                             <tbody className="text-center" id="havaleTable">
@@ -235,7 +197,6 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                                                 d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
                                                 strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg></td>
 
-                                        {/* <td data-th="ثبت بارنامه"><button hidden={roles.some((item:any)=>item>2)?false:true} className="btn-primary rounded border-0" onClick={() => openSetExtraShipping(item.id)}>ثبت بارنامه دستی</button></td> */}
                                     </tr>
 
                                 ) : <tr className='text-center'></tr>}
@@ -251,21 +212,43 @@ const OrderWayBill: React.FC<Props> = ({ loading, Shipping, dataForExcel }) => {
                     </div>
                 }
                 <ExtraShipping id={id} modalIsOpen={modalIsOpen} closeModal={closeModal} />
-                {/* <SetExtraShipping shippingId={shippingId} modalIsOpen={modalSetIsOpen} closeModal={closeSetextra}/> */}
                 <div className=" text-end  p-2" style={{ textAlign: 'left' }}>
 
                     <ExportToExcel apiData={dataForExcel} fileName='لیست بارنامه' />
-                    {/* <button className="btn-primary m-1 btn " onClick={update}>بروزرسانی</button> */}
                 </div>
-            </div>
-        </div>)
-    } else {
-        return (<div>
+                </div>
+                </div>}
+
+        </div>
+        </section>   )
+    } else  {
+        return (
+            <section className="mb-2 mt-2">
+            <div className="   p-3 border rounded  " >
+                <div className="row">
+                <div className=" col-6  ">
+                <span className="float-left">حواله</span> 
+  
+                </div>
+            <div   className="  col-6   ">
+                                            { show ? <IoIosArrowUp size="1.5rem" className="float-right" onClick={showOrderWayBill} /> :<svg onClick={CollapsOrderWayBill}  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                                                 strokeLinecap="round" strokeLinejoin="round"
+                                                 className="float-right feather feather-chevron-down">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg> }
+                                          
+                                            </div>
+                                            </div>
+                                            { show ?<div>
             <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
                 <label>اطلاعات حواله </label>
                 <span className="text-center" >حواله ای موجود نیست</span>
 
-            </div>   </div>
+            </div>   
+            </div> :null}
+            </div> 
+            </section>
         )
     }
 

@@ -5,7 +5,6 @@ import {NavLink} from "react-router-dom";
 import {GetAllOrganisationCode} from "../../../services/organisationService";
 import {GetAddress} from "../../../services/addressService";
 import {GetShoppingContracts, GetShoppings} from "../../../services/ShippingService";
-import QueryString from 'qs';
 import {GetAttachments} from "../../../services/attachmentService";
 import ImagePreviewer from "../../../Utils/ImagePreviewer";
 import AddAdressCustomerForOrder from "../../../Common/Shared/Common/addAdressCustomerForOrder";
@@ -41,7 +40,6 @@ const OrderDetailTest:React.FC = () => {
     let [DetailAddress, setDetailAddress] = useState<any>([]);
     const [Shipping, SetShipping] = useState([])
     const [ShippingContracts, SetShippingContracts] = useState([])
-    const [attachments, Setattachments] = useState([])
     const [OrderWeight,SetOrderWeight]=useState(0)
     let [loading, setLoading] = useState(false);
 
@@ -54,14 +52,7 @@ const OrderDetailTest:React.FC = () => {
             console.log(e)
         }
     }
-    const ShippingContract = async () => {
-        try {
-            const {data, status} = await GetShoppingContracts()
-            SetShippingContracts(data.result.shippings.values)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+   
     const closeModal = () => {
         setIsOpen(false);
     }
@@ -87,37 +78,7 @@ const OrderDetailTest:React.FC = () => {
             console.log(error);
         }
     }
-    let entityId = params.id
-    const handelGetAttachment = async () => {
-        let config = {
-
-            headers: {'Content-Type': 'application/json'},
-            params: {
-
-                entityTypeId: 10,
-                entityId: entityId,
-                isAdmin: true
-            }
-            ,
-            paramsSerializer: (params:any) => {
-
-                return QueryString.stringify(params)
-            }
-        };
-        try {
-            const {data, status} = await GetAttachments(config)
-            if (status === 200) {
-
-                Setattachments(data.result.attachments)
-            }
-
-        } catch (error) {
-
-            console.log(error);
-        }
-
-
-    }
+    
     const getOrder = async () => {
         try {
             const {data, status} = await GetOrder(params.id)
@@ -232,12 +193,7 @@ const OrderDetailTest:React.FC = () => {
         getOrder()
         getOrderDetail()
         GetShipping()
-        // getOrganizationName();
-        // ShippingContract()
-        handelGetAttachment()
-
-
-    }, [])
+}, [])
     const handelPreview = (item:any) => {
         setImage(item)
         setIsOpen(true)
@@ -254,17 +210,7 @@ const OrderDetailTest:React.FC = () => {
         return (fullname)
     }
 
-    const dataForExcel = Shipping ?Shipping.map((item:any) => ({
-
-        ' شناسه سیستم': item.id,
-        'شناسه سفارش': item.orderId?item.orderId:"--",
-        'شناسه جزییات سفارش':item.orderDetailId?item.orderDetailId:"--",
-        'واحد': MeasureUnitSample.filter((i:any) => i.id === item.measureUnitId).map((item:any) => item.name),
-        '  مقدار': item.quantity,
-        'تاریخ قرارداد ': new Date(item.shippingDate).toLocaleDateString('fa-IR'),
-        'نحوه ارسال': DeliveryMethods.filter((i:any) => i.id === item.deliveryMethodId).map((i:any) => i.name),
-        'شماره قراداد': item.shippingContractId === null ? '' : ShippingContracts.filter((i:any) => i.id === item.shippingContractId).map((i:any) => i.contractNumber),
-    })):''
+   
     const update = async () => {
         setLoading(true)
         try {
@@ -314,22 +260,22 @@ const OrderDetailTest:React.FC = () => {
                     </div>
                     <div className=" statbox widget-content widget-content-area text-dark ">
                         <ProgressBar  number={number} id={order.orderStatusId}/>
-                        { number === 12 || number < 4 ? <><OrderCustomerDetail  attachments={attachments} order={order}  orderDetail={DetailAddress} />
-                                {attachments  ? (<OrderAttachment order={order} params={params} attachments={attachments}
+                        { number === 12 || number < 4 ? <><OrderCustomerDetail  params={params} order={order}  orderDetail={DetailAddress} />
+                               <OrderAttachment order={order} params={params} 
                                                                   closeModalForUpload={closeModalForUpload}
                                                                   modalIsOpenUpload={modalIsOpenUpload}
                                                                   setIsOpenUpload={setIsOpenUpload}
-                                                                  handelPreview={handelPreview}/>) : ''}
+                                                                  handelPreview={handelPreview}/> 
                             </>
                             :
                             (
-                                <><OrderAddress   details={detailAddress} shipping={Shipping} orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId}/>
-                                    <OrderWayBill loading={loading} Shipping={Shipping}  dataForExcel={dataForExcel}/>
-                                    {attachments ? (<OrderAttachment  order={order} params={params} attachments={attachments}
+                                <><OrderAddress   details={detailAddress}  orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId}/>
+                                    <OrderWayBill loading={loading} idOrder={params.id}/>
+                                   <OrderAttachment  order={order} params={params} 
                                                                      closeModalForUpload={closeModalForUpload}
                                                                      modalIsOpenUpload={modalIsOpenUpload}
                                                                      setIsOpenUpload={setIsOpenUpload}
-                                                                     handelPreview={handelPreview}/>) : ''}</>)}
+                                                                     handelPreview={handelPreview}/></>)}
                         <ImagePreviewer modalIsOpen={isOpen} closeModal={closeModal} item={image} isUser={true} orderStatus={number}/>
 
                     </div>
