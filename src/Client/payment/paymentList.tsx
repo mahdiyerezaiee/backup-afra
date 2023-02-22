@@ -124,14 +124,14 @@ const PaymentList: React.FC = () => {
                         <span className=" col-lg-5 m-auto p-2 ">
                           {" "}
                           <b>موعد سند</b>:{" "}
-                          {new Date(item.paymentDueDate).toLocaleDateString(
+                          {item.paymentDueDate !== null ? new Date(item.paymentDueDate).toLocaleDateString(
                             "fa-IR",
                             {
                               year: "numeric",
                               month: "2-digit",
                               day: "2-digit",
                             }
-                          )}
+                          ): "--"}
                         </span>
                         <span className="col-lg-4 m-auto p-2">
                           {" "}

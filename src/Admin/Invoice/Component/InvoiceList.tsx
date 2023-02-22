@@ -436,7 +436,6 @@ SetModalOpenPayment(false)
 
 
     });
-    console.log(invoices)
     const CompaniesIDs = () => {
         return (companies.map(data => ({ label: data.name, value: data.id })))
     }

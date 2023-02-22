@@ -23,17 +23,16 @@ const customStyles = {
 
 interface Props{
 
-    orderDetail:any ,order:any , attachments:any, handelPreview:any, getOrder:any
+    orderDetail:any ,order:any , handelPreview:any, getOrder:any
 
 }
-const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order , attachments, handelPreview, getOrder}) => {
+const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order ,  handelPreview, getOrder}) => {
     const [cottageCode, setcottageCode] = useState('');
     const [idEdit, setIdEdit] = useState(0);
     const [id, setId] = useState(0);
     const [modalIsOpenEdit, setIsOpenEdit] = useState(false);
     const [modalIsOpeninvoice, setIsOpeninvoice] = useState(false);
     const [modalIsOpen, setIsOpen] = useState(false);
-    let newAttachmnet=attachments.filter((item:any)=>item.deleted===false)
     const getSupplyCode = async () => {
         try {
             const {data , status}= await GetAllProductSupply(orderDetail[0].productSupplyId)
