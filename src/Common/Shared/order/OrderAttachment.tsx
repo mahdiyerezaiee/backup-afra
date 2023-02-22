@@ -33,7 +33,7 @@ const OrderAttAchment:React.FC<Props> = ({order,params ,attachments ,handelPrevi
                             </div>
                         )):
                         <div className="text-center col-md-12 ">
-                            <h5> تصویری موجود نیست</h5>
+                            <span> تصویری موجود نیست</span>
                         </div>
 
                     }

@@ -39,7 +39,7 @@ const PaymentModalForInvoices: React.FC<Props> = ({ modalOpen, closeModal, Invoi
     }, [InvoiceId])
     const GetPayment = async () => {
 
-
+SetPayments([])
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
