@@ -1,9 +1,25 @@
 import React from 'react'
+import { useState } from 'react';
 
 interface Props {
     data: any
 }
 const OrganizationCredit: React.FC<Props> = ({ data }) => {
+
+    const[IsOpen,SetIsOpen]=useState(false)
+
+    const OpenAddModal=()=>{
+  
+      SetIsOpen(true)
+  
+  
+    }
+    const CloseAddModal=()=>{
+  
+      SetIsOpen(false)
+      
+  
+    }
     return (
         <div>
 
@@ -11,26 +27,38 @@ const OrganizationCredit: React.FC<Props> = ({ data }) => {
                 <label> سازمان های عضو </label>
                 <div className="text-center">
                     <div className=" table text-center">
-                        {/* {data ?
+                        {data.length > 0 ?
                             <table>
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        <th>#</th>
+                                        <th>نام سازمان</th>
+                                        <th>حداکثر اعتبار</th>
+                                        <th> اعتبار درجریان</th>
+                                        <th>  توضیحات</th>
                                     </tr>
-                                </thead>   
-                        (data.map((item:any)=>(
-                                <tr>
+                                </thead>
+                                {data.map((item: any) => (
+                                    <tr>
 
-                                    <td></td>
-                                </tr>
+                                        <td>{item.id}</td>
+                                        <td>{item.organizationName}</td>
+                                        <td>{item.maxValue}</td>
+                                        <td>{item.currentUsed}</td>
+                                        <td>{item.comment}</td>
+                                    </tr>
 
 
-                                )))
+                                ))}
                             </table> :
 
 
-                            <div></div>
-                        } */}
+                            <div>
+                                <span className="text-center">
+                                    اطلاعاتی برای نمایش موجود نیست
+                                </span>
+                            </div>
+                        }
 
                     </div>
 

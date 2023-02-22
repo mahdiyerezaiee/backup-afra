@@ -5,6 +5,7 @@ import { GetCredits } from './../../../services/creditService';
 import QueryString from 'qs';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CreditList: React.FC = () => {
 
@@ -15,7 +16,7 @@ const CreditList: React.FC = () => {
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [totalCount, setTotalCount] = useState(0);
-
+    const navigate=useNavigate()
 
     const param = { PageSize, PageNumber }
 
@@ -315,6 +316,9 @@ const CreditList: React.FC = () => {
 
 
     });
+    const formHandler = () => {
+        navigate("/admin/newCredit")
+    }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
         { Header: 'نام گروه اعتباری', accessor: 'name' },
@@ -398,6 +402,8 @@ const CreditList: React.FC = () => {
                 </div>
 
                 <div className=" statbox widget-content widget-content-area">
+                <button className="btn btn-primary m-3" onClick={formHandler}>تعریف گروه اعتباری</button>
+
                     <MyTable columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                         total={totalCount}
                         setPageSize={setPageSize}
@@ -459,6 +465,8 @@ const CreditList: React.FC = () => {
                 </div>
             <div className=" statbox widget-content widget-content-area">
                 <div>
+                <button className="btn btn-primary m-3" onClick={formHandler}>تعریف گروه اعتباری</button>
+
                     <div className='text-center mt-5'>
                         <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
                     </div>
