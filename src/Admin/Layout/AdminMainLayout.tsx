@@ -99,6 +99,7 @@ import { GridLoader } from 'react-spinners';
 import CreditList from '../Credit/Component/CreditList';
 import CreditDetails from './../Credit/Component/CreditDetails';
 import CreateNewCredit from './../Credit/Component/CreateNewCredit';
+import EditCredit from './../Credit/Component/EditCredit';
 
 const AdminMainLayout: React.FC = () => {
   const [isloading, setIsloading] = useState(true);
@@ -265,6 +266,7 @@ const AdminMainLayout: React.FC = () => {
                   <Route path='Credits' element={<CreditList />} />
                   <Route path='CreditDetails/:id' element={<CreditDetails />} />
                   <Route path='newCredit' element={<CreateNewCredit />} />
+                  <Route path='EditCredit/:id' element={<EditCredit />} />
 
 
 

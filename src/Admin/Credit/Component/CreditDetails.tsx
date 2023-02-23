@@ -80,13 +80,13 @@ const CreditDetails: React.FC = () => {
 
                     <div className=" statbox widget-content widget-content-area text-dark mt-4 mb-4 ">
                         <div>
-                            <CustomersCredit  data={customers}/>
+                            <CustomersCredit  data={customers} getData={getCredit} creditId={Credit.id}/>
                         </div>
 
                     </div>
                     <div className=" statbox widget-content widget-content-area text-dark mt-4 mb-4 ">
                         <div>
-                            <OrganizationCredit data={organizations} />
+                            <OrganizationCredit data={organizations} getData={getCredit} creditId={Credit.id} />
                         </div>
 
                     </div>

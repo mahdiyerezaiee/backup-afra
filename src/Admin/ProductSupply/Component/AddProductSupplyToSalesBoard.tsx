@@ -282,6 +282,32 @@ if(companyId){
                                 <div className="form-group mb-4 textOnInput ">
                                     <div className='form-row'>
 
+                                    {companies.length > 1 ? <div className="col-4">
+                                            <label>شرکت</label>
+
+                                            <Select
+                                                defaultValue={defaultValue}
+                                                placeholder='نام شرکت'
+                                                options={companys()}
+                                                key={defaultValue}
+                                                isClearable={true}
+                                                onChange={e => {
+
+
+                                                    SetcompanyId(e.value)
+                                                    SetCompanyName(e.label)
+
+
+                                                }
+
+                                                }
+
+                                            />
+
+
+                                        </div>
+
+                                            : ''}
                                         <div className={companies.length > 1 ? "col-4 " : "col-6"}>
                                             <label>نام کالا</label>
 
@@ -327,32 +353,7 @@ if(companyId){
                                             />
 
                                         </div>
-                                        {companies.length > 1 ? <div className="col-4">
-                                            <label>شرکت</label>
-
-                                            <Select
-                                                defaultValue={defaultValue}
-                                                placeholder='نام شرکت'
-                                                options={companys()}
-                                                key={defaultValue}
-                                                isClearable={true}
-                                                onChange={e => {
-
-
-                                                    SetcompanyId(e.value)
-                                                    SetCompanyName(e.label)
-
-
-                                                }
-
-                                                }
-
-                                            />
-
-
-                                        </div>
-
-                                            : ''}
+                                    
                                     </div>
                                 </div>
 
