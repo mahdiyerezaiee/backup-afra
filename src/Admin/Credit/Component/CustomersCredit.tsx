@@ -1,13 +1,17 @@
 import React from 'react'
 import { useState } from 'react';
+import AddMemberToCredit from './addMemberToCredit';
+import EditMemberOfCredit from './EditMemberOfCredit';
 
 
 interface Props {
-  data: any
+  data: any,getData:any,creditId:any
 }
-const CustomersCredit: React.FC<Props> = ({ data }) => {
+const CustomersCredit: React.FC<Props> = ({ data ,getData,creditId}) => {
   
   const[IsOpen,SetIsOpen]=useState(false)
+  const[IsOpenEdit,SetIsOpenEdit]=useState(false)
+  const[currentItem,setcurrentItem]=useState<any>()
 
   const OpenAddModal=()=>{
 
@@ -22,6 +26,19 @@ const CustomersCredit: React.FC<Props> = ({ data }) => {
 
   }
 
+  const OpenEditModal=(item:any)=>{
+
+    setcurrentItem(item)
+    SetIsOpenEdit(true)
+
+
+  }
+  const CloseEditModal=()=>{
+
+    SetIsOpenEdit(false)
+    
+
+  }
 
   return (
     <div>
@@ -43,6 +60,7 @@ const CustomersCredit: React.FC<Props> = ({ data }) => {
                     <th>حداکثر اعتبار</th>
                     <th> اعتبار درجریان</th>
                     <th>  توضیحات</th>
+                    <th>  عملیات</th>
                   </tr>
                 </thead>
                 {data.map((item: any) => (
@@ -56,6 +74,19 @@ const CustomersCredit: React.FC<Props> = ({ data }) => {
                     <td>{item.maxValue}</td>
                     <td>{item.currentUsed}</td>
                     <td>{item.comment}</td>
+                    <td> <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
+                        title="ویرایش" 
+                        onClick={()=>OpenEditModal(item)}
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20"
+                            viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-edit-2">
+                            <path
+                                d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                        </svg>
+                    </button></td>
                   </tr>
 
 
@@ -74,7 +105,7 @@ const CustomersCredit: React.FC<Props> = ({ data }) => {
         </div>
         <div className='  '>
 
-          <button style={{ marginTop: '-.8rem', marginLeft: '.6rem', background: 'white' }} className=" border-0 Attachment   float-right " title="افزودن مشتری"  >
+          <button style={{ marginTop: '-.8rem', marginLeft: '.6rem', background: 'white' }} className=" border-0 Attachment   float-right " title="افزودن مشتری" onClick={OpenAddModal} >
             <svg style={{ width: '24px', height: '38px' }} xmlns="http://www.w3.org/2000/svg" fill="currentColor"
               className="bi bi-plus-circle" viewBox="0 0 17 16">
               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -83,7 +114,8 @@ const CustomersCredit: React.FC<Props> = ({ data }) => {
             </svg>
 
           </button>
-          {/* <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={params.id} EntityTypesId={10} comment={'لطفا فایل  مورد نظر را بارگزاری کنید.'}/> */}
+         <AddMemberToCredit modalIsOpen={IsOpen} closeModal={CloseAddModal} EntityType={1} Credit={getData} creditId={creditId}/>
+         <EditMemberOfCredit modalIsOpen={IsOpenEdit} closeModal={CloseEditModal} EntityType={1} Credit={getData} creditId={creditId} currentItem={currentItem} />
 
         </div>
       </div>

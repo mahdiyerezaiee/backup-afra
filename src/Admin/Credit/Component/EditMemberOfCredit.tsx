@@ -5,7 +5,7 @@ import { useState } from 'react';
 import QueryString from 'qs';
 import { GetDataWithSearch } from '../../../services/userService'
 import { GetAllOrganisation } from '../../../services/organisationService'
-import {AddCreditMember} from '../../../services/creditService'
+import { AddCreditMember } from '../../../services/creditService'
 import { useEffect } from 'react';
 import Select from 'react-select';
 import { ClipLoader } from 'react-spinners';
@@ -13,7 +13,7 @@ import { PriceUnitEnums } from './../../../Common/Enums/PriceUnit';
 import { toast } from 'react-toastify';
 
 interface Props {
-    modalIsOpen: boolean, closeModal: any, EntityType: number,Credit:any,creditId:any
+    modalIsOpen: boolean, closeModal: any, EntityType: number, Credit: any, creditId: any, currentItem: any
 }
 const customStyles: any = {
     content: {
@@ -29,7 +29,7 @@ const customStyles: any = {
         border: '2px ridge black'
     }
 };
-const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityType,Credit,creditId }) => {
+const EditMemberOfCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityType, Credit, creditId, currentItem }) => {
 
     const [members, SetMembers] = useState([])
     const [entityId, setEntityId] = useState(0)
@@ -38,8 +38,12 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
     const [maxValue, SetmaxValue] = useState(0)
     const [comment, SetComment] = useState('')
     const [active, SetActive] = useState(true)
+    const [fullName, SetfullName] = useState('')
 
     const getMembers = async () => {
+
+        console.log(currentItem);
+
 
         if (EntityType === 1) {
 
@@ -87,13 +91,37 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
             }
 
         }
+
+
+        if (currentItem &&EntityType===1) {
+
+            const { id, priceUnitId, comment, maxValue, active,fullName } = currentItem
+            setEntityId(id)
+            SetComment(comment)
+            SetpriceUnitId(priceUnitId)
+            SetmaxValue(maxValue)
+            SetActive(active)
+            SetfullName(fullName)
+        }
+        else{
+
+            const { id, priceUnitId, comment, maxValue, active,name } = currentItem
+            setEntityId(id)
+            SetComment(comment)
+            SetpriceUnitId(priceUnitId)
+            SetmaxValue(maxValue)
+            SetActive(active)
+            SetfullName(name)
+        }
+
     }
 
+console.log(entityId);
 
     useEffect(() => {
 
         getMembers()
-    }, [EntityType])
+    }, [currentItem])
 
 
     const MEmbersToSelect = () => {
@@ -119,15 +147,15 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
                 "entityTypeId": EntityType,
                 entityId,
                 priceUnitId,
-                maxValue:Number(maxValue),
+                maxValue: Number(maxValue),
                 active,
                 comment
 
             }
 
 
-            const{data,status}=await AddCreditMember(body)
-            if(status===200){
+            const { data, status } = await AddCreditMember(body)
+            if (status === 200) {
                 closeModal()
                 SetLoading(false)
                 toast.success("اطلاعات با موفقیت ثبت شد", {
@@ -147,7 +175,7 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
 
         } catch (error) {
             console.log(error);
-            
+
             closeModal()
             SetLoading(false)
             Credit()
@@ -157,6 +185,8 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
 
     }
 
+  
+    
     return (
         <Modal isOpen={modalIsOpen}
             onRequestClose={closeModal}
@@ -196,16 +226,10 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
                                 <div className="  form-group col-md-12 col-xs-12 textOnInput  " >
 
                                     <label>{EntityType === 1 ? 'مشتری' : 'سازمان'}</label>
-
-
-                                    <Select
-                                        options={MEmbersToSelect()}
-                                        placeholder="انتخاب عضو"
-                                        onChange={(e: any) =>
-                                            setEntityId(e.value)
-                                        }
+                                    <input type="text" className="form-control opacityForInput" value={fullName}
+                                        name="additionalAmount" disabled={true}
                                     />
-                                    {entityId === 0 ? (<span className="text-danger"> عضو را انتخاب کنید</span>) : null}
+                                  
 
                                 </div>
 
@@ -227,17 +251,31 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
                                 <div className="form-group col-md-6 col-xs-12 textOnInput   "
                                     style={{ zIndex: '3' }}>
                                     <label> واحد</label>
-                                    <Select
-                                        placeholder=" واحد"
-                                        options={Priceunit()}
+                                    {priceUnitId  ?
+                                        <Select
+                                            value={Priceunit().filter((i: any) => i.value === priceUnitId).map((i: any) => i)}
 
-                                        onChange={(e: any) =>
-                                            SetpriceUnitId(e.value)
-                                        }
-                                    />
+                                            placeholder=" واحد"
+                                            options={Priceunit()}
+                                            onChange={(e: any) =>
+                                                SetpriceUnitId(e.value)
+                                            }
+                                        />
 
+
+                                        :
+                                        <Select
+                                            placeholder=" واحد"
+                                            options={Priceunit()}
+                                            onChange={(e: any) =>
+                                                SetpriceUnitId(e.value)
+                                            }
+                                        />
+
+
+
+                                    }
                                     {priceUnitId === 0 ? (<span className="text-danger">نوع پرداخت را وارد کنید</span>) : null}
-
                                 </div>
                             </div>
 
@@ -280,4 +318,4 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
     )
 }
 
-export default AddMemberToCredit
+export default EditMemberOfCredit

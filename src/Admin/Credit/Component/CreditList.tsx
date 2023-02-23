@@ -16,7 +16,7 @@ const CreditList: React.FC = () => {
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
     const [totalCount, setTotalCount] = useState(0);
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     const param = { PageSize, PageNumber }
 
@@ -55,6 +55,9 @@ const CreditList: React.FC = () => {
         if (selected === 5) {
             disableSelectedItem()
         }
+    }
+    const editInfoHandler = (id: any) => {
+        navigate(`/admin/editCredit/${id}`)
     }
 
     const DeleteSelectedItem = async () => {
@@ -331,7 +334,7 @@ const CreditList: React.FC = () => {
         { Header: 'واحد', accessor: 'priceUnitId' },
         { Header: 'توضیحات', accessor: 'comment' },
         {
-            Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
+            Header: 'مشاهده جزییات ', accessor: '', Cell: (row: any) => (<div>
                 <Link className="border-0 bg-transparent non-hover edit-btn" to={`/admin/CreditDetails/${row.row.original.id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width='25' height='25' viewBox="0 0 256 256"><rect
                         width="256" height="256" stroke="none" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
@@ -349,9 +352,26 @@ const CreditList: React.FC = () => {
             </div>
             )
         },
+        {
+            Header: 'عملیات', accessor: '  ', Cell: (row: any) => {
+                return (
+                    <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
+                        title="ویرایش"
+                        onClick={(e: any) => editInfoHandler(row.row.original.id)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20"
+                            viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-edit-2">
+                            <path
+                                d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                        </svg>
+                    </button>)
+            }
+        }
 
 
-    ], [])
+    ], [Credits])
 
 
     const data = useMemo(() => Credits, [Credits])
@@ -402,7 +422,7 @@ const CreditList: React.FC = () => {
                 </div>
 
                 <div className=" statbox widget-content widget-content-area">
-                <button className="btn btn-primary m-3" onClick={formHandler}>تعریف گروه اعتباری</button>
+                    <button className="btn btn-primary m-3" onClick={formHandler}>تعریف گروه اعتباری</button>
 
                     <MyTable columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                         total={totalCount}
@@ -433,39 +453,39 @@ const CreditList: React.FC = () => {
             </div>
 
             <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
-                    <div >
-                        <section className="mb-2 mt-2">
-                            <div className=" mb-5  pt-3 form textOnInput" >
+                <div >
+                    <section className="mb-2 mt-2">
+                        <div className=" mb-5  pt-3 form textOnInput" >
 
-                                <div className="col-lg-3 ml-1 col-md-4  col-sm-12  mb-1 ">
-                                    <label>نام گروه اعتبار</label>
+                            <div className="col-lg-3 ml-1 col-md-4  col-sm-12  mb-1 ">
+                                <label>نام گروه اعتبار</label>
 
-                                    <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام گروه"
-                                        value={Name} onChange={(e: any) => SetName(e.target.value)} />
-                                </div>
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام گروه"
+                                    value={Name} onChange={(e: any) => SetName(e.target.value)} />
+                            </div>
 
-                                <div className="  filter-btn pb-2">
-                                    <div className=" row  ">
-                                        <div className="col-6 ">
-                                            <button onClick={handelSearchFieldClear}
-                                                className="  btn-sm btn-danger ">حذف فیلتر
-                                            </button>
-                                        </div>
-                                        <div className="col-6">
-                                            <button onClick={getDataBySearch}
-                                                className="  btn-sm  btn-primary">جستجو
-                                            </button>
-                                        </div>
+                            <div className="  filter-btn pb-2">
+                                <div className=" row  ">
+                                    <div className="col-6 ">
+                                        <button onClick={handelSearchFieldClear}
+                                            className="  btn-sm btn-danger ">حذف فیلتر
+                                        </button>
+                                    </div>
+                                    <div className="col-6">
+                                        <button onClick={getDataBySearch}
+                                            className="  btn-sm  btn-primary">جستجو
+                                        </button>
                                     </div>
                                 </div>
-
                             </div>
-                        </section>
-                    </div>
+
+                        </div>
+                    </section>
                 </div>
+            </div>
             <div className=" statbox widget-content widget-content-area">
                 <div>
-                <button className="btn btn-primary m-3" onClick={formHandler}>تعریف گروه اعتباری</button>
+                    <button className="btn btn-primary m-3" onClick={formHandler}>تعریف گروه اعتباری</button>
 
                     <div className='text-center mt-5'>
                         <h5>اطلاعاتی جهت نمایش موجود نیست</h5>

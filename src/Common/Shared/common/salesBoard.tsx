@@ -180,37 +180,53 @@ const SalesBoardForCustomer: React.FC<Props> = ({ setloading }) => {
                               >
                                 <div className="row">
                                   <span className="col-lg-4 m-auto p-2">
-                                    <b>شماره کوتاژ </b>: {item.cottageCode}
+                                    
+                                  <b> عرضه کننده :</b>  {item.companyName}
+                                  </span>
+                                 
+                                  <span
+                                    
+                                    className="col-lg-4 m-auto p-2"
+                                  >
+                                    
+                                    <b>شناسه عرضه : </b>{" "}
+                                    {item.name}
+                                  </span>
+                                  <span className="col-lg-2 m-auto p-2">
+                                    
+                                    <b>شماره کوتاژ :</b> {item.cottageCode}
+                                  </span>
+                                  <span className="col-lg-4 m-auto p-2">
+                                    {" "}
+                                    <b>محصول : </b>{" "}
+                                     {item.product.name}
+                                    
                                   </span>
                                   <span className=" col-lg-4 m-auto p-2 ">
                                     {" "}
-                                    <b>محصول</b>: {item.product.name}
-                                  </span>
-                                  <span className="col-lg-4 m-auto p-2">
-                                    {" "}
-                                    <b>قیمت</b>: {formatter.format(item.price)}
-                                  </span>
-                                  <span className="col-lg-4 m-auto p-2">
-                                    <b>واحد</b> :{" "}
-                                    {MeasureUnitSample.filter(
+                                    <b>مقدار عرضه :</b> {" "}
+                                    {formatter2.format(item.quantity) } {MeasureUnitSample.filter(
                                       (e) => e.id === item.product.measureUnitId
                                     ).map((e) => e.name)}
+                                    {" ("}
+                                    باقی مانده :{formatter2.format(item.remainedQuantity)}
+                                    {" )"}
+                                  </span>
+                                  <span className="col-lg-2 m-auto p-2">
+                                    {" "}
+                                    <b>قیمت :</b> {`${formatter.format(item.price) } `}
+                                  </span>
+                                  
+                                  <span className="col-lg-4 m-auto p-2" title={item.comment}>
+                                    {" "}
+                                    <b>توضیحات :</b> {" "}
+                                    {item.comment.substring(0, 40)}{" "}
+                                    {item.comment ? "..." : "--"}
+                                   
                                   </span>
                                   <span className="col-lg-4 m-auto p-2">
                                     {" "}
-                                    <b>مقدار عرضه</b> :{" "}
-                                    {formatter2.format(item.quantity)}
-                                  </span>
-                                  <span
-                                    title={item.comment}
-                                    className="col-lg-4 m-auto p-2"
-                                  >
-                                    <b>توضیحات</b> :{" "}
-                                    {item.comment.substring(0, 40)}{" "}
-                                    {item.comment ? "..." : "--"}
-                                  </span>
-                                  <span className="col-lg-4 m-auto p-2">
-                                    <b>تاریخ شروع</b> :{" "}
+                                    <b>تاریخ شروع :</b> {" "}
                                     {new Date(
                                       item.createDate
                                     ).toLocaleDateString("fa-IR", {
@@ -219,22 +235,23 @@ const SalesBoardForCustomer: React.FC<Props> = ({ setloading }) => {
                                       day: "2-digit",
                                     })}
                                   </span>
-                                  <span className="col-lg-4 m-auto p-2">
+                                  <span className="col-lg-2 m-auto p-2">
                                     {" "}
-                                    <b>تاریخ پایان</b> :
-                                    {new Date(item.endDate).toLocaleDateString(
+                                    <b>تاریخ پایان :</b> 
+                                    {` ${new Date(item.endDate).toLocaleDateString(
                                       "fa-IR",
                                       {
                                         year: "numeric",
                                         month: "2-digit",
                                         day: "2-digit",
                                       }
-                                    )}
+                                      
+                                    )}`}
                                   </span>
-                                  <span className="col-lg-4 m-auto p-2">
+
+                                  <span className="col-lg-3 m-auto p-2">
                                     {" "}
-                                    <b>باقی مانده</b> :
-                                    {formatter2.format(item.remainedQuantity)}
+                                    
                                   </span>
                                 </div>
                               </div>
