@@ -692,32 +692,6 @@ const OrderAddressForClient: React.FC<Props> = ({
                   ""
                 )}
 
-                <div className=" text-end  p-2" style={{ textAlign: "left" }}>
-                  {roles.includes(7) ||
-                  roles.includes(5) ||
-                  roles.includes(8) ? (
-                    <button
-                      className="btn-success m-1 btn "
-                      hidden={order.orderStatusId === 8 ? false : true}
-                      onClick={openModalFinancialConfirmation}
-                    >
-                      تایید مالی
-                    </button>
-                  ) : null}
-                  {roles.includes(7) ||
-                  roles.includes(5) ||
-                  roles.includes(8) ? (
-                    <button
-                      className="btn btn-info"
-                      hidden={ getOrder && order.reserved  ? true : false  }
-                      onClick={() => openModelInvoice(order.id)}
-                    >
-                      صدور صورتحساب سفارش
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
               </div>
              
               <AddAdressCustomerForOrder
