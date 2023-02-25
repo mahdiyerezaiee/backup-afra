@@ -10,6 +10,10 @@ export const GetPeriodicSalesReport=(TypeId)=>{
 
     return http.get(`${configure}/Report/GetPeriodicSalesReport?ScheduleTypeId=${TypeId}`);
 }
+export const GetPaymentsReport=(TypeId)=>{
+
+    return http.get(`${configure}/Report/GetPaymentsReport?ScheduleTypeId=${TypeId}`);
+}
 export const GetScheduleJobsReport=()=>{
 
     return http.get(`${configure}/Report/GetScheduleJobsReport`);
