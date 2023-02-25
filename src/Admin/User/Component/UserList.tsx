@@ -560,7 +560,7 @@ const UserList:React.FC = () => {
 
 
     }
-    const data = useMemo(() => users,[users]);
+    const data = useMemo(() => users,[users,CustomerG]);
     const CompaniesIDs = () => {
         return (companies.map(data => ({ label: data.name, value: data.id })))
     }
