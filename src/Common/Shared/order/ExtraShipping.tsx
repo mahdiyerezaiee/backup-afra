@@ -73,7 +73,8 @@ const ExtraShipping: React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
     }
 
     useEffect(() => {
-        getExter()
+        if(id!==null){
+        getExter()}
     }, [id])
 
     const handelCreateDate = (value: any) => {

@@ -1,14 +1,15 @@
-import { MeasureUnitSample } from "../../Enums/MeasureUnitSample";
-import { DeliveryMethods } from "../../Enums/DeliveryMethodsEnums";
+import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
+import { DeliveryMethods } from "../../../Common/Enums/DeliveryMethodsEnums";
 import FadeLoader from "react-spinners/FadeLoader";
-import { ExportToExcel } from "../Common/ExportToExcel";
+import { ExportToExcel } from "../../../Common/Shared/Common/ExportToExcel";
 import { useState, useEffect } from "react";
-import ExtraShipping from "./ExtraShipping";
+import ExtraShipping from "../../../Common/Shared/order/ExtraShipping";
 import { useSelector } from 'react-redux';
 import { RootState } from "../../../store";
 import { GetShoppingContracts, GetShoppingsAdmin } from "../../../services/ShippingService";
 import { IoIosArrowUp } from "react-icons/io";
 import { GridLoader } from "react-spinners";
+import { GetShoppingsClient } from './../../../services/ShippingService';
 
 const customStyles = {
     content: {
@@ -28,7 +29,7 @@ const customStyles = {
 interface Props {
     loading: any, idOrder:any
 }
-const OrderWayBill: React.FC<Props> = ({ loading , idOrder}) => {
+const OrderWayBillForClients: React.FC<Props> = ({ loading , idOrder}) => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [id, setId] = useState<any>(0);
     const [Shipping, SetShipping] = useState([]);
@@ -48,7 +49,7 @@ const OrderWayBill: React.FC<Props> = ({ loading , idOrder}) => {
     const GetShipping = async () => {
         try {
             setLoading(true)
-          const { data, status } = await GetShoppingsAdmin(idOrder);
+          const { data, status } = await GetShoppingsClient(idOrder);
           SetShipping(data.result.shippings.values)
        
           setLoading(false)
@@ -253,4 +254,4 @@ const OrderWayBill: React.FC<Props> = ({ loading , idOrder}) => {
     }
 
 }
-export default OrderWayBill
+export default OrderWayBillForClients
