@@ -179,7 +179,7 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
                                 <div className="n-chk d-flex  mb-3">
 
                                     <div>
-                                        <label className="mr-2 text-success"> فعال</label>
+                                        <label className={active?"mr-2 text-success":"mr-2 text-danger"}> فعال</label>
 
                                         <input type="checkbox" checked={active}
                                             onChange={e => SetActive(e.target.checked)}

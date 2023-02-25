@@ -20,6 +20,7 @@ import { MeasureUnitSample } from "../../../Common/Enums/MeasureUnitSample";
 import { DeliveryMethods } from '../../../Common/Enums/DeliveryMethodsEnums';
 import OrderCustomerDetail from "../../../Common/Shared/order/orderCustomerDetail";
 import { OrderStatusEnumsProgressBar } from '../../../Common/Enums/OrderStatusEnumsProgressBar';
+import OrderWayBillForClients from './OrderWayBillForClients';
 
 
 const OrderDetailTest:React.FC = () => {
@@ -270,7 +271,7 @@ const OrderDetailTest:React.FC = () => {
                             :
                             (
                                 <><OrderAddress   details={detailAddress}  orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} getOrder={getOrder} order={order} paymentStatus={orderPaymentStatusId}/>
-                                    <OrderWayBill loading={loading} idOrder={params.id}/>
+                                    <OrderWayBillForClients loading={loading} idOrder={params.id}/>
                                    <OrderAttachment  order={order} params={params} 
                                                                      closeModalForUpload={closeModalForUpload}
                                                                      modalIsOpenUpload={modalIsOpenUpload}

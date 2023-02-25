@@ -42,55 +42,11 @@ const EditMemberOfCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTy
 
     const getMembers = async () => {
 
-        console.log(currentItem);
 
 
-        if (EntityType === 1) {
+       
 
-            try {
-
-
-                let configs = {
-                    headers: { "Content-Type": "application/json" },
-                    params: {
-                        RoleIds: 2,
-                        PageNumber: 0,
-                        PageSize: 100000000,
-                    },
-                    paramsSerializer: (params: any) => {
-                        return QueryString.stringify(params);
-                    },
-                };
-
-                const { data, status } = await GetDataWithSearch(configs);
-
-                if (status === 200) {
-                    SetMembers(data.result.users.values);
-                }
-
-
-
-
-            }
-            catch (e) {
-                console.log(e);
-
-            }
-        }
-        else {
-            try {
-                const { data, status } = await GetAllOrganisation()
-                if (status === 200) {
-
-                    SetMembers(data.result.organizationLists.values)
-                }
-
-            } catch (error) {
-                console.log(error);
-
-            }
-
-        }
+           
 
 
         if (currentItem &&EntityType===1) {
@@ -124,17 +80,7 @@ console.log(entityId);
     }, [currentItem])
 
 
-    const MEmbersToSelect = () => {
-
-        if (EntityType === 1) {
-            return (members.map((item: any) => ({ label: `${item.userName} ${item.firstName !== null ? item.firstName : ''} ${item.lastName !== null ? item.lastName : ''}`, value: item.id })))
-
-        }
-        else {
-            return (members.map((item: any) => ({ label: `${item.name !== null ? item.name : ''} ${item.nationalId ? item.nationalId : ''}`, value: item.id })))
-        }
-
-    }
+    
     const Priceunit = () => {
         return (PriceUnitEnums.map((item: any) => ({ label: item.name, value: item.id })))
     }
@@ -209,7 +155,7 @@ console.log(entityId);
                                 <div className="n-chk d-flex  mb-3">
 
                                     <div>
-                                        <label className="mr-2 text-success"> فعال</label>
+                                        <label className={active?"mr-2 text-success":"mr-2 text-danger"}> فعال</label>
 
                                         <input type="checkbox" checked={active}
                                             onChange={e => SetActive(e.target.checked)}

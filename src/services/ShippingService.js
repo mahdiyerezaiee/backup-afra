@@ -75,3 +75,7 @@ export const SetShippingReport=(body)=>{
 
 
 }
+export const GetShoppingsClient=(id)=>{
+
+    return http.get(`${configure}/Shipping/GetShippings?EntityId=${id}&EntityTypeId=10&PageNumber=0&PageSize=100000`);
+}
