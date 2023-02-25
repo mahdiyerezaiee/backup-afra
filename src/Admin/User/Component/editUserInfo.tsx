@@ -257,9 +257,14 @@ const EditUserInfo: React.FC = () => {
 
     }
     let allcompanies: any = companys()
-    
+
     let defaultValue: any = allcompanies.filter((item: any) => item.value === companyId)[0]
 
+    const handelFinotech=async()=>{
+
+        
+
+    }
 
 
     return (
@@ -310,7 +315,7 @@ const EditUserInfo: React.FC = () => {
                                     <div className="form-row">
 
                                         <div className="col-12 mb-5 d-flex justify-content-between ">
-                                            <div className="col-lg-4 col-md-6 col-sm-11 ">
+                                            <div className="col-lg-3 col-md-6 col-sm-11 ">
 
 
                                                 <label className="form-check-label mb-3">
@@ -319,20 +324,26 @@ const EditUserInfo: React.FC = () => {
                                                     حقوقی
                                                 </label>
                                             </div>
-                                            <div className="col-lg-4 col-md-6 col-sm-11">
+                                            <div className="col-lg-3 col-md-6 col-sm-11">
 
                                                 <label className="form-check-label mb-3">
 
                                                     <Field type="checkbox" className="form-check-input" name="active" />
                                                     فعال                                     </label>
                                             </div>
-                                            <div className="col-lg-4 col-md-6 col-sm-11">
+                                            <div className="col-lg-3 col-md-6 col-sm-11">
 
                                                 <label className="form-check-label mb-3 text-danger font-weight-bold">
 
                                                     <Field type="checkbox" name="actionBlock" className="form-check-input" />
                                                     تعلیق کاربر                                  </label>
                                             </div>
+
+                                            {userRole.some((item: any) => item < 2)? 
+
+                                                <button className="btn btn-small btn-secondary"  onClick={handelFinotech}>استعلام کدملی</button>:''
+                                            }
+
                                         </div>
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
