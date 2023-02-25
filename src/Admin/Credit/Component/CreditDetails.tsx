@@ -52,19 +52,19 @@ const CreditDetails: React.FC = () => {
                                 <div className='  col-lg-12 col-md-4 col-sm-12 col-xs-12 row '>
                                     <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 
-                                        <p>شناسه اعتبار : {Credit.id}</p>
+                                        <b>شناسه اعتبار : {Credit.id}</b>
                                     </div>
                                     <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 
-                                        <p>نام گروه اعتباری : {Credit.name}</p>
+                                        <b>نام گروه اعتباری : {Credit.name}</b>
                                     </div>
                                     <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 
-                                        <p>ارزش اعتبار : {formatterForMoney.format(Credit.value)}</p>
+                                        <b>ارزش اعتبار : {formatterForMoney.format(Credit.value)}</b>
                                     </div>
                                     <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 
-                                        <p>توضیحات  : {Credit.comment}</p>
+                                        <b>توضیحات  : {Credit.comment}</b>
                                     </div>
 
                                 </div>
