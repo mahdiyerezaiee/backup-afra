@@ -1,55 +1,9 @@
-import React, { useState } from 'react'
-import { EntityTypes } from '../../../Common/Enums/EntityTypesEnums';
-import { AttributeControlTypes } from '../../../Common/Enums/AttributeControlTypesEnums';
+import React, { useReducer, useState } from 'react'
 import Select from 'react-select';
 import { NavLink } from 'react-router-dom';
-import { SetAttribute } from '../../../services/attributeService';
-import { toast } from 'react-toastify';
-
-const AttributeCreator:React.FC = () => {
-    const [name, setName] = useState('');
-    const [entityTypeId, setEntityTypeId] = useState(0);
-    const [controlTypeId, setControlTypeId] = useState(0);
-    const [controlTypeValue, setControlTypeValue] = useState('')
-
-    const entityTypes = () => {
-        return (EntityTypes.map(data => ({ label: data.name, value: data.id })));
-    }
-    const Attributes = () => {
-        return (AttributeControlTypes.map(data => ({ label: data.name, value: data.id })))
-    }
-    const body = {
-        attribute: {
-            name,
-            entityTypeId,
-            controlTypeId,
-            controlTypeValue
-        }
-    }
-    const submit = async (event:any) => {
-        event.preventDefault();
-        try {
-
-            const { data, status } = await SetAttribute(body);
-            if (status === 200) {
-                toast.success('ویژگی جدید ایجاد شد',
-                    {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined
-                    })
-            }
-
-        } catch (error) {
-           
-        }
-
-
-    }
+import { Attributes, entityTypes, submitAttribute } from '../service/AttributeCreatorService';
+ const AttributeCreator:React.FC = () => {
+ 
     return (
         <div className='user-progress' >
             <div className='row'>
@@ -60,36 +14,38 @@ const AttributeCreator:React.FC = () => {
             </div>
             <div className='row d-flex justify-content-center '>
                 <div className='  col-md-8 col-lg-8 col-sm-12 m-2'>
-                    <form className='form row '>
+                    <form className='form row ' onSubmit={submitAttribute}>
                         <div className=" col-md-6 col-sm-12 form-group mb-4 textOnInput  ">
 
                             <label >نام ویژگی</label>
-                            <input type="text" className="form-control opacityForInput" value={name} onChange={(e:any) => setName(e.target.value)} />
+                            <input type="text"  name="name" className="form-control opacityForInput" 
+                             />
 
                         </div>
                         <div className=" col-md-6 col-sm-12 form-group mb-4 textOnInput  ">
 
 
-                            <Select className='form-input opacityForInput' placeholder='انتخاب فرم'
+                            <Select name="entityTypeId" className='form-input opacityForInput' placeholder='انتخاب فرم'
                                 options={entityTypes()}
-                                onChange={(e:any) => setEntityTypeId(e.value)} />
+                                />
                         </div>
                         <div className=" col-md-6 col-sm-12 form-group mb-4 textOnInput  ">
 
 
-                            <Select className='form-input ' placeholder='انتخاب ویژگی'
+                            <Select name="controlTypeId" className='form-input ' placeholder='انتخاب ویژگی'
                                 options={Attributes()}
-                                onChange={(e:any) => setControlTypeId(e.value)} />
+                                />
 
                         </div>
                         <div className="col-md-6 col-sm-12 form-group mb-4 textOnInput  ">
 
                             <label >مقدار</label>
-                            <input type="text" className="form-control opacityForInput" value={controlTypeValue} onChange={(e:any) => setControlTypeValue(e.target.value)} />
+                            <input type="text" name="controlTypeValue" className="form-control opacityForInput" 
+                            />
 
                         </div>
                         <div className='col-6  '>
-                                <button type="submit" className="btn btn-success float-right" onClick={submit} >تایید</button>
+                                <button type="submit" className="btn btn-success float-right"  >تایید</button>
                                 </div>
                                 <div className='col-6  '>
 

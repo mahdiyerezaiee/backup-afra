@@ -1,77 +1,17 @@
-import React, { Fragment, useEffect, useState, useRef } from "react";
+import React, { Fragment, useEffect, useState, useRef, useReducer } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { toast } from 'react-toastify';
-
-import { validatAlpha, validateRequired, validatNumber } from "../../../Utils/validitionParams";
+import { validatAlpha, validatNumber } from "../../../Utils/validitionParams";
 import { Field, Form, Formik } from "formik";
-import { CreateCredit } from "../../../services/creditService";
 import Select from 'react-select';
-import { PriceUnitEnums } from './../../../Common/Enums/PriceUnit';
+import { creditReducer, CreditState } from "../../../store/Slice/credit/CreditSlice";
+import { submitCreateCredit, units } from "../service/CreateNewCreditService";
 const CreateNewCredit: React.FC = () => {
-    const navigate = useNavigate();
-    const [name, setName] = useState('')
-    const [loading, setLoading] = useState(false);
-    const [priceUnitId, setpriceUnitId] = useState(0)
-    const [value, SetValue] = useState<any>('')
-    const [comment, Setcomment] = useState('')
-
-
     
+ const [state, dispatch] = useReducer(creditReducer, CreditState);
+const navigate = useNavigate();
 
-
-    const submit = async () => {
-        
-    const body = {
-
-        id: null,
-        name,
-        priceUnitId,
-        value,
-        comment
-
-
-
-    };
-        setLoading(true)
-        try {
-            const { data, status } = await CreateCredit(body);
-            if (status === 200) {
-                toast.success("اطلاعات با موفقیت ثبت شد", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-                navigate('/admin/Credits')
-
-            }
-
-
-        }
-
-        catch (error) {
-            console.log(error);
-        }
-
-        setLoading(false)
-    };
-
-    var formatter = new Intl.NumberFormat('en-US', {
-
-
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0,
-    });
-    const units=()=>{
-
-        return(PriceUnitEnums.map((item:any)=>({label:item.name,value:item.id})))
-
-    }
-    return (
+return (
         <div className='user-progress' >
             <div className='row'>
                 <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
@@ -84,16 +24,20 @@ const CreateNewCredit: React.FC = () => {
                     <Formik
                         initialValues={{
                             id: null,
-                            name,
-                            value, priceUnitId, comment
+                            name:"",
+                            value:"",
+                             priceUnitId:0,
+                              comment:""
                         }}
                         enableReinitialize={true}
-                        onSubmit={values => {
+                        onSubmit={(values:any) => {
                             // same shape as initial values
-                            submit()
+                            submitCreateCredit({values , navigate , dispatch})
+                            
                         }}>
 
                         {({ errors, touched, validateField, validateForm, setFieldValue, handleChange, values }) => (
+
 
 
 
@@ -112,21 +56,14 @@ const CreateNewCredit: React.FC = () => {
                                     <div className='form-row'>
                                         <div className='col-4 '>
                                             <label >  نام </label>
-                                            <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput" value={name} onChange={(e: any) => {
-                                                setName(e.target.value)
-
-                                            }} />
+                                            <Field validate={validatAlpha} name="name" type="text" className="form-control opacityForInput"  />
                                             {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
                                         </div>
 
                                         <div className="col-4">
                                             <label >میزان اعتبار</label>
-                                            <Field validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={formatter.format(value)}
-                                                onChange={(e: any) => {
-                                                    SetValue(Number(e.target.value.replaceAll(",", "")))
-
-                                                }} />
+                                            <Field validate={validatNumber}  name='value' type="text" className="form-control opacityForInput"  />
                                             {errors.value && touched.value && <div className="text-danger">{String(errors.value)}</div>}
                                         </div>
 
@@ -136,13 +73,10 @@ const CreateNewCredit: React.FC = () => {
 
                                             <Select
                                                 placeholder='واحد'
-                                                
+                                               name="priceUnitId" 
                                                 
                                                options={units()} 
-                                                onChange={(e: any) => {
-                                                    setpriceUnitId(e.value)
-
-                                                }}
+                                               
                                             />
 
                                         </div>
@@ -155,10 +89,7 @@ const CreateNewCredit: React.FC = () => {
                                 <div className="form-group mb-4 textOnInput">
                                     <label >توضیحات</label>
 
-                                    <Field name="comment" as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی' value={comment} onChange={(e: any) => {
-                                        Setcomment(e.target.value)
-
-                                    }} />
+                                    <Field name="comment" as="textarea" className="form-control opacityForInput " rows='4' placeholder='توضیحات تکمیلی'  />
                                     {errors.comment && touched.comment && <div className="text-danger">{errors.comment}</div>}
 
                                 </div>
@@ -167,9 +98,9 @@ const CreateNewCredit: React.FC = () => {
 
                                 <div className='row justify-content-between'>
                                     <div className='col-6  '>
-                                        <button type="submit" disabled={loading} className="btn btn-success float-right" onClick={submit} >ثبت<ClipLoader
+                                        <button type="submit" disabled={state.loading} className="btn btn-success float-right"  >ثبت<ClipLoader
 
-                                            loading={loading}
+                                            loading={state.loading}
                                             color="#ffff"
                                             size={15}
                                         /></button>                                </div>

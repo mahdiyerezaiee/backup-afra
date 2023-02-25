@@ -5,6 +5,7 @@ import productReducer from "./Slice/productSlice/productSlice"
 import userRoleSlice from "./Slice/user/userRole/userRoleSlice";
 import UserSlice from "./Slice/user/userSlice";
 import PaymentSlice from "./Slice/PaymentMethods/PaymentMethods";
+import AttributeSlice from "./Slice/Attribute/AttributeSlice";
 export const  store = configureStore({
     reducer:{
         product: productReducer,
@@ -12,7 +13,8 @@ export const  store = configureStore({
         login:loginSlice,
         roles:userRoleSlice,
         payment:PaymentSlice,
-        companies:companySlice
+        companies:companySlice,
+        attribute : AttributeSlice
     }
 })
 // Infer the `RootState` and `AppDispatch` types from the store itself
