@@ -1,7 +1,7 @@
 import React, { useReducer, useState } from 'react'
 import Select from 'react-select';
 import { NavLink } from 'react-router-dom';
-import { Attributes, entityTypes, submitAttribute } from '../service/AttributeCreatorService';
+import { Attributes, entityTypes, submitAttribute } from '../Service/AttributeCreatorService';
  const AttributeCreator:React.FC = () => {
  
     return (

@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import  Select  from 'react-select';
 import { NavLink } from 'react-router-dom';
-import { entityTypes, submitGroupCreator } from '../service/GroupCreatorService';
+import { entityTypes, submitGroupCreator } from '../Service/GroupCreatorService';
 
 const GroupCreator:React.FC = () => {
   

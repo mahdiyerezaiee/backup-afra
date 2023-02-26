@@ -385,7 +385,7 @@ const Header: React.FC<Props> = ({ collapsed }) => {
                                 </div>
                             </div>
                             <div className="dropdown-item">
-                                <NavLink to="userProfile">
+                                <NavLink to="/client/userProfile">
                                     <svg style={{
                                         width: "24",
                                         height: "24",

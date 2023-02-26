@@ -21,7 +21,7 @@ const EditAddress:React.FC = () => {
     const[ostanId,setOstanId]=useState(0);
     const GetAddresUser= async ()=>{
         const {data , status} = await GetAddress(1, user.id )
-        let address = data.result.addresses.filter((i:any)=> i.id === Number(params.id))[0]
+        let address = data.result.addresses
         setFulAddress(address.fullAddress)
         setpostalCode(address.postalCode)
         setreceiverMobile(address.receiverMobile)
