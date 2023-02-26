@@ -174,7 +174,7 @@ window.addEventListener('resize',getSize)
 
                 </SubMenu>
                 <SubMenu ref={ref14} open={show.item14 === true ? true : false} onClick={() => setShow({ ...show, item14: !show.item14, item1: false, item16: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item12: false, item13: false })} icon={<FaUserCog size='2rem' />} label="حساب کاربری" >
-                    <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-hashtag" />} ><NavLink to='userProfile'>اطلاعات کاربری</NavLink> </MenuItem>
+                    <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-hashtag" />} ><NavLink to='/client/userProfile'>اطلاعات کاربری</NavLink> </MenuItem>
                     <MenuItem onClick={handleHeaderClick} icon={<i className="fa fa-share-square-o" />} > <NavLink to='/logout'>خروج از سامانه</NavLink></MenuItem>
                 </SubMenu>
 

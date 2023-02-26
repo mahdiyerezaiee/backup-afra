@@ -28,6 +28,7 @@ import InvoiceClient from "../invoice/invoiceClient";
 import PaymentMethods from "../paymentMethods/paymentMethods";
 import PaymentMethodComponent from "../paymentMethods/paymentMethods";
 import PaymentList from "../payment/paymentList";
+import AddresForm from './../IdentityRegister/Component/AddresForm';
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
@@ -114,6 +115,8 @@ const ClientsMainLayout: React.FC = () => {
                 <Route path="userProfile" element={<UserProfile />} />
                 <Route path="editProfile" element={<EditProfile />} />
                 <Route path="editAddress/:id" element={<EditAddress />} />
+                <Route path="newAddress" element={<AddresForm />} />
+                
                 {/*organization */}
                 <Route path="organization" element={<OrganizationClient/>}/>
                 <Route path="editorganization/:id" element={<EditOrganizaion/>}/>
