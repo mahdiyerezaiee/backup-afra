@@ -23,6 +23,7 @@ import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import { GetProducts } from '../../../services/productService';
 import { GetCompanyChild } from '../../../services/companiesService';
+import { FiFileText } from 'react-icons/fi';
 
 const customStyles = {
     content: {
@@ -389,6 +390,9 @@ const ProductSupply:React.FC = () => {
     const formHandler = () => {
         navigate("/admin/newProductsupply")
     }
+    const BreifHandler=(id:any)=>{
+        navigate(`/admin/CoutaggeBerief/${id}`)
+    }
     const openModal = (id:number) => {
         setIsOpen(true);
         setId(id)
@@ -497,6 +501,16 @@ const ProductSupply:React.FC = () => {
 
 
             }
+        }, {
+            Header: 'کارنامه کوتاژ', accessor: '', Cell: (row:any) => (
+                <ul className="table-controls">
+    <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
+                        title="کارنامه کوتاژ"
+                        onClick={e => BreifHandler(row.row.original.cottageCode)}>
+                        <FiFileText size="1.5rem"/>
+                    </button>
+                </ul>
+            )
         },
         {
             Header: 'عملیات', accessor: 'عملیات', Cell: row => (
@@ -530,6 +544,8 @@ const ProductSupply:React.FC = () => {
                         </svg>
                     </button>
 
+
+               
 
                 </ul>
             )

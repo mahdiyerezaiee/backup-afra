@@ -49,3 +49,6 @@ export const GetnProceessAttachments=()=>{
 export const  GetCustomerBrief = (CustomerId)=>{
     return http.get(`${configure}/Report/GetCustomerBrief?CustomerId=${CustomerId}`)
 }
+export const  GetCoutaggeBrief = (cottageCode)=>{
+    return http.get(`${configure}/Report/GetCottageBrief?cottageCode=${cottageCode}`)
+}

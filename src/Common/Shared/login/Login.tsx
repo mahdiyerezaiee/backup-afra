@@ -106,7 +106,7 @@ mobileNo=mobile
             <div className='card'>
                 <div className='row no-gutters'>
                     <div className='col-md-5'>
-                        {show === false ?
+                        {show === true ?
                             <>
                             <LoginWithPassword setShows={setShow} value ={mobileNo} onchange={(e:any) =>{setMobile(e.target.value)
                                                                                 localStorage.setItem('mobile',mobile)}}/>
@@ -167,7 +167,7 @@ mobileNo=mobile
                                     </div>
                                     <div className="col-6">
 
-                                        <button className='   btn btn-primary mt-5 mb-5 float-right'  onClick={()=>setShow(false)}>ورود با رمز عبور</button>
+                                        <button className='   btn btn-primary mt-5 mb-5 float-right'  onClick={()=>setShow(true)}>ورود با رمز عبور</button>
                                     </div>
                                 </div>
                                         </Form>
