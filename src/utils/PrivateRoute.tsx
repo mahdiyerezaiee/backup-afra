@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { GetUsersRoles } from "../services/userService";
 import { RootState } from "../store";
 import { userRoles } from "../store/Slice/user/userRole/userRoleSlice";
+import { decryptStirng } from './DecryptionUtill';
 interface Props {
     children: JSX.Element
 }
@@ -15,9 +16,11 @@ const PrivateRoute: React.FC<Props> = ({ children }: Props) => {
     const token = localStorage.getItem("token")
     const roles = useSelector((state:RootState) => state.roles);
     
-    const role=JSON.parse(String(localStorage.getItem("rd")))
+    const role=decryptStirng(localStorage.getItem('rd'))
     
 
+  
+   
  
 
    
@@ -28,11 +31,11 @@ if(roles.length>0){
 }
 else if(role)
 {
-    return token && role.some((item: any) => item > 2) ? children : <Navigate to="/client" />
+    return token && role.some((item: any) => item > 2) ? children : <Navigate to="/admin" />
 
 }
 else{
-    return token? <Navigate to="/client" />:<Navigate to="/"/>
+    return token? <Navigate to="/client" />:<Navigate to="/login"/>
 }
 };
 
