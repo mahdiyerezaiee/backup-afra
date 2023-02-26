@@ -137,7 +137,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                     draggable: true,
                     progress: undefined
                 });
-                roles.includes(2) ? Navigate('/admin/cuoList') : Navigate('/admin/orderList')
+                Navigate('/client/orderlist') 
             }
 
 

@@ -235,7 +235,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                                 </button>
                             </div>
                             <div className="col-7">
-                                <button className=' btn btn-primary  mt-5 mb-5 float-right' onClick={() => setShows(true)}>ورود با رمز یکبار مصرف</button>
+                                <button className=' btn btn-primary  mt-5 mb-5 float-right' onClick={() => setShows(false)}>ورود با رمز یکبار مصرف</button>
                             </div>
 
                         </div>
