@@ -2302,10 +2302,10 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   }
   .textOnInput label {
     position: absolute;
-    top: -18px;
+    top: -14px;
     right: 15px;
     padding: 2px;
-   background: white;
+   background: transparent;
    z-index: 2;
   }
 .textOnInput label::after {
@@ -3665,3 +3665,6 @@ input[type=number]::-webkit-outer-spin-button {
  
 }
 .GridLoader{right:50%}
+.textOnInput label input[disabled] {
+background-color: transparent!important;
+}

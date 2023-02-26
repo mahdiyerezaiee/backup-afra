@@ -37,10 +37,7 @@ const Header: React.FC<Props> = ({ collapsed }) => {
     const roles = useSelector((state: RootState) => state.roles);
     const [loading, setLoading] = useState(false);
 
-    const handleHeaderClick = (event: any) => {
-
-        event.stopPropagation();
-    };
+    
 
     useEffect(() => {
 
@@ -92,72 +89,14 @@ const Header: React.FC<Props> = ({ collapsed }) => {
 
     }
 
-    const deleteItemHandler = async (id: number) => {
-
-        try {
-            const { data, status } = await DeleteItemCart(id, Number(localStorage.getItem('connect')))
-            getCartShopping()
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    const deleteHandler = async () => {
-
-        try {
-            const { data, status } = await DeleteItemCarts(Number(localStorage.getItem('connect')))
-            getCartShopping()
-        } catch (err) {
-            console.log(err)
-
-        }
-    }
+   
+   
 
     useEffect(() => {
         getCartShopping()
 
     }, [])
 
-    const setOrder = async () => {
-        setLoading(true)
-        const order = {
-            "customerId": Number(localStorage.getItem('connect'))
-
-        }
-        try {
-            const { data, status } = await SetOrder(order)
-            if (data.success === true) {
-                getCartShopping()
-                toast.success(data.result.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-                roles.includes(2) ? Navigate('/admin/cuoList') : Navigate('/admin/orderList')
-            }
-
-
-
-        } catch (err) {
-            console.log(err)
-        }
-        setLoading(false)
-    }
-    const MeasureUnit = (id: number) => {
-        return (MeasureUnitSample.filter(item => item.id === id).map(item => item.name))
-    }
-    let formatter = new Intl.NumberFormat('fa-IR', {
-        // style: 'currency  ',
-        // currency: 'IRR',
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0,
-    });
-    const paymentMethod = () => {
-        return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
-    }
     let days = ['یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
     let d = new Date()
     let dayName = days[d.getDay()]
@@ -379,7 +318,7 @@ const Header: React.FC<Props> = ({ collapsed }) => {
                                         <path fillRule="evenodd"
                                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                                     </svg>                                    <div className="media-body">
-                                        <h5>{localStorage.getItem('mobile')}</h5>
+                                        <h5>{user.firstName ? user.firstName +" "+ user.lastName: localStorage.getItem('mobile')}</h5>
 
                                     </div>
                                 </div>
