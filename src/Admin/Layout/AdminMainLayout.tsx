@@ -100,6 +100,7 @@ import CreditList from '../Credit/Component/CreditList';
 import CreditDetails from './../Credit/Component/CreditDetails';
 import CreateNewCredit from './../Credit/Component/CreateNewCredit';
 import EditCredit from './../Credit/Component/EditCredit';
+import CustomerBrief from '../User/Component/CustomerBrief';
 import { encryptMessage } from '../../Utils/DecryptionUtill';
 
 const AdminMainLayout: React.FC = () => {
@@ -207,6 +208,7 @@ const AdminMainLayout: React.FC = () => {
                   <Route path='personBankAccount' element={<PersonBankAccount />} />
                   <Route path='userlist' element={<UserList />} />
                   <Route path='editInfo/:id' element={<EditUserInfo />} />
+                  <Route path='customerBrief/:id' element={<CustomerBrief />} />
                   <Route path='adduser' element={<AddNewUser />} />
                   {/* <Route path='editrole/:id' element={<EditUserRole />} />
                   <Route path='editcustomergroup/:id' element={<EditCustomerGroup />} /> */}

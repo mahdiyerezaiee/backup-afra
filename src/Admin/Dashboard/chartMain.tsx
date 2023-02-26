@@ -4,6 +4,7 @@ import {ChartLineValue} from "../../Common/Shared/Chart/chartLineValue";
 import {useEffect, useState} from "react";
 import {GetPeriodicSalesReport} from "../../services/reportService";
 import { ChartPayment } from '../../Common/Shared/Chart/ChartPayment';
+import { ChartShippingReport } from '../../Common/Shared/Chart/ChartShippingReport';
 
 
 const ChartMain:React.FC = () => {
@@ -64,9 +65,13 @@ dataReport.datas=data.result.ordersPerSchedule
 
                 <ChartLineValue datas={datas} setTypeId={setTypeId}/>
             </div>
-            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12  ">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
 
 <ChartPayment />
+</div>
+<div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
+
+<ChartShippingReport/>
 </div>
 
         </div>

@@ -9,8 +9,8 @@ import {
     Filler,
     Legend,
 } from 'chart.js';
-import {Line} from 'react-chartjs-2';
-import {GetPaymentsReport, GetPeriodicSalesReport} from "../../../services/reportService";
+import {Bar} from 'react-chartjs-2';
+import { GetPaymentsReport, GetShippingsReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
 import  QueryString  from 'qs';
 
@@ -31,10 +31,9 @@ ChartJS.register(
 
 
 
-export function ChartPayment() {
+export function ChartShippingReport() {
     const [datas , setDatas]=useState<any>([])
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)
-    const [PaymentMethodId , setPaymentMethodId]=useState(0)
 
 
   
@@ -42,26 +41,10 @@ export function ChartPayment() {
 useEffect(()=>{
     const GetReport = async () => {
         try {
-            let config = {
+           
+            const {data , status}= await GetShippingsReport(ScheduleTypeId)
 
-                headers: { 'Content-Type': 'application/json' },
-    
-                params: {
-                    ScheduleTypeId,
-                    PaymentMethodId
-                    
-    
-                },
-                paramsSerializer: (params:any) => {
-    
-                    return QueryString.stringify(params)
-                }
-    
-    
-            };
-            const {data , status}= await GetPaymentsReport(config)
-
-            setDatas(data.result.paymentsPerSchedule)
+            setDatas(data.result.shippingsPerSchedule)
 
         }catch (e) {
             console.log(e)
@@ -69,41 +52,37 @@ useEffect(()=>{
 
     }
     
-     if (ScheduleTypeId || PaymentMethodId){
+     if (ScheduleTypeId ){
         GetReport()
 
     }
 
-},[ScheduleTypeId , PaymentMethodId])
-    if (datas && datas.length >0){
-        const labels =datas.map((item:any)=>item.current === true ? item.scheduleName + " " + "(امروز)": item.scheduleName)
+},[ScheduleTypeId ])
+    if (datas && datas.length > 0){
+        const labels =datas.map((item:any)=>item.shippingCompanyName)
       
     const data:any = {
         labels: labels,
         datasets: [
           {
-            label: 'پرداخت شده',
-            data: datas.map((i:any)=> i.paid),
+            label: ' مقدار باقی مانده',
+            data: datas.map((i:any)=> i.shippedQuantity),
             borderColor: "MediumVioletRed",
             fill: false,
-            pointStyle: 'circle',
-
+            stack: 'combined',
+            type: 'bar'
           }, {
-            label: 'پرداخت نشده',
-            data: datas.map((i:any)=> i.notPaid),
+            label: ' مقدار حمل شده',
+            data: datas.map((i:any)=> i.shippedQuantity),
             borderColor: "OliveDrab",
-            fill: false,
-          }, {
-            label: 'کل',
-            data: datas.map((i:any)=> i.total),
-            borderColor: "MediumSlateBlue",
-            fill: false
-          },
+            stack: 'combined',
+            type: 'bar'
+          }
           
         ]
       };
       const config:any = {
-        type: 'line',
+        type: 'bar',
         responsive: true,
      maintainAspectRatio: false,
         
@@ -216,7 +195,7 @@ useEffect(()=>{
             <div className="widget widget-chart-three">
                 <div className="widget-heading ">
                     <div className="d-inline float-left">
-                        <h5 className=""> گزارش پرداخت ها</h5>
+                        <h5 className=""> گزارش باربری</h5>
                     </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <a className="dropdown-toggle" role="button" id="uniqueVisitors" data-toggle="dropdown"
@@ -239,30 +218,10 @@ useEffect(()=>{
                 </div>
                 <div className="btn-group m-2" role="group" aria-label="Basic example">
                 </div>
-                <div className="widget-heading text-center">
-                 <span className="m-auto text-dark">نحوه پرداخت</span> :
-<div className='d-inline p-2 '>
-
-<input type="radio" className='mx-1' checked={PaymentMethodId === 0} onChange={()=> setPaymentMethodId(0)}/> 
-کل
-</div>
-<div className='d-inline p-2 '>
-
-<input type="radio" className='mx-1' checked={PaymentMethodId === 2} onChange={()=> setPaymentMethodId(2)}/> 
-نقدی
-</div>
-<div className='d-inline p-2 '>
-
-<input type="radio" className='mx-1' checked={PaymentMethodId === 4} onChange={()=> setPaymentMethodId(4)}/> 
-اعتباری(چک)
-</div>
-
-
-
-                </div>
+                
                 <div className="widget-content  pt-3 border-top" style={{height: "300px"}}>
 
-                <Line options={config} data={data}/>
+                <Bar options={config} data={data}/>
             </div>
             </div>
         </div>
