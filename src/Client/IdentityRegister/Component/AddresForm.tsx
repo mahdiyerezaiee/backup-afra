@@ -20,6 +20,7 @@ const AddresForm:React.FC = () => {
     const [province, setProvince] = useState([]);
     const[provinceId,setProvinceId]=useState(0);
     const[ostanId,setostanId]=useState(0);
+    const navigate=useNavigate()
     
     const getProvince = async () => {
 
@@ -81,7 +82,11 @@ const AddresForm:React.FC = () => {
             console.log(error)
         }
      
+        navigate(-1)
 
+    }
+    const handelReturn=()=>{
+        navigate(-1)
     }
     return (
         <div className='user-progress' >
@@ -147,7 +152,7 @@ const AddresForm:React.FC = () => {
                                     <div className="form-group col-md-4">
 
                                         <label >کد پستی</label>
-                                        <Field  validate={validatmin10} name="postalCode" type="text" className="form-control" id="inputZip" value={postalCode}  onChange={(e:any)=> {
+                                        <Field  validate={validatmin10} name="postalCode"   type="text" className="form-control" id="inputZip" value={postalCode}  onChange={(e:any)=> {
                                             setpostalCode(e.target.value)
 
 
@@ -202,7 +207,7 @@ const AddresForm:React.FC = () => {
                                         <button  type="submit" className="btn btn-success">ذخیره تغییرات</button>
                                     </div>
                                     <div >
-                                        <NavLink to='/admin/identitypannel' className="btn btn-danger">بازگشت</NavLink>
+                                        <button onClick={handelReturn} className="btn btn-danger">بازگشت</button>
                                     </div>
                                 </div>
 

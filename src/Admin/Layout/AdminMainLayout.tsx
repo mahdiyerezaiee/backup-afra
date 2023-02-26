@@ -101,6 +101,7 @@ import CreditDetails from './../Credit/Component/CreditDetails';
 import CreateNewCredit from './../Credit/Component/CreateNewCredit';
 import EditCredit from './../Credit/Component/EditCredit';
 import CustomerBrief from '../User/Component/CustomerBrief';
+import { encryptMessage } from '../../Utils/DecryptionUtill';
 
 const AdminMainLayout: React.FC = () => {
   const [isloading, setIsloading] = useState(true);
@@ -141,7 +142,10 @@ const AdminMainLayout: React.FC = () => {
       if (status === 200) {
         dispatch(userRoles(data.result.userRoleIds))
 
-        localStorage.setItem('rd', JSON.stringify(data.result.userRoleIds))
+        let  role= data.result.userRoleIds
+    
+        localStorage.setItem('rd',encryptMessage( role))
+    
 
 
       }

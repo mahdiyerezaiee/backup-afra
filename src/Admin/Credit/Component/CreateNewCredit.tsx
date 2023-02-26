@@ -5,7 +5,7 @@ import { validatAlpha, validatNumber } from "../../../Utils/validitionParams";
 import { Field, Form, Formik } from "formik";
 import Select from 'react-select';
 import { creditReducer, CreditState } from "../../../store/Slice/credit/CreditSlice";
-import { submitCreateCredit, units } from "../service/CreateNewCreditService";
+import { submitCreateCredit, units } from "../Service/CreateNewCreditService";
 const CreateNewCredit: React.FC = () => {
     
  const [state, dispatch] = useReducer(creditReducer, CreditState);

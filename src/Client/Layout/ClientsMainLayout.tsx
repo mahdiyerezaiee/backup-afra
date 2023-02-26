@@ -28,6 +28,8 @@ import InvoiceClient from "../invoice/invoiceClient";
 import PaymentMethods from "../paymentMethods/paymentMethods";
 import PaymentMethodComponent from "../paymentMethods/paymentMethods";
 import PaymentList from "../payment/paymentList";
+import AddresForm from './../IdentityRegister/Component/AddresForm';
+import { decryptStirng, encryptMessage } from './../../Utils/DecryptionUtill';
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
@@ -57,7 +59,7 @@ const ClientsMainLayout: React.FC = () => {
   document.body.classList.add('clientBody')
 
   const getUserRole = async () => {
-    localStorage.removeItem('rd')
+    
     const { data, status } = await GetUsersRoles();
     try {
       if (status === 200) {
@@ -66,6 +68,13 @@ const ClientsMainLayout: React.FC = () => {
     } catch (error) {
       refreshPage();
     }
+    let  role= data.result.userRoleIds
+    
+    localStorage.setItem('rd',encryptMessage( role))
+
+   
+   
+    
   };
 
   const getUserCompanies = async () => {
@@ -81,6 +90,7 @@ const ClientsMainLayout: React.FC = () => {
         {" "}
         <HeaderClient collapsed={collapsed} />
         <HeaderClientMian />
+        
       </div>
 
       <div className="hero-section style-2">
@@ -114,6 +124,8 @@ const ClientsMainLayout: React.FC = () => {
                 <Route path="userProfile" element={<UserProfile />} />
                 <Route path="editProfile" element={<EditProfile />} />
                 <Route path="editAddress/:id" element={<EditAddress />} />
+                <Route path="newAddress" element={<AddresForm />} />
+                
                 {/*organization */}
                 <Route path="organization" element={<OrganizationClient/>}/>
                 <Route path="editorganization/:id" element={<EditOrganizaion/>}/>
