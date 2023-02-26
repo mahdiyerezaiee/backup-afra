@@ -10,6 +10,10 @@ export const GetPeriodicSalesReport=(TypeId)=>{
 
     return http.get(`${configure}/Report/GetPeriodicSalesReport?ScheduleTypeId=${TypeId}`);
 }
+export const GetShippingsReport=(TypeId)=>{
+
+    return http.get(`${configure}/Report/GetShippingsReport?ScheduleTypeId=${TypeId}`);
+}
 export const GetPaymentsReport=(searchParams)=>{
 
     return http.get(`${configure}/Report/GetPaymentsReport` , searchParams);
@@ -41,4 +45,7 @@ export const GetShippingReports=(searchParams)=>{
 export const GetnProceessAttachments=()=>{
 
     return http.get(`${configure}/Report/GetInProceessAttachments`);
+}
+export const  GetCustomerBrief = (CustomerId)=>{
+    return http.get(`${configure}/Report/GetCustomerBrief?CustomerId=${CustomerId}`)
 }

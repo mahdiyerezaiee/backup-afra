@@ -25,6 +25,7 @@ import { GetGroupWithCompany } from '../../../services/GroupService';
 import { GetUsersRolesById } from '../../../services/userService';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { FiFileText } from 'react-icons/fi';
 
 const UserList:React.FC = () => {
 
@@ -278,6 +279,9 @@ const UserList:React.FC = () => {
     }
     const editInfoHandler = (id:any) => {
         navigate(`/admin/editInfo/${id}`)
+    } 
+    const CustomerBriefHandler = (id:any) => {
+        navigate(`/admin/customerBrief/${id}`)
     }
     const editHandlerGroup = (id:number) => {
         setModalId(id)
@@ -496,7 +500,19 @@ const UserList:React.FC = () => {
 
 
             }
-        }, {
+        }, 
+        {
+            Header: 'کارنامه مشتری', accessor: '', Cell: row => (
+                <ul className="table-controls">
+    <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
+                        title="کارنامه مشتری"
+                        onClick={e => CustomerBriefHandler(row.row.original.id)}>
+                        <FiFileText size="1.5rem"/>
+                    </button>
+                </ul>
+            )
+        },
+        {
             Header: 'عملیات', accessor: '', Cell: row => (
                 <ul className="table-controls">
 
