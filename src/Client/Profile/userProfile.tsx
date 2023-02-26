@@ -168,7 +168,7 @@ const UserProfile: React.FC = () => {
 
 
 
-              <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`} style={{maxHeight:"80px",width:"80px"}} />
+              <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`} style={{height:"80px",width:"80px"}} />
               <button onClick={() => HandelDeleteAttachment(newAttachment[0].id)} className="border-0 bg-transparent non-hover"><AiTwotoneDelete size="1.5rem" color="red" /></button>
               <p >{user.firstName} {user.lastName}</p>
 

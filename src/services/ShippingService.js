@@ -79,3 +79,7 @@ export const GetShoppingsClient=(id)=>{
 
     return http.get(`${configure}/Shipping/GetShippings?EntityId=${id}&EntityTypeId=10&PageNumber=0&PageSize=100000`);
 }
+export const GetShoppingsReporteBrief=(id)=>{
+
+    return http.get(`${configure}/Shipping/GetShippings?EntityId=${id}&EntityTypeId=1&PageNumber=0&PageSize=5`);
+}

@@ -100,7 +100,7 @@ import CreditList from '../Credit/Component/CreditList';
 import CreditDetails from './../Credit/Component/CreditDetails';
 import CreateNewCredit from './../Credit/Component/CreateNewCredit';
 import EditCredit from './../Credit/Component/EditCredit';
-import CustomerBrief from '../User/Component/CustomerBrief';
+import CustomerBrief from '../Report/Component/CustomerBrief';
 import { encryptMessage } from '../../Utils/DecryptionUtill';
 
 const AdminMainLayout: React.FC = () => {

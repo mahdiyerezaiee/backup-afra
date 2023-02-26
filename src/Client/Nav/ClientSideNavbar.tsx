@@ -81,7 +81,7 @@ const ClientSideNavbar: React.FC = () => {
         </div>:
         
         <div className="circle pb-3 ">
-          <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`} style={{maxHeight:"80px",width:"80px"}} />
+          <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`} style={{height:"80px",width:"80px"}} />
           <Link to="userProfile"><TiPencil size="1.5rem" color="white" className="edit-svg" /></Link>
         </div>
         }
