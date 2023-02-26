@@ -132,7 +132,7 @@ window.location.reload()
                         <thead className='text-center'>
                         <tr className="">
                             <th> شماره عرضه</th>
-                            <th>شماره کورتاژ</th>
+                           
                             <th> نام کالا</th>
                             <th>وزن</th>
                             <th> فی</th>
@@ -145,7 +145,7 @@ window.location.reload()
                         {orderDetail.map((item:any)=>
                             <tr className="" >
                                 <td data-th="شماره عرضه"className="text-center">{item.productSupplyId}</td>
-                                <td data-th="شماره کورتاژ" className="text-center">{cottageCode}</td>
+                              
                                 <td data-th="نام کالا" className="text-center">{item.product.name}</td>
                                 <td data-th="وزن " className="text-center">{item.quantity}</td>
                                 <td data-th=" فی" className="text-center">{item.price / item.quantity}</td>
