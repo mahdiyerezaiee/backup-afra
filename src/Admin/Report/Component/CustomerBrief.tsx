@@ -2,13 +2,14 @@ import QueryString from "qs";
 import { Fragment, useEffect, useState } from "react";
 import GaugeChart from "react-gauge-chart";
 import { HiOutlineUserCircle } from "react-icons/hi";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { GaugeChartCustom } from "../../../Common/Shared/Chart/GaugeChartCustom";
 import { GetAttachments } from "../../../services/attachmentService";
 import { GetCustomerBrief } from "../../../services/reportService";
 import InvoicesForReportBrief from "./invoiceForReportBrief";
 import OrderReportBrief from "./OrderReportBrief";
 import OrderWayBillReportBrief from "./orderWayBillReportBrief";
+import { AiOutlineArrowRight } from 'react-icons/ai';
 const attachmetURL = (window as any).globalThis.stie_att;
 
 const CustomerBrief: React.FC = () => {
@@ -18,7 +19,7 @@ const CustomerBrief: React.FC = () => {
   const [ordersBrief, setOrdersBrief] = useState<any>({});
   const [shippingsBrief, setShippingsBrief] = useState<any>([]);
   const [attachments, Setattachments] = useState([]);
-
+  const navigate = useNavigate()
   const GetBerief = async () => {
     try {
       const { data, status } = await GetCustomerBrief(params.id);
@@ -55,6 +56,9 @@ const CustomerBrief: React.FC = () => {
     GetBerief();
     handelGetAttachment();
   }, []);
+  const handelBack = () => {
+    navigate(-1)
+}
   var formatter = new Intl.NumberFormat('fa-IR', {
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
@@ -66,6 +70,8 @@ const CustomerBrief: React.FC = () => {
     return (
       <div className=" statbox widget-content widget-content-area">
         <div className="row  ">
+        <button className="border-0 bg-transparent  edit-btn float-left" onClick={handelBack}><AiOutlineArrowRight size={'2rem'} /></button>
+
           <div className="col-12  rounded shadow mb-2  p-4">
             <div className="row">
               <div className="col-lg-3">
