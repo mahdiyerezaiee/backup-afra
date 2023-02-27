@@ -2,7 +2,7 @@ import QueryString from "qs";
 import { useEffect, useState } from "react";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { useParams } from "react-router-dom";
-import { GaugeChart } from "../../../Common/Shared/Chart/GaugeChart";
+import { GaugeChartCustom } from "../../../Common/Shared/Chart/GaugeChartCustom";
 import { GetAttachments } from "../../../services/attachmentService";
 import { GetCustomerBrief } from "../../../services/reportService";
 import InvoicesForReportBrief from "./invoiceForReportBrief";
@@ -101,7 +101,7 @@ const CustomerBrief: React.FC = () => {
               {ordersBrief.totalBought !== 0 ? (
                 <div className="col-6  text-center">
                   <h4>سفارشات</h4>
-                  <GaugeChart
+                  <GaugeChartCustom
                     labels={["کل خرید", "صورت حساب ها", "پرداخت شده ها"]}
                     data1={ordersBrief.totalBought}
                     data2={ordersBrief.totalInvoices}
@@ -123,7 +123,7 @@ const CustomerBrief: React.FC = () => {
                   item.totalShippingRequest !== 0 ? (
                     item.measureUnitId === 5 ? (
                       <>
-                        <GaugeChart
+                        <GaugeChartCustom
                           labels={[" کل درخواست های ارسال", "  ارسال شده ها"]}
                           data1={item.totalShippingRequest}
                           data2={item.totalShipped}
@@ -139,7 +139,7 @@ const CustomerBrief: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <GaugeChart
+                        <GaugeChartCustom
                           labels={[" کل درخواست های ارسال", "  ارسال شده ها"]}
                           data1={item.totalShippingRequest}
                           data2={item.totalShipped}

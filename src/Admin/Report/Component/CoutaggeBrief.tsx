@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { useParams } from "react-router-dom";
-import { GaugeChart } from "../../../Common/Shared/Chart/GaugeChart";
+import { GaugeChartCustom } from "../../../Common/Shared/Chart/GaugeChartCustom";
 import { GetCoutaggeBrief } from "../../../services/reportService";
+import GaugeChart from 'react-gauge-chart'
 
 const CoutaggeBrief: React.FC = () => {
     const params = useParams()
@@ -36,12 +37,11 @@ const CoutaggeBrief: React.FC = () => {
                         
                        
 
-                            {Berief.map((item: any) =>
+                            {Berief.map((item: any,index:number) =>
                                 <>
                                  <div className="col-6 text-center">
                                     <h4 >{`${item.company.companyName}`}</h4>
-                                    <GaugeChart labels={null} data1={item.supplyAmount.quantity} data2={item.salesAmount.quantity} data3={null} />
-
+                                    <GaugeChart id={` gauge${index}`} nrOfLevels={10} percent={(item.supplyAmount.quantity)/100}/>
                                     </div>
                                 </>
 

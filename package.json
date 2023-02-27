@@ -26,6 +26,7 @@
     "react-countdown": "^2.3.5",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
+    "react-gauge-chart": "^0.4.1",
     "react-icons": "^4.7.1",
     "react-modal": "^3.16.1",
     "react-multi-date-picker": "^3.3.4",
@@ -75,5 +76,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-gauge-chart": "^0.4.0"
   }
 }
