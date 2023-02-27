@@ -31,7 +31,7 @@ if(roles.length>0){
 }
 else if(role)
 {
-    return token && role.some((item: any) => item > 2) ? children : <Navigate to="/admin" />
+    return token && role.some((item: any) => item > 2) ? children : <Navigate to="/client" />
 
 }
 else{

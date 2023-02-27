@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route,useNavigate } from "react-router-dom";
 import FooterClient from "./Footer/FooterClient";
 import HeaderClient from "./Header/HeadrClient";
 import ClientSideNavbar from "./../Nav/ClientSideNavbar";
@@ -33,6 +33,8 @@ import { decryptStirng, encryptMessage } from './../../Utils/DecryptionUtill';
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
+  const [roles, setUserRoles] = useState<any>([]);
+  const navigate=useNavigate()
   const refreshPage = () => {
     window.location.reload();
   };
@@ -68,6 +70,7 @@ const ClientsMainLayout: React.FC = () => {
     } catch (error) {
       refreshPage();
     }
+    setUserRoles(data.result.userRoleIds)
     let  role= data.result.userRoleIds
     
     localStorage.setItem('rd',encryptMessage( role))
@@ -84,6 +87,7 @@ const ClientsMainLayout: React.FC = () => {
     }
   };
 
+ 
   return (
     <Fragment>
       <div className="headerClient">
@@ -106,6 +110,7 @@ const ClientsMainLayout: React.FC = () => {
               <ClientSideNavbar />
             </div>
             <div className=" col-lg-9">
+              {!roles.includes(1)?
               <Routes>
                 <Route path="/" element={<DashbordCustomer />} />
                 <Route path="/*" element={<NotFound />} />
@@ -133,7 +138,25 @@ const ClientsMainLayout: React.FC = () => {
                 <Route path="invoice" element={<InvoiceClient/>}/>
                 <Route path="PaymentMethod" element={<PaymentMethodComponent/>}/>
                 <Route path="payment" element={<PaymentList/>}/>
-              </Routes>
+              </Routes>:
+              
+
+               <Routes>
+               <Route path="/" element={<UserProfile />} />
+               <Route path="/*" element={<NotFound />} />
+               {/* Sales&Order&Bazargah*/}
+
+           
+
+               <Route path="userProfile" element={<UserProfile />} />
+               <Route path="editProfile" element={<EditProfile />} />
+              
+               <Route path="newAddress" element={<AddresForm />} />
+               
+             
+             </Routes>
+              
+              }
             </div>
           </div>
         </div>
