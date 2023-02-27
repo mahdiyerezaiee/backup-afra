@@ -38,7 +38,7 @@ interface Props {
   labels: any;
 }
 
-export function GaugeChart({ data1, data2, data3, labels }: Props) {
+export function GaugeChartCustom({ data1, data2, data3, labels }: Props) {
 
   const data: any = {
     labels: labels,
