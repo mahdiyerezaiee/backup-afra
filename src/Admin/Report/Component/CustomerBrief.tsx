@@ -105,70 +105,76 @@ const CustomerBrief: React.FC = () => {
             <div className="row mt-2 text-center">
                 <div className="col-12  ">
                   <div className="row">
-                  {ordersBrief.totalBought !== 0 ? (
+                 
 <Fragment>
   
                 
 
-                    <div className="col-4 ">
+                    <div className="col-md-4 ">
                     <h4>سفارشات</h4>
 
                       <span>براساس پرداخت شده ها</span>
                       <GaugeChart
                         id="gauge-chart6"
-                        colors={["#5685ff47", "#51f4eb42"]}
                         arcWidth={0.3}
                         style={{fontSize:"14.0497px"}}
-
+                        cornerRadius={0}
+                         arcPadding={0}
+                         nrOfLevels={1000}
+                         colors={[ "#00ffff","#009fff", "#0020ff" ]}
                         textColor="#000"
                         formatTextValue={() =>formatter.format( ordersBrief.totalPaid)}
-                        percent={
-                          ordersBrief.totalPaid / ordersBrief.totalBought
+                        percent={ordersBrief.totalBought?
+                          ordersBrief.totalPaid / ordersBrief.totalBought:0
                         }
                       />
                       <p> کل خرید : {formatter.format( ordersBrief.totalBought)}</p>
 
                       <p> پرداخت شده ها : {formatter.format( ordersBrief.totalPaid)}</p>
                     </div>
-                    <div className="col-4 ">
+                    <div className="col-md-4 ">
                     <h4>سفارشات</h4>
 
                       <span>براساس صورت حساب ها</span>
                       <GaugeChart
                         id="gauge-chart6"
-                        colors={["#5685ff47", "#51f4eb42"]}
                         arcWidth={0.3}
                         style={{fontSize:"14.0497px"}}
-
+                        cornerRadius={0}
+                        arcPadding={0}
+                        nrOfLevels={1000}
+                        colors={[ "#ffbf00","#cf9812a", "#fc6600" ]}
                         textColor="#000"
                         formatTextValue={() => formatter.format( ordersBrief.totalInvoices)}
-                        percent={
-                          ordersBrief.totalInvoices / ordersBrief.totalBought
+                        percent={ordersBrief.totalBought ?
+                          ordersBrief.totalInvoices / ordersBrief.totalBought: 0
                         }
                       />
                       <p> کل خرید : {formatter.format( ordersBrief.totalBought)}</p>
 
                       <p> صورت حساب ها : {formatter.format( ordersBrief.totalInvoices)}</p>
-                    </div></Fragment>) : null}
-                    <div className="col-4 text-center">
+                    </div></Fragment>
+                    <div className="col-md-4 text-center">
+                
+                  <h4>حواله</h4> 
                 {shippingsBrief.map((item: any) =>
-                  item.totalShippingRequest !== 0 ? <h4>حواله</h4> : null
-                )}
-                {shippingsBrief.map((item: any) =>
-                  item.totalShippingRequest !== 0 ? (
+                 
                     item.measureUnitId === 5 ? (
                       <>
                         <span>وزنی</span>
                         <GaugeChart
                           id="gauge-chart6"
                           //  nrOfLevels={10}
-                          colors={["#5685ff47", "#51f4eb42"]}
                           arcWidth={0.3}
                           style={{fontSize:"14.0497px"}}
                           textColor="#000"
+                          cornerRadius={0}
+                          arcPadding={0}
+                          nrOfLevels={1000}
+                          colors={[ "#50c878","#2e8b57", "#043927" ]}
                           formatTextValue={() =>formatter.format(  item.totalShipped) }
-                          percent={
-                            item.totalShipped / item.totalShippingRequest
+                          percent={item.totalShippingRequest ?
+                            item.totalShipped / item.totalShippingRequest:0
                           }
                         />
                         <p>ارسال شده : {formatter.format( item.totalShipped)}</p>
@@ -183,11 +189,16 @@ const CustomerBrief: React.FC = () => {
                         <span>تعدادی</span>
                         <GaugeChart
                           id="gauge-chart6"
-                          nrOfLevels={10}
-                          colors={["#5685ff47", "#51f4eb42"]}
                           arcWidth={0.3}
-                          percent={
-                            item.totalShipped / item.totalShippingRequest
+                          style={{fontSize:"14.0497px"}}
+                          textColor="#000"
+                          cornerRadius={0}
+                          arcPadding={0}
+                          nrOfLevels={1000}
+                          colors={[ "#50c878","#2e8b57", "#043927" ]}
+                          formatTextValue={() =>formatter.format(  item.totalShipped) }
+                          percent={item.totalShippingRequest ?
+                            item.totalShipped / item.totalShippingRequest:0
                           }
                         />
                         <p>ارسال شده : {item.totalShipped}</p>
@@ -197,7 +208,7 @@ const CustomerBrief: React.FC = () => {
                         <br />
                       </>
                     )
-                  ) : null
+                 
                 )}
               </div>
                   </div>

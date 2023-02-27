@@ -66,23 +66,7 @@ const OrderWayBillReportBrief: React.FC<Props> = ({  idCustomer}) => {
         GetShipping();
         // ShippingContract()
       }
-    const findeTakhsis = (id: any) => {
-
-        const row: any = document.getElementById(`${id}`);
-        const ClassNames: any = document.getElementsByClassName(`findeTakhsis`)
-
-        if (ClassNames.length !== 0) {
-            ClassNames.item(".findeTakhsis").classList.remove(`findeTakhsis`)
-        }
-        row.classList.remove("findeTakhsis")
-
-        row.scrollIntoView({ behavior: "smooth", block: "center" });
-
-        row.classList.add("findeTakhsis")
-
-    }
     
-    let color = "#0c4088"
    
     if (Shipping && show ) {
         
@@ -128,14 +112,14 @@ const OrderWayBillReportBrief: React.FC<Props> = ({  idCustomer}) => {
                                     <th >نحوه ارسال</th>
                                     <th >شماره قرارداد</th>
                                     <th >نام باربری</th>
-                                    <th >مشاهده جزییات</th>
+                                    {/* <th >مشاهده جزییات</th> */}
                                  
                                 </tr>
                             </thead>
-                            <tbody className="text-center" id="havaleTable">
+                            <tbody className="text-center">
                                 {Shipping ? Shipping.map((item: any) =>
 
-                                    <tr key={item.id} id={item.entityId} onClick={() => findeTakhsis(item.entityId)}>
+                                    <tr key={item.id} id={item.entityId} >
                                         <td data-th="  #"  >{item.id}</td>
                                         <td data-th="  شناسه"  >{(item.entityTypeId === 10 ? 'سفارش' : 'تخصیص') + ` ${item.entityId}#`}</td>
                                         <td data-th="واحد" >{MeasureUnitSample.filter(i => i.id === item.measureUnitId).map(item => item.name)}</td>
@@ -145,7 +129,7 @@ const OrderWayBillReportBrief: React.FC<Props> = ({  idCustomer}) => {
                                         <td data-th="نحوه ارسال">{DeliveryMethods.filter(i => i.id === item.deliveryMethodId).map(i => i.name)}</td>
                                         <td data-th="شماره قراداد">{item.shippingContractCode ? item.shippingContractCode : '--'}</td>
                                         <td data-th="نام باربری">{item.shippingCompanyName ? item.shippingCompanyName : '--'}</td>
-                                        <td data-th="مشاهده جزییات"> <svg  onClick={() => openModal(item.id)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
+                                        {/* <td data-th="مشاهده جزییات"> <svg  onClick={() => openModal(item.id)} xmlns="http://www.w3.org/2000/svg" width='25' height='25' viewBox="0 0 256 256"><rect
                                             width="256" height="256" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
                                                 fill="none" stroke="#000" strokeLinecap="round"
                                                 strokeLinejoin="round" strokeWidth="12" /><line
@@ -156,7 +140,7 @@ const OrderWayBillReportBrief: React.FC<Props> = ({  idCustomer}) => {
                                                 x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="#000" strokeLinecap="round"
                                                 strokeLinejoin="round" strokeWidth="12" /><path
                                                 d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="#000"
-                                                strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg></td>
+                                                strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg></td> */}
 
                                     </tr>
 
@@ -169,7 +153,6 @@ const OrderWayBillReportBrief: React.FC<Props> = ({  idCustomer}) => {
                     </div> 
                        
                 
-                <ExtraShipping id={id} modalIsOpen={modalIsOpen} closeModal={closeModal} />
                 <div className=" text-end  p-2" style={{ textAlign: 'left' }}>
 
                 </div>
