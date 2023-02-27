@@ -24,29 +24,41 @@ const CoutaggeBrief: React.FC = () => {
         GetCoutaggeBerief()
 
     }, [])
+    const style = {
+
+        height: '100px'
+    }
     return (
         <div className=" statbox widget-content widget-content-area">
             <div className="row  ">
-              
+                <div className="mb-3 text-center col-12">
+                    <p className="text-center">گزارش بر مبنای کوتاژ</p>
+                </div>
                 <div className="col-12 ">
                     <div className="row mt-4">
+
 
                         <div className="row  text-center">
 
 
-                        
-                       
 
-                            {Berief.map((item: any,index:number) =>
+
+
+                            {Berief.map((item: any, index: number) =>
                                 <>
-                                 <div className="col-6 text-center">
-                                    <h4 >{`${item.company.companyName}`}</h4>
-                                    <GaugeChart id={` gauge${index}`} nrOfLevels={10} percent={(item.supplyAmount.quantity)/100}/>
+                                    <div className="col-4 text-center">
+                                        <GaugeChart id={` gauge${index}`} percent={(item.supplyAmount.quantity)} textColor='#000' formatTextValue={() => item.supplyAmount.quantity} />
+
+                                        <GaugeChart id={` gauge${index}`} percent={(item.salesAmount.quantity)} textColor='#000' formatTextValue={() => item.salesAmount.quantity} />
+
+                                        <h5 >{`${item.company.companyName}`}</h5>
+                                        <hr />
+
                                     </div>
                                 </>
 
                             )}
-                        
+
 
                         </div>
                     </div>
