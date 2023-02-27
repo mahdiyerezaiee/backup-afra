@@ -3668,3 +3668,6 @@ input[type=number]::-webkit-outer-spin-button {
 .textOnInput label input[disabled] {
 background-color: transparent!important;
 }
+ .text-group text{
+  font-size: 14.0497px!important;
+}
