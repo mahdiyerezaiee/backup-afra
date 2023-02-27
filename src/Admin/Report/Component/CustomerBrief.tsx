@@ -55,6 +55,10 @@ const CustomerBrief: React.FC = () => {
     GetBerief();
     handelGetAttachment();
   }, []);
+  var formatter = new Intl.NumberFormat('fa-IR', {
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+});
   let newAttachment: any = [];
   newAttachment = attachments.filter((item: any) => item.deleted === false);
 
@@ -117,14 +121,14 @@ const CustomerBrief: React.FC = () => {
                         style={{fontSize:"14.0497px"}}
 
                         textColor="#000"
-                        formatTextValue={() => ordersBrief.totalPaid}
+                        formatTextValue={() =>formatter.format( ordersBrief.totalPaid)}
                         percent={
                           ordersBrief.totalPaid / ordersBrief.totalBought
                         }
                       />
-                      <p> کل خرید : {ordersBrief.totalBought}</p>
+                      <p> کل خرید : {formatter.format( ordersBrief.totalBought)}</p>
 
-                      <p> پرداخت شده ها : {ordersBrief.totalPaid}</p>
+                      <p> پرداخت شده ها : {formatter.format( ordersBrief.totalPaid)}</p>
                     </div>
                     <div className="col-4 ">
                     <h4>سفارشات</h4>
@@ -137,14 +141,14 @@ const CustomerBrief: React.FC = () => {
                         style={{fontSize:"14.0497px"}}
 
                         textColor="#000"
-                        formatTextValue={() => ordersBrief.totalInvoices}
+                        formatTextValue={() => formatter.format( ordersBrief.totalInvoices)}
                         percent={
                           ordersBrief.totalInvoices / ordersBrief.totalBought
                         }
                       />
-                      <p> کل خرید : {ordersBrief.totalBought}</p>
+                      <p> کل خرید : {formatter.format( ordersBrief.totalBought)}</p>
 
-                      <p> صورت حساب ها : {ordersBrief.totalInvoices}</p>
+                      <p> صورت حساب ها : {formatter.format( ordersBrief.totalInvoices)}</p>
                     </div></Fragment>) : null}
                     <div className="col-4 text-center">
                 {shippingsBrief.map((item: any) =>
@@ -162,15 +166,15 @@ const CustomerBrief: React.FC = () => {
                           arcWidth={0.3}
                           style={{fontSize:"14.0497px"}}
                           textColor="#000"
-                          formatTextValue={() => item.totalShipped }
+                          formatTextValue={() =>formatter.format(  item.totalShipped) }
                           percent={
                             item.totalShipped / item.totalShippingRequest
                           }
                         />
-                        <p>ارسال شده : {item.totalShipped}</p>
+                        <p>ارسال شده : {formatter.format( item.totalShipped)}</p>
 
                         <p>
-                          کل درخواست های ارسال : {item.totalShippingRequest}
+                          کل درخواست های ارسال : {formatter.format( item.totalShippingRequest)}
                         </p>
                         <br />
                       </>

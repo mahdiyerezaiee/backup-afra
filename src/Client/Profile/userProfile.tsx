@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { ImUser } from "react-icons/im"
+import { ImCross, ImUser } from "react-icons/im"
 import { GetOrganisationById } from "../../services/organisationService";
 import { RootState } from "../../store";
 import { GetAddress, GetAllProvince } from "../../services/addressService";
@@ -169,7 +169,7 @@ const UserProfile: React.FC = () => {
 
 
               <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`} style={{height:"80px",width:"80px"}} />
-              <button onClick={() => HandelDeleteAttachment(newAttachment[0].id)} className="border-0 bg-transparent non-hover"><AiTwotoneDelete size="1.5rem" color="red" /></button>
+              <button onClick={() => HandelDeleteAttachment(newAttachment[0].id)} className="border-0 bg-transparent non-hover"><ImCross size="1rem" color="red" title="حذف عکس"/></button>
               <p >{user.firstName} {user.lastName}</p>
 
             </div>}

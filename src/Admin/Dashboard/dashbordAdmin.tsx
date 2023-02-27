@@ -39,7 +39,7 @@ const DashbordAdmin:React.FC = () => {
               <ChartMain />
           </div>
           <div className="reveal fade-bottom">
-              <SalesBoardForAdmin/>
+              {/* <SalesBoardForAdmin/> */}
           </div>
 
 
