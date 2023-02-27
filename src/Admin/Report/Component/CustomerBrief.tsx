@@ -1,5 +1,6 @@
 import QueryString from "qs";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import GaugeChart from "react-gauge-chart";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { useParams } from "react-router-dom";
 import { GaugeChartCustom } from "../../../Common/Shared/Chart/GaugeChartCustom";
@@ -97,25 +98,55 @@ const CustomerBrief: React.FC = () => {
             </div>
           </div>
           <div className="col-12 ">
-            <div className="row mt-2">
-              {ordersBrief.totalBought !== 0 ? (
-                <div className="col-6  text-center">
-                  <h4>سفارشات</h4>
-                  <GaugeChartCustom
-                    labels={["کل خرید", "صورت حساب ها", "پرداخت شده ها"]}
-                    data1={ordersBrief.totalBought}
-                    data2={ordersBrief.totalInvoices}
-                    data3={ordersBrief.totalPaid}
-                  />
-                  <p> کل خرید : {ordersBrief.totalBought}</p>
+            <div className="row mt-2 text-center">
+                <div className="col-12  ">
+                  <div className="row">
+                  {ordersBrief.totalBought !== 0 ? (
+<Fragment>
+  
+                
 
-                  <p> صورت حساب ها : {ordersBrief.totalInvoices}</p>
+                    <div className="col-4 ">
+                    <h4>سفارشات</h4>
 
-                  <p> پرداخت شده ها : {ordersBrief.totalPaid}</p>
-                  <br />
-                </div>
-              ) : null}
-              <div className="col-6 text-center">
+                      <span>براساس پرداخت شده ها</span>
+                      <GaugeChart
+                        id="gauge-chart6"
+                        colors={["#5685ff47", "#51f4eb42"]}
+                        arcWidth={0.3}
+                        style={{fontSize:"14.0497px"}}
+
+                        textColor="#000"
+                        formatTextValue={() => ordersBrief.totalPaid}
+                        percent={
+                          ordersBrief.totalPaid / ordersBrief.totalBought
+                        }
+                      />
+                      <p> کل خرید : {ordersBrief.totalBought}</p>
+
+                      <p> پرداخت شده ها : {ordersBrief.totalPaid}</p>
+                    </div>
+                    <div className="col-4 ">
+                    <h4>سفارشات</h4>
+
+                      <span>براساس صورت حساب ها</span>
+                      <GaugeChart
+                        id="gauge-chart6"
+                        colors={["#5685ff47", "#51f4eb42"]}
+                        arcWidth={0.3}
+                        style={{fontSize:"14.0497px"}}
+
+                        textColor="#000"
+                        formatTextValue={() => ordersBrief.totalInvoices}
+                        percent={
+                          ordersBrief.totalInvoices / ordersBrief.totalBought
+                        }
+                      />
+                      <p> کل خرید : {ordersBrief.totalBought}</p>
+
+                      <p> صورت حساب ها : {ordersBrief.totalInvoices}</p>
+                    </div></Fragment>) : null}
+                    <div className="col-4 text-center">
                 {shippingsBrief.map((item: any) =>
                   item.totalShippingRequest !== 0 ? <h4>حواله</h4> : null
                 )}
@@ -123,11 +154,18 @@ const CustomerBrief: React.FC = () => {
                   item.totalShippingRequest !== 0 ? (
                     item.measureUnitId === 5 ? (
                       <>
-                        <GaugeChartCustom
-                          labels={[" کل درخواست های ارسال", "  ارسال شده ها"]}
-                          data1={item.totalShippingRequest}
-                          data2={item.totalShipped}
-                          data3={null}
+                        <span>وزنی</span>
+                        <GaugeChart
+                          id="gauge-chart6"
+                          //  nrOfLevels={10}
+                          colors={["#5685ff47", "#51f4eb42"]}
+                          arcWidth={0.3}
+                          style={{fontSize:"14.0497px"}}
+                          textColor="#000"
+                          formatTextValue={() => item.totalShipped }
+                          percent={
+                            item.totalShipped / item.totalShippingRequest
+                          }
                         />
                         <p>ارسال شده : {item.totalShipped}</p>
 
@@ -135,33 +173,39 @@ const CustomerBrief: React.FC = () => {
                           کل درخواست های ارسال : {item.totalShippingRequest}
                         </p>
                         <br />
-                        <span>وزنی</span>
                       </>
                     ) : (
                       <>
-                        <GaugeChartCustom
-                          labels={[" کل درخواست های ارسال", "  ارسال شده ها"]}
-                          data1={item.totalShippingRequest}
-                          data2={item.totalShipped}
-                          data3={null}
+                        <span>تعدادی</span>
+                        <GaugeChart
+                          id="gauge-chart6"
+                          nrOfLevels={10}
+                          colors={["#5685ff47", "#51f4eb42"]}
+                          arcWidth={0.3}
+                          percent={
+                            item.totalShipped / item.totalShippingRequest
+                          }
                         />
                         <p>ارسال شده : {item.totalShipped}</p>
                         <p>
                           کل درخواست های ارسال : {item.totalShippingRequest}
                         </p>
                         <br />
-                        <span>تعدادی</span>
                       </>
                     )
                   ) : null
                 )}
               </div>
+                  </div>
+                </div>
+              
+              
             </div>
           </div>
         </div>
-        <OrderWayBillReportBrief idCustomer={params.id}/>
-        <InvoicesForReportBrief CustomerUserName={customer.userName}/>
-<OrderReportBrief UserName={customer.userName}/>
+        <OrderWayBillReportBrief idCustomer={params.id} />
+        <InvoicesForReportBrief CustomerUserName={customer.userName} />
+        <OrderReportBrief UserName={customer.userName} />
       </div>
     );
   } else {
