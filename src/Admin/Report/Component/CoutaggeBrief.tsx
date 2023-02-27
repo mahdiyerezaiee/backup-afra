@@ -37,12 +37,11 @@ const CoutaggeBrief: React.FC = () => {
                         
                        
 
-                            {Berief.map((item: any) =>
+                            {Berief.map((item: any,index:number) =>
                                 <>
                                  <div className="col-6 text-center">
                                     <h4 >{`${item.company.companyName}`}</h4>
-                                    <GaugeChartCustom labels={null} data1={item.supplyAmount.quantity} data2={item.salesAmount.quantity} data3={null} />
-                                    <GaugeChart id="test" nrOfLevels={20} percent={0.80}/>
+                                    <GaugeChart id={` gauge${index}`} nrOfLevels={10} percent={(item.supplyAmount.quantity)/100}/>
                                     </div>
                                 </>
 
