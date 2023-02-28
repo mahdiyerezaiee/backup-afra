@@ -33,7 +33,7 @@ import { decryptStirng, encryptMessage } from './../../Utils/DecryptionUtill';
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
-  const [roles, setUserRoles] = useState<any>([]);
+  const [userinfo, setUserinfo] = useState<any>([]);
   const navigate=useNavigate()
   const refreshPage = () => {
     window.location.reload();
@@ -52,6 +52,7 @@ const ClientsMainLayout: React.FC = () => {
         localStorage.setItem("connect", data.result.customer.id);
         localStorage.setItem("com", data.result.customer.companyId);
         
+        setUserinfo(data.result.customer)
         dispatch(addUser(data.result.customer));
       }
     } catch (error) {
@@ -70,7 +71,7 @@ const ClientsMainLayout: React.FC = () => {
     } catch (error) {
       refreshPage();
     }
-    setUserRoles(data.result.userRoleIds)
+    
     let  role= data.result.userRoleIds
     
     localStorage.setItem('rd',encryptMessage( role))
@@ -110,7 +111,7 @@ const ClientsMainLayout: React.FC = () => {
               <ClientSideNavbar />
             </div>
             <div className=" col-lg-9">
-              {!roles.includes(1)?
+              {!userinfo.requireInfo?
               <Routes>
                 <Route path="/" element={<DashbordCustomer />} />
                 <Route path="/*" element={<NotFound />} />
@@ -142,16 +143,16 @@ const ClientsMainLayout: React.FC = () => {
               
 
                <Routes>
-               <Route path="/" element={<UserProfile />} />
+               <Route path="/" element={<EditProfile />} />
                <Route path="/*" element={<NotFound />} />
                {/* Sales&Order&Bazargah*/}
 
            
 
-               <Route path="userProfile" element={<UserProfile />} />
+              
                <Route path="editProfile" element={<EditProfile />} />
               
-               <Route path="newAddress" element={<AddresForm />} />
+               
                
              
              </Routes>

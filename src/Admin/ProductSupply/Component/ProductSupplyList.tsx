@@ -451,8 +451,12 @@ const ProductSupply:React.FC = () => {
         },{Header:'شرکت',accessor:'companyName'},
         {
             Header: 'توضیحات', accessor: 'comment', Cell: (row:any) => {
+                if(row.row.original.comment!==null){
                 return (row.row.original.comment.substring(0, 20))
-            }
+                }
+                else{
+                return('--')
+            }}
         },
         {
             Header: 'فعال', accessor: '', isVisible: true,

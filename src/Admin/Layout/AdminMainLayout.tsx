@@ -103,6 +103,8 @@ import EditCredit from './../Credit/Component/EditCredit';
 import CustomerBrief from '../Report/Component/CustomerBrief';
 import { encryptMessage } from '../../Utils/DecryptionUtill';
 import CoutaggeBrief from './../Report/Component/CoutaggeBrief';
+import NavCustomerBrief from '../Report/Component/NavCustomerBrief';
+import NavCoutaggeBrief from './../Report/Component/NavCoutaggeBrief';
 
 const AdminMainLayout: React.FC = () => {
   const [isloading, setIsloading] = useState(true);
@@ -323,6 +325,8 @@ const AdminMainLayout: React.FC = () => {
                   <Route path='CustomersReports' element={<CustomerReports />} />
                   <Route path='OrdersReports' element={<OrdersReports />} />
                   <Route path='CoutaggeBerief/:id' element={<CoutaggeBrief />} />
+                  <Route path='CustomerBerief' element={<NavCustomerBrief />} />
+                  <Route path='CoutaggeBrief' element={<NavCoutaggeBrief />} />
 
                   {/* InvoiceCreator*/}
                   <Route path='invoice/:id' element={<InvoiceCreator closeModal={null} />} />
