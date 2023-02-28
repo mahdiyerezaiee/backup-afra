@@ -21,6 +21,7 @@ import { RootState } from "../../../store";
 import { GetUsersRolesById } from './../../../services/userService';
 import { optionsRole } from './../../../Common/Enums/RolesEnums';
 import { GetGroupWithCompany } from "../../../services/GroupService";
+import { FintotechCheck } from './../../../services/outScopeService';
 
 const EditUserInfo: React.FC = () => {
     const navigate = useNavigate()
@@ -261,8 +262,28 @@ const EditUserInfo: React.FC = () => {
     let defaultValue: any = allcompanies.filter((item: any) => item.value === companyId)[0]
 
     const handelFinotech=async()=>{
-
+        const body={
+            nationalCode,
+            "customerId":Number(params.id)
+        }
         
+        try {
+            const{data,status}=await FintotechCheck(body)
+            if (status === 200) {
+                toast.success(' استعلام شماره تلفن و نام کاربری مورد تایید است', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });}
+
+        } catch (error) {
+            console.log(error);
+            
+        }
 
     }
 

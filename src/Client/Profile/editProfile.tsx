@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 import { validatAlpha, validateEmail, validatmin10, validatPassword } from "../../Utils/validitionParams";
 import { RootState } from "../../store";
+import { FintotechCheck } from './../../services/outScopeService';
+import { ClipLoader } from 'react-spinners';
 
 const EditProfile: React.FC = () => {
     const navigate = useNavigate()
@@ -19,6 +21,8 @@ const EditProfile: React.FC = () => {
     const [nationalCode, setnationalCode] = useState(userinfo.nationalCode);
     const [email, setemail] = useState(userinfo.email);
     const [userInfo, setUserInfo] = useState({})
+  const [loading, setLoading] = useState(false);
+
 
     const [password, setPassword] = useState(null)
     const [passwordConfirm, setPasswordConfirm] = useState<any>(null)
@@ -57,14 +61,26 @@ const EditProfile: React.FC = () => {
 
         setShow(!show)
     }
-    const handelSetCustomer = async (user: any) => {
+    const handelSetCustomer = async () => {
 
+        setLoading(true)
         try {
+            const body = {
+                "customerId": userinfo.id,
+                nationalCode
+            }
 
-            const { data, status } = await setCustomerInfo(user);
+            const { data, status } = await FintotechCheck(body)
+
+
             if (status === 200) {
 
-                toast.success("اطلاعات با موفقیت ثبت شد", {
+              try {
+                
+            const { data, status } = await setCustomerInfo(user);
+            if(status===200){
+
+                toast.success(" اطلاعات با موفقیت ثبت شد لطفا منتظر تایید ادمین باشد", {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -73,23 +89,23 @@ const EditProfile: React.FC = () => {
                     draggable: true,
                     progress: undefined
                 });
+            }
+              } catch (error) {
+                
+                console.log(error);
+                
+              }
                 const { data, status } = await GetUserInfo();
 
 
-                if (roles.includes(1)) {
-
-
-
-
-
-
-                }
             }
 
 
         } catch (error) {
-
+            console.log(error);
+            
         }
+        setLoading(false)
     }
     const backHandel = (e: any) => {
         e.preventDefault()
@@ -128,9 +144,10 @@ const EditProfile: React.FC = () => {
                         companyId: userinfo.companyId
 
                     }}
-                        onSubmit={values => {
+                    enableReinitialize={true}
+                        onSubmit={(values) => {
                             // same shape as initial values
-                            handelSetCustomer(values)
+                            handelSetCustomer()
                         }}>
                         {({ errors, touched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
@@ -139,19 +156,19 @@ const EditProfile: React.FC = () => {
 
                                     <label>نام</label>
                                     <Field type="text" className="form-control opacityForInput"
-                                        placeholder="نام" name="firstName" validate={validatAlpha} value={values.firstName} onChange={handleChange} />
+                                        placeholder="نام" name="firstName" validate={validatAlpha} value={firstName} onChange={(e:any)=>{setfirstName(e.target.value)}}/>
                                     {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
 
                                 </div>
                                 <div className="col-lg-6 form-group mb-4 textOnInput">
                                     <label>نام خانوادگی</label>
-                                    <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} />
-                                    {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
+                                    <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} value={lastName}   onChange={(e:any)=>setlastName(e.target.value)}/>
+                                    
 
                                 </div>
                                 <div className="col-lg-6 form-group mb-4 textOnInput">
                                     <label>کد ملی</label>
-                                    <Field type="text" className="form-control opacityForInput" placeholder="0070090602" name="nationalCode" validate={validatmin10} />
+                                    <Field type="text" className="form-control opacityForInput" placeholder="0070090602" name="nationalCode" validate={validatmin10} value={values.nationalCode} onChange={(e:any)=>setnationalCode(e.target.value)}/>
                                     {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
 
                                 </div>
@@ -159,7 +176,7 @@ const EditProfile: React.FC = () => {
 
                                 <div className="col-lg-6 form-group mb-4 textOnInput">
                                     <label>ایمیل</label>
-                                    <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name='email' validate={validateEmail} />
+                                    <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name='email' validate={validateEmail} value={values.email} onChange={(e:any)=>setemail(e.target.value)}/>
                                     {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
 
                                 </div>
@@ -244,7 +261,8 @@ const EditProfile: React.FC = () => {
                                 <div className="col-12">
                                     <div className='row justify-content-between mt-4'>
                                         <div >
-                                            <button type="submit" className="btn btn-success">ذخیره تغییرات</button>
+                                            <button type="submit" className="btn btn-success">درخواست بررسی اطلاعات</button>
+                                            <ClipLoader loading={loading} color="#ffff" size={15} />
                                         </div>
                                         <div >
                                             <button onClick={backHandel} className="btn btn-primary">بازگشت</button>
