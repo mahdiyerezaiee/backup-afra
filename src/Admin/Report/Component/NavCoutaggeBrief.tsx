@@ -87,7 +87,7 @@ const NavCoutaggeBrief: React.FC = () => {
         setLoading(true)
         const { data, status } = await GetAllProductWithSearch(config);
         if (status === 200) {
-            SetProductSupply(data.result.users.values);
+            SetProductSupply(data.result.productSupplies.values);
 
             SetClicked(true);
             setLoading(false)
