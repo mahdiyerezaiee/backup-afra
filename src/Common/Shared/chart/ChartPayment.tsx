@@ -211,11 +211,11 @@ useEffect(()=>{
                   barPercentage: 1.6,
                   grid: {
                       borderDash: [10, 10],
-                    //   display: (c:any) => {
-                    //     console.log(c);
+                      display: (c:any) => {
+                        console.log(c.scale);
                         
-                    //     // return c.tick.label.includes('اکنون') ? "false" : "true"
-                    // },
+                        return c.scale.ticks.map((i:any)=>i.label.includes("اکنون") )? false : true
+                    },
                       zeroLineColor: "transparent"
                   },
                   ticks: {
