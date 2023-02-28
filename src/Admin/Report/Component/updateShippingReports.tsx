@@ -108,7 +108,7 @@ const UpdateShippingReports: React.FC = () => {
         setLoading(true)
         let body: any;
         if (reportMethod === '3days') {
-            body = { startDate: null, endDate: null, shippingCompanyId: null,updateCompaniesStatus,useExistingData:null }
+            body = { startDate: null, endDate: null, shippingCompanyId: null,updateCompaniesStatus,useExistingData }
         }
         else {
             body = {
@@ -194,7 +194,7 @@ const UpdateShippingReports: React.FC = () => {
     const shippingCompanySelect = () => {
         return (companies.map((data: any) => ({ label: data.name, value: data.id })))
     }
-    const data = useMemo(()=>report,[report])
+    const data = report
     const handelFrom = () => {
         setClicked(false)
     }

@@ -30,10 +30,13 @@ import PaymentMethodComponent from "../paymentMethods/paymentMethods";
 import PaymentList from "../payment/paymentList";
 import AddresForm from './../IdentityRegister/Component/AddresForm';
 import { decryptStirng, encryptMessage } from './../../Utils/DecryptionUtill';
+import SalesBoardForCustomer from './../../Common/Shared/Common/salesBoard';
 
 const ClientsMainLayout: React.FC = () => {
   const [collapsed, Setcollapsed] = useState(true);
   const [userinfo, setUserinfo] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+
   const navigate=useNavigate()
   const refreshPage = () => {
     window.location.reload();
@@ -120,6 +123,8 @@ const ClientsMainLayout: React.FC = () => {
                 <Route path="orderlist" element={<OrderCustomer />} />
                 <Route path="orderDetail/:id" element={<OrderDetailTest />} />
                 <Route path='invoice/:id' element={<InvoiceCreator closeModal={null} />} />
+                <Route path="salesBoard" element={<SalesBoardForCustomer setloading={setLoading}  />} />
+
 
                 {/* Ticket*/}
 

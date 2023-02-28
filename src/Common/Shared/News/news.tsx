@@ -2,7 +2,11 @@ import {useEffect, useState} from "react";
 import {GetAllNewsForUsers, GetAllNewsForUsersPage} from "../../../services/newsService";
 import QueryString from "qs";
 
-const News:React.FC = () => {
+interface Props {
+    setloading: any;
+  }
+  
+const News:React.FC <Props>= ({setloading}) => {
   const [guessNews , setGuessNews]= useState( getDataNews().guessNews?getDataNews().guessNews: [])
     let d = new Date();
     d.setTime(d.getTime() +  (60 * 1000));
@@ -18,6 +22,7 @@ const News:React.FC = () => {
     }
 
     useEffect(()=>{
+        setloading(false)
         const getNews =async () => {
             let config = {
 
@@ -36,7 +41,7 @@ const News:React.FC = () => {
                 setGuessNews(data.result.news.values)
                 dataNews.guessNews=data.result.news.values
                 sessionStorage.setItem('dataNews', JSON.stringify(dataNews));
-
+                
             }catch (err){
                 console.log(err)
             }
