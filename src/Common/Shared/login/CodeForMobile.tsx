@@ -87,17 +87,10 @@ const CodeForMobile: React.FC = () => {
                 const response = await GetUsersRoles()
 
 
-                if (response.data.result.userRoleIds.every((Item: any) => Item <= 2)) {
+                
 
                     history('/client')
-                    document.body.classList.add('clientBody')
-
-                }
-                else {
-                    history('/admin')
-                    document.body.classList.remove('clientBody')
-
-                }
+                  
             }
 
 

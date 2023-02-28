@@ -53,12 +53,13 @@ useEffect(()=>{
 },[ScheduleTypeId ])
     if (datas && datas.length > 0){
         const labels =datas.map((item:any)=>item.shippingCompanyName)
-      
+        let delayed:any;
+
     const data:any = {
         labels: labels,
         datasets: [
           {
-            label: ' مقدار باقی مانده',
+            label: ' مقدار درخواست شده',
             data: datas.map((i:any)=> i.shippedQuantity),
             backgroundColor: "MediumVioletRed",
             fill: false,
@@ -78,7 +79,18 @@ useEffect(()=>{
         type: 'bar',
         responsive: true,
      maintainAspectRatio: false,
-        
+     animation: {
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context:any) => {
+          let delay = 0;
+          if (context.type === 'data' && context.mode === 'default' && !delayed) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
+      },
           elements: {
               point: {
                   radius: 0,
@@ -203,9 +215,12 @@ useEffect(()=>{
                     </a>
 
                     <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
+                    <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>10 ماه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>10روز اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 10 ساعت اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 10دقیقه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 10 ثانیه اخیر</a>
                     </div>
                 </div>
                 </div>
