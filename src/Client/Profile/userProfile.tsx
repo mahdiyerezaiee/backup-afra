@@ -41,7 +41,7 @@ const UserProfile: React.FC = () => {
       params: {
         entityTypeId: 1,
         entityId: Number(localStorage.getItem('connect')),
-        attachmentTypeId:3
+        attachmentTypeId: 3
       },
       paramsSerializer: (params: any) => {
         return QueryString.stringify(params);
@@ -123,15 +123,15 @@ const UserProfile: React.FC = () => {
     } catch (error) {
 
       console.log(error);
- 
+
     }
 
-
+    window.location.reload()
 
   }
   let iconStyles = { color: "black", fontSize: "1em", fill: 'black' };
   let newAttachment: any = []
-  newAttachment = attachments.filter((item: any) => item.deleted === false && item.attachmentTypeId===3)
+  newAttachment = attachments.filter((item: any) => item.deleted === false && item.attachmentTypeId === 3)
   return (
 
     <div className="row layout-spacing">
@@ -163,8 +163,8 @@ const UserProfile: React.FC = () => {
 
 
 
-              <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`} style={{height:"80px",width:"80px"}} />
-              <button onClick={() => HandelDeleteAttachment(newAttachment[0].id)} className="border-0 bg-transparent non-hover"><ImCross size="1rem" color="red" title="حذف عکس"/></button>
+              <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`} style={{ height: "80px", width: "80px" }} />
+              <button onClick={() => HandelDeleteAttachment(newAttachment[0].id)} className="border-0 bg-transparent non-hover"><ImCross size="1rem" color="red" title="حذف عکس" /></button>
               <p >{user.firstName} {user.lastName}</p>
 
             </div>}

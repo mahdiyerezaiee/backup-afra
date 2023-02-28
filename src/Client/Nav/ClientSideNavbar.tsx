@@ -41,6 +41,8 @@ const ClientSideNavbar: React.FC = () => {
       params: {
         entityTypeId: 1,
         entityId: Number(localStorage.getItem('connect')),
+        attachmentTypeId:3
+
 
       },
       paramsSerializer: (params: any) => {
@@ -72,7 +74,8 @@ console.log(user);
 
 
   let newAttachment: any = []
-  newAttachment = attachments.filter((item: any) => item.deleted === false)
+  newAttachment = attachments.filter((item: any) => item.deleted === false && item.attachmentTypeId===3)
+  
   return (
     <Sidebar defaultCollapsed={false} className="client-sideBar sticky-menu ">
       <div className="m-2 text-center   text-black-50 p-3 info-client">
