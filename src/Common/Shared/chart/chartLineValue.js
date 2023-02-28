@@ -24,11 +24,23 @@ ChartJS.register(
     Filler,
     Legend
 );
+let delayed;
 
 const options = {
     responsive: true,
     maintainAspectRatio: false,
-
+    animation: {
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context) => {
+          let delay = 0;
+          if (context.type === 'data' && context.mode === 'default' && !delayed) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
+      },
     elements: {
         point: {
             radius: 0,
@@ -179,9 +191,12 @@ export function ChartLineValue({datas , setTypeId}) {
                     </Link>
 
                     <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                        <Link className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</Link>
-                        <Link className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</Link>
-                        <Link className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</Link>
+                    <a className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(4)}> 10 ساعت اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(5)}> 10دقیقه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(6)}> 10 ثانیه اخیر</a>
                     </div>
                 </div>
                 </div>
