@@ -15,6 +15,7 @@ import { GetUsersRoles } from '../../services/userService';
 import { TbFileInvoice } from 'react-icons/tb';
 import QueryString from 'qs';
 import { GetAttachments } from './../../services/attachmentService';
+import { GrCatalog } from 'react-icons/gr';
 
 const attachmetURL = (window as any).globalThis.stie_att
 
@@ -99,6 +100,7 @@ console.log(user);
 
       <Menu >
         <MenuItem icon={<RiDashboardLine size={'1.2rem'} />}  routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="/client" />}>داشبورد</MenuItem>
+        <MenuItem icon={<GrCatalog    size={'1.2rem'} color='#4C2ED1' />}  routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="/client/salesBoard" />}>تابلو عرضه</MenuItem>
         <MenuItem icon={<FaRegHandshake size={'1.2rem'} />} routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="orderlist" />}> سفارشات من</MenuItem>
         <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="ticket" />}> تیکت های من</MenuItem>
         <MenuItem icon={<FaUserCog size='2rem' />} routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>

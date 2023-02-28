@@ -32,7 +32,7 @@ const DashbordGuess:React.FC = () => {
     <hr/>
     <SalesBoard setloading={setLoading} />
     <hr/>
-    <News />
+    <News setloading={setLoading} />
     </Fragment>)}
 }
 export default DashbordGuess

@@ -6,6 +6,7 @@ import SalesBoardForCustomer from "../../../Common/Shared/Common/salesBoard";
 import BlockReport from "../../Reports/BlockReport";
 import { GridLoader } from "react-spinners";
 
+
 const DashbordCustomer: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
@@ -18,9 +19,9 @@ const DashbordCustomer: React.FC = () => {
       </div> : null}
       <BlockReport  />
       <hr />
-      <SalesBoardForCustomer setloading={setLoading} />
+      {/* <SalesBoardForCustomer setloading={setLoading} /> */}
       <hr />
-      <News  />
+      <News setloading={setLoading} />
     </Fragment>
   );
 };

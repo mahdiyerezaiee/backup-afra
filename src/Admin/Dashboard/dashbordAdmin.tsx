@@ -5,8 +5,11 @@ import SalesBoardForAdmin from '../../Common/Shared/Common/salesBoardForAdmin';
 import ReportBlock from "../../Common/Shared/Chart/reportBlock";
 import OverDuePaymentsByAttachments from "../../Common/Shared/Common/OverDuePaymentsByAttachments";
 import ScheduleJob from "../Report/Component/ScheduleJob";
+import { useState } from 'react';
 
 const DashbordAdmin:React.FC = () => {
+  const [loading, setLoading] = useState(true);
+
     useEffect(()=>{
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
@@ -44,7 +47,8 @@ const DashbordAdmin:React.FC = () => {
 
 
 <div className="row mt-3 reveal fade-left">
-    <div className="col-lg-6 col-sm-12"> <News/></div>
+    <div className="col-lg-6 col-sm-12">       <News setloading={setLoading} />
+</div>
     <div className="col-lg-6 col-sm-12"><ScheduleJob/></div>
 </div>
 
