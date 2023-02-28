@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const CreditState = {
+export const CreditState:any = {
     loading: false,
-    body: [],
+    body: {},
    
   };
   
@@ -11,7 +11,7 @@ export const CreditState = {
     reducers: {
       setCredit: (state:any, action:any) => {
         state.loading = true;
-        state.body = action.payload.body;
+        state.body = action.payload
       },
       setCreditSuccess: (state:any , action:any) => {
         state.loading = false;
