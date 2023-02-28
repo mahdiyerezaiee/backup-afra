@@ -199,15 +199,15 @@ const NavCoutaggeBrief: React.FC = () => {
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center '>
-                        <div className=' col-lg-6 col-sm-12 m-2'>
+                        <div className=' col-lg-4 col-sm-12 m-2'>
 
 
                             <form >
                                 <div className=' textOnInput form-group'>
                                     <div className=" col-12 ">
-                                        <label>نام</label>
+                                        <label>کد کوتاژ</label>
 
-                                        <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام " value={CottageCode} onChange={e => setCottageCode(e.target.value)} />
+                                        <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد کوتاژ " value={CottageCode} onChange={e => setCottageCode(e.target.value)} />
                                     </div>
 
 
