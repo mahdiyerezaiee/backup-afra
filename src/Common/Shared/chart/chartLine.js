@@ -195,6 +195,9 @@ export function ChartLineValue() {
                         <Link className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</Link>
                         <Link className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</Link>
                         <Link className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</Link>
+                        <a className="dropdown-item" onClick={()=> setTypeId(4)}> 10 ساعت اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(5)}> 10دقیقه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(6)}> 10ثانیه اخیر</a>
                     </div>
                 </div>
                 </div>

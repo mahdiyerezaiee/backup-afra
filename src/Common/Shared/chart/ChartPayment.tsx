@@ -75,9 +75,12 @@ useEffect(()=>{
     }
 
 },[ScheduleTypeId , PaymentMethodId])
+    
     if (datas && datas.length >0){
-        const labels =datas.map((item:any)=>item.current === true ? item.scheduleName + " " + "(امروز)": item.scheduleName)
-      
+        
+       
+        let labels  = datas.map((item:any)=>item.current === true ? item.scheduleName + " " + "(اکنون)": item.scheduleName)
+
     const data:any = {
         labels: labels,
         datasets: [
@@ -102,11 +105,24 @@ useEffect(()=>{
           
         ]
       };
+      let delayed:any;
+     
       const config:any = {
         type: 'line',
         responsive: true,
      maintainAspectRatio: false,
-        
+     animation: {
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context:any) => {
+          let delay = 0;
+          if (context.type === 'data' && context.mode === 'default' && !delayed) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
+      },
           elements: {
               point: {
                   radius: 0,
@@ -164,9 +180,9 @@ useEffect(()=>{
       
          
           scales: {
-             
-                  yAxes: {
-      
+
+               yAxes: {
+
                   barPercentage: 1.6,
                   grid: {
                       // borderDash: [10, 10],
@@ -183,25 +199,36 @@ useEffect(()=>{
                       },
       
                       major: {
-                          enable: true
+                          enable: false
                       }
                   },
                   suggestedMin: -10,
                     suggestedMax: 200
               },
               xAxes: {
+                
+                
                   barPercentage: 1.6,
                   grid: {
                       borderDash: [10, 10],
-                      display: false,
+                    //   display: (c:any) => {
+                    //     console.log(c);
+                        
+                    //     // return c.tick.label.includes('اکنون') ? "false" : "true"
+                    // },
                       zeroLineColor: "transparent"
                   },
                   ticks: {
-                    
+  
+                    rtl:false,
+                    color: (c:any) => {
+                        return c.tick.label.includes('اکنون') ? "red" : "black"
+                    },
                       padding: 4,
                       font: {
                           family: "diroz", // Add your font here to change the font of your x axis
-                          size: 10
+                          size: 8,
+                          weight:500,
                       },
       
                       major: {
@@ -231,15 +258,18 @@ useEffect(()=>{
                     </a>
 
                     <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
+                    <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>10 ماه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>10روز اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 10 ساعت اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 10دقیقه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 10 ثانیه اخیر</a>
                     </div>
                 </div>
                 </div>
                 <div className="btn-group m-2" role="group" aria-label="Basic example">
                 </div>
-                <div className="widget-heading text-center">
+                <div className="widget-heading ">
                  <span className="m-auto text-dark">نحوه پرداخت</span> :
 <div className='d-inline p-2 '>
 
