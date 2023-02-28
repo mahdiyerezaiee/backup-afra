@@ -212,7 +212,6 @@ useEffect(()=>{
                   grid: {
                       borderDash: [10, 10],
                       display: (c:any) => {
-                        console.log(c.scale);
                         
                         return c.scale.ticks.map((i:any)=>i.label.includes("اکنون") )? false : true
                     },

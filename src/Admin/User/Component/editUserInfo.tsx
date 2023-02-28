@@ -261,7 +261,8 @@ const EditUserInfo: React.FC = () => {
 
     let defaultValue: any = allcompanies.filter((item: any) => item.value === companyId)[0]
 
-    const handelFinotech=async()=>{
+    const handelFinotech=async(e:any)=>{
+        e.preventDefault()
         const body={
             nationalCode,
             "customerId":Number(params.id)
@@ -349,14 +350,14 @@ const EditUserInfo: React.FC = () => {
 
                                                 <label className="form-check-label mb-3">
 
-                                                    <Field type="checkbox" className="form-check-input" name="active" />
+                                                    <Field type="checkbox" className="form-check-input" name="active" value={active} onChange={(e:any)=>setActive(e.target.chechked)} />
                                                     فعال                                     </label>
                                             </div>
                                             <div className="col-lg-3 col-md-6 col-sm-11">
 
                                                 <label className="form-check-label mb-3 text-danger font-weight-bold">
 
-                                                    <Field type="checkbox" name="actionBlock" className="form-check-input" />
+                                                    <Field type="checkbox" name="actionBlock" className="form-check-input" value={actionBlock} onChange={(e:any)=>SetactionBlock(e.target.chechked)}/>
                                                     تعلیق کاربر                                  </label>
                                             </div>
 
@@ -369,7 +370,7 @@ const EditUserInfo: React.FC = () => {
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                             <label >شماره موبایل</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="شماره موبایل" name="userName" validate={validatMobail} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="شماره موبایل" name="userName" validate={validatMobail}  value={userName} onChange={(e:any)=>setUserName(e.target.value)}/>
 
                                             {errors.userName && touched.userName && <div className="text-danger">{errors.userName}</div>}
 
@@ -378,23 +379,23 @@ const EditUserInfo: React.FC = () => {
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                             <label >نام</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="نام" name="firstName" validate={validatAlpha} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="نام" name="firstName" validate={validatAlpha}  value={firstName} onChange={(e:any)=>setFirstName(e.target.value)}/>
                                             {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
                                         </div>
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-4" >
                                             <label >نام خانوادگی</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha}   value={lastName} onChange={(e:any)=>setLastName(e.target.value)}/>
                                             {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                             <label >کد ملی</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" validate={validatmin10} name="nationalCode" />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" validate={validatmin10} name="nationalCode"  value={nationalCode} onChange={(e:any)=>setNationalCode(e.target.value)}/>
                                             {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
 
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                             <label >ایمیل</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name="email" validate={validateEmail} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name="email" validate={validateEmail}  value={email} onChange={(e:any)=>setEmail(e.target.value)} />
                                             {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
 
                                         </div>
@@ -402,7 +403,7 @@ const EditUserInfo: React.FC = () => {
 
                                         <div className={companies.length > 0 && (userRole[0] === 7 || companies.length > 0 && userRole[0] === 8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
                                             <label >مقدار اعتبار </label>
-                                            <Field type="text" className=" formater form-control opacityForInput" placeholder="100,000" validate={validatNumber} name='maxValidity' />
+                                            <Field type="text" className=" formater form-control opacityForInput" placeholder="100,000" validate={validatNumber} name='maxValidity'  value={maxValidity} onChange={(e:any)=>setUserName(e.target.maxValidity)}/>
                                             {errors.maxValidity && touched.maxValidity && <div className="text-danger">{String(errors.maxValidity)}</div>}
 
                                         </div>
@@ -507,7 +508,7 @@ const EditUserInfo: React.FC = () => {
 
                                         <div className="input-group col-lg-5 col-md-6 col-sm-11 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                             <label >رمز عبور</label>
-                                            <Field type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" name="password" onChange={(e: any) => {
+                                            <Field type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" name="password" value={password} onChange={(e: any) => {
                                                 setPassword(e.target.value)
                                             }} />
 
