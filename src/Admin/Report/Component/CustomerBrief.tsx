@@ -37,6 +37,8 @@ const CustomerBrief: React.FC = () => {
       params: {
         entityTypeId: 1,
         entityId: params.id,
+        attachmentTypeId:3
+
       },
       paramsSerializer: (params: any) => {
         return QueryString.stringify(params);
@@ -64,7 +66,8 @@ const CustomerBrief: React.FC = () => {
     minimumFractionDigits: 0,
 });
   let newAttachment: any = [];
-  newAttachment = attachments.filter((item: any) => item.deleted === false);
+  newAttachment = attachments.filter((item: any) => item.deleted === false && item.attachmentTypeId===3)
+
 
   if (Berief.length !== 0) {
     return (
