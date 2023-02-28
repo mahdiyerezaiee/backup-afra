@@ -132,8 +132,8 @@ window.addEventListener('resize',getSize)
                     <MenuItem onClick={handleHeaderClick}  ><NavLink to='ShippingReport'> گزارش  تخصیص و ارسال کالا</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}  ><NavLink to='UsedBarBariReports'> گزارش بارنامه های صادر شده</NavLink> </MenuItem>
                     <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomersReports'> گزارش مشتریان</NavLink></MenuItem>
-                    {/* <MenuItem onClick={handleHeaderClick}  > <NavLink to='OrdersReports'>سفارشات</NavLink> </MenuItem> */}
-                    {/* <MenuItem onClick={handleHeaderClick}  > <NavLink to='ProceessAttachments'>اعتبار و اسناد</NavLink> </MenuItem> */}
+                     <MenuItem onClick={handleHeaderClick}  > <NavLink to='CoutaggeBrief'>خلاصه گزارش کوتاژ</NavLink> </MenuItem> 
+                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomerBerief'></NavLink>خلاصه گزارش مشتری </MenuItem> 
 
                 </SubMenu>
                 <SubMenu ref={ref7} open={show.item7 === true ? true : false} onClick={() => setShow({ ...show, item7: !show.item7, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item2: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(8) ? false : true} label='تحویل کالا' icon={<GiMineTruck size='2rem' />}>

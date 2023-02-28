@@ -15,7 +15,8 @@ import {
   CreditState,
 } from "../../../store/Slice/credit/CreditSlice";
 import { submitCreateCredit, units } from "../Service/CreditService";
-import MultiSelect from "../../../Utils/MultiSelect";
+import MultiSelect from './../../../Utils/MultiSelect';
+
 const CreateNewCredit: React.FC = () => {
   const [state, dispatch] = useReducer(creditReducer, CreditState);
   const navigate = useNavigate();

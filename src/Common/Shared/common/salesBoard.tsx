@@ -220,7 +220,7 @@ const SalesBoardForCustomer: React.FC<Props> = ({ setloading }) => {
                                   <span className="col-lg-4 m-auto p-2" title={item.comment}>
                                     {" "}
                                     <b>توضیحات :</b> {" "}
-                                    {item.comment.substring(0, 40)}{" "}
+                                    {item.comment?item.comment.substring(0, 40):'--'}{" "}
                                     {item.comment ? "..." : "--"}
                                    
                                   </span>
