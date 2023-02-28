@@ -21,7 +21,7 @@ const attachmetURL = (window as any).globalThis.stie_att
 
 const ClientSideNavbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
-  let [userRole, SetUserRole] = useState([])
+  
   const [attachments, Setattachments] = useState([]);
 
   const token = localStorage.getItem("token")
@@ -93,13 +93,13 @@ const ClientSideNavbar: React.FC = () => {
         </h6>
       </div>
       <Menu >
-        <MenuItem icon={<RiDashboardLine size={'1.2rem'} />} routerLink={<Link to="/client" />}>داشبورد</MenuItem>
-        <MenuItem icon={<FaRegHandshake size={'1.2rem'} />} routerLink={<Link to="orderlist" />}> سفارشات من</MenuItem>
-        <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={<Link to="ticket" />}> تیکت های من</MenuItem>
-        <MenuItem icon={<FaUserCog size='2rem' />} routerLink={<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>
-        <MenuItem icon={<SlOrganization size='2rem' />} routerLink={<Link to="organization" />}>    سازمان</MenuItem>
-        <MenuItem icon={<TbFileInvoice size='2rem' />} routerLink={<Link to="invoice" />}>    صورتحساب های من</MenuItem>
-        <MenuItem icon={<MdPayment size='2rem' />} routerLink={<Link to="payment" />}>    پرداخت های من</MenuItem>
+        <MenuItem icon={<RiDashboardLine size={'1.2rem'} />}  routerLink={roles.includes(1)?<Link to='/client/userProfile'/>:<Link to="/client" />}>داشبورد</MenuItem>
+        <MenuItem icon={<FaRegHandshake size={'1.2rem'} />} routerLink={roles.includes(1)?<Link to='/client/userProfile'/>:<Link to="orderlist" />}> سفارشات من</MenuItem>
+        <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={roles.includes(1)?<Link to='/client/userProfile'/>:<Link to="ticket" />}> تیکت های من</MenuItem>
+        <MenuItem icon={<FaUserCog size='2rem' />} routerLink={roles.includes(1)?<Link to='/client/userProfile'/>:<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>
+        <MenuItem icon={<SlOrganization size='2rem' />} routerLink={roles.includes(1)?<Link to='/client/userProfile'/>:<Link to="organization" />}>    سازمان</MenuItem>
+        <MenuItem icon={<TbFileInvoice size='2rem' />} routerLink={roles.includes(1)?<Link to='/client/userProfile'/>:<Link to="invoice" />}>    صورتحساب های من</MenuItem>
+        <MenuItem icon={<MdPayment size='2rem' />} routerLink={roles.includes(1)?<Link to='/client/userProfile'/>:<Link to="payment" />}>    پرداخت های من</MenuItem>
 
         <MenuItem hidden={roles.some((item: any) => item > 2) ? false : true} className='bg-light-success' icon={<MdOutlineAdminPanelSettings size='2rem' color='green' />} onClick={sideChanger}>    ورود به پنل ادمین</MenuItem>
 

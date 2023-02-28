@@ -118,17 +118,12 @@ const UserProfile: React.FC = () => {
           progress: undefined
         });
 
-        getProvince();
-        fetchApi();
-        handelGetAttachment()
       }
 
     } catch (error) {
 
       console.log(error);
-      getProvince();
-      fetchApi();
-      handelGetAttachment()
+ 
     }
 
 
