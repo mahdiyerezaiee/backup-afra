@@ -31,3 +31,8 @@ export const SyncShippingsWithBazargah=(body)=>{
     return http.post(`${configure}/OutScope/SyncShippingsWithBazargah`,JSON.stringify(body));
 }
 
+
+export const FintotechCheck=(body)=>{
+
+    return http.post(`${configure}/OutScope/FinotechVerification`,JSON.stringify(body));
+}
