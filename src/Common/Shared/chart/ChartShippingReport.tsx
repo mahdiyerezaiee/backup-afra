@@ -4,40 +4,33 @@ import {
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
+
     Title,
     Tooltip,
     Filler,
     Legend,
 } from 'chart.js';
 import {Bar} from 'react-chartjs-2';
-import { GetPaymentsReport, GetShippingsReport} from "../../../services/reportService";
+import {GetShippingsReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
-import  QueryString  from 'qs';
 
 ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
+
     Title,
     Tooltip,
     Filler,
     Legend
 );
 
-
-    
-    
-
-
-
 export function ChartShippingReport() {
     const [datas , setDatas]=useState<any>([])
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)
-
-
-  
-
 useEffect(()=>{
     const GetReport = async () => {
         try {
@@ -67,15 +60,15 @@ useEffect(()=>{
           {
             label: ' مقدار باقی مانده',
             data: datas.map((i:any)=> i.shippedQuantity),
-            borderColor: "MediumVioletRed",
+            backgroundColor: "MediumVioletRed",
             fill: false,
-            stack: 'combined',
+            // stack: 'combined',
             type: 'bar'
           }, {
             label: ' مقدار حمل شده',
-            data: datas.map((i:any)=> i.shippedQuantity),
-            borderColor: "OliveDrab",
-            stack: 'combined',
+            data: datas.map((i:any)=> i.plannedQuantity),
+            backgroundColor: "OliveDrab",
+            // stack: 'combined',
             type: 'bar'
           }
           
@@ -94,7 +87,7 @@ useEffect(()=>{
       
               },
               line: {
-                  // tension: 0.4
+                  tension: 0.4
               }
           },
           plugins: {
