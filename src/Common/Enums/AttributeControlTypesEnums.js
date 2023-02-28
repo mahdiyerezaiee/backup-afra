@@ -26,3 +26,12 @@ export const AttributeControlTypes=[
 //     Select,
 //     MultiSelect
 // }
+
+
+// public enum AttachmentTypes
+// {
+//     None = 0,
+//     Contract,
+//     Financial,
+//     ProfilePic
+// }

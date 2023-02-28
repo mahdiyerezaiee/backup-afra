@@ -41,7 +41,7 @@ const UserProfile: React.FC = () => {
       params: {
         entityTypeId: 1,
         entityId: Number(localStorage.getItem('connect')),
-       
+        attachmentTypeId:3
       },
       paramsSerializer: (params: any) => {
         return QueryString.stringify(params);
@@ -131,7 +131,7 @@ const UserProfile: React.FC = () => {
   }
   let iconStyles = { color: "black", fontSize: "1em", fill: 'black' };
   let newAttachment: any = []
-  newAttachment = attachments.filter((item: any) => item.deleted === false)
+  newAttachment = attachments.filter((item: any) => item.deleted === false && item.attachmentTypeId===3)
   return (
 
     <div className="row layout-spacing">
