@@ -5,6 +5,7 @@ import { GaugeChartCustom } from "../../../Common/Shared/Chart/GaugeChartCustom"
 import { GetCoutaggeBrief } from "../../../services/reportService";
 import GaugeChart from 'react-gauge-chart'
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { ChartBar } from "../../../Common/Shared/Chart/ChartBar";
 
 const CoutaggeBrief: React.FC = () => {
     const params = useParams()
@@ -24,13 +25,11 @@ const CoutaggeBrief: React.FC = () => {
     GetCoutaggeBerief()
 
 }, [])
-const style = {
 
-    height: '100px'
-}
 const handelBack = () => {
     navigate(-1)
 }
+
   return (
     <div className=" statbox widget-content widget-content-area">
       <div className="row  ">
@@ -39,48 +38,20 @@ const handelBack = () => {
           <button className="border-0 bg-transparent  edit-btn float-left" onClick={handelBack}><AiOutlineArrowRight size={'2rem'} /></button>
 
         </div>
-        <div className="col-12 ">
-          <div className="row mt-4">
-            <div className="row  text-center">
+        <div className="col-12 m-auto">
+        
+            <div className="row d-flex justify-content-center  ">
               {Berief.map((item: any, index: number) => (
                 <>
-                  <div className="col-md-2 text-center rounded shadow m-4">
+                  <div className="col-md-3 text-center rounded shadow m-2  ">
                     <h6 className="mt-4 mb-4">{`${item.company.companyName}`}</h6>
-                    <GaugeChart
-                      nrOfLevels={500}
-                      cornerRadius={0}
-                      arcPadding={0}
-                      colors={[
-                        "#00ffff",
-                        "#009fff",
-                        "#0080ff",
-                        "#0010d9",
-                        "#0020ff",
-                      ]}
-                      id={` gauge${index}`}
-                      percent={item.supplyAmount.quantity}
-                      textColor="#000"
-                      formatTextValue={() => item.supplyAmount.quantity}
-                    />
-                    <p>مقدار عرضه</p>
-                    <GaugeChart
-                      id={` gauge${index}`}
-                      percent={item.salesAmount.quantity}
-                      textColor="#000"
-                      nrOfLevels={1000}
-                      cornerRadius={0}
-                      arcPadding={0}
-                          colors={[ "#50c878","#2e8b57", "#043927" ]}
-                      formatTextValue={() => item.salesAmount.quantity}
-                    />
-                    <p>مقدار فروش</p>
-
-                    {/* <hr className="my-4" style={{borderTop:'1px dashed '}}/> */}
+                    <ChartBar data1={item.supplyAmount.quantity} data2={item.salesAmount.quantity} labels={["مقدار تامین" , "مقدار فروش"]}/>
+                   
                   </div>
                 </>
               ))}
             </div>
-          </div>
+         
         </div>
       </div>
     </div>
