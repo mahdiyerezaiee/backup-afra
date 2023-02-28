@@ -94,6 +94,7 @@ const Login:React.FC = () => {
         
             setClick(false);
         }
+        setLoading(false)
     }
 
     let mobileNo;
