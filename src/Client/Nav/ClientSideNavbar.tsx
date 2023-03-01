@@ -100,7 +100,7 @@ console.log(user);
 
       <Menu >
         <MenuItem icon={<RiDashboardLine size={'1.2rem'} />}  routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="/client" />}>داشبورد</MenuItem>
-        <MenuItem icon={<GrCatalog    size={'1.2rem'} color='#4C2ED1' />}  routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="/client/salesBoard" />}>تابلو عرضه</MenuItem>
+        <MenuItem icon={<GrCatalog    size={'1.2rem'}  />}  routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="/client/salesBoard" />}>تابلو عرضه</MenuItem>
         <MenuItem icon={<FaRegHandshake size={'1.2rem'} />} routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="orderlist" />}> سفارشات من</MenuItem>
         <MenuItem icon={<MdSupportAgent size='2rem' />} routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="ticket" />}> تیکت های من</MenuItem>
         <MenuItem icon={<FaUserCog size='2rem' />} routerLink={user.requireInfo?<Link to='/client/editProfile'/>:<Link to="userProfile" />}>   اطلاعات کاربری</MenuItem>

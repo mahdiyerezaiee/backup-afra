@@ -130,17 +130,7 @@ const SalesBoardForCustomer: React.FC<Props> = ({ setloading }) => {
     return (
       <div className="">
         <div className=" ">
-          <div className="row ">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2 ">
-              <h4 className="text-center" style={{ color: "#027f00" }}>
-                {/* کالای قابل عرضه به گروه مشتریان (
-                       عمومی
-                        {!groupInfo    ?  "عمومی" : groupInfo && groupInfo.name}
-                        )
-                         */}
-              </h4>
-            </div>
-          </div>
+        
           <div className=" tab-content  ">
             <div className="tab-pane fade show active">
               <Modal

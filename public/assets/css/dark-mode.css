@@ -111,7 +111,7 @@
     border: 3px solid #142138 !important;
 }
 .dark-mode .auction-content b {
-    color: mediumslateblue;
+    color: rgb(88 158 244);
 }
 .dark-mode .bg-light-warning {
     background-color: #060818!important;
@@ -832,7 +832,7 @@ select:-webkit-autofill:focus {
 } */
 .dark-mode .edit-svg {
     color: white;
-    background: mediumslateblue;
+    background: rgb(88 158 244);
 }
 
 .dark-mode .ps-sidebar-root .ps-collapsed .css-vj11vy .ps-menuitem-root>.ps-menu-button:hover {

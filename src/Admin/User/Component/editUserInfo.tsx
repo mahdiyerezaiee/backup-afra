@@ -167,8 +167,25 @@ const EditUserInfo: React.FC = () => {
 
 
     }, [organizationId])
-
-    const submit = async (dataUser: any) => {
+    
+const body ={
+    id: Number(params.id),
+    userName,
+    email,
+    firstName,
+    lastName,
+    nationalCode,
+    organizationId: check ? organizationId : null,
+    password,
+    active,
+    maxValidity: maxValidity ? maxValidity.replaceAll(",", "") : maxValidity,
+    maxValidityUnitId,
+    actionBlock,
+    groupId,
+    companyId: userRole[0] === 2 ? null : companyId
+    , companyName: userRole[0] === 2 ? null : companyName
+}
+    const submit = async () => {
         setLoading(true)
         try {
             const userrole = {
@@ -182,7 +199,7 @@ const EditUserInfo: React.FC = () => {
 
         }
         try {
-            const { data, status } = await setCustomerInfo(dataUser)
+            const { data, status } = await setCustomerInfo(body)
             if (status === 200) {
                 toast.success('کاربر با موفقیت ثبت شد', {
                     position: "top-right",
@@ -326,7 +343,7 @@ const EditUserInfo: React.FC = () => {
                         enableReinitialize={true}
                         onSubmit={values => {
                             // same shape as initial values
-                            submit(values)
+                            submit()
                         }}>
                         {({ errors, touched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
@@ -350,7 +367,7 @@ const EditUserInfo: React.FC = () => {
 
                                                 <label className="form-check-label mb-3">
 
-                                                    <Field type="checkbox" className="form-check-input" name="active" value={active} onChange={(e:any)=>setActive(e.target.chechked)} />
+                                                    <input type="checkbox" className="form-check-input" name="active" checked={active} onChange={(e:any)=>setActive(!active)} />
                                                     فعال                                     </label>
                                             </div>
                                             <div className="col-lg-3 col-md-6 col-sm-11">
