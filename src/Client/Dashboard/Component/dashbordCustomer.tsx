@@ -17,7 +17,7 @@ const DashbordCustomer: React.FC = () => {
           <GridLoader loading={loading} color="#4236d6" />
         </div>
       </div> : null}
-      <BlockReport  />
+      <BlockReport setLoading={setLoading} />
       {/* <hr />
       /* <SalesBoardForCustomer setloading={setLoading} /> */}
       <hr /> 
