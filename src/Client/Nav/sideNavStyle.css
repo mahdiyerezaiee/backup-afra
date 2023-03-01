@@ -42,7 +42,7 @@ position: absolute;
 }
 .client-sideBar svg{
     width: fit-content!important;
-    color: rgb(76, 46, 209);
+    color: rgb(88 158 244);
 }
 .client-sideBar svg path{
    stroke: currentColor;
@@ -59,7 +59,7 @@ position: absolute;
 }
 .edit-svg{
     color: white;
-    background: mediumslateblue;
+    background: rgb(88 158 244);
     position: absolute;
     display: inline;
     right: 55%;
@@ -84,7 +84,7 @@ padding: 23px;
 }
 
 .client-sideBar .css-vj11vy .ps-menuitem-root:hover  {
-    background-color: mediumslateblue;
+    background-color: rgb(88 158 244);
     color: initial;
 
 }
@@ -132,7 +132,7 @@ background-color: transparent!important;
     }
     .client-sideBar svg{
         width: auto!important;
-        color: rgb(76, 46, 209);
+        color: rgb(88 158 244);
     }
 
     .client-sideBar> .css-dip3t8 {

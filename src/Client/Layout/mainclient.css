@@ -1780,7 +1780,7 @@ input[type="submit"] {
 }
 */
 .copyright-area {
-    border-top: 1px solid rgba(255, 255, 255, 0.302);
+    border-top: 1px solid rgba(255, 255, 255, 0.959);
 }
 
 .footer-bottom-wrapper {
@@ -1815,7 +1815,7 @@ input[type="submit"] {
 
 .footer-bottom-wrapper .copyright span {
     margin: 0 !important;
-    color: rgba(255, 255, 255, 0.9);
+    /* color: rgba(255, 255, 255, 0.9); */
 }
 
 @media (max-width: 991px) {
@@ -2998,7 +2998,7 @@ header {
 /*Hero Section Starts Here*/
 .hero-section {
     position: relative;
-    padding: 190px 0 505px;
+    padding: 0px 0 126px;
     overflow: hidden;
 }
 
@@ -3036,7 +3036,7 @@ header {
     right: 0;
     left: 0;
     height: 490px;
-    background-image: url(./hero-bg.png);
+    /* background-image: url(./hero-bg.png); */
     border-bottom-left-radius: 100% 337px;
     border-bottom-right-radius: 100% 337px;
 }
