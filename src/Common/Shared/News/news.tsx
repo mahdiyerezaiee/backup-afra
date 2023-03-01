@@ -22,7 +22,7 @@ const News:React.FC <Props>= ({setloading}) => {
     }
 
     useEffect(()=>{
-        setloading(false)
+        setloading(true)
         const getNews =async () => {
             let config = {
 
@@ -41,9 +41,12 @@ const News:React.FC <Props>= ({setloading}) => {
                 setGuessNews(data.result.news.values)
                 dataNews.guessNews=data.result.news.values
                 sessionStorage.setItem('dataNews', JSON.stringify(dataNews));
-                
+                setloading(false)
+
             }catch (err){
                 console.log(err)
+                setloading(false)
+
             }
 
         }
