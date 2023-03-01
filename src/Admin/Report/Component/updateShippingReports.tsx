@@ -141,14 +141,14 @@ const UpdateShippingReports: React.FC = () => {
         } catch (error) {
             setLoading(false)
         }
-
+        setDisable(false)
 
 
     }
     const RadioChanger = (e: any) => {
 
         SetReportMethod(e.target.value)
-
+        setDisable(false)
     }
 
     const columns = useMemo(() => [
@@ -197,6 +197,7 @@ const UpdateShippingReports: React.FC = () => {
     const data = report
     const handelFrom = () => {
         setClicked(false)
+        setDisable(false)
     }
 
     if (!clicked) {

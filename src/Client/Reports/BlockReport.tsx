@@ -8,9 +8,12 @@ import { GetAllProductSupplyBord } from '../../services/productSupplyService';
 import { GetSupportRequesstsUser } from '../../services/TicketService';
 import { RootState } from '../../store';
 
+interface Props{
 
+  setLoading:any
+}
 
-const BlockReport:React.FC = () => {
+const BlockReport:React.FC <Props>= ({setLoading}) => {
     const [order, setOrder] = useState([])
     const [ticket , setTicket]=useState([])
     const [productSupply, setProductSupply] = useState([])
@@ -25,6 +28,8 @@ const BlockReport:React.FC = () => {
         } catch (error) {
             console.log(error);
         }
+
+        setLoading(false)
     }
     const getTicket = async () => {
 
