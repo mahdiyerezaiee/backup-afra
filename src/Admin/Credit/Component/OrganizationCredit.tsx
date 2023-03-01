@@ -4,9 +4,9 @@ import AddMemberToCredit from './addMemberToCredit';
 import EditMemberOfCredit from './EditMemberOfCredit';
 
 interface Props {
-    data: any, getData: any, creditId: any
+    data: any, getData: any, creditId: any,value:any
 }
-const OrganizationCredit: React.FC<Props> = ({ data, getData, creditId }) => {
+const OrganizationCredit: React.FC<Props> = ({ data, getData, creditId,value }) => {
 
     const [IsOpen, SetIsOpen] = useState(false)
     const [IsOpenEdit, SetIsOpenEdit] = useState(false)
@@ -38,6 +38,12 @@ const OrganizationCredit: React.FC<Props> = ({ data, getData, creditId }) => {
 
 
     }
+    let formatterForMoney = new Intl.NumberFormat('fa-IR', {
+
+        currency: 'IRR'
+    
+    
+    });
     return (
         <div>
 
@@ -63,7 +69,7 @@ const OrganizationCredit: React.FC<Props> = ({ data, getData, creditId }) => {
 
                                         <td>{item.id}</td>
                                         <td>{item.organizationName}</td>
-                                        <td>{item.maxValue}</td>
+                                        <td>{formatterForMoney.format(item.maxValue)}</td>
                                         <td>{item.currentUsed}</td>
                                         <td>{item.comment}</td>
                                         <td> <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top"
@@ -107,7 +113,7 @@ const OrganizationCredit: React.FC<Props> = ({ data, getData, creditId }) => {
                         </svg>
 
                     </button>
-                    <AddMemberToCredit modalIsOpen={IsOpen} closeModal={CloseAddModal} EntityType={3} Credit={getData} creditId={creditId} />
+                    <AddMemberToCredit modalIsOpen={IsOpen} closeModal={CloseAddModal} EntityType={3} Credit={getData} creditId={creditId} value={value}/>
                     <EditMemberOfCredit modalIsOpen={IsOpenEdit} closeModal={CloseEditModal} EntityType={2} Credit={getData} creditId={creditId} currentItem={currentItem} />
 
 
