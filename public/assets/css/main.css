@@ -125,6 +125,12 @@ width: 100%;
 .fixed_header {
   overflow: scroll!important;
 }
+.header-green {
+  overflow: scroll!important;
+}
+.header-blue {
+  overflow: scroll!important;
+}
 .containerTSaleBoard {
   margin-left: 20%;
   margin-right: 20%;
@@ -174,7 +180,24 @@ inset: 0px;
   white-space: nowrap;
 }
 
-
+.header-blue th {
+  height: 0;
+  /*line-height: 0;*/
+  /*padding-top: 0;*/
+  /*padding-bottom: 0;*/
+  color:transparent;
+  /*border: 1px solid rgb(220 220 255);*/
+  white-space: nowrap;
+}
+.header-green th {
+  height: 0;
+  /*line-height: 0;*/
+  /*padding-top: 0;*/
+  /*padding-bottom: 0;*/
+  color:transparent;
+  /*border: 1px solid rgb(220 220 255);*/
+  white-space: nowrap;
+}
 
 .filter-btn .btn-sm{
   width: 100%;
@@ -3688,3 +3711,42 @@ margin: auto;
   animation: swing ease-in-out 0.5s 1 alternate;
   color: #e21b1b;
 }
+.fixed_header thead tr {
+  position: sticky;
+    top: 0px;
+    background: rgb(220 220 255)!important;
+    z-index: 1;
+    border: 1px solid rgb(220 220 255)!important;
+    box-shadow: 0px -10px  #fff;
+  
+  }
+ .header-green thead tr{
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  border: 1px solid rgb(220 220 255)!important;
+  box-shadow: 0px -10px  #fff;
+
+background: #E5FFDA!important 
+}
+.header-green > thead > tr > th {
+  color: green!important;
+
+}
+
+
+.header-green thead th {
+  background: #E5FFDA!important 
+}
+.header-blue thead th {
+  background-color:#DEF5FF!important;
+}
+ .header-blue thead tr{
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  border: 1px solid rgb(220 220 255)!important;
+  box-shadow: 0px -10px  #fff;
+
+  background-color:#DEF5FF!important;
+  }

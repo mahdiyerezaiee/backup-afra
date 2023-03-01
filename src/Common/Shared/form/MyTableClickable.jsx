@@ -296,21 +296,21 @@ useEffect(()=>{
 
                                                         <div  className="w-85  containerT  ">
 
-                                                            <table   className="  table m-1 table-striped  fixed_header " >
+                                                            <table   className={row.original.extId > 0?"  table m-1   header-green ":"table m-1 header-blue"} >
 
                                                                 <thead  style={{color:'white'}}>
                                                                 <tr>
-                                                                    <th bgcolor='#247881'>  عرضه</th>
-                                                                    <th bgcolor='#247881' >  کوتاژ</th>
-                                                                    <th bgcolor='#247881'> کالا</th>
-                                                                    <th bgcolor='#247881'> وزن خرید</th>
-                                                                    <th bgcolor="#247881"> تاریخ </th>
-                                                                    <th bgcolor="#247881">فی</th>
-                                                                    <th bgcolor="#247881">آدرس</th>
-                                                                    <th bgcolor="#247881"پستی>کد </th>
-                                                                    <th bgcolor="#247881">تلفن</th>
-                                                                    <th bgcolor="#247881">موبایل</th>
-                                                                    <th bgcolor="#247881">خریدار</th>
+                                                                    <th bgcolor=''>  عرضه</th>
+                                                                    <th bgcolor='' >  کوتاژ</th>
+                                                                    <th bgcolor=''> کالا</th>
+                                                                    <th bgcolor=''> وزن خرید</th>
+                                                                    <th bgcolor=""> تاریخ </th>
+                                                                    <th bgcolor="">فی</th>
+                                                                    <th bgcolor="">آدرس</th>
+                                                                    <th bgcolor=""پستی>کد </th>
+                                                                    <th bgcolor="">تلفن</th>
+                                                                    <th bgcolor="">موبایل</th>
+                                                                    <th bgcolor="">خریدار</th>
 
                                                                 </tr>
                                                                 </thead>
@@ -342,22 +342,22 @@ useEffect(()=>{
                                                         {row.original.extId > 0 ?
                                                             <div className=" w-85  table  ">
 
-                                                                <table className="w-100 " >
+<table   className={row.original.extId > 0?"  table m-1   fixed_header header-green ":"table m-1   fixed_header  header-blue"} >
 
                                                                     <thead style={{color:'white'}}>
                                                                     <tr >
-                                                                        <th bgcolor="#247881"> کد تخصیص</th>
-                                                                        <th bgcolor="#247881"> شناسه بازارگاه</th>
-                                                                        <th bgcolor="#247881">وزن خرید </th>
-                                                                        <th bgcolor="#247881">وزن بارنامه شده</th>
+                                                                        <th bgcolor=""> کد تخصیص</th>
+                                                                        <th bgcolor=""> شناسه بازارگاه</th>
+                                                                        <th bgcolor="">وزن خرید </th>
+                                                                        <th bgcolor="">وزن بارنامه شده</th>
 
-                                                                        <th bgcolor="#247881">وزن بارنامه نشده </th>
+                                                                        <th bgcolor="">وزن بارنامه نشده </th>
 
-                                                                        <th bgcolor="#247881">شناسه واریز</th>
-                                                                        <th bgcolor="#247881">شماره پیگیری</th>
+                                                                        <th bgcolor="">شناسه واریز</th>
+                                                                        <th bgcolor="">شماره پیگیری</th>
 
-                                                                        <th bgcolor="#247881">کد ملی تحویل گیرنده</th>
-                                                                        <th bgcolor="#247881">کد یکتا</th>
+                                                                        <th bgcolor="">کد ملی تحویل گیرنده</th>
+                                                                        <th bgcolor="">کد یکتا</th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
