@@ -178,8 +178,8 @@ const body ={
     organizationId: check ? organizationId : null,
     password,
     active,
-    maxValidity: maxValidity ? maxValidity.replaceAll(",", "") : maxValidity,
-    maxValidityUnitId,
+    maxValidity: 0,
+    maxValidityUnitId:0,
     actionBlock,
     groupId,
     companyId: userRole[0] === 2 ? null : companyId
@@ -332,8 +332,8 @@ const body ={
                             organizationId: check ? organizationId : null,
                             password,
                             active,
-                            maxValidity: maxValidity ? maxValidity.replaceAll(",", "") : maxValidity,
-                            maxValidityUnitId,
+                            maxValidity: 0,
+                            maxValidityUnitId:0,
                             actionBlock,
                             groupId,
                             companyId: userRole[0] === 2 ? null : companyId
@@ -418,7 +418,7 @@ const body ={
                                         </div>
 
 
-                                        <div className={companies.length > 0 && (userRole[0] === 7 || companies.length > 0 && userRole[0] === 8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
+                                        {/* <div className={companies.length > 0 && (userRole[0] === 7 || companies.length > 0 && userRole[0] === 8) ? "col-lg-4 col-md-4 col-sm-11 mb-4" : "col-lg-6 col-md-6 col-sm-11 mb-4"}>
                                             <label >مقدار اعتبار </label>
                                             <Field type="text" className=" formater form-control opacityForInput" placeholder="100,000" validate={validatNumber} name='maxValidity'  value={maxValidity} onChange={(e:any)=>setUserName(e.target.maxValidity)}/>
                                             {errors.maxValidity && touched.maxValidity && <div className="text-danger">{String(errors.maxValidity)}</div>}
@@ -432,7 +432,7 @@ const body ={
                                                 options={PriceUnitItem()}
                                                 onChange={(e: any) => setMaxValidityUnitId(e.value)}
                                             />
-                                        </div>
+                                        </div> */}
                                         {companies.length > 0 && (userRole[0] === 7 || companies.length > 0 && userRole[0] === 8) ?
                                             <div className="col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput">
 
@@ -462,7 +462,7 @@ const body ={
                                         }
 
 
-                                        <div className={check === true ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+                                        <div className={check ||companies.length > 0 === true ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
 
                                             <label> نقش کاربر</label>
                                             <Select
@@ -487,7 +487,7 @@ const body ={
                                         </div>
 
 
-                                        <div className={check === true ? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
+                                        <div className={check ||companies.length > 0 === true? "col-lg-4 col-md-4 col-sm-11 mb-4 textOnInput" : "col-lg-6 col-md-6 col-sm-11 mb-4 textOnInput"}>
 
                                             <label>گروه مشتری</label>
                                             <Select
