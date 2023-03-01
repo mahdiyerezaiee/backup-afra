@@ -16,6 +16,11 @@
 .css-1097eso{
     background-color: transparent!important;
 }
+.css-vj11vy{
+  height: calc(75vh - 30px);
+  overflow-y: auto;
+
+}
 .main-Layout{
   height: calc(100vh - 100px);
   overflow-y:scroll;
@@ -171,7 +176,7 @@
       /*margin-top: 80px;*/
       z-index: 101; }
     .css-vj11vy{
-      height: calc(100vh - 30px);
+      height: calc(75vh - 30px);
       overflow-y: auto;
 
     }

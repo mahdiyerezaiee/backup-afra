@@ -16,17 +16,12 @@ import { ClipLoader } from "react-spinners";
 import { Link } from 'react-router-dom';
 import { useProSidebar } from 'react-pro-sidebar';
 import { RootState } from '../../../store';
-interface Props {
-
-    collapsed: boolean
 
 
-}
 
-
-const Header: React.FC<Props> = ({ collapsed }) => {
+const Header: React.FC = () => {
     const ref: any = useRef()
-    const { collapseSidebar } = useProSidebar();
+    const { collapseSidebar , collapsed } = useProSidebar();
     const refNews: any = useRef()
     const Navigate = useNavigate()
     const user = useSelector((state: RootState) => state.user);

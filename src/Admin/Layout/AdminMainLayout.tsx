@@ -172,10 +172,7 @@ const AdminMainLayout: React.FC = () => {
   }
 
 
-  const [collapsed, setCollapsed] = useState(true);
-  const handleCollapsedChange = () => {
-    setCollapsed(!collapsed);
-  };
+ 
 
   return (
     <Fragment>
@@ -184,7 +181,7 @@ const AdminMainLayout: React.FC = () => {
           <GridLoader loading={isloading} color="#4236d6" />
         </div>
       </div> : null}
-      <Header collapsed={collapsed} />
+      <Header  />
       <div className="main-container" id="container">
         <SideNavbar />
         <div id="content" className="main-content main-Layout">
