@@ -18,9 +18,9 @@ const DashbordCustomer: React.FC = () => {
         </div>
       </div> : null}
       <BlockReport  />
-      <hr />
-      {/* <SalesBoardForCustomer setloading={setLoading} /> */}
-      <hr />
+      {/* <hr />
+      /* <SalesBoardForCustomer setloading={setLoading} /> */}
+      <hr /> 
       <News setloading={setLoading} />
     </Fragment>
   );

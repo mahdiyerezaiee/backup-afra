@@ -345,7 +345,7 @@ const OrderAddress: React.FC<Props> = ({
       {
         Header: "قیمت پایه",
         accessor: "basePrice",
-        Filter: SelectColumnFilter,
+        Filter: FilterData.length > 3 ? SelectColumnFilter : "",
         filter: "multiple",
       },
       { Header: "وزن", accessor: "quantity", disableFilters: true },

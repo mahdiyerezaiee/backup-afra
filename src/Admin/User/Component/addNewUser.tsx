@@ -111,7 +111,8 @@ const AddNewUser: React.FC = () => {
         setLoading(true)
         
    
-let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
+let body={"customer":{...dataUser,
+    companyId:userRole===2?null:companyId,
     
     companyName:userRole===2?null:companyName
     
@@ -212,8 +213,8 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                         password,
                         active,
                         actionBlock,
-                        groupId,
                        
+                      
 
 
 
@@ -257,7 +258,7 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                             <label >شماره موبایل</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="شماره موبایل" name="userName" validate={validatMobail} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="شماره موبایل" name="userName" validate={validatMobail} value={userName} onChange={(e:any) => setUserName(e.target.value)}/>
 
                                             {errors.userName && touched.userName && <div className="text-danger">{errors.userName}</div>}
 
@@ -266,23 +267,23 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-4">
 
                                             <label >نام</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="نام" name="firstName" validate={validatAlpha} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="نام" name="firstName" validate={validatAlpha}  value={firstName} onChange={(e:any)=>setFirstName(e.target.value)} />
                                             {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
                                         </div>
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-4" >
                                             <label >نام خانوادگی</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} value={lastName} onChange={(e:any)=>setLastName(e.target.value)}/>
                                             {errors.lastName && touched.lastName && <div className="text-danger">{errors.lastName}</div>}
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                             <label >کد ملی</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" validate={validatmin10} name="nationalCode" />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="0070090602" maxLength="10" validate={validatmin10} name="nationalCode"  value={nationalCode} onChange={(e:any)=>setNationalCode(e.target.value)}/>
                                             {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
 
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                             <label >ایمیل</label>
-                                            <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name="email" validate={validateEmail} />
+                                            <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name="email" validate={validateEmail}  value={email} onChange={(e:any)=>setEmail(e.target.value)}/>
                                             {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
 
                                         </div>
@@ -374,7 +375,9 @@ let body={"customer":{...dataUser,companyId:userRole===2?null:companyId,
 
                                         <div className="input-group col-5 mb-5 mt-4 textOnInputForGrp rounded" hidden={!show}>
                                             <label >رمز عبور</label>
-                                            <Field type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" name="password" validate={validatPassword} />
+                                            <Field type={passwordType} className="form-control opacityForInput  " style={{ borderLeft: 'none' }} placeholder="*******" name="password" validate={validatPassword} value={password} onChange={(e: any) => {
+                                                setPassword(e.target.value)
+                                            }}/>
                                             <div className="input-group-append ">
                                                 <button className=" btn-outline-primary box-shadow-none rounded" onClick={togglePassword} style={{ border: 'none' }}>
                                                     {passwordType === "password" ? <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" fill="blue"></path> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="blue"></path> </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" /> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" /> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" /> </svg>}</button>

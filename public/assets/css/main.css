@@ -119,7 +119,7 @@ width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 300px;
-  min-height: 250px;
+  min-height: auto;
 
 }
 .fixed_header {
@@ -1836,8 +1836,10 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
 .alert{
     animation: drop-in 1200ms ease 500ms backwards ;
   }
-.sliderReport{
-    animation:drop-in 1200ms ease 500ms backwards ;
+.sliderReport h1{
+  /* font-family: "ChildrenMemoriesInline"!important;
+  font-size: 120px; */
+  /* color: #ffffff70!important; */
   }
 
 @keyframes drop-in {
@@ -3670,4 +3672,19 @@ background-color: transparent!important;
 }
  .text-group text{
   font-size: 14.0497px!important;
+}
+.logOut{
+  border-top: 1px solid  #6e82a524!important;
+  display: flex;
+  justify-content: center;
+margin: auto;
+
+}
+.logOut svg{
+  margin: 2rem auto;
+ color: #6e82a5
+}
+.logOut svg:hover{
+  animation: swing ease-in-out 0.5s 1 alternate;
+  color: #e21b1b;
 }
