@@ -301,7 +301,7 @@ useEffect(()=>{
                                                                 <thead  style={{color:'white'}}>
                                                                 <tr>
                                                                     <th bgcolor=''>  عرضه</th>
-                                                                    <th bgcolor='' >  کوتاژ</th>
+                                                                    {/* <th bgcolor='' >  کوتاژ</th> */}
                                                                     <th bgcolor=''> کالا</th>
                                                                     <th bgcolor=''> وزن خرید</th>
                                                                     <th bgcolor=""> تاریخ </th>
@@ -318,7 +318,7 @@ useEffect(()=>{
                                                                 {Detail.map((item, index)=>
                                                                 <tr  key={index +100000}>
                                                                     <td data-th={"عرضه"}>{item.productSupplyId}</td>
-                                                                    <td data-th={"کوتاژ"}>{cottageCode?cottageCode:"--"}</td>
+                                                                    {/* <td data-th={"کوتاژ"}>{cottageCode?cottageCode:"--"}</td> */}
                                                                     <td data-th={"کالا"}>{item.product ? item.product.name : null }</td>
                                                                     <td data-th="وزن خرید">{item.quantity}</td>
                                                                     <td data-th="تاریخ">{new  Date(item.createDate).toLocaleDateString('fa-IR')}</td>

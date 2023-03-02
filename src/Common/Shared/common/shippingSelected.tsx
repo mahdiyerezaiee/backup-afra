@@ -58,9 +58,9 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
     }
 
     useEffect(() => {
-        if (roles.includes(7) || roles.includes(8)) {
+ 
             getShippingCompany()
-        }
+
     }, [])
 
     const shippingCompanySelect = () => {
@@ -200,7 +200,7 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
                                 <Select
                                     placeholder="قراداد باربری"
                                     options={shippingContractSelect()}
-                                    maxMenuHeight={150}
+                                    maxMenuHeight={100}
 
 
                                     onChange={(e:any) => {

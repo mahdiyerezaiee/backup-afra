@@ -565,7 +565,7 @@ const PaymentsList: React.FC = () => {
 
         { Header: 'توضیحات', accessor: 'comment' },
         {
-            Header: ' وضعیت پرداخت', accessor: '', Cell: (row: any) => {
+            Header: '  پرداخت شده', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.paid)
                 const id = row.row.original.id
              
@@ -620,7 +620,7 @@ const PaymentsList: React.FC = () => {
 
             }
         }, {
-            Header: ' وضعیت تایید', accessor: '', Cell: (row: any) => {
+            Header: '  تایید شده', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.confirmed)
                 const id = row.row.original.id
                

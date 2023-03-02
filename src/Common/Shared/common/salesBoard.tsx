@@ -189,7 +189,7 @@ const SalesBoardForCustomer: React.FC<Props> = ({ setloading }) => {
                                   <span className="col-lg-4 m-auto p-2">
                                     {" "}
                                     <b>محصول : </b>{" "}
-                                     {item.product.name}
+                                     {item.productSupplyConditions.length === 0 ?`${item.product.name} فروش نقدی`:item.product.name}
                                     
                                   </span>
                                   <span className=" col-lg-4 m-auto p-2 ">
@@ -245,25 +245,24 @@ const SalesBoardForCustomer: React.FC<Props> = ({ setloading }) => {
                                   </span>
                                 </div>
                               </div>
-                              <span className="col-lg-2  m-auto button-auction">
+                              <span className=" text-center  m-auto button-auction">
                                 {" "}
                                 {item.productSupplyConditions.length === 0 ? (
                                   <button
-                                    className="btn btn-success"
+                                    className="btn btn-success p-3 m-1"
                                     disabled={userRole[0] === 1 ? true : false}
                                     onClick={() => openModal(item)}
                                   >
-                                    ثبت درخواست
+                                     افزودن به سبد خرید
                                   </button>
                                 ) : (
                                   <button
-                                    className=" btn btn-success"
+                                  className="btn btn-success p-3 m-1"
                                     disabled={userRole[0] === 1 ? true : false}
                                     onClick={() =>
                                       openModalCondition(item, item.id)
                                     }
-                                  >
-                                    شرایط پرداخت
+                                  >مشاهده شرایط پرداخت
                                   </button>
                                 )}
                               </span>

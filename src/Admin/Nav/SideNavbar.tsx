@@ -99,6 +99,8 @@ window.addEventListener('resize',getSize)
                     <MenuItem onClick={handleHeaderClick}><NavLink to='customergroup'>گروه کاربران</NavLink> </MenuItem>
 
                     <MenuItem onClick={handleHeaderClick}><NavLink to='organizationlist'> لیست سازمان ها</NavLink></MenuItem>
+                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="Credits">گروه اعتباری</NavLink></MenuItem>
+
 
                 </SubMenu>
 
@@ -123,7 +125,6 @@ window.addEventListener('resize',getSize)
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="addOrder">ثبت سفارش</NavLink></MenuItem>
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="InvoiceList">صورتحساب</NavLink></MenuItem>
                     <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="PaymentLists">پرداخت ها</NavLink></MenuItem>
-                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="Credits">گروه اعتباری</NavLink></MenuItem>
 
 
                     <MenuItem><NavLink to='bazargah'>  بازارگاه </NavLink></MenuItem>
@@ -184,7 +185,7 @@ window.addEventListener('resize',getSize)
 
 
             </Menu>
-<SidebarFooter  />
+{/* <SidebarFooter  /> */}
         </Sidebar>
     )
 }

@@ -608,7 +608,7 @@ const OrderAddress: React.FC<Props> = ({
                                     ? PaymentStructureEnums.filter(
                                         (x) => x.id === item.paymentMethodId
                                       ).map((q) => q.name)
-                                    : "--"}
+                                    : "نقدی"}
                                 </td>
                                 <td
                                   data-th="  بازه پرداخت"

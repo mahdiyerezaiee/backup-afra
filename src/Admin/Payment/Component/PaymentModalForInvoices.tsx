@@ -6,6 +6,8 @@ import QueryString from 'qs';
 import { MeasureUnitSample } from './../../../Common/Enums/MeasureUnitSample';
 import { useEffect } from 'react';
 import { PriceUnitEnums } from './../../../Common/Enums/PriceUnit';
+import PaymentList from './PaymentsList';
+import PaymnetListForInvoice from './PaymnetListForInvoice';
 
 
 
@@ -31,64 +33,12 @@ interface Props {
 }
 const PaymentModalForInvoices: React.FC<Props> = ({ modalOpen, closeModal, InvoiceId }) => {
 
-    const [Payments, SetPayments] = useState<any>([])
+   
 
-    useEffect(() => {
-        GetPayment()
-
-    }, [InvoiceId])
-    const GetPayment = async () => {
-
-SetPayments([])
-        let config = {
-
-            headers: { 'Content-Type': 'application/json' },
-            params: {
-                InvoiceId,
-                IsAdmin: true,
-                PageNumber: 0,
-                PageSize: 10000
+ 
+    
 
 
-            }
-            ,
-            paramsSerializer: (params: any) => {
-
-                return QueryString.stringify(params)
-            }
-
-        };
-
-        try {
-            const { data, status } = await GetPayments(config);
-            if (status === 200) {
-
-                SetPayments(data.result.payments.values)
-
-
-
-
-            }
-        } catch (err) {
-            console.log(err)
-        }
-
-
-
-
-
-
-
-
-    }
-
-
-    let formatterForMoney = new Intl.NumberFormat('fa-IR', {
-
-        currency: 'IRR'
-
-
-    });
     return (
         <Modal
 
@@ -112,52 +62,15 @@ SetPayments([])
                     y2="18"></line><line
                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div>
-            <p className='text-center'> {`پرداختی های مربوط به صورتحساب شماره ${InvoiceId}`}</p>
+            <h6 className='text-center'> {`پرداختی های مربوط به صورتحساب شماره ${InvoiceId}`}</h6>
                 <div className=" rounded  " style={{ border: " 1px solid #bfc9d4" }} >
 
                     <div className=" p-2 containerT " >
                         <div className="col-lg-4 col-md-6 col-sm-11 ">
                                                         
                         </div>
-
-                        <table
-                            className="table table-bordered table-responsive  table-striped fixed_header "  >
-                            <thead >
-                                <tr style={{ fontSize: '10px' }}>
-                                    <th style={{ fontSize: '10px' }} className="text-center">ردیف</th>
-                                    <th style={{ fontSize: '10px' }} className="text-center">#</th>
-                                    <th style={{ fontSize: '10px' }} className="text-center">کد پیگیری</th>
-                                    <th style={{ fontSize: '10px' }} className="text-center">قیمت</th>
-                                    <th style={{ fontSize: '10px' }} className="text-center">واحد</th>
-                                    <th style={{ fontSize: '10px' }} className="text-center">تاریخ ثبت</th>
-                                    <th style={{ fontSize: '10px' }} className="text-center">وضعیت پرداخت</th>
-                                    <th style={{ fontSize: '10px' }} className="text-center">وضعیت تایید</th>
-
-
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {Payments ?
-                                    Payments.map((item: any, index: number) => (
-
-                                        <tr  className='text-center' key={item.id}>
-                                            <td data-th="ردیف">{index + 1}</td>
-                                            <td data-th="#">{item.id}</td>
-                                            <td data-th="کد پیگیری">{item.trackingCode}</td>
-                                            <td data-th="قیمت">{formatterForMoney.format(item.price)}</td>
-                                            <td data-th="واحد">{PriceUnitEnums.filter((q: any) => q.id === item.priceUnitId).map((x: any) => x.name)}</td>
-                                            <td data-th="تاریخ ثبت">{new Date(item.createDate).toLocaleDateString('fa-IR')}</td>
-                                            <td data-th="وضعیت پرداخت">{item.paid ? 'پرداخت شده' : 'پرداخت نشده'}</td>
-                                            <td  data-th="وضعیت تایید">{item.confirmed ? 'تایید شده' : 'تایید نشده'}</td>
-
-                                        </tr>
-
-                                    ))
-
-                                    : <tr> <td colSpan={8}>پرداختی وجود ندارد </td></tr>}
-
-                            </tbody>
-                        </table>
+                        <PaymnetListForInvoice InvoiceId={InvoiceId}/>
+                      
                     </div>
                 </div>
             </div>

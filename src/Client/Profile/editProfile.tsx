@@ -21,7 +21,7 @@ const EditProfile: React.FC = () => {
     const [nationalCode, setnationalCode] = useState(userinfo.nationalCode);
     const [email, setemail] = useState(userinfo.email);
     const [userInfo, setUserInfo] = useState({})
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     const [password, setPassword] = useState(null)
@@ -54,8 +54,20 @@ const EditProfile: React.FC = () => {
         active: true
     }
 
+    const getCurrentUser = async () => {
+        const { data, status } = await GetUserInfo();
+        if (status === 200) {
+            setfirstName(data.result.customer.firstName)
+            setlastName(data.result.customer.lastName)
+            setnationalCode(data.result.customer.nationalCode)
+            setemail(data.result.customer.email)
+        }
 
+    }
 
+    useEffect(() =>{
+        getCurrentUser()
+    },[])
 
     const showHandler = () => {
 
@@ -75,35 +87,33 @@ const EditProfile: React.FC = () => {
 
             if (status === 200) {
 
-              try {
-                
-            const { data, status } = await setCustomerInfo(user);
-            if(status===200){
+                try {
 
-                toast.success(" اطلاعات با موفقیت ثبت شد لطفا منتظر تایید ادمین باشد", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
-            }
-              } catch (error) {
-                
-                console.log(error);
-                
-              }
-                const { data, status } = await GetUserInfo();
+                    const { data, status } = await setCustomerInfo(user);
+                    if (status === 200) {
 
+                        toast.success(" اطلاعات با موفقیت ثبت شد لطفا منتظر تایید ادمین باشد", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined
+                        });
+                    }
+                } catch (error) {
 
+                    console.log(error);
+
+                }
+                getCurrentUser()
             }
 
 
         } catch (error) {
             console.log(error);
-            
+
         }
         setLoading(false)
     }
@@ -144,7 +154,7 @@ const EditProfile: React.FC = () => {
                         companyId: userinfo.companyId
 
                     }}
-                    enableReinitialize={true}
+                        enableReinitialize={true}
                         onSubmit={(values) => {
                             // same shape as initial values
                             handelSetCustomer()
@@ -156,19 +166,19 @@ const EditProfile: React.FC = () => {
 
                                     <label>نام</label>
                                     <Field type="text" className="form-control opacityForInput"
-                                        placeholder="نام" name="firstName" validate={validatAlpha} value={firstName} onChange={(e:any)=>{setfirstName(e.target.value)}}/>
+                                        placeholder="نام" name="firstName" validate={validatAlpha} value={firstName} onChange={(e: any) => { setfirstName(e.target.value) }} />
                                     {errors.firstName && touched.firstName && <div className="text-danger">{errors.firstName}</div>}
 
                                 </div>
                                 <div className="col-lg-6 form-group mb-4 textOnInput">
                                     <label>نام خانوادگی</label>
-                                    <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} value={lastName}   onChange={(e:any)=>setlastName(e.target.value)}/>
-                                    
+                                    <Field type="text" className="form-control opacityForInput" placeholder="نام خانوادگی" name="lastName" validate={validatAlpha} value={lastName} onChange={(e: any) => setlastName(e.target.value)} />
+
 
                                 </div>
                                 <div className="col-lg-6 form-group mb-4 textOnInput">
                                     <label>کد ملی</label>
-                                    <Field type="text" className="form-control opacityForInput" placeholder="0070090602" name="nationalCode" validate={validatmin10} value={values.nationalCode} onChange={(e:any)=>setnationalCode(e.target.value)}/>
+                                    <Field type="text" className="form-control opacityForInput" placeholder="0070090602" name="nationalCode" validate={validatmin10} value={values.nationalCode} onChange={(e: any) => setnationalCode(e.target.value)} />
                                     {errors.nationalCode && touched.nationalCode && <div className="text-danger">{errors.nationalCode}</div>}
 
                                 </div>
@@ -176,7 +186,7 @@ const EditProfile: React.FC = () => {
 
                                 <div className="col-lg-6 form-group mb-4 textOnInput">
                                     <label>ایمیل</label>
-                                    <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name='email' validate={validateEmail} value={values.email} onChange={(e:any)=>setemail(e.target.value)}/>
+                                    <Field type="text" className="form-control opacityForInput" placeholder="email@example.com" name='email' validate={validateEmail} value={values.email} onChange={(e: any) => setemail(e.target.value)} />
                                     {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
 
                                 </div>
