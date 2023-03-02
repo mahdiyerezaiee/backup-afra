@@ -6,10 +6,12 @@ import QueryString from "qs";
 import { useEffect, useState } from "react";
 import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
 import ImageUploaderForPayment from "../../Utils/ImageUploaderForPayment";
+import { GetInvoicePayments, GetPayments } from './../../services/paymentService';
 
 const PaymentMethodComponent: React.FC = () => {
   const [paymentId, setPaymentId] = useState([]);
   const [currentTab, setCurrentTab] = useState(1);
+  const [currentPay, SetCurrentPay] = useState<any>([])
 
   let payments = JSON.parse(
     String(sessionStorage.getItem(`param/client/PaymentMethod`))
@@ -34,12 +36,45 @@ const PaymentMethodComponent: React.FC = () => {
       console.log(err);
     }
   };
+
+  var formatter = new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 0, 
+    minimumFractionDigits: 0, });
+  const getCurrentPaids = async () => {
+    let pays = []
+
+    for (let i = 0; i < payments.length; i++) {
+
+
+
+      try {
+        const { data, status } = await GetInvoicePayments(payments[i])
+
+        if (status === 200) {
+
+          pays.push(...data.result.payments)
+
+        }
+      } catch (error) {
+
+      }
+
+
+      SetCurrentPay(pays)
+    }
+
+    console.log(pays);
+
+  }
   useEffect(() => {
     paymentMethodsGroup();
+    getCurrentPaids()
   }, []);
   const handleTabClick = (id: any) => {
     setCurrentTab(id);
   }
+
+
+
 
   if (payments) {
     return (
@@ -83,11 +118,33 @@ const PaymentMethodComponent: React.FC = () => {
                         <p className="mb-4 d-block clearfixed">
                           {item.message}
                         </p>
-                      <br></br>                     
-                      < ImageUploaderForPayment data={paymentId} index={item.tabIndex} Ids={payments}/>
-                     </div>}
+                        <br></br>
+                        {currentPay.length > 0 ?
+                          <div><table className='table text-center table-striped'>
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>کدرهگیری</th>
+                                  <th>مبلغ</th>
+      
+                              </tr>
+                          </thead>
+      
+                          <tbody>
+                              {currentPay.map((i:any) => (
+                                  <tr>
+                                      <td>{i.id}</td>
+                                      <td>{i.trackingCode}</td>
+                                      <td>{formatter.format(i.price)}</td>
+                                  </tr>
+      
+                              ))}
+                          </tbody>
+      
+                      </table></div> : < ImageUploaderForPayment data={paymentId} index={item.tabIndex} Ids={payments} />}
+                      </div>}
 
-                    
+
 
                   </div>
 

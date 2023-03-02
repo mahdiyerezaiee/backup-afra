@@ -114,7 +114,7 @@ const OrganizationCredit: React.FC<Props> = ({ data, getData, creditId,value }) 
 
                     </button>
                     <AddMemberToCredit modalIsOpen={IsOpen} closeModal={CloseAddModal} EntityType={3} Credit={getData} creditId={creditId} value={value}/>
-                    <EditMemberOfCredit modalIsOpen={IsOpenEdit} closeModal={CloseEditModal} EntityType={2} Credit={getData} creditId={creditId} currentItem={currentItem} />
+                    <EditMemberOfCredit modalIsOpen={IsOpenEdit} closeModal={CloseEditModal} EntityType={2} Credit={getData} creditId={creditId} currentItem={currentItem} value={value}/>
 
 
 
