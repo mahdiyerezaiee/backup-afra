@@ -33,6 +33,8 @@ const OrderCustomerDetail:React.FC<Props> = ({orderDetail ,order ,params }) => {
     const [idEdit, setIdEdit] = useState(0);
     const [modalIsOpenEdit, setIsOpenEdit] = useState(false);
     const [attachments, Setattachments] = useState([])
+    const [modalIsOpenUpload, setIsOpenUpload] = useState(false);
+
 
 let newAttachmnet=attachments.filter((item:any)=>item.deleted===false)
 let entityId = params.id
@@ -41,16 +43,16 @@ const handelGetAttachment = async () => {
     let config = {
 
         headers: {'Content-Type': 'application/json'},
-        params: {
+        param: {
 
             entityTypeId: 10,
             entityId: entityId,
             isAdmin: true
         }
         ,
-        paramsSerializer: (params:any) => {
+        paramsSerializer: (param:any) => {
 
-            return QueryString.stringify(params)
+            return QueryString.stringify(param)
         }
     };
     try {
@@ -71,16 +73,13 @@ useEffect(() => {
 
     handelGetAttachment()
 }, [])
-    const getSupplyCode = async () => {
-        try {
-            const {data , status}= await GetAllProductSupply(orderDetail[0].productSupplyId)
-            setcottageCode(data.result.productSupply.cottageCode)
+const closeModalForUpload = () => {
+    setIsOpenUpload(false)
+}
+const OpenModalForUpload = () => {
+    setIsOpenUpload(true)
+}
 
-        }catch (e) {
-            console.log(e)
-        }
-
-    }
 
     useEffect(()=>{
         // getSupplyCode()
@@ -161,8 +160,10 @@ window.location.reload()
                 <div className=" buttons   text-end  p-2 mt-4" >
 
                     <Link  to={`/client/invoice/${order.id}`} className={newAttachmnet.length > 0?  "btn-primary   btn m-1" : order.orderStatusId === 4 ?"btn-success   btn m-1" : "btn-primary   btn m-1"} hidden={order.orderStatusId ===  1 }  >دریافت پیش فاکتور</Link>
+                    <button className="btn btn-info m-1" hidden={order.orderStatusId === 4?false:true} onClick={OpenModalForUpload}>بارگزاری پیش فاکتور تایید شده</button>
                     <button className="btn-success  m-1 btn " hidden={newAttachmnet.length > 0?false:true} disabled={order.orderStatusId ===  5   } onClick={handelSubmit}>درخواست بررسی اسناد ارائه شده </button>
                 </div>
+                <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={params.id} EntityTypesId={10} comment={'لطفا فایل  مورد نظر را بارگزاری کنید.'} />
             </div>
 
         </div>)

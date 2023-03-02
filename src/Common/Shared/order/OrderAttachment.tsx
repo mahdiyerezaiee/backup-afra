@@ -150,7 +150,7 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
         <div className="  p-3 border rounded  ">
           <div className="row">
             <div className=" col-6  ">
-              <span className="float-left">فایل ضمیمه </span>
+              <span className="float-left">فایل های ضمیمه </span>
             </div>
             <div className="  col-6   ">
               {show ? (
