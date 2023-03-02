@@ -13,7 +13,7 @@ import { PriceUnitEnums } from './../../../Common/Enums/PriceUnit';
 import { toast } from 'react-toastify';
 
 interface Props {
-    modalIsOpen: boolean, closeModal: any, EntityType: number, Credit: any, creditId: any, currentItem: any
+    modalIsOpen: boolean, closeModal: any, EntityType: number, Credit: any, creditId: any, currentItem: any,value:any
 }
 const customStyles: any = {
     content: {
@@ -29,7 +29,7 @@ const customStyles: any = {
         border: '2px ridge black'
     }
 };
-const EditMemberOfCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityType, Credit, creditId, currentItem }) => {
+const EditMemberOfCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityType, Credit, creditId, currentItem ,value}) => {
 
     const [members, SetMembers] = useState([])
     const [entityId, setEntityId] = useState(0)
@@ -236,10 +236,9 @@ console.log(entityId);
                             <div className='row '>
 
                                 <div className='col-6 '>
-                                    <button className="btn btn-success float-left " onClick={handelSubmit}
+                                    <button className="btn btn-success float-left " onClick={handelSubmit} disabled={maxValue>value?true:false}
                                     >تایید
                                         <ClipLoader
-
                                             loading={loading}
                                             color="#ffff"
                                             size={15}
