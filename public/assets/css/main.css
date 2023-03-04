@@ -2724,9 +2724,9 @@ left: -214px;
 
 }
 .cart-shop2{
-  width: 20rem;
+  width: 40rem;
   top:80px;
-  padding: 10px;
+  /* padding: 10px; */
   position: fixed;
   height:calc(97.5vh - 100px);
   left: 8rem;
@@ -2746,7 +2746,8 @@ margin-bottom: 10px;
 }
 .footer-car-shop{
   position: absolute;
-  bottom: 0;
+  bottom: 10%;
+  border-top: 1px solid lightgray;
 }
 .ReactModal__Overlay{
   z-index: 10;
@@ -2938,7 +2939,7 @@ select:-webkit-autofill:focus {
     bottom: 10%;
   }
   .cart-shop2{
-    padding: 10px;
+    /* padding: 10px; */
     position: fixed;
     height:calc(90vh - 100px);
     left: 8rem;
@@ -3215,10 +3216,10 @@ button{
   }
   .footer-car-shop{
     position: absolute;
-    bottom: 3%;
+    bottom: 20%;
   }
   .cart-shop2{
-    padding: 10px;
+    /* padding: 10px; */
     position: fixed;
     height:calc(100vh - 100px) ;
     left: 8rem;
@@ -3749,4 +3750,43 @@ background: #E5FFDA!important
   box-shadow: 0px -10px  #fff;
 
   background-color:#DEF5FF!important;
+  }
+  .product-name-cartShop{
+    white-space: break-spaces!important;
+    font-size: smaller!important;
+  }
+  .product-detail-cartShop{
+    top: 2px;
+    right: -10px;
+    font-size: 12px;
+    height: 24px;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    justify-content: center;
+    color: #27c6df;
+    border: 1px solid #27c6df;
+    border-radius: 15px;
+    position: absolute;
+    background-color: #fff;
+    font-size: xx-small;
+  }
+  .product-price-cartShop{
+    top: 30px;
+    right: -10px;
+    font-size: 12px;
+    height: 24px;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    justify-content: center;
+    color: #27c6df;
+    border: 1px solid #27c6df;
+    border-radius: 15px;
+    position: absolute;
+    background-color: #fff;
+    font-size: xx-small;
+
   }

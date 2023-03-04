@@ -232,7 +232,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                             style={{ top: "80px", left: show == true ? "1rem" : "-60rem" }}>
                             <div className="col-12 px-2" >
                                 <div className="row">
-                                    <span className=" col-6 float-left bold py-2" style={{ fontSize: 'smaller' }}>{cartShopping.length} محصول</span>
+                                <span className=" col-6 float-right bold py-2" style={{ fontSize: 'smaller' , color:"black" }}>{cartShopping.length !== 0 ? <span>{cartShopping.length} کالا در سبد خرید</span>:<span> کالایی در سبد خرید موجود نیست</span>}</span>
 
                                     <span className=" col-6 float-right py-2" onClick={() => setShow(oldState => !oldState)}><svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -246,6 +246,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                                             x2="6"
                                             y2="18"></line><line
                                                 x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+
                                 </div>
                                 <div >
                                     {cartShopping.length !== 0 ?
@@ -254,11 +255,44 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
 
                                             show && (
 
-                                                <Link to='#' className=" animated dropdown-item border-bottom border-light p-2 my-2 mt-3 "
+                                                <Link to='#' className=" animated dropdown-item    "
                                                     key={item.id}>
-                                                    <div className="row shadow">
-                                                        <div className="col-12">
-                                                            <span className=" float-left mt-1"
+                                                    <div className="row px-4 ">
+                                                       
+                                                        <div className=" col-3">
+                                                            <div className="user-img">
+                                                                <div className="avatar avatar-xl">
+                                                                    <span className="avatar-title rounded-circle">
+                                                                        <img className="img-fluid" style={{width:"100px" }} src="/assets/img/afralogo.png"/>
+                                                                    </span>
+                                                                </div>
+                                                                <span className=" product-detail-cartShop">{item.quantity}<span
+                                                                        className="mx-1 ">{MeasureUnit(item.measureUnitId)}</span>
+                                                                    </span>
+<br />
+
+                                                                    <span className=" product-price-cartShop"> {formatter.format(item.price)} ریال</span>
+                                                            </div>
+                                                         
+
+
+                                                        </div>
+                                                        <div className=" col-8  ">
+                                                                <div className="">
+                                                               
+                                                                    <p className=" product-name-cartShop" >{item.product.name}</p>
+                                                                    <p style={{
+                                                                        fontSize: 'x-small',
+                                                                        color: 'lightgrey'
+                                                                    }}> موجود در انبار</p>
+
+                                                                   
+                                                                    
+                                                                </div>
+
+                                                            </div>
+                                                            <div className="col-1">
+                                                        <span className="  "
                                                                 onClick={() => deleteItemHandler(item.productSupplyId)}><svg
                                                                     style={{ color: 'red' }} width="24" height="24"
                                                                     stroke-width="1.5" viewBox="0 0 24 24" fill="none"
@@ -268,35 +302,8 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                                                                         stroke-linejoin="round" /> <path
                                                                         d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
                                                                         stroke="currentColor" stroke-linecap="round"
-                                                                        stroke-linejoin="round" /> </svg></span></div>
-                                                        <div className="media col-5 ">
-                                                            <div className="user-img">
-                                                                <div className="avatar avatar-xl">
-                                                                    <span className="avatar-title rounded-circle">
-                                                                        {/* <img className="img-fluid" style={{width:"100px" , height:'100px'}} src="/assets/img/000000.png"/> */}
-                                                                    </span>
-                                                                </div>
+                                                                        stroke-linejoin="round" /> </svg></span>
                                                             </div>
-                                                            <div className="media-body col-6  mt-3">
-                                                                <div className="">
-                                                                    <h5 className="usr-name text-primary">{item.product.name}</h5>
-                                                                    <p style={{
-                                                                        fontSize: 'x-small',
-                                                                        color: 'lightgrey'
-                                                                    }}> موجود در انبار</p>
-
-                                                                    <p className="">مقدار:{item.quantity}<span
-                                                                        className="mx-1">{MeasureUnit(item.measureUnitId)}</span>
-                                                                    </p>
-
-                                                                    <p> قیمت:{formatter.format(item.price)} ریال</p>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-
                                                     </div>
 
                                                 </Link>
@@ -304,22 +311,16 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                                             )
                                         ))
 
-                                        : <Link to='#' className="dropdown-item border-bottom border-light p-2 my-2 mt-3 ">
-
-                                            <div className="col-12"></div>
-                                            <div className="media col-5 p-2 ">
-                                                <span> کالایی در سبد خرید موجود نیست</span>
-
-                                            </div>
-
-
-
-                                        </Link>
+                                        :
+                                        <div className='text-center'>
+                                    
+                                        <img src="/assets/img/emptyBasket.svg"/>
+                                        </div>
                                     }
                                 </div>
                             </div>
 
-                            <div className="footer-car-shop col-12 shadow p-3 rounded  " >
+                           { cartShopping.length !== 0 ? <div className="footer-car-shop col-12  p-3   " >
                                 <span className="float-right " onClick={deleteHandler}> <svg style={{ color: 'red' }}
                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     viewBox="0 0 24 24" fill="none"
@@ -335,9 +336,9 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                                 </svg></span>
                                 <p className="font-weight-bolder  " style={{ fontSize: '0.8rem' }}> مبلغ قابل پرداخت
                                     :{formatter.format(cartShopping.reduce((total, item:any) => total + (item.price), 0))} ریال</p>
-                                <p>
+                                <p className='text-center'>
                                     <button
-                                        onClick={setOrder} disabled={loading ? true : cartShopping.length > 0 ? false : true} className="btn btn-primary  float-left mt-3">ارسال درخواست
+                                        onClick={setOrder} disabled={loading ? true : cartShopping.length > 0 ? false : true} className="btn btn-primary w-100  mt-3">ارسال درخواست
                                         <ClipLoader
 
                                             loading={loading}
@@ -345,12 +346,12 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                                             size={15}
                                         /></button>
 
-                                    <button className="btn btn-primary float-right mt-3" onClick={() => {
+                                    {/* <button className="btn btn-primary float-right mt-3" onClick={() => {
                                         setShow(oldState => !oldState)
                                         setShowNews(false)
-                                    }} >ادامه خرید</button>
+                                    }} >ادامه خرید</button> */}
                                 </p>
-                            </div>
+                            </div>: null}
                         </div>
 
                     </li>
