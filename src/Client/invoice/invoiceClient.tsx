@@ -275,17 +275,8 @@ const InvoiceClient: React.FC = () => {
                         </div>
                       </div>
                       <span className="col-lg-2 text-center  m-auto button-auction">
-                        {item.paymentStatusId === 3 ? (
-                          <Link
-                          className="border-0 bg-transparent non-hover edit-btn"
-                          to={`/client/payment`}
-                      state="fromInvoiceClient"
-                        >
-                          <button className="border-0 bg-transparent  non-hover "   onClick={ ()=>sessionStorage.setItem(`param/client/payment/invoice`, JSON.stringify([item.id]))}>
-                            {" "}
-                            مشاهده پرداخت ها
-                          </button></Link>
-                        ) : (
+                        {item.paymentStatusId === 5||item.paymentStatusId === 4||item.paymentStatusId === 2||item.paymentStatusId === 1 ? (
+                           
                           <button
                             className="border-0 btn-success btn non-hover "
                             onClick={() => {
@@ -295,7 +286,16 @@ const InvoiceClient: React.FC = () => {
                           >
                             پرداخت
                           </button>
-                        )}
+                        ): (<Link
+                        className="border-0 bg-transparent non-hover edit-btn"
+                        to={`/client/payment`}
+                    state="fromInvoiceClient"
+                      >
+                        <button className="border-0 bg-transparent  non-hover "   onClick={ ()=>sessionStorage.setItem(`param/client/payment/invoice`, JSON.stringify([item.id]))}>
+                          {" "}
+                          مشاهده پرداخت ها
+                        </button></Link>
+                      )}
                       </span>
                     </div>
                   </div>

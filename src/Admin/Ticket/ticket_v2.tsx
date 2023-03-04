@@ -1,6 +1,6 @@
 
 import {useNavigate} from "react-router-dom";
-import ListTicket from './ListTicket';
+import ListTicketForAdmin from './ListTicketForAdmin';
 
 const Ticket:React.FC = () => {
   const Navigate=useNavigate()
@@ -16,7 +16,7 @@ const Ticket:React.FC = () => {
           <div className="col-xl-12 col-lg-12 col-md-12">
 
 
-<ListTicket/>
+<ListTicketForAdmin/>
 
   </div>
   </div>
