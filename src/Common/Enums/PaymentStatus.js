@@ -4,7 +4,10 @@ export const PaymentStatusEnums=[
     {name:'پرداخت شده ',id:3},
     {name:'باز پرداخت شده ',id:4},
     {name:'باطل شده ',id:5},
-    {name:'شرایطی  ',id:6}
+    {name:'شرایطی  ',id:6},
+    {name:' در دست بررسی ',id:7},
+    {name:'تایید شده  ',id:8},
+    
 
 ]
 

@@ -27,6 +27,7 @@ import { HasAttchmentEnum } from './../../../Common/Enums/HasAttchmentEnum';
 import ImagePriviewerForPayment from '../../../Utils/ImagePriviewerForPayment';
 import AdminImagePreviwerForPaymentList from './../../../Utils/AdminImagePreviwerForPaymentList';
 import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -49,6 +50,7 @@ const customStyles = {
 }
 
 const PaymentsList: React.FC = () => {
+    const location = useLocation()
 
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
@@ -58,7 +60,7 @@ const PaymentsList: React.FC = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [open, SetOpen] = useState(false);
-
+    const [Ids, setIds] = useState<any>(location.state &&JSON.parse(String(sessionStorage.getItem('undeciededPayments')))?JSON.parse(String(sessionStorage.getItem('undeciededPayments'))).Ids:[])
     const [stateError, SetStateError] = useState(0)
     const [payments, SetPayments] = useState([])
     const [InvoiceId, setInvoiceId] = useState<any>(getDefault().InvoiceId)
@@ -83,7 +85,6 @@ const PaymentsList: React.FC = () => {
     const [IsOpenEdit, setIsOpenEdit] = useState(false)
     const [EditPayment, setEditPayment] = useState()
     const [Id, setId] = useState(0)
-
     const companies = useSelector((state: RootState) => state.companies)
 
 
@@ -95,7 +96,7 @@ const PaymentsList: React.FC = () => {
 
 
     }
-    const params = { InvoiceId, EntityTypeId, EntityId, PaymentMethodId, PaymentStatusId, PriceUnitId, MinPrice, MaxPrice, MinCreateDate, MaxCreateDate, MinPaymentDueDate, MaxPaymentDueDate, TrackingCode, HasAttachment, Paid, Confirmed }
+    const params = { InvoiceId,Ids, EntityTypeId, EntityId, PaymentMethodId, PaymentStatusId, PriceUnitId, MinPrice, MaxPrice, MinCreateDate, MaxCreateDate, MinPaymentDueDate, MaxPaymentDueDate, TrackingCode, HasAttachment, Paid, Confirmed }
     function getDefault() {
         let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
@@ -312,11 +313,44 @@ const PaymentsList: React.FC = () => {
             SetMaxPaymentDueDate(new Date(value.toDate().setHours(3, 30, 0, 0)))
         }
     }
+    const SetPaymnetChange = async (id: any) => {
+
+        const body = {
+
+            "paymentId": id,
+            "paymentStatusId": 5,
+            "confirmed": null,
+            "paid": null
+        }
+
+        try {
+
+            const { data, status } = await ChangePaymentStatus(body)
+            if (status === 200) {
+                toast.success('پرداختی مربوطه با موفقیت باطل شد',
+                    {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    })
+            }
+
+
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
     const getDataBySearch = async () => {
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
+                Ids,
                 InvoiceId,
                 EntityTypeId,
                 EntityId,
@@ -357,6 +391,7 @@ const PaymentsList: React.FC = () => {
                 setTotalCount(data.result.payments.totalCount)
 
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
 
             }
 
@@ -369,6 +404,7 @@ const PaymentsList: React.FC = () => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
+                Ids,
                 InvoiceId,
                 EntityTypeId,
                 EntityId,
@@ -409,6 +445,7 @@ const PaymentsList: React.FC = () => {
                 setTotalCount(data.result.payments.totalCount)
 
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
 
             }
 
@@ -427,6 +464,7 @@ const PaymentsList: React.FC = () => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
+                Ids,
                 InvoiceId,
                 EntityTypeId,
                 EntityId,
@@ -467,6 +505,7 @@ const PaymentsList: React.FC = () => {
                 setTotalCount(data.result.payments.totalCount)
 
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
 
             }
         } catch (err) {
@@ -551,13 +590,13 @@ const PaymentsList: React.FC = () => {
         {
             Header: 'تاریخ سررسید ', accessor: 'paymentDueDate', Cell: (rows: any) => {
 
-               
-                
-                if(rows.row.original.paymentDueDate!==null){
-                return (new Date(rows.row.original.paymentDueDate).toLocaleDateString('fa-IR'))
+
+
+                if (rows.row.original.paymentDueDate !== null) {
+                    return (new Date(rows.row.original.paymentDueDate).toLocaleDateString('fa-IR'))
                 }
-                else{
-                    return('')
+                else {
+                    return ('')
                 }
             }
         },
@@ -568,7 +607,7 @@ const PaymentsList: React.FC = () => {
             Header: '  پرداخت شده', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.paid)
                 const id = row.row.original.id
-             
+
                 const activeChang = {
 
                     "paymentId": id,
@@ -582,17 +621,17 @@ const PaymentsList: React.FC = () => {
                     setActive(!active);
                     try {
                         const { data, status } = await ChangePaymentStatus(activeChang)
-                        if(status===200){
+                        if (status === 200) {
                             toast.success('وضعیت پرداخت با موفقیت تغییر کرد',
-                            {
-                                position: "top-right",
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                draggable: true,
-                                progress: undefined
-                            })
+                                {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: false,
+                                    draggable: true,
+                                    progress: undefined
+                                })
                         }
                     } catch (err) {
                         console.log(err)
@@ -604,14 +643,14 @@ const PaymentsList: React.FC = () => {
                     return (
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            className="feather feather-check  " onClick={ activeHandler} style={{ color: 'green' }}>
+                            className="feather feather-check  " onClick={activeHandler} style={{ color: 'green' }}>
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>)
                 } else {
                     return (<svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="feather feather-x  danger " onClick={ activeHandler} style={{ color: 'red' }}>
+                        className="feather feather-x  danger " onClick={activeHandler} style={{ color: 'red' }}>
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>)
@@ -623,7 +662,7 @@ const PaymentsList: React.FC = () => {
             Header: '  تایید شده', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.confirmed)
                 const id = row.row.original.id
-               
+
                 const activeChang = {
 
                     "paymentId": id,
@@ -636,21 +675,22 @@ const PaymentsList: React.FC = () => {
                 const activeHandler = async () => {
                     setActive(!active);
 
-                   
-                    
+
+
                     try {
                         const { data, status } = await ChangePaymentStatus(activeChang)
-                        if(status===200){
+                        if (status === 200) {
                             toast.success('وضعیت تایید با موفقیت تغییر کرد',
-                            {
-                                position: "top-right",
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                draggable: true,
-                                progress: undefined
-                            })
+                                {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: false,
+                                    draggable: true,
+                                    progress: undefined
+                                })
+                            setGeData(true)
                         }
                     } catch (err) {
                         console.log(err)
@@ -662,14 +702,14 @@ const PaymentsList: React.FC = () => {
                     return (
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            className="feather feather-check  "onClick={ activeHandler} style={{ color: 'green' }}>
+                            className="feather feather-check  " onClick={activeHandler} style={{ color: 'green' }}>
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>)
                 } else {
                     return (<svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="feather feather-x  danger " onClick={ activeHandler} style={{ color: 'red' }}>
+                        className="feather feather-x  danger " onClick={activeHandler} style={{ color: 'red' }}>
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>)
@@ -714,6 +754,21 @@ const PaymentsList: React.FC = () => {
 
 
             }
+        }, {
+
+            Header: 'عملیات', accessor: '  ', Cell: (rows: any) => {
+
+
+                if (rows.row.original.paymentStatusId === 1 || rows.row.original.paymentStatusId === 7 || rows.row.original.paymentStatusId === 2 || rows.row.original.paymentStatusId === 8) {
+
+                    return (<button title='باطل کردن اسناد پرداختی' className='btn btn-sm rounded btn-danger ' onClick={() => SetPaymnetChange(rows.row.original.id)}>ابطال پرداخت</button>)
+                }
+                else {
+                    return ('')
+                }
+
+
+            }
         }
 
 
@@ -730,7 +785,7 @@ const PaymentsList: React.FC = () => {
         SetOrganizationName('')
         SetOrganizationNationalId('')
         SetCustomerName('')
-
+        setIds([])
         SetMinCreateDate('')
         SetMaxCreateDate('')
         SetMinPaymentDueDate('')
@@ -757,6 +812,7 @@ const PaymentsList: React.FC = () => {
                 <AdminImagePreviwerForPaymentList id={Id} closeModal={closeModalEdit} modalIsOpen={IsOpenEdit} />
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12  '>
+
                     </div>
                 </div>
                 <Modal
@@ -1074,6 +1130,11 @@ const PaymentsList: React.FC = () => {
                             </div>
                         </div>
                     </AdvancedSearch>
+                    {
+            getDefault().InvoiceId||  getDefault().EntityId|| getDefault().PaymentMethodId|| getDefault().PaymentStatusId|| getDefault().PriceUnitId||
+            getDefault().MinPrice||getDefault().MaxPrice||getDefault().MinCreateDate||getDefault().MaxCreateDate||getDefault().MinPaymentDueDate||
+            getDefault().MaxPaymentDueDate||getDefault().TrackingCode||getDefault().HasAttachment||getDefault().Paid||getDefault().Confirmed?  <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
+          
                 </div>
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
@@ -1438,6 +1499,10 @@ const PaymentsList: React.FC = () => {
                             </div>
                         </div>
                     </AdvancedSearch>
+                    {
+            getDefault().InvoiceId||  getDefault().EntityId|| getDefault().PaymentMethodId|| getDefault().PaymentStatusId|| getDefault().PriceUnitId||
+            getDefault().MinPrice||getDefault().MaxPrice||getDefault().MinCreateDate||getDefault().MaxCreateDate||getDefault().MinPaymentDueDate||
+            getDefault().MaxPaymentDueDate||getDefault().TrackingCode||getDefault().HasAttachment||getDefault().Paid||getDefault().Confirmed?  <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
                 </div>
                 <div className=" statbox widget-content widget-content-area">
                     <div>

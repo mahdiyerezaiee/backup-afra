@@ -1,11 +1,11 @@
 import {useState , useRef} from "react";
 import {useSelector} from "react-redux";
-import {setSupportRequessts, SetSupportRequestMessage} from "../../services/TicketService";
+import {setSupportRequessts, SetSupportRequestMessage} from "../../../services/TicketService";
 import {NavLink, useNavigate} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
-import {validateRequired, validatNumber} from "../../Utils/validitionParams";
-import { RootState } from "../../store";
+import {validateRequired, validatNumber} from "../../../Utils/validitionParams";
+import { RootState } from "../../../store";
 
 const NewTicket:React.FC = () => {
     const user = useSelector((state:RootState) => state.user);

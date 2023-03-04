@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {GetSupportRequestMessages, SetSupportRequestMessage} from "../../services/TicketService";
+import {GetSupportRequestMessages, SetSupportRequestMessage} from "../../../services/TicketService";
 import {Button, Card} from "react-bootstrap";
 
 const ChatBox = (id) => {

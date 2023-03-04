@@ -52,3 +52,7 @@ export const  GetCustomerBrief = (CustomerId)=>{
 export const  GetCoutaggeBrief = (cottageCode)=>{
     return http.get(`${configure}/Report/GetCottageBrief?cottageCode=${cottageCode}`)
 }
+
+export const  GetUndecidedPayments = ()=>{
+    return http.get(`${configure}/Report/GetUndecidedPayments`)
+}

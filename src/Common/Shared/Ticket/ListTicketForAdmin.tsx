@@ -1,10 +1,10 @@
-import {GetSupportRequesstsAdmin, GetSupportRequesstsUser} from "../../services/TicketService";
+import {GetSupportRequesstsAdmin, GetSupportRequesstsUser} from "../../../services/TicketService";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import ChatBox from "./chatBox";
 import QueryString from "qs";
-import { RootState } from "../../store";
+import { RootState } from "../../../store";
 
 const ListTicketForAdmin:React.FC = () => {
   const roles = useSelector((state:RootState) => state.roles)

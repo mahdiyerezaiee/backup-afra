@@ -88,6 +88,7 @@ const EditProfile: React.FC = () => {
     organizationId: userinfo.organizationId,
     password,
     active: true,
+    companyId: userinfo.companyId,
   };
 
   const getCurrentUser = async () => {
