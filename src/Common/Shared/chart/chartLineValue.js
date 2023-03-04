@@ -13,6 +13,7 @@ import {Line} from 'react-chartjs-2';
 import {GetPeriodicSalesReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
 import { Link } from 'react-router-dom';
+import { ScheduleTypes } from '../../Enums/scheduleTypes';
 
 ChartJS.register(
     CategoryScale,
@@ -24,22 +25,21 @@ ChartJS.register(
     Filler,
     Legend
 );
-let delayed;
 
+
+
+
+
+export function ChartLineValue({datas , setTypeId  , TypeId, animation}) {
+
+    if (datas && datas.length > 0){
+        
 const options = {
     responsive: true,
     maintainAspectRatio: false,
-    animation: {
-        onComplete: () => {
-          delayed = true;
-        },
-        delay: (context) => {
-          let delay = 0;
-          if (context.type === 'data' && context.mode === 'default' && !delayed) {
-            delay = context.dataIndex * 300 + context.datasetIndex * 100;
-          }
-          return delay;
-        },
+    animation,
+    interaction: {
+        intersect: false
       },
     elements: {
         point: {
@@ -143,12 +143,6 @@ const options = {
         }
     }
 };
-
-
-
-export function ChartLineValue({datas , setTypeId}) {
-
-    if (datas && datas.length > 0){
     const labels =datas.map(item=>item.scheduleName)
 
     const data = {
@@ -178,6 +172,9 @@ export function ChartLineValue({datas , setTypeId}) {
                     <div className="d-inline float-left">
                         <h5 className="">قیمت سفارشات</h5>
                     </div>
+                    <div className="d-inline float-left px-2">
+                <span >{"10"  + " "+ ScheduleTypes.filter(i=> i.value === `${TypeId}`).map(i=> i.label)  + " "+  "اخیر"}</span> 
+                </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <Link className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">

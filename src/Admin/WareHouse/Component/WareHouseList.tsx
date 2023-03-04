@@ -404,11 +404,8 @@ const WareHouseList:React.FC = () => {
     if(warehouse && warehouse.length >0){
 
         return (
-            <div className='user-progress' >
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                    </div>
-                </div>
+            <div className='' >
+                
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
                         isOpen={modalIsOpen}

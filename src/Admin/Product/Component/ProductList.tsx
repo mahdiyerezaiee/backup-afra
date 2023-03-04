@@ -568,7 +568,7 @@ const ProductList: React.FC = () => {
         }))
 
         return (
-            <div className='user-progress'>
+            <div className=''>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 '>
 

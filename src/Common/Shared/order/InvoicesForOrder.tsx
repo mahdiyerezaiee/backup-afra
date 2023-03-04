@@ -89,11 +89,11 @@ SetModalOpenPayment(false)
     if (Invoices && show) {
         return (
 
-            <section className="mb-2 mt-2">
-        <div className=" mb-1  p-3 border rounded">
-          <div className="row">
+            <section className="mb-2 mt-2 ">
+        <div className=" mb-1    rounded ">
+          <div className="row p-3 itemA">
             <div className=" col-6  ">
-              <h4 className="float-left">صورتحسابها </h4>
+              <span className="float-left">صورتحسابها </span>
             </div>
             <div className="  col-6   ">
               {show === true ? (
@@ -132,7 +132,7 @@ SetModalOpenPayment(false)
               {/* </div> */}
             </div>
           ) : (
-            <div>
+            <div className='info-Item'>
 
                 <div className="form-group mb-4 textOnInput col-lg-12 rounded border  border-dark  mt-4 p-2 "  >
                     <label> صورتحسابها </label>
@@ -189,8 +189,8 @@ SetModalOpenPayment(false)
     else {
         return ( 
         <section className="mb-2 mt-2">
-        <div className="   p-3 border rounded  ">
-          <div className="row">
+        <div className=" mb-1    rounded ">
+          <div className="row p-3 itemA">
             <div className=" col-6  ">
               <span className="float-left">صورتحسابها</span>
             </div>
@@ -221,7 +221,7 @@ SetModalOpenPayment(false)
             </div>
           </div>
           {show ? (
-            <div>
+            <div className='info-Item'>
               <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
                 <span className="text-center">
                   اطلاعاتی برای نمایش موجود نیست

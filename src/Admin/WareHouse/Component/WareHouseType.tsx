@@ -311,9 +311,9 @@ const WareHouseType :React.FC= () => {
 
     if(WarehouseG && WarehouseG.length >0){
         return (
-            <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-4'>
+            <div className=''>
+                <div className=''>
+                    <div className=' statbox widget-content widget-content-area mb-2'>
                     {userCompanies.length > 1 ?
                           
                                 <form className='form-row textOnInput'>
@@ -393,9 +393,9 @@ const WareHouseType :React.FC= () => {
         )}
     else{
         return(
-            <div className='user-progress'>
-                <div className='row '>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-4'>
+            <div className=''>
+                <div className=' '>
+                    <div className='statbox widget-content widget-content-area mb-2'>
 
                     {userCompanies.length > 1 ?
                             

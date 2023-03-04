@@ -367,9 +367,9 @@ export const CustomersGroup:React.FC = () => {
     if (customerg && customerg.length > 0) {
 
         return (
-            <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+            <div className=''>
+                <div className=''>
+                    <div className='statbox widget-content widget-content-area mb-2'>
 
                         {userCompanies.length > 1 ?
                             
@@ -436,9 +436,9 @@ export const CustomersGroup:React.FC = () => {
     }
     else {
         return (
-            <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
+            <div className=''>
+                <div className=''>
+                    <div className='statbox widget-content widget-content-area mb-2'>
 
                         {userCompanies.length > 1 ?
                             
@@ -480,7 +480,7 @@ export const CustomersGroup:React.FC = () => {
                     </div>
                 </div>
 
-                <div className='text-center mt-5'>
+                <div className='text-center p-5 mt-5 dashboard-widget'>
                     <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
                 </div>
             </div>

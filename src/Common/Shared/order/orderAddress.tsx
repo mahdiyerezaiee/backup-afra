@@ -330,7 +330,7 @@ const OrderAddress: React.FC<Props> = ({
         Cell: (rows: any) => {
           return (
             <p title={rows.row.original.fullAddress}>
-              {rows.row.original.fullAddress.substring(0, 20)}
+              {rows.row.original.fullAddress ? rows.row.original.fullAddress.substring(0, 20): "--"}
             </p>
           );
         },
@@ -490,10 +490,10 @@ const getPayments=()=>{
   if (show && typeof details !== undefined) {
     return (
       <section className="mb-2 mt-2">
-        <div className=" mb-1  p-3 border rounded">
-          <div className="row">
+        <div className=" mb-1    rounded ">
+          <div className="row p-3 itemA">
             <div className=" col-6  ">
-              <h4 className="float-left">جزییات سفارش</h4>
+              <span className="float-left">جزییات سفارش</span>
             </div>
             <div className="  col-6   ">
               {show === true ? (
@@ -532,7 +532,7 @@ const getPayments=()=>{
               {/* </div> */}
             </div>
           ) : (
-            <div>
+            <div  className="info-Item">
               <ShippingSelected
                 modalIsOpen={modalIsOpen}
                 closeModal={closeModal}
@@ -842,8 +842,8 @@ const getPayments=()=>{
   } else {
     return (
       <section className="mb-2 mt-2">
-        <div className="   p-3 border rounded  ">
-          <div className="row">
+        <div className="     rounded ">
+          <div className="row p-3 itemA">
             <div className=" col-6  ">
               <span className="float-left">جزییات سفارش</span>
             </div>
@@ -874,7 +874,7 @@ const getPayments=()=>{
             </div>
           </div>
           {show ? (
-            <div>
+            <div className="info-Item">
               <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
                 <span className="text-center">
                   اطلاعاتی برای نمایش موجود نیست
