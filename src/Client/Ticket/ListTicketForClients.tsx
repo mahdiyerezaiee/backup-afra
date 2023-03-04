@@ -1,14 +1,15 @@
-import {GetSupportRequesstsAdmin, GetSupportRequesstsUser} from "../../../services/TicketService";
+import {GetSupportRequesstsAdmin, GetSupportRequesstsUser} from "../../services/TicketService";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import ChatBox from "./chatBox";
 import QueryString from "qs";
-import { RootState } from "../../../store";
+import { RootState } from "../../store";
 
-const ListTicket:React.FC = () => {
+const ListTicketForClients:React.FC = () => {
   const roles = useSelector((state:RootState) => state.roles)
   const user=useSelector((state:RootState)=>state.user);
+  const userId=localStorage.getItem('connect')
   const Navigate=useNavigate()
   const [PageNumber, setPageNumber] = useState( 0)
 
@@ -23,6 +24,9 @@ const ListTicket:React.FC = () => {
       headers: {'Content-Type': 'application/json'},
 
       params: {
+
+        creatorId:userId,
+        
         PageSize:100000000,
       },
       paramsSerializer: (params:any) => {
@@ -70,16 +74,12 @@ const ListTicket:React.FC = () => {
 //     document.getElementsByClassName("people")[0].addEventListener("scroll", reveal);
 //   },[window])
   const getTicket= async () => {
-    if(roles.includes(7) || roles.includes(5) ||roles.includes(8)){
-      const {data , status}= await GetSupportRequesstsAdmin()
-      setTicket(data.result.supportRequests.values)
-      setTotalCount(data.result.supportRequests.totalCount)
-    }else {
+  
       const {data , status}= await GetSupportRequesstsUser(user.id)
       setTicket(data.result.supportRequests.values)
       setTotalCount(data.result.supportRequests.totalCount)
 
-    }
+    
   }
   useEffect(()=>{
 
@@ -132,4 +132,4 @@ if (ticket){
 }
 
 }
-export default  ListTicket
+export default  ListTicketForClients

@@ -6,7 +6,7 @@ import ChatBox from "./chatBox";
 import QueryString from "qs";
 import { RootState } from "../../store";
 
-const ListTicket:React.FC = () => {
+const ListTicketForAdmin:React.FC = () => {
   const roles = useSelector((state:RootState) => state.roles)
   const user=useSelector((state:RootState)=>state.user);
   const Navigate=useNavigate()
@@ -23,6 +23,7 @@ const ListTicket:React.FC = () => {
       headers: {'Content-Type': 'application/json'},
 
       params: {
+
         PageSize:100000000,
       },
       paramsSerializer: (params:any) => {
@@ -34,14 +35,9 @@ const ListTicket:React.FC = () => {
     };
 
     try {
-      if(roles.includes(7) || roles.includes(5) ||roles.includes(8)){
+   
         const {data , status}= await GetSupportRequesstsAdmin(config)
-        setTicket(data.result.supportRequests.values)
-      }else {
-        const {data , status}= await GetSupportRequesstsUser(user.id , config)
-        setTicket(data.result.supportRequests.values)
-
-      }
+     
     } catch (error) {
       console.log(error);
     }
@@ -69,18 +65,7 @@ const ListTicket:React.FC = () => {
 //
 //     document.getElementsByClassName("people")[0].addEventListener("scroll", reveal);
 //   },[window])
-  const getTicket= async () => {
-    if(roles.includes(7) || roles.includes(5) ||roles.includes(8)){
-      const {data , status}= await GetSupportRequesstsAdmin()
-      setTicket(data.result.supportRequests.values)
-      setTotalCount(data.result.supportRequests.totalCount)
-    }else {
-      const {data , status}= await GetSupportRequesstsUser(user.id)
-      setTicket(data.result.supportRequests.values)
-      setTotalCount(data.result.supportRequests.totalCount)
 
-    }
-  }
   useEffect(()=>{
 
     getDataBySearch()
@@ -132,4 +117,4 @@ if (ticket){
 }
 
 }
-export default  ListTicket
+export default  ListTicketForAdmin
