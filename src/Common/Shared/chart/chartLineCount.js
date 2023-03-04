@@ -13,6 +13,7 @@ import {Line} from 'react-chartjs-2';
 import {GetPeriodicSalesReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
 import { Link } from 'react-router-dom';
+import { ScheduleTypes } from '../../Enums/scheduleTypes';
 
 ChartJS.register(
     CategoryScale,
@@ -26,132 +27,124 @@ ChartJS.register(
 );
 let delayed;
 
-const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-backgroundColor: "blue",
-animation: {
-    onComplete: () => {
-      delayed = true;
-    },
-    delay: (context) => {
-      let delay = 0;
-      if (context.type === 'data' && context.mode === 'default' && !delayed) {
-        delay = context.dataIndex * 300 + context.datasetIndex * 100;
-      }
-      return delay;
-    },
-  },
-    elements: {
-        point: {
-            radius: 0,
-            hoverRadius: 5,
-            hitRadius: 20,
-
-        },
-        line: {
-            tension: 0.4
-        }
-    },
-    plugins: {
-
-        legend: {
-            rtl: true,
-            display: false,
-            labels: {
-                yPadding: '10',
-                position: 'left',
-                usePointStyle: true,
-                pointStyle: 'circle',
-                font: {
-                    family: "diroz"
-                }
-            },
-
-        },
-        dataLabels: {
-            display: true,
-            color: "white",
-        },
-        tooltip: {
-            previousBodyPadding: 'circle',
-            usePointStyle: true,
-            backgroundColor: "rgba(23,21,21,0.78)",
-            Color: "#333",
-            bodyFontColor: "#666",
-            bodySpacing: 4,
-            xPadding: 12,
-            mode: "nearest",
-            intersect: 0,
-            position: "nearest",
-            bodyFont: {
-                family: "diroz",
-                size: 8
-
-
-            },
-            titleFont: {
-                family: "diroz",
-                size: 10
-
-            }
-        },
-        
-    },
-
-
-    scales: {
-        yAxes: {
-
-            barPercentage: 1.6,
-            grid: {
-                // borderDash: [10, 10],
-                drawBorder: false,
-
-                display: true,
-                zeroLineColor: "transparent"
-            },
-            ticks: {
-                padding: 4,
-                font: {
-                    family: "diroz", // Add your font here to change the font of your x axis
-                    size: 8
-                },
-
-                major: {
-                    enable: true
-                }
-            }
-        },
-        xAxes: {
-            barPercentage: 1.6,
-            grid: {
-                borderDash: [10, 10],
-                display: false,
-                zeroLineColor: "transparent"
-            },
-            ticks: {
-                padding: 4,
-                font: {
-                    family: "diroz", // Add your font here to change the font of your x axis
-                    size: 8
-                },
-
-                major: {
-                    enable: false
-                }
-            }
-        }
-    }
-};
 
 
 
-export function ChartLineCount({datas , setTypeId }) {
+export function ChartLineCount({datas , setTypeId, TypeId , animation}) {
 
 if (datas && datas.length >0){
     const labels =datas.map(item=>item.scheduleName)
-
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+    backgroundColor: "blue",
+    animation,
+    interaction: {
+        intersect: false
+      },
+        elements: {
+            point: {
+                radius: 0,
+                hoverRadius: 5,
+                hitRadius: 20,
+    
+            },
+            line: {
+                tension: 0.4
+            }
+        },
+        plugins: {
+    
+            legend: {
+                rtl: true,
+                display: false,
+                labels: {
+                    yPadding: '10',
+                    position: 'left',
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    font: {
+                        family: "diroz"
+                    }
+                },
+    
+            },
+            dataLabels: {
+                display: true,
+                color: "white",
+            },
+            tooltip: {
+                previousBodyPadding: 'circle',
+                usePointStyle: true,
+                backgroundColor: "rgba(23,21,21,0.78)",
+                Color: "#333",
+                bodyFontColor: "#666",
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest",
+                bodyFont: {
+                    family: "diroz",
+                    size: 8
+    
+    
+                },
+                titleFont: {
+                    family: "diroz",
+                    size: 10
+    
+                }
+            },
+            
+        },
+    
+    
+        scales: {
+            yAxes: {
+    
+                barPercentage: 1.6,
+                grid: {
+                    // borderDash: [10, 10],
+                    drawBorder: false,
+    
+                    display: true,
+                    zeroLineColor: "transparent"
+                },
+                ticks: {
+                    padding: 4,
+                    font: {
+                        family: "diroz", // Add your font here to change the font of your x axis
+                        size: 8
+                    },
+    
+                    major: {
+                        enable: true
+                    }
+                }
+            },
+            xAxes: {
+                barPercentage: 1.6,
+                grid: {
+                    borderDash: [10, 10],
+                    display: false,
+                    zeroLineColor: "transparent"
+                },
+                ticks: {
+                    padding: 4,
+                    font: {
+                        family: "diroz", // Add your font here to change the font of your x axis
+                        size: 8
+                    },
+    
+                    major: {
+                        enable: false
+                    }
+                }
+            }
+        }
+    };
+    
     const data = {
         labels,
         datasets: [
@@ -174,12 +167,16 @@ if (datas && datas.length >0){
 
         ],
     };
+    console.log( );
     return (
     <div id="chartArea" className="col-xl-12 layout-spacing">
         <div className="widget widget-chart-three">
             <div className="widget-heading">
                 <div className="d-inline float-left">
                     <h5 className=""> تعداد سفارشات</h5>
+                </div>
+                <div className="d-inline float-left px-2">
+                <span >{"10"  + " "+ ScheduleTypes.filter(i=> i.value === `${TypeId}`).map(i=> i.label) + " "+ "اخیر"}</span> 
                 </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <Link className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"

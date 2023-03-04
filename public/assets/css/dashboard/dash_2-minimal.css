@@ -7,7 +7,7 @@ body.minimal .widget {
 .widget {
     position: relative;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 20px;
     border: none;
     background: #fff;
     border: 1px solid #e0e6ed;

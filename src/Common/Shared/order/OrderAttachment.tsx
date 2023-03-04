@@ -56,11 +56,11 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
   };
   if (newAttachment.length > 0 && show) {
     return (
-      <section className="mb-2 ">
-        <div className=" mb-1  p-3 border rounded">
-          <div className="row">
+      <section className="mb-2  ">
+        <div className=" mb-1    rounded ">
+          <div className="row p-3 itemA">
             <div className=" col-6  ">
-              <h4 className="float-left">فایل ضمیمه </h4>
+              <span className="float-left">فایل ضمیمه </span>
 
 
             </div>
@@ -101,7 +101,7 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
               {/* </div> */}
             </div>
           ) : (
-            <div>
+            <div className="info-Item">
 
               <div className="form-group mb-4 textOnInput col-lg-12    border-dark  mt-4 p-2">
                 <div className="text-center">
@@ -147,8 +147,8 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
   } else {
     return (
       <section className="mb-2 mt-2">
-        <div className="  p-3 border rounded  ">
-          <div className="row">
+        <div className=" mb-1    rounded ">
+          <div className="row p-3 itemA">
             <div className=" col-6  ">
               <span className="float-left">فایل های ضمیمه </span>
             </div>
@@ -179,7 +179,7 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
             </div>
           </div>
           {show ? (
-            <div>
+            <div className="info-Item">
               <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
 
                 <span className="text-center">

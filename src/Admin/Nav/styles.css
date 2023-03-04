@@ -16,16 +16,17 @@
 .css-1097eso{
     background-color: transparent!important;
 }
-.css-vj11vy{
+/* .css-vj11vy{
   height: calc(75vh - 30px);
   overflow-y: auto;
 
-}
+} */
 .main-Layout{
   height: calc(100vh - 100px);
   overflow-y:scroll;
   overflow-x: hidden;
 }
+
 .css-1nzbc76{
   overflow-y: auto;
   overflow-x: hidden;

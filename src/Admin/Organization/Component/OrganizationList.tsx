@@ -437,13 +437,13 @@ getOrganizationName()
             'شمار ثبت ': item.registrationNumber,
         }));
         return (
-            <div className='user-progress'>
+            <div className=''>
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 '>
 
                     </div>
                 </div>
-                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1   rounded">
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1   ">
                     <AdvancedSearch>
 
                         <form className='form-row  form-group textOnInput'>
@@ -559,7 +559,7 @@ getOrganizationName()
 
                     </div>
                 </div>
-                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1   rounded">
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1   ">
                     <AdvancedSearch>
 
                         <form className='form-row  form-group textOnInput'>
