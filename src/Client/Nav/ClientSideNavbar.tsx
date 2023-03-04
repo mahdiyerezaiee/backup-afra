@@ -78,7 +78,7 @@ console.log(user);
   newAttachment = attachments.filter((item: any) => item.deleted === false && item.attachmentTypeId===3)
   
   return (
-    <Sidebar defaultCollapsed={false} className="client-sideBar sticky-menu ">
+    <Sidebar defaultCollapsed={false} className="client-sideBar  dashboard-widget ">
       <div className="m-2 text-center   text-black-50 p-3 info-client">
         {newAttachment.length===0?<div className="circle pb-3 ">
           <FaUserCircle size="5rem" color="lightgray" />

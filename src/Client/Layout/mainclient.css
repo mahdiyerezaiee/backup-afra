@@ -3008,13 +3008,13 @@ header {
 }
 
 @media (max-width: 991px) {
-    .hero-section {
+    /* .hero-section {
         padding: 190px 0 160px;
     }
 
     .hero-section.style-2 {
         padding-bottom: 300px;
-    }
+    } */
 }
 /*
 @media (min-width: 992px) {
@@ -5889,7 +5889,7 @@ div[class*="auction"] .custom-button {
 
 @media (min-width: 992px) {
     .mt-lg--440 {
-        margin-top: -503px;
+        margin-top: -432px;
     }
 }
 /*
@@ -7651,7 +7651,7 @@ div[class*="auction"] .custom-button {
 
 @media screen and (min-width: 450px) {
     .dashboard-widget {
-        padding: 30px;
+        padding: 0px;
     }
 }
 
@@ -8870,8 +8870,19 @@ All Animation Ends Here */
 .clientBody footer{
     position: relative;
 }
+.clientBody .cart-shop2 .dropdown-item{
+    padding: 10px 0px 0px  0px;
+}
+.clientBody .cart-shop2 .dropdown-item:first-child{
+   border-top: 1px solid lightgray;
+   border-bottom: 1px solid lightgray;
+
+}
+.clientBody .cart-shop2 .dropdown-item{
+    border-bottom: 1px solid lightgray;
+ }
 .clientBody .cart-shop2 {
-    width: 20rem;
+    width: 25rem;
     top: 0!important;
     position: fixed;
     height: 100vh;
@@ -9185,8 +9196,19 @@ background-color: #ffffff;
 color: #43b055!important;
     transform: rotate(90deg); 
 } */
+.footer-bottom{
+    margin-top: 250px;
+}
+.navbar-toggler-icon svg {
+    color: white;
+}
 @media only screen and  (max-width: 600px) {
-    
+    .navbar-toggler-icon svg{
+        color: black;
+    }
+    .footer-bottom{
+        margin-top: 0px;
+    }
     .bid-area .col-lg-10:before{
         background: none;
         border-bottom-left-radius: 16px;
@@ -9296,6 +9318,7 @@ color: #43b055!important;
     .clientBody .navbar-collapse{
         display: block;
     background: #ffffff;
+    box-shadow: 0px 6px 18px 0px rgb(16 5 54 / 17%);;
     position: absolute;
     top: 100%;
     right: 0;
@@ -9361,7 +9384,14 @@ width: 390px;
         transform: rotate(0deg); 
     }
     .mt-lg--440 {
-        margin-top: -312px;
+        margin-top: 10px;
+    }
+    .hero-section {
+        padding: 0px;
+    }
+
+    .hero-section.style-2 {
+        padding-bottom: 0px;
     }
 }
 .clearfixed{
@@ -9369,4 +9399,47 @@ width: 390px;
 }
 .dark-mode-footer{
     display: none;
+}
+.userProfileInfo {
+    margin-top: 3%;
+}
+.userProfileInfo p{
+    color: #777c81;
+    font-size: medium;
+    font-weight: bolder;
+}
+.editProfileBtn{
+    text-align: end;
+    color: #27c6df;
+}
+.addressHeader {
+    border-bottom: 1px solid lightgray;
+    margin: auto;
+    color: #777c81;
+}
+.addAddressUser{
+    border-radius: 20px;
+    border: 1px solid lightgray;
+    padding:2rem;
+    margin: 2% auto;
+    width: 33%;
+}
+.addAddressUser svg:hover{
+cursor: pointer;
+color:#585858;
+}
+.addAddressUser svg{
+  
+    color:lightgray;
+    }
+.addressUser {
+    margin-top: 2%;
+    border-radius: 20px ;
+    text-align:start;
+    padding: 3%;
+    border: 1px solid lightgray;
+}
+.addressUser p{
+    color: #777c81;
+    font-size: small;
 }

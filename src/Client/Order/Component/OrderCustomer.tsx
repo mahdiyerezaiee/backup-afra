@@ -196,7 +196,7 @@ if(order){
 }
   
 else{
-  return(<div className="text-center dashboard-widget">
+  return(<div className="text-center dashboard-widget p-3">
   <AiOutlineWarning  size="5rem " color="gold"/>
 <div>اطلاعاتی برای نمایش وجود ندارد</div>
 </div>)

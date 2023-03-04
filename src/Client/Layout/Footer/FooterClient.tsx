@@ -43,12 +43,7 @@ const FooterClient: React.FC = () => {
       </div>
 
       <div
-        className="footer-bottom"
-        style={{
-          marginTop: "250px",
-          zIndex:"2"
-        }}
-      >
+        className="footer-bottom"  >
         <div className="container">
           <div className="copyright-area">
             <div className="footer-bottom-wrapper">
