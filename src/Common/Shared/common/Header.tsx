@@ -108,18 +108,18 @@ const Header: React.FC = () => {
             document.removeEventListener("click", checkIfClickedOutside)
         }
     }, [showNews])
-    const getCartShopping = async () => {
-        const { data, status } = await GetShoppingCart(Number(localStorage.getItem('connect')))
+    // const getCartShopping = async () => {
+    //     const { data, status } = await GetShoppingCart(Number(localStorage.getItem('connect')))
 
-        setCartShopping(data.result.shoppingCartItems)
+    //     setCartShopping(data.result.shoppingCartItems)
 
-    }
+    // }
 
    
    
 
     useEffect(() => {
-        getCartShopping()
+       // getCartShopping()
         handelGetAttachment()
 
     }, [])
