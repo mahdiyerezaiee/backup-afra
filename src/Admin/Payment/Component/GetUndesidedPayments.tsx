@@ -7,6 +7,7 @@ import { GetUndecidedPayments } from '../../../services/reportService';
 
 const GetUndesidedPayments:React.FC = () => {
 const[Ids,setIds]=useState<any>([])
+const[Count,setCount]=useState<any>(0)
 
 let d = new Date();
 d.setTime(d.getTime() +  (60 * 1000));
@@ -27,6 +28,7 @@ let undeciededPayments = {
 
             if(status===200){
                 setIds(data.result.unDecidedPayments)
+                setCount(data.result.unDecidedPayments.length)
                 undeciededPayments.Ids=data.result.unDecidedPayments
                 sessionStorage.setItem('undeciededPayments', JSON.stringify(undeciededPayments));
                 
@@ -61,14 +63,14 @@ useEffect(()=>{
             <div className="float-left">
                 <FiAlertOctagon size='2rem' className="m-2"/>
             <span style={{color:"white"}}>
-              پرداختی های  تعیین تکلیف نشده
+              {`تعداد ${Count}پرداخت در وضعیت تصمیم گیری نشده یافت شد.`}
             </span>
             </div>
         </div>
         <div className="col-lg-6 m-auto">
 
             <div className="float-right ">
-            <Link onClick={getUndecieded} to="/admin/PaymentLists" state="fromDashboard" className="text-light" >  مشاهده بیشتر</Link>
+            <Link onClick={getUndecieded} to="/admin/PaymentLists" state="fromDashboard" className="text-light" >  مشاهده پرداخت ها </Link>
                 <BsArrowLeftCircle size="1.5rem" className="mx-2" style={{position: 'relative',animation: "changeRight 1s infinite"}}/>
 
             </div>
