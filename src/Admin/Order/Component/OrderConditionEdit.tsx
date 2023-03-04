@@ -74,7 +74,7 @@ const OrderConditionEdit:React.FC<Props> = ({ orderCondition, getOrderDetail, Or
                   <td >{item.product.name}</td>
                   <td >{item.quantity}</td>
                   <td >{item.basePrice}</td>
-                  <td >{PaymentStructureEnums.filter(i => i.id === item.paymentMethodId).map(i => i.name)}</td>
+                  <td >{item.paymentMethodId?PaymentStructureEnums.filter(i => i.id === item.paymentMethodId).map(i => i.name):PaymentStructureEnums.filter(i => i.id === 2).map(i => i.name)}</td>
                   <td >{item.installmentOccureCount}</td>
                   <td >{item.installmentPeriod}</td>
                   <td >{AdditionalTypeId.filter(i => i.id === item.additionalTypeId).map(i => i.name)}</td>

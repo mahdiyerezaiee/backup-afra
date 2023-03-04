@@ -471,6 +471,17 @@ const OrderAddress: React.FC<Props> = ({
     getOrderDetailCondition();
   }, [getOrder , show]);
 
+const getPayments=()=>{
+  if(condition)
+  {
+    return(condition.map((i:any)=>({payments:i.paymentMethodId,installmentPeriod:i.installmentPeriod,installmentOccureCount:i.installmentOccureCount})))
+  }
+  else{
+    return([])
+  }
+}
+
+
   if (show && typeof details !== undefined) {
     return (
       <section className="mb-2 mt-2">
@@ -798,6 +809,7 @@ const OrderAddress: React.FC<Props> = ({
                 </div>
               </div>
               <InvoiceSetForOrder
+              defaultPaymentId={getPayments}
                 closeModal={CloseModalInvoice}
                 isOpenInvoice={IsOpenInvoce}
                 orderId={OrderId}
