@@ -29,8 +29,8 @@ import EditUserRole from '../User/Component/editUserRole';
 import ProductSupply from '../ProductSupply/Component/ProductSupplyList';
 import AddProductSupplyToSalesBoard from '../ProductSupply/Component/AddProductSupplyToSalesBoard';
 
-import NewTicket from '../Ticket/newTicket';
-import Message from '../Ticket/message';
+import NewTicket from '../../Common/Shared/Ticket/newTicket';
+import Message from '../../Common/Shared/Ticket/message';
 import { CustomersGroup } from '../Customer/Component/CustomersGroup';
 import CustomersList from '../Customer/Component/CustomersList';
 import NewCustomerGroup from '../Customer/Component/NewCustomerGroup';
@@ -85,7 +85,7 @@ import DetailCustomerAttachment from "../Report/Component/DetailCustomerAttachme
 import AddOrder from "../Order/Component/addOrder";
 import ShippingList from "../Shipping/Component/ShippingList";
 import InvoiceCreator from "../../Utils/invoiceCreator";
-import Ticket from "../Ticket/ticket_v2";
+import Ticket from "../../Common/Shared/Ticket/ticket_v2";
 import { addUser, userDelete } from '../../store/Slice/user/userSlice';
 import { removeRole, userRoles } from '../../store/Slice/user/userRole/userRoleSlice';
 import ReportShipping from "../Report/Component/ReportShipping";

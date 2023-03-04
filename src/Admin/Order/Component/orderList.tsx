@@ -90,6 +90,7 @@ const OrderList :React.FC= () => {
     const [DetailAddress, setDetailAddress] = useState([]);
     const [companies, setCompanies] = useState([])
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
+ 
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
     let SortColumn:any = null
     let SortingDirectionId:any = null

@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {GetSupportRequestMessages, SetSupportRequestMessage} from "../../services/TicketService";
+import {GetSupportRequestMessages, SetSupportRequestMessage} from "../../../services/TicketService";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {Card ,Button} from "react-bootstrap";
-import { RootState } from "../../store";
+import { RootState } from "../../../store";
 
 const Message:React.FC = () => {
     let userName = localStorage.getItem("connect")
