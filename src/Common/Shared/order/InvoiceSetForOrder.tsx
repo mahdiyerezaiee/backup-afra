@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { PaymentStructureEnums } from './../../Enums/PaymentStructureEnums';
 import  Modal  from 'react-modal';
 import  Select  from 'react-select';
@@ -26,9 +26,9 @@ const customStyles = {
 }
 interface Props {
   closeModal: any,
-  isOpenInvoice: any, orderId: any
+  isOpenInvoice: any, orderId: any,defaultPaymentId:any
 }
-const InvoiceSetForOrder: React.FC<Props> = ({ closeModal, isOpenInvoice, orderId }) => {
+const InvoiceSetForOrder: React.FC<Props> = ({ closeModal, isOpenInvoice, orderId,defaultPaymentId }) => {
 
   const [loading, setLoading] = useState(false);
   const [paymentMethodId, setPaymentMethodId] = useState<any>(0);
@@ -51,6 +51,44 @@ const InvoiceSetForOrder: React.FC<Props> = ({ closeModal, isOpenInvoice, orderI
     }
 }
 
+useEffect(()=>{
+  setDefault()
+
+
+},[defaultPaymentId()])
+const setDefault=()=>{
+
+  if(defaultPaymentId().length>0){
+
+    if(defaultPaymentId().length===1){
+    
+      setPaymentMethodId(defaultPaymentId()[0].payments?defaultPaymentId()[0].payments:2)
+      setInstallmentOccureCount(defaultPaymentId()[0].installmentOccureCount)
+      setInstallmentPeriod(defaultPaymentId()[0].installmentPeriod)
+    
+    
+    }
+    else if(defaultPaymentId().length>1){
+  let newPayments:any=[]
+
+  newPayments=[...new Set(defaultPaymentId().map((i:any)=>i.payments?i.payments:2))]
+
+  console.log(newPayments);
+  
+  if(newPayments.length>1){
+
+    setPaymentMethodId(7)
+  }
+  else{
+    setPaymentMethodId(newPayments[0])
+  }
+
+
+    }
+    
+    
+    }
+}
 
   const paymentMethodIDs = () => {
     return (PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id })))
@@ -83,6 +121,7 @@ try {
   closeModal()
 }
 
+
   return (
     <Modal
       isOpen={isOpenInvoice}
@@ -97,7 +136,8 @@ try {
             <div className=" form-control-sm">
               <label> نحوه پرداخت </label>
 
-              <Select
+              {paymentMethodId!==0?<Select
+              value={paymentMethodIDs().filter((i:any)=>i.value===paymentMethodId).map((i:any)=>i)}
                 placeholder=' پرداخت '
                 options={paymentMethodIDs()}
 
@@ -106,7 +146,16 @@ try {
                   setPaymentMethodId(e.value)
 
                 }}
-              />
+              />: 
+              
+              <Select placeholder=' پرداخت '
+              options={paymentMethodIDs()}
+
+              onChange={(e: any) => {
+
+                setPaymentMethodId(e.value)
+
+              }}/>}
             </div>
           </div>
           {paymentMethodId === 4 ?

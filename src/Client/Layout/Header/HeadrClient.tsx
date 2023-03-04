@@ -17,6 +17,8 @@ import { Link } from 'react-router-dom';
 import { useProSidebar } from 'react-pro-sidebar';
 import { RootState } from '../../../store';
 import{BsBasket} from "react-icons/bs"
+import  QueryString  from 'qs';
+import { GetAttachments } from './../../../services/attachmentService';
 interface Props{
 
     collapsed:boolean
@@ -24,6 +26,7 @@ interface Props{
 
 } 
 
+const attachmetURL = (window as any).globalThis.stie_att
 
 const HeaderClient:React.FC<Props> = ({ collapsed }) => {
     const ref:any = useRef()
@@ -37,7 +40,34 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
     const [showNews, setShowNews] = useState(false)
     const roles = useSelector((state:RootState) => state.roles);
     const [loading, setLoading] = useState(false);
+    const [attachments, Setattachments] = useState([]);
 
+    const handelGetAttachment = async () => {
+
+        let config = {
+          headers: { "Content-Type": "application/json" },
+          params: {
+            entityTypeId: 1,
+            entityId: Number(localStorage.getItem('connect')),
+            attachmentTypeId: 3
+          },
+          paramsSerializer: (params: any) => {
+            return QueryString.stringify(params);
+          },
+        };
+        try {
+          const { data, status } = await GetAttachments(config);
+          if (status === 200) {
+            Setattachments(data.result.attachments);
+    
+    
+          }
+        } catch (error) {
+          console.log(error);
+    
+    
+        }
+      }
     const handleHeaderClick = (event:any) => {
 
         event.stopPropagation();
@@ -115,8 +145,10 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
 
     useEffect(() => {
         getCartShopping()
+        handelGetAttachment()
 
     }, [])
+
 
     const setOrder = async () => {
         setLoading(true)
@@ -162,6 +194,8 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
     let days = ['یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
     let d = new Date()
     let dayName = days[d.getDay()]
+    let newAttachment: any = []
+  newAttachment = attachments.filter((item: any) => item.deleted === false && item.attachmentTypeId === 3)
 
     return (
 
@@ -353,23 +387,25 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
 
                     <li className="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
                         <Link to='#' className="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            aria-haspopup="true" aria-expanded="false">{newAttachment.length>0?
+                                <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`}  />
+                            : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 className="bi bi-person-circle" viewBox="0 0 16 16" color='white'>
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" fill='white' />
                                 <path fillRule="evenodd"
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" fill='white'/>
-                            </svg>                        </Link>
+                </svg>                       }</Link> 
                         <div className="dropdown-menu position-absolute animated fadeInUp"
                             aria-labelledby="userProfileDropdown">
                             <div className="user-profile-section">
-                                <div className="media mx-auto">
-                                    <svg style={{ marginLeft: '8px', backgroundColor: 'white', border: '2px solid white', borderRadius: '5px' }} xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                               
+                                <div className="media mx-auto">{newAttachment.length>0? <img src={`${attachmetURL}${newAttachment[0].path}`} className="rounded-circle " alt={`${user.firstName} ${user.lastName}`}  />:
+                                     <svg style={{ marginLeft: '8px', backgroundColor: 'white', border: '2px solid white', borderRadius: '5px' }} xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                         className="bi bi-person-circle" viewBox="0 0 16 16">
                                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                                         <path fillRule="evenodd"
                                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                                    </svg>                                    <div className="media-body">
+                                    </svg>      }                            <div className="media-body ml-2">
                                     <h5>{user.firstName ? user.firstName +" "+ user.lastName: localStorage.getItem('mobile')}</h5>
                                     </div>
                                 </div>
