@@ -63,7 +63,7 @@ useEffect(()=>{
             <div className="float-left">
                 <FiAlertOctagon size='2rem' className="m-2"/>
             <span style={{color:"white"}}>
-              {`تعداد ${Count} پرداخت در وضعیت تصمیم گیری نشده یافت شد.`}
+              {`تعداد ${GetundeciededPayments().Ids.length} پرداخت در وضعیت تصمیم گیری نشده یافت شد.`}
             </span>
             </div>
         </div>
