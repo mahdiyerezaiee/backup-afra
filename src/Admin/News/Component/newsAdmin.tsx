@@ -392,11 +392,8 @@ const[id,setId]=useState(0)
     const data = useMemo(() => news,[news]);
     if(news){
         return (
-            <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-                    </div>
-                </div>
+            <div className=''>
+               
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
                         isOpen={modalIsOpen}
@@ -439,13 +436,8 @@ const[id,setId]=useState(0)
     }
     else{
         return(
-            <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-
-
-                    </div>
-                </div>
+            <div className=''>
+               
                 <div className=" statbox widget-content widget-content-area">
                     <div>
                         <button className="btn btn-primary m-3" onClick={formHandler}>تعریف اعلان جدید</button>

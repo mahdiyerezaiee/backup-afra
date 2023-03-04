@@ -602,7 +602,7 @@ const UserList:React.FC = () => {
                     </div>
                 </div>
                 <EditCustomerGroup id={modalId} closeModal={modalGroupClose} modalIsOpen={modalGroupOpen} refresh={getUsers} />
-                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  ">
                     <AdvancedSearch>
 
                         <form className='form-row textOnInput'>
@@ -723,7 +723,7 @@ const UserList:React.FC = () => {
 
                     </div>
                 </div>
-                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  ">
                     <AdvancedSearch>
 
 

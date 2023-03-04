@@ -14,6 +14,8 @@ import {
 import {Bar} from 'react-chartjs-2';
 import {GetShippingsReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
+import { AiOutlineWarning } from 'react-icons/ai';
+import { ScheduleTypes } from '../../Enums/scheduleTypes';
 
 ChartJS.register(
     CategoryScale,
@@ -31,11 +33,13 @@ ChartJS.register(
 export function ChartShippingReport() {
     const [datas , setDatas]=useState<any>([])
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)
+    const [PriceUnitId , setPriceUnitId]=useState(3)
+
 useEffect(()=>{
     const GetReport = async () => {
         try {
            
-            const {data , status}= await GetShippingsReport(ScheduleTypeId)
+            const {data , status}= await GetShippingsReport(ScheduleTypeId , PriceUnitId)
 
             setDatas(data.result.shippingsPerSchedule)
 
@@ -45,12 +49,12 @@ useEffect(()=>{
 
     }
     
-     if (ScheduleTypeId ){
+     if (ScheduleTypeId || PriceUnitId ){
         GetReport()
 
     }
 
-},[ScheduleTypeId ])
+},[ScheduleTypeId , PriceUnitId])
     if (datas && datas.length > 0){
         const labels =datas.map((item:any)=>item.shippingCompanyName)
         let delayed:any;
@@ -202,6 +206,14 @@ useEffect(()=>{
                     <div className="d-inline float-left">
                         <h5 className=""> گزارش باربری</h5>
                     </div>
+                    <div className="d-inline float-left px-2">
+                    <span >{"10"  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
+                 { " " }
+                    در مقیاس   
+                    { " " }
+                    {PriceUnitId === 1 ? "ریال" : PriceUnitId === 2 ? "تومان" : PriceUnitId === 3 ? "  میلیون تومان"    :"میلیارد تومان"}
+                    </span> 
+                    </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <a className="dropdown-toggle" role="button" id="uniqueVisitors" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -214,13 +226,28 @@ useEffect(()=>{
                         </svg>
                     </a>
 
-                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                    <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
+                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors" style={{width:"20rem"}}>
+                        <div  className='row'>
+                             <div className='col-6 border-right'>
+                                <span>تاریخ</span>
+                             <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>10 ماه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>10روز اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 10 ساعت اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 10دقیقه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 10 ثانیه اخیر</a>
+                            </div>
+                            <div className='col-6'> 
+                            <span>واحد قیمت</span>
+                            <a className="dropdown-item" onClick={()=> setPriceUnitId(1)}>ریال</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(2)}>تومان</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(3)}> میلیون تومان</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(4)}> میلیارد تومان</a>
+                            </div>
+                            </div>
+                    
+                   
+                    
                     </div>
                 </div>
                 </div>
@@ -235,6 +262,9 @@ useEffect(()=>{
         </div>
     )
     }else {
-        return null
+        return (<div className="text-center dashboard-widget p-3 my-2">
+      
+      <div>اطلاعاتی برای نمایش وجود ندارد</div>
+      </div>)
     }
 }

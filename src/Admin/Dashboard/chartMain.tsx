@@ -17,6 +17,37 @@ const ChartMain: React.FC = () => {
         expiresAt: expires,
         datas
     }
+    const totalDuration = 1450;
+const delayBetweenPoints = totalDuration / datas.length;
+const previousY = (ctx:any) => ctx.index === 0 ? ctx.chart.scales.yAxes.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+const animation = {
+  x: {
+    type: 'number',
+    easing: 'linear',
+    duration: delayBetweenPoints,
+    from: NaN, // the point is initially skipped
+    delay(ctx:any) {
+      if (ctx.type !== 'data' || ctx.xStarted) {
+        return 0;
+      }
+      ctx.xStarted = true;
+      return ctx.index * delayBetweenPoints;
+    }
+  },
+  y: {
+    type: 'number',
+    easing: 'linear',
+    duration: delayBetweenPoints,
+    from: previousY,
+    delay(ctx:any) {
+      if (ctx.type !== 'data' || ctx.yStarted) {
+        return 0;
+      }
+      ctx.yStarted = true;
+      return ctx.index * delayBetweenPoints;
+    }
+  }
+};
 
     function getDataReport() {
         let items = JSON.parse(String(sessionStorage.getItem('dataReport')));
@@ -59,11 +90,11 @@ const ChartMain: React.FC = () => {
 
             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
 
-                <ChartLineCount datas={datas} setTypeId={setTypeId} />
+                <ChartLineCount animation={animation} TypeId={TypeId} datas={datas} setTypeId={setTypeId} />
             </div>
             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
 
-                <ChartLineValue datas={datas} setTypeId={setTypeId} />
+                <ChartLineValue animation={animation}  TypeId={TypeId}   datas={datas} setTypeId={setTypeId} />
             </div>
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12  ">
 

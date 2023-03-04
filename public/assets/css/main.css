@@ -3604,7 +3604,7 @@ animation: pulseblue 1s infinite;
   overflow: hidden;
 }
 .table tr {
-  border-color: #46637f;
+  border-color: #46637f
 }
 .table th, .table td {
   margin: .5em 1em;
@@ -3790,3 +3790,22 @@ background: #E5FFDA!important
     font-size: xx-small;
 
   }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    } }
+.itemA{
+background-color: #64a5ff69;
+color: #0c4088;
+border-radius: 10px;
+border: 1px solid #0c4088;
+}
+
+.info-Item{
+  animation: fadeIn 1s ;
+  background-color: #ffffff!important;
+
+}

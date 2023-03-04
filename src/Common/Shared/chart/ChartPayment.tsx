@@ -13,6 +13,7 @@ import {Line} from 'react-chartjs-2';
 import {GetPaymentsReport, GetPeriodicSalesReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
 import  QueryString  from 'qs';
+import { ScheduleTypes } from '../../Enums/scheduleTypes';
 
 ChartJS.register(
     CategoryScale,
@@ -33,10 +34,42 @@ ChartJS.register(
 
 export function ChartPayment() {
     const [datas , setDatas]=useState<any>([])
-    const [ScheduleTypeId , setScheduleTypeId]=useState(3)
+    const [ScheduleTypeId , setScheduleTypeId]=useState(3)   
+     const [PriceUnitId , setPriceUnitId]=useState(3)
+
     const [PaymentMethodId , setPaymentMethodId]=useState(0)
-
-
+    
+    const totalDuration = 2000;
+    const delayBetweenPoints = totalDuration / datas.length;
+    const previousY = (ctx:any) => ctx.index === 0 ? ctx.chart.scales.yAxes.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+    const animation = {
+      x: {
+        type: 'number',
+        easing: 'linear',
+        duration: delayBetweenPoints,
+        from: NaN, // the point is initially skipped
+        delay(ctx:any) {
+          if (ctx.type !== 'data' || ctx.xStarted) {
+            return 0;
+          }
+          ctx.xStarted = true;
+          return ctx.index * delayBetweenPoints;
+        }
+      },
+      y: {
+        type: 'number',
+        easing: 'linear',
+        duration: delayBetweenPoints,
+        from: previousY,
+        delay(ctx:any) {
+          if (ctx.type !== 'data' || ctx.yStarted) {
+            return 0;
+          }
+          ctx.yStarted = true;
+          return ctx.index * delayBetweenPoints;
+        }
+      }
+    };
   
 
 useEffect(()=>{
@@ -48,8 +81,8 @@ useEffect(()=>{
     
                 params: {
                     ScheduleTypeId,
-                    PaymentMethodId
-                    
+                    PaymentMethodId,
+                    PriceUnitId
     
                 },
                 paramsSerializer: (params:any) => {
@@ -69,12 +102,12 @@ useEffect(()=>{
 
     }
     
-     if (ScheduleTypeId || PaymentMethodId){
+     if (ScheduleTypeId || PaymentMethodId || PriceUnitId){
         GetReport()
 
     }
 
-},[ScheduleTypeId , PaymentMethodId])
+},[ScheduleTypeId , PaymentMethodId , PriceUnitId])
     
     if (datas && datas.length >0){
         
@@ -88,96 +121,113 @@ useEffect(()=>{
             label: 'پرداخت شده',
             data: datas.map((i:any)=> i.paid),
             borderColor: "MediumVioletRed",
-            fill: false,
+            // fill: false,
             pointStyle: 'circle',
+          
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBorderColor:"#ffffff",
+            pointBackgroundColor:'MediumVioletRed',
+           shadowBlur : 10,
+            shadowOffsetX : 0,
+            shadowOffsetY : 4,
 
           }, {
             label: 'پرداخت نشده',
             data: datas.map((i:any)=> i.notPaid),
             borderColor: "OliveDrab",
-            fill: false,
+            // fill: false,
+            pointStyle: 'circle',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBorderColor:"#ffffff",
+            pointBackgroundColor:'OliveDrab',
+           shadowBlur : 10,
+            shadowOffsetX : 0,
+            shadowOffsetY : 4,
           }, {
             label: 'کل',
             data: datas.map((i:any)=> i.total),
             borderColor: "MediumSlateBlue",
-            fill: false
+            // fill: false,
+            pointStyle: 'circle',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBorderColor:"#ffffff",
+            pointBackgroundColor:'MediumSlateBlue',
+           shadowBlur : 10,
+            shadowOffsetX : 0,
+            shadowOffsetY : 4,
           },
           
         ]
       };
-      let delayed:any;
      
       const config:any = {
-        type: 'line',
         responsive: true,
-     maintainAspectRatio: false,
-     animation: {
-        onComplete: () => {
-          delayed = true;
+        maintainAspectRatio: false,
+    backgroundColor: "blue",
+
+    animation,
+    interaction: {
+      intersect: false
+    },
+        elements: {
+            point: {
+                radius: 0,
+                hoverRadius: 5,
+                hitRadius: 20,
+    
+            },
+            line: {
+                tension: 0.4
+            }
         },
-        delay: (context:any) => {
-          let delay = 0;
-          if (context.type === 'data' && context.mode === 'default' && !delayed) {
-            delay = context.dataIndex * 300 + context.datasetIndex * 100;
-          }
-          return delay;
+        plugins: {
+    
+            legend: {
+                rtl: true,
+                display: false,
+                labels: {
+                    yPadding: '10',
+                    position: 'left',
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    font: {
+                        family: "diroz"
+                    }
+                },
+    
+            },
+            dataLabels: {
+                display: true,
+                color: "white",
+            },
+            tooltip: {
+                previousBodyPadding: 'circle',
+                usePointStyle: true,
+                backgroundColor: "rgba(23,21,21,0.78)",
+                Color: "#333",
+                bodyFontColor: "#666",
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest",
+                bodyFont: {
+                    family: "diroz",
+                    size: 8
+    
+    
+                },
+                titleFont: {
+                    family: "diroz",
+                    size: 10
+    
+                }
+            },
+            
         },
-      },
-          elements: {
-              point: {
-                  radius: 0,
-                  hoverRadius: 5,
-                  hitRadius: 20,
-      
-              },
-              line: {
-                  // tension: 0.4
-              }
-          },
-          plugins: {
-             
-              legend: {
-                  rtl: true,
-                  labels: {
-                      yPadding: '10',
-                      position: 'left',
-                      usePointStyle: true,
-                    
-                      font: {
-                          family: "diroz"
-                      }
-                  },
-      
-              },
-              dataLabels: {
-                  display: true,
-                  color: "white",
-              },
-              tooltip: {
-                  previousBodyPadding: 'circle',
-                  usePointStyle: true,
-                  Color: "#333",
-                  bodyFontColor: "#666",
-                  bodySpacing: 4,
-                  xPadding: 12,
-                  mode: "nearest",
-                  intersect: 0,
-                  position: "nearest",
-                  bodyFont: {
-                      family: "diroz",
-                      size: 8
-      
-      
-                  },
-                  titleFont: {
-                      family: "diroz",
-                      size: 10
-      
-                  }
-              },
-              
-          },
-      
          
           scales: {
 
@@ -202,8 +252,7 @@ useEffect(()=>{
                           enable: false
                       }
                   },
-                  suggestedMin: -10,
-                    suggestedMax: 200
+                 
               },
               xAxes: {
                 
@@ -244,6 +293,15 @@ useEffect(()=>{
                     <div className="d-inline float-left">
                         <h5 className=""> گزارش پرداخت ها</h5>
                     </div>
+                    <div className="d-inline float-left px-2">
+                    <span >{"10"  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
+                 { " " }
+                    در مقیاس   
+                    { " " }
+                    {PriceUnitId === 1 ? "ریال" : PriceUnitId === 2 ? "تومان" : PriceUnitId === 3 ? "  میلیون تومان"    :"میلیارد تومان"}
+                    </span> 
+                    </div>
+
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <a className="dropdown-toggle" role="button" id="uniqueVisitors" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -256,16 +314,37 @@ useEffect(()=>{
                         </svg>
                     </a>
 
-                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                    <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
+                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors" style={{width:"20rem"}}>
+                        <div  className='row'>
+                             <div className='col-6 border-right'>
+                                <span>تاریخ</span>
+                             <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>10 ماه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>10روز اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 10 ساعت اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 10دقیقه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 10 ثانیه اخیر</a>
+                            </div>
+                            <div className='col-6'> 
+                            <span>واحد قیمت</span>
+                            <a className="dropdown-item" onClick={()=> setPriceUnitId(1)}>ریال</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(2)}>تومان</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(3)}> میلیون تومان</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(4)}> میلیارد تومان</a>
+                            </div>
+                            </div>
+                    
+                   
+                    
                     </div>
+                    
                 </div>
                 </div>
+                
+                    
+                
+                      
+               
                 <div className="btn-group m-2" role="group" aria-label="Basic example">
                 </div>
                 <div className="widget-heading ">
@@ -297,6 +376,9 @@ useEffect(()=>{
         </div>
     )
     }else {
-        return null
+        return (<div className="text-center dashboard-widget p-3 my-2">
+      
+        <div>اطلاعاتی برای نمایش وجود ندارد</div>
+        </div>)
     }
 }

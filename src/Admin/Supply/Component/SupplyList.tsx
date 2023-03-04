@@ -623,13 +623,8 @@ const SupplyList:React.FC = () => {
             'نام تامین کننده': item.name
         }))
         return (
-            <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 '>
-
-
-                    </div>
-                </div>
+            <div >
+                
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1 ">
                     <AdvancedSearch>
 
@@ -834,13 +829,8 @@ const SupplyList:React.FC = () => {
     }
     else {
         return (
-            <div className='user-progress'>
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12 p-3 m-2'>
-
-
-                    </div>
-                </div>
+            <div className=''>
+                
                 <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2 my-1 ">
                     <AdvancedSearch>
 
