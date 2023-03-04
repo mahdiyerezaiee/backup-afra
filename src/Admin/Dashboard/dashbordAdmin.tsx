@@ -33,7 +33,7 @@ const DashbordAdmin:React.FC = () => {
     },[window])
   return(
       <div >
-          <div className="">
+          <div className="mb-3">
           <GetUndesidedPayments/>
       </div>
           <div className=" ">
