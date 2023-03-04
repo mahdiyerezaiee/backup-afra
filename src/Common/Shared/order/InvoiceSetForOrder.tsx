@@ -62,17 +62,30 @@ const setDefault=()=>{
 
     if(defaultPaymentId().length===1){
     
-      setPaymentMethodId(defaultPaymentId()[0].payments!==null?defaultPaymentId()[0].payments:2)
+      setPaymentMethodId(defaultPaymentId()[0].payments?defaultPaymentId()[0].payments:2)
       setInstallmentOccureCount(defaultPaymentId()[0].installmentOccureCount)
       setInstallmentPeriod(defaultPaymentId()[0].installmentPeriod)
     
     
     }
-    else{
-      setPaymentMethodId(7)
-      setInstallmentOccureCount(null)
-      setInstallmentPeriod(null)
+    else if(defaultPaymentId().length>1){
+  let newPayments:any=[]
+
+  newPayments=[...new Set(defaultPaymentId().map((i:any)=>i.payments?i.payments:2))]
+
+  console.log(newPayments);
+  
+  if(newPayments.length>1){
+
+    setPaymentMethodId(7)
+  }
+  else{
+    setPaymentMethodId(newPayments[0])
+  }
+
+
     }
+    
     
     }
 }
