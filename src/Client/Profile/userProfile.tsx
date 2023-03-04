@@ -99,7 +99,7 @@ const UserProfile: React.FC = () => {
   
   return (
     <div className="row layout-spacing p-0 m-0">
-      <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing p-0 m-0">
+      <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing p-0 m-lg-0 mt-3">
         <div className="user-profile layout-spacing p-0 m-0">
           <div className=" dashboard-widget widget-content widget-content-area p-3">
             {newAttachment.length === 0 ? (
@@ -183,11 +183,11 @@ const UserProfile: React.FC = () => {
 
             <div className="text-center ">
               <div className="">
-              <div className="row m-auto text-center w-75">
+              <div className="row m-auto text-center addressFiled ">
                 {address.length !==0 ? (
                   address.map((item: any) => (
                     <>
-                      <div className=" col-6">
+                      <div className=" col-lg-6">
                         <div  className=" addressUser">
                         <p className="">
                          آدرس :

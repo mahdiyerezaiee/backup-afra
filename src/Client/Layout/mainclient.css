@@ -9202,9 +9202,30 @@ color: #43b055!important;
 .navbar-toggler-icon svg {
     color: white;
 }
+.addAddressUser{
+    border-radius: 20px;
+    border: 1px solid lightgray;
+    padding:2rem;
+    margin: 2% auto;
+    width: 33%;
+}
+.addAddressUser svg:hover{
+cursor: pointer;
+color:#585858;
+}
+.addressFiled{
+    width: 75%;
+}
 @media only screen and  (max-width: 600px) {
+    .addressFiled{
+        width: 100%;
+    }
     .navbar-toggler-icon svg{
         color: black;
+    }
+    .addAddressUser{
+    
+        width: 90%;
     }
     .footer-bottom{
         margin-top: 0px;
@@ -9417,17 +9438,7 @@ width: 390px;
     margin: auto;
     color: #777c81;
 }
-.addAddressUser{
-    border-radius: 20px;
-    border: 1px solid lightgray;
-    padding:2rem;
-    margin: 2% auto;
-    width: 33%;
-}
-.addAddressUser svg:hover{
-cursor: pointer;
-color:#585858;
-}
+
 .addAddressUser svg{
   
     color:lightgray;
