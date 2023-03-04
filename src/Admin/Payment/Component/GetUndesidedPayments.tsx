@@ -70,9 +70,9 @@ useEffect(()=>{
         <div className="col-lg-6 m-auto">
 
             <div className="float-right ">
-            <Link onClick={getUndecieded} to="/admin/PaymentLists" state="fromDashboard" className="text-light" >  مشاهده پرداخت ها </Link>
+            <Link onClick={getUndecieded} to="/admin/PaymentLists" state="fromDashboard" className="text-light" >  مشاهده پرداخت ها 
                 <BsArrowLeftCircle size="1.5rem" className="mx-2" style={{position: 'relative',animation: "changeRight 1s infinite"}}/>
-
+                </Link>
             </div>
         </div>
     </div>
