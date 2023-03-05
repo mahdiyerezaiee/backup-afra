@@ -80,7 +80,7 @@ const PaymentMethodComponent: React.FC = () => {
     return (
       <div className="row">
         <div id="tabsIcons" className="col-lg-12 col-12 layout-spacing">
-          <div className="dashboard-widget">
+          <div className="dashboard-widget p-4">
             <div className=" icon-tab">
               <ul
                 className="nav nav-tabs  mb-3 mt-3"

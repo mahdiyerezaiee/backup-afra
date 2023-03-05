@@ -30,10 +30,6 @@ try {
     console.log(error);
   }
 };
-export const formatter = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 0,
-  minimumFractionDigits: 0,
-});
 
 export const units = () => {
   return PriceUnitEnums.map((item: any) => ({

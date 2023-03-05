@@ -853,3 +853,7 @@ select:-webkit-autofill:focus {
     display: block;
     background:#060818!important;}
 }
+
+.dark-mode .navbar-toggler-icon svg {
+    color: white;
+}

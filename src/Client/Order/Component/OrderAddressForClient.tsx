@@ -344,7 +344,7 @@ const OrderAddressForClient: React.FC<Props> = ({
       {
         Header: "قیمت پایه",
         accessor: "basePrice",
-        Filter: SelectColumnFilter,
+        Filter: FilterData.length > 3 ? SelectColumnFilter : "",
         filter: "multiple",
       },
       { Header: "وزن", accessor: "quantity", disableFilters: true },
@@ -412,10 +412,10 @@ const OrderAddressForClient: React.FC<Props> = ({
   if (show && typeof details !== undefined) {
     return (
       <section className="mb-2 mt-2">
-        <div className=" mb-1  p-3 border rounded">
-          <div className="row">
+        <div className=" mb-1   rounded">
+          <div className="row itemA   p-3">
             <div className=" col-6  ">
-              <h4 className="float-left">جزییات سفارش</h4>
+              <span className="float-left">جزییات سفارش</span>
             </div>
             <div className="  col-6   ">
               {show === true ? (
@@ -454,7 +454,7 @@ const OrderAddressForClient: React.FC<Props> = ({
               {/* </div> */}
             </div>
           ) : (
-            <div>
+            <div className="info-Item">
              
               <div className="form-group mb-4 textOnInput col-lg-12     mt-4   ">
                 {condition &&
@@ -717,8 +717,8 @@ const OrderAddressForClient: React.FC<Props> = ({
   } else {
     return (
       <section className="mb-2 mt-2">
-        <div className="   p-3 border rounded  ">
-          <div className="row">
+        <div className="   rounded  ">
+          <div className="row itemA   p-3">
             <div className=" col-6  ">
               <span className="float-left">جزییات سفارش</span>
             </div>
@@ -749,7 +749,7 @@ const OrderAddressForClient: React.FC<Props> = ({
             </div>
           </div>
           {show ? (
-            <div>
+            <div className="info-Item">
               <div className="form-group mb-4 textOnInput col-lg-12 rounded border text-center border-dark  mt-4 p-2 ">
                 <span className="text-center">
                   اطلاعاتی برای نمایش موجود نیست

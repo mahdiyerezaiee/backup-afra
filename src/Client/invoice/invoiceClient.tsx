@@ -24,29 +24,17 @@ const InvoiceClient: React.FC = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [PageNumber, setPageNumber] = useState( getPage().PageNumber ? getPage().PageNumber : 0);
   const [PageSize, setPageSize] = useState( getPage().PageSize ? getPage().PageSize : 5);
-  const [active, setActive] = useState<any>([]);
-  const activity = active.map((data: any) => ({ active: data }));
   const [newInvoices, setNewInvoices] = useState<any>([]);
   let invoiceOrder= location.state === "fromOrderClient" ? JSON.parse(String(sessionStorage.getItem(`param/client/invoice`))) : null
   let invoicePaymentId = location.state === "fromPaymentClient" ? JSON.parse(String(sessionStorage.getItem(`param/client/invoice/paymentId`))) : null;
-  const mergeById = (a1: any, a2: any) =>
-    a1.map((itm: any, index1: any) => ({
-      ...a2.find((item: any, index: any) => index === index1 && item),
-      ...itm,
-    }));
-  useEffect(() => {
-    if (invoices) {
-      if (active.length === 0) {
-        setActive(new Array(invoices.length).fill(false));
-      }
-      setNewInvoices(mergeById(invoices, activity));
-    }
-  }, [active]);
-  const checkValueee = (position: any) => {
-    const updatedCheckedState = active.map((item: any, index: any) =>
-      index === position ? !item : item
-    );
-    setActive(updatedCheckedState);
+  
+ 
+  const checkValueee = (id: any) => {
+    const clonedData = [...newInvoices];
+    setNewInvoices(
+      clonedData.map((i:any) => (i.id === id ? { ...i, active: !i.active } : i))
+    )
+   
   };
   const filterInvoice = newInvoices
     .filter((item: any) => item.active === true)
@@ -81,15 +69,16 @@ const InvoiceClient: React.FC = () => {
         if (status === 200) {
           SetInvoice(data.result.invoices.values);
           setTotalCount(data.result.invoices.totalCount);
+          setNewInvoices(data.result.invoices.values.map((item:any) =>({
+            ...item,active:false
+          })));
         }
       } catch (err) {
         console.log(err);
       }
     
   };
-  useEffect(() => {
-    GetIvoices();
-  }, [location.state]);
+  
   
   const getDataByPage = async () => {
     let config = {
@@ -108,6 +97,12 @@ const InvoiceClient: React.FC = () => {
       const { data, status } = await GetInvoicesWithSearch(config);
       if (status === 200) {
         SetInvoice(data.result.invoices.values);
+        setTotalCount(data.result.invoices.totalCount);
+       
+        setNewInvoices(data.result.invoices.values.map((item:any) =>({
+          ...item,active:false
+        })));
+
       }
     } catch (err) {
       console.log(err);
@@ -168,6 +163,7 @@ const InvoiceClient: React.FC = () => {
   let formatterForMoney = new Intl.NumberFormat("fa-IR", {
     currency: "IRR",
   });
+  
   if (invoices) {
     return (
       <div>
@@ -201,12 +197,12 @@ const InvoiceClient: React.FC = () => {
                         {item.paymentStatusId === 3 ? null : (
                           <input
                             id={`custom-checkbox-${index}`}
-                            checked={active[index]}
+                            checked={item.active}
                             type="checkbox"
                             required
                             value={item}
                             name={item}
-                            onClick={(event) => checkValueee(index)}
+                            onClick={(event) => checkValueee(item.id)}
                           />
                         )}
                       </span>

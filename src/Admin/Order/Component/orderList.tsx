@@ -104,7 +104,6 @@ const OrderList :React.FC= () => {
 
     }
     const bindAdress = async (arr:any) => {
-        console.log(arr)
         if (arr.length > 1) {
             FilnalArr=[]
             for (let i = 0; i < arr.length; i++) {
@@ -902,7 +901,7 @@ const OrderList :React.FC= () => {
         if (modalIsOpenEdit === false) {
             return {
                 onClick: async () => {
-                    SetShow( oldState => !oldState)
+                    SetShow(  !show)
 
                     await orderDetail()
                 },
@@ -1130,7 +1129,6 @@ const OrderList :React.FC= () => {
                                         options={CompaniesIDs()}
                                         onChange={(e:any) => {
                                             setCompanyId(e.value)
-                                            console.log(e);
 
                                         }}
                                     />}
@@ -1378,7 +1376,6 @@ const OrderList :React.FC= () => {
                                         options={CompaniesIDs()}
                                         onChange={(e:any) => {
                                             setCompanyId(e.value)
-                                            console.log(e);
 
                                         }}
                                     />}
