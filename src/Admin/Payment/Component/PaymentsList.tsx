@@ -791,7 +791,7 @@ const PaymentsList: React.FC = () => {
         setHasAttachment(null)
         setPaid(null)
         setConfirmed(null)
-        SetTrackingCode(null)
+        SetTrackingCode('')
         SetEntityId(null)
         SetEntityTypeId([])
         SetMinPrice('')
@@ -800,6 +800,7 @@ const PaymentsList: React.FC = () => {
         SetPaymentMethodId(null)
         setPageNumber(0)
         setPageSize(10)
+    
 
         sessionStorage.clear()
 
