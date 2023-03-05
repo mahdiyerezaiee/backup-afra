@@ -37,7 +37,7 @@ export function ChartPayment() {
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)   
      const [PriceUnitId , setPriceUnitId]=useState(3)
 
-    const [PaymentMethodId , setPaymentMethodId]=useState(0)
+    const [PaymentMethodId , setPaymentMethodId]=useState<any>(null)
     
     const totalDuration = 2000;
     const delayBetweenPoints = totalDuration / datas.length;

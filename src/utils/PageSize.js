@@ -4,9 +4,6 @@ const PageSizeTable = ({setPageSize , pageSize , getDataBySearch,total }) => {
     const pageSizeHandler =async  (data) => {
         setPageSize(data)
 }
-useEffect(()=>{
-    getDataBySearch()
-},[pageSize])
 
 
   return( <div className='d-block clearfix mt-3 float-right'>
