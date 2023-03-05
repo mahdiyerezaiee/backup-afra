@@ -50,7 +50,7 @@ const UserList:React.FC = () => {
     const [modalRoleOpen, setmodalRoleOpen] = useState(false)
     const [getData, setGeData] = useState(false)
     const companies=useSelector((state:RootState)=>state.companies)
-    const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : null)
+    const [companyId, setCompanyId] = useState(getDefault().companyId ? getDefault().companyId : 0)
     const params = { UserName, FirstName, NationalCode, LastName, userRole,companyId }
 
     function getDefault() {
@@ -172,7 +172,8 @@ const UserList:React.FC = () => {
 
     }
     const optiobUserRole = () => {
-        return (optionsRole.map((item) => ({ label: item.label, value: item.value })))
+
+        return ( optionsRole.map((item) => ({ label: item.label, value: item.value })) )
     }
     let configs = {
 
@@ -570,7 +571,7 @@ const UserList:React.FC = () => {
         setUserName('')
         setNationalCode('')
         setUserRole([])
-        setCompanyId(null)
+        setCompanyId(0)
         getUsers()
         sessionStorage.clear();
 
@@ -578,7 +579,8 @@ const UserList:React.FC = () => {
     }
     const data = useMemo(() => users,[users,CustomerG]);
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        let company =companies.map(data => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...company ])
     }
 
     if (users) {
