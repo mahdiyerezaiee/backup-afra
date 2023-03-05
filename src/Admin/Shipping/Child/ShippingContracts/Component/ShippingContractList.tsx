@@ -264,6 +264,7 @@ setPageNumber(0)
 
                 setShippingContract(data.result.shippingContracts.values)
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+                setTotalCount(data.result.shippingContracts.totalCount)
 
             }
         } catch (error) {
@@ -284,12 +285,12 @@ setPageNumber(0)
             headers: { 'Content-Type': 'application/json' },
 
             params: {
-                CompanyName,
-                ContractNumber,
-                CompanyCode,
+                CompanyName:null,
+                ContractNumber:null,
+                CompanyCode:null,
 
-                PageNumber,
-                PageSize,
+                PageNumber:0,
+                PageSize:10,
 
 
             },
@@ -320,13 +321,7 @@ setGeData(false)
             console.log(error);
         }
     }
-    useEffect(() => {
-        sessionStorage.clear()
-
-        getShippingContartcs();
-        sessionStorage.clear()
-        getShippingCompanies();
-    }, [getData])
+ 
 
     const editHandler = (id:number) => {
         navigate(`/admin/editShippingContract/${id}`)
@@ -343,17 +338,9 @@ setGeData(false)
         { Header: '#', accessor: 'id' },
         { Header: 'شماره قرارداد', accessor: 'contractNumber' },
         {
-            Header: 'نام باربری', accessor: 'shippingCompanyId', Cell: (rows:any) => {
-
-                return (ShippingCompanies.filter((item:any) => item.id === rows.row.original.shippingCompanyId).map((item:any) => item.name))
-            }
+            Header: 'نام باربری', accessor: 'shippingCompanyName'
         }
-        , {
-            Header: ' کد باربری ', accessor: 'shippingCompanyCode', Cell: rows => {
-
-                return (ShippingCompanies.filter((item:any) => item.id === rows.row.original.shippingCompanyId).map((item:any) => item.code))
-            }
-        },
+        ,
         { Header: ' مقدار ', accessor: 'quantity' },
         {
             Header: 'واحد', accessor: 'measureUnitId', Cell: (row:any) => {
@@ -396,8 +383,10 @@ setPageNumber(0)
         setCompanyName('')
         setCompanyCode('')
         setContractNumber('')
+        setPageSize(10)
         sessionStorage.clear()
      setGeData(true)
+     getShippingContartcs()
     }
     if (ShippingContract) {
         const dataForExcel = data.map((item:any) => ({

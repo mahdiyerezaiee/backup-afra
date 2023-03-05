@@ -49,22 +49,22 @@ const customStyles = {
     }
 
 }
-interface Props{
-    InvoiceId:any
+interface Props {
+    InvoiceId: any
 }
-const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
+const PaymnetListForInvoice: React.FC<Props> = ({ InvoiceId }) => {
 
-  
+
     const [selectedRows, setSelectedRows] = useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [payments, SetPayments] = useState([])
-   
+
 
     const companies = useSelector((state: RootState) => state.companies)
 
 
-   
-   
+
+
     let arrayOfSelectedData = [];
     const getSelectedData = (data: any) => {
 
@@ -88,9 +88,9 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
             disableSelectedItem()
         }
     }
-    
-   
-    
+
+
+
     const DeleteSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
         let successCount = 0;
@@ -222,9 +222,9 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
 
 
     }
-  
-    
-  
+
+
+
     const getDataBySearch = async () => {
         let config = {
 
@@ -232,8 +232,8 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
             params: {
                 InvoiceId,
                 IsAdmin: true,
-                PageNumber:0,
-                PageSize:10000
+                PageNumber: 0,
+                PageSize: 10000
 
 
             }
@@ -249,9 +249,9 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
             const { data, status } = await GetPayments(config);
             if (status === 200) {
                 SetPayments(data.result.payments.values)
-                
 
-               
+
+
 
             }
 
@@ -259,12 +259,12 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
             console.log(err)
         }
     }
-  
-    
-  
+
+
+
 
     useEffect(() => {
-  getDataBySearch()
+        getDataBySearch()
 
     }, [InvoiceId])
     let formatterForMoney = new Intl.NumberFormat('fa-IR', {
@@ -337,13 +337,13 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
         {
             Header: 'تاریخ سررسید ', accessor: 'paymentDueDate', Cell: (rows: any) => {
 
-               
-                
-                if(rows.row.original.paymentDueDate!==null){
-                return (new Date(rows.row.original.paymentDueDate).toLocaleDateString('fa-IR'))
+
+
+                if (rows.row.original.paymentDueDate !== null) {
+                    return (new Date(rows.row.original.paymentDueDate).toLocaleDateString('fa-IR'))
                 }
-                else{
-                    return('')
+                else {
+                    return ('')
                 }
             }
         },
@@ -354,7 +354,7 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
             Header: '  پرداخت شده', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.paid)
                 const id = row.row.original.id
-             
+
                 const activeChang = {
 
                     "paymentId": id,
@@ -368,17 +368,17 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
                     setActive(!active);
                     try {
                         const { data, status } = await ChangePaymentStatus(activeChang)
-                        if(status===200){
+                        if (status === 200) {
                             toast.success('وضعیت پرداخت با موفقیت تغییر کرد',
-                            {
-                                position: "top-right",
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                draggable: true,
-                                progress: undefined
-                            })
+                                {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: false,
+                                    draggable: true,
+                                    progress: undefined
+                                })
                         }
                     } catch (err) {
                         console.log(err)
@@ -390,14 +390,14 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
                     return (
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            className="feather feather-check  " onClick={ activeHandler} style={{ color: 'green' }}>
+                            className="feather feather-check  " onClick={activeHandler} style={{ color: 'green' }}>
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>)
                 } else {
                     return (<svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="feather feather-x  danger " onClick={ activeHandler} style={{ color: 'red' }}>
+                        className="feather feather-x  danger " onClick={activeHandler} style={{ color: 'red' }}>
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>)
@@ -409,7 +409,7 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
             Header: '  تایید شده', accessor: '', Cell: (row: any) => {
                 const [active, setActive] = useState(row.row.original.confirmed)
                 const id = row.row.original.id
-               
+
                 const activeChang = {
 
                     "paymentId": id,
@@ -422,21 +422,21 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
                 const activeHandler = async () => {
                     setActive(!active);
 
-                   
-                    
+
+
                     try {
                         const { data, status } = await ChangePaymentStatus(activeChang)
-                        if(status===200){
+                        if (status === 200) {
                             toast.success('وضعیت تایید با موفقیت تغییر کرد',
-                            {
-                                position: "top-right",
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                draggable: true,
-                                progress: undefined
-                            })
+                                {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: false,
+                                    draggable: true,
+                                    progress: undefined
+                                })
                         }
                     } catch (err) {
                         console.log(err)
@@ -448,14 +448,14 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
                     return (
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            className="feather feather-check  "onClick={ activeHandler} style={{ color: 'green' }}>
+                            className="feather feather-check  " onClick={activeHandler} style={{ color: 'green' }}>
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>)
                 } else {
                     return (<svg xmlns="http://www.w3.org/2000/svg" data-dismiss="alert" width="21" height="21"
                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="feather feather-x  danger " onClick={ activeHandler} style={{ color: 'red' }}>
+                        className="feather feather-x  danger " onClick={activeHandler} style={{ color: 'red' }}>
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>)
@@ -465,7 +465,7 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
             }
         },
 
-    
+
 
 
 
@@ -474,34 +474,36 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
     const data = useMemo(() => payments, [payments])
 
 
- 
-    
+
+    console.log(data);
+
+    if (payments) {
         return (
             <div className="rounded">
-              
+
                 <div className='row'>
                     <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12  '>
                     </div>
                 </div>
-              
-              
+
+
                 <div className=" statbox widget-content widget-content-area">
-                  
 
 
 
 
-                        {/*<button className="btn btn-success float-right" onClick={closeModal}>خیر</button>*/}
 
-                   
+                    {/*<button className="btn btn-success float-right" onClick={closeModal}>خیر</button>*/}
+
+
                     <div>
 
-                        <TableForPaymentsInOrder columns={columns} data={data} 
-                          
-                          
+                        <TableForPaymentsInOrder columns={columns} data={data}
+
+
                         />
 
-                       
+
 
                     </div>
                     <div className="d-flex justify-content-end">
@@ -513,8 +515,27 @@ const PaymnetListForInvoice: React.FC <Props>= ({InvoiceId}) => {
 
 
         )
-    
-   
+    }
+    else {
+        return (
+            <div className="rounded">
+
+                <div className='row'>
+                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12  '>
+                    </div>
+                </div>
+
+                <p>پرداختی جهت نمایش موجود نمیباشد</p>
+                <div className=" statbox widget-content widget-content-area">
+                    <div className="d-flex justify-content-end">
+
+                    </div>
+                </div>
+
+            </div >)
+    }
+
+
 }
 
 export default PaymnetListForInvoice

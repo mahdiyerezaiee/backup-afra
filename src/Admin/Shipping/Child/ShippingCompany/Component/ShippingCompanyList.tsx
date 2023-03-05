@@ -271,6 +271,8 @@ setPageNumber(0)
 
                 setShippingCompanys(data.result.shippingCompanies.values)
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+            setTotalCount(data.result.shippingCompanies.totalCount)
+
 
             }
         } catch (error) {
@@ -291,10 +293,10 @@ setPageNumber(0)
             headers: { 'Content-Type': 'application/json' },
 
             params: {
-                Name,
-                Code,
-                PageNumber,
-                PageSize,
+                Name:null,
+                Code:null,
+                PageNumber:0,
+                PageSize:10,
 
 
 
@@ -318,10 +320,7 @@ setPageNumber(0)
             console.log(error);
         }
     }
-    useEffect(() => {
-        getShippingCompany();
-        sessionStorage.clear()
-    }, [getData])
+ 
 
     const editHandler = (id:number) => {
         navigate(`/admin/editshippingCompany/${id}`)
@@ -361,8 +360,9 @@ setPageNumber(0)
 setPageNumber(0)
         setName('')
         setCode('')
+        setPageSize(10)
       sessionStorage.clear()
-        setGeData(true)
+      getShippingCompany()
 
     }
     if (shippingCompany) {

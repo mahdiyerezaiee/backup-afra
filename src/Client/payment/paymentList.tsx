@@ -57,6 +57,8 @@ const PaymentList: React.FC = () => {
         setTotalCount(data.result.payments.totalCount)
 
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+      setTotalCount(data.result.payments.totalCount)
+
       }
 
     } catch (err) {
@@ -87,9 +89,9 @@ const PaymentList: React.FC = () => {
       console.log(err);
     }
   };
-  // useEffect(() => {
-  //   GetPayment();
-  // }, []);
+  useEffect(() => {
+   // GetPayment();
+  }, []);
   var formatter = new Intl.NumberFormat('fa-IR', {
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
