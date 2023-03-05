@@ -26,9 +26,9 @@ const customStyles = {
         border: '2px ridge black'
     }
 };
-const OrganizationList:React.FC = () => {
-    const [PageNumber, setPageNumber] = useState( getPage().PageNumber?getPage().PageNumber:0)
-    const [PageSize, setPageSize] = useState(getPage().PageSize?getPage().PageSize:10)
+const OrganizationList: React.FC = () => {
+    const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
+    const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
 
     const [totalCount, setTotalCount] = useState(0);
     const [organization, setOrganization] = useState([]);
@@ -43,18 +43,18 @@ const OrganizationList:React.FC = () => {
     const [RegistrationNumber, setRegistrationNumber] = useState(getDefault().RegistrationNumber)
     const [getData, setGeData] = useState(false)
 
-    const params = { Name, NationalId, RegistrationNumber}
+    const params = { Name, NationalId, RegistrationNumber }
     function getDefault() {
         let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
-        return items? items:''
+        return items ? items : ''
 
 
     }
-    const param = { PageSize ,PageNumber}
+    const param = { PageSize, PageNumber }
 
     function getPage() {
         let items = JSON.parse(String(sessionStorage.getItem(`param${window.location.pathname}`)));
-        return items? items:''
+        return items ? items : ''
 
 
     }
@@ -65,9 +65,9 @@ const OrganizationList:React.FC = () => {
 
         headers: { 'Content-Type': 'application/json' },
         params: {
-            Name:params.Name,
-            NationalId:params.NationalId,
-            RegistrationNumber:params.RegistrationNumber,
+            Name: params.Name,
+            NationalId: params.NationalId,
+            RegistrationNumber: params.RegistrationNumber,
 
             PageNumber,
             PageSize
@@ -75,7 +75,7 @@ const OrganizationList:React.FC = () => {
 
         }
         ,
-        paramsSerializer: (params:any) => {
+        paramsSerializer: (params: any) => {
 
             return QueryString.stringify(params)
         }
@@ -88,6 +88,7 @@ const OrganizationList:React.FC = () => {
 
         setOrganization(data.result.organizationLists.values);
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+        setTotalCount(data.result.organizationLists.totalCount)
 
 
     }
@@ -96,7 +97,7 @@ const OrganizationList:React.FC = () => {
     }
     let arrayOfSelectedData = [];
 
-    const getWithSearchParams = async (e:any) => {
+    const getWithSearchParams = async (e: any) => {
         e.preventDefault();
         try {
             let parameter = {
@@ -104,17 +105,17 @@ const OrganizationList:React.FC = () => {
                 headers: { 'Content-Type': 'application/json' },
 
                 params: {
-                    Name:params.Name,
-                    NationalId:params.NationalId,
-                    RegistrationNumber:params.RegistrationNumber,
+                    Name: params.Name,
+                    NationalId: params.NationalId,
+                    RegistrationNumber: params.RegistrationNumber,
                     PageSize,
-                    PageNumber:0,
+                    PageNumber: 0,
 
 
 
 
                 },
-                paramsSerializer: (params:any) => {
+                paramsSerializer: (params: any) => {
 
                     return QueryString.stringify(params)
                 }
@@ -124,7 +125,7 @@ const OrganizationList:React.FC = () => {
 
             const { data, status } = await GetAllOrganisationCode(parameter);
             setOrganization(data.result.organizationLists.values);
-        setTotalCount(data.result.organizationLists.totalCount)
+            setTotalCount(data.result.organizationLists.totalCount)
             sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
             sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
@@ -136,9 +137,9 @@ const OrganizationList:React.FC = () => {
 
 
     }
-    const getSelectedData = (data:any) => {
+    const getSelectedData = (data: any) => {
 
-        arrayOfSelectedData = data.map((item:any) => item.original);
+        arrayOfSelectedData = data.map((item: any) => item.original);
 
 
         return (arrayOfSelectedData)
@@ -147,7 +148,7 @@ const OrganizationList:React.FC = () => {
 
 
 
-    const getBulkJob = (selected:any) => {
+    const getBulkJob = (selected: any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -189,7 +190,7 @@ const OrganizationList:React.FC = () => {
     }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
+        const copyData = arrayOfData.map((item: any) => { return { ...item, id: 0, active: true, createDate: new Date() } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -222,7 +223,7 @@ const OrganizationList:React.FC = () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => { return { ...item, active: true } })
+        const copyData = arrayOfData.map((item: any) => { return { ...item, active: true } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -255,7 +256,7 @@ const OrganizationList:React.FC = () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => { return { ...item, active: false } })
+        const copyData = arrayOfData.map((item: any) => { return { ...item, active: false } })
 
         let successCount = 0;
         let errorCount = 0;
@@ -286,35 +287,21 @@ const OrganizationList:React.FC = () => {
 
 
     }
-
-    const openModal = (id:any) => {
-        setIsOpen(true);
-        setId(id)
-
-    }
-    const closeModal = () => {
-        setIsOpen(false);
-    }
-
-
     const getOrganizationName = async () => {
-        if (getData){
-            sessionStorage.clear()
-
-        }
+      
         try {
             let parameter = {
 
                 headers: { 'Content-Type': 'application/json' },
 
                 params: {
-                    Name:params.Name,
-                    NationalId:params.NationalId,
-                    RegistrationNumber:params.RegistrationNumber,
-                    PageSize,
-                    PageNumber
+                    Name: null,
+                    NationalId:null ,
+                    RegistrationNumber: null,
+                    PageSize:10,
+                    PageNumber:0
                 },
-                paramsSerializer: (params:any) => {
+                paramsSerializer: (params: any) => {
 
                     return QueryString.stringify(params)
                 }
@@ -333,9 +320,33 @@ const OrganizationList:React.FC = () => {
         }
     }
 
+
+    const openModal = (id: any) => {
+        setIsOpen(true);
+        setId(id)
+
+    }
+    const closeModal = () => {
+        setIsOpen(false);
+    }
+    const handelSearchFieldClear = async () => {
+        setGeData(true)
+        setName("")
+        setPageNumber(0)
+        setPageSize(10)
+        setRegistrationNumber("")
+        setNationalId("")
+        sessionStorage.clear();
+
+
+getOrganizationName()
+    }
+
+
+ 
     useEffect(() => {
 
-        getOrganizationName();
+        // getOrganizationName();
 
     }, [getData])
     const addNewOrganizationHandler = () => {
@@ -343,7 +354,7 @@ const OrganizationList:React.FC = () => {
     }
     const navigate = useNavigate()
 
-    const editHandler = (id:number) => {
+    const editHandler = (id: number) => {
         navigate(`/admin/editorganization/${id}`)
     }
     const deletHandler = async () => {
@@ -375,7 +386,7 @@ const OrganizationList:React.FC = () => {
         , { Header: 'شناسه ملی', accessor: 'nationalId' }, {
             Header: 'شماره ثبت', accessor: 'registrationNumber'
         }, {
-            Header: 'عملیات', accessor: '', Cell: (row:any) => (
+            Header: 'عملیات', accessor: '', Cell: (row: any) => (
                 <ul className="table-controls">
                     {/*<NavLink className='btn btn-primary btn-rounded ' to={`/userrole/${row.row.original.id}`}> تعیین نقش </NavLink>*/}
 
@@ -413,24 +424,13 @@ const OrganizationList:React.FC = () => {
                 </ul>
             )
         }
-    ],[])
-    const data = useMemo(() => organization,[organization]);
+    ], [])
+    const data = useMemo(() => organization, [organization]);
 
-    const handelSearchFieldClear = async () => {
-        setGeData(true)
-getOrganizationName()
-        setName("")
-
-        setRegistrationNumber("")
-        setNationalId("")
-        sessionStorage.clear();
-
-
-
-    }
+  
 
     if (organization) {
-        const dataForExcel = data.map((item:any) => ({
+        const dataForExcel = data.map((item: any) => ({
             'شناسه': item.id,
             'نام سازمان': item.name,
             'شناسه ملی شرکت': item.nationalId,
@@ -454,19 +454,19 @@ getOrganizationName()
 
                                 <label> نام سازمان</label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام سازمان" value={Name} onChange={(e:any) => setName(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="نام سازمان" value={Name} onChange={(e: any) => setName(e.target.value)} />
                             </div>
 
                             <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
                                 <label> شناسه ملی </label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی " value={NationalId} onChange={(e:any) => setNationalId(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی " value={NationalId} onChange={(e: any) => setNationalId(e.target.value)} />
                             </div>
 
                             <div className="col-lg-4 col-md-6  col-sm-12  mb-1">
                                 <label> شماره ثبت  </label>
 
-                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره ثبت" value={RegistrationNumber} onChange={(e:any) => setRegistrationNumber(e.target.value)} />
+                                <input className="form-control opacityForInput  mb-4" type="text" placeholder="شماره ثبت" value={RegistrationNumber} onChange={(e: any) => setRegistrationNumber(e.target.value)} />
                             </div>
 
 
@@ -475,20 +475,23 @@ getOrganizationName()
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={async() => {
+                                       await handelSearchFieldClear()
+                                    
+                                    }}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getWithSearchParams}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getWithSearchParams}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div>
-                        </div></div>
+                                    </button>
+                                </div>
+                            </div></div>
                         <br />
                     </AdvancedSearch>
                 </div>
-                {getDefault().Name || getDefault().RegistrationNumber||getDefault().NationalId ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().Name || getDefault().RegistrationNumber || getDefault().NationalId ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div className="table-responsive">
@@ -500,8 +503,8 @@ getOrganizationName()
                             ariaHideApp={false}
 
                         >
-                            <div style={{width:"20rem"}}>
-                                <div className="d-block clearfix mb-2"   onClick={closeModal}><svg
+                            <div style={{ width: "20rem" }}>
+                                <div className="d-block clearfix mb-2" onClick={closeModal}><svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24" height="24"
                                     viewBox="0 0 24 24" fill="none"
@@ -510,12 +513,12 @@ getOrganizationName()
                                     strokeLinejoin="round"
                                     className="feather feather-x close"
                                     data-dismiss="alert"><line x1="18" y1="6"
-                                                               x2="6"
-                                                               y2="18"></line><line
-                                    x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                                        x2="6"
+                                        y2="18"></line><line
+                                            x1="6" y1="6" x2="18" y2="18"></line></svg></div>
 
 
-                                <p> آیا مطمئنید  سازمان {organization.filter((item:any) => item.id === id).map((item:any) => item.name)}   </p>
+                                <p> آیا مطمئنید  سازمان {organization.filter((item: any) => item.id === id).map((item: any) => item.name)}   </p>
                                 <p>حذف شود ؟ </p>
 
 
@@ -530,7 +533,7 @@ getOrganizationName()
                         <button onClick={addNewOrganizationHandler} className="btn btn-primary m-3">تعریف سازمان جدید</button>
 
 
-                        <MyTable columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)} bulkJob={getBulkJob}
+                        <MyTable columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} bulkJob={getBulkJob}
                             total={totalCount}
                             setPageSize={setPageSize}
                             PageSize={PageSize}
@@ -591,20 +594,20 @@ getOrganizationName()
                         <div className="  filter-btn ">
                             <div className=" row  ">
                                 <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
+                                    <button onClick={handelSearchFieldClear}
                                         className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getWithSearchParams}
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getWithSearchParams}
                                         className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div></div>
+                                    </button>
+                                </div></div>
                         </div>
                         <br />
                     </AdvancedSearch>
                 </div>
-                {getDefault().Name || getDefault().RegistrationNumber||getDefault().NationalId ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{fontSize:"15px"}}>نمایش اطلاعات بر اساس فیلتر  </span>:null}
+                {getDefault().Name || getDefault().RegistrationNumber || getDefault().NationalId ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
 
                 <div className=" statbox widget-content widget-content-area">
                     <div>

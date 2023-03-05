@@ -310,23 +310,19 @@ const SupplyList:React.FC = () => {
         setIsOpen(false);
     }
     const getSupplies = async () => {
-        if (getData) {
-            sessionStorage.clear()
-
-        }
-
+       
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                SupplierId: supplierId,
-                SupplyTypeIds: supplyTypeIds ? supplyTypeIds.map((item:any) => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
-                ProductId: productId,
-                WareHouseId: wareHouseId,
-                ContractNumber: contractNumber,
-                PageNumber,
-                PageSize
+                SupplierId: null,
+                SupplyTypeIds:  [],
+                ShippingStatusIds:  [],
+                ProductId: null,
+                WareHouseId: null,
+                ContractNumber: null,
+                PageNumber:0,
+                PageSize:10
 
 
             }
@@ -419,6 +415,8 @@ const SupplyList:React.FC = () => {
             const { data, status } = await GetDataWithSearchSupply(config);
             if (status === 200) {
                 setSupplies(data.result.supplies.values);
+                setTotalCount(data.result.supplies.totalCount)
+
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
@@ -466,7 +464,7 @@ const SupplyList:React.FC = () => {
     useEffect(() => {
 
 
-        getSupplies();
+       //getSupplies();
         getWareHouse();
         getCompanies()
         getSupplier()
@@ -612,8 +610,11 @@ const SupplyList:React.FC = () => {
         SetSupplyTypeIds([])
         SetShippingStatusIds([])
         SetWareHouseId('')
+        setPageNumber(0)
+        setPageSize(10)
         setCompanyId(null)
 
+        getSupplies()
         sessionStorage.clear()
 
     }

@@ -314,6 +314,8 @@ const ProductList: React.FC = () => {
 
                 setProduct(data.result.products.values)
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
+                setTotalCount(data.result.products.totalCount)
+
 
             }
         } catch (error) {
@@ -341,22 +343,19 @@ const ProductList: React.FC = () => {
 
     }
     const getProducts = async () => {
-        if (getData) {
-            sessionStorage.clear()
-
-        }
+      
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
 
             params: {
-                Name,
-                EnglishName,
-                GroupIds: groupIds ? groupIds.map((item: any) => item.value) : [],
+                Name:null,
+                EnglishName:null,
+                GroupIds:  [],
                 isAdmin: true,
 
-                PageNumber,
-                PageSize,
+                PageNumber:0,
+                PageSize:10,
 
             },
             paramsSerializer: (params: any) => {
@@ -381,7 +380,7 @@ const ProductList: React.FC = () => {
     }
     useEffect(() => {
 
-        getProducts();
+        //getProducts();
 
         GetProductGroup();
         getCompany()
@@ -550,6 +549,8 @@ const ProductList: React.FC = () => {
         setPageNumber(0)
         setName('')
         setEnglishName('')
+        setPageNumber(0)
+        setPageSize(10)
         SetGroupId(null)
         setCompanyId(null)
         sessionStorage.clear();

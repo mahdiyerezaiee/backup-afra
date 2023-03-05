@@ -129,6 +129,7 @@ const ProductSupply:React.FC = () => {
         };
         const { data, status } = await GetAllProductWithSearch(config);
         setProductSupply(data.result.productSupplies.values)
+        setTotalCount(data.result.productSupplies.totalCount)
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
     }
@@ -347,19 +348,16 @@ const ProductSupply:React.FC = () => {
     }
 
     const getProductSupply = async () => {
-        if (getData) {
-            sessionStorage.clear()
-
-        }
+    
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                CreateDate,
-                CottageCode,
-                ProductId,
-                PageNumber,
-                PageSize,
+                CreateDate:null,
+                CottageCode:null,
+                ProductId:null,
+                PageNumber:0,
+                PageSize:10,
                 IsAdmin: true,
                 Active: false
 
@@ -378,7 +376,7 @@ const ProductSupply:React.FC = () => {
     }
     useEffect(() => {
 
-        getProductSupply();
+        //getProductSupply();
         getCompanies()
         getProduct();
     }, [getData])
@@ -568,6 +566,7 @@ const ProductSupply:React.FC = () => {
         setGeData(true)
         setCompanyId(null)
         setPageNumber(0)
+        setPageSize(10)
         sessionStorage.clear()
 
     }

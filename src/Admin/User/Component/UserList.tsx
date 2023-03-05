@@ -138,6 +138,7 @@ const UserList:React.FC = () => {
         const { data, status } = await GetDataWithSearch(config);
         setUsers(data.result.users.values);
         setIds([...new Set((data.result.users.values).filter((item:any) => item.groupId !== null).map((item:any) => item.groupId))] as any)
+        setTotalCount(data.result.users.totalCount)
 
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
@@ -177,13 +178,13 @@ const UserList:React.FC = () => {
 
         headers: { 'Content-Type': 'application/json' },
         params: {
-            RoleIds: userRole ? userRole.map((item:any) => item.value) : [],
-            UserName,
-            FirstName,
-            LastName,
-            NationalCode,
-            PageNumber,
-            PageSize
+            RoleIds:  [],
+            UserName:null,
+            FirstName:null,
+            LastName:null,
+            NationalCode:null,
+            PageNumber:0,
+            PageSize:10
         }
         ,
         paramsSerializer: (params:any) => {
@@ -192,10 +193,7 @@ const UserList:React.FC = () => {
         }
     };
     const getUsers = async () => {
-        if (getData) {
-            sessionStorage.clear()
-
-        }
+        
         try {
             const { data, status } = await GetDataWithSearch(configs);
             setGeData(false)
@@ -258,7 +256,7 @@ const UserList:React.FC = () => {
     // }
     useEffect(() => {
         getOrganization()
-        getUsers();
+        // getUsers();
     
     }, [getData])
 
@@ -566,12 +564,14 @@ const UserList:React.FC = () => {
         setGeData(true)
         getUsers()
         setPageNumber(0)
+        setPageSize(10)
         setFirstName('');
         setLastName('')
         setUserName('')
         setNationalCode('')
         setUserRole([])
         setCompanyId(null)
+        getUsers()
         sessionStorage.clear();
 
 
