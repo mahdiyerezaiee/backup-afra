@@ -14,7 +14,8 @@ d.setTime(d.getTime() +  (60 * 1000));
 let expires =  d.toUTCString();
 let undeciededPayments = {
     expiresAt: expires,
-    Ids
+    Ids,
+    Count
 }
  function GetundeciededPayments(){
     let items = JSON.parse(String(sessionStorage.getItem('undeciededPayments')));
@@ -30,6 +31,7 @@ let undeciededPayments = {
                 setIds(data.result.unDecidedPayments)
                 setCount(data.result.unDecidedPayments.length)
                 undeciededPayments.Ids=data.result.unDecidedPayments
+                undeciededPayments.Count = data.result.unDecidedPayments.length
                 sessionStorage.setItem('undeciededPayments', JSON.stringify(undeciededPayments));
                 
             }
@@ -54,7 +56,7 @@ useEffect(()=>{
         }
 
     },[])
-    if(Ids){
+    if(Ids.length > 0 ){
   return (
     
     <div className="w-100 bg-danger p-2 rounded" >
@@ -63,7 +65,7 @@ useEffect(()=>{
             <div className="float-left">
                 <FiAlertOctagon size='2rem' className="m-2"/>
             <span style={{color:"white"}}>
-              {`تعداد ${GetundeciededPayments().Ids.length} پرداخت در وضعیت تصمیم گیری نشده یافت شد.`}
+              {`تعداد ${GetundeciededPayments().Count} پرداخت در وضعیت تصمیم گیری نشده یافت شد.`}
             </span>
             </div>
         </div>
