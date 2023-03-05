@@ -439,6 +439,8 @@ const OrderList :React.FC= () => {
             if (status === 200) {
                 SetAddress({ id: 0 })
                 setOrder(data.result.orderList.values);
+                setTotalCount(data.result.orderList.totalCount)
+
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
             }
@@ -631,29 +633,26 @@ const OrderList :React.FC= () => {
 
     }
     const GetOrders = async () => {
-        if (getOrders) {
-            sessionStorage.clear()
-
-        }
+      
         let config = {
             headers: { 'Content-Type': 'application/json' },
             params: {
-                Id: Number(Id),
-                UserName: userName,
-                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
-                StartDate
-                , EndDate
-                , ExtId: Number(ExtId),
-                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
+                Id: null,
+                UserName: null,
+                OrderStatusIds:  [],
+                StartDate:null
+                , EndDate:null
+                , ExtId:null,
+                paymentStatusIds: [],
                 AttachmentsOverDue: overDue,
-                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
-                NationalCode: nationalCode,
-                OrganizationNationalId: organizationNationalId,
+                PaymentMethodIds: [],
+                ShippingStatusIds:  [],
+                NationalCode: null,
+                OrganizationNationalId: null,
                 IsAdmin: true,
-                OrderDetailExtId,
-                PageNumber,
-                PageSize
+                OrderDetailExtId:null,
+                PageNumber:0,
+                PageSize:10
             }
             ,
             paramsSerializer: (params:any) => { return QueryString.stringify(params) }
@@ -697,7 +696,7 @@ const OrderList :React.FC= () => {
         minimumFractionDigits: 0,
     });
     useEffect(() => {
-        GetOrders()
+       // GetOrders()
         getOrganization()
         getCompany()
     }, [getOrders])
@@ -932,6 +931,7 @@ const OrderList :React.FC= () => {
         sessionStorage.clear()
 
         setPageNumber(0)
+        setPageSize(10)
     }
     if (order) {
         const dataForExcel = data.map((item:any) => ({

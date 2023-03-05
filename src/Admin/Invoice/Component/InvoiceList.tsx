@@ -377,33 +377,30 @@ SetModalOpenPayment(false)
 
     }
     const GetIvoices = async () => {
-        if (getData) {
-            sessionStorage.clear()
-
-        }
+       
 
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                Ids,
-                EntityTypeId,
-                EntityId,
-                PriceUnitId,
-                MinPrice,
-                MaxPrice,
-                PaymentStatusId,
-                StartDate,
-                EndDate,
+                Ids:[],
+                EntityTypeId:null,
+                EntityId:null,
+                PriceUnitId:null,
+                MinPrice:null,
+                MaxPrice:null,
+                PaymentStatusId:null,
+                StartDate:null,
+                EndDate:null,
                 CompanyId,
-                CustomerUserName,
-                CustomerFirstName,
-                CustomerLastName, CustomerNationalCode,
-                OrganizationName,
-                OrganizationNationalId,
+                CustomerUserName:null,
+                CustomerFirstName:null,
+                CustomerLastName:null, CustomerNationalCode:null,
+                OrganizationName:null,
+                OrganizationNationalId:null,
                 IsAdmin: true,
-                PageNumber,
-                PageSize
+                PageNumber:0,
+                PageSize:10
 
 
             }
@@ -429,7 +426,7 @@ SetModalOpenPayment(false)
 
     }
     useEffect(() => {
-        GetIvoices()
+       // GetIvoices()
 
     }, [getData])
     let formatterForMoney = new Intl.NumberFormat('fa-IR', {
@@ -548,7 +545,8 @@ SetModalOpenPayment(false)
         SetMinPrice('')
         SetPriceUnitId('')
         SetPaymentStatusId(null)
-
+      
+        setPageSize(10)
         SetCompanyId(null)
         sessionStorage.clear()
 

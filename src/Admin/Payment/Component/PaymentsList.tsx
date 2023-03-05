@@ -455,38 +455,35 @@ const PaymentsList: React.FC = () => {
 
     }
     const getPayments = async () => {
-        if (getData) {
-            sessionStorage.clear()
 
-        }
 
         let config = {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                Ids,
-                InvoiceId,
-                EntityTypeId,
-                EntityId,
-                PriceUnitId,
-                MinPrice,
-                MaxPrice,
-                PaymentStatusId,
-                PaymentMethodId,
-                MinCreateDate,
-                MaxCreateDate,
-                MinPaymentDueDate,
-                MaxPaymentDueDate,
-                CustomerName,
-                OrganizationName,
-                TrackingCode,
-                HasAttachment,
-                Paid,
-                Confirmed,
-                OrganizationNationalId,
+                Ids:[],
+                InvoiceId:null,
+                EntityTypeId:null,
+                EntityId:null,
+                PriceUnitId:null,
+                MinPrice:null,
+                MaxPrice:null,
+                PaymentStatusId:null,
+                PaymentMethodId:null,
+                MinCreateDate:null,
+                MaxCreateDate:null,
+                MinPaymentDueDate:null,
+                MaxPaymentDueDate:null,
+                CustomerName:null,
+                OrganizationName:null,
+                TrackingCode:null,
+                HasAttachment:null,
+                Paid:null,
+                Confirmed:null,
+                OrganizationNationalId:null,
                 IsAdmin: true,
-                PageNumber,
-                PageSize
+                PageNumber:0,
+                PageSize:10
 
             }
             ,
@@ -514,7 +511,7 @@ const PaymentsList: React.FC = () => {
 
     }
     useEffect(() => {
-        getPayments()
+        //getPayments()
 
     }, [getData])
     let formatterForMoney = new Intl.NumberFormat('fa-IR', {
@@ -801,6 +798,8 @@ const PaymentsList: React.FC = () => {
         SetPriceUnitId('')
         SetPaymentStatusId(null)
         SetPaymentMethodId(null)
+        setPageNumber(0)
+        setPageSize(10)
 
         sessionStorage.clear()
 
