@@ -54,6 +54,8 @@ const PaymentList: React.FC = () => {
       const { data, status } = await GetPayments(config);
       if (status === 200) {
         setPayments(data.result.payments.values);
+        setTotalCount(data.result.payments.totalCount)
+
         sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
       }
 
@@ -85,9 +87,9 @@ const PaymentList: React.FC = () => {
       console.log(err);
     }
   };
-  useEffect(() => {
-    GetPayment();
-  }, []);
+  // useEffect(() => {
+  //   GetPayment();
+  // }, []);
   var formatter = new Intl.NumberFormat('fa-IR', {
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,

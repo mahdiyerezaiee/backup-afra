@@ -103,15 +103,16 @@ closeModal()
                                            x2="6"
                                            y2="18"></line><line
                 x1="6" y1="6" x2="18" y2="18"></line></svg></div>
-            <div style={{ height: '15rem', width: '20rem' }}>
+            <div >
 
 
                 <p className='text-left'>{comment}</p>
-                <div className="form-group mt-5  ">
+                <div className=" mt-5  ">
                     <div className='form-row mb-5'>
                         <div className="col-12 ">
 
-                            <div className="custom-file">
+                            <div className="custom-file ">
+                                
                                 <input  type="file" className="custom-file-input" id="customFile" accept='image/*' onChange={onchange}/>
                                 <label className="custom-file-label" for="customFile">{filename}</label>
                             </div>

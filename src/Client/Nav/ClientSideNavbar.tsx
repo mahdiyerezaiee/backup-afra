@@ -74,7 +74,7 @@ const ClickHandler =()=>{
   return (
     <Sidebar
       defaultCollapsed={false}
-      className="client-sideBar  dashboard-widget "
+      className="client-sideBar   "
     >
       <div className="m-2 text-center   text-black-50 p-3 info-client">
         {newAttachment.length === 0 ? (

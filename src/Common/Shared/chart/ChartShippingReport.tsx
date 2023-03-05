@@ -16,6 +16,7 @@ import {GetShippingsReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
 import { AiOutlineWarning } from 'react-icons/ai';
 import { ScheduleTypes } from '../../Enums/scheduleTypes';
+import { formatter } from '../../../Utils/Formatter';
 
 ChartJS.register(
     CategoryScale,
@@ -33,7 +34,7 @@ ChartJS.register(
 export function ChartShippingReport() {
     const [datas , setDatas]=useState<any>([])
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)
-    const [PriceUnitId , setPriceUnitId]=useState(3)
+    const [PriceUnitId , setPriceUnitId]=useState(4)
 
 useEffect(()=>{
     const GetReport = async () => {
@@ -154,7 +155,8 @@ useEffect(()=>{
           scales: {
              
                   yAxes: {
-      
+                    callback : function(value:any,index:any,array:any) { return  formatter.format(value)  },
+
                   barPercentage: 1.6,
                   grid: {
                       // borderDash: [10, 10],
@@ -211,7 +213,7 @@ useEffect(()=>{
                  { " " }
                     در مقیاس   
                     { " " }
-                    {PriceUnitId === 1 ? "ریال" : PriceUnitId === 2 ? "تومان" : PriceUnitId === 3 ? "  میلیون تومان"    :"میلیارد تومان"}
+                    {PriceUnitId === 1 ? "ریال" : PriceUnitId === 2 ? "تومان" : PriceUnitId === 4 ? "  میلیون تومان"    :null}
                     </span> 
                     </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
@@ -241,8 +243,7 @@ useEffect(()=>{
                             <span>واحد قیمت</span>
                             <a className="dropdown-item" onClick={()=> setPriceUnitId(1)}>ریال</a>
                         <a className="dropdown-item" onClick={()=> setPriceUnitId(2)}>تومان</a>
-                        <a className="dropdown-item" onClick={()=> setPriceUnitId(3)}> میلیون تومان</a>
-                        <a className="dropdown-item" onClick={()=> setPriceUnitId(4)}> میلیارد تومان</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(4)}> میلیون تومان</a>
                             </div>
                             </div>
                     

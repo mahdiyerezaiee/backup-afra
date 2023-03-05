@@ -479,7 +479,7 @@ select.form-control.form-custom {
   font-size: 15px;
   padding: 8px 10px;
   letter-spacing: 1px;
-  background-color: #f1f2f3; }
+}
   .custom-file-label::after {
     height: auto;
     padding: 8px 12px;
@@ -3162,7 +3162,7 @@ button{
     width: 80% ;
    }
   .ReactModal__Content .custom-file{
-    width: 70% ;
+    width: 100% ;
    }
   .ReactModal__Content .btn{
     width: 100% ;

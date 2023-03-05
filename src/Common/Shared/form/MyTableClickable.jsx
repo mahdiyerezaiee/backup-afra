@@ -5,6 +5,8 @@ import {GetShoppings} from "../../../services/ShippingService";
 import ShippingSelected from "../Common/shippingSelected";
 import PageSizeTable from "../../../Utils/PageSize";
 import Pagination from "../../../Utils/pagination";
+import { formatter } from '../../../Utils/Formatter';
+import { MdFormatListNumberedRtl } from 'react-icons/md';
 
 const LazyShippingCom=React.lazy(()=>import( "../Common/ShippingsOrder"))
 
@@ -137,7 +139,7 @@ useEffect(()=>{
 
                     <span className="Expanded" {...row.getToggleRowExpandedProps()}>
 
-            {row.isExpanded ?
+            {row.id === show  ?
                 <svg {...row.getRowProps(formatRowProps && formatRowProps(row))} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                       className="bi bi-chevron-down" viewBox="0 0 16 16">
                     <path fillRule="evenodd"
@@ -286,10 +288,10 @@ useEffect(()=>{
 
 
                                     </tr>
-                                    {  row.id === show && showAddress && row.isExpanded ?
+                                    {  row.id === show && showAddress ?
 <tr >
     <td colSpan={18}   className="fadeInt   m-3    " >
-                                    {row.id === show && showAddress && row.isExpanded ?
+                                    {row.id === show && showAddress  ?
 
                                                     <div className="  expanded shadow rounded p-2  " >
                                                         {Detail.length !== 0 ?
@@ -320,10 +322,10 @@ useEffect(()=>{
                                                                     <td data-th={"عرضه"}>{item.productSupplyId}</td>
                                                                     {/* <td data-th={"کوتاژ"}>{cottageCode?cottageCode:"--"}</td> */}
                                                                     <td data-th={"کالا"}>{item.product ? item.product.name : null }</td>
-                                                                    <td data-th="وزن خرید">{item.quantity}</td>
+                                                                    <td data-th="وزن خرید">{formatter.format(item.quantity)}</td>
                                                                     <td data-th="تاریخ">{new  Date(item.createDate).toLocaleDateString('fa-IR')}</td>
                                                                     {/*The unit price must be read from the backend*/}
-                                                                    <td data-th="فی">{item.basePrice}</td>
+                                                                    <td data-th="فی">{formatter.format(item.basePrice)}</td>
                                                                     <td data-th="آدرس" title={item.fullAddress}>{item.fullAddress?item.fullAddress.substring(0,20)+ "...":""}</td>
                                                                     <td data-th="کد پستی" >{item.postalCode}</td>
                                                                     <td data-th="تلفن">{item.receiverTel}</td>
@@ -371,12 +373,12 @@ useEffect(()=>{
                                                                                 {address.Id}
                                                                             </td>
                                                                             <td data-th="وزن خرید" >
-                                                                                {address.Qty}
+                                                                                {formatter.format(address.Qty)}
                                                                             </td>  <td  data-th="وزن بارنامه شده" >
-                                                                            {address.WBarnameShode}
+                                                                            {formatter.format(address.WBarnameShode)}
                                                                         </td>
                                                                             <td data-th="وزن بارنامه نشده" >
-                                                                                {address.WBarnameNashode}
+                                                                                {formatter.format(address.WBarnameNashode)}
                                                                             </td>
 
                                                                             <td data-th="شناسه  واریز "  >
