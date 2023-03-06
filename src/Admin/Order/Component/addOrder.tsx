@@ -419,7 +419,6 @@ setQuantityConditio(quantity)
   setAddCondition(false)
   getProductSupply()
 }
-console.log(condition);
 
   return (
     <div className="user-progress">

@@ -472,7 +472,7 @@ const OrderAddress: React.FC<Props> = ({
   }, [getOrder , show]);
 
 const getPayments=()=>{
-  console.log(FilterData,condition);
+ 
   if(condition)
   {
     return(condition.map((i:any)=>({payments:i.paymentMethodId,installmentPeriod:i.installmentPeriod,installmentOccureCount:i.installmentOccureCount})))

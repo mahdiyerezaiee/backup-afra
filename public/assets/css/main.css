@@ -2327,8 +2327,8 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   }
   .textOnInput label {
     position: absolute;
-    top: -14px;
-    right: 15px;
+    top: -13px;
+    right: 20px;
     padding: 2px;
    background: transparent;
    z-index: 2;
