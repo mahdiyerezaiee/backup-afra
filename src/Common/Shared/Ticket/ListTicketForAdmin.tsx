@@ -23,8 +23,9 @@ const ListTicketForAdmin:React.FC = () => {
       headers: {'Content-Type': 'application/json'},
 
       params: {
-
+        PageNumber:0,
         PageSize:100000000,
+        isAdmin:true
       },
       paramsSerializer: (params:any) => {
 
@@ -37,6 +38,7 @@ const ListTicketForAdmin:React.FC = () => {
     try {
    
         const {data , status}= await GetSupportRequesstsAdmin(config)
+        setTicket(data.result.supportRequests.values)
      
     } catch (error) {
       console.log(error);
@@ -70,6 +72,8 @@ const ListTicketForAdmin:React.FC = () => {
 
     getDataBySearch()
   },[])
+
+
 if (ticket){
   return(
     <div className="chat-system">
