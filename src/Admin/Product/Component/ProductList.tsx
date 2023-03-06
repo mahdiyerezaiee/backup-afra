@@ -406,6 +406,9 @@ const ProductList: React.FC = () => {
         }
         setIsOpen(false)
         getDataBySearch()
+
+
+        
     }
     const navigate = useNavigate()
     const formHandler = () => {
