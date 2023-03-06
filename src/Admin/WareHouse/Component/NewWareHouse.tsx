@@ -149,7 +149,7 @@ companyId, companyName,active
                 wareId = data.result.id;
 
                 // setAddressForWare();
-                // setAttributevalueforHajm();
+                 setAttributevalueforHajm();
                 navigate('/admin/warehouselist')
             }
             setLoading(false)

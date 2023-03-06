@@ -23,7 +23,9 @@ const NewTicket:React.FC = () => {
             title,
     creatorId:user.id,
     onlineChat: false,
-            createDate :new Date()
+            createDate :new Date(),
+           
+
         }
 
 }

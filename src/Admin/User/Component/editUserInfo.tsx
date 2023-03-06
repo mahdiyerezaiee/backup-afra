@@ -374,7 +374,7 @@ const body ={
 
                                                 <label className="form-check-label mb-3 text-danger font-weight-bold">
 
-                                                    <Field type="checkbox" name="actionBlock" className="form-check-input" value={actionBlock} onChange={(e:any)=>SetactionBlock(e.target.chechked)}/>
+                                                    <Field type="checkbox" name="actionBlock" className="form-check-input" checked={actionBlock} onChange={(e:any)=>SetactionBlock(e.target.chechked)}/>
                                                     تعلیق کاربر                                  </label>
                                             </div>
 

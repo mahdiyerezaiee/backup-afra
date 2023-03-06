@@ -34,7 +34,7 @@ const EditWareHouse: React.FC = () => {
     const test = {
 
         "wareHouse": {
-            id,
+            id:Number(id),
             name,
             groupId, companyId, companyName, active
         }
@@ -169,8 +169,7 @@ const EditWareHouse: React.FC = () => {
                     progress: undefined
                 });
 
-                // setAddressForWare();
-                // setAttributevalueforHajm();
+                 setAttributevalueforHajm();
                 navigator('/admin/warehouselist')
             }
             setLoading(false)
