@@ -120,12 +120,13 @@ const CustomerBrief: React.FC = () => {
   
                 
 
-                    <div className="col-md-8 ">
+                    <div className="col-md-6 ">
                     <h4>سفارشات</h4>
-                    <ChartBar Total={ordersBrief.totalBought} data1={ ordersBrief.totalPaid} data2={ordersBrief.totalInvoices} labels={["پرداخت شده ها " , "صورت حساب ها"]}/>
+                    <ChartBar  data1={ordersBrief.totalBought } data2={ ordersBrief.totalInvoices } data3={ordersBrief.totalPaid} labels={[ "کل سفارشات","صورت حساب ها" , "پرداخت شده ها " ]}/>
 
                      
                     </div></Fragment>
+                    <div className="col-md-2"></div>
                     <div className="col-md-4 text-center">
                 
                   <h4>حواله</h4> 

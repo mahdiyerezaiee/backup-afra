@@ -25,8 +25,7 @@ const ListTicketForClients:React.FC = () => {
 
       params: {
 
-        creatorId:userId,
-        
+        idAdmin:true,
         PageSize:100000000,
       },
       paramsSerializer: (params:any) => {
@@ -42,7 +41,7 @@ const ListTicketForClients:React.FC = () => {
         const {data , status}= await GetSupportRequesstsAdmin(config)
         setTicket(data.result.supportRequests.values)
       }else {
-        const {data , status}= await GetSupportRequesstsUser(user.id , config)
+        const {data , status}= await GetSupportRequesstsUser(userId)
         setTicket(data.result.supportRequests.values)
 
       }
@@ -85,6 +84,8 @@ const ListTicketForClients:React.FC = () => {
 
     getDataBySearch()
   },[])
+  console.log(id);
+  
 if (ticket){
   return(
     <div className="chat-system">

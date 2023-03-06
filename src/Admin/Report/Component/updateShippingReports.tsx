@@ -192,8 +192,10 @@ const UpdateShippingReports: React.FC = () => {
     ], []);
 
     const shippingCompanySelect = () => {
-        return (companies.map((data: any) => ({ label: data.name, value: data.id })))
-    }
+
+let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])   
+     }
     const data = report
     const handelFrom = () => {
         setClicked(false)
