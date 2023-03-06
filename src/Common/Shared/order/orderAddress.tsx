@@ -123,11 +123,13 @@ const OrderAddress: React.FC<Props> = ({
           closeOnClick: true,
         });
         closeModalDelet();
+     window.location.reload()
       }
     } catch (err) {
       console.log(err);
       closeModalDelet();
     }
+    
   };
   const selectedFunc = () => {
     const arrayOfData = getSelectedData(selectedRows);
