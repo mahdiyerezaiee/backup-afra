@@ -77,7 +77,7 @@ const setDefault=()=>{
   
   if(newPayments.length>1){
 
-    setPaymentMethodId(7)
+    setPaymentMethodId(null)
   }
   else{
     setPaymentMethodId(newPayments[0])
@@ -91,7 +91,7 @@ const setDefault=()=>{
 }
 
   const paymentMethodIDs = () => {
-    return (PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id })))
+    return (PaymentStructureEnums.filter((item:any)=>item.id===2||item.id===4).map((data: any) => ({ label: data.name, value: data.id })))
   }
 
 const handelSubmit=async()=>{

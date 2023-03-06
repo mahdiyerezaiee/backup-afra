@@ -1,49 +1,58 @@
-import React,{ useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, NavLink, useParams } from 'react-router-dom';
 import { GetSupplier, SetSupplier } from '../../../services/supplyService';
 import { toast } from 'react-toastify';
-import {ClipLoader} from "react-spinners";
-import {Field, Form, Formik} from "formik";
-import {validatAlpha} from "../../../Utils/validitionParams";
+import { ClipLoader } from "react-spinners";
+import { Field, Form, Formik } from "formik";
+import { validatAlpha } from "../../../Utils/validitionParams";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import Select from 'react-select';
 
 
 
 
-const EditSupplier:React.FC = () => {
-    const[name,Setname]=useState();
-    const navigate=useNavigate();
-    const params=useParams();
+const EditSupplier: React.FC = () => {
+    const [name, Setname] = useState();
+    const navigate = useNavigate();
+    const params = useParams();
     const [loading, setLoading] = useState(false);
+    const companies = useSelector((state: RootState) => state.companies)
+    const [companyId, setCompanyId] = useState<any>(0)
+    const [companyName, setCompanyName] = useState('')
 
-    const getSupplierbyId=async()=>{
+    const getSupplierbyId = async () => {
 
         try {
-            const{data,status}=await GetSupplier(params.id);
-            if(status===200){
+            const { data, status } = await GetSupplier(params.id);
+            if (status === 200) {
 
                 Setname(data.result.supplier.name);
+                setCompanyId(data.result.supplier.companyId)
+                setCompanyName(data.result.supplier.companyName)
             }
         } catch (error) {
-            
-        } 
+
+        }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getSupplierbyId();
-    },[])
+    }, [])
 
     const handelSubmit = async () => {
         setLoading(true)
         try {
-            const supplier={
-                'supplier':{
-                    id:Number(params.id),
+            const supplier = {
+                'supplier': {
+                    id: Number(params.id),
                     name,
-                    groupId:null
+                    groupId: null,
+                    companyId, companyName
                 }
             }
             const { data, status } = await SetSupplier(supplier);
-         
+
             if (status === 200) {
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
@@ -54,8 +63,8 @@ const EditSupplier:React.FC = () => {
                     draggable: true,
                     progress: undefined
                 });
-                
-              
+
+
                 navigate('/admin/supplierList')
             }
             setLoading(false)
@@ -63,7 +72,10 @@ const EditSupplier:React.FC = () => {
             console.log(error);
         }
     }
+    const CompaniesIDs = () => {
+        return (companies.map((item: any) => ({ label: item.name, value: item.id })))
 
+    }
     return (
         <div className='user-progress' >
             <div className='row'>
@@ -76,43 +88,74 @@ const EditSupplier:React.FC = () => {
                 <div className='col-lg-6 col-xs-12 m-2'>
                     <Formik
                         initialValues={{
-                            id:Number(params.id),
+                            id: Number(params.id),
                             name,
-                            groupId:null
+                            groupId: null,
+                            companyId, companyName
                         }}
                         enableReinitialize={true}
                         onSubmit={values => {
                             // same shape as initial values
                             handelSubmit()
                         }}>
-                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+                        {({ errors, touched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
 
-                    <Form>
-                        <div className='form-group'>
+                            <Form>
+                                <div className='form-group'>
+                                    <div className='row'>
+                                        <div className={companies.length > 1?"col-lg-6 col-md-6 col-sm-11 mb-3  textOnInput":"col-lg-12 col-md-12 col-sm-11 mb-3  textOnInput"}>
+                                            <label >نام </label>
+                                        <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="نام تامیین کننده" aria-describedby="basic-addon1" value={name} onChange={(e: any) => Setname(e.target.value)} />
+                                            {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
-                            <div className=" mb-4 textOnInput">
-                                <label >نام </label>
-                                <Field name="name" validate={validatAlpha} type="text" className="form-control opacityForInput" placeholder="نام تامیین کننده" aria-describedby="basic-addon1" value={name} onChange={(e:any) => Setname(e.target.value)} />
-                                {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
 
+                                        </div>
+                                        {companies.length > 1 ? <div className="col-lg-6 col-md-6 col-sm-11 mb-3   textOnInput form-group "
+                                            style={{ marginBottom: "3rem" }}>
+                                            <div className=" form-control-sm">
+                                                <label> نام شرکت </label>
 
-                            </div>
-                            <div className='row '>
-                                <div className='col-6 '>
-                                    <button type="submit" disabled={loading} className="btn btn-success float-left"  >ثبت<ClipLoader
+                                                {companyId && companyId === null ?
+                                                    <Select
 
-                                        loading={loading}
-                                        color="#ffff"
-                                        size={15}
-                                    /></button>
+                                                        options={CompaniesIDs()}
+                                                        onChange={(e: any) => {
+                                                            setCompanyId(e.value)
+                                                        }}
+                                                    /> : <Select
+                                                        value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
+
+                                                        placeholder='نام شرکت'
+                                                        options={CompaniesIDs()}
+                                                        onChange={(e: any) => {
+                                                            setCompanyId(e.value)
+                                                            setCompanyName(e.lable)
+                                                            console.log(e);
+
+                                                        }}
+                                                    />}
+                                                {companyId === 0 ? <span className="text-danger">یک شرکت را انتخاب کنید</span> : ''}
+
+                                            </div>
+                                        </div> : ''}
+                                    </div>
+
+                                    <div className='row mt-4 '>
+                                        <div className='col-6 '>
+                                            <button type="submit" disabled={loading} className="btn btn-success float-right"  >ثبت<ClipLoader
+
+                                                loading={loading}
+                                                color="#ffff"
+                                                size={15}
+                                            /></button>
+                                        </div>
+                                        <div className='col-6 '>
+                                            <NavLink to='/admin/supplierList' className="btn btn-danger float-left">بازگشت</NavLink>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='col-6 '>
-                                    <NavLink to='/admin/supplierList' className="btn btn-danger float-right">بازگشت</NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </Form>)}</Formik>
+                            </Form>)}</Formik>
                 </div>
             </div>
         </div>

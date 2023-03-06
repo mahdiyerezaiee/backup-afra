@@ -266,7 +266,7 @@ const AdminMainLayout: React.FC = () => {
                   <Route path='bazargah' element={<BazargahList />} />
                   <Route path='cuoList' element={<OrderCustomer />} />
 
-                  <Route path='cuoDetail/:id' element={<CustomerOrderDetailTest />} />
+                 
                   <Route path='InvoiceList' element={<InvoiceList />} />
                   <Route path='PaymentLists' element={<PaymentsList />} />
                   <Route path='Credits' element={<CreditList />} />

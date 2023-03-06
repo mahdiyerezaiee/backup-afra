@@ -17,7 +17,7 @@ export const GetAllProductSupplyBordAdmin=()=>{
 }
 export const GetAllProductSupply=(id)=>{
 
-    return http.get(`${configure}/Product/GetProductSupply?Id=${id}`);
+    return http.get(`${configure}/Product/GetProductSupply?Id=${id}&IsAdmin=true`);
 }
 export const SetProductSupply=(ProductSupply)=>{
 

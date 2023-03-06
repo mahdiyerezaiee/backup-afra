@@ -31,6 +31,10 @@ export const GetOrder=(id)=>{
 
     return http.get(`${configure}/Order/GetOrder?Id=${id}`);
 }
+export const GetOrderByDetailId=(id)=>{
+
+    return http.get(`${configure}/Order/GetOrder?OrderDetailId=${id}`);
+}
 export const GetDataWithSearchOrder=(url)=>{
 
     return http.get(`${configure}/Order/GetOrders`,url);

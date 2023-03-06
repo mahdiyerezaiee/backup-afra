@@ -48,15 +48,15 @@ const customStyles = {
 
 }
 
-const OrderList :React.FC= () => {
+const OrderList: React.FC = () => {
     const location = useLocation();
 
     const [PageNumber, setPageNumber] = useState(getPage().PageNumber ? getPage().PageNumber : 0)
     const [PageSize, setPageSize] = useState(getPage().PageSize ? getPage().PageSize : 10)
 
     const [orderId, setOrderId] = useState(0)
-    let FilnalArr:any = [];
-    const roles = useSelector((state:RootState) => state.roles)
+    let FilnalArr: any = [];
+    const roles = useSelector((state: RootState) => state.roles)
     const Navigate = useNavigate()
     const [selectedRows, setSelectedRows] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -68,9 +68,9 @@ const OrderList :React.FC= () => {
     const [open, SetOpen] = useState(false);
     const [show, SetShow] = useState(false);
     const [overDue, SetoverDue] = useState(location.state ? true : getDefault().overDue);
-    const [address, SetAddress] = useState<any>( 0 );
+    const [address, SetAddress] = useState<any>(0);
 
-    let Detail:any = [];
+    let Detail: any = [];
     const [totalCount, setTotalCount] = useState(0);
     const [ShippingInformation, SetShippingInformation] = useState([]);
     const [organizations, SetOrganisations] = useState([]);
@@ -90,10 +90,10 @@ const OrderList :React.FC= () => {
     const [DetailAddress, setDetailAddress] = useState([]);
     const [companies, setCompanies] = useState([])
     const [OrderDetailExtId, setOrderDetailExtId] = useState(getDefault().OrderDetailExtId)
- 
+
     const [Id, setId] = useState(getDefault().Id ? getDefault().Id : null)
-    let SortColumn:any = null
-    let SortingDirectionId:any = null
+    let SortColumn: any = null
+    let SortingDirectionId: any = null
 
     const param = { PageSize, PageNumber }
 
@@ -103,16 +103,16 @@ const OrderList :React.FC= () => {
 
 
     }
-    const bindAdress = async (arr:any) => {
+    const bindAdress = async (arr: any) => {
         if (arr.length > 1) {
-            FilnalArr=[]
+            FilnalArr = []
             for (let i = 0; i < arr.length; i++) {
 
                 try {
                     const { data, status } = await GetAddress(11, arr[i].id)
-                    let detail = Detail.filter((item:any) => item.id === arr[i].id)[0]
+                    let detail = Detail.filter((item: any) => item.id === arr[i].id)[0]
                     let address = data.result.addresses;
-                    const finallAddres = address.map((item:any) =>
+                    const finallAddres = address.map((item: any) =>
                     ({
                         fullAddress: item.fullAddress,
                         postalCode: item.postalCode,
@@ -130,14 +130,14 @@ const OrderList :React.FC= () => {
 
             }
         } else {
-            FilnalArr=[]
+            FilnalArr = []
 
             for (let i = 0; i < arr.length; i++) {
                 try {
                     const { data, status } = await GetAddress(10, arr[i].orderId)
-                    let detail = Detail.filter((item:any) => item.orderId === arr[i].orderId)[0]
+                    let detail = Detail.filter((item: any) => item.orderId === arr[i].orderId)[0]
                     let address = data.result.addresses;
-                    const finallAddres = address.map((item:any) =>
+                    const finallAddres = address.map((item: any) =>
                     ({
                         fullAddress: item.fullAddress,
                         postalCode: item.postalCode,
@@ -159,14 +159,14 @@ const OrderList :React.FC= () => {
     const closeModal = () => {
         setIsOpen(false);
     }
-    const openModalEdit = (id:number) => {
+    const openModalEdit = (id: number) => {
         setIdEdit(id)
         setIsOpenEdit(true);
     }
     const closeModalEdit = () => {
         setIsOpenEdit(false);
     }
-    const handelStartDate = (value:any) => {
+    const handelStartDate = (value: any) => {
         if (value === null) {
             setStartDate('')
         }
@@ -179,7 +179,7 @@ const OrderList :React.FC= () => {
         }
     }
 
-    const handelEndDate = (value:any) => {
+    const handelEndDate = (value: any) => {
         if (value === null) {
             setEndDate('')
         }
@@ -192,43 +192,43 @@ const OrderList :React.FC= () => {
         SetOpen(false);
     }
     const shippingId = () => {
-        let all =ShippingStatusEnums.map(data => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
-       
+        let all = ShippingStatusEnums.map(data => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
+
     }
     const PaymentStatus = () => {
-        let all =PaymentStatusEnums.map(data => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
-       
-      
+        let all = PaymentStatusEnums.map(data => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
+
+
     }
     const OrderStatusID = () => {
-        let all =OrderStatus.map(data => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
-       
-       
+        let all = OrderStatus.map(data => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
+
+
     }
     const paymentMethodIDs = () => {
-        let all =PaymentStructureEnums.map(data => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
-       
-       
+        let all = PaymentStructureEnums.map(data => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
+
+
     }
     const OverDue = () => {
-        let all =OverDueEnum.map(data => ({ label: data.name, value: data.value }))
-        return ([{label :"همه", value : null} , ...all ])
-       
+        let all = OverDueEnum.map(data => ({ label: data.name, value: data.value }))
+        return ([{ label: "همه", value: null }, ...all])
+
     }
     let arrayOfSelectedData = [];
-    const getSelectedData = (data:any) => {
-        arrayOfSelectedData = data.map((item:any) => item.original);
+    const getSelectedData = (data: any) => {
+        arrayOfSelectedData = data.map((item: any) => item.original);
         return (arrayOfSelectedData)
     }
     const CompaniesIDs = () => {
-        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = companies.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
     }
-    const getBulkJob = (selected:any) => {
+    const getBulkJob = (selected: any) => {
         if (selected === 2) {
             enableSelectedItem()
         }
@@ -245,7 +245,7 @@ const OrderList :React.FC= () => {
     const DeleteSelectedItem = async () => { }
     const copySelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => {
+        const copyData = arrayOfData.map((item: any) => {
             return { ...item, id: 0, active: true, createDate: new Date() }
         })
 
@@ -259,12 +259,12 @@ const OrderList :React.FC= () => {
                 let payload = {
                     'organization': copyData[i]
                 }
-               setOrder(copyData[i])
-               
-                    SetOpen(true)
+                setOrder(copyData[i])
 
-                    SetStateSuccess(successCount += 1)
-             
+                SetOpen(true)
+
+                SetStateSuccess(successCount += 1)
+
 
 
             } catch (error) {
@@ -280,7 +280,7 @@ const OrderList :React.FC= () => {
     }
     const enableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => {
+        const copyData = arrayOfData.map((item: any) => {
             return { ...item, active: true }
         })
 
@@ -295,11 +295,11 @@ const OrderList :React.FC= () => {
                     'order': copyData[i]
                 }
                 setOrder(copyData[i])
-                
-                    SetOpen(true)
 
-                    SetStateSuccess(successCount += 1)
-               
+                SetOpen(true)
+
+                SetStateSuccess(successCount += 1)
+
 
 
             } catch (error) {
@@ -315,7 +315,7 @@ const OrderList :React.FC= () => {
     }
     const disableSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
-        const copyData = arrayOfData.map((item:any) => {
+        const copyData = arrayOfData.map((item: any) => {
             return { ...item, active: false }
         })
 
@@ -330,11 +330,11 @@ const OrderList :React.FC= () => {
                     'order': copyData[i]
                 }
                 setOrder(copyData[i])
-              
-                    SetOpen(true)
 
-                    SetStateSuccess(successCount += 1)
-                
+                SetOpen(true)
+
+                SetStateSuccess(successCount += 1)
+
 
 
             } catch (error) {
@@ -375,14 +375,14 @@ const OrderList :React.FC= () => {
             params: {
                 Id: Number(Id), IsAdmin: true,
                 UserName: userName,
-                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
+                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item: any) => item.value) : [],
                 StartDate
                 , EndDate
                 , ExtId: Number(ExtId),
                 AttachmentsOverDue: overDue,
-                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
-                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
+                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item: any) => item.value) : [],
+                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item: any) => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item: any) => item.value) : [],
                 NationalCode: nationalCode,
                 OrganizationNationalId: organizationNationalId,
                 OrderDetailExtId,
@@ -394,7 +394,7 @@ const OrderList :React.FC= () => {
 
             }
             ,
-            paramsSerializer: (params:any) => {
+            paramsSerializer: (params: any) => {
 
                 return QueryString.stringify(params)
             }
@@ -424,14 +424,14 @@ const OrderList :React.FC= () => {
             params: {
                 Id: Number(Id),
                 UserName: userName,
-                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item:any) => item.value) : [],
+                OrderStatusIds: orderStatusIds ? orderStatusIds.map((item: any) => item.value) : [],
                 StartDate
                 , EndDate
                 , ExtId: Number(ExtId),
                 AttachmentsOverDue: overDue,
-                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item:any) => item.value) : [],
-                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item:any) => item.value) : [],
-                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item:any) => item.value) : [],
+                paymentStatusIds: paymentStatusIds ? paymentStatusIds.map((item: any) => item.value) : [],
+                PaymentMethodIds: paymentMethodIds ? paymentMethodIds.map((item: any) => item.value) : [],
+                ShippingStatusIds: shippingStatusIds ? shippingStatusIds.map((item: any) => item.value) : [],
                 NationalCode: nationalCode,
                 OrganizationNationalId: organizationNationalId,
                 companyId,
@@ -442,7 +442,7 @@ const OrderList :React.FC= () => {
 
             }
             ,
-            paramsSerializer: (params:any) => {
+            paramsSerializer: (params: any) => {
                 return QueryString.stringify(params)
             }
         };
@@ -466,7 +466,7 @@ const OrderList :React.FC= () => {
     const onHeaderClick = () => {
         return {
 
-            onClick: (e:any) => {
+            onClick: (e: any) => {
                 var siblings = [];
 
 
@@ -646,29 +646,29 @@ const OrderList :React.FC= () => {
 
     }
     const GetOrders = async () => {
-      
+
         let config = {
             headers: { 'Content-Type': 'application/json' },
             params: {
                 Id: null,
                 UserName: null,
-                OrderStatusIds:  [],
-                StartDate:null
-                , EndDate:null
-                , ExtId:null,
+                OrderStatusIds: [],
+                StartDate: null
+                , EndDate: null
+                , ExtId: null,
                 paymentStatusIds: [],
                 AttachmentsOverDue: overDue,
                 PaymentMethodIds: [],
-                ShippingStatusIds:  [],
+                ShippingStatusIds: [],
                 NationalCode: null,
                 OrganizationNationalId: null,
                 IsAdmin: true,
-                OrderDetailExtId:null,
-                PageNumber:0,
-                PageSize:10
+                OrderDetailExtId: null,
+                PageNumber: 0,
+                PageSize: 10
             }
             ,
-            paramsSerializer: (params:any) => { return QueryString.stringify(params) }
+            paramsSerializer: (params: any) => { return QueryString.stringify(params) }
 
 
         };
@@ -709,218 +709,208 @@ const OrderList :React.FC= () => {
         minimumFractionDigits: 0,
     });
     useEffect(() => {
-       // GetOrders()
+        // GetOrders()
         getOrganization()
         getCompany()
     }, [getOrders])
 
 
 
-    const columns = useMemo(() => [ {
-            Header: 'شماره سفارش', accessor: 'id',
-        },
-        
-        {
-            Header: 'تاریخ', accessor: 'CreateDate'
-            , Cell: (row:any) => {
+    const columns = useMemo(() => [{
+        Header: 'شماره سفارش', accessor: 'id',
+    },
 
-                return (new Date(row.row.original.createDate).toLocaleDateString('fa-IR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                }))
-            }
+    {
+        Header: 'تاریخ', accessor: 'CreateDate'
+        , Cell: (row: any) => {
 
-        },
-        {
-            Header: 'خریدار', accessor: (d:any) => {
-                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.name)
-
-                return (` ${d.customer.firstName} ,    ${d.customer.lastName} ,`)
-            }
-            , Cell: (row:any) => {
-                let fName = row.row.original.customer.firstName;
-                let lName = row.row.original.customer.lastName;
-                let OName;
-                if (row.row.original.customer.organizationId > 0) {
-
-                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.name)
-                }
-                let fullname = `${fName ? fName : '--'} ${lName ? lName : ''} `;
-                return (fullname)
-            }
-        }, {
-            Header: 'کد ملی', accessor: d => {
-                let Ncode = d.customer.nationalCode;
-                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.nationalId)
-                return (`${Ncode}`)
-
-            }, Cell: row => {
-                let Ncode = row.row.original.customer.nationalCode;
-                let OName;
-                if (row.row.original.customer.organizationId > 0) {
-
-                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.nationalId)
-                }
-                let code = `${Ncode ? Ncode : '--'} `
-                return (code)
-            }
-        }, {
-            Header: 'سازمان', accessor: d => {
-                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.name)
-
-                return (` ${d.OName} `)
-            }
-            , Cell: row => {
-
-                let OName;
-                if (row.row.original.customer.organizationId > 0) {
-
-                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.name)
-                }
-                let fullname = `${OName ? OName : '--'}  `;
-                return (fullname)
-            }
-        }, {
-            Header: 'شناسه ملی', accessor: d => {
-                let Ncode = d.customer.nationalCode;
-                let OName = organizations.filter((item:any) => item.id === d.customer.organizationId).map((item:any) => item.nationalId)
-                return (`${OName}`)
-
-            }, Cell: row => {
-                let Ncode = row.row.original.customer.nationalCode;
-                let OName;
-                if (row.row.original.customer.organizationId > 0) {
-
-                    OName = organizations.filter((item:any) => item.id === row.row.original.customer.organizationId).map((item:any) => item.nationalId)
-                }
-                let code = ` ${OName ? OName : '--'}`
-                return (code)
-            }
-        },
-        {Header:'نام شرکت ',accessor:'companyName'}, {
-            Header: 'نحوه پرداخت', accessor: 'paymentMethodId', Cell: row => {
-                return (PaymentStructureEnums.filter((item:any) => item.id === row.row.original.paymentMethodId).map((item:any) => item.name))
-            }
-        },
-        { Header: 'شماره همراه', accessor: 'customer.userName' },
-        ,
-        {
-            Header: 'وضعیت ارسال', accessor: 'shippingStatusId', Cell: row => {
-                return (ShippingStatusEnums.filter((item:any) => item.id === row.row.original.shippingStatusId).map((item:any) => item.name))
-            }
-        },
-        {
-            Header: 'وضعیت سفارش', accessor: 'orderStatusId', Cell: row => {
-                return (OrderStatus.filter((item:any) => item.id === row.row.original.orderStatusId).map((item:any) => item.name))
-            }
+            return (new Date(row.row.original.createDate).toLocaleDateString('fa-IR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }))
         }
+
+    },
+    {
+        Header: 'خریدار', accessor: (d: any) => {
+            let OName = organizations.filter((item: any) => item.id === d.customer.organizationId).map((item: any) => item.name)
+
+            return (` ${d.customer.firstName} ,    ${d.customer.lastName} ,`)
+        }
+        , Cell: (row: any) => {
+            let fName = row.row.original.customer.firstName;
+            let lName = row.row.original.customer.lastName;
+            let OName;
+            if (row.row.original.customer.organizationId > 0) {
+
+                OName = organizations.filter((item: any) => item.id === row.row.original.customer.organizationId).map((item: any) => item.name)
+            }
+            let fullname = `${fName ? fName : '--'} ${lName ? lName : ''} `;
+            return (fullname)
+        }
+    }, {
+        Header: 'کد ملی', accessor: d => {
+            let Ncode = d.customer.nationalCode;
+            let OName = organizations.filter((item: any) => item.id === d.customer.organizationId).map((item: any) => item.nationalId)
+            return (`${Ncode}`)
+
+        }, Cell: row => {
+            let Ncode = row.row.original.customer.nationalCode;
+            let OName;
+            if (row.row.original.customer.organizationId > 0) {
+
+                OName = organizations.filter((item: any) => item.id === row.row.original.customer.organizationId).map((item: any) => item.nationalId)
+            }
+            let code = `${Ncode ? Ncode : '--'} `
+            return (code)
+        }
+    }, {
+        Header: 'سازمان', accessor: d => {
+            let OName = organizations.filter((item: any) => item.id === d.customer.organizationId).map((item: any) => item.name)
+
+            return (` ${d.OName} `)
+        }
+        , Cell: row => {
+
+            let OName;
+            if (row.row.original.customer.organizationId > 0) {
+
+                OName = organizations.filter((item: any) => item.id === row.row.original.customer.organizationId).map((item: any) => item.name)
+            }
+            let fullname = `${OName ? OName : '--'}  `;
+            return (fullname)
+        }
+    }, {
+        Header: 'شناسه ملی', accessor: d => {
+            let Ncode = d.customer.nationalCode;
+            let OName = organizations.filter((item: any) => item.id === d.customer.organizationId).map((item: any) => item.nationalId)
+            return (`${OName}`)
+
+        }, Cell: row => {
+            let Ncode = row.row.original.customer.nationalCode;
+            let OName;
+            if (row.row.original.customer.organizationId > 0) {
+
+                OName = organizations.filter((item: any) => item.id === row.row.original.customer.organizationId).map((item: any) => item.nationalId)
+            }
+            let code = ` ${OName ? OName : '--'}`
+            return (code)
+        }
+    },
+    { Header: 'نام شرکت ', accessor: 'companyName' }, {
+        Header: 'نحوه پرداخت', accessor: 'paymentMethodId', Cell: row => {
+            return (PaymentStructureEnums.filter((item: any) => item.id === row.row.original.paymentMethodId).map((item: any) => item.name))
+        }
+    },
+    { Header: 'شماره همراه', accessor: 'customer.userName' },
+        ,
+    {
+        Header: 'وضعیت ارسال', accessor: 'shippingStatusId', Cell: row => {
+            return (ShippingStatusEnums.filter((item: any) => item.id === row.row.original.shippingStatusId).map((item: any) => item.name))
+        }
+    },
+    {
+        Header: 'وضعیت سفارش', accessor: 'orderStatusId', Cell: row => {
+            return (OrderStatus.filter((item: any) => item.id === row.row.original.orderStatusId).map((item: any) => item.name))
+        }
+    }
         ,
 
-        {
-            Header: 'وضعیت پرداخت', accessor: 'paymentStatusId', Cell: row => {
-                return (PaymentStatusEnums.filter((item:any) => item.id === row.row.original.paymentStatusId).map((item:any) => item.name))
-            }
-        },
-        {
-            Header: 'مبلغ-ریال',
-            accessor: 'orderFinalizedPrice',
-            Cell: (row:any) => (formatter.format(row.row.original.orderFinalizedPrice))
-        },
-        {
-            Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
-                <Link className="border-0 bg-transparent non-hover edit-btn" to={`/admin/orderDetail/${row.row.original.id}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" width='25' height='25' viewBox="0 0 256 256"><rect
-                        width="256" height="256" stroke="none" fill="none"/><line x1="201.1" y1="127.3" x2="224" y2="166.8"
+    {
+        Header: 'وضعیت پرداخت', accessor: 'paymentStatusId', Cell: row => {
+            return (PaymentStatusEnums.filter((item: any) => item.id === row.row.original.paymentStatusId).map((item: any) => item.name))
+        }
+    },
+    {
+        Header: 'مبلغ-ریال',
+        accessor: 'orderFinalizedPrice',
+        Cell: (row: any) => (formatter.format(row.row.original.orderFinalizedPrice))
+    },
+    {
+        Header: 'مشاهده جزییات ', accessor: '', Cell: row => (<div>
+            <Link className="border-0 bg-transparent non-hover edit-btn" to={`/admin/orderDetail/${row.row.original.id}`}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width='25' height='25' viewBox="0 0 256 256"><rect
+                    width="256" height="256" stroke="none" fill="none" /><line x1="201.1" y1="127.3" x2="224" y2="166.8"
+                        fill="none" stroke="currentColor" strokeLinecap="round"
+                        strokeLinejoin="round" strokeWidth="12" /><line
+                        x1="154.2" y1="149.3" x2="161.3" y2="189.6" fill="none" stroke="currentColor" strokeLinecap="round"
+                        strokeLinejoin="round" strokeWidth="12" /><line x1="101.7" y1="149.2" x2="94.6" y2="189.6"
                             fill="none" stroke="currentColor" strokeLinecap="round"
                             strokeLinejoin="round" strokeWidth="12" /><line
-                            x1="154.2" y1="149.3" x2="161.3" y2="189.6" fill="none" stroke="currentColor" strokeLinecap="round"
-                            strokeLinejoin="round" strokeWidth="12" /><line x1="101.7" y1="149.2" x2="94.6" y2="189.6"
-                                fill="none" stroke="currentColor" strokeLinecap="round"
-                                strokeLinejoin="round" strokeWidth="12" /><line
-                            x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="currentColor" strokeLinecap="round"
-                            strokeLinejoin="round" strokeWidth="12" /><path
-                            d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="currentColor"
-                            strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>
-                </Link>
+                        x1="54.8" y1="127.3" x2="31.9" y2="167" fill="none" stroke="currentColor" strokeLinecap="round"
+                        strokeLinejoin="round" strokeWidth="12" /><path
+                        d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1" fill="none" stroke="currentColor"
+                        strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" /></svg>
+            </Link>
+        </div>
+        )
+    },
+
+    {
+        Header: 'عملیات', accessor: '', Cell: row => (
+
+            roles.includes(2) ? '' : <div className=" btn-group">
+
+                <button className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip"
+                    data-placement="top" data-title="ویرایش"
+                    onClick={function () {
+                        openModalEdit(row.row.original.id)
+                        SetAddress({ id: 0 })
+                    }}
+                    disabled={roles.includes(8) ? false : true}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="feather feather-edit-2">
+                        <path
+                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                    </svg>
+                </button>
+
+
             </div>
-            )
-        },
 
-        {
-            Header: 'عملیات', accessor: '', Cell: row => (
+        )
+    }], [organizations])
 
-                roles.includes(2) ? '' : <div className=" btn-group">
-
-                    <button className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip"
-                        data-placement="top" data-title="ویرایش"
-                        onClick={function () {
-                            openModalEdit(row.row.original.id)
-                            SetAddress({ id:0 })
-                        }}
-                        disabled={roles.includes(8) ? false : true}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="feather feather-edit-2">
-                            <path
-                                d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                        </svg>
-                    </button>
+    const data = useMemo(() => order, [order]);
+    const formatTrProps = (state: any = {}) => {
+        const orderDetail = async () => {
+            setDetailAddress([])
+            setOrderId(state.original.id)
 
 
-                </div>
 
-            )
-        }],[organizations])
+            try {
+                const { data, status } = await GetOrderDetailsAdmin(state.original.id)
+             
+                SetAddress(state)
+                if (status === 200) {
 
-    const data = useMemo(() => order,[order]);
-    const formatTrProps = (state:any = {}) => {
-        const orderDetail =async () => {
-                setDetailAddress([])
-                setOrderId(state.original.id)
+                    Detail = data.result.orderDetails
+                    await bindAdress(data.result.orderDetails)
 
-                try {
-                    const { data, status } = await GetOrderDetailsAdmin(state.original.id)
-                    SetAddress(state.id)
-                    if (status === 200) {
-
-                        Detail = data.result.orderDetails
-                        await bindAdress(data.result.orderDetails)
-
-                    }
-                } catch (err) {
-                    console.log(err)
                 }
-                try {
-                    const { data, status } = await GetOrder(state.original.id)
-                    SetAddress(state.id)
-                    if (status === 200) {
-                        let xd = data.result.order.extraData
-                        SetShoppingCartInformation(data.result.order)
-                        if (xd === null) {
-                            SetShippingInformation([])
-
-                        } else {
-                            SetShippingInformation(JSON.parse(xd.data))
-                        }
-                    }
-                } catch (err) {
-                    console.log(err)
-                }
+            } catch (err) {
+                console.log(err)
+            }
+           
             // document.getElementsByClassName('expanded')[0].scrollIntoView({ behavior: "smooth", block: "center" })
 
         }
-        if (modalIsOpenEdit === false) {
+         {
             return {
                 onClick: async () => {
-                    SetShow(  !show)
+
+                    SetShow(!show)
 
                     await orderDetail()
                 },
             }
         }
+        
     }
 
     const handelSearchFieldClear = () => {
@@ -947,7 +937,7 @@ const OrderList :React.FC= () => {
         setPageSize(10)
     }
     if (order) {
-        const dataForExcel = data.map((item:any) => ({
+        const dataForExcel = data.map((item: any) => ({
             'شمراه فاکتور': item.id,
             'خریدار': item.customer.firstName,
             'شماره همراه': item.customer.userName,
@@ -977,7 +967,7 @@ const OrderList :React.FC= () => {
             </Modal>
             <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
                 <AdvancedSearch>
-                  
+
                     <form className='form-row textOnInput'>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
 
@@ -1008,30 +998,30 @@ const OrderList :React.FC= () => {
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label>شماره سفارش</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="سفارش"
-                                value={Id} onChange={(e:any) => setId(e.target.value)} /></div>
+                                value={Id} onChange={(e: any) => setId(e.target.value)} /></div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> کد ملی</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
                                 maxLength={11} value={nationalCode}
-                                onChange={(e:any) => setNationalCode(e.target.value)} /></div>
+                                onChange={(e: any) => setNationalCode(e.target.value)} /></div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> شناسه ملی</label>
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
                                 maxLength={11} value={organizationNationalId}
-                                onChange={(e:any) => setOrganizationNationalId(e.target.value)} /></div>
+                                onChange={(e: any) => setOrganizationNationalId(e.target.value)} /></div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> شناسه خرید بازارگاه</label>
 
 
                             <input className="form-control opacityForInput  mb-4" type="text"
                                 placeholder="شناسه خرید"
-                                value={ExtId} onChange={(e:any) => setExtId(e.target.value)} />
+                                value={ExtId} onChange={(e: any) => setExtId(e.target.value)} />
                         </div>
                         <div className="col-lg-2 col-md-4  col-sm-12  mb-4">
                             <label> کد تخصیص</label>
 
                             <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
-                                value={OrderDetailExtId} onChange={(e:any) => setOrderDetailExtId(e.target.value)} />
+                                value={OrderDetailExtId} onChange={(e: any) => setOrderDetailExtId(e.target.value)} />
                         </div>
                         <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
@@ -1066,7 +1056,7 @@ const OrderList :React.FC= () => {
                                     }} />
                             </div>
                         </div>
-                        
+
                         <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
                             style={{ marginBottom: "3rem" }}>
                             <div className=" form-control-sm">
@@ -1092,7 +1082,7 @@ const OrderList :React.FC= () => {
                                     <Select
 
                                         options={OverDue()}
-                                        onChange={(e:any) => {
+                                        onChange={(e: any) => {
                                             SetoverDue(e.value)
                                         }}
                                     /> : <Select
@@ -1100,7 +1090,7 @@ const OrderList :React.FC= () => {
 
                                         placeholder=' وضعیت سررسید '
                                         options={OverDue()}
-                                        onChange={(e:any) => {
+                                        onChange={(e: any) => {
                                             SetoverDue(e.value)
                                         }}
                                     />}
@@ -1118,7 +1108,7 @@ const OrderList :React.FC= () => {
                                     options={paymentMethodIDs()}
                                     isMulti
                                     isClearable={true}
-                                    onChange={(e:any) => {
+                                    onChange={(e: any) => {
                                         setPaymentMethodIds(e)
                                     }}
                                 />
@@ -1133,7 +1123,7 @@ const OrderList :React.FC= () => {
                                     <Select
 
                                         options={CompaniesIDs()}
-                                        onChange={(e:any) => {
+                                        onChange={(e: any) => {
                                             setCompanyId(e.value)
                                         }}
                                     /> : <Select
@@ -1141,7 +1131,7 @@ const OrderList :React.FC= () => {
 
                                         placeholder='نام شرکت'
                                         options={CompaniesIDs()}
-                                        onChange={(e:any) => {
+                                        onChange={(e: any) => {
                                             setCompanyId(e.value)
 
                                         }}
@@ -1171,11 +1161,10 @@ const OrderList :React.FC= () => {
             <div className=" statbox widget-content widget-content-area rounded">
                 <div>
 
-                    <MyTableClick columns={columns} data={data} getData={(rows:any) => setSelectedRows(rows)}
-                        bulkJob={getBulkJob} formatRowProps={(state:any) => formatTrProps(state)}
+                    <MyTableClick columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)}
+                        bulkJob={getBulkJob} formatRowProps={(state: any) => formatTrProps(state)}
                         show={address}
                         address={ShippingInformation}
-                        ShippingCartInformation={ShoppingCartInformation}
                         setPageSize={setPageSize}
                         PageSize={PageSize}
                         total={totalCount}
@@ -1184,7 +1173,7 @@ const OrderList :React.FC= () => {
                         PageNumber={PageNumber}
                         Detail={DetailAddress}
                         clickableHeader={onHeaderClick}
-                                  showAddress={show}
+                        showAddress={show}
 
                     />
                     <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
@@ -1246,20 +1235,20 @@ const OrderList :React.FC= () => {
 
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد ملی"
                                     maxLength={11} value={nationalCode}
-                                    onChange={(e:any) => setNationalCode(e.target.value)} />
+                                    onChange={(e: any) => setNationalCode(e.target.value)} />
                             </div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه ملی</label>
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="شناسه ملی"
                                     maxLength={11} value={organizationNationalId}
-                                    onChange={(e:any) => setOrganizationNationalId(e.target.value)} /></div>
+                                    onChange={(e: any) => setOrganizationNationalId(e.target.value)} /></div>
 
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> شناسه خرید بازارگاه</label>
 
                                 <input className="form-control opacityForInput  mb-4" type="text"
                                     placeholder="شناسه خرید"
-                                    value={ExtId} onChange={(e:any) => setExtId(e.target.value)} />
+                                    value={ExtId} onChange={(e: any) => setExtId(e.target.value)} />
                             </div>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
                                 <label> کد تخصیص</label>
@@ -1267,7 +1256,7 @@ const OrderList :React.FC= () => {
                                 <input className="form-control opacityForInput  mb-4" type="text" placeholder="کد تصیص"
                                     value={OrderDetailExtId} onChange={e => setOrderDetailExtId(e.target.value)} />
                             </div>
-                            
+
                             <div className="col-lg-2 col-md-4  col-sm-12   mb-3 textOnInput form-group "
                                 style={{ marginBottom: "3rem" }}>
                                 <div className=" form-control-sm">
@@ -1337,14 +1326,14 @@ const OrderList :React.FC= () => {
                                             placeholder=' وضعیت سررسید '
                                             options={OverDue()}
                                             isMulti={true}
-                                            onChange={(e:any) => {
+                                            onChange={(e: any) => {
                                                 SetoverDue(e.value)
                                             }}
                                         /> : <Select
                                             value={OverDue().filter(i => i.value === overDue).map(i => i)}
                                             placeholder=' وضعیت سررسید '
                                             options={OverDue()}
-                                            onChange={(e:any) => {
+                                            onChange={(e: any) => {
                                                 SetoverDue(e.value)
                                             }}
                                         />}
@@ -1372,57 +1361,57 @@ const OrderList :React.FC= () => {
 
                             </div>
                             {companies.length > 1 ? <div className="col-lg-2 col-md-4  col-sm-12    textOnInput form-group "
-                            style={{ marginBottom: "3rem" }}>
-                            <div className=" form-control-sm">
-                                <label> نام شرکت </label>
+                                style={{ marginBottom: "3rem" }}>
+                                <div className=" form-control-sm">
+                                    <label> نام شرکت </label>
 
-                                {companyId && companyId === null ?
-                                    <Select
+                                    {companyId && companyId === null ?
+                                        <Select
 
-                                        options={CompaniesIDs()}
-                                        onChange={(e:any) => {
-                                            setCompanyId(e.value)
-                                        }}
-                                    /> : <Select
-                                        value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
+                                            options={CompaniesIDs()}
+                                            onChange={(e: any) => {
+                                                setCompanyId(e.value)
+                                            }}
+                                        /> : <Select
+                                            value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
 
-                                        placeholder='نام شرکت'
-                                        options={CompaniesIDs()}
-                                        onChange={(e:any) => {
-                                            setCompanyId(e.value)
+                                            placeholder='نام شرکت'
+                                            options={CompaniesIDs()}
+                                            onChange={(e: any) => {
+                                                setCompanyId(e.value)
 
-                                        }}
-                                    />}
-                            </div>
-                        </div> : ''}
-                    </form>
-                    <div className="  filter-btn ">
-                        <div className=" row  ">
-                            <div className="col-6 ">
-                                <button onClick={handelSearchFieldClear}
-                                    className="  btn-sm btn-danger ">حذف فیلتر
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <button onClick={getDataBySearch}
-                                    className="  btn-sm  btn-primary">جستجو
-                                </button>
-                            </div>
-                        </div></div>
-                </AdvancedSearch>
-            </div>
-                {
-            getDefault().organizationNationalId || getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
-                <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null
-        }
-
-        <div className=" statbox widget-content widget-content-area">
-            <div>
-                <div className='text-center mt-5'>
-                    <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                                            }}
+                                        />}
+                                </div>
+                            </div> : ''}
+                        </form>
+                        <div className="  filter-btn ">
+                            <div className=" row  ">
+                                <div className="col-6 ">
+                                    <button onClick={handelSearchFieldClear}
+                                        className="  btn-sm btn-danger ">حذف فیلتر
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button onClick={getDataBySearch}
+                                        className="  btn-sm  btn-primary">جستجو
+                                    </button>
+                                </div>
+                            </div></div>
+                    </AdvancedSearch>
                 </div>
-            </div>
-        </div>
+                {
+                    getDefault().organizationNationalId || getDefault().overDue || getDefault().EndDate || getDefault().ExtId || getDefault().Id || getDefault().OrderDetailExtId || getDefault().StartDate || getDefault().orderStatusIds || getDefault().paymentMethodIds || getDefault().shippingStatusIds || getDefault().userName || getDefault().paymentStatusIds ?
+                        <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null
+                }
+
+                <div className=" statbox widget-content widget-content-area">
+                    <div>
+                        <div className='text-center mt-5'>
+                            <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                        </div>
+                    </div>
+                </div>
 
 
             </div >

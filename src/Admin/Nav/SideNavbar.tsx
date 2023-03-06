@@ -103,11 +103,6 @@ window.addEventListener('resize',getSize)
 
 
                 </SubMenu>
-
-                <SubMenu ref={ref3} open={show.item3 === true ? true : false} onClick={() => setShow({ ...show, item3: !show.item3, item1: false, item2: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(6) || roles.includes(3) || roles.includes(8) ? false : true} label='کالا' icon={<BsBoxSeam size={'2rem'} />}>
-                    <MenuItem onClick={handleHeaderClick}> <NavLink to='productList'> لیست کالاها</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}><NavLink to='productgroup'> گروه کالا</NavLink></MenuItem>
-                </SubMenu>
                 <SubMenu ref={ref4} open={show.item4 === true ? true : false} onClick={() => setShow({ ...show, item4: !show.item4, item1: false, item3: false, item2: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(6) || roles.includes(3) || roles.includes(8) ? false : true} label='انبار' icon={<FaWarehouse size={'2rem'} />}>
                     <MenuItem onClick={handleHeaderClick}> <NavLink to='warehouselist'> لیست انبارها</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}> <NavLink to='warehousetypes'> گروه انبار</NavLink></MenuItem>
@@ -115,6 +110,11 @@ window.addEventListener('resize',getSize)
 
 
                 </SubMenu>
+                <SubMenu ref={ref3} open={show.item3 === true ? true : false} onClick={() => setShow({ ...show, item3: !show.item3, item1: false, item2: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(6) || roles.includes(3) || roles.includes(8) ? false : true} label='کالا' icon={<BsBoxSeam size={'2rem'} />}>
+                    <MenuItem onClick={handleHeaderClick}> <NavLink to='productList'> لیست کالاها</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}><NavLink to='productgroup'> گروه کالا</NavLink></MenuItem>
+                </SubMenu>
+                
                 <SubMenu ref={ref5} open={show.item5 === true ? true : false} onClick={() => setShow({ ...show, item5: !show.item5, item1: false, item3: false, item4: false, item2: false, item6: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(6) || roles.includes(3) || roles.includes(8) ? false : true} label='تامین' icon={<RiShipLine size={'2rem'} />}>
                     <MenuItem onClick={handleHeaderClick} ><NavLink to="supplierList">لیست تامین کنندگان</NavLink></MenuItem>
                     <MenuItem onClick={handleHeaderClick}><NavLink to="supply">لیست تامین </NavLink></MenuItem>

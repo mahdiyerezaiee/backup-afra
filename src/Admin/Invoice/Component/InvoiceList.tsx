@@ -20,6 +20,8 @@ import { InvoceTypes } from './../../../Common/Enums/InvoiceTypeIdEnums';
 import { PaymentStructureEnums } from './../../../Common/Enums/PaymentStructureEnums';
 import PaymentModalForInvoices from '../../Payment/Component/PaymentModalForInvoices';
 import { AiOutlineDollar } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { GetOrderByDetailId } from '../../../services/orderService';
 
 
 
@@ -74,7 +76,7 @@ const InvoiceList: React.FC = () => {
 
     const companies = useSelector((state: RootState) => state.companies)
 
-
+const navigate=useNavigate()
     const param = { PageSize, PageNumber }
 
     function getPage() {
@@ -366,6 +368,31 @@ SetModalOpenPayment(false)
 
 
     });
+
+
+const handelNavigateWithId=(id:number)=>{
+
+    navigate(`/admin/orderDetail/${id}`)
+}
+
+const handelNavigateWithDetails=async(id:number)=>{
+
+    try {
+            const{data,status}=await GetOrderByDetailId(id)
+
+            if(status===200){
+
+                navigate(`/admin/orderDetail/${data.result.order.id}`)
+            }
+    } catch (error) {
+        
+    }
+
+
+}
+
+
+
     const CompaniesIDs = () => {
         let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
         return ([{label :"همه", value : null} , ...all ])
@@ -393,7 +420,24 @@ SetModalOpenPayment(false)
 
             }
         },
-        { Header: 'شناسه ', accessor: 'entityId' },
+        { Header: 'شناسه ', accessor: 'entityId',Cell:(row:any)=>{
+
+            if(row.row.original.entityTypeId===10){
+
+                return(
+                    <button className='border-0 bg-transparent text-primary' onClick={()=>handelNavigateWithId(row.row.original.entityId)}>{`#${row.row.original.entityId} سفارش`} </button>
+                )
+
+            }
+            else{
+                
+                return(
+                    <button className='border-0 bg-transparent text-primary '  onClick={()=>handelNavigateWithDetails(row.row.original.entityId)}>{`#${row.row.original.entityId} جزییات سفارش`} </button>
+                )
+            }
+
+
+        } },
         {
             Header: 'قیمت', accessor: 'price', Cell: (rows: any) => {
 

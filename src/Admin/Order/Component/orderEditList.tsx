@@ -39,6 +39,7 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
     
     const getOrder = async () => {
+        if(id>0){
         try {
             const { data, status } = await GetOrder(id)
             setOrder(data.result.order)
@@ -50,7 +51,8 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
         } catch (err) {
             console.log(err)
-        }
+        }}
+        
     }
 
     useEffect(() => {
