@@ -9454,6 +9454,10 @@ width: 390px;
     color: #777c81;
     font-size: small;
 }
+.pmsdesc{
+    padding-top: 1%;
+    margin-bottom: 1%;
+}
 .pmsdesc b > b{
     color: #0e0e0f!important;
     }

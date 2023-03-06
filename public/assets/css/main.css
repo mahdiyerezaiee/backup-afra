@@ -64,7 +64,28 @@ code {
 }
 select.form-custom::-ms-expand {
   display: none; }
-
+  #form>span {
+    height: 92%;
+    border-right: 1px solid lightgray;
+    display: inline-block;
+    padding: 3%;
+    margin-right: -17%;
+    
+  }
+  #form>input {
+    float:right;
+  }
+  #Price>span {
+    height: 95%;
+    border-right: 1px solid lightgray;
+    display: inline-block;
+    padding: 2%;
+    margin-right: -12%;
+    
+  }
+  #Price>input {
+    float:right;
+  }
 .custom-file-input:focus ~ .custom-file-label {
   border: 1px solid #ced4da;
   box-shadow: none; }
@@ -3808,4 +3829,11 @@ border: 1px solid #0c4088;
   animation: fadeIn 1s ;
   background-color: #ffffff!important;
 
+}
+.wrapper{
+  position: relative;
+}
+.units {
+  
+  right: 14px;
 }

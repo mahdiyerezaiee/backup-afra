@@ -922,30 +922,39 @@ setQuantityConditio(quantity)
                       />
                     </div>
                    
-                    <div className="col-lg-6 col-md-6 col-sm-11 ">
+                    <div  className="col-lg-6 col-md-6 col-sm-11 mb-4 textOnInputForGrp ">
+                    <div className ="input-group rounded">
                       <label>مقدار</label>
+                     
+
                       <Field
                         validate={validatNumber}
                         name="quantity"
                         type="text"
-                        className="  form-control opacityForInput  mb-4"
+                        className="  form-control opacityForInput rounded "
                         value={formatter.format(quantity)}
                         onChange={(e: any) => {
                           setQuantity(e.target.value.replaceAll(",", ""));
                         }}
                       />
+                        <div className="input-group-append ">
+                                            <span className="input-group-text"> کیلوگرم </span>
+                                              </div>
+</div>
                       {errors.quantity && touched.quantity && (
                         <div className="text-danger">{errors.quantity}</div>
                       )}
                     </div>
                     {productSupplyId === 0 ?
-                    <div className="col-lg-6 col-md-6 col-sm-11 ">
+                    <div  className="col-lg-6 col-md-6 col-sm-11 mb-4  ">
+                      <div className ="input-group">
                       <label>فی</label>
+
                       <Field
                         validate={validatNumber}
                         name="productBasePrice"
                         type="text"
-                        className="  form-control opacityForInput  mb-4"
+                        className="  form-control opacityForInput rounded "
                         value={formatter.format(productBasePrice)}
                         onChange={(e: any) => {
                           setProductBasePrice(
@@ -953,20 +962,26 @@ setQuantityConditio(quantity)
                           );
                         }}
                       />
+<div className="input-group-append ">
+                                            <span className="input-group-text"> ریال </span>
+                                              </div>
+                                              </div>
+
                       {errors.productBasePrice && touched.productBasePrice && (
                         <div className="text-danger">
                           {errors.productBasePrice}
                         </div>
                       )}
                     </div>:
-                    <div className="col-lg-6 col-md-6 col-sm-11 ">
+                    <div className="col-lg-6 col-md-6 col-sm-11 mb-4  ">
+                        <div className ="input-group rounded">
                     <label>فی</label>
                     <Field
                       validate={validatNumber}
                       name="productBasePrice"
                       type="text"
                       disabled={true}
-                      className="  form-control opacityForInput  mb-4"
+                      className="  form-control   "
                       value={formatter.format(productBasePrice)}
                       onChange={(e: any) => {
                         setProductBasePrice(
@@ -974,6 +989,11 @@ setQuantityConditio(quantity)
                         );
                       }}
                     />
+                                            <div className="input-group-append ">
+                                            <span className="input-group-text"> ریال </span>
+                                              </div>
+                                              </div>
+
                     {errors.productBasePrice && touched.productBasePrice && (
                       <div className="text-danger">
                         {errors.productBasePrice}
