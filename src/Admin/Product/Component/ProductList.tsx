@@ -393,23 +393,22 @@ const ProductList: React.FC = () => {
     const deletHandler = async () => {
         try {
             const { data, status } = await DeleteProduct(id)
-            if (data.result.success === true) {
+            if (status === 200) {
                 toast.success("کالا با موفقیت حذف شد", {
                     position: "top-right",
                     closeOnClick: true
                 });
                 setIsOpen(false)
-                getProducts()
-            } if (data.result.success === false) {
-
-                toast.error("این کالا به یک یا چند عرضه اختصاص داده شده است", {
-                    position: "top-right",
-                    closeOnClick: true
-                });
-            }
+                getDataBySearch()
+            } 
         } catch (err) {
             console.log(err)
         }
+        setIsOpen(false)
+        getDataBySearch()
+
+
+        
     }
     const navigate = useNavigate()
     const formHandler = () => {
