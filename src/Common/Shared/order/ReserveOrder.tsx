@@ -98,7 +98,7 @@ const ReserveOrder: React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
                     y2="18"></line><line
                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div >  
-                <div className="card-body p-0 t" style={{ height: '25rem', width: '30rem' }}>
+                <div className="card-body p-0 t" style={{ height: '28rem', width: '30rem' ,overflow:'auto'}}>
                     <div className="mb-4 text-left">
 
                         <p>در نظر داشته باشید با تغییر نوع سفارش به رزرو ، مبلغ تمام شده سفارش بر اساس تخصیص به آن سفارش ارزیابی خواهد شد و صدور صورتحساب بر اساس هر تخصیص امکان پذیر می باشد.
