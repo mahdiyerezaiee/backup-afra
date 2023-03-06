@@ -518,19 +518,12 @@ const PaymnetListForInvoice: React.FC<Props> = ({ InvoiceId }) => {
     }
     else {
         return (
-            <div className="rounded">
+            <div className="rounded text-center">
 
-                <div className='row'>
-                    <div className='col-lg-12 col-md-12 col-sm-12 col-xs-12  '>
-                    </div>
-                </div>
+           
 
                 <p>پرداختی جهت نمایش موجود نمیباشد</p>
-                <div className=" statbox widget-content widget-content-area">
-                    <div className="d-flex justify-content-end">
-
-                    </div>
-                </div>
+                
 
             </div >)
     }

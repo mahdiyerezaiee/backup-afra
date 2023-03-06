@@ -848,6 +848,7 @@ console.log(condition);
                               options={prodcutSupplyCombo()}
                               isClearable={true}
                               onChange={(e: any) => {
+                             
                                 setProductSupplyId(e.value);
                                 
                                 disabledBtn(e.value);
