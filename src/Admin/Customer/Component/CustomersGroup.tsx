@@ -373,9 +373,9 @@ export const CustomersGroup:React.FC = () => {
 
                         {userCompanies.length > 1 ?
                             
-                                <form className='form-row textOnInput'>
+                                <form className='col-lg-4 col-md-4  col-sm-12  mb-1  textOnInput form-group'>
 
-                                    <div className="col-lg-4 col-md-6  col-sm-12 m-4  co selectIndex">
+                                    <div className="form-control-sm">
                                         <label> شرکت</label>
                                         <Select
                                             defaultValue={defaultValue}
@@ -442,9 +442,10 @@ export const CustomersGroup:React.FC = () => {
 
                         {userCompanies.length > 1 ?
                             
-                                <form className='form-row textOnInput'>
+                               
+                            <form className='col-lg-4 col-md-4  col-sm-12  mb-1  textOnInput form-group'>
 
-                                    <div className="col-lg-4 col-md-4 col-sm-4 m-4  selectIndex">
+                            <div className="form-control-sm">
                                         <label> شرکت</label>
                                         <Select
                                             defaultValue={defaultValue}

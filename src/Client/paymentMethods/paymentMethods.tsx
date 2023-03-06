@@ -62,7 +62,6 @@ const PaymentMethodComponent: React.FC = () => {
       SetCurrentPay(pays)
     }
 
-    console.log(pays);
 
   }
   useEffect(() => {

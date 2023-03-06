@@ -204,8 +204,7 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
     useEffect(() => {
         getData(selectedFlatRows);
     }, [selectedRowIds])
-    console.log(show);
-    console.log(showAddress);
+  
     return (
         <Fragment>
             <div className="table-responsive table-striped" style={{ overflowX: 'auto' }}>

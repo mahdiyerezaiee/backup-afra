@@ -72,6 +72,8 @@ useEffect(()=>{
                 borderRadius: 2,
                 borderSkipped: false,
                 // stack: 0,
+                barThickness:150,
+
                 type: 'bar'
               },
           {
@@ -87,7 +89,9 @@ useEffect(()=>{
                 shadowOffsetY : 4,
             fill: false,
             // stack: 0,
-            type: 'bar'
+            type: 'bar',
+            barThickness:150
+
           }
           
         ]
