@@ -6,13 +6,13 @@ export const GetSimplifiedReports=()=>{
 
     return http.get(`${configure}/Report/GetSimplifiedReports`);
 }
-export const GetPeriodicSalesReport=(TypeId)=>{
+export const GetPeriodicSalesReport=(TypeId, PriceUnitId)=>{
 
-    return http.get(`${configure}/Report/GetPeriodicSalesReport?ScheduleTypeId=${TypeId}`);
+    return http.get(`${configure}/Report/GetPeriodicSalesReport?ScheduleTypeId=${TypeId}&PriceUnitId=${PriceUnitId}`);
 }
-export const GetShippingsReport=(TypeId , PriceUnitId)=>{
+export const GetShippingsReport=(TypeId )=>{
 
-    return http.get(`${configure}/Report/GetShippingsReport?ScheduleTypeId=${TypeId}?PriceUnitId=${PriceUnitId}`);
+    return http.get(`${configure}/Report/GetShippingsReport?ScheduleTypeId=${TypeId}`);
 }
 export const GetPaymentsReport=(searchParams)=>{
 

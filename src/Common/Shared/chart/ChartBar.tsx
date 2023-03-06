@@ -31,10 +31,10 @@ ChartJS.register(
 interface Props {
     data1: any;
     data2: any;
-
+    Total:any;
     labels: any;
   }
-export function ChartBar({ data1, data2, labels }: Props) {
+export function ChartBar({ data1, data2, labels , Total }: Props) {
    
  const data:any = {
         labels: labels,
@@ -60,7 +60,8 @@ export function ChartBar({ data1, data2, labels }: Props) {
                 'rgb(153, 102, 255)',
                 'rgb(201, 203, 207)'
               ],
-              borderWidth: 1
+              borderWidth: 1,
+              barThickness:60
           }
           
         ]
@@ -128,9 +129,12 @@ export function ChartBar({ data1, data2, labels }: Props) {
       
          
           scales: {
+            
              
                   yAxes: {
-      
+                    callback : function(value:any,index:any,array:any) { return (value <= Total) ? value +"کل خرید" : value},
+                    stacked: true,
+
                   barPercentage: 1.6,
                   grid: {
                       // borderDash: [10, 10],
@@ -140,6 +144,7 @@ export function ChartBar({ data1, data2, labels }: Props) {
                       zeroLineColor: "transparent"
                   },
                   ticks: {
+                    // stepSize: 2000,
                       padding: 4,
                       font: {
                           family: "diroz", // Add your font here to change the font of your x axis
@@ -148,12 +153,19 @@ export function ChartBar({ data1, data2, labels }: Props) {
       
                       major: {
                           enable: true
-                      }
+                      },
+                      beginAtZero: true,
+                      
+                      max: Total
+                     
                   },
-                  
+              
               },
               xAxes: {
-                  barPercentage: 1.6,
+                barThickness: 1,  // number (pixels) or 'flex'
+                maxBarThickness: 1, // number (pixels)
+
+                  barPercentage: 0.6,
                   grid: {
                       borderDash: [10, 10],
                       display: false,
@@ -180,9 +192,9 @@ export function ChartBar({ data1, data2, labels }: Props) {
               
                
                 
-                <div className="" >
+                <div className=""  >
 
-                <Bar options={config} data={data}/>
+                <Bar options={config} data={data} style={{height: "20rem"}}/>
             </div>
             </div>
         </div>
