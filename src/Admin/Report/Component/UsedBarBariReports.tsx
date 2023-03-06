@@ -122,7 +122,8 @@ const UsedBarBariReport: React.FC = () => {
 
     });
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const columns = useMemo(() => [
         { Header: 'کد باربری', accessor: 'companyCode' },

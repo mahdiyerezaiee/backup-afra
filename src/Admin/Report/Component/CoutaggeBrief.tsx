@@ -45,7 +45,7 @@ const handelBack = () => {
                 <>
                   <div className="col-md-3 text-center rounded shadow m-2  ">
                     <h6 className="mt-4 mb-4">{`${item.company.companyName}`}</h6>
-                    <ChartBar Total={100000000} data1={item.supplyAmount.quantity} data2={item.salesAmount.quantity} labels={["مقدار تامین" , "مقدار فروش"]}/>
+                    <ChartBar  data3={null}  data1={item.supplyAmount.quantity} data2={item.salesAmount.quantity} labels={["مقدار تامین" , "مقدار فروش"]}/>
                    
                   </div>
                 </>

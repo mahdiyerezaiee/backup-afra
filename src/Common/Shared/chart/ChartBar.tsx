@@ -31,31 +31,28 @@ ChartJS.register(
 interface Props {
     data1: any;
     data2: any;
-    Total:any;
+
     labels: any;
+    data3:any
   }
-export function ChartBar({ data1, data2, labels , Total }: Props) {
+export function ChartBar({ data1, data2, labels  ,data3
+}: Props) {
    
  const data:any = {
         labels: labels,
         datasets: [
           {
             
-            data: [data1 , data2],
+            data: [data1 , data2 , data3],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
+                
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(201, 203, 207, 0.2)'
               ],
               borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
+                
+              
                 'rgb(54, 162, 235)',
                 'rgb(153, 102, 255)',
                 'rgb(201, 203, 207)'
@@ -132,7 +129,6 @@ export function ChartBar({ data1, data2, labels , Total }: Props) {
             
              
                   yAxes: {
-                    callback : function(value:any,index:any,array:any) { return (value <= Total) ? value +"کل خرید" : value},
                     stacked: true,
 
                   barPercentage: 1.6,
@@ -156,7 +152,6 @@ export function ChartBar({ data1, data2, labels , Total }: Props) {
                       },
                       beginAtZero: true,
                       
-                      max: Total
                      
                   },
               
