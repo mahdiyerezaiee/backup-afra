@@ -9,6 +9,8 @@ import { ChartShippingReport } from '../../Common/Shared/Chart/ChartShippingRepo
 
 const ChartMain: React.FC = () => {
     const [datas, setDatas] = useState(getDataReport().datas ? getDataReport().datas : [])
+    const [PriceUnitId , setPriceUnitId]=useState(4)
+
     const [TypeId, setTypeId] = useState(3)
     let d = new Date();
     d.setTime(d.getTime() + (60 * 1000));
@@ -58,7 +60,7 @@ const animation = {
     useEffect(() => {
         const GetReport = async () => {
             try {
-                const { data, status } = await GetPeriodicSalesReport(TypeId)
+                const { data, status } = await GetPeriodicSalesReport(TypeId , PriceUnitId)
 
                 setDatas(data.result.ordersPerSchedule)
                 dataReport.datas = data.result.ordersPerSchedule
@@ -77,12 +79,12 @@ const animation = {
             GetReport()
             sessionStorage.setItem('dataReport', JSON.stringify(dataReport));
 
-        } else if (TypeId) {
+        } else if (TypeId || PriceUnitId) {
             GetReport()
 
         }
 
-    }, [TypeId])
+    }, [TypeId , PriceUnitId])
 
 
     return (
@@ -94,7 +96,7 @@ const animation = {
             </div>
             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
 
-                <ChartLineValue animation={animation}  TypeId={TypeId}   datas={datas} setTypeId={setTypeId} />
+                <ChartLineValue PriceUnitId={PriceUnitId} setPriceUnitId={setPriceUnitId} animation={animation}  TypeId={TypeId}   datas={datas} setTypeId={setTypeId} />
             </div>
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12  ">
 

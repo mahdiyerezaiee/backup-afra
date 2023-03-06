@@ -419,6 +419,7 @@ setQuantityConditio(quantity)
   setAddCondition(false)
   getProductSupply()
 }
+console.log(condition);
 
   return (
     <div className="user-progress">
@@ -437,7 +438,7 @@ setQuantityConditio(quantity)
         ) : (
           addCondition === true? <ConditionForOrder  getSupply={getProductSupply} setConditionS={backTooTable} id={productSupplyId}  quantity={quantityCondition}/>
           :
-        condition.length === 0 ? ( <div>
+          condition && condition === null ? ( <div>
           <div className='text-center mt-5'>
               <h6>اطلاعاتی جهت نمایش موجود نیست</h6>
               <button

@@ -10,6 +10,7 @@ import InvoicesForReportBrief from "./invoiceForReportBrief";
 import OrderReportBrief from "./OrderReportBrief";
 import OrderWayBillReportBrief from "./orderWayBillReportBrief";
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { ChartBar } from "../../../Common/Shared/Chart/ChartBar";
 const attachmetURL = (window as any).globalThis.stie_att;
 
 const CustomerBrief: React.FC = () => {
@@ -119,49 +120,11 @@ const CustomerBrief: React.FC = () => {
   
                 
 
-                    <div className="col-md-4 ">
+                    <div className="col-md-8 ">
                     <h4>سفارشات</h4>
+                    <ChartBar Total={ordersBrief.totalBought} data1={ ordersBrief.totalPaid} data2={ordersBrief.totalInvoices} labels={["پرداخت شده ها " , "صورت حساب ها"]}/>
 
-                      <span>براساس پرداخت شده ها</span>
-                      <GaugeChart
-                        id="gauge-chart6"
-                        arcWidth={0.3}
-                        style={{fontSize:"14.0497px"}}
-                        cornerRadius={0}
-                         arcPadding={0}
-                         nrOfLevels={1000}
-                         colors={[ "#00ffff","#009fff", "#0020ff" ]}
-                        textColor="#000"
-                        formatTextValue={() =>formatter.format( ordersBrief.totalPaid)}
-                        percent={ordersBrief.totalBought?
-                          ordersBrief.totalPaid / ordersBrief.totalBought:0
-                        }
-                      />
-                      <p> کل خرید : {formatter.format( ordersBrief.totalBought)}</p>
-
-                      <p> پرداخت شده ها : {formatter.format( ordersBrief.totalPaid)}</p>
-                    </div>
-                    <div className="col-md-4 ">
-                    <h4>سفارشات</h4>
-
-                      <span>براساس صورت حساب ها</span>
-                      <GaugeChart
-                        id="gauge-chart6"
-                        arcWidth={0.3}
-                        style={{fontSize:"14.0497px"}}
-                        cornerRadius={0}
-                        arcPadding={0}
-                        nrOfLevels={1000}
-                        colors={[ "#ffbf00","#cf9812a", "#fc6600" ]}
-                        textColor="#000"
-                        formatTextValue={() => formatter.format( ordersBrief.totalInvoices)}
-                        percent={ordersBrief.totalBought ?
-                          ordersBrief.totalInvoices / ordersBrief.totalBought: 0
-                        }
-                      />
-                      <p> کل خرید : {formatter.format( ordersBrief.totalBought)}</p>
-
-                      <p> صورت حساب ها : {formatter.format( ordersBrief.totalInvoices)}</p>
+                     
                     </div></Fragment>
                     <div className="col-md-4 text-center">
                 

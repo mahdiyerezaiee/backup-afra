@@ -30,7 +30,7 @@ ChartJS.register(
 
 
 
-export function ChartLineValue({datas , setTypeId  , TypeId, animation}) {
+export function ChartLineValue({datas , setTypeId  , TypeId, animation , setPriceUnitId , PriceUnitId}) {
 
     if (datas && datas.length > 0){
         
@@ -173,7 +173,14 @@ const options = {
                         <h5 className="">قیمت سفارشات</h5>
                     </div>
                     <div className="d-inline float-left px-2">
-                <span >{"10"  + " "+ ScheduleTypes.filter(i=> i.value === `${TypeId}`).map(i=> i.label)  + " "+  "اخیر"}</span> 
+                    <div className="d-inline float-left px-2">
+                    <span >{"10"  + " "+ ScheduleTypes.filter((i)=> i.value === `${TypeId}`).map((i)=> i.label) + " "+ "اخیر"}
+                 { " " }
+                    در مقیاس   
+                    { " " }
+                    {PriceUnitId === 1 ? "ریال" : PriceUnitId === 2 ? "تومان" : PriceUnitId === 4 ? "  میلیون تومان"    :null}
+                    </span> 
+                    </div>
                 </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <Link className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
@@ -187,14 +194,31 @@ const options = {
                         </svg>
                     </Link>
 
-                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                    <a className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</a>
+                    
+                    
+                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors" style={{width:"20rem"}}>
+                        <div  className='row'>
+                             <div className='col-6 border-right'>
+                                <span>تاریخ</span>
+                                <a className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</a>
                         <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</a>
                         <a className="dropdown-item" onClick={()=> setTypeId(4)}> 10 ساعت اخیر</a>
                         <a className="dropdown-item" onClick={()=> setTypeId(5)}> 10دقیقه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setTypeId(6)}> 10 ثانیه اخیر</a>
-                    </div>
+                            </div>
+                            <div className='col-6'> 
+                            <span>واحد قیمت</span>
+                            <a className="dropdown-item" onClick={()=> setPriceUnitId(1)}>ریال</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(2)}>تومان</a>
+                        <a className="dropdown-item" onClick={()=> setPriceUnitId(4)}> میلیون تومان</a>
+                            </div>
+                            </div>
+                    
+                   
+                    
+                   
+                </div>
                 </div>
                 </div>
                 <div className="btn-group m-2" role="group" aria-label="Basic example">
