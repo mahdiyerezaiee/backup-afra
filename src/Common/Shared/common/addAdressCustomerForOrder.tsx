@@ -179,8 +179,8 @@ const AddAdressCustomerForOrder:React.FC<Props> = ({ closeModal, isOpenAddress, 
                                 <div>
                                     <label className="mr-2"> امکان حمل با تریلی </label>
 
-                                    <Field type="checkbox" defaultChecked={heavyWeightTruck} onChange={(e:any) => {
-                                        SetheavyWeightTruck(e.checked)
+                                    <Field type="checkbox" checked={heavyWeightTruck} onChange={(e:any) => {
+                                        SetheavyWeightTruck(e.target.checked)
 
                                     }}
                                     />
