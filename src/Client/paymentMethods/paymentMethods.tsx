@@ -115,9 +115,9 @@ const PaymentMethodComponent: React.FC = () => {
                         <h6 className="float-left "><b>مجموع اسناد قابل پرداخت:</b> {item.totalValue}</h6>
                         <h6 className="float-right"><b>    نحوه پرداخت: </b> {PaymentStructureEnums.filter((i: any) => i.id === item.paymentMethodId).map((i: any) => i.name)}</h6>
 
-                        <p className="mb-4 d-block clearfixed">
-                          {item.message}
-                        </p>
+                        <div dangerouslySetInnerHTML={{__html:item.message}} className="mb-4 d-block clearfixed">
+                        
+                        </div>
                         <br></br>
                         {currentPay.length > 0 ?
                           <div><table className='table text-center table-striped'>

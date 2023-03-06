@@ -34,8 +34,11 @@ const ClientSideNavbar: React.FC = () => {
     navigate("/admin");
   };
 const ClickHandler =()=>{
-  const row: any = document.getElementsByClassName("col-lg-9")[0];
-  row.scrollIntoView({ behavior: "smooth", block: "center" });
+  if(window.innerWidth < 600){
+    const row: any = document.getElementsByClassName("col-lg-9")[0];
+    row.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  
 
 
 }
@@ -81,7 +84,7 @@ const ClickHandler =()=>{
           <div className="circle pb-3 ">
             <FaUserCircle size="5rem" color="lightgray" />
             <Link to="userProfile">
-              <TiPencil size="1.5rem" color="white" className="edit-svg" />
+              <TiPencil  size="1.5rem" color="white" className="edit-svg" onClick={ClickHandler} />
             </Link>
           </div>
         ) : (
@@ -93,7 +96,7 @@ const ClickHandler =()=>{
               style={{ height: "80px", width: "80px" }}
             />
             <Link to="userProfile">
-              <TiPencil size="1.5rem" color="white" className="edit-svg" />
+              <TiPencil size="1.5rem" color="white" className="edit-svg" onClick={ClickHandler}/>
             </Link>
           </div>
         )}

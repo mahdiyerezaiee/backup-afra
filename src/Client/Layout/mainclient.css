@@ -9454,3 +9454,18 @@ width: 390px;
     color: #777c81;
     font-size: small;
 }
+.pmsdesc b > b{
+    color: #0e0e0f!important;
+    }
+/* .pmsdesc b {
+        color: #0e0e0f;
+        } */
+.pmsdesc b:first-child {
+color: #0036fa;
+}
+ .pmval{
+    color: #0037ff;
+    }
+.pmdesc li::marker{
+    color: #b331ff;
+}

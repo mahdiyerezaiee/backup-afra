@@ -34,13 +34,13 @@ ChartJS.register(
 export function ChartShippingReport() {
     const [datas , setDatas]=useState<any>([])
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)
-    const [PriceUnitId , setPriceUnitId]=useState(4)
+   
 
 useEffect(()=>{
     const GetReport = async () => {
         try {
            
-            const {data , status}= await GetShippingsReport(ScheduleTypeId , PriceUnitId)
+            const {data , status}= await GetShippingsReport(ScheduleTypeId )
 
             setDatas(data.result.shippingsPerSchedule)
 
@@ -50,12 +50,12 @@ useEffect(()=>{
 
     }
     
-     if (ScheduleTypeId || PriceUnitId ){
+     if (ScheduleTypeId  ){
         GetReport()
 
     }
 
-},[ScheduleTypeId , PriceUnitId])
+},[ScheduleTypeId ])
     if (datas && datas.length > 0){
         const labels =datas.map((item:any)=>item.shippingCompanyName)
         let delayed:any;
@@ -63,18 +63,30 @@ useEffect(()=>{
     const data:any = {
         labels: labels,
         datasets: [
+             {
+                label: ' مقدار حمل شده',
+                data: datas.map((i:any)=> i.plannedQuantity),
+                borderColor: 'rgb(70,194,101)',
+                backgroundColor: 'rgb(70,194,101,0.2)',
+                borderWidth: 2,
+                borderRadius: 2,
+                borderSkipped: false,
+                // stack: 0,
+                type: 'bar'
+              },
           {
             label: ' مقدار درخواست شده',
             data: datas.map((i:any)=> i.shippedQuantity),
-            backgroundColor: "MediumVioletRed",
+            borderColor: 'rgb(27, 85, 226)',
+                backgroundColor: "rgb(27, 85, 226 ,0.2)",
+                borderWidth: 2,
+                borderRadius: 2,
+                borderSkipped: false,
+               shadowBlur : 10,
+                shadowOffsetX : 0,
+                shadowOffsetY : 4,
             fill: false,
-            // stack: 'combined',
-            type: 'bar'
-          }, {
-            label: ' مقدار حمل شده',
-            data: datas.map((i:any)=> i.plannedQuantity),
-            backgroundColor: "OliveDrab",
-            // stack: 'combined',
+            // stack: 0,
             type: 'bar'
           }
           
@@ -156,7 +168,6 @@ useEffect(()=>{
              
                   yAxes: {
                     callback : function(value:any,index:any,array:any) { return  formatter.format(value)  },
-
                   barPercentage: 1.6,
                   grid: {
                       // borderDash: [10, 10],
@@ -166,6 +177,7 @@ useEffect(()=>{
                       zeroLineColor: "transparent"
                   },
                   ticks: {
+
                       padding: 4,
                       font: {
                           family: "diroz", // Add your font here to change the font of your x axis
@@ -174,12 +186,14 @@ useEffect(()=>{
       
                       major: {
                           enable: true
-                      }
+                      },
+                      beginAtZero: true,
+                     
                   },
-                  suggestedMin: -10,
-                    suggestedMax: 200
+                
               },
               xAxes: {
+                stacked: true,
                   barPercentage: 1.6,
                   grid: {
                       borderDash: [10, 10],
@@ -210,10 +224,7 @@ useEffect(()=>{
                     </div>
                     <div className="d-inline float-left px-2">
                     <span >{"10"  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
-                 { " " }
-                    در مقیاس   
-                    { " " }
-                    {PriceUnitId === 1 ? "ریال" : PriceUnitId === 2 ? "تومان" : PriceUnitId === 4 ? "  میلیون تومان"    :null}
+                
                     </span> 
                     </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
@@ -229,23 +240,14 @@ useEffect(()=>{
                     </a>
 
                     <div className="dropdown-menu" aria-labelledby="uniqueVisitors" style={{width:"20rem"}}>
-                        <div  className='row'>
-                             <div className='col-6 border-right'>
-                                <span>تاریخ</span>
+                        
                              <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>10 ماه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>10روز اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 10 ساعت اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 10دقیقه اخیر</a>
                         <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 10 ثانیه اخیر</a>
-                            </div>
-                            <div className='col-6'> 
-                            <span>واحد قیمت</span>
-                            <a className="dropdown-item" onClick={()=> setPriceUnitId(1)}>ریال</a>
-                        <a className="dropdown-item" onClick={()=> setPriceUnitId(2)}>تومان</a>
-                        <a className="dropdown-item" onClick={()=> setPriceUnitId(4)}> میلیون تومان</a>
-                            </div>
-                            </div>
+                           
                     
                    
                     
@@ -263,9 +265,55 @@ useEffect(()=>{
         </div>
     )
     }else {
-        return (<div className="text-center dashboard-widget p-3 my-2">
+        return (
+            <div id="chartArea" className="col-xl-12 layout-spacing">
+            <div className="widget widget-chart-three">
+                <div className="widget-heading ">
+                    <div className="d-inline float-left">
+                        <h5 className=""> گزارش باربری</h5>
+                    </div>
+                    <div className="d-inline float-left px-2">
+                    <span >{"10"  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
+                
+                    </span> 
+                    </div>
+                <div className="dropdown  custom-dropdown d-inline float-right ">
+                    <a className="dropdown-toggle" role="button" id="uniqueVisitors" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                             className="feather feather-more-horizontal">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </a>
+
+                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors" style={{width:"20rem"}}>
+                        
+                             <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>10 ماه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>10روز اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 10 ساعت اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 10دقیقه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 10 ثانیه اخیر</a>
+                           
+                    
+                   
+                    
+                    </div>
+                </div>
+                </div>
+                <div className="btn-group m-2" role="group" aria-label="Basic example">
+                </div>
+                
+                <div className="text-center dashboard-widget p-3 my-2">
       
       <div>اطلاعاتی برای نمایش وجود ندارد</div>
-      </div>)
+      </div>
+            </div>
+        </div>
+        
+       )
     }
 }
