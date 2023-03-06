@@ -192,19 +192,32 @@ const OrderList :React.FC= () => {
         SetOpen(false);
     }
     const shippingId = () => {
-        return (ShippingStatusEnums.map(data => ({ label: data.name, value: data.id })))
+        let all =ShippingStatusEnums.map(data => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
+       
     }
     const PaymentStatus = () => {
-        return (PaymentStatusEnums.map(data => ({ label: data.name, value: data.id })))
+        let all =PaymentStatusEnums.map(data => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
+       
+      
     }
     const OrderStatusID = () => {
-        return (OrderStatus.map(data => ({ label: data.name, value: data.id })))
+        let all =OrderStatus.map(data => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
+       
+       
     }
     const paymentMethodIDs = () => {
-        return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
+        let all =PaymentStructureEnums.map(data => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
+       
+       
     }
     const OverDue = () => {
-        return (OverDueEnum.map(data => ({ label: data.name, value: data.value })))
+        let all =OverDueEnum.map(data => ({ label: data.name, value: data.value }))
+        return ([{label :"همه", value : null} , ...all ])
+       
     }
     let arrayOfSelectedData = [];
     const getSelectedData = (data:any) => {
@@ -212,7 +225,8 @@ const OrderList :React.FC= () => {
         return (arrayOfSelectedData)
     }
     const CompaniesIDs = () => {
-        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
+        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const getBulkJob = (selected:any) => {
         if (selected === 2) {

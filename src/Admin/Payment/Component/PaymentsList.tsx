@@ -521,29 +521,38 @@ const PaymentsList: React.FC = () => {
 
     });
     const CompaniesIDs = () => {
-        return (companies.map(data => ({ label: data.name, value: data.id })))
+        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const EntityTypesIDs = () => {
+        let all =EntityTypes.filter((item: any) => item.id === 10 || item.id === 11).map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
 
-        return (EntityTypes.filter((item: any) => item.id === 10 || item.id === 11).map((data: any) => ({ label: data.name, value: data.id })))
     }
     const PriceUnitIDS = () => {
-        return (PriceUnitEnums.map((data: any) => ({ label: data.name, value: data.id })))
+        let all =PriceUnitEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const PaymentStatusIds = () => {
-        return (PaymentStatusEnums.map((data: any) => ({ label: data.name, value: data.id })))
+        let all =PaymentStatusEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const PaumentMrthodIds = () => {
-        return (PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id })))
+        let all =PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const Paids = () => {
-        return (PaidEnum.map((data: any) => ({ label: data.name, value: data.value })))
+        let all =PaidEnum.map((data: any) => ({ label: data.name, value: data.value }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const Confirms = () => {
-        return (ConfirmedEnum.map((data: any) => ({ label: data.name, value: data.value })))
+        let all =ConfirmedEnum.map((data: any) => ({ label: data.name, value: data.value }))
+        return ([{label :"همه", value : null} , ...all ])
+     
     }
     const HasAttach = () => {
-        return (HasAttchmentEnum.map((data: any) => ({ label: data.name, value: data.value })))
+        let all =HasAttchmentEnum.map((data: any) => ({ label: data.name, value: data.value }))
+        return ([{label :"همه", value : null} , ...all ])
 
     }
     const columns = useMemo(() => [
@@ -822,7 +831,7 @@ const PaymentsList: React.FC = () => {
                     contentLabel="Selected Option"
                     ariaHideApp={false}>
                 </Modal>
-                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  ">
                     <AdvancedSearch>
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">
@@ -1191,7 +1200,7 @@ const PaymentsList: React.FC = () => {
                     contentLabel="Selected Option"
                     ariaHideApp={false}>
                 </Modal>
-                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  rounded">
+                <div className=" statbox widget-content widget-content-area mb-1 mt-1 p-2  ">
                     <AdvancedSearch>
                         <form className='form-row textOnInput'>
                             <div className="col-lg-2 col-md-4  col-sm-12  mb-1">

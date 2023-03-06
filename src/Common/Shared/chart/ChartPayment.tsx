@@ -29,16 +29,12 @@ ChartJS.register(
 
 
     
-    
-
-
-
 export function ChartPayment() {
     const [datas , setDatas]=useState<any>([])
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)   
      const [PriceUnitId , setPriceUnitId]=useState(4)
 
-    const [PaymentMethodId , setPaymentMethodId]=useState<any>(null)
+    const [PaymentMethodId , setPaymentMethodId]=useState<any>(0)
     
     const totalDuration = 2000;
     const delayBetweenPoints = totalDuration / datas.length;

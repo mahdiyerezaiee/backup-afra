@@ -256,21 +256,26 @@ const SupplyList:React.FC = () => {
 
     }
     const shippingId = () => {
-        return (ShippingStatusEnums.map((data:any) => ({ label: data.name, value: data.id })))
+        let Shipping =ShippingStatusEnums.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...Shipping ])
     }
     const SupplyTypes = () => {
-        return (SupplyTypesEnums.map((data:any) => ({ label: data.name, value: data.id })));
+        let Shipping =SupplyTypesEnums.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...Shipping ])
     }
     const inputProductG:any = () => {
         if (products) {
-            return (products.map((data:any) => ({ label: data.name, value: data.id })))
+            let allProduct =products.map((data:any) => ({ label: data.name, value: data.id }))
+            return ([{label :"همه", value : null} , ...allProduct ])
         }
         else {
             return null
         }
     }
     const WareHouseG = () => {
-        return (wareHouses.map((data:any) => ({ label: data.name, value: data.id })))
+        let allWareHouse =wareHouses.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...allWareHouse ])
+       
     }
 
     const deletHandler = async () => {
@@ -440,6 +445,7 @@ const SupplyList:React.FC = () => {
     }
     const getSupplier = async () => {
         try {
+            
             const { data, status } = await GetAllSuppliers();
             if (status === 200) {
                 setSuppliers(data.result.suppliers.values)
@@ -471,7 +477,8 @@ const SupplyList:React.FC = () => {
     }, [getData])
     const SupplierG:any = () => {
         if (suppliers) {
-            return (suppliers.map((data:any) => ({ label: data.name, value: data.id })))
+            let all =suppliers.map((data:any) => ({ label: data.name, value: data.id }))
+            return ([{label :"همه", value : null} , ...all ])
         }
         else {
             return null
@@ -597,7 +604,8 @@ const SupplyList:React.FC = () => {
         }
     ],[wareHouses])
     const CompaniesIDs = () => {
-        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
+        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
 
     const data = useMemo(() => supplies,[supplies])
@@ -605,14 +613,14 @@ const SupplyList:React.FC = () => {
         setGeData(true)
         getSupplies()
         SetContractNumber('')
-        SetProductId('')
-        SetSupplierId('')
+        SetProductId(0)
+        SetSupplierId(null)
         SetSupplyTypeIds([])
         SetShippingStatusIds([])
-        SetWareHouseId('')
+        SetWareHouseId(0)
         setPageNumber(0)
         setPageSize(10)
-        setCompanyId(null)
+        setCompanyId(0)
 
         getSupplies()
         sessionStorage.clear()

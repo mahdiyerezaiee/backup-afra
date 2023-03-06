@@ -416,13 +416,7 @@ const ProductList: React.FC = () => {
         navigate("/admin/newproduct")
     }
 
-    var formatter = new Intl.NumberFormat('fa-IR', {
-        style: 'currency',
-        currency: 'IRR', maximumFractionDigits: 0,
-        minimumFractionDigits: 0,
-
-
-    });
+   
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
         { Header: 'نام', accessor: 'name' }
@@ -540,7 +534,8 @@ const ProductList: React.FC = () => {
             }
         }], [productG])
     const CompaniesIDs = () => {
-        return (companies.map((data: any) => ({ label: data.name, value: data.id })))
+        let company =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...company ])
     }
     const data = useMemo(() => product, [product]);
     const handelSearchFieldClear = () => {

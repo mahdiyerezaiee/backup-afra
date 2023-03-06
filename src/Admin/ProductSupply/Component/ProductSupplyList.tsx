@@ -147,14 +147,17 @@ const ProductSupply:React.FC = () => {
     }
     const productForSelect:any = () => {
         if (products) {
-            return (products.map((data:any) => ({ label: data.name, value: data.id })))
+            let all =products.map((data:any) => ({ label: data.name, value: data.id }))
+            return ([{label :"همه", value : null} , ...all ])
+          
         }
         else {
             return null
         }
     }
     const paymentMethod = () => {
-        return (PaymentStructureEnums.map((data:any) => ({ label: data.name, value: data.id })))
+        let all =PaymentStructureEnums.map((data:any) => ({ label: data.name, value: data.id }))
+            return ([{label :"همه", value : null} , ...all ])
     }
 
     const close = () => {
@@ -553,7 +556,9 @@ const ProductSupply:React.FC = () => {
             )
         }],[productSupply])
     const CompaniesIDs = () => {
-        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
+        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
+ 
     }
 
     const data = useMemo(() => productSupply,[productSupply]);

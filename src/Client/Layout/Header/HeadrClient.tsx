@@ -78,7 +78,8 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
         const checkIfClickedOutside = (e:any) => {
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
-            if (show && ref.current && !ref.current.contains(e.target)) {
+            
+            if (show && ref.current && !ref.current.contains(e.target) ) {
                 setShow(false)
             }
             if (showNews && refNews.current && !refNews.current.contains(e.target)) {
@@ -95,32 +96,15 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
             document.removeEventListener("click", checkIfClickedOutside)
         }
     }, [show])
-    useEffect(() => {
-
-        const checkIfClickedOutside =(e:any)=> {
-            // If the menu is open and the clicked target is not within the menu,
-            // then close the menu
-            if (show && ref.current && !ref.current.contains(e.target)) {
-                setShow(false)
-            }
-            if (showNews && refNews.current && !refNews.current.contains(e.target)) {
-                setShowNews(false)
-            }
-        }
-
-        document.addEventListener("click", checkIfClickedOutside)
-
-
-        return () => {
-            // Cleanup the event listener
-            document.removeEventListener("click", checkIfClickedOutside)
-        }
-    }, [showNews])
+ 
     const getCartShopping = async () => {
         const { data, status } = await GetShoppingCart(Number(localStorage.getItem('connect')))
 
         setCartShopping(data.result.shoppingCartItems)
+        if(data.result.shoppingCartItems.length > 0){
+            setShow(true)
 
+        }
     }
 
     const deleteItemHandler = async (id:number) => {

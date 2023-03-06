@@ -124,24 +124,7 @@ const InvoiceList: React.FC = () => {
         let errorCount = 0;
         for (let i = 0; i < arrayOfData.length; i++) {
 
-            // try {
-            //     const { data, status } = await DeleteSupply(arrayOfData[i].id)
-            //     if (data.result.success === true) {
-            //         SetOpen(true)
-            //         SetStateSuccess(successCount += 1)
-            //     }
-            //     if (data.result.success === false) {
-            //         SetOpen(true)
-
-            //         SetStateError(errorCount += 1)
-            //     }
-
-
-            // } catch (error) {
-            //     SetOpen(true)
-
-            //     SetStateError(errorCount += 1)
-            // }
+           
 
 
         }
@@ -157,23 +140,6 @@ const InvoiceList: React.FC = () => {
         let errorCount = 0;
         for (let i = 0; i < copyData.length; i++) {
 
-
-            // try {
-            //     let payload = {
-            //         'supply': copyData[i]
-            //     }
-            //     const { data, status } = await SetSupply(payload)
-            //     if (status === 200) {
-            //         SetOpen(true)
-            //         SetStateSuccess(successCount += 1)
-            //     }
-
-
-            // } catch (error) {
-            //     SetOpen(true)
-
-            //     SetStateError(errorCount += 1)
-            // }
 
 
         }
@@ -191,24 +157,7 @@ const InvoiceList: React.FC = () => {
         for (let i = 0; i < copyData.length; i++) {
 
 
-            // try {
-            //     let payload = {
-            //         'supply': copyData[i]
-            //     }
-
-            //     const { data, status } = await SetSupply(payload)
-            //     if (status === 200) {
-            //         SetOpen(true)
-            //         SetStateSuccess(successCount += 1)
-            //     }
-
-
-            // } catch (error) {
-            //     SetOpen(true)
-
-            //     SetStateError(errorCount += 1)
-            // }
-
+          
 
         }
 
@@ -225,24 +174,6 @@ const InvoiceList: React.FC = () => {
         for (let i = 0; i < copyData.length; i++) {
 
 
-            // try {
-
-            //     let payload = {
-            //         'supply': copyData[i]
-            //     }
-
-            //     const { data, status } = await SetSupply(payload)
-            //     if (status === 200) {
-            //         SetOpen(true)
-            //         SetStateSuccess(successCount += 1)
-            //     }
-
-
-            // } catch (error) {
-            //     SetOpen(true)
-
-            //     SetStateError(errorCount += 1)
-            // }
 
 
         }
@@ -436,17 +367,20 @@ SetModalOpenPayment(false)
 
     });
     const CompaniesIDs = () => {
-        return (companies.map((data:any) => ({ label: data.name, value: data.id })))
+        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const EntityTypesIDs = () => {
-
-        return (EntityTypes.filter((item: any) => item.id === 10 || item.id === 11).map((data: any) => ({ label: data.name, value: data.id })))
+        let all =EntityTypes.filter((item: any) => item.id === 10 || item.id === 11).map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const PriceUnitIDS = () => {
-        return (PriceUnitEnums.map((data: any) => ({ label: data.name, value: data.id })))
+        let all =PriceUnitEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const PaymentStatusIds = () => {
-        return (PaymentStatusEnums.map((data: any) => ({ label: data.name, value: data.id })))
+        let all =PaymentStatusEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{label :"همه", value : null} , ...all ])
     }
     const columns = useMemo(() => [
         { Header: '#', accessor: 'id' },
