@@ -24,7 +24,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     const [valid, setValid] = useState(true)
     const [SHOW, setShow] = useState(false)
     const [, forceUpdate] = useState();
-    const [captcha, setCaptcha] = useState<any>("");
+    const [captcha, setCaptcha] = useState<any>(null);
 
     const [loading, setLoading] = useState(false);
 
@@ -35,7 +35,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     const [password, setPassword] = useState('');
     const captchaRef: any = useRef()
     const handelCaptchaChange = useCallback((code: any) => {
-        setCaptcha(code)
+       captchaRef.current= code
     }, [])
 
     const captchaChek = () => {
@@ -51,6 +51,8 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
 
     }
 
+    console.log(captchaRef,captcha);
+    
 
     const handelBack = (e: any) => {
         e.preventDefault()
@@ -62,6 +64,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     }
     const handleSubmit = async () => {
         setLoading(true)
+      
 
         const user = {
 
@@ -69,7 +72,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
             password
         }
 
-        // submitCaptcha()
+
 
         try {
 

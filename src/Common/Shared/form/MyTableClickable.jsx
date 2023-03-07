@@ -1,14 +1,14 @@
 import React, { Fragment, useEffect, useState, Suspense } from 'react'
 import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect, useExpanded } from 'react-table';
 import { GetAllProductSupply } from "../../../services/productSupplyService";
-import { GetShoppings } from "../../../services/ShippingService";
+import { GetShoppingsAdmin } from "../../../services/ShippingService";
 import ShippingSelected from "../Common/shippingSelected";
 import PageSizeTable from "../../../Utils/PageSize";
 import Pagination from "../../../Utils/pagination";
 import { formatter } from '../../../Utils/Formatter';
 import { MdFormatListNumberedRtl } from 'react-icons/md';
+import { getExtraData } from './../../../services/extraService';
 
-const LazyShippingCom = React.lazy(() => import("../Common/ShippingsOrder"))
 
 
 
@@ -32,6 +32,7 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
     const [cottageCode, setcottageCode] = useState('');
     const [Shippings, SetShippings] = useState([])
     const [Shippingcheck, SetShippingCheck] = useState([])
+    const [extData,setexdData]=useState([])
     const [orderId, setOrderId] = useState(0)
     let FilnalArr = [];
     const getSupplyCode = async () => {
@@ -50,32 +51,28 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
     }, [Detail])
 
 
+  
 
-    const GetShippings = async () => {
+    const GetExternalData = async () => {
 
-        try {
-            const { data, status } = await GetShoppings(orderId)
-            SetShippingCheck(data.result.shippings.values)
-            let detail = Detail.filter(item => item.orderId === orderId)[0]
+        setexdData([])
+        if(show.original.extId && show.isExpanded){
+        const {data,status}=await getExtraData(show.original.extId,1)
+        
+        setexdData(JSON.parse(data.result.extraData.data))
+        }
+        else{
+            setexdData(data.result.extraData)
 
-            const finallAddres = Shippingcheck.map(item =>
-            ({
-                deliveryMethodId: item.deliveryMethodId,
-            }))[0]
-
-            let obj = { ...detail, ...finallAddres }
-            FilnalArr.push(obj)
-
-            SetShippings(obj)
-        } catch (e) {
-            console.log(e)
         }
     }
-    // useEffect(()=>{
-    //     if(orderId>0){
-    //     GetShippings()}
-    // },[orderId])
 
+    useEffect(()=>{
+        
+            GetExternalData()
+    },[orderId])
+
+   
     const [selectFunc, setSelectFunc] = useState(0);
     const [Func, SetFunc] = useState([]);
     const formattedvalues = [];
@@ -342,7 +339,7 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
                                                                     </table>
                                                                 </div> : null}
                                                             {/* {row.original.shippingStatusId===2?null:<Suspense><LazyShippingCom  id={row.original.id}/></Suspense>} */}
-                                                            {row.original.extId > 0 ?
+                                                            {row.original.extId > 0 && extData.length>0 ?
                                                                 <div className=" w-85  table  ">
 
                                                                     <table className={row.original.extId > 0 ? "  table m-1   fixed_header header-green " : "table m-1   fixed_header  header-blue"} >
@@ -364,7 +361,7 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            {address.length === 0 ? null : address.map((address, index) =>
+                                                                            {extData.length === 0 ? null : extData.map((address, index) =>
 
                                                                                 <tr key={index + 2000}>
                                                                                     <td data-th="کد تخصیص"  >

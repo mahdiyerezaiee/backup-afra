@@ -72,7 +72,7 @@ const OrderList: React.FC = () => {
 
     let Detail: any = [];
     const [totalCount, setTotalCount] = useState(0);
-    const [ShippingInformation, SetShippingInformation] = useState([]);
+    const [extDataIds, SetExtDataIds] = useState<any>([]);
     const [organizations, SetOrganisations] = useState([]);
     const [ShoppingCartInformation, SetShoppingCartInformation] = useState([]);
     const [userName, setUserName] = useState(getDefault().userName)
@@ -406,6 +406,7 @@ const OrderList: React.FC = () => {
                 SetAddress({ id: 0 })
                 setOrder(data.result.orderList.values);
                 setTotalCount(data.result.orderList.totalCount)
+                SetExtDataIds(data.result.orderList.values.map((item:any)=>item.extId))
                 setPageNumber(0)
                 sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
@@ -453,6 +454,9 @@ const OrderList: React.FC = () => {
                 SetAddress({ id: 0 })
                 setOrder(data.result.orderList.values);
                 setTotalCount(data.result.orderList.totalCount)
+                SetExtDataIds(data.result.orderList.values.map((item:any)=>item.extId))
+
+                sessionStorage.setItem(`params${window.location.pathname}`, JSON.stringify(params));
 
                 sessionStorage.setItem(`param${window.location.pathname}`, JSON.stringify(param));
 
@@ -1164,7 +1168,7 @@ const OrderList: React.FC = () => {
                     <MyTableClick columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)}
                         bulkJob={getBulkJob} formatRowProps={(state: any) => formatTrProps(state)}
                         show={address}
-                        address={ShippingInformation}
+                        address={extDataIds}
                         setPageSize={setPageSize}
                         PageSize={PageSize}
                         total={totalCount}
