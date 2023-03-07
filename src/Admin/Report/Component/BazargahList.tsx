@@ -182,6 +182,9 @@ const BazargahList: React.FC = () => {
                 return (`${condition}`)
 
             }, Cell: (row: any) => ((row.row.original.lockedData) ? 'قفل شده' : 'قفل نشده')
+        },
+        {
+            Header: 'نام شرکت', accessor:'companyName'
         }
 
 

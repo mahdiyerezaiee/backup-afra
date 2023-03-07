@@ -420,19 +420,19 @@ const handelNavigateWithDetails=async(id:number)=>{
 
             }
         },
-        { Header: 'شناسه ', accessor: 'entityId',Cell:(row:any)=>{
+        { Header: 'سفارش ', accessor: 'entityId',Cell:(row:any)=>{
 
             if(row.row.original.entityTypeId===10){
 
                 return(
-                    <button className='border-0 bg-transparent text-primary' onClick={()=>handelNavigateWithId(row.row.original.entityId)}>{`#${row.row.original.entityId} سفارش`} </button>
+                    <button className='border-0 bg-transparent text-primary' onClick={()=>handelNavigateWithId(row.row.original.entityId)}>{row.row.original.entityId} </button>
                 )
 
             }
             else{
                 
                 return(
-                    <button className='border-0 bg-transparent text-primary '  onClick={()=>handelNavigateWithDetails(row.row.original.entityId)}>{`#${row.row.original.entityId} جزییات سفارش`} </button>
+                    <button className='border-0 bg-transparent text-primary '  onClick={()=>handelNavigateWithDetails(row.row.original.entityId)}>{row.row.original.entityId} </button>
                 )
             }
 

@@ -24,7 +24,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     const [valid, setValid] = useState(true)
     const [SHOW, setShow] = useState(false)
     const [, forceUpdate] = useState();
-    const [captcha, setCaptcha] = useState<any>("");
+    const [captcha, setCaptcha] = useState<any>('');
 
     const [loading, setLoading] = useState(false);
 
@@ -35,7 +35,9 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     const [password, setPassword] = useState('');
     const captchaRef: any = useRef()
     const handelCaptchaChange = useCallback((code: any) => {
+
         setCaptcha(code)
+
     }, [])
 
     const captchaChek = () => {
@@ -52,6 +54,9 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     }
 
 
+
+
+
     const handelBack = (e: any) => {
         e.preventDefault()
         navigate('sysplus')
@@ -63,31 +68,89 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     const handleSubmit = async () => {
         setLoading(true)
 
+
+
         const user = {
 
             phoneNumber: value,
             password
         }
 
-        // submitCaptcha()
-
-        try {
-
-
-
-            const { status, data } = await loginUser(user);
-            if (status === 200) {
+        if (SHOW) {
+            if (captcha === input) {
+                try {
 
 
-                setValid(true)
-                localStorage.setItem('mobile', user.phoneNumber)
-                localStorage.setItem('token', data.result.token);
-                localStorage.setItem('refresh', data.result.refresh);
 
-                axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
-                const response = await GetUsersRoles()
+                    const { status, data } = await loginUser(user);
+                    if (status === 200) {
 
-                toast.success("ورود موفقیت آمیز بود", {
+
+                        setValid(true)
+                        localStorage.setItem('mobile', user.phoneNumber)
+                        localStorage.setItem('token', data.result.token);
+                        localStorage.setItem('refresh', data.result.refresh);
+
+                        axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
+                        const response = await GetUsersRoles()
+
+                        toast.success("ورود موفقیت آمیز بود", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined
+                        });
+
+                        dispatch(userRoles(response.data.result.userRoleIds))
+
+                        navigate('/client')
+
+                    }
+
+
+
+                    else {
+                        setShow(true)
+                        captchaRef.current.refresh()
+                        toast.error(`${data.error.message}`, {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined
+                        });
+
+                    }
+
+                    setLoading(false)
+
+
+
+
+                }
+
+
+
+                catch (error) {
+                    setShow(true)
+
+                    console.log(error);
+                    setLoading(false)
+
+
+                }
+
+            }
+            else{
+
+                captchaRef.current.refresh()
+                setLoading(false)
+                toast.warning('کد امنیتی را اشتباه است', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -96,50 +159,77 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                     draggable: true,
                     progress: undefined
                 });
+            }
 
-                dispatch(userRoles(response.data.result.userRoleIds))
+        }
+        else{
+            try {
+
+
+
+                const { status, data } = await loginUser(user);
+                if (status === 200) {
+
+
+                    setValid(true)
+                    localStorage.setItem('mobile', user.phoneNumber)
+                    localStorage.setItem('token', data.result.token);
+                    localStorage.setItem('refresh', data.result.refresh);
+
+                    axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
+                    const response = await GetUsersRoles()
+
+                    toast.success("ورود موفقیت آمیز بود", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    });
+
+                    dispatch(userRoles(response.data.result.userRoleIds))
 
                     navigate('/client')
-                  
+
+                }
+
+
+
+                else {
+                    setShow(true)
+                    captchaRef.current.refresh()
+                    toast.error(`${data.error.message}`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+                    });
+
+                }
+
+                setLoading(false)
+
+
+
+
             }
 
-            
 
-            else {
+
+            catch (error) {
                 setShow(true)
-                toast.error(`${data.error.message}`, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined
-                });
+
+                console.log(error);
+                setLoading(false)
+
 
             }
-
-            setLoading(false)
-
-
-
-
         }
-
-
-
-        catch (error) {
-            setShow(true)
-
-            console.log(error);
-            setLoading(false)
-
-
-        }
-
-
-
-
 
     }
 
