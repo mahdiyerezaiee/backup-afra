@@ -250,7 +250,7 @@ const UserList:React.FC = () => {
         try {
             const{data,status}=await FintotechCheck(body)
             if (status === 200) {
-                toast.success(' استعلام شماره تلفن و نام کاربری مورد تایید است', {
+                toast.success(' استعلام شماره تلفن همراه و کد ملی مورد تایید است', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
