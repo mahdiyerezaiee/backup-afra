@@ -87,10 +87,10 @@ const CodeForMobile: React.FC = () => {
                 const response = await GetUsersRoles()
 
 
-                
 
-                    history('/client')
-                  
+
+                history('/client')
+
             }
 
 
@@ -147,7 +147,7 @@ const CodeForMobile: React.FC = () => {
                                     separator={<span> </span>}
                                     onChange={handleChang}
                                     className="otpInput"
-
+                                    isInputNum={true}
                                 />
                                 <hr />
 
