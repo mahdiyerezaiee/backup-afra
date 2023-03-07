@@ -17,8 +17,8 @@ const BlockReport:React.FC <Props>= ({setLoading}) => {
     const [order, setOrder] = useState([])
     const [ticket , setTicket]=useState([])
     const [productSupply, setProductSupply] = useState([])
+    const userId=localStorage.getItem('connect')
 
-    const user=useSelector((state:RootState)=>state.user);
     const getProductSupply = async () => {
         try {
             const { data, status } = await GetAllProductSupplyBord();
@@ -50,7 +50,7 @@ const BlockReport:React.FC <Props>= ({setLoading}) => {
     
         try {
           
-            const {data , status}= await GetSupportRequesstsUser(user.id , config)
+            const {data , status}= await GetSupportRequesstsUser(userId , config)
             setTicket(data.result.supportRequests.values)
     
           
