@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { GetUsersRoles, loginUser } from "../../../services/userService";
 import { toast } from "react-toastify";
 import { decodeToken } from '../../../Utils/decodeToken';
-import { AiOutlineReload } from "react-icons/ai"
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineReload } from "react-icons/ai"
 import Captcha from "react-captcha-code";
 import FadeLoader from "react-spinners/FadeLoader";
 import { ClipLoader } from "react-spinners";
@@ -34,6 +34,15 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
     const captchaRef: any = useRef()
+    const [passwordType, setPasswordType] = useState("password");
+    const togglePassword = (e: any) => {
+        e.preventDefault()
+        if (passwordType === "password") {
+            setPasswordType("text")
+            return;
+        }
+        setPasswordType("password")
+    }
     const handelCaptchaChange = useCallback((code: any) => {
 
         setCaptcha(code)
@@ -279,10 +288,12 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                         </div>
                         <div className=' textOnInput' style={{ direction: 'ltr' }}>
                             <label>رمز عبور</label>
-                            <Field type='password' name='password' className='form-control opacityForInput' placeholder='******** '
+                            <Field type={passwordType} name='password' className='form-control opacityForInput float-left' placeholder='******** '
                                 value={password} onChange={(e: any) => {
                                     setPassword(e.target.value)
                                 }} validate={validateRequired} />
+                                {passwordType==='password'?<AiOutlineEye onClick={togglePassword} size={'1.2rem'}   id="togglePassword" style={{marginRight: '-94%', cursor: 'pointer',color:'gray',marginTop:'5%'}}/>:<AiOutlineEyeInvisible onClick={togglePassword} size={'1.2rem'}   id="togglePassword" style={{marginRight: '-94%', cursor: 'pointer',color:'gray',marginTop:'5%'}}/>}
+
 
 
 
