@@ -174,7 +174,7 @@ const options = {
                     </div>
                     <div className="d-inline float-left px-2">
                     <div className="d-inline float-left px-2">
-                    <span >{"10"  + " "+ ScheduleTypes.filter((i)=> i.value === `${TypeId}`).map((i)=> i.label) + " "+ "اخیر"}
+                    <span >{"7"  + " "+ ScheduleTypes.filter((i)=> i.value === `${TypeId}`).map((i)=> i.label) + " "+ "اخیر"}
                  { " " }
                     در مقیاس   
                     { " " }
@@ -200,12 +200,12 @@ const options = {
                         <div  className='row'>
                              <div className='col-6 border-right'>
                                 <span>تاریخ</span>
-                                <a className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(4)}> 10 ساعت اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(5)}> 10دقیقه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(6)}> 10 ثانیه اخیر</a>
+                                <a className="dropdown-item" onClick={()=> setTypeId(1)}>7 سال اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>7 ماه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>7 روز اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(4)}> 7 ساعت اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(5)}> 7 دقیقه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(6)}> 7 ثانیه اخیر</a>
                             </div>
                             <div className='col-6'> 
                             <span>واحد قیمت</span>
