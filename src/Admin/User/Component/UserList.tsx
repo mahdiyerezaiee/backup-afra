@@ -588,7 +588,7 @@ const UserList:React.FC = () => {
                         </svg>
                     </button>
 
-                    <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="استعلام کد ملی" onClick={()=>handelFinotechCheck(row.row.original.id)}>
+                    <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="استعلام کد ملی و شماره موبایل" onClick={()=>handelFinotechCheck(row.row.original.id)}>
 
                     <GrValidate size={'1rem'}/>
                     </button>
