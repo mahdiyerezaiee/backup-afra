@@ -176,7 +176,7 @@ if (datas && datas.length >0){
                     <h5 className=""> تعداد سفارشات</h5>
                 </div>
                 <div className="d-inline float-left px-2">
-                <span >{"10"  + " "+ ScheduleTypes.filter(i=> i.value === `${TypeId}`).map(i=> i.label) + " "+ "اخیر"}</span> 
+                <span >{"7"  + " "+ ScheduleTypes.filter(i=> i.value === `${TypeId}`).map(i=> i.label) + " "+ "اخیر"}</span> 
                 </div>
                 <div className="dropdown  custom-dropdown d-inline float-right ">
                     <Link className="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown"
@@ -191,12 +191,12 @@ if (datas && datas.length >0){
                     </Link>
 
                     <div className="dropdown-menu" aria-labelledby="uniqueVisitors">
-                    <a className="dropdown-item" onClick={()=> setTypeId(1)}>10 سال اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>10 ماه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>10روز اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(4)}> 10 ساعت اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(5)}> 10دقیقه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setTypeId(6)}> 10 ثانیه اخیر</a>
+                    <a className="dropdown-item" onClick={()=> setTypeId(1)}>7 سال اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(2)}>7 ماه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(3)}>7 روز اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(4)}> 7 ساعت اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(5)}> 7 دقیقه اخیر</a>
+                        <a className="dropdown-item" onClick={()=> setTypeId(6)}> 7 ثانیه اخیر</a>
                     </div>
                 </div>
             </div>
