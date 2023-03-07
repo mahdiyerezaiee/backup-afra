@@ -26,6 +26,9 @@ import { GetUsersRolesById } from '../../../services/userService';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { FiFileText } from 'react-icons/fi';
+import { GrValidate } from 'react-icons/gr';
+import { FintotechCheck } from './../../../services/outScopeService';
+import { toast } from 'react-toastify';
 
 const UserList:React.FC = () => {
 
@@ -235,6 +238,35 @@ const UserList:React.FC = () => {
         }
     }
 
+    const handelFinotechCheck=async(userId:any)=>{
+
+
+     
+        const body={
+            
+            "customerId":Number(userId)
+        }
+        
+        try {
+            const{data,status}=await FintotechCheck(body)
+            if (status === 200) {
+                toast.success(' استعلام شماره تلفن و نام کاربری مورد تایید است', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+                });}
+
+        } catch (error) {
+            console.log(error);
+            
+        }
+
+
+    }
     // const getCustomerGroups = async () => {
     //     const response = await GetCompanyChild();
     //     let companies = response.data.result.companies
@@ -556,6 +588,10 @@ const UserList:React.FC = () => {
                         </svg>
                     </button>
 
+                    <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="استعلام کد ملی" onClick={()=>handelFinotechCheck(row.row.original.id)}>
+
+                    <GrValidate size={'1rem'}/>
+                    </button>
 
                 </ul>
             )
