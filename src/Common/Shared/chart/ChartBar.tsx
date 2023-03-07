@@ -58,7 +58,7 @@ export function ChartBar({ data1, data2, labels  ,data3
                 'rgb(201, 203, 207)'
               ],
               borderWidth: 1,
-              barThickness:60
+              // barThickness:20
           }
           
         ]
