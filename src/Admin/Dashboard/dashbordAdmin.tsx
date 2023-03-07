@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect , Suspense , lazy} from 'react';
 import ChartMain from "./chartMain";
 import News from '../../Common/Shared/News/news';
 import SalesBoardForAdmin from '../../Common/Shared/Common/salesBoardForAdmin';
@@ -7,6 +7,7 @@ import OverDuePaymentsByAttachments from "../../Common/Shared/Common/OverDuePaym
 import ScheduleJob from "../Report/Component/ScheduleJob";
 import { useState } from 'react';
 import GetUndesidedPayments from './../Payment/Component/GetUndesidedPayments';
+import LazyLoad from 'react-lazy-load';
 
 const DashbordAdmin:React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -40,19 +41,34 @@ const DashbordAdmin:React.FC = () => {
               <ReportBlock/>
           </div>
           <div className="active fade-right">
+              <LazyLoad threshold={1}  offset={1000}>
               <ChartMain />
+              </LazyLoad>
           </div>
           <div className="reveal fade-bottom">
               {/* <SalesBoardForAdmin/> */}
           </div>
 
-
+          <LazyLoad  threshold={1} offset={1200}>
 <div className="row mt-3 reveal fade-left">
-    <div className="col-lg-6 col-sm-12">       <News setloading={setLoading} />
+    <div className="col-lg-6 col-sm-12">
+
+
+
+        <News setloading={setLoading} />
+
+
+    </div>
+    <div className="col-lg-6 col-sm-12">
+
+
+   <ScheduleJob/>
+
+
 </div>
-    <div className="col-lg-6 col-sm-12"><ScheduleJob/></div>
 </div>
 
+          </LazyLoad>
 
 
 
