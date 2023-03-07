@@ -72,7 +72,7 @@ useEffect(()=>{
                 borderRadius: 2,
                 borderSkipped: false,
                 // stack: 0,
-                barThickness:100,
+                // barThickness:100,
 
                 type: 'bar'
               },
@@ -90,7 +90,7 @@ useEffect(()=>{
             fill: false,
             // stack: 0,
             type: 'bar',
-            barThickness:100
+            // barThickness:100
 
           }
           

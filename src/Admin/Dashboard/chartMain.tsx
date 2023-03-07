@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { GetPeriodicSalesReport } from "../../services/reportService";
 import { ChartPayment } from '../../Common/Shared/Chart/ChartPayment';
 import { ChartShippingReport } from '../../Common/Shared/Chart/ChartShippingReport';
+import LazyLoad from "react-lazy-load";
 
 
 const ChartMain: React.FC = () => {
@@ -90,21 +91,29 @@ const animation = {
     return (
         <div className=" row sales mt-3 ">
 
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
+            <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12  ">
+                <LazyLoad threshold={1}  offset={1000}>
 
                 <ChartLineCount animation={animation} TypeId={TypeId} datas={datas} setTypeId={setTypeId} />
+                </LazyLoad>
             </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12  ">
+            <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12  ">
+                <LazyLoad threshold={1} offset={1000}>
 
                 <ChartLineValue PriceUnitId={PriceUnitId} setPriceUnitId={setPriceUnitId} animation={animation}  TypeId={TypeId}   datas={datas} setTypeId={setTypeId} />
+                </LazyLoad>
             </div>
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12  ">
+                <LazyLoad threshold={1} offset={1200}>
 
                 <ChartPayment />
+                </LazyLoad>
             </div>
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12  ">
+                <LazyLoad threshold={1} offset={1200}>
 
                 <ChartShippingReport />
+                </LazyLoad>
             </div>
 
         </div>

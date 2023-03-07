@@ -49,15 +49,15 @@ const ReportBlock = () => {
 
     }, [])
     if (report){
-        return (<div className="widget  shadow sliderReport" >
-        <div className="row justify-content-center " style={{ zIndex: "2", backgroundColor: 'white' }}>
+        return (<div className="widget  shadow  sliderReport" >
+        <div className="row  justify-content-lg-center" style={{ zIndex: "2", backgroundColor: 'white' }}>
 
 
             {report.map((item , index) =>
 
                 ReportEntityStyle.map(i => i.id === item.entityTypeId ?
 
-                    <div className="col-lg-2 col-md-4 col-sm-4 mb-3 mr-2 " key={i.id}>
+                    <div className="col-lg-2 col-md-3 col-sm-4 mb-3 mr-lg-2 " key={i.id}>
 
                         <div   className="" style={{ zIndex: '1', position: 'relative', animation:  "changeRight 1s "  }} >
                             <NavLink to={i.path}>
