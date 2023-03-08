@@ -101,7 +101,7 @@ import CreditDetails from './../Credit/Component/CreditDetails';
 import CreateNewCredit from './../Credit/Component/CreateNewCredit';
 import EditCredit from './../Credit/Component/EditCredit';
 import CustomerBrief from '../Report/Component/CustomerBrief';
-import { encryptMessage } from '../../Utils/DecryptionUtill';
+import { decryptStirng, encryptMessage } from '../../Utils/DecryptionUtill';
 import CoutaggeBrief from './../Report/Component/CoutaggeBrief';
 import NavCustomerBrief from '../Report/Component/NavCustomerBrief';
 import NavCoutaggeBrief from './../Report/Component/NavCoutaggeBrief';
@@ -137,32 +137,25 @@ const AdminMainLayout: React.FC = () => {
 
   }
 
-  const getUserRole = async () => {
+  const getUserRole =  () => {
 
 
-    const { data, status } = await GetUsersRoles()
-    try {
-      if (status === 200) {
-        dispatch(userRoles(data.result.userRoleIds))
+   
+   
+        dispatch(userRoles(decryptStirng(localStorage.getItem('rd'))))
 
-        let  role= data.result.userRoleIds
+
     
-        localStorage.setItem('rd',encryptMessage( role))
+     
     
 
 
-      }
-    } catch (error) {
+  
 
 
-      refreshPage()
 
-    }
-
-
-  }
   document.body.classList.remove('clientBody')
-
+  }
   const getUserCompanies = async () => {
     const { data, status } = await GetCompanyChild()
     if (status === 200) {

@@ -14,6 +14,7 @@ import axios from 'axios';
 import { Field, Form, Formik } from "formik";
 import { validateRequired, validatMobail } from "../../../Utils/validitionParams";
 import { RootState } from "../../../store";
+import { encryptMessage } from "../../../Utils/DecryptionUtill";
 
 interface Props {
     value: any, onchange: any, setShows: any
@@ -114,6 +115,8 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                         });
 
                         dispatch(userRoles(response.data.result.userRoleIds))
+                        localStorage.setItem("rd", encryptMessage(response.data.result.userRoleIds));
+
 
                         navigate('/client')
 
@@ -155,7 +158,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                 }
 
             }
-            else{
+            else {
 
                 captchaRef.current.refresh()
                 setLoading(false)
@@ -171,7 +174,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
             }
 
         }
-        else{
+        else {
             try {
 
 
@@ -199,6 +202,8 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                     });
 
                     dispatch(userRoles(response.data.result.userRoleIds))
+                    localStorage.setItem("rd", encryptMessage(response.data.result.userRoleIds));
+
 
                     navigate('/client')
 
@@ -292,7 +297,7 @@ const LoginWithPassword: React.FC<Props> = ({ value, onchange, setShows }) => {
                                 value={password} onChange={(e: any) => {
                                     setPassword(e.target.value)
                                 }} validate={validateRequired} />
-                                {passwordType==='password'?<AiOutlineEye onClick={togglePassword} size={'1.2rem'}   id="togglePassword" style={{marginRight: '-94%', cursor: 'pointer',color:'gray',marginTop:'5%'}}/>:<AiOutlineEyeInvisible onClick={togglePassword} size={'1.2rem'}   id="togglePassword" style={{marginRight: '-94%', cursor: 'pointer',color:'gray',marginTop:'5%'}}/>}
+                            {passwordType === 'password' ? <AiOutlineEye onClick={togglePassword} size={'1.2rem'} id="togglePassword" style={{ marginRight: '-94%', cursor: 'pointer', color: 'gray', marginTop: '5%' }} /> : <AiOutlineEyeInvisible onClick={togglePassword} size={'1.2rem'} id="togglePassword" style={{ marginRight: '-94%', cursor: 'pointer', color: 'gray', marginTop: '5%' }} />}
 
 
 

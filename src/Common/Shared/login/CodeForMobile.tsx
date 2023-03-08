@@ -10,6 +10,7 @@ import './customCss.css';
 import Countdown from 'react-countdown';
 import { ShowTimer } from '../Common/ShowTimer';
 import axios from 'axios';
+import { encryptMessage } from '../../../Utils/DecryptionUtill';
 const afra = require('./afra.jpg');
 
 
@@ -85,7 +86,7 @@ const CodeForMobile: React.FC = () => {
                 localStorage.setItem('refresh', data.result.refresh);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${data.result.token}`;
                 const response = await GetUsersRoles()
-
+                localStorage.setItem("rd", encryptMessage(response.data.result.userRoleIds));
 
 
 

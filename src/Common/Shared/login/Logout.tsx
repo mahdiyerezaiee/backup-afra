@@ -29,6 +29,7 @@ const Logout:React.FC = () => {
         localStorage.removeItem('username');
         localStorage.removeItem('mobile')
         localStorage.clear()
+        sessionStorage.clear()
         delete axios.defaults.headers.common["Authorization"];
      
         history("/login");
