@@ -77,30 +77,31 @@ const ProductSupplyEdit: React.FC = () => {
 
     const getProdcutForCombo = async () => {
 
-        if(companyId){
-        try {
-            const { data, status } = await GetProductsWithCompanyForCombos(companyId);
-            if (status === 200) {
-                setProducts(data.result.products.values)
+        if (companyId) {
+            try {
+                const { data, status } = await GetProductsWithCompanyForCombos(companyId);
+                if (status === 200) {
+                    setProducts(data.result.products.values)
 
 
-            }
-        } catch (error) {
-            console.log(error)
-
-        }}
-        else{
-            try{
-            const { data, status } = await GetProductsWithCompanyForCombos(companies[0].id);
-            if (status === 200) {
-                setProducts(data.result.products.values)
-
+                }
+            } catch (error) {
+                console.log(error)
 
             }
-        } catch (error) {
-            console.log(error)
-
         }
+        else {
+            try {
+                const { data, status } = await GetProductsWithCompanyForCombos(companies[0].id);
+                if (status === 200) {
+                    setProducts(data.result.products.values)
+
+
+                }
+            } catch (error) {
+                console.log(error)
+
+            }
         }
 
     }
@@ -136,25 +137,26 @@ const ProductSupplyEdit: React.FC = () => {
 
 
     }, [productId])
- 
+
     const productCombo: any = () => {
-        if(products){
-        return (products.map((data: any) => ({ label: data.name, value: data.id })))}
-        else{
-            return(null)
+        if (products) {
+            return (products.map((data: any) => ({ label: data.name, value: data.id })))
+        }
+        else {
+            return (null)
         }
     }
     const product = () => {
-        if(products){
-        return (products.filter((item: any) => item.id === productId).map((data: any) => ({ label: data.name, id: data.id })))
+        if (products) {
+            return (products.filter((item: any) => item.id === productId).map((data: any) => ({ label: data.name, id: data.id })))
         }
-        else{
-            return(null)
+        else {
+            return (null)
         }
     }
     let productValue: any = product()
     console.log(productValue);
-    
+
     const ProductMeasure = async () => {
         const { data, status } = await getEditProduct(productValue[0].id);
         if (status === 200) {
@@ -166,13 +168,14 @@ const ProductSupplyEdit: React.FC = () => {
 
     const wareCombo: any = () => {
 
-        if(Productwarehouse){
-        return (Productwarehouse.filter((data: any) => data.id !== 0).map((data: any) => ({
-            label: data.wareHouseName,
-            value: data.id
-        })))}
-        else{
-            return(null)
+        if (Productwarehouse) {
+            return (Productwarehouse.filter((data: any) => data.id !== 0).map((data: any) => ({
+                label: data.wareHouseName,
+                value: data.id
+            })))
+        }
+        else {
+            return (null)
         }
     }
     const WareHouse = () => {
@@ -216,7 +219,7 @@ const ProductSupplyEdit: React.FC = () => {
                 comment,
                 name,
                 price,
-                companyId,companyName
+                companyId, companyName
 
 
             },
@@ -286,7 +289,7 @@ const ProductSupplyEdit: React.FC = () => {
                             comment,
                             name,
                             price,
-                            companyId,companyName
+                            companyId, companyName
 
                         }}
                         enableReinitialize={true}
@@ -308,6 +311,7 @@ const ProductSupplyEdit: React.FC = () => {
                                             {productId === 0 ? (
                                                 <>
                                                     <Select
+                                                        isDisabled={true}
                                                         value={product()}
                                                         // placeholder='کالا'
                                                         className='opacityForInput border-danger'
@@ -322,6 +326,7 @@ const ProductSupplyEdit: React.FC = () => {
                                                 </>
                                             ) : (<Select
                                                 value={product()}
+                                                isDisabled={true}
 
                                                 className='opacityForInput '
                                                 options={productCombo()}
@@ -342,6 +347,7 @@ const ProductSupplyEdit: React.FC = () => {
                                                     <Select
                                                         value={wareCombo().filter((i: any) => i.value === productWareHouseId).map((i: any) => i)}
                                                         // placeholder='کالا'
+                                                        isDisabled={true}
 
                                                         options={wareCombo()}
                                                         onChange={(e: any) => {
@@ -353,22 +359,22 @@ const ProductSupplyEdit: React.FC = () => {
 
                                                 </>
                                             ) : (<>
-                                            <Select
-                                                value={wareCombo()}
+                                                <Select
+                                                    value={wareCombo()}
 
-                                                options={wareCombo()}
-                                                onChange={(e: any) => {
-                                                    setproductWareHouseId(e.value)
+                                                    options={wareCombo()}
+                                                    onChange={(e: any) => {
+                                                        setproductWareHouseId(e.value)
 
-                                                }}
-                                            />
-                                            <p style={{ color: 'red' }}>لطفا این فیلد را پر کنید</p>
+                                                    }}
+                                                />
+                                                <p style={{ color: 'red' }}>لطفا این فیلد را پر کنید</p>
 
                                             </>
                                             )
-                                            
+
                                             }
-                                            
+
 
                                         </div>
 
@@ -396,6 +402,7 @@ const ProductSupplyEdit: React.FC = () => {
 
                                                 {companyId && companyId === null ?
                                                     <Select
+                                                        isDisabled={true}
 
                                                         options={CompaniesIDs()}
                                                         onChange={(e: any) => {
@@ -403,6 +410,7 @@ const ProductSupplyEdit: React.FC = () => {
                                                         }}
                                                     /> : <Select
                                                         value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
+                                                        isDisabled={true}
 
                                                         placeholder='نام شرکت'
                                                         options={CompaniesIDs()}
@@ -485,7 +493,7 @@ const ProductSupplyEdit: React.FC = () => {
 
                                 <div className='form-group mb-4 textOnInput'>
                                     <label>شرایط پرداخت</label>
-                                    <ProductSupplyCondition quantity={quantity} />
+                                    <ProductSupplyCondition quantity={quantity} companyId={companyId} />
                                 </div>
 
                                 <div className='row '>

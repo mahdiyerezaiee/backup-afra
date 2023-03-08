@@ -34,9 +34,9 @@ const customStyles: any = {
 };
 
 interface Props {
-    quantity: any
+    quantity: any,companyId:any
 }
-const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
+const ProductSupplyCondition: React.FC<Props> = ({ quantity,companyId }) => {
     const params = useParams()
 
     const [paymentMethodId, setpaymentMethodId] = useState<any>(0)
@@ -93,24 +93,15 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
 
     const GetCustomerGroup = async () => {
 
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr: any = []
-        for (let i = 0; i < companies.length; i++) {
 
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+            const { data, status } = await GetGroupWithCompany(1, companyId);
 
-            if (data.result.groups.length > 0) {
-                arr.push(data.result.groups)
-            }
+           
+
+  
 
 
-        }
-
-        finalArr = Array.prototype.concat.apply([], arr);
-
-        setCustomerg(finalArr);
+        setCustomerg(data.result.groups);
 
     }
     useEffect(() => {
@@ -147,6 +138,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
     };
     const body = {
         productSupplyCondition: {
+            
             minSellableAmount: Number(addFormData.minSellableAmount),
             maxSellableAmount: quantity,
             paymentMethodId,
@@ -155,7 +147,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
             installmentOccureCount: addFormData.installmentOccureCount,
             installmentStartDate: new Date(),
             comment: addFormData.comment,
-            active: true,
+            active: addFormData.active,
             special,
             additionalAmount: addFormData.additionalAmount,
             additionalTypeId,
@@ -201,7 +193,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
             installmentOccureCount: editFormData.installmentOccureCount,
             installmentStartDate: new Date(),
             comment: editFormData.comment,
-            active: true,
+            active: editFormData.active,
             special,
             additionalAmount: editFormData.additionalAmount,
             additionalTypeId,
@@ -217,9 +209,10 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         setLoading(true)
         try {
             const { data, status } = await SetProductSupplyConditions(editedContact)
-            if (data.result.message === "ProductSupplyCondition saved completed") {
+            if (status===200) {
                 GetProductSupplyC()
                 setLoading(false)
+                window.location.reload()
             }
 
         } catch (err) {
@@ -254,6 +247,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         let ids = condition.id
         setId(ids);
         const formValues = {
+            id:condition.id,
             minSellableAmount: condition.minSellableAmount,
             maxSellableAmount: condition.maxSellableAmount,
             paymentMethodId: condition.paymentMethodId,
@@ -272,7 +266,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
             setActive(!active)
             const editedContact = {
                 productSupplyCondition: {
-                    id: Id,
+                    id: condition.id,
 
                     minSellableAmount: editFormData.minSellableAmount,
                     maxSellableAmount: editFormData.maxSellableAmount,
@@ -306,6 +300,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
         setEditContactId(condition.id);
 
         const formValues = {
+            id:condition.id,
             minSellableAmount: condition.minSellableAmount,
             maxSellableAmount: condition.maxSellableAmount,
             paymentMethodId: condition.paymentMethodId,
@@ -409,6 +404,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
                                         handleEditFormChange={handleEditFormChange}
                                         handleCancelClick={handleCancelClick}
                                         setSpecial={setSpecial}
+                                        companyId={companyId}
                                     />
                                 ) : (
 
@@ -419,6 +415,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity }) => {
                                         contact={contact}
                                         handleEditClick={handleEditClick}
                                         handleDeleteClick={handleDeleteClick}
+                                        companyId={companyId}
                                     />
 
 

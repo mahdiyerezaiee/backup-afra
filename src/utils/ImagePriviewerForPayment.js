@@ -131,7 +131,7 @@ const ImagePriviewerForPayment = ({
                         validate={validateRequired}
                         name="trackingCode"
                         type="text"
-                        className="form-control"
+                        className="form-control opacityForInput"
                         value={trackingCode}
                         placeholder='شماره چک/فیش نقدی'
                         onChange={(e) => SettrackingCode(e.target.value)}
@@ -140,24 +140,23 @@ const ImagePriviewerForPayment = ({
                         <div className="text-danger">{errors.trackingCode}</div>
                       )}
                     </div>
-                    <div className="col-md-6 mt-4">
-                      {currentPayment[0].shouldPickFromInvoices ? (
-                        <>
-                          <lable>انتخاب سفارش ها</lable>
-                          <Select
+                    {currentPayment[0].shouldPickFromInvoices ? (  <div className="col-6 mb-4  textOnInput">
+                        <label> انتخاب صورتحسابها</label>
+                        <Select
                             options={Invoices()}
+                            placeholder=' صورتحساب های خود را انتخاب کنید'
                             isMulti
                             isClearable={true}
                             onChange={(e) => {
                               SetinvoiceIds(e.map((i) => i.value));
                             }}
                           />
-                        </>
-                      ) : (
+                       
+                        </div> ) : (
                         ""
                       )}
-                    </div>
-                    <div className="col-md-6 mt-4">
+                    
+                    <div className="col-md-6 mb-4 ">
                       {currentPayment[0].shouldAnnounceDueDate ? (
                         <>
                           <label className="date-piker-form">سررسید</label>

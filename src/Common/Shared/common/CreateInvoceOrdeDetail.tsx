@@ -49,14 +49,16 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
     }
     
 
+    
+    
     useEffect(() => {
         setDefault()
 
 
-    }, [defaultPaymentId()])
+    }, [])
     const setDefault = () => {
 
-        if (defaultPaymentId().length > 0) {
+        if (defaultPaymentId().length > 0 ) {
 
             if (defaultPaymentId().length === 1) {
 
@@ -67,12 +69,13 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
 
 
             }
-            else if (defaultPaymentId().length > 1) {
+            else if (defaultPaymentId().length > 1 ) {
                 let newPayments: any = []
 
                 newPayments = [...new Set(defaultPaymentId().map((i: any) => (i.payments ? i.payments : 2)))]
 
-           
+               
+                
 
                 if (newPayments.length > 1) {
 
@@ -81,9 +84,18 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
                 else {
                    let newArray:any= defaultPaymentId().filter((i:any)=>i.payments===newPayments[0])
 
+    
+                   
+                   if(newArray.lenght>0){
                     setPaymentMethodId(newArray[0].payments)
                     setInstallmentOccureCount(newArray[0].installmentOccureCount)
-                    setInstallmentPeriod(newArray[0].installmentPeriod)
+                    setInstallmentPeriod(newArray[0].installmentPeriod)}
+                    else{
+                      setPaymentMethodId(2)
+                    }
+                          
+                   
+                  
                 }
 
 
@@ -144,7 +156,7 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
 
     }
     const paymentMethodIDs = () => {
-        return (PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id })))
+        return (PaymentStructureEnums.filter((i:any)=>i.id===2 ||i.id===4).map((data: any) => ({ label: data.name, value: data.id })))
     }
     return (
         <Modal

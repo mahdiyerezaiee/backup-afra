@@ -55,7 +55,7 @@ useEffect(()=>{
   setDefault()
 
 
-},[defaultPaymentId()])
+},[])
 const setDefault=()=>{
 
   if(defaultPaymentId().length>0){
@@ -82,10 +82,16 @@ const setDefault=()=>{
   else{
     let newArray:any= defaultPaymentId().filter((i:any)=>i.payments===newPayments[0])
 
-                    setPaymentMethodId(newArray[0].payments)
-                    setInstallmentOccureCount(newArray[0].installmentOccureCount)
-                    setInstallmentPeriod(newArray[0].installmentPeriod)
+    if(newArray.lenght>0){
+      setPaymentMethodId(newArray[0].payments)
+      setInstallmentOccureCount(newArray[0].installmentOccureCount)
+      setInstallmentPeriod(newArray[0].installmentPeriod)}
+      else{
+        setPaymentMethodId(2)
+      }
+                  
   }
+
 
 
     }

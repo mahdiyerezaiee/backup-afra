@@ -10,31 +10,19 @@ import { GetCompanyChild } from '../../../../../services/companiesService';
 import { GetGroupWithCompany } from '../../../../../services/GroupService';
 
 interface Props{
-    loading:any, paymentMethodId:any, setSpecial:any, customStyles:any, handleEditFormSubmit:any, setcustomerGroupId:any, setpaymentMethodId:any, setadditionalTypeId:any, editFormData:any, handleEditFormChange:any, handleCancelClick:any, index:any 
+    loading:any, paymentMethodId:any,companyId:any, setSpecial:any, customStyles:any, handleEditFormSubmit:any, setcustomerGroupId:any, setpaymentMethodId:any, setadditionalTypeId:any, editFormData:any, handleEditFormChange:any, handleCancelClick:any, index:any 
 }
-const ProductSupplyConditionEdit:React.FC<Props> = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index }) => {
+const ProductSupplyConditionEdit:React.FC<Props> = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index,companyId }) => {
     const [customerg, setCustomerg] = useState([])
     const [cu, SetCu] = useState(0)
     const [modalIsOpen, setIsOpen] = useState(true);
     const GetCustomerGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr:any = []
-        for (let i = 0; i < companies.length; i++) {
+      
+      
 
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+            const { data, status } = await GetGroupWithCompany(1, companyId);
 
-            if (data.result.groups.length > 0) {
-                arr.push(data.result.groups)
-            }
-
-
-        }
-
-        finalArr = Array.prototype.concat.apply([], arr);
-
-        setCustomerg(finalArr);
+          setCustomerg(data.result.groups)
     }
     useEffect(() => {
         GetCustomerGroup();

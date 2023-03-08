@@ -131,7 +131,7 @@ const OrderConditionEdit:React.FC<Props> = ({ orderCondition, getOrderDetail, Or
             </tbody>
           </table>}
 
-        <OrderProductSupplyConditionEdit closeModal={closeModal} modalIsOpen={modalIsOpen} id={id} Detail={detail} />
+        <OrderProductSupplyConditionEdit closeModal={closeModal} modalIsOpen={modalIsOpen} id={id} Detail={detail} order={Order} />
       </div>
     )
   }
