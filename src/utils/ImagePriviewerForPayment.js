@@ -133,6 +133,7 @@ const ImagePriviewerForPayment = ({
                         type="text"
                         className="form-control"
                         value={trackingCode}
+                        placeholder='شماره چک/فیش نقدی'
                         onChange={(e) => SettrackingCode(e.target.value)}
                       />
                       {errors.trackingCode && touched.trackingCode && (
@@ -142,7 +143,7 @@ const ImagePriviewerForPayment = ({
                     <div className="col-md-6 mt-4">
                       {currentPayment[0].shouldPickFromInvoices ? (
                         <>
-                          <lable></lable>
+                          <lable>انتخاب سفارش ها</lable>
                           <Select
                             options={Invoices()}
                             isMulti

@@ -136,6 +136,25 @@ const ProductSupplyEdit: React.FC = () => {
 
 
     }, [productId])
+ 
+    const productCombo: any = () => {
+        if(products){
+        return (products.map((data: any) => ({ label: data.name, value: data.id })))}
+        else{
+            return(null)
+        }
+    }
+    const product = () => {
+        if(products){
+        return (products.filter((item: any) => item.id === productId).map((data: any) => ({ label: data.name, id: data.id })))
+        }
+        else{
+            return(null)
+        }
+    }
+    let productValue: any = product()
+    console.log(productValue);
+    
     const ProductMeasure = async () => {
         const { data, status } = await getEditProduct(productValue[0].id);
         if (status === 200) {
@@ -145,20 +164,16 @@ const ProductSupplyEdit: React.FC = () => {
 
     }
 
-    const productCombo: any = () => {
-        return (products.map((data: any) => ({ label: data.name, value: data.id })))
-    }
-    const product = () => {
-        return (products.filter((item: any) => item.id === productId).map((data: any) => ({ label: data.name, id: data.id })))
-    }
-    let productValue: any = product()
-
     const wareCombo: any = () => {
 
+        if(Productwarehouse){
         return (Productwarehouse.filter((data: any) => data.id !== 0).map((data: any) => ({
             label: data.wareHouseName,
             value: data.id
-        })))
+        })))}
+        else{
+            return(null)
+        }
     }
     const WareHouse = () => {
         return (Productwarehouse.filter((data: any) => data.id === productWareHouseId).map((data: any) => ({

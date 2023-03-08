@@ -123,7 +123,10 @@ if(companyId){
         if (products) {
             return (products.map((data: any) => ({ label: data.name, value: data.id })))
         }
-        else { return null }
+        else { 
+            
+            setProducts([])
+            return (null) }
     }
     const wareCombo = () => {
 
@@ -227,7 +230,14 @@ if(companyId){
 
     }
     let defaultValue: any = companys()[0]
-
+    const product = () => {
+        if(products){
+        return (products.filter((item: any) => item.id === productId).map((data: any) => ({ label: data.name, id: data.id })))
+        }
+        else{
+            return(null)
+        }
+    }
     return (
         <div className='user-progress' >
             <div className='row'>
@@ -311,30 +321,34 @@ if(companyId){
                                         <div className={companies.length > 1 ? "col-4 " : "col-6"}>
                                             <label>نام کالا</label>
 
+                                        
                                             {productId === 0 ? (
                                                 <>
-                                                    <Select placeholder='کالا'
+                                                    <Select
+                                                        value={product()}
+                                                        // placeholder='کالا'
                                                         className='opacityForInput border-danger'
                                                         options={productCombo()}
                                                         onChange={(e: any) => {
                                                             setProductId(e.value)
                                                             Prodcutware(e.value)
-
                                                         }}
                                                     />
                                                     <p style={{ color: 'red' }}>لطفا این فیلد را پر کنید</p>
 
                                                 </>
-                                            ) : (<Select placeholder='کالا'
+                                            ) : (<Select
+                                                value={product()}
+
                                                 className='opacityForInput '
                                                 options={productCombo()}
                                                 onChange={(e: any) => {
                                                     setProductId(e.value)
                                                     Prodcutware(e.value)
-                                                    ProductMeasure(e.value)
 
                                                 }}
                                             />)}
+                                            
 
 
                                         </div>
