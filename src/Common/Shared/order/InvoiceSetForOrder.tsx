@@ -55,7 +55,7 @@ useEffect(()=>{
   setDefault()
 
 
-},[defaultPaymentId()])
+},[])
 const setDefault=()=>{
 
   if(defaultPaymentId().length>0){

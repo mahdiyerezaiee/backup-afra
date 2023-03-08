@@ -133,7 +133,7 @@ conditionOrder=orderCondition
         getOrder()
         getOrderDetail()
 
-    }, [id])
+    }, [])
     const handleEditFormSubmit = async () => {
     setLoading(true)
         const datas = {

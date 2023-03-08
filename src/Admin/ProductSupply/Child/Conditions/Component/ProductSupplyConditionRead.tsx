@@ -9,9 +9,9 @@ import { GetCompanyChild } from '../../../../../services/companiesService';
 import { GetGroupWithCompany } from '../../../../../services/GroupService';
 
 interface Props{
-    activeHandler:any, contact:any, handleEditClick:any, handleDeleteClick:any, index:any
+    activeHandler:any, contact:any, handleEditClick:any, handleDeleteClick:any, index:any,companyId:any
 }
-const ProductSupplyConditionReadOnly:React.FC<Props> = ({activeHandler, contact, handleEditClick, handleDeleteClick, index}) => {
+const ProductSupplyConditionReadOnly:React.FC<Props> = ({activeHandler, contact, handleEditClick, handleDeleteClick, index,companyId}) => {
     const [customerg, setCustomerg] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false);
     const openModal = async () => {
@@ -21,24 +21,14 @@ const ProductSupplyConditionReadOnly:React.FC<Props> = ({activeHandler, contact,
         setIsOpen(false);
     }
     const GetCustomerGroup = async () => {
-        const response = await GetCompanyChild();
-        let companies = response.data.result.companies
-        let arr = []
-        let finalArr:any = []
-        for (let i = 0; i < companies.length; i++) {
+        
+            const { data, status } = await GetGroupWithCompany(1, companyId);
 
-            const { data, status } = await GetGroupWithCompany(1, companies[i].id);
+           
 
-            if (data.result.groups.length > 0) {
-                arr.push(data.result.groups)
-            }
+      
 
-
-        }
-
-        finalArr = Array.prototype.concat.apply([], arr);
-
-        setCustomerg(finalArr);
+        setCustomerg(data.result.groups);
     }
     useEffect(() => {
         GetCustomerGroup();

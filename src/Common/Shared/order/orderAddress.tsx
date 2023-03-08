@@ -403,8 +403,8 @@ const OrderAddress: React.FC<Props> = ({
                 <button
                   onClick={() => openModal(rows.row.original.id)}
                   className="btn btn-sm  btn-primary "
-                  disabled={paymentStatus === 1 ? true : false}
-                  hidden={rows.row.original.shippingId !== null ? true : false}
+                  disabled={paymentStatus === 1 || rows.row.original.shippingId !== null ? true : false}
+                  hidden={rows.row.original.shippingId !== null && order.extId!== null ? true : false}
                 >
                   صدور حواله
                 </button>
@@ -413,7 +413,7 @@ const OrderAddress: React.FC<Props> = ({
                   onClick={() =>
                     syncButton(rows.row.original.orderId, rows.row.original.id)
                   }
-                  hidden={rows.row.original.shippingId !== null ? false : true}
+                  hidden={rows.row.original.shippingId !== null && order.extId!== null ? false : true}
                 >
                   {" "}
                   تطابق با بازارگاه

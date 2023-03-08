@@ -55,7 +55,7 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
         setDefault()
 
 
-    }, [defaultPaymentId()])
+    }, [])
     const setDefault = () => {
 
         if (defaultPaymentId().length > 0 ) {
@@ -156,7 +156,7 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
 
     }
     const paymentMethodIDs = () => {
-        return (PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id })))
+        return (PaymentStructureEnums.filter((i:any)=>i.id===2 ||i.id===4).map((data: any) => ({ label: data.name, value: data.id })))
     }
     return (
         <Modal

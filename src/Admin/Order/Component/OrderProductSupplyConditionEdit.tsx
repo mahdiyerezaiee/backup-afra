@@ -29,9 +29,9 @@ const customStyles = {
 }
 
 interface Props{
-    modalIsOpen:any, closeModal:any, id:any, Detail:any
+    modalIsOpen:any, closeModal:any, id:any, Detail:any,order:any
 }
-const OrderProductSupplyConditionEdit:React.FC<Props> = ({ modalIsOpen, closeModal, id, Detail }) => {
+const OrderProductSupplyConditionEdit:React.FC<Props> = ({ modalIsOpen, closeModal, id, Detail,order }) => {
     const Navigate = useNavigate()
     const [checked, setChecked] = useState({ selectedValue: 0 })
     const [condition, setCondition] = useState([])
@@ -107,10 +107,9 @@ const OrderProductSupplyConditionEdit:React.FC<Props> = ({ modalIsOpen, closeMod
         const response = await GetCompanyChild(); let companies = response.data.result.companies
          let arr = [] 
          let finalArr:any = [] 
-         for (let i = 0; i < companies.length; i++) {
-             const { data, status } = await GetGroupWithCompany(1, companies[i].id); if (data.result.groups.length > 0) { arr.push(data.result.groups) }
-             } 
-             finalArr = Array.prototype.concat.apply([], arr);
+         
+             const { data, status } = await GetGroupWithCompany(1, order.companyId)
+            
               setCustomerg(finalArr);
     }
     useEffect(() => {
