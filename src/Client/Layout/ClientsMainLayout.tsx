@@ -69,14 +69,15 @@ const ClientsMainLayout: React.FC = () => {
     try {
       if (status === 200) {
         dispatch(userRoles(data.result.userRoleIds));
+        
+    let role = data.result.userRoleIds;
+
+    localStorage.setItem("rd", encryptMessage(role));
       }
     } catch (error) {
       refreshPage();
     }
 
-    let role = data.result.userRoleIds;
-
-    localStorage.setItem("rd", encryptMessage(role));
   };
 
   const getUserCompanies = async () => {

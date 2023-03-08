@@ -18,19 +18,20 @@ const EditNews:React.FC = () => {
     const [message, setMessage] = useState('');
     const [title, setTitle] = useState('');
 
-    const [active, setActive] = useState(true)
+    const [active, setActive] = useState<any>()
     const creatorId = user.id
 
 
 
         const getNewsAdmin =useCallback(async  () => {
             try {
-                const {data, status} = await GetAllNewsForUsers()
+                const {data, status} = await GetAllNewsForAdmin()
 
                     setMessage( data.result.news.values.filter((item:any) => item.id == params.id).map((item:any)  => item.message)[0])
 
 
                     setTitle( data.result.news.values.filter((item:any)  => item.id == params.id).map((item:any)  => item.title)[0])
+                    setActive(data.result.news.values.filter((item:any)  => item.id == params.id).map((item:any)  => item.active)[0])
 
 
             } catch (err) {
@@ -64,7 +65,7 @@ useEffect(()=>{
         setLoading(true)
         try {
             const {data, status} = await SetNews(setNews)
-            if (data.success === 200) {
+            if (status === 200) {
                 toast.success("اطلاعات با موفقیت ثبت شد", {
                     position: "top-right",
                     autoClose: 5000,

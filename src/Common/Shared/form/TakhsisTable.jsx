@@ -84,6 +84,8 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
         getData(selectedFlatRows);
     }, [selectedRowIds])
     
+
+
             return (
         <Fragment>
 

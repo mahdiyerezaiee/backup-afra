@@ -551,6 +551,7 @@ const getPayments=()=>{
                 closeModal={ColseInvoceModal}
                 orderDetailId={orderDetailId}
                 Order={order}
+                defaultPaymentId={getPayments}
               />
               <div className="form-group mb-4 textOnInput col-lg-12     mt-4   ">
                 {condition &&

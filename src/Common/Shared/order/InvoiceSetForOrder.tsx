@@ -73,14 +73,18 @@ const setDefault=()=>{
 
   newPayments=[...new Set(defaultPaymentId().map((i:any)=>i.payments?i.payments:2))]
 
-  console.log(newPayments);
+
   
   if(newPayments.length>1){
 
     setPaymentMethodId(null)
   }
   else{
-    setPaymentMethodId(newPayments[0])
+    let newArray:any= defaultPaymentId().filter((i:any)=>i.payments===newPayments[0])
+
+                    setPaymentMethodId(newArray[0].payments)
+                    setInstallmentOccureCount(newArray[0].installmentOccureCount)
+                    setInstallmentPeriod(newArray[0].installmentPeriod)
   }
 
 

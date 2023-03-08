@@ -87,7 +87,7 @@ const ConditionSalesBordCustomer:React.FC<Props> = ({closeModal, productSupplyCo
                     </tr>
                 </thead>
                 <tbody>
-                    {productSupplyConditions ? productSupplyConditions.productSupplyConditions.map((contact:any, index:number) =>
+                    {productSupplyConditions ? productSupplyConditions.productSupplyConditions.filter((i:any)=>i.special===false).map((contact:any, index:number) =>
 
                         <tr className='text-center'>
                              <td data-th="ردیف">{index + 1}</td>
