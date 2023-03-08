@@ -26,7 +26,7 @@ const ImageUploaderForPayment = ({data,index,Ids}) => {
                 </label>
         </div>:<div className='row' >  
         <div className='col-lg-4  labelPayment'>
-        <p className='   text-danger TextPayment' >لطفا پیش از بارگزاری اطلاعات پرداخت جدید ، اطلاعات بارگزاری شده را ثبت نهایی فرمایید</p>
+        <p className='   text-danger TextPayment text-nowrap' >لطفا پیش از بارگزاری اطلاعات پرداخت جدید ، اطلاعات بارگزاری شده را ثبت نهایی فرمایید</p>
           </div>
       <input disabled={true}  type="file" className="col-lg-4 custom-file-input" id="PaymentFile" accept='image/*' onChange={onchange}  />
       <div className='col-lg-4  labelPayment'>

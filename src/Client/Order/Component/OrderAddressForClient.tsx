@@ -327,11 +327,19 @@ const OrderAddressForClient: React.FC<Props> = ({
         Header: "آدرس",
         accessor: "fullAddress",
         Cell: (rows: any) => {
+
+          if(String(rows.row.original.fullAddress).length>20){
           return (
             <p title={rows.row.original.fullAddress}>
               {rows.row.original.fullAddress.substring(0, 20)}
             </p>
-          );
+          );}
+          else{
+            return(
+              <p title={rows.row.original.fullAddress}>
+              {rows.row.original.fullAddress}
+            </p>)
+          }
         },
         disableFilters: true,
       },
