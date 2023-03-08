@@ -67,7 +67,7 @@ const OrderProductSupplyConditionEdit:React.FC<Props> = ({ modalIsOpen, closeMod
 
             setTimeout(() => {
                 if (data.success === true) {
-                    toast.success('jyddvhj با موفقیت ثبت شد', {
+                    toast.success('تغییرات با موفقیت ثبت شد', {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,

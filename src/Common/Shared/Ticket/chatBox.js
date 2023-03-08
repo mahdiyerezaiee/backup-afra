@@ -63,11 +63,15 @@ if (getmessage){
                             <div key={item.id}>
                         <div style={{display : index === 0 ?"block":"none"}} className="conversation-start">
                             <span>{ new Date(item.createDate).toLocaleDateString('fa-IR')}</span>
+
                         </div>
+                      
                         {item.message ?
-                        <div className={item.creatorId === Number(userName) ?"bubble me": " bubble you"}>
+                        <div title={` ${new Date(item.createDate).toLocaleTimeString('fa-IR')}`} className={item.creatorId === Number(userName) ?"bubble me": " bubble you"}>
                             {item.message}
+                           
                         </div> :  null }
+                        
                             </div>
                             )}
                     </div>

@@ -314,6 +314,18 @@ const[id,setId]=useState(0)
                     setActive(!active)
                     try {
                         const { data, status } = await SetNews(activeChang)
+                        if (status === 200) {
+                            toast.success("تغییرات با موفقیت ثبت شد", {
+                                position: "top-right",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: false,
+                                draggable: true,
+                                progress: undefined
+                            });
+            
+                        }
                      
                     } catch (err) {
                         console.log(err)
