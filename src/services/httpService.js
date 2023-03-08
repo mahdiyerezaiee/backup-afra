@@ -33,6 +33,10 @@ axios.interceptors.response.use(
     if (error.response.status === 401 && !connect ) {
       window.location.reload()
     }
+    if (error.response.status === 401 && !token ) {
+      window.location.replace('/logout')
+
+    }
     if (error.response.status === 401 && token) {
 
 

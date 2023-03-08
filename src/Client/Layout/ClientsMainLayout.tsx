@@ -64,19 +64,9 @@ const ClientsMainLayout: React.FC = () => {
   }
   document.body.classList.add("clientBody");
 
-  const getUserRole = async () => {
-    const { data, status } = await GetUsersRoles();
-    try {
-      if (status === 200) {
-        dispatch(userRoles(data.result.userRoleIds));
-        
-    let role = data.result.userRoleIds;
-
-    localStorage.setItem("rd", encryptMessage(role));
-      }
-    } catch (error) {
-      refreshPage();
-    }
+  const getUserRole =  () => {
+   
+    dispatch(userRoles( decryptStirng( localStorage.getItem('rd'))))
 
   };
 
