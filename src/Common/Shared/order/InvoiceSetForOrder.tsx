@@ -38,6 +38,8 @@ const InvoiceSetForOrder: React.FC<Props> = ({ closeModal, isOpenInvoice, orderI
   const [comment, setComment] = useState<any>(null);
 
 
+
+  
   const handelStartDate = (value:any) => {
     if (value === null) {
         setInstallmentStartDate(new Date())

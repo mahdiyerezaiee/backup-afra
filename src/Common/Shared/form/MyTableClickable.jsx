@@ -56,20 +56,21 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
     const GetExternalData = async () => {
 
         setexdData([])
-        if(show.original.extId && show.isExpanded){
+        if(show.original.extId>0){
         const {data,status}=await getExtraData(show.original.extId,1)
-        
+        if(data.result.extraData!==null){
         setexdData(JSON.parse(data.result.extraData.data))
         }
         else{
-            setexdData(data.result.extraData)
+            setexdData([])
 
         }
     }
-
+    }
     useEffect(()=>{
         
             GetExternalData()
+          
     },[orderId])
 
    
@@ -164,7 +165,8 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
                                 width: '10px',
                                 height: "10px",
                                 backgroundColor: 'greenyellow'
-                            }}></div> : <div style={{ width: '10px', height: "10px", backgroundColor: 'deepskyblue' }}></div>
+                            }}></div> 
+                            : <div style={{ width: '10px', height: "10px", backgroundColor: 'deepskyblue' }}></div>
                             }
                         </span>
                     )
@@ -296,7 +298,7 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
 
                                                                 <div className="w-85  containerT  ">
 
-                                                                    <table className={row.original.extId > 0 ? "  table m-1   header-green " : "table m-1 header-blue"} >
+                                                                    <table className={row.original.extId > 0 ? "  table m-1   header-green " : "table m-1 header-blue" } >
 
                                                                         <thead style={{ color: 'white' }}>
                                                                             <tr>
