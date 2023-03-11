@@ -17,6 +17,8 @@ import {useEffect, useState} from "react";
 import { AiOutlineWarning } from 'react-icons/ai';
 import { ScheduleTypes } from '../../Enums/scheduleTypes';
 import { formatter } from '../../../Utils/Formatter';
+import Select from "react-select";
+import {ComboDays} from "../../../Utils/OptionSelectBoxDays";
 
 ChartJS.register(
     CategoryScale,
@@ -34,13 +36,15 @@ ChartJS.register(
 export function ChartShippingReport() {
     const [datas , setDatas]=useState<any>([])
     const [ScheduleTypeId , setScheduleTypeId]=useState(3)
-   
+    const [show ,setShow] =useState(false)
+    const [Length , setLength] = useState<any>(7)
+const [max , setMax]=useState(30)
 
-useEffect(()=>{
+    useEffect(()=>{
     const GetReport = async () => {
         try {
            
-            const {data , status}= await GetShippingsReport(ScheduleTypeId )
+            const {data , status}= await GetShippingsReport(ScheduleTypeId , Length)
 
             setDatas(data.result.shippingsPerSchedule)
 
@@ -50,12 +54,20 @@ useEffect(()=>{
 
     }
     
-     if (ScheduleTypeId  ){
+     if (ScheduleTypeId || Length ){
         GetReport()
 
     }
 
-},[ScheduleTypeId ])
+},[ScheduleTypeId , Length])
+    const ChangHandler = (e:any) =>{
+        setScheduleTypeId(e.value)
+        setLength(
+            e.value === 1 ? 3 : e.value === 2 ? 12: e.value === 3 ? 30 :e.value ===4? 24 : 60
+
+        )
+
+    }
     if (datas && datas.length > 0){
         const labels =datas.map((item:any)=>item.shippingCompanyName)
         let delayed:any;
@@ -219,6 +231,7 @@ useEffect(()=>{
               }
           }
       };
+
     return (
         <div id="chartArea" className="col-xl-12 layout-spacing">
             <div className="widget widget-chart-three">
@@ -227,36 +240,57 @@ useEffect(()=>{
                         <h5 className=""> گزارش باربری</h5>
                     </div>
                     <div className="d-inline float-left px-2">
-                    <span >{"7"  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
+                    <span >{Length  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
                 
                     </span> 
                     </div>
-                <div className="dropdown  custom-dropdown d-inline float-right ">
-                    <a className="dropdown-toggle" role="button" id="uniqueVisitors" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <div className="   d-inline float-right ">
+
+                        <svg onClick={()=> setShow(!show)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                              className="feather feather-more-horizontal">
                             <circle cx="12" cy="12" r="1"></circle>
                             <circle cx="19" cy="12" r="1"></circle>
                             <circle cx="5" cy="12" r="1"></circle>
                         </svg>
-                    </a>
 
-                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors" style={{width:"20rem"}}>
-                        
-                             <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>7 سال اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>7 ماه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>7 اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 7 ساعت اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 7 اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 7 ثانیه اخیر</a>
-                           
-                    
-                   
-                    
+
+
+                        {show?
+                            <div className="dashboard-widget p-3 position-absolute dwrap" >
+                                <div  className='row form-row textOnInput'>
+                                    <div className='col-md-6 mt-3 col-lg-6'>
+                                        <div className="quantity-field w-100">
+                                            <button className="value-button increase-button" onClick={() => Length >= (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60):  setLength(Number(Length) + 1)}>+
+                                            </button>
+                                            <input   className="number"  onKeyUp={() => Length > (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60): Length} type="number" placeholder="بازه زمانی"
+                                                     min={1}  value={Length} onChange={(e:any)  => setLength(e.target.value)} />
+                                            <button className="value-button decrease-button "  onClick={() =>Length > 1 ? setLength(Number(Length) - 1) : setLength(1)}> --
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className='col-md-6 col-lg-6 mt-3  textOnInput form-group' >
+                                        <div className=" form-control-sm">
+                                            <label>  برنامه زمانی </label>
+
+                                            <Select
+                                                placeholder="  برنامه زمانی  "
+                                                options={ComboDays()}
+                                                onChange={(e:any)=> ChangHandler(e)}
+                                                defaultValue={ComboDays().filter((i:any)=> i.value === ScheduleTypeId).map((i:any)=> i)}
+                                            />
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                            </div>: null}
                     </div>
-                </div>
                 </div>
                 <div className="btn-group m-2" role="group" aria-label="Basic example">
                 </div>
@@ -277,36 +311,57 @@ useEffect(()=>{
                         <h5 className=""> گزارش باربری</h5>
                     </div>
                     <div className="d-inline float-left px-2">
-                    <span >{"10"  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
+                    <span >{Length  + " "+ ScheduleTypes.filter((i:any)=> i.value === `${ScheduleTypeId}`).map((i:any)=> i.label) + " "+ "اخیر"}
                 
                     </span> 
                     </div>
-                <div className="dropdown  custom-dropdown d-inline float-right ">
-                    <a className="dropdown-toggle" role="button" id="uniqueVisitors" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <div className="   d-inline float-right ">
+
+                        <svg onClick={()=> setShow(!show)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                              className="feather feather-more-horizontal">
                             <circle cx="12" cy="12" r="1"></circle>
                             <circle cx="19" cy="12" r="1"></circle>
                             <circle cx="5" cy="12" r="1"></circle>
                         </svg>
-                    </a>
 
-                    <div className="dropdown-menu" aria-labelledby="uniqueVisitors" style={{width:"20rem"}}>
-                        
-                             <a className="dropdown-item" onClick={()=> setScheduleTypeId(1)}>10 سال اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(2)}>10 ماه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(3)}>10روز اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(4)}> 10 ساعت اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(5)}> 10دقیقه اخیر</a>
-                        <a className="dropdown-item" onClick={()=> setScheduleTypeId(6)}> 10 ثانیه اخیر</a>
-                           
-                    
-                   
-                    
+
+
+                        {show?
+                            <div className="dashboard-widget p-3 position-absolute dwrap" >
+                                <div  className='row form-row textOnInput'>
+                                    <div className='col-md-6 col-lg-6 mt-3'>
+                                        <div className="quantity-field w-100">
+                                            <button className="value-button increase-button" onClick={() => Length >= (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60):  setLength(Number(Length) + 1)}>+
+                                            </button>
+                                            <input   className="number"  onKeyUp={() => Length > (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60): Length} type="number" placeholder="بازه زمانی"
+                                                     min={1}  value={Length} onChange={(e:any)  => setLength(e.target.value)} />
+                                            <button className="value-button decrease-button "  onClick={() =>Length > 1 ? setLength(Number(Length) - 1) : setLength(1)}> --
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className='col-md-6 col-lg-6 mt-3   textOnInput form-group' >
+                                        <div className=" form-control-sm">
+                                            <label>  برنامه زمانی </label>
+
+                                            <Select
+                                                placeholder="  برنامه زمانی  "
+                                                options={ComboDays()}
+                                                onChange={(e:any)=> ChangHandler(e)}
+                                                defaultValue={ComboDays().filter((i:any)=> i.value === ScheduleTypeId).map((i:any)=> i)}
+                                            />
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                            </div>: null}
                     </div>
-                </div>
                 </div>
                 <div className="btn-group m-2" role="group" aria-label="Basic example">
                 </div>

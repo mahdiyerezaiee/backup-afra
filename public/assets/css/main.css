@@ -223,7 +223,10 @@ inset: 0px;
 .filter-btn .btn-sm{
   width: 100%;
 }
-
+.dwrap{
+  top:16%;
+  left: 0;
+}
 .lead a.btn.btn-primary.btn-lg {
   margin-top: 15px;
   border-radius: 4px; }
