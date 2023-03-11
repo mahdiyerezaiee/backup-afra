@@ -22,6 +22,7 @@ import InvoiceSetForOrder from "./InvoiceSetForOrder";
 import CraeteInvoceOrderDetail from "../Common/CreateInvoceOrdeDetail";
 import { IoIosArrowUp } from "react-icons/io";
 import { GridLoader } from "react-spinners";
+import ReserveOrder from './ReserveOrder';
 
 const file = require("../../../Admin/Order/Component/addressFile.xlsx");
 
@@ -76,6 +77,7 @@ const OrderAddress: React.FC<Props> = ({
   const [show, setShow] = useState(true);
 
   const [isOpenAddress, setIsOpenAddress] = useState(false);
+  const [isReserveModal, setisReserveModal] = useState(false);
   const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
   let [loading, setLoading] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -104,6 +106,16 @@ const OrderAddress: React.FC<Props> = ({
   const ColseInvoceModal = () => {
     setIsModalOpenInvoice(false);
   };
+
+
+  const OpenModalReserve = () => {
+   
+    setisReserveModal(true);
+}
+const closeModalinvoice = () => {
+  setisReserveModal(false);
+    getOrder()
+}
   const openModalDelet = (id: any) => {
     setIsModalOpen(true);
     setIdDelete(id);
@@ -123,13 +135,13 @@ const OrderAddress: React.FC<Props> = ({
           closeOnClick: true,
         });
         closeModalDelet();
-     window.location.reload()
+        window.location.reload()
       }
     } catch (err) {
       console.log(err);
       closeModalDelet();
     }
-    
+
   };
   const selectedFunc = () => {
     const arrayOfData = getSelectedData(selectedRows);
@@ -257,7 +269,7 @@ const OrderAddress: React.FC<Props> = ({
           closeOnClick: true,
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const getDetails = async () => {
     let finalArr: any = [];
@@ -332,7 +344,7 @@ const OrderAddress: React.FC<Props> = ({
         Cell: (rows: any) => {
           return (
             <p title={rows.row.original.fullAddress}>
-              {rows.row.original.fullAddress ? rows.row.original.fullAddress.substring(0, 20): "--"}
+              {rows.row.original.fullAddress ? rows.row.original.fullAddress.substring(0, 20) : "--"}
             </p>
           );
         },
@@ -366,11 +378,11 @@ const OrderAddress: React.FC<Props> = ({
           return condition.filter((x: any) => x.id === rows.row.original.id)
             .paymentMethodId === 4
             ? condition
-                .filter((x: any) => x.id === rows.row.original.id)
-                .map(
-                  (y: any) =>
-                    `${y.installmentOccureCount} قسط ${y.installmentPeriod} روزه`
-                )
+              .filter((x: any) => x.id === rows.row.original.id)
+              .map(
+                (y: any) =>
+                  `${y.installmentOccureCount} قسط ${y.installmentPeriod} روزه`
+              )
             : "--";
         },
         disableFilters: true,
@@ -404,16 +416,23 @@ const OrderAddress: React.FC<Props> = ({
                   onClick={() => openModal(rows.row.original.id)}
                   className="btn btn-sm  btn-primary "
                   disabled={paymentStatus === 1 || rows.row.original.shippingId !== null ? true : false}
-                  hidden={rows.row.original.shippingId !== null && order.extId!== null ? true : false}
+                  hidden={rows.row.original.shippingId !== null && order.extId !== null ? true : false}
                 >
                   صدور حواله
+                </button>
+                <button
+                  className="btn btn-sm btn-info ml-1 mr-1"
+                 onClick={()=>openInvoceModal([rows.row.original.id])}
+                >
+                  {" "}
+                  صدور صورتحساب
                 </button>
                 <button
                   className="btn btn-sm btn-warning ml-1 mr-1"
                   onClick={() =>
                     syncButton(rows.row.original.orderId, rows.row.original.id)
                   }
-                  hidden={rows.row.original.shippingId !== null && order.extId!== null ? false : true}
+                  hidden={rows.row.original.shippingId !== null && order.extId !== null ? false : true}
                 >
                   {" "}
                   تطابق با بازارگاه
@@ -446,6 +465,7 @@ const OrderAddress: React.FC<Props> = ({
                     <line x1="14" y1="11" x2="14" y2="17"></line>
                   </svg>
                 </button>
+                
               </div>
             );
           } else {
@@ -465,28 +485,27 @@ const OrderAddress: React.FC<Props> = ({
   };
   const CollapsAddressOrder = () => {
     setShow(!show);
-    
+
   };
 
   useEffect(() => {
     getDetails();
     getOrderDetailCondition();
-  }, [getOrder , show]);
+  }, [getOrder, show]);
 
-const getPayments=()=>{
- 
-  if(condition)
-  {
-    return(condition.map((i:any)=>({payments:i.paymentMethodId,installmentPeriod:i.installmentPeriod,installmentOccureCount:i.installmentOccureCount})))
+  const getPayments = () => {
+
+    if (condition) {
+      return (condition.map((i: any) => ({ payments: i.paymentMethodId, installmentPeriod: i.installmentPeriod, installmentOccureCount: i.installmentOccureCount })))
+    }
+    else {
+
+
+
+
+      return (FilterData.map((i: any) => ({ payments: i.paymentMethodId, installmentPeriod: i.installmentPeriod, installmentOccureCount: i.installmentOccureCount })))
+    }
   }
-  else{
-   
-  
-    
-    
-    return(FilterData.map((i:any)=>({payments:i.paymentMethodId,installmentPeriod:i.installmentPeriod,installmentOccureCount:i.installmentOccureCount})))
-  }
-}
 
 
   if (show && typeof details !== undefined) {
@@ -523,7 +542,7 @@ const getPayments=()=>{
               )}
             </div>
           </div>
-          { loading  ? (
+          {loading ? (
             <div className="w-100">
               {/* <div className=" m-auto"> */}
               <GridLoader
@@ -534,7 +553,7 @@ const getPayments=()=>{
               {/* </div> */}
             </div>
           ) : (
-            <div  className="info-Item">
+            <div className="info-Item">
               <ShippingSelected
                 modalIsOpen={modalIsOpen}
                 closeModal={closeModal}
@@ -555,7 +574,7 @@ const getPayments=()=>{
               />
               <div className="form-group mb-4 textOnInput col-lg-12     mt-4   ">
                 {condition &&
-                condition.filter((x: any) => x.extId === null).length > 0 ? (
+                  condition.filter((x: any) => x.extId === null).length > 0 ? (
                   <div
                     className="form-group   textOnInput col-lg-12 rounded border  border-dark   "
                     style={{ marginTop: "4rem" }}
@@ -625,8 +644,8 @@ const getPayments=()=>{
                                 >
                                   {item.paymentMethodId
                                     ? PaymentStructureEnums.filter(
-                                        (x) => x.id === item.paymentMethodId
-                                      ).map((q) => q.name)
+                                      (x) => x.id === item.paymentMethodId
+                                    ).map((q) => q.name)
                                     : "نقدی"}
                                 </td>
                                 <td
@@ -717,7 +736,7 @@ const getPayments=()=>{
                   ""
                 )}
                 {completeDdata &&
-                completeDdata.filter((x: any) => x.extId !== null).length >
+                  completeDdata.filter((x: any) => x.extId !== null).length >
                   0 ? (
                   <div
                     className="form-group mb-4  textOnInput col-lg-12 rounded border  border-dark    "
@@ -791,8 +810,8 @@ const getPayments=()=>{
 
                 <div className=" text-end  p-2" style={{ textAlign: "left" }}>
                   {roles.includes(7) ||
-                  roles.includes(5) ||
-                  roles.includes(8) ? (
+                    roles.includes(5) ||
+                    roles.includes(8) ? (
                     <button
                       className="btn-success m-1 btn "
                       hidden={order.orderStatusId === 8 ? false : true}
@@ -802,11 +821,11 @@ const getPayments=()=>{
                     </button>
                   ) : null}
                   {roles.includes(7) ||
-                  roles.includes(5) ||
-                  roles.includes(8) ? (
+                    roles.includes(5) ||
+                    roles.includes(8) ? (
                     <button
                       className="btn btn-info"
-                      hidden={ getOrder && order.reserved  ? true : false  }
+                      hidden={getOrder && order.reserved ? true : false}
                       onClick={() => openModelInvoice(order.id)}
                     >
                       صدور صورتحساب سفارش
@@ -814,10 +833,24 @@ const getPayments=()=>{
                   ) : (
                     ""
                   )}
+                  {roles.includes(7) ||
+                    roles.includes(5) ||
+                    roles.includes(8) ? (
+                    <button
+                      className="btn btn-warning"
+                      hidden={getOrder && order.reserved ? false : true}
+                      onClick={() => OpenModalReserve()}
+                    >
+                      تغییر تاریخ سررسید رزرو
+                    </button>
+                  ) : (
+                    ""
+                  )}
+
                 </div>
               </div>
               <InvoiceSetForOrder
-              defaultPaymentId={getPayments}
+                defaultPaymentId={getPayments}
                 closeModal={CloseModalInvoice}
                 isOpenInvoice={IsOpenInvoce}
                 orderId={OrderId}
@@ -828,6 +861,7 @@ const getPayments=()=>{
                 orderDetailId={orderDetailId}
                 orderMeasuerId={measureUnitId}
               />
+              <ReserveOrder id={order.id} closeModal={closeModalinvoice} modalIsOpen={isReserveModal} expireDate={order.reservationExpireDate} />
               <ExcelFileUploader
                 modalIsOpen={modalIsOpenUploadExcel}
                 closeModal={closeModalIsOpenUploadExcel}
