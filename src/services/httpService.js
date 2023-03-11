@@ -80,7 +80,14 @@ axios.interceptors.response.use(
           closeOnClick: true
         });
       }
-      else {
+      else if(error.response.data.error.errorCode===500 && error.response.data.error.message!=="") {
+
+        toast.error(error.response.data.error.message, {
+          position: "top-right",
+          closeOnClick: true
+        });
+      }
+      else{
         toast.error('سرور پاسخگو نیست', {
           position: "top-right",
           closeOnClick: true

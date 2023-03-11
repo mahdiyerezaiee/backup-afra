@@ -13,7 +13,7 @@ import  QueryString  from 'qs';
 
 const ReportShipping: React.FC = () => {
 
-    const [Unshipped, setUnshipped] = useState<any>(true);
+    const [shipped, setshipped] = useState<any>(true);
     const [HasShippingContract, setHasShippingContract] = useState<any>(true);
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
@@ -74,7 +74,7 @@ const ReportShipping: React.FC = () => {
     
                 params: {
                     StartDate,EndDate,
-                    Unshipped: Unshipped===true?Unshipped:null,
+                    Unshipped: shipped===true?shipped:null,
                     HasShippingContract:HasShippingContract===true?HasShippingContract:null
                     
     
@@ -168,7 +168,7 @@ const ReportShipping: React.FC = () => {
 
                                             <div className="col-xl-6 col-md-6  col-xs-12 ">
 
-                                                <input type="checkbox" checked={Unshipped} onClick={(e: any) => setUnshipped(e.target.checked)} />
+                                                <input type="checkbox" checked={shipped} onClick={(e: any) => setshipped(e.target.checked)} />
                                                 <label className="ml-3">فقط  حمل شده  </label>
 
                                             </div>

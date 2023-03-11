@@ -415,7 +415,7 @@ const closeModalinvoice = () => {
                 <button
                   onClick={() => openModal(rows.row.original.id)}
                   className="btn btn-sm  btn-primary "
-                  disabled={paymentStatus === 1 || rows.row.original.shippingId !== null ? true : false}
+                  disabled={ rows.row.original.shippingId !== null ? true : false}
                   hidden={rows.row.original.shippingId !== null && order.extId !== null ? true : false}
                 >
                   صدور حواله
@@ -817,7 +817,7 @@ const closeModalinvoice = () => {
                       hidden={order.orderStatusId === 8 ? false : true}
                       onClick={openModalFinancialConfirmation}
                     >
-                      تایید مالی
+                     تایید مشروط
                     </button>
                   ) : null}
                   {roles.includes(7) ||
