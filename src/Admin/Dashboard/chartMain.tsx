@@ -11,7 +11,7 @@ import LazyLoad from "react-lazy-load";
 const ChartMain: React.FC = () => {
     const [datas, setDatas] = useState(getDataReport().datas ? getDataReport().datas : [])
     const [PriceUnitId , setPriceUnitId]=useState(4)
-
+const [Length , setLength] = useState(7)
     const [TypeId, setTypeId] = useState(3)
     let d = new Date();
     d.setTime(d.getTime() + (60 * 1000));
@@ -58,20 +58,21 @@ const animation = {
 
 
     }
-    useEffect(() => {
-        const GetReport = async () => {
-            try {
-                const { data, status } = await GetPeriodicSalesReport(TypeId , PriceUnitId)
+    const GetReport = async () => {
+        try {
+            const { data, status } = await GetPeriodicSalesReport(TypeId , PriceUnitId,Length)
 
-                setDatas(data.result.ordersPerSchedule)
-                dataReport.datas = data.result.ordersPerSchedule
-                sessionStorage.setItem('dataReport', JSON.stringify(dataReport));
+            setDatas(data.result.ordersPerSchedule)
+            dataReport.datas = data.result.ordersPerSchedule
+            sessionStorage.setItem('dataReport', JSON.stringify(dataReport));
 
-            } catch (e) {
-                console.log(e)
-            }
-
+        } catch (e) {
+            console.log(e)
         }
+
+    }
+    useEffect(() => {
+
         if (getDataReport().expiresAt < new Date().toUTCString()) {
             sessionStorage.removeItem("dataReport")
 
@@ -80,12 +81,12 @@ const animation = {
             GetReport()
             sessionStorage.setItem('dataReport', JSON.stringify(dataReport));
 
-        } else if (TypeId || PriceUnitId) {
+        } else if (TypeId || PriceUnitId || Length) {
             GetReport()
 
         }
 
-    }, [TypeId , PriceUnitId])
+    }, [TypeId , PriceUnitId ,Length])
 
 
     return (
@@ -94,13 +95,13 @@ const animation = {
             <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12  ">
                 <LazyLoad threshold={1}  offset={1000}>
 
-                <ChartLineCount animation={animation} TypeId={TypeId} datas={datas} setTypeId={setTypeId} />
+                <ChartLineCount Length={Length} setLength={setLength} animation={animation} TypeId={TypeId} datas={datas} setTypeId={setTypeId} />
                 </LazyLoad>
             </div>
             <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12  ">
                 <LazyLoad threshold={1} offset={1000}>
 
-                <ChartLineValue PriceUnitId={PriceUnitId} setPriceUnitId={setPriceUnitId} animation={animation}  TypeId={TypeId}   datas={datas} setTypeId={setTypeId} />
+                <ChartLineValue Length={Length} setLength={setLength}  PriceUnitId={PriceUnitId} setPriceUnitId={setPriceUnitId} animation={animation}  TypeId={TypeId}   datas={datas} setTypeId={setTypeId} />
                 </LazyLoad>
             </div>
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12  ">
