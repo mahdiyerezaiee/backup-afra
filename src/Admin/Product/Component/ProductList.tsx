@@ -596,7 +596,7 @@ const ProductList: React.FC = () => {
                                     <label>گروه کالا </label>
 
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='گروه کالا'
                                         options={groups}
                                         isMulti
@@ -617,14 +617,14 @@ const ProductList: React.FC = () => {
 
                                     {companyId && companyId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
                                             value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {
@@ -742,7 +742,7 @@ const ProductList: React.FC = () => {
                                     <label>گروه کالا </label>
 
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='گروه کالا'
                                         options={groups}
                                         isMulti
@@ -763,14 +763,14 @@ const ProductList: React.FC = () => {
 
                                     {companyId && companyId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
                                             value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {

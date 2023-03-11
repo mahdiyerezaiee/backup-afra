@@ -163,6 +163,7 @@ setLoading(false)
                                     <div className="form-group mb-3">
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             className="opacityForInput"
                                             options={optionsRole}
                                             placeholder={UserRoles()}

@@ -230,6 +230,7 @@ const EditeSupply:React.FC = () => {
                                     <label>نام کالا</label>
 
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         styles={{
                                             // Fixes the overlapping problem of the component
                                             menu: provided => ({ ...provided, zIndex: 9999 })
@@ -249,6 +250,7 @@ const EditeSupply:React.FC = () => {
                                 <label>واحد</label>
 
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         styles={{
                                             // Fixes the overlapping problem of the component
                                             menu: provided => ({ ...provided, zIndex: 9999 })
@@ -268,6 +270,7 @@ const EditeSupply:React.FC = () => {
                                 <label>انبار</label>
 
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         styles={{
                                             // Fixes the overlapping problem of the component
                                             menu: provided => ({ ...provided, zIndex: 9999 })
@@ -291,6 +294,7 @@ const EditeSupply:React.FC = () => {
                                     <label>تامین کننده</label>
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             styles={{
                                                 // Fixes the overlapping problem of the component
                                                 menu: provided => ({ ...provided, zIndex: 9999 })
@@ -321,6 +325,7 @@ const EditeSupply:React.FC = () => {
 
 
                                             }}
+                                         menuShouldScrollIntoView ={false}
                                         />
                                         {supplyTypeId === 0 ? <span className="text-danger">یک نوع تامین را انتخاب کنید</span> : ''}
 
@@ -329,6 +334,7 @@ const EditeSupply:React.FC = () => {
                                     <label>نوع تامین</label>
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                          styles={{
                                             // Fixes the overlapping problem of the component
                                             menu: provided => ({ ...provided, zIndex: 9999 })
@@ -388,14 +394,14 @@ const EditeSupply:React.FC = () => {
 
                                                     {companyId && companyId === null ?
                                                         <Select
-
+                                                            menuShouldScrollIntoView ={false}
                                                             options={CompaniesIDs()}
                                                             onChange={(e: any) => {
                                                                 setCompanyId(e.value)
                                                             }}
                                                         /> : <Select
                                                             value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
-
+                                                            menuShouldScrollIntoView ={false}
                                                             placeholder='نام شرکت'
                                                             options={CompaniesIDs()}
                                                             onChange={(e: any) => {

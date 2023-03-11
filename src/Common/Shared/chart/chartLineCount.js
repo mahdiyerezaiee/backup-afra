@@ -219,6 +219,7 @@ if (datas && datas.length >0){
                                         <label>  برنامه زمانی </label>
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="  برنامه زمانی  "
                                             options={ComboDays()}
                                             onChange={(e)=> ChangHandler(e)}

@@ -713,6 +713,7 @@ setQuantityConditio(quantity)
                       <div className="col-12 mb-4  textOnInput">
                         <label> شرکت</label>
                         <Select
+                            menuShouldScrollIntoView ={false}
                           defaultValue={defaultValue}
                           placeholder="نام شرکت"
                           options={companys()}
@@ -742,6 +743,7 @@ setQuantityConditio(quantity)
                       <label>مشتری</label>
 
                       <Select
+                          menuShouldScrollIntoView ={false}
                         placeholder="مشتری"
                         options={customerComb()}
                         onChange={(e: any) => {
@@ -765,6 +767,7 @@ setQuantityConditio(quantity)
 {productSupplyId !== 0  ?
                         <>
                           <Select
+                              menuShouldScrollIntoView ={false}
                             placeholder="کالا"
                             className="opacityForInput border-danger"
                            value={productComboSupply()}
@@ -777,6 +780,7 @@ setQuantityConditio(quantity)
                       productId === 0 ? (
                         <>
                           <Select
+                              menuShouldScrollIntoView ={false}
                             placeholder="کالا"
                             className="opacityForInput border-danger"
                             options={productCombo()}
@@ -795,6 +799,7 @@ setQuantityConditio(quantity)
                         </>
                       ) : (
                         <Select
+                            menuShouldScrollIntoView ={false}
                           placeholder="کالا"
                           className=" "
                           options={productCombo()}
@@ -817,6 +822,7 @@ setQuantityConditio(quantity)
                         {productSupplyId === 0 ? (
                           <div className="row">
                             <Select
+                                menuShouldScrollIntoView ={false}
                               placeholder="عرضه"
                               className=" col-9 opacityForInput border-danger pr-2"
                               options={prodcutSupplyCombo()}
@@ -842,6 +848,7 @@ setQuantityConditio(quantity)
                         ) : (
                           <div className="row">
                             <Select
+                                menuShouldScrollIntoView ={false}
                               placeholder="عرضه"
                               className="col-9 opacityForInput pr-2 "
                               options={prodcutSupplyCombo()}
@@ -873,6 +880,7 @@ setQuantityConditio(quantity)
                       >
                         <label>نحوه پرداخت</label>
                         <Select
+                            menuShouldScrollIntoView ={false}
                           value={paymentSupplay()}
                           isDisabled
                           placeholder="نحوه پرداخت"
@@ -889,6 +897,7 @@ setQuantityConditio(quantity)
                       >
                         <label>نحوه پرداخت</label>
                         <Select
+                            menuShouldScrollIntoView ={false}
                           placeholder="نحوه پرداخت"
                           options={paymentM()}
                           onChange={(e: any) => {
@@ -904,6 +913,7 @@ setQuantityConditio(quantity)
                       <div className=" form-control-sm">
                         <label>وضعیت پرداخت </label>
                         <Select
+                            menuShouldScrollIntoView ={false}
                           placeholder="وضعیت پرداخت"
                           options={PaymentStatus()}
                           onChange={(e: any) => {
@@ -1007,6 +1017,7 @@ setQuantityConditio(quantity)
                     >
                       <label>وضعیت سفارش</label>
                       <Select
+                          menuShouldScrollIntoView ={false}
                         maxMenuHeight={200}
                         placeholder="نحوه پرداخت"
                         options={statusOrder()}

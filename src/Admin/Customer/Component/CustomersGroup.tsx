@@ -378,6 +378,7 @@ export const CustomersGroup:React.FC = () => {
                                     <div className="form-control-sm">
                                         <label> شرکت</label>
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}
@@ -448,6 +449,7 @@ export const CustomersGroup:React.FC = () => {
                             <div className="form-control-sm">
                                         <label> شرکت</label>
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}

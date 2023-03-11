@@ -125,7 +125,7 @@ const FinancialConfirmation:React.FC<Props> = ({ id, modalIsOpen, closeModal }) 
                                 <label>نوع تایید</label>
 
                                 <Select
-
+                                    menuShouldScrollIntoView ={false}
                                     placeholder='نوع تایید'
                                     options={PaymentStatus()}
                                     onChange={(e:any) => { setId(e.value) }}

@@ -144,14 +144,14 @@ const EditCustomerGroupName:React.FC = () => {
 
                                                     {companyId && companyId === null ?
                                                         <Select
-
+                                                            menuShouldScrollIntoView ={false}
                                                             options={companys()}
                                                             onChange={(e: any) => {
                                                                 SetcompanyId(e.value)
                                                             }}
                                                         /> : <Select
                                                             value={companys().filter((i: any) => i.value === companyId).map((i: any) => i)}
-
+                                                            menuShouldScrollIntoView ={false}
                                                             placeholder='نام شرکت'
                                                             options={companys()}
                                                             onChange={(e: any) => {

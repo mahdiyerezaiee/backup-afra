@@ -283,6 +283,7 @@ export function ChartShippingReport() {
                                             <label>  برنامه زمانی </label>
 
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder="  برنامه زمانی  "
                                                 options={ComboDays()}
                                                 onChange={(e:any)=> ChangHandler(e)}
@@ -354,6 +355,7 @@ export function ChartShippingReport() {
                                             <label>  برنامه زمانی </label>
 
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder="  برنامه زمانی  "
                                                 options={ComboDays()}
                                                 onChange={(e:any)=> ChangHandler(e)}

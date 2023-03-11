@@ -321,7 +321,7 @@ const Header: React.FC = () => {
                             </Link>
                             <span className="badge badge-success"></span>
                         </div>
-                        <div className="  row cart-shop2 ql-direction-rtl  "
+                        <div className="  row cart-news ql-direction-rtl  "
                             style={{ top: "80px", left: showNews == true ? "1rem" : "-60rem" }}>
                             {showNews && (
                                 <NewsHeader />

@@ -213,7 +213,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                             </Link>
                         </div>
                         <div onClick={handleHeaderClick} className="  row cart-shop2 ql-direction-rtl  "
-                            style={{ top: "80px", left: show == true ? "1rem" : "-60rem" }}>
+                            style={{ top: "80px", left: show == true ? "0.8rem" : "-60rem" }}>
                             <div className="col-12 px-2" >
                                 <div className="row">
                                 <span className=" col-6 float-right bold py-2" style={{ fontSize: 'smaller' , color:"black" }}>{cartShopping.length !== 0 ? <span>{cartShopping.length} کالا در سبد خرید</span>:<span> کالایی در سبد خرید موجود نیست</span>}</span>

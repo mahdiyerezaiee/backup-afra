@@ -321,6 +321,7 @@ const WareHouseType :React.FC= () => {
                                     <div className="col-lg-4 col-md-4 col-sm-4   selectIndex">
                                         <label> شرکت</label>
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}
@@ -404,6 +405,7 @@ const WareHouseType :React.FC= () => {
                                     <div className="col-lg-4 col-md-4 col-sm-4 selectIndex">
                                         <label> شرکت</label>
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}

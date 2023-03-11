@@ -445,6 +445,7 @@ const body ={
                                                     options={companys()}
                                                     key={defaultValue}
                                                     isClearable={true}
+                                                    menuShouldScrollIntoView ={false}
                                                     onChange={(e: any) => {
 
 
@@ -473,6 +474,7 @@ const body ={
                                                 options={Roles()}
                                                 key={defaulRoleValue}
                                                 isClearable={true}
+                                                menuShouldScrollIntoView ={false}
                                                 onChange={(e: any) => {
 
 
@@ -498,6 +500,7 @@ const body ={
                                                 options={UserGroups()}
                                                 key={defaultUserGroup}
                                                 isClearable={true}
+                                                menuShouldScrollIntoView ={false}
                                                 onChange={(e: any) => {
 
 
@@ -517,6 +520,7 @@ const body ={
                                             <div className="col-lg-4 col-md-4 col-sm-11 mb-4">
                                                 <label >سازمان</label>
                                                 <Select
+                                                    menuShouldScrollIntoView ={false}
                                                     value={OrganizationItem()}
                                                     options={OrganizationId()}
                                                     onChange={(e: any) => setOrganizationId(e.value)}

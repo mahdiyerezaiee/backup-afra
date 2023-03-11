@@ -1033,6 +1033,7 @@ const OrderList: React.FC = () => {
                                 <label>وضعیت ارسال </label>
 
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     value={shippingStatusIds}
                                     placeholder='وضعیت تخصیص'
                                     options={shippingId()}
@@ -1050,6 +1051,7 @@ const OrderList: React.FC = () => {
                                 <label>وضعیت سفارش</label>
 
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     value={orderStatusIds}
                                     placeholder='وضعیت سفارش'
                                     options={OrderStatusID()}
@@ -1067,6 +1069,7 @@ const OrderList: React.FC = () => {
                                 <label>وضعیت پرداخت </label>
 
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     value={paymentStatusIds}
                                     placeholder='وضعیت پرداخت'
                                     options={PaymentStatus()}
@@ -1084,12 +1087,13 @@ const OrderList: React.FC = () => {
                                 <label> وضعیت سررسید </label>
                                 {overDue && overDue === null ?
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         options={OverDue()}
                                         onChange={(e: any) => {
                                             SetoverDue(e.value)
                                         }}
                                     /> : <Select
+                                        menuShouldScrollIntoView ={false}
                                         value={OverDue().filter(i => i.value === overDue).map(i => i)}
 
                                         placeholder=' وضعیت سررسید '
@@ -1107,6 +1111,7 @@ const OrderList: React.FC = () => {
                                 <label> نحوه پرداخت </label>
 
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     value={paymentMethodIds}
                                     placeholder=' پرداخت '
                                     options={paymentMethodIDs()}
@@ -1125,14 +1130,14 @@ const OrderList: React.FC = () => {
 
                                 {companyId && companyId === null ?
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         options={CompaniesIDs()}
                                         onChange={(e: any) => {
                                             setCompanyId(e.value)
                                         }}
                                     /> : <Select
                                         value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='نام شرکت'
                                         options={CompaniesIDs()}
                                         onChange={(e: any) => {
@@ -1271,7 +1276,7 @@ const OrderList: React.FC = () => {
                                         placeholder='وضعیت تخصیص'
                                         options={shippingId()}
                                         isMulti
-
+                                        menuShouldScrollIntoView ={false}
                                         isClearable={true}
                                         onChange={e => {
 
@@ -1292,7 +1297,7 @@ const OrderList: React.FC = () => {
                                         placeholder='وضعیت سفارش'
                                         options={OrderStatusID()}
                                         isMulti
-
+                                        menuShouldScrollIntoView ={false}
                                         isClearable={true}
                                         onChange={e => {
                                             setOrderStatusIds(e)
@@ -1310,7 +1315,7 @@ const OrderList: React.FC = () => {
                                         placeholder='وضعیت پرداخت'
                                         options={PaymentStatus()}
                                         isMulti
-
+                                        menuShouldScrollIntoView ={false}
                                         isClearable={true}
                                         onChange={e => {
 
@@ -1327,6 +1332,7 @@ const OrderList: React.FC = () => {
 
                                     {overDue && overDue === null ?
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             placeholder=' وضعیت سررسید '
                                             options={OverDue()}
                                             isMulti={true}
@@ -1334,6 +1340,7 @@ const OrderList: React.FC = () => {
                                                 SetoverDue(e.value)
                                             }}
                                         /> : <Select
+                                            menuShouldScrollIntoView ={false}
                                             value={OverDue().filter(i => i.value === overDue).map(i => i)}
                                             placeholder=' وضعیت سررسید '
                                             options={OverDue()}
@@ -1349,6 +1356,7 @@ const OrderList: React.FC = () => {
                                     <label> نحوه پرداخت </label>
 
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         value={paymentMethodIds}
                                         placeholder=' پرداخت '
                                         options={paymentMethodIDs()}
@@ -1371,14 +1379,14 @@ const OrderList: React.FC = () => {
 
                                     {companyId && companyId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
                                             value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {

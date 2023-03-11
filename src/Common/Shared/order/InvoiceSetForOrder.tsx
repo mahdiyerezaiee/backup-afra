@@ -149,6 +149,7 @@ try {
               <label> نحوه پرداخت </label>
 
               {paymentMethodId!==0?<Select
+                      menuShouldScrollIntoView ={false}
               value={paymentMethodIDs().filter((i:any)=>i.value===paymentMethodId).map((i:any)=>i)}
                 placeholder=' پرداخت '
                 options={paymentMethodIDs()}
@@ -162,7 +163,7 @@ try {
               
               <Select placeholder=' پرداخت '
               options={paymentMethodIDs()}
-
+                      menuShouldScrollIntoView ={false}
               onChange={(e: any) => {
 
                 setPaymentMethodId(e.value)

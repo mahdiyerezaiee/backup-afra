@@ -289,7 +289,7 @@ useEffect(()=>{
   
                     rtl:false,
                     color: (c:any) => {
-                        return c.tick.label.includes('اکنون') ? "red" : "black"
+                        return c.tick.label.includes('اکنون') ? "red" : "gray"
                     },
                       padding: 4,
                       font: {
@@ -360,6 +360,7 @@ useEffect(()=>{
                                             <label>  برنامه زمانی </label>
 
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder="  برنامه زمانی  "
                                                 options={ComboDays()}
                                                 onChange={(e:any)=> ChangHandler(e)}
@@ -373,6 +374,7 @@ useEffect(()=>{
                                             <label> واحد قیمت </label>
 
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder="  واحد قیمت  "
                                                 options={ComboPrice()}
                                                 onChange={(e:any)=> setPriceUnitId(e.value)}

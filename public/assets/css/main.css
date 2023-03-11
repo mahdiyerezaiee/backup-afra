@@ -2750,7 +2750,22 @@ left: -214px;
 .cart-shop2{
   width: 40rem;
   top:80px;
-  /* padding: 10px; */
+   /*padding: 10px;*/
+  position: fixed;
+  height:calc(97.5vh - 100px);
+  left: 8rem;
+  background-color: white;
+  transition: all 1s ;
+  border: 1px solid #c5c5c5;
+  border-bottom-right-radius:10px ;
+  border-top-right-radius:10px ;
+
+
+}
+.cart-news{
+  width: 29rem;
+  top:80px;
+  padding: 10px;
   position: fixed;
   height:calc(97.5vh - 100px);
   left: 8rem;
@@ -2964,6 +2979,13 @@ select:-webkit-autofill:focus {
   }
   .clientBody .cart-shop2 {
     width: 20rem;}
+  .cart-news{
+    width: 20rem;
+
+
+
+
+  }
   .cart-shop2{
     /* padding: 10px; */
     width: 20rem;

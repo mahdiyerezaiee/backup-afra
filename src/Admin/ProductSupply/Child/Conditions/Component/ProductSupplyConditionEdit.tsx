@@ -133,7 +133,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         placeholder="نوع پرداخت"
                                         options={paymentMethod()}
                                         onChange={(e:any) => setpaymentMethodId(e.value)}
-
+                                        menuShouldScrollIntoView ={false}
                                     />
 
                                 </div>
@@ -145,9 +145,10 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
 
                                     <Select
+
                                         placeholder=' نوع افزایش'
                                         defaultValue={additionalType(editFormData.additionalTypeId)}
-
+                                        menuShouldScrollIntoView ={false}
                                         options={additionalTypeIdS()}
                                         onChange={(e:any) => setadditionalTypeId(e.value)}
 
@@ -197,6 +198,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                     <label>گروه مشتریان</label>
                                     {cu === 0 ?
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             value={CustomerGId(editFormData.customerGroupId)}
                                             options={CustomerG()}
                                             onChange={function (e:any) {
@@ -208,7 +210,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         :
                                         <Select
 
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CustomerG()}
                                             onChange={(e:any) => setcustomerGroupId(e.value)}
 
