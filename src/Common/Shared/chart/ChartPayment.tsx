@@ -332,7 +332,7 @@ useEffect(()=>{
                         {show?
                             <div className="dashboard-widget p-3 position-absolute dwrap" >
                                 <div  className='row form-row  '>
-                                    <div className='col-md-4 mt-3 '>
+                                    <div className='col-md-4 mt-4 '>
 
                                         <div className="quantity-field w-100">
                                         <button className="value-button increase-button" onClick={() => Length >= (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60):  setLength(Number(Length) + 1)}>+
@@ -343,7 +343,7 @@ useEffect(()=>{
                                         </button>
                                         </div>
                                     </div>
-                                    <div className='col-md-4 mt-3 textOnInput form-group' >
+                                    <div className='col-md-4 mt-4 textOnInput form-group' >
                                         <div className=" form-control-sm">
                                             <label>  برنامه زمانی </label>
 
@@ -356,7 +356,7 @@ useEffect(()=>{
                                         </div>
 
                                     </div>
-                                    <div className='col-md-4 mt-3  textOnInput form-group' >
+                                    <div className='col-md-4 mt-4  textOnInput form-group' >
                                         <div className=" form-control-sm">
                                             <label> واحد قیمت </label>
 
