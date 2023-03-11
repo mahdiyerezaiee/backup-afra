@@ -2962,8 +2962,11 @@ select:-webkit-autofill:focus {
     position: absolute;
     bottom: 10%;
   }
+  .clientBody .cart-shop2 {
+    width: 20rem;}
   .cart-shop2{
     /* padding: 10px; */
+    width: 20rem;
     position: fixed;
     height:calc(90vh - 100px);
     left: 8rem;
@@ -3049,6 +3052,7 @@ select:-webkit-autofill:focus {
     margin: 10px;
     border-radius: 20px;
   }
+
   .table td:last-child {
    /* margin-bottom: 100px; */
     /* border-bottom: 1px solid #0045ff!important; */
