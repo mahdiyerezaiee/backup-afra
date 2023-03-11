@@ -7,6 +7,7 @@ import { PaymentStatusEnums } from "../../Enums/PaymentStatus";
 import { ConditionalPaymentTypes } from "../../Enums/ConditionalPaymentTypes";
 import { PaymentFinancialConfirmtion } from "../../Enums/paymentFinancialConfirmtion";
 import {ClipLoader} from "react-spinners";
+import { SetConditionalPay } from './../../../services/orderService';
 
 const customStyles = {
     content: {
@@ -37,18 +38,13 @@ const FinancialConfirmation:React.FC<Props> = ({ id, modalIsOpen, closeModal }) 
 
     const handleEditFormSubmit = async () => {
         setLoading(true)
-        if (StatusId === 1) {
-
-            paymentStatusId = 3
-            conditionalPaymentTypeId = null
-
-        } if (StatusId === 2) {
-            paymentStatusId = 6
+       if (StatusId === 2) {
+           
             conditionalPaymentTypeId = 1
 
 
         } if (StatusId === 3) {
-            paymentStatusId = 6
+         
             conditionalPaymentTypeId = 2
 
 
@@ -58,15 +54,13 @@ const FinancialConfirmation:React.FC<Props> = ({ id, modalIsOpen, closeModal }) 
         const datas = {
 
             orderId: id,
-            orderStatusId: 3,
-            paymentStatusId,
             conditionalPaymentTypeId,
             conditionPaymentComment: StatusId === 2 ? conditionPaymentComment : null,
-            IsAdmin:true
+            
         }
 
         try {
-            const { data, status } = await ChangeOrderStatus(datas)
+            const { data, status } = await SetConditionalPay(datas)
 
             if (status===200) {
                 toast.success('تایید با موفقیت انجام شد', {
