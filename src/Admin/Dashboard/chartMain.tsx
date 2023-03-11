@@ -10,9 +10,9 @@ import LazyLoad from "react-lazy-load";
 
 const ChartMain: React.FC = () => {
     const [datas, setDatas] = useState(getDataReport().datas ? getDataReport().datas : [])
-    const [PriceUnitId , setPriceUnitId]=useState(4)
-const [Length , setLength] = useState(7)
-    const [TypeId, setTypeId] = useState(3)
+    const [PriceUnitId , setPriceUnitId]=useState(getDataReportValue().PriceUnitId ?getDataReportValue().PriceUnitId : 4)
+const [Length , setLength] = useState(getDataReportValue().Length ? getDataReportValue().Length :7)
+    const [TypeId, setTypeId] = useState(getDataReportValue().TypeId ? getDataReportValue().TypeId : 3)
     let d = new Date();
     d.setTime(d.getTime() + (60 * 1000));
     let expires = d.toUTCString();
@@ -51,14 +51,25 @@ const animation = {
     }
   }
 };
-
+    const valueReport = {
+        Length,
+        PriceUnitId,
+        TypeId,
+    }
     function getDataReport() {
         let items = JSON.parse(String(sessionStorage.getItem('dataReport')));
         return items ? items : ''
 
 
     }
+    function getDataReportValue() {
+        let items = JSON.parse(String(localStorage.getItem('valueDataReportOrder')));
+        return items ? items : ''
+
+
+    }
     const GetReport = async () => {
+
         try {
             const { data, status } = await GetPeriodicSalesReport(TypeId , PriceUnitId,Length)
 
@@ -85,6 +96,7 @@ const animation = {
             GetReport()
 
         }
+        localStorage.setItem('valueDataReportOrder', JSON.stringify(valueReport));
 
     }, [TypeId , PriceUnitId ,Length])
 

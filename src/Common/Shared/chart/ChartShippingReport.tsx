@@ -35,11 +35,19 @@ ChartJS.register(
 
 export function ChartShippingReport() {
     const [datas , setDatas]=useState<any>([])
-    const [ScheduleTypeId , setScheduleTypeId]=useState(3)
+    const [ScheduleTypeId , setScheduleTypeId]=useState(getDataReportValue().ScheduleTypeId ? getDataReportValue().ScheduleTypeId : 3)
     const [show ,setShow] =useState(false)
-    const [Length , setLength] = useState<any>(7)
-const [max , setMax]=useState(30)
+    const [Length , setLength] = useState(getDataReportValue().Length ? getDataReportValue().Length :7)
+    const valueReport = {
+        Length,
+        ScheduleTypeId,
+    }
+    function getDataReportValue() {
+        let items = JSON.parse(String(localStorage.getItem('valueDataReportShipping')));
+        return items ? items : ''
 
+
+    }
     useEffect(()=>{
     const GetReport = async () => {
         try {
@@ -58,6 +66,7 @@ const [max , setMax]=useState(30)
         GetReport()
 
     }
+        localStorage.setItem('valueDataReportShipping', JSON.stringify(valueReport));
 
 },[ScheduleTypeId , Length])
     const ChangHandler = (e:any) =>{
