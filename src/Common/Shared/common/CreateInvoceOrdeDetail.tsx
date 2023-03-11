@@ -56,6 +56,9 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
 
 
     }, [])
+   
+    console.log(orderDetailId.length);
+    
     const setDefault = () => {
 
         if (defaultPaymentId().length > 0 ) {
@@ -112,6 +115,53 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
         e.preventDefault();
         let body = {}
 
+        if(orderDetailId.length===1){
+
+            console.log(orderDetailId[0]);
+            
+            body = {
+                "entityTypeId": 11,
+                "entityId": orderDetailId[0],
+                "paymentMethodId": paymentMethodId,
+                "installmentStartDate": paymentMethodId !== 4 ? null : installmentStartDate,
+                "installmentPeriod": installmentPeriod,
+                "installmentOccureCount": installmentOccureCount,
+                "comment": comment
+            }
+
+            try {
+                const { data, status } = await CreateInvoice(body)
+              
+    
+                    if (status === 200) {
+    
+                        toast.success('فاکتور با موفقیت صادر شد', {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined
+                        });
+    
+                        window.location.reload()
+    
+    
+                    }
+    
+    
+                    setLoading(false)
+                    closeModal()
+                } catch (error) {
+                    setLoading(false)
+                    closeModal()
+                }
+
+        }
+        else{
+
+        
         for (let i = 0; i < orderDetailId.length; i++) {
             body = {
                 "entityTypeId": 11,
@@ -122,9 +172,9 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
                 "installmentOccureCount": installmentOccureCount,
                 "comment": comment
             }
-
-            const { data, status } = await CreateInvoice(body)
             try {
+            const { data, status } = await CreateInvoice(body)
+          
 
                 if (status === 200) {
 
@@ -138,6 +188,7 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
                         progress: undefined
                     });
 
+                    window.location.reload()
 
 
                 }
@@ -150,8 +201,8 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
                 closeModal()
             }
         }
+    }
 
-        window.location.reload()
 
 
     }
