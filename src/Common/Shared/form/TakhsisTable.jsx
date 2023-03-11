@@ -94,6 +94,7 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
                 <span className=" py-3" style={{fontSize: 'smaller'}}> اقدام دسته جمعی: </span>
 
                 <select
+                    menuShouldScrollIntoView ={false}
                     // style={{height:'20px'}}
                     className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                     style={{fontSize: 'smaller'}}
