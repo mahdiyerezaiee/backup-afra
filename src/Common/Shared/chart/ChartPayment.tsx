@@ -35,13 +35,24 @@ ChartJS.register(
     
 export function ChartPayment() {
     const [datas , setDatas]=useState<any>([])
-    const [ScheduleTypeId , setScheduleTypeId]=useState(3)   
-     const [PriceUnitId , setPriceUnitId]=useState(4)
+    const [ScheduleTypeId , setScheduleTypeId]=useState(getDataReportValue().ScheduleTypeId ? getDataReportValue().ScheduleTypeId : 3)
+    const [PriceUnitId , setPriceUnitId]=useState(getDataReportValue().PriceUnitId ?getDataReportValue().PriceUnitId : 4)
     const [show ,setShow] =useState(false)
-    const [Length , setLength] = useState<any>(7)
+    const [Length , setLength] = useState(getDataReportValue().Length ? getDataReportValue().Length :7)
+    const [PaymentMethodId , setPaymentMethodId]=useState<any>(getDataReportValue().PaymentMethodId ? getDataReportValue().PaymentMethodId :0)
+    const valueReport = {
+        Length,
+        PriceUnitId,
+        ScheduleTypeId,
+        PaymentMethodId,
 
-    const [PaymentMethodId , setPaymentMethodId]=useState<any>(0)
-    
+    }
+    function getDataReportValue() {
+        let items = JSON.parse(String(sessionStorage.getItem('valueDataReportPayment')));
+        return items ? items : ''
+
+
+    }
     const totalDuration = 2000;
     const delayBetweenPoints = totalDuration / datas.length;
     const previousY = (ctx:any) => ctx.index === 0 ? ctx.chart.scales.yAxes.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
@@ -109,6 +120,7 @@ useEffect(()=>{
      if (ScheduleTypeId || PaymentMethodId || PriceUnitId || Length){
         GetReport()
     }
+    sessionStorage.setItem('valueDataReportPayment', JSON.stringify(valueReport));
 
 },[ScheduleTypeId , PaymentMethodId , PriceUnitId ,Length])
     
