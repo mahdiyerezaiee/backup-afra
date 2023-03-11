@@ -259,7 +259,7 @@ const [max , setMax]=useState(30)
                         {show?
                             <div className="dashboard-widget p-3 position-absolute dwrap" >
                                 <div  className='row form-row textOnInput'>
-                                    <div className='col-md-6 mt-3 col-lg-6'>
+                                    <div className='col-md-6 mt-4 col-lg-6'>
                                         <div className="quantity-field w-100">
                                             <button className="value-button increase-button" onClick={() => Length >= (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60):  setLength(Number(Length) + 1)}>+
                                             </button>
@@ -269,7 +269,7 @@ const [max , setMax]=useState(30)
                                             </button>
                                         </div>
                                     </div>
-                                    <div className='col-md-6 col-lg-6 mt-3  textOnInput form-group' >
+                                    <div className='col-md-6 col-lg-6 mt-4  textOnInput form-group' >
                                         <div className=" form-control-sm">
                                             <label>  برنامه زمانی </label>
 
@@ -330,7 +330,7 @@ const [max , setMax]=useState(30)
                         {show?
                             <div className="dashboard-widget p-3 position-absolute dwrap" >
                                 <div  className='row form-row textOnInput'>
-                                    <div className='col-md-6 col-lg-6 mt-3'>
+                                    <div className='col-md-6 col-lg-6 mt-4'>
                                         <div className="quantity-field w-100">
                                             <button className="value-button increase-button" onClick={() => Length >= (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60):  setLength(Number(Length) + 1)}>+
                                             </button>
@@ -340,7 +340,7 @@ const [max , setMax]=useState(30)
                                             </button>
                                         </div>
                                     </div>
-                                    <div className='col-md-6 col-lg-6 mt-3   textOnInput form-group' >
+                                    <div className='col-md-6 col-lg-6 mt-4   textOnInput form-group' >
                                         <div className=" form-control-sm">
                                             <label>  برنامه زمانی </label>
 
