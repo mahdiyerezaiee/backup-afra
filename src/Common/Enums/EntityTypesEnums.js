@@ -22,6 +22,7 @@ export const EntityTypes = [
     { name: 'پرداخت', id: 20 },
     { name: 'اعتبار', id: 21 },
     { name: 'اعضای اعتبار', id: 22 },
+    { name: ' شرکت', id: 23 },
 
 ]
 
@@ -48,5 +49,6 @@ export const EntityTypes = [
 //     Invoice,
 //     Payment,
 //     Credit,
-//     CreditMember
+//     CreditMember,
+//      Company
 // }
