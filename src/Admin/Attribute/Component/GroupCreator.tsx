@@ -27,6 +27,7 @@ const GroupCreator:React.FC = () => {
 
                             <Select name='entityTypeId' className='form-input opacityForInput' placeholder='انتخاب موجودیت'
                                 options={entityTypes()}
+                                    menuShouldScrollIntoView ={false}
                                  />
                         </div>
                    

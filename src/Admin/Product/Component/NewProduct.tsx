@@ -304,6 +304,7 @@ const NewProduct: React.FC = () => {
                                             <label>واحد</label>
 
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 name="measureUnitId"
                                                 onBlur={() => setFieldTouched('measureUnitId', true)}
                                                 onChange={(option, e: any) => {
@@ -321,7 +322,7 @@ const NewProduct: React.FC = () => {
                                             <label>گروه کالا</label>
 
                                             <Select
-
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder="گروه کالا"
                                                 options={inputProductG()}
                                                 onBlur={() => setFieldTouched('groupId', true)}
@@ -341,6 +342,7 @@ const NewProduct: React.FC = () => {
 
                                                 <label> شرکت</label>
                                                 <Select
+                                                    menuShouldScrollIntoView ={false}
                                                     defaultValue={defaultValue}
                                                     placeholder='نام شرکت'
                                                     options={companys()}

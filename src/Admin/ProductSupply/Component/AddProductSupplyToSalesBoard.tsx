@@ -296,6 +296,7 @@ if(companyId){
                                             <label>شرکت</label>
 
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 defaultValue={defaultValue}
                                                 placeholder='نام شرکت'
                                                 options={companys()}
@@ -325,6 +326,7 @@ if(companyId){
                                             {productId === 0 ? (
                                                 <>
                                                     <Select
+                                                        menuShouldScrollIntoView ={false}
                                                         value={product()}
                                                         // placeholder='کالا'
                                                         className='opacityForInput border-danger'
@@ -338,6 +340,7 @@ if(companyId){
 
                                                 </>
                                             ) : (<Select
+                                                menuShouldScrollIntoView ={false}
                                                 value={product()}
 
                                                 className='opacityForInput '
@@ -357,6 +360,7 @@ if(companyId){
                                             <label>انبار</label>
 
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder='انبار'
                                                 options={wareCombo()}
                                                 // value={wareCombo()}

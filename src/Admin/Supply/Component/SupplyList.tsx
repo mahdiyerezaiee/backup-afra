@@ -653,7 +653,7 @@ const SupplyList:React.FC = () => {
 
                                     <Select
                                         defaultValue={products.filter((i:any) => i.id === productId).map((data:any) => ({ label: data.name, value: data.id }))[0]}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='محصول'
                                         options={inputProductG()}
 
@@ -669,7 +669,7 @@ const SupplyList:React.FC = () => {
 
                                     <Select
                                         defaultValue={params.supplierId}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='تامین کننده'
                                         options={SupplierG()}
 
@@ -685,7 +685,7 @@ const SupplyList:React.FC = () => {
 
                                     <Select
                                         defaultValue={params.supplyTypeIds}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='نوع تامین '
                                         options={SupplyTypes()}
                                         isMulti
@@ -705,7 +705,7 @@ const SupplyList:React.FC = () => {
 
                                     <Select
                                         defaultValue={params.shippingStatusIds}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='وضعیت ارسال'
                                         options={shippingId()}
                                         isMulti
@@ -728,7 +728,7 @@ const SupplyList:React.FC = () => {
                                         isClearable={true}
                                         placeholder='انبار'
                                         options={WareHouseG()}
-
+                                        menuShouldScrollIntoView ={false}
                                         onChange={e => {
 
                                             SetWareHouseId(e.value)
@@ -745,14 +745,14 @@ const SupplyList:React.FC = () => {
 
                                     {companyId && companyId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CompaniesIDs()}
                                             onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
                                             value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
                                             onChange={(e:any) => {
@@ -858,7 +858,7 @@ const SupplyList:React.FC = () => {
                                     <label>محصول</label>
 
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         defaultValue={products ? products.filter((i:any) => i.id === productId).map((data:any) => ({ label: data.name, value: data.id }))[0] : ""}
                                         placeholder='محصول'
                                         options={inputProductG()}
@@ -874,7 +874,7 @@ const SupplyList:React.FC = () => {
                                     <label>تامین کننده</label>
 
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         defaultValue={params.supplierId}
                                         placeholder='تامین کننده'
                                         options={SupplierG()}
@@ -891,7 +891,7 @@ const SupplyList:React.FC = () => {
 
                                     <Select
                                         defaultValue={params.supplyTypeIds}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='نوع تامین '
                                         options={SupplyTypes()}
                                         isMulti
@@ -911,7 +911,7 @@ const SupplyList:React.FC = () => {
 
                                     <Select
                                         defaultValue={params.shippingStatusIds}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='وضعیت ارسال'
                                         options={shippingId()}
                                         isMulti
@@ -934,7 +934,7 @@ const SupplyList:React.FC = () => {
                                         isClearable={true}
                                         placeholder='انبار'
                                         options={WareHouseG()}
-
+                                        menuShouldScrollIntoView ={false}
                                         onChange={e => {
 
                                             SetWareHouseId(e.value)
@@ -951,14 +951,14 @@ const SupplyList:React.FC = () => {
 
                                     {companyId && companyId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CompaniesIDs()}
                                             onChange={(e:any) => {
                                                 setCompanyId(e.value)
                                             }}
                                         /> : <Select
                                             value={CompaniesIDs().filter((i:any) => i.value === companyId).map((i:any) => i)}
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
                                             onChange={(e:any) => {

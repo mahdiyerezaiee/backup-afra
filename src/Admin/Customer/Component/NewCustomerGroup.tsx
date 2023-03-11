@@ -124,6 +124,7 @@ const NewCustomerGroup:React.FC = () => {
 
                                 <label> شرکت</label>
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     defaultValue={defaultValue}
                                     placeholder='نام شرکت'
                                     options={companys()}

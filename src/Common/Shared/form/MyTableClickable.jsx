@@ -214,6 +214,7 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
                     <span className=" py-3" style={{ fontSize: 'smaller' }}> اقدام دسته جمعی: </span>
                     {rows.find(item => item.original.active === true || item.original.active === false) ?
                         <select
+                            menuShouldScrollIntoView ={false}
                             // style={{height:'20px'}}
                             className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                             style={{ fontSize: 'smaller' }}
@@ -232,6 +233,8 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
 
                             ))}
                         </select> : <select
+
+                            menuShouldScrollIntoView ={false}
                             // style={{height:'20px'}}
                             className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                             style={{ fontSize: 'smaller' }}

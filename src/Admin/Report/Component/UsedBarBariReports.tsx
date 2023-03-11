@@ -167,7 +167,7 @@ const UsedBarBariReport: React.FC = () => {
 
                                         <label> شرکت</label>
                                         <Select
-                                           
+                                            menuShouldScrollIntoView ={false}
                                             placeholder=' لطفا نام شرکت را انتخاب کنید'
                                             options={CompaniesIDs()}
                                          

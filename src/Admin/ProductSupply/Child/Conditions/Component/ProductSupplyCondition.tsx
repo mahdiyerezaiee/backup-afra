@@ -477,6 +477,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity,companyId }) => {
 
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="نوع پرداخت"
                                             options={paymentMethod()}
                                             onChange={(e:any) => setpaymentMethodId(e.value)}
@@ -493,6 +494,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity,companyId }) => {
 
                                         <>
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 name="additionalTypeId"
                                                 placeholder="نوع افزایش"
                                                 options={additionalTypeIdS()}
@@ -540,6 +542,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity,companyId }) => {
                                         style={{ zIndex: '3' }}>
                                         <label>گروه مشتریان</label>
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="گروه مشتریان"
                                             options={CustomerG()}
                                             onChange={(e:any) => setcustomerGroupId(e.value)}

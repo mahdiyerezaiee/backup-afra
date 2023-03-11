@@ -135,6 +135,7 @@ const getCompanies = async () => {
 
 <label> شرکت</label>
 <Select
+    menuShouldScrollIntoView ={false}
     defaultValue={defaultValue}
     placeholder='نام شرکت'
     options={companys()}

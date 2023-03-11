@@ -590,7 +590,7 @@ const UserList:React.FC = () => {
 
                     <button className="m-1 p-0 border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="استعلام کد ملی و شماره موبایل" onClick={()=>handelFinotechCheck(row.row.original.id)}>
 
-                    <GrValidate size={'1rem'}/>
+                    <GrValidate size={'1rem'} className="svg"/>
                     </button>
 
                 </ul>
@@ -669,6 +669,7 @@ const UserList:React.FC = () => {
                             <div className={companies.length > 1 ?"col-lg-2 col-md-3  col-sm-12 mb-4  selectIndex":"col-lg-4 col-md-6  col-sm-12 mb-4  selectIndex"}>
                                 <label> نقش کاربر</label>
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     value={userRole}
                                     placeholder='گروه کاربر'
                                     options={optiobUserRole()}
@@ -684,14 +685,14 @@ const UserList:React.FC = () => {
 
                                 {companyId && companyId === null ?
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         options={CompaniesIDs()}
                                         onChange={(e:any) => {
                                             setCompanyId(e.value)
                                         }}
                                     /> : <Select
                                         value={CompaniesIDs().filter(i => i.value === companyId).map(i => i)}
-
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='نام شرکت'
                                         options={CompaniesIDs()}
                                         onChange={(e:any) => {
@@ -790,6 +791,7 @@ const UserList:React.FC = () => {
                             <div className="col-lg-4 col-md-6  col-sm-12  co selectIndex">
                                 <label> نقش کاربر</label>
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     value={userRole}
                                     placeholder='گروه کاربر'
                                     options={optiobUserRole()}

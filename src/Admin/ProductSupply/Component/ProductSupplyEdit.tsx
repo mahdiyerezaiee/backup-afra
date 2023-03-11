@@ -311,6 +311,7 @@ const ProductSupplyEdit: React.FC = () => {
                                             {productId === 0 ? (
                                                 <>
                                                     <Select
+                                                        menuShouldScrollIntoView ={false}
                                                         isDisabled={true}
                                                         value={product()}
                                                         // placeholder='کالا'
@@ -325,6 +326,7 @@ const ProductSupplyEdit: React.FC = () => {
 
                                                 </>
                                             ) : (<Select
+                                                menuShouldScrollIntoView ={false}
                                                 value={product()}
                                                 isDisabled={true}
 
@@ -345,6 +347,7 @@ const ProductSupplyEdit: React.FC = () => {
                                             {productWareHouseId !== null ? (
                                                 <>
                                                     <Select
+                                                        menuShouldScrollIntoView ={false}
                                                         value={wareCombo().filter((i: any) => i.value === productWareHouseId).map((i: any) => i)}
                                                         // placeholder='کالا'
                                                         isDisabled={true}
@@ -360,6 +363,7 @@ const ProductSupplyEdit: React.FC = () => {
                                                 </>
                                             ) : (<>
                                                 <Select
+                                                    menuShouldScrollIntoView ={false}
                                                     value={wareCombo()}
 
                                                     options={wareCombo()}
@@ -403,7 +407,7 @@ const ProductSupplyEdit: React.FC = () => {
                                                 {companyId && companyId === null ?
                                                     <Select
                                                         isDisabled={true}
-
+                                                        menuShouldScrollIntoView ={false}
                                                         options={CompaniesIDs()}
                                                         onChange={(e: any) => {
                                                             SetcompanyId(e.value)
@@ -411,7 +415,7 @@ const ProductSupplyEdit: React.FC = () => {
                                                     /> : <Select
                                                         value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
                                                         isDisabled={true}
-
+                                                        menuShouldScrollIntoView ={false}
                                                         placeholder='نام شرکت'
                                                         options={CompaniesIDs()}
                                                         onChange={(e: any) => {

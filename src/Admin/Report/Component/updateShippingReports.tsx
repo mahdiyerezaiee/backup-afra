@@ -255,7 +255,7 @@ let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
                                             <label style={{ position: 'absolute', zIndex: '1', top: '-15px', right: '10px', background: 'white', padding: '0 8px' }}> نام باربری </label>
 
                                             <Select
-
+                                                menuShouldScrollIntoView ={false}
                                                 isDisabled={reportMethod === 'byDate' ? false : true}
 
                                                 placeholder="شرکت باربری"

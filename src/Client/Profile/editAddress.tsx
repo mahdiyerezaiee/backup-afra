@@ -164,6 +164,7 @@ const EditAddress:React.FC = () => {
                           <div className="form-group col-md-6">
                               <label>استان</label>
                               <Select
+                                  menuShouldScrollIntoView ={false}
                                   placeholder='استان'
                                   options={ProvincerenderList()}
                                   onChange={(e:any)=>{setOstanId(e.value)
@@ -176,6 +177,7 @@ const EditAddress:React.FC = () => {
 
                               <label >شهر</label>
                               <Select
+                                  menuShouldScrollIntoView ={false}
                                   placeholder='شهر'
                                   options={CitiesrenderList()}
                                   className='form-group'

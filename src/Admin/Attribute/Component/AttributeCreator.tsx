@@ -25,7 +25,9 @@ import { Attributes, entityTypes, submitAttribute } from '../Service/AttributeCr
                         <div className=" col-md-6 col-sm-12 form-group mb-4 textOnInput  ">
 
 
-                            <Select name="entityTypeId" className='form-input opacityForInput' placeholder='انتخاب فرم'
+                            <Select name="entityTypeId"
+                                    menuShouldScrollIntoView ={false}
+                                    className='form-input opacityForInput' placeholder='انتخاب فرم'
                                 options={entityTypes()}
                                 />
                         </div>
@@ -34,6 +36,7 @@ import { Attributes, entityTypes, submitAttribute } from '../Service/AttributeCr
 
                             <Select name="controlTypeId" className='form-input ' placeholder='انتخاب ویژگی'
                                 options={Attributes()}
+                                    menuShouldScrollIntoView ={false}
                                 />
 
                         </div>

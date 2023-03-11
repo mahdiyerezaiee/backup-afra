@@ -132,7 +132,7 @@ const ChangePayment: React.FC<Props> = ({ payment, modalIsOpen, closeModal,payme
 
 
                             <Select
-
+                                menuShouldScrollIntoView ={false}
                                 value={PaymentStatusId()}
                                 placeholder="وضعیت پرداخت"
                                 options={PaymentStatusID()}

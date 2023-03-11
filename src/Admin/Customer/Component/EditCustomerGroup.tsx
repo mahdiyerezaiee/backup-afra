@@ -185,6 +185,7 @@ if(id>0){
                                     <div className="form-group mb-3">
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             value={{ label: groupName, value: groupId }}
                                             options={inputCustomerG()}
                                             onChange={(e:any) => {

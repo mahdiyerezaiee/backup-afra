@@ -247,6 +247,7 @@ const EditCustomer:React.FC = () => {
                                         <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                             <label >واحد قیمت</label>
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 value={PriceUnit()}
                                                 placeholder="واحد قیمت"
                                                 options={PriceUnitItem()}
@@ -260,6 +261,7 @@ const EditCustomer:React.FC = () => {
                                             <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                                 <label >شرکت</label>
                                                 <Select
+                                                    menuShouldScrollIntoView ={false}
                                                     value={OrganizationItem()}
                                                     options={OrganizationId()}
                                                     onChange={(e:any) => setOrganizationId(e.value)}

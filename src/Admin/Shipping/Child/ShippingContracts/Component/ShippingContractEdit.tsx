@@ -166,6 +166,7 @@ setLoading(false)
 
                                     <label>واحد</label>
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         placeholder="واحد"
                                         value={{ label: MEASURE, id: measureUnitId }}
                                         options={Mesures()}
@@ -184,6 +185,7 @@ setLoading(false)
 
                                     <label>باربری</label>
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         placeholder="باربری"
                                         value={{ label: COMPANY, id: shippingCompanyId }}
                                         options={barbari()}

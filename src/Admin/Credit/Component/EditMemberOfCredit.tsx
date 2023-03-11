@@ -199,6 +199,7 @@ console.log(entityId);
                                     <label> واحد</label>
                                     {priceUnitId  ?
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             value={Priceunit().filter((i: any) => i.value === priceUnitId).map((i: any) => i)}
 
                                             placeholder=" واحد"
@@ -211,6 +212,7 @@ console.log(entityId);
 
                                         :
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             placeholder=" واحد"
                                             options={Priceunit()}
                                             onChange={(e: any) =>

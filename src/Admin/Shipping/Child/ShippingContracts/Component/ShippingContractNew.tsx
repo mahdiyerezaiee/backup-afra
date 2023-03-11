@@ -135,7 +135,7 @@ setLoading(false)
 
                                     <label>واحد</label>
                                     <Select
-                                    
+                                        menuShouldScrollIntoView ={false}
                                         placeholder="واحد"
 
                                         options={Mesures()}
@@ -152,7 +152,7 @@ setLoading(false)
 
                                     <label>باربری</label>
                                     <Select
-                                    
+                                        menuShouldScrollIntoView ={false}
                                         placeholder="باربری"
 
                                         options={Barbaries()}

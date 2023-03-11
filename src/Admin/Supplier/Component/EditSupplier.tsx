@@ -118,14 +118,14 @@ const EditSupplier: React.FC = () => {
 
                                                 {companyId && companyId === null ?
                                                     <Select
-
+                                                        menuShouldScrollIntoView ={false}
                                                         options={CompaniesIDs()}
                                                         onChange={(e: any) => {
                                                             setCompanyId(e.value)
                                                         }}
                                                     /> : <Select
                                                         value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
-
+                                                        menuShouldScrollIntoView ={false}
                                                         placeholder='نام شرکت'
                                                         options={CompaniesIDs()}
                                                         onChange={(e: any) => {

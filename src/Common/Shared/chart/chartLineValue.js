@@ -222,6 +222,7 @@ const options = {
                                         <label>  برنامه زمانی </label>
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="  برنامه زمانی  "
                                             options={ComboDays()}
                                             onChange={(e)=> ChangHandler(e)}
@@ -236,6 +237,7 @@ const options = {
                                         <label> واحد قیمت </label>
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="  واحد قیمت  "
                                             options={ComboPrice()}
                                             onChange={e=> setPriceUnitId(e.value)}

@@ -380,8 +380,9 @@
 }
 
 .dark-mode .css-t3ipsp-control {
-    background-color: #233649 !important;
+    background-color: #1b2e4b !important;
     color: #BDBDD7 !important;
+    box-shadow: none!important;
 }
 
 .dark-mode #react-select-6-live-region {
@@ -856,4 +857,85 @@ select:-webkit-autofill:focus {
 
 .dark-mode .navbar-toggler-icon svg {
     color: white;
+}
+.dark-mode .css-1nmdiq5-menu{
+    background:#1b2e4b!important;
+    color: white!important;
+}
+.dark-mode .css-1nmdiq5-menu > div> div:hover{
+
+        color: #1a1c2d!important;
+
+
+}
+
+.dark-mode .info-Item{
+    background: transparent!important;
+}
+.dark-mode .itemA span{
+    color:white;
+}
+.dark-mode .svg path{
+    stroke:white!important;
+
+}
+.dark-mode select option{
+    background: #0e1726!important;
+    color: white!important;
+}
+.dark-mode .quantity-field .value-button{
+    background: #0e1726!important;
+    color: white!important;
+    border: 1px  solid lightgrey!important;
+}
+.dark-mode .number{
+    background:#1b2e4b!important;
+    border: 1px  solid lightgrey!important;
+
+}
+.dark-mode .newsItem{
+    border:white!important;
+    color: white!important;
+}
+.dark-mode .border-dark{
+    border:1px solid white!important;
+
+}
+.dark-mode .cart-news{
+    background:#0e1726!important;
+
+}
+.dark-mode .input-group-text{
+    background:#0e1726!important;
+    color: white!important;
+
+
+}
+.dark-mode input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly]{
+    background: #263965 !important;
+    color: #656363 !important;
+}
+.dark-mode .css-16xfy0z-control{
+    cursor: not-allowed;
+    background: #263965 !important;
+    color: #656363 !important;
+}
+.dark-mode td{
+    background: transparent!important;
+}
+.dark-mode tr{
+    background: transparent!important;
+}
+.dark-mode .edit-btn{
+    color: white!important;
+}
+.dark-mode .orderCustomerInfo span {
+    color: white!important;
+}
+.dark-mode .orderCustomerInfo label::after{
+    background-color: #1a1c2d!important;
+}
+.dark-mode .mainMenu  label::after{
+    background-color: #1a1c2d!important;
+
 }

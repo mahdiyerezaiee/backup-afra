@@ -293,6 +293,7 @@ let body={"customer":{...dataUser,
 
                                             <label> نقش کاربر</label>
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder='تعیین نقش'
                                                 options={Roles()}
                                                 isClearable={true}
@@ -319,6 +320,7 @@ let body={"customer":{...dataUser,
 
                                                 <label> شرکت</label>
                                                 <Select
+                                                    menuShouldScrollIntoView ={false}
                                                     defaultValue={defaultValue}
                                                     placeholder='نام شرکت'
                                                     options={companys()}
@@ -345,6 +347,7 @@ let body={"customer":{...dataUser,
 
                                             <label>گروه مشتری</label>
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder='تعیین گروه'
                                                 options={UserGroups()}
                                                 isClearable={true}
@@ -367,6 +370,7 @@ let body={"customer":{...dataUser,
                                             <div className="col-lg-6 col-md-6 col-sm-11 mb-4">
                                                 <label >سازمان</label>
                                                 <Select
+                                                    menuShouldScrollIntoView ={false}
                                                     value={OrganizationItem()}
                                                     options={OrganizationId()}
                                                     onChange={(e: any) => setOrganizationId(e.value)}

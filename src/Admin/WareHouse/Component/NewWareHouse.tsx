@@ -220,6 +220,7 @@ companyId, companyName,active
 
                                     <label> شرکت</label>
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         defaultValue={defaultValue}
                                         placeholder='نام شرکت'
                                         options={companys()}
@@ -246,6 +247,7 @@ companyId, companyName,active
                                 <label>گروه انبار</label>
 
                                 <Select
+                                    menuShouldScrollIntoView ={false}
                                     placeholder="گروه"
                                     options={inputwareHouseT()}
                                     onChange={(e:any) =>

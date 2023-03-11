@@ -243,6 +243,7 @@ const NewSupply: React.FC = () => {
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                             <label>نام کالا</label>
                                             <Select placeholder='انتخاب'
+                                                    menuShouldScrollIntoView ={false}
                                                 className='opacityForInput border-danger '
                                                 options={inputProductG()}
                                                 styles={{
@@ -259,7 +260,9 @@ const NewSupply: React.FC = () => {
                                         <div className="col-lg-4 col-md-6 col-sm-11 mb-3">
                                             <label>واحد</label>
 
-                                            <Select placeholder='انتخاب '
+                                            <Select
+                                                menuShouldScrollIntoView ={false}
+                                                placeholder='انتخاب '
                                                 styles={{
                                                     // Fixes the overlapping problem of the component
                                                     menu: provided => ({ ...provided, zIndex: 9999 })
@@ -290,6 +293,7 @@ const NewSupply: React.FC = () => {
 
 
                                                 }}
+                                                    menuShouldScrollIntoView ={false}
                                             />
                                             {wareHouseId === 0 ? <span className="text-danger">یک انبار انتخاب کنید</span> : ''}
 
@@ -311,6 +315,7 @@ const NewSupply: React.FC = () => {
 
 
                                                     }}
+                                                        menuShouldScrollIntoView ={false}
                                                 />
                                                 {supplierId === 0 ? <span className="text-danger">یک تامین کننده را انتخاب کنید</span> : ''}
 
@@ -330,6 +335,7 @@ const NewSupply: React.FC = () => {
 
 
                                                     }}
+                                                        menuShouldScrollIntoView ={false}
                                                 />
                                                 {supplyTypeId === 0 ? <span className="text-danger">یک نوع تامین را انتخاب کنید</span> : ''}
 
@@ -341,14 +347,14 @@ const NewSupply: React.FC = () => {
 
                                                     {companyId && companyId === null ?
                                                         <Select
-
+                                                            menuShouldScrollIntoView ={false}
                                                             options={CompaniesIDs()}
                                                             onChange={(e: any) => {
                                                                 setCompanyId(e.value)
                                                             }}
                                                         /> : <Select
                                                             value={CompaniesIDs().filter((i: any) => i.value === companyId).map((i: any) => i)}
-
+                                                            menuShouldScrollIntoView ={false}
                                                             placeholder='نام شرکت'
                                                             options={CompaniesIDs()}
                                                             onChange={(e: any) => {

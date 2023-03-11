@@ -181,7 +181,7 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
 
                             <label>شرکت باربری</label>
                             <Select
-
+                                menuShouldScrollIntoView ={false}
                                 placeholder="شرکت باربری"
                                 options={shippingCompanySelect()}
                                 maxMenuHeight={150}
@@ -201,7 +201,7 @@ const ShippingSelected:React.FC<Props> = ({ modalIsOpen, closeModal, orderDetail
                                     placeholder="قراداد باربری"
                                     options={shippingContractSelect()}
                                     maxMenuHeight={100}
-
+                                    menuShouldScrollIntoView ={false}
 
                                     onChange={(e:any) => {
                                         setShippingContractId(e.value)

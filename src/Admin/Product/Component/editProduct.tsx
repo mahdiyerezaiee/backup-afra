@@ -292,6 +292,7 @@ const EditProduct: React.FC = () => {
                                         <div className={companies.length > 1?"col-lg-4 col-sm-12 mt-3":"col-lg-6 col-sm-12 mt-3"}>
                                             <label>واحد</label>
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 required={true}
                                                 value={{ label: MEASURE, id: measureUnitId }}
                                                 options={Mesures()}
@@ -304,7 +305,7 @@ const EditProduct: React.FC = () => {
                                             <label>گروه کالا</label>
                                             <Select
                                                 required={true}
-
+                                                menuShouldScrollIntoView ={false}
                                                 placeholder="گروه کالا ..."
                                                 options={inputProductG()}
                                                 value={currentProductG()}
@@ -314,6 +315,7 @@ const EditProduct: React.FC = () => {
                                         {companies.length > 1 ? <div className="col-lg-4 col-sm-12 mt-3" >
                                             <label>شرکت</label>
                                             <Select
+                                                menuShouldScrollIntoView ={false}
                                                 defaultValue={defaultValue}
                                                 placeholder='نام شرکت'
                                                 options={companys()}

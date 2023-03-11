@@ -315,6 +315,7 @@ const AddAdressCustomerForOrder:React.FC<Props> = ({ closeModal, isOpenAddress, 
                                 <div className="form-group col-md-6">
                                     <label>استان</label>
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='استان'
                                         options={ProvincerenderList()}
                                         onChange={(e:any) => {
@@ -328,6 +329,7 @@ const AddAdressCustomerForOrder:React.FC<Props> = ({ closeModal, isOpenAddress, 
 
                                     <label >شهر</label>
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         placeholder='شهر'
                                         options={CitiesrenderList()}
                                         className='form-group'

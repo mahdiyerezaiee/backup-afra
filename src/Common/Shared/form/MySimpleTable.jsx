@@ -100,6 +100,7 @@ const MySimpleTable = ({ columns, data ,getData,bulkJob ,  rowProps = (row) => (
                 <div className='d-block clearfix mt-3 float-right'>
                     <span  className=" py-3" style={{fontSize:'smaller'}} > تعداد نمایش در صفحه : </span>
                     <select
+                        menuShouldScrollIntoView ={false}
                         // style={{height:'20px'}}
                         className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                         value={pageSize}
@@ -119,6 +120,7 @@ const MySimpleTable = ({ columns, data ,getData,bulkJob ,  rowProps = (row) => (
                     <span  className=" py-3" style={{fontSize:'smaller'}} > اقدام دسته جمعی: </span>
                     {page.find(item =>item.original.active === true || item.original.active === false) ?
                         <select
+                            menuShouldScrollIntoView ={false}
                         // style={{height:'20px'}}
                         className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                         style={{fontSize:'smaller'}}
@@ -134,6 +136,7 @@ const MySimpleTable = ({ columns, data ,getData,bulkJob ,  rowProps = (row) => (
 
                         ))}
                     </select> :   <select
+                            menuShouldScrollIntoView ={false}
                             // style={{height:'20px'}}
                             className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                             style={{fontSize:'smaller'}}

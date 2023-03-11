@@ -637,7 +637,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                     <label>صادر شده برای</label>
                                     {EntityTypeId && EntityTypeId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
 
@@ -646,7 +646,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                                 SetEntityTypeId(e.value)
                                             }}
                                         /> : <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
                                             value={EntityTypesIDs().filter((i: any) => i.value === EntityTypeId).map((i: any) => i)}
@@ -664,7 +664,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                     <label>واحد پول </label>
                                     {PriceUnitId && PriceUnitId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
 
@@ -673,7 +673,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                                 SetPriceUnitId(e.value)
                                             }} /> :
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
                                             value={PriceUnitIDS().filter((i: any) => i.value === PriceUnitId).map((i: any) => i)}
@@ -692,7 +692,7 @@ const handelNavigateWithDetails=async(id:number)=>{
 
                                     {PaymentStatusId && PaymentStatusId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
 
@@ -701,7 +701,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                                 SetPaymentStatusId(e.value)
                                             }}
                                         /> : <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             value={PaymentStatusIds().filter((i: any) => i.value === PaymentStatusId).map((i: any) => i)}
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
@@ -722,12 +722,13 @@ const handelNavigateWithDetails=async(id:number)=>{
 
                                     {CompanyId && CompanyId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {
                                                 SetCompanyId(e.value)
                                             }}
                                         /> : <Select
+                                            menuShouldScrollIntoView ={false}
                                             value={CompaniesIDs().filter((i: any) => i.value === CompanyId).map((i: any) => i)}
 
                                             placeholder='نام شرکت'
@@ -904,7 +905,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                     <label>صادر شده برای</label>
                                     {EntityTypeId && EntityTypeId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
 
@@ -913,7 +914,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                                 SetEntityTypeId(e.value)
                                             }}
                                         /> : <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
                                             value={EntityTypesIDs().filter((i: any) => i.value === EntityTypeId).map((i: any) => i)}
@@ -931,7 +932,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                     <label>واحد پول </label>
                                     {PriceUnitId && PriceUnitId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
 
@@ -940,7 +941,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                                 SetPriceUnitId(e.value)
                                             }} /> :
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
                                             value={PriceUnitIDS().filter((i: any) => i.value === PriceUnitId).map((i: any) => i)}
@@ -959,7 +960,7 @@ const handelNavigateWithDetails=async(id:number)=>{
 
                                     {PaymentStatusId && PaymentStatusId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
 
@@ -968,7 +969,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                                                 SetPaymentStatusId(e.value)
                                             }}
                                         /> : <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             value={PaymentStatusIds().filter((i: any) => i.value === PaymentStatusId).map((i: any) => i)}
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
@@ -989,14 +990,14 @@ const handelNavigateWithDetails=async(id:number)=>{
 
                                     {CompanyId && CompanyId === null ?
                                         <Select
-
+                                            menuShouldScrollIntoView ={false}
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {
                                                 SetCompanyId(e.value)
                                             }}
                                         /> : <Select
                                             value={CompaniesIDs().filter((i: any) => i.value === CompanyId).map((i: any) => i)}
-
+                                            menuShouldScrollIntoView ={false}
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
                                             onChange={(e: any) => {

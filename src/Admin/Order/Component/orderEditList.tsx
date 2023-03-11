@@ -150,6 +150,7 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
 
                             <Select
+                                menuShouldScrollIntoView ={false}
                                 value={OrderStatusId()}
                                 placeholder="وضعیت سفارش"
                                 options={OrderStatusID()}
@@ -165,7 +166,7 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
 
                             <Select
-                            
+                                menuShouldScrollIntoView ={false}
                                 value={PaymentStatusId()}
                                 placeholder="وضعیت پرداخت"
                                 options={PaymentStatusID()}
@@ -181,6 +182,7 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
 
                             <Select
+                                menuShouldScrollIntoView ={false}
                                 value={ShippingStatusId()}
                                 placeholder="وضعیت ارسال"
                                 options={ShippingStatusID()}

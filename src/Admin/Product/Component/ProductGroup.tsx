@@ -374,6 +374,7 @@ navigate('/admin/newproductgroup')
                                     <div className="col-lg-4 col-md-4 col-sm-4 m-4  selectIndex">
                                         <label> شرکت</label>
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}
@@ -466,6 +467,7 @@ navigate('/admin/newproductgroup')
                                     <div className="col-lg-4 col-md-4 col-sm-4  m-4 selectIndex">
                                         <label> شرکت</label>
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}

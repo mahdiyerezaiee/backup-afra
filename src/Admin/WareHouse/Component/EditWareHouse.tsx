@@ -252,6 +252,7 @@ const EditWareHouse: React.FC = () => {
 
 
                                         <Select
+                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}
@@ -278,7 +279,7 @@ const EditWareHouse: React.FC = () => {
 
 
                                     <Select
-
+                                        menuShouldScrollIntoView ={false}
                                         defaultValue={defaultwareValue}
                                         key={defaultwareValue}
                                         options={inputwareHouseT()}

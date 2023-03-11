@@ -199,6 +199,7 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
 
 
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         options={MEmbersToSelect()}
                                         placeholder="انتخاب عضو"
                                         onChange={(e: any) =>
@@ -228,6 +229,7 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
                                     style={{ zIndex: '3' }}>
                                     <label> واحد</label>
                                     <Select
+                                        menuShouldScrollIntoView ={false}
                                         placeholder=" واحد"
                                         options={Priceunit()}
 
