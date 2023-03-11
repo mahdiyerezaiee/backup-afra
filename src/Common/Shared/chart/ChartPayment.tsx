@@ -331,7 +331,7 @@ useEffect(()=>{
 
                         {show?
                             <div className="dashboard-widget p-3 position-absolute dwrap" >
-                                <div  className='row form-row  '>
+                                <div  className='row form-row mb-4 '>
                                     <div className='col-md-4 mt-4 '>
 
                                         <div className="quantity-field w-100">

@@ -203,7 +203,7 @@ if (datas && datas.length >0){
 
                     {show?
                         <div className="dashboard-widget p-3 position-absolute dwrap" >
-                            <div  className='row form-row textOnInput'>
+                            <div  className='row form-row textOnInput mb-4'>
                                 <div className='col-md-6 mt-4 '>
                                     <div className="quantity-field w-100">
                                         <button className="value-button increase-button" onClick={() => Length >= (TypeId === 1 ? 3 : TypeId === 2 ? 12: TypeId === 3 ? 30 :TypeId ===4 ? 24 : 60) ? setLength(TypeId === 1 ? 3 : TypeId === 2 ? 12: TypeId === 3 ? 30 :TypeId ===4? 24 : 60):  setLength(Number(Length) + 1)}>+
