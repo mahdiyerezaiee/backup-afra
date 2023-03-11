@@ -43,7 +43,7 @@ export function ChartShippingReport() {
         ScheduleTypeId,
     }
     function getDataReportValue() {
-        let items = JSON.parse(String(sessionStorage.getItem('valueDataReportShipping')));
+        let items = JSON.parse(String(localStorage.getItem('valueDataReportShipping')));
         return items ? items : ''
 
 
@@ -66,7 +66,7 @@ export function ChartShippingReport() {
         GetReport()
 
     }
-        sessionStorage.setItem('valueDataReportShipping', JSON.stringify(valueReport));
+        localStorage.setItem('valueDataReportShipping', JSON.stringify(valueReport));
 
 },[ScheduleTypeId , Length])
     const ChangHandler = (e:any) =>{
