@@ -90,3 +90,9 @@ export const SetOrderReserve=(body)=>{
 
     return http.post(`${configure}/Order/SetOrderReserved`,JSON.stringify(body))
 }
+export const SetConditionalPay=(body)=>{
+    
+    return http.post(`${configure}/Order/SetConditionalPay`,JSON.stringify(body))
+
+
+}
