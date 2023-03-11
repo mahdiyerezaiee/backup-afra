@@ -48,7 +48,7 @@ export function ChartPayment() {
 
     }
     function getDataReportValue() {
-        let items = JSON.parse(String(sessionStorage.getItem('valueDataReportPayment')));
+        let items = JSON.parse(String(localStorage.getItem('valueDataReportPayment')));
         return items ? items : ''
 
 
@@ -120,7 +120,7 @@ useEffect(()=>{
      if (ScheduleTypeId || PaymentMethodId || PriceUnitId || Length){
         GetReport()
     }
-    sessionStorage.setItem('valueDataReportPayment', JSON.stringify(valueReport));
+    localStorage.setItem('valueDataReportPayment', JSON.stringify(valueReport));
 
 },[ScheduleTypeId , PaymentMethodId , PriceUnitId ,Length])
     

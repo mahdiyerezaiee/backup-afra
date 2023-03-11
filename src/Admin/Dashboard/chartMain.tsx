@@ -63,7 +63,7 @@ const animation = {
 
     }
     function getDataReportValue() {
-        let items = JSON.parse(String(sessionStorage.getItem('valueDataReportOrder')));
+        let items = JSON.parse(String(localStorage.getItem('valueDataReportOrder')));
         return items ? items : ''
 
 
@@ -96,7 +96,7 @@ const animation = {
             GetReport()
 
         }
-        sessionStorage.setItem('valueDataReportOrder', JSON.stringify(valueReport));
+        localStorage.setItem('valueDataReportOrder', JSON.stringify(valueReport));
 
     }, [TypeId , PriceUnitId ,Length])
 
