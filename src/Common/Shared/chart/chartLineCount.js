@@ -174,7 +174,7 @@ if (datas && datas.length >0){
     const ChangHandler = (e) =>{
         setTypeId(e.value)
         setLength(
-            e.value === 1 ? 3 : e.value === 2 ? 12: e.value === 3 ? 30 :e.value ===4? 24 : 60
+            e.value === 1 ? Length > 3? 3 : Length : e.value === 2 ?Length > 12? 12 : Length : e.value === 3 ? Length > 30? 30 : Length   :e.value ===4? Length > 24? 24 : Length  : 60
 
         )
 

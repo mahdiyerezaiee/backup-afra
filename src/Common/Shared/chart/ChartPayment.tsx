@@ -308,7 +308,7 @@ useEffect(()=>{
       const ChangHandler = (e:any) =>{
             setScheduleTypeId(e.value)
           setLength(
-              e.value === 1 ? 3 : e.value === 2 ? 12: e.value === 3 ? 30 :e.value ===4? 24 : 60
+              e.value === 1 ? Length > 3? 3 : Length : e.value === 2 ?Length > 12? 12 : Length : e.value === 3 ? Length > 30? 30 : Length   :e.value ===4? Length > 24? 24 : Length  : 60
 
     )
 
@@ -347,7 +347,7 @@ useEffect(()=>{
                                     <div className='col-md-4 mt-4 '>
 
                                         <div className="quantity-field w-100">
-                                        <button className="value-button increase-button" onClick={() => Length >= (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60):  setLength(Number(Length) + 1)}>+
+                                        <button className="value-button increase-button" onClick={() => Length >= (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId === 4 ? 24 : 60):  setLength(Number(Length) + 1)}>+
                                         </button>
                                         <input   className="number"  onKeyUp={() => Length > (ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4 ? 24 : 60) ? setLength(ScheduleTypeId === 1 ? 3 : ScheduleTypeId === 2 ? 12: ScheduleTypeId === 3 ? 30 :ScheduleTypeId ===4? 24 : 60): Length} type="number" placeholder="بازه زمانی"
                                                   min={1}  value={Length} onChange={(e:any)  => setLength(e.target.value)} />
