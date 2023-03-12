@@ -17,7 +17,7 @@ const ReportShipping: React.FC = () => {
     const [HasShippingContract, setHasShippingContract] = useState<any>(true);
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
-    const [Response, SetResponse] = useState([]);
+    const [Response, SetResponse] = useState<any>([]);
     const [clicked, SetClicked] = useState(false)
     const [selectedRows, setSelectedRows] = useState([])
 

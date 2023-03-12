@@ -10,9 +10,9 @@ import { GetCompanyChild } from '../../../../../services/companiesService';
 import { GetGroupWithCompany } from '../../../../../services/GroupService';
 
 interface Props{
-    loading:any, paymentMethodId:any,companyId:any, setSpecial:any, customStyles:any, handleEditFormSubmit:any, setcustomerGroupId:any, setpaymentMethodId:any, setadditionalTypeId:any, editFormData:any, handleEditFormChange:any, handleCancelClick:any, index:any 
+    loading:any, paymentMethodId:any,companyId:any, setSpecial:any, customStyles:any, handleEditFormSubmit:any, setcustomerGroupId:any, setpaymentMethodId:any, setadditionalTypeId:any, editFormData:any, handleEditFormChange:any, handleCancelClick:any, index:any ,handelDeletData:any
 }
-const ProductSupplyConditionEdit:React.FC<Props> = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index,companyId }) => {
+const ProductSupplyConditionEdit:React.FC<Props> = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index,companyId,handelDeletData }) => {
     const [customerg, setCustomerg] = useState([])
     const [cu, SetCu] = useState(0)
     const [modalIsOpen, setIsOpen] = useState(true);
@@ -132,7 +132,14 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         defaultValue={PaymentId(editFormData.paymentMethodId)}
                                         placeholder="نوع پرداخت"
                                         options={paymentMethod()}
-                                        onChange={(e:any) => setpaymentMethodId(e.value)}
+                                        onChange={(e:any) => {setpaymentMethodId(e.value)
+                                            handelDeletData()
+                                            editFormData.installmentOccureCount=null
+                                            editFormData.installmentPeriod=null
+                                            editFormData.additionalAmount=null
+                                            editFormData.minSellableAmount=null
+                                            editFormData.comment=null
+                                        }}
                                         menuShouldScrollIntoView ={false}
                                     />
 

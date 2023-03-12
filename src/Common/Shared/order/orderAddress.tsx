@@ -567,13 +567,14 @@ const closeModalinvoice = () => {
                 modalIsOpen={IsOpen}
                 closeModal={closeModalFinancialConfirmation}
               />
+              {order.reserved?
               <CraeteInvoceOrderDetail
                 modalIsOpen={modalOpenInvoice}
                 closeModal={ColseInvoceModal}
                 orderDetailId={orderDetailId}
                 Order={order}
                 defaultPaymentId={getPayments}
-              />
+              />:''}
               <div className="form-group mb-4 textOnInput col-lg-12     mt-4   ">
                 {condition &&
                   condition.filter((x: any) => x.extId === null).length > 0 ? (

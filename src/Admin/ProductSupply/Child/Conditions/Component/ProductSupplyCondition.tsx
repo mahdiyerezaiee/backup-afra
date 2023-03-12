@@ -136,6 +136,19 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity,companyId }) => {
         newFormData[fieldName] = fieldValue;
         setEditFormData(newFormData);
     };
+    const handelDeletData=()=>{
+        setEditFormData({  minSellableAmount: 0,
+            maxSellableAmount:editFormData.maxSellableAmount,
+            paymentMethodId,
+            installmentPeriod: 0,
+            installmentOccureCount: 0,
+            comment: "",
+            active,
+            special,
+            additionalAmount: 0,
+            additionalTypeId,
+            customerGroupId,})
+    }
     const body = {
         productSupplyCondition: {
             
@@ -405,6 +418,7 @@ const ProductSupplyCondition: React.FC<Props> = ({ quantity,companyId }) => {
                                         handleCancelClick={handleCancelClick}
                                         setSpecial={setSpecial}
                                         companyId={companyId}
+                                        handelDeletData={handelDeletData}
                                     />
                                 ) : (
 
