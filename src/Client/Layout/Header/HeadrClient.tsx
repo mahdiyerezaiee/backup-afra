@@ -121,6 +121,8 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
         try {
             const { data, status } = await DeleteItemCarts(Number(localStorage.getItem('connect')))
             getCartShopping()
+            setShow(false)
+
         } catch (err) {
             console.log(err)
 
@@ -142,7 +144,7 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
         }
         try {
             const { data, status } = await SetOrder(order)
-            if (data.success === true) {
+            if (status === 200) {
                 getCartShopping()
                 toast.success(data.result.message, {
                     position: "top-right",
@@ -153,6 +155,8 @@ const HeaderClient:React.FC<Props> = ({ collapsed }) => {
                     draggable: true,
                     progress: undefined
                 });
+            setShow(false)
+
                 Navigate('/client/orderlist') 
             }
 
