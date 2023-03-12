@@ -98,7 +98,7 @@ return (
                         <label className="position-static">همه</label>
                     </div>
                 {options.map((option, i) => (
-                    <div className="m-1  text-left ">
+                    <div key={i} className="m-1  text-left ">
 
                         <input
                             ref={(element) => { ref.current[i] = element }}
