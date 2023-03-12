@@ -74,8 +74,8 @@ const ReportShipping: React.FC = () => {
     
                 params: {
                     StartDate,EndDate,
-                    shipped: shipped===true?shipped:null,
-                    HasShippingContract:HasShippingContract===true?HasShippingContract:null
+                    shipped,
+                    HasShippingContract
                     
     
                 },
@@ -102,6 +102,7 @@ const ReportShipping: React.FC = () => {
     }
     const handelFrom = () => {
         SetClicked(false)
+        SetResponse(null)
     }
     let formatter = new Intl.NumberFormat('fa-IR', {
 
