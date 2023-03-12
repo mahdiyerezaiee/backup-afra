@@ -14,7 +14,6 @@ import {
 import {Bar} from 'react-chartjs-2';
 import {GetShippingsReport} from "../../../services/reportService";
 import {useEffect, useState} from "react";
-import { AiOutlineWarning } from 'react-icons/ai';
 import { ScheduleTypes } from '../../Enums/scheduleTypes';
 import { formatter } from '../../../Utils/Formatter';
 import Select from "react-select";

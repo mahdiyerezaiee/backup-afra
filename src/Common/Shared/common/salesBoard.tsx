@@ -156,7 +156,7 @@ const SalesBoardForCustomer: React.FC<Props> = ({ setloading }) => {
                   productSupply
                     .slice(0, showMore ? productSupply.length : 5)
                     .map((item: any, index: number) => (
-                      <div className="col-sm-10 col-md-12 m-1">
+                      <div key={index} className="col-sm-10 col-md-12 m-1">
                         <div className="  auction-item-2 text-center m-auto  ">
                           <div className="auction-content">
                             <div className=" row bid-area">

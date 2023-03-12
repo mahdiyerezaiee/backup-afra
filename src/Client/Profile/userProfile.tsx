@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {Fragment, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -177,7 +177,21 @@ const UserProfile: React.FC = () => {
         <div className="user-profile layout-spacing">
           <div className=" dashboard-widget widget-content widget-content-area dashboard-widget pb-1">
             <div className="d-flex justify-content-center p-3 addressHeader">
-              <CiLocationOn size="2rem" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 512 512"><title>ionicons-v5-n</title>
+                <path d="M256,48c-79.5,0-144,61.39-144,137,0,87,96,224.87,131.25,272.49a15.77,15.77,0,0,0,25.5,0C304,409.89,400,272.07,400,185,400,109.39,335.5,48,256,48Z"
+                      style={{
+                        fill: "none",
+                        stroke:"#000",
+                        strokeLinecap:"round",
+                        strokeLinejoin:"round",
+                        strokeWidth:"32px"}}
+                />
+                <circle cx="256" cy="192" r="48" style={{
+                fill: "none",
+                stroke:"#000",
+                strokeLinecap:"round",
+                strokeLinejoin:"round",
+                strokeWidth:"32px"}}/></svg>
               <h5 className=""> آدرس ها</h5>
             </div>
 
@@ -185,8 +199,8 @@ const UserProfile: React.FC = () => {
               <div className="">
               <div className="row m-auto text-center addressFiled ">
                 {address.length !==0 ? (
-                  address.map((item: any) => (
-                    <>
+                  address.map((item: any , index) => (
+                    < Fragment key={index} >
                       <div className=" col-lg-6">
                         <div  className=" addressUser">
                         <p className="">
@@ -204,7 +218,7 @@ const UserProfile: React.FC = () => {
                         </p>
                         </div>
                       </div>
-                    </>
+                    </Fragment>
                   ))
                 ) : (
                   <span className="p-3"> شما هیچ آدرسی ثبت نکردید</span>
