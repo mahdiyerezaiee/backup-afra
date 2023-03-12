@@ -11,6 +11,7 @@ const CreditDetails: React.FC = () => {
     const [Credit, SetCredit] = useState<any>([])
     const [customers, SetCustomers] = useState([])
     const [organizations, Setorganizations] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const getCredit = async () => {
 

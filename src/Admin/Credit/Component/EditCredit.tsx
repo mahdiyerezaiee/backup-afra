@@ -1,6 +1,6 @@
 import React, {
-  useEffect,
-  useReducer,
+    useEffect,
+    useReducer, useState,
 } from "react";
 import { useNavigate, NavLink, useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
@@ -21,6 +21,7 @@ import MultiSelect from "../../../Utils/MultiSelect";
 
 const EditCredit: React.FC = () => {
   const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
   const [state, dispatch] = useReducer(creditReducer, CreditState);
   const { name } = state.body;
@@ -55,7 +56,7 @@ const EditCredit: React.FC = () => {
             enableReinitialize={true}
             onSubmit={(values: any) => {
               // same shape as initial values
-              submitCreateCredit({ values, navigate, dispatch });
+              submitCreateCredit({ values, navigate, dispatch ,setLoading});
               // submit()
             }}
           >

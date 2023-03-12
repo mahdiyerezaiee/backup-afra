@@ -19,7 +19,9 @@ import MultiSelect from './../../../Utils/MultiSelect';
 
 const CreateNewCredit: React.FC = () => {
   const [state, dispatch] = useReducer(creditReducer, CreditState);
-  const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
+
+    const navigate = useNavigate();
 
   return (
     <div className="user-progress">
@@ -42,7 +44,7 @@ const CreateNewCredit: React.FC = () => {
             enableReinitialize={true}
             onSubmit={(values: any) => {
               // same shape as initial values
-              submitCreateCredit({ values, navigate, dispatch });
+              submitCreateCredit({ values, navigate, dispatch,setLoading });
             }}
           >
             {({
@@ -127,12 +129,12 @@ const CreateNewCredit: React.FC = () => {
                   <div className="col-6  ">
                     <button
                       type="submit"
-                      disabled={state.loading}
+                      disabled={loading}
                       className="btn btn-success float-right"
                     >
                       ثبت
                       <ClipLoader
-                        loading={state.loading}
+                        loading={loading}
                         color="#ffff"
                         size={15}
                       />

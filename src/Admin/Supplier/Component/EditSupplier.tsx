@@ -69,8 +69,12 @@ const EditSupplier: React.FC = () => {
             }
             setLoading(false)
         } catch (error) {
+            setLoading(false)
+
             console.log(error);
         }
+        setLoading(false)
+
     }
     const CompaniesIDs = () => {
         return (companies.map((item: any) => ({ label: item.name, value: item.id })))

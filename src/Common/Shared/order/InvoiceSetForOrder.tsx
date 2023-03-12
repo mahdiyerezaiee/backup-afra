@@ -107,6 +107,7 @@ const setDefault=()=>{
   }
 
 const handelSubmit=async()=>{
+  setLoading(true)
   const body={
     entityTypeId:10,
     entityId: orderId,
@@ -125,12 +126,16 @@ try {
       closeOnClick: true
   });
   }
-  
+  setLoading(false)
+
 } catch (error) {
   console.log(error);
-  
+  setLoading(false)
+
 }
   closeModal()
+  setLoading(false)
+
 }
 
 

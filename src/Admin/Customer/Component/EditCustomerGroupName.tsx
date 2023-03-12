@@ -87,6 +87,8 @@ const EditCustomerGroupName:React.FC = () => {
             }
         } catch (error) {
             console.log(error);
+            setLoading(false)
+
         }
 
 

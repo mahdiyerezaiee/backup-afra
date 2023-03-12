@@ -9,6 +9,7 @@ import {useRef} from "react";
 import {Field, Form, Formik} from "formik";
 import {validateRequired, validatmin10, validatMobail, validatNumber} from "../../../Utils/validitionParams";
 import { RootState } from '../../../store';
+import {ClipLoader} from "react-spinners";
 
 const AddresForm:React.FC = () => {
 
@@ -21,7 +22,8 @@ const AddresForm:React.FC = () => {
     const[provinceId,setProvinceId]=useState(0);
     const[ostanId,setostanId]=useState(0);
     const navigate=useNavigate()
-    
+    const [loading, SetLoading] = useState(false)
+
     const getProvince = async () => {
 
         const { data, status } = await GetAllProvince();
@@ -62,6 +64,8 @@ const AddresForm:React.FC = () => {
         entityId:Number( localStorage.getItem('connect'))
     }
     const handelSubmit =async () => {
+        SetLoading(true)
+
         try {
             
             const {data,status}=await SetAddress(body);
@@ -77,11 +81,15 @@ const AddresForm:React.FC = () => {
                 });
 
             }
+            SetLoading(false)
 
         } catch (error) {
             console.log(error)
+            SetLoading(false)
+
         }
-     
+        SetLoading(false)
+
         navigate(-1)
 
     }
@@ -206,7 +214,12 @@ const AddresForm:React.FC = () => {
                                 </div>
                                 <div className='row justify-content-between mt-4'>
                                     <div >
-                                        <button  type="submit" className="btn btn-success">ذخیره تغییرات</button>
+                                        <button disabled={loading}  type="submit" className="btn btn-success">ذخیره تغییرات
+                                            <ClipLoader
+                                                loading={loading}
+                                                color="#ffff"
+                                                size={15}
+                                            /></button>
                                     </div>
                                     <div >
                                         <button onClick={handelReturn} className="btn btn-danger">بازگشت</button>

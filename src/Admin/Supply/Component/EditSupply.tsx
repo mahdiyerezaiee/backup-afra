@@ -171,8 +171,12 @@ const EditeSupply:React.FC = () => {
             }
             setLoading(false)
         } catch (error) {
+            setLoading(false)
+
             console.log(error)
         }
+        setLoading(false)
+
     }
     var formatter = new Intl.NumberFormat('en-US', {
 

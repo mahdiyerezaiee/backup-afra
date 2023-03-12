@@ -216,6 +216,7 @@ if(companyId){
             console.log(error);
             setLoading(false)
         }
+        setLoading(false)
 
 
     }

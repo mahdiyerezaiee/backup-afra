@@ -67,9 +67,13 @@ const NewCustomerGroup:React.FC = () => {
                         draggable: true,
                         progress: undefined
                     })
+                setLoading(false)
+
             }
         } catch (error) {
             console.log(error);
+            setLoading(false)
+
         }
         navigate('/admin/customergroup')
         setLoading(false)

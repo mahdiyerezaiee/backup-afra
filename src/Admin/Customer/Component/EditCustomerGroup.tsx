@@ -139,6 +139,8 @@ if(id>0){
 
         } catch (error) {
             console.log(error);
+            setLoading(false)
+
         }
         refresh()
 
