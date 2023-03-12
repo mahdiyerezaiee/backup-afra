@@ -150,7 +150,6 @@ useEffect(()=>{
                     <span className=" py-3" style={{fontSize: 'smaller'}}> اقدام دسته جمعی: </span>
                     {rows.find(item => item.original.active === true || item.original.active === false) ?
                         <select
-                            menuShouldScrollIntoView ={false}
                             // style={{height:'20px'}}
                             className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                             style={{fontSize: 'smaller'}}
@@ -169,7 +168,6 @@ useEffect(()=>{
 
                             ))}
                         </select> : <select
-                            menuShouldScrollIntoView ={false}
                             // style={{height:'20px'}}
                             className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                             style={{fontSize: 'smaller'}}
@@ -220,7 +218,7 @@ useEffect(()=>{
                                         { // loop over the rows cells
                                             row.cells.map(cell => (
 
-                                                <td data-th={cell.column.Header} {...cell.getCellProps()}>
+                                                <td data-th={`${cell.column.Header}`} {...cell.getCellProps()}>
                                                     {cell.render('Cell')}
 
                                                 </td>

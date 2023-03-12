@@ -95,58 +95,58 @@ window.addEventListener('resize',getSize)
                 <SubMenu ref={ref1} open={show.item1 === true ? true : false} onClick={() => setShow({ ...show, item1: !show.item1, item2: false, item3: false, item4: false, item5: false, item6: false, item7: false, item8: false, item9: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(8) ? false : true} icon={<FiUsers size={'2rem'} />} label='کاربران'>
 
 
-                    <MenuItem onClick={handleHeaderClick}><NavLink to='userlist'> لیست کاربران</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}><NavLink to='customergroup'>گروه کاربران</NavLink> </MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='userlist'></Link>}> لیست کاربران</MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='customergroup'></Link>}>گروه کاربران </MenuItem>
 
-                    <MenuItem onClick={handleHeaderClick}><NavLink to='organizationlist'> لیست سازمان ها</NavLink></MenuItem>
-                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="Credits">گروه اعتباری</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='organizationlist'></Link>}> لیست سازمان ها</MenuItem>
+                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> گروه اعتباری</MenuItem>
 
 
                 </SubMenu>
                 <SubMenu ref={ref4} open={show.item4 === true ? true : false} onClick={() => setShow({ ...show, item4: !show.item4, item1: false, item3: false, item2: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(6) || roles.includes(3) || roles.includes(8) ? false : true} label='انبار' icon={<FaWarehouse size={'2rem'} />}>
-                    <MenuItem onClick={handleHeaderClick}> <NavLink to='warehouselist'> لیست انبارها</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}> <NavLink to='warehousetypes'> گروه انبار</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  routerLink={<Link to='warehouselist'></Link>}>  لیست انبارها</MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='warehousetypes'></Link>} >  گروه انبار</MenuItem>
 
 
 
                 </SubMenu>
                 <SubMenu ref={ref3} open={show.item3 === true ? true : false} onClick={() => setShow({ ...show, item3: !show.item3, item1: false, item2: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(6) || roles.includes(3) || roles.includes(8) ? false : true} label='کالا' icon={<BsBoxSeam size={'2rem'} />}>
-                    <MenuItem onClick={handleHeaderClick}> <NavLink to='productList'> لیست کالاها</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}><NavLink to='productgroup'> گروه کالا</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='productList'></Link>}>  لیست کالاها</MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='productgroup'></Link>}> گروه کالا</MenuItem>
                 </SubMenu>
                 
                 <SubMenu ref={ref5} open={show.item5 === true ? true : false} onClick={() => setShow({ ...show, item5: !show.item5, item1: false, item3: false, item4: false, item2: false, item6: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(6) || roles.includes(3) || roles.includes(8) ? false : true} label='تامین' icon={<RiShipLine size={'2rem'} />}>
-                    <MenuItem onClick={handleHeaderClick} ><NavLink to="supplierList">لیست تامین کنندگان</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}><NavLink to="supply">لیست تامین </NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='supplierList'></Link>} >لیست تامین کنندگان</MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='supply'></Link>} >لیست تامین </MenuItem>
                 </SubMenu>
                 <SubMenu ref={ref6} open={show.item6 === true ? true : false}  onClick={() => setShow({ ...show, item6: !show.item6, item1: false, item3: false, item4: false, item5: false, item2: false, item8: false, item9: false, item10: false, item7: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(4) || roles.includes(3) || roles.includes(8) ? false : true} label='فروش' icon={<FaRegHandshake size='2rem' />}>
-                    <MenuItem onClick={handleHeaderClick}><NavLink to="productSupply" >عرضه</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}> <NavLink to="orderList">سفارشات</NavLink></MenuItem>
-                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="addOrder">ثبت سفارش</NavLink></MenuItem>
-                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="InvoiceList">صورتحساب</NavLink></MenuItem>
-                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> <NavLink to="PaymentLists">پرداخت ها</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='productSupply'></Link>}>عرضه</MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='orderList'></Link>}> سفارشات</MenuItem>
+                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}  routerLink={<Link to='addOrder'></Link>} > ثبت سفارش</MenuItem>
+                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}  routerLink={<Link to='InvoiceList'></Link>} > صورتحساب</MenuItem>
+                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}  routerLink={<Link to='PaymentLists'></Link>} > پرداخت ها</MenuItem>
 
 
-                    <MenuItem><NavLink to='bazargah'>  بازارگاه </NavLink></MenuItem>
+                    <MenuItem routerLink={<Link to='bazargah'></Link>} >  بازارگاه </MenuItem>
 
                 </SubMenu>
 
                 <SubMenu  hidden={roles.includes(7) || roles.includes(8) ? false : true} icon={<TbReport size={'2rem'} />} ref={ref16} open={show.item16 === true ? true : false} onClick={() => setShow({ ...show, item16: !show.item16, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item2: false, item11: false, item12: false, item14: false, item13: false, item7: false })} label="گزارشات">
-                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='ShippingReport'> گزارش  تخصیص و ارسال کالا</NavLink></MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='UsedBarBariReports'> گزارش بارنامه های صادر شده</NavLink> </MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomersReports'> گزارش مشتریان</NavLink></MenuItem>
-                     <MenuItem onClick={handleHeaderClick}  > <NavLink to='CoutaggeBrief'>خلاصه گزارش کوتاژ</NavLink> </MenuItem> 
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='CustomerBerief'></NavLink>خلاصه گزارش مشتری </MenuItem> 
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='ShippingReport'></Link>}  > گزارش  تخصیص و ارسال کالا</MenuItem>
+                    <MenuItem onClick={handleHeaderClick} routerLink={<Link to='UsedBarBariReports'></Link>} > گزارش بارنامه های صادر شده </MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  routerLink={<Link to='CustomersReports'></Link>}>  گزارش مشتریان</MenuItem>
+                     <MenuItem onClick={handleHeaderClick} routerLink={<Link to='CoutaggeBrief'></Link>} > خلاصه گزارش کوتاژ </MenuItem>
+                    <MenuItem onClick={handleHeaderClick}  routerLink={<Link to='CustomerBerief'></Link>}> خلاصه گزارش مشتری </MenuItem>
 
                 </SubMenu>
                 <SubMenu ref={ref7} open={show.item7 === true ? true : false} onClick={() => setShow({ ...show, item7: !show.item7, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item2: false, item11: false, item12: false, item14: false, item13: false, item16: false })} hidden={roles.includes(7) || roles.includes(8) ? false : true} label='تحویل کالا' icon={<GiMineTruck size='2rem' />}>
 
                     {/* <MenuItem onClick={handleHeaderClick}>ثبت بارنامه و کسری سرک</MenuItem>
                 <MenuItem onClick={handleHeaderClick}><NavLink to='/reportfromsql'> ترافیک بارگیری</NavLink></MenuItem> */}
-                    <MenuItem onClick={handleHeaderClick}  ><NavLink to='shippingcompanyList'>لیست باربری</NavLink> </MenuItem>
-                    <MenuItem onClick={handleHeaderClick}  > <NavLink to='ShippingContract'>لیست قرارداد باربری</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick}   routerLink={<Link to='shippingcompanyList'></Link>}>لیست باربری </MenuItem>
+                    <MenuItem onClick={handleHeaderClick}   routerLink={<Link to='ShippingContract'></Link>}> لیست قرارداد باربری</MenuItem>
                     
-                        <MenuItem onClick={handleHeaderClick} > <NavLink to='updateShippingReports'>بروز رسانی باربری</NavLink></MenuItem>
+                        <MenuItem onClick={handleHeaderClick}  routerLink={<Link to='updateShippingReports'></Link>}> بروز رسانی باربری</MenuItem>
                         
                     
                 </SubMenu>
@@ -161,7 +161,7 @@ window.addEventListener('resize',getSize)
 
                 {/*<MenuItem hidden={ false } icon={<FaCashRegister size='2rem' />} > w,vj pshf </MenuItem>*/}
                 <SubMenu ref={ref12} open={show.item12 === true ? true : false} onClick={() => setShow({ ...show, item12: !show.item12, item16: false, item1: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item13: false, item14: false })} hidden={(roles.includes(2) || roles.includes(7) || roles.includes(8)) || roles.includes(5) ? false : true} icon={<MdSupportAgent size='2rem' />} label="پشتیبانی" >
-                    <MenuItem onClick={handleHeaderClick} hidden={roles.includes(7) || roles.includes(8) || roles.includes(5) ? false : true}><NavLink to="user-news" >اطلاعیه و اعلان ها</NavLink></MenuItem>
+                    <MenuItem onClick={handleHeaderClick} hidden={roles.includes(7) || roles.includes(8) || roles.includes(5) ? false : true}  routerLink={<Link to='user-news'></Link>}>اطلاعیه و اعلان ها</MenuItem>
                     <MenuItem onClick={handleHeaderClick} routerLink={<Link to='ticket'></Link>} >لیست تیکت ها</MenuItem>
                     {/* <MenuItem onClick={handleHeaderClick} hidden={roles.includes(2) || roles.includes(1) ? false : true}  routerLink={<Link to='newTicket'></Link>}>ثبت تیکت جدید </MenuItem> */}
 
@@ -170,8 +170,8 @@ window.addEventListener('resize',getSize)
                 <SubMenu ref={ref13} open={show.item13 === true ? true : false} onClick={() => setShow({ ...show, item13: !show.item13, item1: false, item16: false, item3: false, item4: false, item5: false, item6: false, item8: false, item9: false, item10: false, item7: false, item2: false, item11: false, item12: false, item14: false })} hidden={roles.includes(7) || roles.includes(8) ? false : true} label='تنظیمات' icon={<IoSettingsOutline size='2rem' />}>
 
                     <SubMenu onClick={handleHeaderClick} label='تعاریف'>
-                        <MenuItem onClick={handleHeaderClick} > <NavLink to='createAttribute'>دسته بندی</NavLink></MenuItem>
-                        <MenuItem onClick={handleHeaderClick} > <NavLink to='creategroup'>گروه بندی</NavLink></MenuItem>
+                        <MenuItem onClick={handleHeaderClick} routerLink={<Link to='createAttribute'></Link>} > دسته بندی</MenuItem>
+                        <MenuItem onClick={handleHeaderClick} routerLink={<Link to='creategroup'></Link>} > گروه بندی</MenuItem>
 
                     </SubMenu>
 
