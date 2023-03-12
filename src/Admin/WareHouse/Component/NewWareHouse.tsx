@@ -155,7 +155,11 @@ companyId, companyName,active
             setLoading(false)
         } catch (error) {
             console.log(error);
+            setLoading(false)
+
         }
+        setLoading(false)
+
     }
     const companys = () => {
         return (userCompanies.map((item:any) => ({ label: item.name, value: item.id })))

@@ -212,9 +212,13 @@ const body ={
                     draggable: true,
                     progress: undefined
                 });
+                setLoading(false)
+
             }
         } catch (err) {
             console.log(err)
+            setLoading(false)
+
         }
 
 

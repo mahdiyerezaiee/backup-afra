@@ -161,12 +161,20 @@ const EditProfile: React.FC = () => {
               }
             );
           }
+          setLoading(false);
+
         } catch (error) {
           console.log(error);
+          setLoading(false);
+
         }
         getCurrentUser();
+        setLoading(false);
+
       }
     } catch (error) {
+      setLoading(false);
+
       console.log(error);
     }
     setLoading(false);

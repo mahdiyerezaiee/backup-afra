@@ -149,8 +149,12 @@ let body={"customer":{...dataUser,
                 });
 
             }
+            setLoading(false)
+
         } catch (err) {
             console.log(err)
+            setLoading(false)
+
         }
         navigate('/admin/userlist')
         setLoading(false)

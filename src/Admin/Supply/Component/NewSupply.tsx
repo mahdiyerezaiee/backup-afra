@@ -143,8 +143,12 @@ const NewSupply: React.FC = () => {
                 setLoading(false)
 
             } catch (error) {
+                setLoading(false)
+
                 console.log(error)
             }
+            setLoading(false)
+
         }
         else {
             try {
@@ -185,8 +189,11 @@ const NewSupply: React.FC = () => {
 
             } catch (error) {
                 console.log(error);
+                setLoading(false)
 
             }
+            setLoading(false)
+
         }
     }
     var formatter = new Intl.NumberFormat('en-US', {

@@ -212,7 +212,11 @@ const AddOrder: React.FC = () => {
       setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false)
+
     }
+    setLoading(false)
+
   };
   const Mesures: any = () => {
     if (measureUnitId && measureUnitId > 0) {
