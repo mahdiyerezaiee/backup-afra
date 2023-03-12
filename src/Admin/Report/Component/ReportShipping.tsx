@@ -74,7 +74,7 @@ const ReportShipping: React.FC = () => {
     
                 params: {
                     StartDate,EndDate,
-                    Unshipped: shipped===true?shipped:null,
+                    shipped: shipped===true?shipped:null,
                     HasShippingContract:HasShippingContract===true?HasShippingContract:null
                     
     

@@ -31,7 +31,7 @@ interface Props {
 const ReserveOrder: React.FC<Props> = ({ id, modalIsOpen, closeModal,expireDate }) => {
     const [loading, setLoading] = useState(false);
     const [comment, setComment] = useState('')
-    const [reservationExpireDate, setreservationExpireDate] = useState<any>(new Date(expireDate))
+    const [reservationExpireDate, setreservationExpireDate] = useState<any>(new Date(expireDate?expireDate:''))
 
     const handelStartDate = (value: any) => {
     

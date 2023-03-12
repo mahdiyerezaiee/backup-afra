@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ImageFileUploader from "../../../Utils/ImageFileUploader";
 import QueryString from "qs";
 import { GetAttachments } from "../../../services/attachmentService";
@@ -10,6 +10,7 @@ const attachmet = (window as any).globalThis.stie_att
 interface Props {
   order: any, params: any, handelPreview: any, modalIsOpenUpload: any, closeModalForUpload: any, setIsOpenUpload: any
 }
+
 const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalIsOpenUpload, closeModalForUpload, setIsOpenUpload }) => {
   const [attachments, Setattachments] = useState([]);
   const [show, setShow] = useState(false);
@@ -17,7 +18,15 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
 
   let newAttachment = attachments.filter((item: any) => item.deleted === false)
 
+
   let entityId = params.id;
+  useEffect(()=>{
+
+    handelGetAttachment()
+    if(newAttachment.length>0){
+setShow(true)
+    }
+  },[newAttachment.length>0,params.id])
   const handelGetAttachment = async () => {
     setLoading(true)
     let config = {
@@ -35,6 +44,11 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
       const { data, status } = await GetAttachments(config);
       if (status === 200) {
         Setattachments(data.result.attachments);
+        if(data.result.attachments.length>0)
+        {
+         
+        }
+
         setLoading(false)
 
       }
@@ -46,6 +60,8 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
   };
 
 
+
+
   const showAtt = () => {
     setShow(!show);
   };
@@ -54,7 +70,10 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
     handelGetAttachment();
 
   };
+
   if (newAttachment.length > 0 && show) {
+
+
     return (
       <section className="mb-2  ">
         <div className=" mb-1    rounded ">
@@ -73,6 +92,7 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
                 />
               ) : (
                 <svg
+                 
                   onClick={CollapsAtt}
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -185,20 +205,20 @@ const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalI
                 <span className="text-center">
                   اطلاعاتی برای نمایش موجود نیست
                   <button disabled={order.orderStatusId === 1} style={{ marginTop: '-.8rem', marginLeft: '.6rem', background: 'none' }} className=" border-0 Attachment   float-right " title="افزودن تصویر" onClick={() => setIsOpenUpload(true)}>
-                  <svg style={{ width: '24px', height: '38px' }} xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    className="bi bi-plus-circle" viewBox="0 0 17 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                    <path
-                      d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                  </svg>
+                    <svg style={{ width: '24px', height: '38px' }} xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                      className="bi bi-plus-circle" viewBox="0 0 17 16">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                      <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
 
-                </button>
+                  </button>
                 </span>
-              
+
               </div>
               <div className='  '>
 
-                
+
                 <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={params.id} EntityTypesId={10} comment={'لطفا فایل  مورد نظر را بارگزاری کنید.'} />
 
               </div>
