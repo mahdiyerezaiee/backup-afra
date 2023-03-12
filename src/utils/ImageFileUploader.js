@@ -22,7 +22,7 @@ const customStyles = {
 }
 
 
-const ImageFileUploader = ({ EntityTypesId, EntityId, modalIsOpen, closeModal,comment }) => {
+const ImageFileUploader = ({ EntityTypesId, EntityId, modalIsOpen, closeModal,comment,AttchmentTypeId }) => {
     const [files, setFiles] = useState('')
     const [filename, setFileName] = useState('انتخاب فایل')
     let [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const ImageFileUploader = ({ EntityTypesId, EntityId, modalIsOpen, closeModal,co
         formData.append('Files', files)
         formData.append('EntityTypeId', EntityTypesId)
         formData.append('EntityId', EntityId)
-
+        formData.append('AttchmentTypeId',AttchmentTypeId)
         try {
             const {data,status}=await attachmentUpload(formData)
 

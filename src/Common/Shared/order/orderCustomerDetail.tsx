@@ -163,7 +163,7 @@ window.location.reload()
                     <button className="btn btn-info m-1" hidden={order.orderStatusId === 4 && newAttachmnet.length <= 0?false:true} onClick={OpenModalForUpload}>بارگزاری پیش فاکتور تایید شده</button>
                     <button className="btn-success  m-1 btn " hidden={newAttachmnet.length > 0?false:true} disabled={order.orderStatusId ===  5   } onClick={handelSubmit}>درخواست بررسی اسناد ارائه شده </button>
                 </div>
-                <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={params.id} EntityTypesId={10} comment={'لطفا فایل  مورد نظر را بارگزاری کنید.'} />
+                <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={params.id} EntityTypesId={10} comment={'لطفا فایل  مورد نظر را بارگزاری کنید.'}  AttchmentTypeId={1}/>
             </div>
 
         </div>)

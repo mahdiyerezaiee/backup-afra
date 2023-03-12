@@ -393,6 +393,7 @@ const EditProfile: React.FC = () => {
           comment={"بارگزاری عکس پروفایل"}
           EntityTypesId={1}
           EntityId={user.id}
+          AttchmentTypeId={3}
         />
       </div>
     </div>
