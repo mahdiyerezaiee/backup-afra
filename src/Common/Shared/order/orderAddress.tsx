@@ -816,7 +816,7 @@ const closeModalinvoice = () => {
                     roles.includes(8) ? (
                     <button
                       className="btn-success m-1 btn "
-                      hidden={order.conditionalPaymentTypeId  || order.orderStatusId>8 ? true : false}
+                      hidden={order.conditionalPaymentTypeId  || order.orderStatusId>=8 ? true : false}
                       onClick={openModalFinancialConfirmation}
                     >
                      تایید مشروط
