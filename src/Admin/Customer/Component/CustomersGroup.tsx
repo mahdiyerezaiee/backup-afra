@@ -378,7 +378,6 @@ export const CustomersGroup:React.FC = () => {
                                     <div className="form-control-sm">
                                         <label> شرکت</label>
                                         <Select
-                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}
@@ -449,7 +448,6 @@ export const CustomersGroup:React.FC = () => {
                             <div className="form-control-sm">
                                         <label> شرکت</label>
                                         <Select
-                                            menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
                                             placeholder='نام شرکت'
                                             options={companys()}
@@ -477,14 +475,14 @@ export const CustomersGroup:React.FC = () => {
                 </div>
                 <div className=" statbox widget-content widget-content-area">
                     <div>
-                        <button className="btn btn-primary m-3" onClick={handelForm}>تعریف گروه</button>
 
+                        <button className="btn btn-primary m-3" onClick={handelForm}> تعریف گروه جدید</button>
+
+                        <div className='text-center mt-5 '>
+                            <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                        </div>
 
                     </div>
-                </div>
-
-                <div className='text-center p-5 mt-5 dashboard-widget'>
-                    <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
                 </div>
             </div>
         )
