@@ -7,6 +7,7 @@ export const OrderStatus=[
     {name:'تایید شده',id:6 , number:3},
     {name:'در انتظار تامین',id:7},
     {name:'تخصیص آدرس',id:8 , number:7},
+    
     {name:'در حال انجام',id:9 , number:8},
     {name:'حواله  ارسال',id:10 , number:9},
     {name: 'ارسال شده',id:11 , number:10},
