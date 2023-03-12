@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import {Field, Form, Formik} from "formik";
 import {validateRequired, validatmin10, validatMobail, validatNumber} from "../../Utils/validitionParams";
 import { RootState } from "../../store";
+import {ClipLoader} from "react-spinners";
 
 const EditAddress:React.FC = () => {
     const params =useParams()
@@ -18,6 +19,8 @@ const EditAddress:React.FC = () => {
     const [postalCode, setpostalCode] = useState('');
     const [receiverTel, setreceiverTel] = useState('');
     const [receiverMobile, setreceiverMobile] = useState('');
+    const [loading, SetLoading] = useState(false)
+
     const[ostanId,setOstanId]=useState(0);
     const GetAddresUser= async ()=>{
         const {data , status} = await GetAddress(1, user.id )
@@ -69,6 +72,7 @@ const EditAddress:React.FC = () => {
         navigate(-1)
     }
     const addressSetHandler =async () => {
+        SetLoading(true)
         try {
 
             const {data,status}=await SetAddress(body);
@@ -83,10 +87,14 @@ const EditAddress:React.FC = () => {
                     progress: undefined
                 });
             }
+            SetLoading(false)
 
         } catch (error) {
+            SetLoading(false)
+
             console.log(error)
         }
+        SetLoading(false)
 
 
 
@@ -204,7 +212,12 @@ const EditAddress:React.FC = () => {
                       </div>
                       <div className='row justify-content-between mt-4'>
                           <div >
-                              <button  type="submit" className="btn btn-success">ذخیره تغییرات</button>
+                              <button disabled={loading}  type="submit" className="btn btn-success">ذخیره تغییرات
+                                  <ClipLoader
+                                      loading={loading}
+                                      color="#ffff"
+                                      size={15}
+                                  /></button>
                           </div>
                           <div >
                               <button  onClick={backHandel} className="btn btn-primary">بازگشت</button>

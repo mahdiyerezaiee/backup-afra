@@ -154,6 +154,7 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
         }
 
 
+        SetLoading(false)
 
     }
 

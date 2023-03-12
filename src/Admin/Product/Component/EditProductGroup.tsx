@@ -84,10 +84,12 @@ const getCompanies = async () => {
             setLoading(false)
 
         } catch (error) {
-           
+            setLoading(false)
+
             console.log(error);
         }
-    
+
+        setLoading(false)
 
     }
     const companys = () => {

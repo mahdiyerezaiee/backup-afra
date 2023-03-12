@@ -47,8 +47,12 @@ const NewSupplier: React.FC = () => {
             }
             setLoading(false)
         } catch (error) {
+            setLoading(false)
+
             console.log(error);
         }
+        setLoading(false)
+
     }
 
     const CompaniesIDs = () => {

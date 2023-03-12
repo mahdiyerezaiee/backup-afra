@@ -200,6 +200,7 @@ const NewProduct: React.FC = () => {
             }
 
             // await setAttributevalue();
+            setLoading(false)
 
         }
 
@@ -207,8 +208,12 @@ const NewProduct: React.FC = () => {
 
         catch (error) {
             console.log(error);
+            setLoading(false)
+
+
         }
 
+        setLoading(false)
 
 
     };

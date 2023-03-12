@@ -77,9 +77,12 @@ useEffect(()=>{
                 });
 
             }
+            setLoading(false)
 
         } catch (error) {
             console.log(error)
+            setLoading(false)
+
         }
         navigate('/admin/user-news')
 setLoading(false)

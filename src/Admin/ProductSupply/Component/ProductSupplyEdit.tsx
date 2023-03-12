@@ -155,7 +155,6 @@ const ProductSupplyEdit: React.FC = () => {
         }
     }
     let productValue: any = product()
-    console.log(productValue);
 
     const ProductMeasure = async () => {
         const { data, status } = await getEditProduct(productValue[0].id);
@@ -249,7 +248,10 @@ const ProductSupplyEdit: React.FC = () => {
             setLoading(false)
         } catch (error) {
             console.log(error);
+            setLoading(false)
+
         }
+        setLoading(false)
 
     }
     const handelNavigate = (e: any) => {

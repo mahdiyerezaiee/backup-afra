@@ -8,9 +8,11 @@ interface Props {
   values: any;
   navigate: any;
   dispatch: any;
+    setLoading:any
 }
 
 export const submitCreateCredit = async (props: Props ) => {
+    props.setLoading(true)
 try {
     const { data, status } = await CreateCredit(props.values);
     props.dispatch(setCredit(props.values));
@@ -29,6 +31,8 @@ try {
   } catch (error) {
     console.log(error);
   }
+    props.setLoading(false)
+
 };
 
 export const units = () => {

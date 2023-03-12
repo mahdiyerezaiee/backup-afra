@@ -41,12 +41,15 @@ const addNews = async ()=>{
         });
         navigator('/admin/user-news')
 
+        setLoading(false)
 
     }
 
 } catch (error) {
         console.log(error)
-    }
+       setLoading(false)
+
+   }
     setLoading(false)
 }
 const submit=()=>{

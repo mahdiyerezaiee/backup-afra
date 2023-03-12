@@ -8,7 +8,8 @@ export const entityTypes = () => {
 export const Attributes = () => {
     return (AttributeControlTypes.map(data => ({ label: data.name, value: data.id })))
 }
-export const submitAttribute = async (event:any) => {
+export const submitAttribute = async (event:any , setLoading:any) => {
+    setLoading(true)
     const formData = new FormData(event.target)
     const controlTypeValue = formData.get( "controlTypeValue" )
     const controlTypeId = formData.get( "controlTypeId" ) 
@@ -39,10 +40,14 @@ export const submitAttribute = async (event:any) => {
                     progress: undefined
                 })
         }
+        setLoading(false)
+
 
     } catch (error) {
-       
+        setLoading(false)
+
     }
+    setLoading(false)
 
 
 }

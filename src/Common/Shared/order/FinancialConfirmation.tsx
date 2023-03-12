@@ -78,7 +78,8 @@ const FinancialConfirmation:React.FC<Props> = ({ id, modalIsOpen, closeModal }) 
                 
             closeModal()
         } catch (e) {
-            
+            setLoading(false)
+
             console.log(e)
             closeModal()
 

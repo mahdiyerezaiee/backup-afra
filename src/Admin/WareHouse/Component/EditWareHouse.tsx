@@ -175,6 +175,8 @@ const EditWareHouse: React.FC = () => {
             setLoading(false)
         } catch (error) {
             console.log(error);
+            setLoading(false)
+
         }
     }
 
