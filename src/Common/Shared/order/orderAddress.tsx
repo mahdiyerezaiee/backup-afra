@@ -423,6 +423,8 @@ const closeModalinvoice = () => {
                 <button
                   className="btn btn-sm btn-info ml-1 mr-1"
                  onClick={()=>openInvoceModal([rows.row.original.id])}
+                 hidden={order.reserved  ?false:true}
+                 disabled={rows.row.original.hasOrderDetailBasedInvoice?true:false}
                 >
                   {" "}
                   صدور صورتحساب
@@ -814,7 +816,7 @@ const closeModalinvoice = () => {
                     roles.includes(8) ? (
                     <button
                       className="btn-success m-1 btn "
-                      hidden={order.conditionalPaymentTypeId ? true : false}
+                      hidden={order.conditionalPaymentTypeId  || order.orderStatusId>8 ? true : false}
                       onClick={openModalFinancialConfirmation}
                     >
                      تایید مشروط
@@ -827,6 +829,7 @@ const closeModalinvoice = () => {
                       className="btn btn-info"
                       hidden={getOrder && order.reserved ? true : false}
                       onClick={() => openModelInvoice(order.id)}
+                      disabled={order.hasOrderBaseInvoice?true:false}
                     >
                       صدور صورتحساب سفارش
                     </button>

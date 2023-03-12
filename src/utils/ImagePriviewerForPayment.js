@@ -60,6 +60,7 @@ const ImagePriviewerForPayment = ({
             formData.append("Files", images[0]);
             formData.append("EntityTypeId", 20);
             formData.append("EntityId", data.result.payment.id);
+            formData.append("AttchmentTypeId",2)
             const response = await attachmentUpload(formData);
           } catch (error) {}
         }
