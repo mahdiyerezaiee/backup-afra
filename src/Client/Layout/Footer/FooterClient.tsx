@@ -16,9 +16,9 @@ const FooterClient: React.FC = () => {
         >
           <defs>
             <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
-              <stop stop-color="rgba(62, 71.325, 243, 1)" offset="0%"></stop>
+              <stop stopColor="rgba(62, 71.325, 243, 1)" offset="0%"></stop>
               <stop
-                stop-color="rgba(157.733, 255, 212.167, 1)"
+                stopColor="rgba(157.733, 255, 212.167, 1)"
                 offset="100%"
               ></stop>
             </linearGradient>
@@ -30,8 +30,8 @@ const FooterClient: React.FC = () => {
           ></path>
           <defs>
             <linearGradient id="sw-gradient-1" x1="0" x2="0" y1="1" y2="0">
-              <stop stop-color="rgba(62, 151.031, 243, 1)" offset="0%"></stop>
-              <stop stop-color="rgba(255, 255, 255, 1)" offset="100%"></stop>
+              <stop stopColor="rgba(62, 151.031, 243, 1)" offset="0%"></stop>
+              <stop stopColor="rgba(255, 255, 255, 1)" offset="100%"></stop>
             </linearGradient>
           </defs>
           <path

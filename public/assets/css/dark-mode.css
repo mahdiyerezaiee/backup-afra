@@ -852,19 +852,54 @@ select:-webkit-autofill:focus {
 
 .dark-mode .navbar-collapse {
     display: block;
-    background:#060818!important;}
+    background:#060818!important;
+}
 }
 
 .dark-mode .navbar-toggler-icon svg {
     color: white;
 }
+@keyframes  hoverstyle {
+    0% {
+
+        background:#1b2e4b!important;
+        color: white!important;
+
+
+    }
+    100% {
+
+        background:#0052be!important;
+        color: white!important;
+
+
+    }
+}
 .dark-mode .css-1nmdiq5-menu{
+    background:#1b2e4b!important;
+    color: white!important;
+
+
+
+
+
+}
+.dark-mode .css-1nmdiq5-menu > div > div {
+
     background:#1b2e4b!important;
     color: white!important;
 }
 .dark-mode .css-1nmdiq5-menu > div> div:hover{
+    background:#0052be!important;
+    color: white!important;
+    animation: hoverstyle ease-in-out 0.5s 1 alternate!important;
 
-        color: #1a1c2d!important;
+}
+
+.dark-mode body:hover .css-1nmdiq5-menu > div> div {
+    background: #0052be !important;
+
+    /*color: #1a1c2d!important;*/
 
 
 }
@@ -938,4 +973,10 @@ select:-webkit-autofill:focus {
 .dark-mode .mainMenu  label::after{
     background-color: #1a1c2d!important;
 
+}
+.dark-mode .ps-submenu-content{
+    background: rgb(26, 28, 45)!important;
+}
+.dark-mode .ps-submenu-content .css-ewdv3l{
+    background-color: transparent!important;
 }

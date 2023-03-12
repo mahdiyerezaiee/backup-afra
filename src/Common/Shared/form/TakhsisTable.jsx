@@ -94,7 +94,6 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
                 <span className=" py-3" style={{fontSize: 'smaller'}}> اقدام دسته جمعی: </span>
 
                 <select
-                    menuShouldScrollIntoView ={false}
                     // style={{height:'20px'}}
                     className='btn m-1  non-hover  bg-transparent shadow-none  p-0 '
                     style={{fontSize: 'smaller'}}
@@ -146,7 +145,7 @@ const TakhsisTable = ({ columns, data , getData, bulkJob ,  rowProps = () => ({}
                         return (
                             <tr id={row.original.id} {...row.getRowProps(rowProps(row))}>
                                 {row.cells.map(cell => {
-                                    return <td data-th={cell.column.Header} className="text-center" {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    return <td data-th={`${cell.column.Header}`} className="text-center" {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )

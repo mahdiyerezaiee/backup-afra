@@ -189,7 +189,7 @@ const InvoiceClient: React.FC = () => {
           </button>
           <div>
             {invoices.map((item: any, index: any) => (
-              <div className="col-sm-10 col-md-12 m-1">
+              <div key={index} className="col-sm-10 col-md-12 m-1">
                 <div className="  auction-item-2 text-center  ">
                   <div className="auction-content">
                     <div className=" row bid-area">

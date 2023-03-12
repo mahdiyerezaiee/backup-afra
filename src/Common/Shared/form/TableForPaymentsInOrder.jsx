@@ -165,7 +165,7 @@ const TableForPaymentsInOrder = ({ columns, data }) => {
                                 <tr {...row.getRowProps()}>
                                     { // loop over the rows cells
                                         row.cells.map(cell => (
-                                            <td data-th={cell.column.Header} {...cell.getCellProps()}>
+                                            <td data-th={`${cell.column.Header}`} {...cell.getCellProps()}>
                                                 {cell.render('Cell')}
                                             </td>
                                         ))

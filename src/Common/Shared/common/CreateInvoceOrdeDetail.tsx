@@ -57,8 +57,7 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
 
     }, [])
    
-    console.log(orderDetailId.length);
-    
+
     const setDefault = () => {
 
         if (defaultPaymentId().length > 0 ) {
