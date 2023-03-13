@@ -7,35 +7,35 @@ import { toast } from 'react-toastify';
 import './customCss.css';
 
 import { BiArrowBack } from 'react-icons/bi';
-import {ClipLoader} from "react-spinners";
-import {Field, Form, Formik} from "formik";
-import {validatMobail} from "../../../Utils/validitionParams";
+import { ClipLoader } from "react-spinners";
+import { Field, Form, Formik } from "formik";
+import { validatMobail } from "../../../Utils/validitionParams";
 import { RootState } from '../../../store';
 import LoginWithPassword from './loginWithPassword';
-const afra =require( './afra.jpg');
+const afra = require('./afra.jpg');
 
 
 
-const Login:React.FC = () => {
-    const user = useSelector((state:RootState) => state.user);
+const Login: React.FC = () => {
+    const user = useSelector((state: RootState) => state.user);
     const [, forceUpdate] = useState();
     const history = useNavigate();
     const [click, setClick] = useState(false);
-    const [show , setShow]=useState(false)
+    const [show, setShow] = useState(false)
     const dispatch = useDispatch();
     const [mobile, setMobile] = useState('');
     const [loading, setLoading] = useState(false);
-    
 
 
 
-    const handelBack=(e:any)=>{
+
+    const handelBack = (e: any) => {
         e.preventDefault()
         history('sysplus')
     }
     let d = new Date();
-    d.setTime(d.getTime() +  (60 * 2000));
-    let expires =  d.toUTCString();
+    d.setTime(d.getTime() + (60 * 2000));
+    let expires = d.toUTCString();
 
     const dataLogin = {
         expiresAt: expires,
@@ -47,6 +47,7 @@ const Login:React.FC = () => {
 
     }
     const handleSubmit = async () => {
+
         setLoading(true)
         setClick(true);
         const user = {
@@ -63,43 +64,58 @@ const Login:React.FC = () => {
 
 
 
-                if (getDataLogin().expiresAt < new Date().toUTCString()){
+            if (getDataLogin().expiresAt < new Date().toUTCString()) {
 
-                    sessionStorage.removeItem("dataLogin")
+                sessionStorage.removeItem("dataLogin")
 
 
+            }
+            if (getDataLogin().expiresAt) {
+                toast.warning('لطفا چند دقیقه بعد امتحان کنید', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined
+
+                });
+
+
+            }
+            if (!getDataLogin().expiresAt) {
+                const { status, data } = await loginUser(user);
+                setLoading(false)
+                if (data.success === true) {
+                    toast.success("کد برای تلفن همراه شما ارسال شد", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined
+
+                    });
+                    setLoading(true)
+                    localStorage.setItem('mobile', user.phoneNumber)
+                    resetForm();
+                    history('/verify', { replace: true });
                 }
-                if (!getDataLogin().expiresAt){
-                    const { status, data } = await loginUser(user);
-                    setLoading(false)
-                    if (data.success===true) {
-                        toast.success("کد برای تلفن همراه شما ارسال شد", {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: true,
-                            progress: undefined
-
-                        });
-                        setLoading(true)
-                        localStorage.setItem('mobile', user.phoneNumber)
-                        resetForm();
-                        history('/verify', { replace: true });
-                    }
-                    sessionStorage.setItem('dataLogin', JSON.stringify(dataLogin));
-                }}
+                sessionStorage.setItem('dataLogin', JSON.stringify(dataLogin));
+            }
+        }
         catch (error) {
-        
+
             setClick(false);
         }
         setLoading(false)
     }
 
     let mobileNo;
-    if(mobile){
-mobileNo=mobile
+    if (mobile) {
+        mobileNo = mobile
     }
 
     return (
@@ -109,18 +125,20 @@ mobileNo=mobile
                     <div className='col-md-5'>
                         {show === true ?
                             <>
-                            <LoginWithPassword setShows={setShow} value ={mobileNo} onchange={(e:any) =>{setMobile(e.target.value)
-                                                                                localStorage.setItem('mobile',mobile)}}/>
-                            </>:
+                                <LoginWithPassword setShows={setShow} value={mobileNo} onchange={(e: any) => {
+                                    setMobile(e.target.value)
+                                    localStorage.setItem('mobile', mobile)
+                                }} />
+                            </> :
                             <div className='card-body'>
 
-<div className='row'>
-                <h4 className="col-10">
-                    ورود
-                </h4>
-                {/* <BiArrowBack className="col-2 text-left"  size="20px" title="بازگشت به صفحه اصلی" onClick={handelBack}/> */}
-            </div>
-                            <p className='mt-5'>برای استفاده از خدمات هولدینگ افرا، وارد حساب کاربری خود شوید .</p>
+                                <div className='row'>
+                                    <h4 className="col-10">
+                                        ورود
+                                    </h4>
+                                    {/* <BiArrowBack className="col-2 text-left"  size="20px" title="بازگشت به صفحه اصلی" onClick={handelBack}/> */}
+                                </div>
+                                <p className='mt-5'>برای استفاده از خدمات هولدینگ افرا، وارد حساب کاربری خود شوید .</p>
 
 
                                 <Formik
@@ -133,46 +151,46 @@ mobileNo=mobile
                                         // same shape as initial values
                                         handleSubmit()
                                     }}>
-                                    {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
+                                    {({ errors, touched, validateField, validateForm, setFieldValue, handleChange, values }) => (
 
 
 
                                         <Form >
-                            <div className=' mt-5 textOnInput ' style={{direction: 'ltr'}} >
-                <label>شماره موبایل</label>
+                                            <div className=' mt-5 textOnInput ' style={{ direction: 'ltr' }} >
+                                                <label>شماره موبایل</label>
 
-                            <Field   type='text' name='mobile' className='form-control opacityForInput' value={mobile} placeholder='09121234567 ' maxLength="11" onChange={(e:any) => {
-                            setMobile(e.target.value)
-                        }}  validate={validatMobail} />
+                                                <Field type='text' name='mobile' className='form-control opacityForInput' value={mobile} placeholder='09121234567 ' maxLength="11" onChange={(e: any) => {
+                                                    setMobile(e.target.value)
+                                                }} validate={validatMobail} />
 
-                                {errors.mobile && touched.mobile && <div className="text-danger">{errors.mobile}</div>}
-
-
-                            </div>
-                            <div className='form-group' style={{height: "20px"}}>
-                            </div>
-                                <div className='row'>
+                                                {errors.mobile && touched.mobile && <div className="text-danger">{errors.mobile}</div>}
 
 
-                                    <div className="col-6">
-                                        <button className='  btn btn-success mt-5 mb-5 float-left' disabled={loading}>
-                                            تایید و ادامه
-                                            <ClipLoader
+                                            </div>
+                                            <div className='form-group' style={{ height: "20px" }}>
+                                            </div>
+                                            <div className='row'>
 
-                                                loading={loading}
-                                                color="#ffff"
-                                                size={15}
-                                            />
-                                        </button>
 
-                                    </div>
-                                    <div className="col-6">
+                                                <div className="col-6">
+                                                    <button className='  btn btn-success mt-5 mb-5 float-left' disabled={loading}>
+                                                        تایید و ادامه
+                                                        <ClipLoader
 
-                                        <button className='   btn btn-primary mt-5 mb-5 float-right'  onClick={()=>setShow(true)}>ورود با رمز عبور</button>
-                                    </div>
-                                </div>
+                                                            loading={loading}
+                                                            color="#ffff"
+                                                            size={15}
+                                                        />
+                                                    </button>
+
+                                                </div>
+                                                <div className="col-6">
+
+                                                    <button className='   btn btn-primary mt-5 mb-5 float-right' onClick={() => setShow(true)}>ورود با رمز عبور</button>
+                                                </div>
+                                            </div>
                                         </Form>
-                                        )}
+                                    )}
                                 </Formik>
 
                             </div>

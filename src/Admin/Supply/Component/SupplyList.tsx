@@ -132,14 +132,11 @@ const SupplyList:React.FC = () => {
 
             try {
                 const { data, status } = await DeleteSupply(arrayOfData[i].id)
-                if (data.result.success === true) {
-                    SetOpen(true)
+                if (status=== 200) {
+                    SetOpen(false)
                     SetStateSuccess(successCount += 1)
-                }
-                if (data.result.success === false) {
-                    SetOpen(true)
-
-                    SetStateError(errorCount += 1)
+              
+                   
                 }
 
 
@@ -281,7 +278,7 @@ const SupplyList:React.FC = () => {
     const deletHandler = async () => {
         try {
             const { data, status } = await DeleteSupply(id)
-            if (data.result.success === true) {
+            if (status=== 200) {
                 toast.success("تامین با موفقیت حذف شد", {
                     position: "top-right",
                     closeOnClick: true
@@ -289,12 +286,14 @@ const SupplyList:React.FC = () => {
                 setIsOpen(false)
                 getSupplies()
             }
-            if (data.result.success === false) {
+            else{
 
                 toast.error("این تامین کننده به یک یا چند تامین اختصاص داده شده است", {
                     position: "top-right",
                     closeOnClick: true
                 });
+                setIsOpen(false)
+
             }
         } catch (err) {
             console.log(err)
