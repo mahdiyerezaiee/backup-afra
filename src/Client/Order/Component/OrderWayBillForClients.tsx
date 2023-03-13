@@ -134,7 +134,7 @@ const OrderWayBillForClients: React.FC<Props> = ({ loading, idOrder }) => {
               {show === true ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showOrderWayBill}
                 />
               ) : (
@@ -343,7 +343,7 @@ const OrderWayBillForClients: React.FC<Props> = ({ loading, idOrder }) => {
               {show ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showOrderWayBill}
                 />
               ) : (

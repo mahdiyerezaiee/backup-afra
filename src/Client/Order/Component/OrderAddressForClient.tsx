@@ -429,7 +429,7 @@ const OrderAddressForClient: React.FC<Props> = ({
               {show === true ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showAddressOrder}
                 />
               ) : (
@@ -734,7 +734,7 @@ const OrderAddressForClient: React.FC<Props> = ({
               {show ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showAddressOrder}
                 />
               ) : (

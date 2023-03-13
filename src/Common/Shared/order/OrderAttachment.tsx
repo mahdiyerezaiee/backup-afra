@@ -87,7 +87,7 @@ setShow(true)
               {show === true ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showAtt}
                 />
               ) : (
@@ -176,7 +176,7 @@ setShow(true)
               {show ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showAtt}
                 />
               ) : (
