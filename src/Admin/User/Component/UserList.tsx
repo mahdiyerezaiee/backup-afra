@@ -335,12 +335,8 @@ const UserList:React.FC = () => {
         { Header: 'نام کاربری', accessor: 'userName' }
         ,
         {
-            Header: 'نام و نام خانوادگی', accessor: (d:any) => {
-                let fName = d.firstName;
-                let lName = d.lastName;
-                let fullname = `${fName ? fName : ''} ${lName ? lName : ''} `;
-                return (fullname)
-            }, Cell: (row:any) => {
+            Header: 'نام و نام خانوادگی', accessor:'firstName'
+            , Cell: (row:any) => {
                 if (row.row.original.firstName){
                 let fName = row.row.original.firstName;
                 let lName = row.row.original.lastName;
@@ -358,10 +354,8 @@ const UserList:React.FC = () => {
         }
         , { Header: 'کد ملی', accessor: 'nationalCode' , Cell:(row:any)=>row.row.original.nationalCode ?row.row.original.nationalCode:"--"  }
         , {
-            Header: 'شناسه ملی', accessor: (d:any) => {
-                let organizationss =organiz? organiz.filter((item:any) => item.id === d.organizationId).map((item:any) => item.nationalId):null
-                return (`${organizationss}`)
-            }, Cell: (row:any) => {
+            Header: 'شناسه ملی', accessor: 'organizationId'
+            , Cell: (row:any) => {
 
                 if (row.row.original.organizationId) {
                     return (organiz.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.nationalId))
@@ -375,10 +369,7 @@ const UserList:React.FC = () => {
             }
         },
         {
-            Header: 'سازمان', accessor: (d:any) => {
-                let organizationss = organiz.filter((item:any) => item.id === d.organizationId).map((item:any) => item.name)
-                return (`${organizationss}`)
-            }, Cell: (row:any) => {
+            Header: 'سازمان', accessor:'    ',Cell: (row:any) => {
 
                 if (row.row.original.organizationId) {
                     return (organiz.filter((item:any) => item.id === row.row.original.organizationId).map((item:any) => item.name))
