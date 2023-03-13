@@ -57,55 +57,58 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
 
     }, [])
    
+    const setDefault=()=>{
 
-    const setDefault = () => {
-
-        if (defaultPaymentId().length > 0 ) {
-
-            if (defaultPaymentId().length === 1) {
-
-                setPaymentMethodId(defaultPaymentId()[0].payments ? defaultPaymentId()[0].payments : 2)
-                setInstallmentOccureCount(defaultPaymentId()[0].installmentOccureCount)
-                setInstallmentPeriod(defaultPaymentId()[0].installmentPeriod)
-                
-
-
-            }
-            else if (defaultPaymentId().length > 1 ) {
-                let newPayments: any = []
-
-                newPayments = [...new Set(defaultPaymentId().map((i: any) => (i.payments ? i.payments : 2)))]
-
-               
-                
-
-                if (newPayments.length > 1) {
-
-                    setPaymentMethodId(null)
-                }
-                else {
-                   let newArray:any= defaultPaymentId().filter((i:any)=>i.payments===newPayments[0])
-
-    
-                   
-                   if(newArray.lenght>0){
-                    setPaymentMethodId(newArray[0].payments)
-                    setInstallmentOccureCount(newArray[0].installmentOccureCount)
-                    setInstallmentPeriod(newArray[0].installmentPeriod)}
-                    else{
-                      setPaymentMethodId(2)
-                    }
-                          
-                   
-                  
-                }
-
-
-            }
-
-
+        if(defaultPaymentId().length>0){
+      
+          if(defaultPaymentId().length===1){
+          
+            setPaymentMethodId(defaultPaymentId()[0].payments?defaultPaymentId()[0].payments:2)
+            setInstallmentOccureCount(defaultPaymentId()[0].installmentOccureCount)
+            setInstallmentPeriod(defaultPaymentId()[0].installmentPeriod)
+          
+          
+          }
+          else if(defaultPaymentId().length>1){
+        let newPayments:any=[]
+      
+        newPayments=[...new Set(defaultPaymentId().map((i:any)=>i.payments!==undefined?i.payments:i.payments=2))]
+      
+      
+        
+      
+        
+        if(newPayments.length>1){
+      
+          setPaymentMethodId(null)
         }
-    }
+        else{
+          let newArray:any= defaultPaymentId().filter((i:any)=>i.payments===newPayments[0])
+      
+          
+          
+          if(newArray.length>1){
+            setPaymentMethodId(newArray[0].payments)
+            setInstallmentOccureCount(newArray[0].installmentOccureCount)
+            setInstallmentPeriod(newArray[0].installmentPeriod)
+      
+            
+            
+          }
+            else{
+              setPaymentMethodId(2)
+            }
+             
+        }
+      
+      
+      
+          }
+          
+          
+          }
+      }
+      
 
 
 

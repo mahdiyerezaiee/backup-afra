@@ -73,8 +73,10 @@ const setDefault=()=>{
     else if(defaultPaymentId().length>1){
   let newPayments:any=[]
 
-  newPayments=[...new Set(defaultPaymentId().map((i:any)=>i.payments?i.payments:2))]
+  newPayments=[...new Set(defaultPaymentId().map((i:any)=>i.payments!==undefined?i.payments:i.payments=2))]
 
+
+  
 
   
   if(newPayments.length>1){
@@ -84,14 +86,20 @@ const setDefault=()=>{
   else{
     let newArray:any= defaultPaymentId().filter((i:any)=>i.payments===newPayments[0])
 
-    if(newArray.lenght>0){
+    
+    
+    if(newArray.length>1){
       setPaymentMethodId(newArray[0].payments)
       setInstallmentOccureCount(newArray[0].installmentOccureCount)
-      setInstallmentPeriod(newArray[0].installmentPeriod)}
+      setInstallmentPeriod(newArray[0].installmentPeriod)
+
+      
+      
+    }
       else{
         setPaymentMethodId(2)
       }
-                  
+       
   }
 
 
@@ -101,6 +109,8 @@ const setDefault=()=>{
     
     }
 }
+
+
 
   const paymentMethodIDs = () => {
     return (PaymentStructureEnums.filter((item:any)=>item.id===2||item.id===4).map((data: any) => ({ label: data.name, value: data.id })))
@@ -113,8 +123,8 @@ const handelSubmit=async()=>{
     entityId: orderId,
     paymentMethodId,
     installmentStartDate:paymentMethodId!==4?null:installmentStartDate,
-    installmentPeriod,
-    installmentOccureCount,
+    installmentPeriod:Number(installmentPeriod),
+    installmentOccureCount:Number(installmentOccureCount),
     comment
   }
 try {
