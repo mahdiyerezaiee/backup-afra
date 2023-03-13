@@ -43,11 +43,16 @@ axios.interceptors.response.use(
       axios.interceptors.response.eject()
 
       await axios.post(`${configure}/User/Refresh`, refreshR).then(response => {
+        if(response.status===200){
+          
         localStorage.setItem('token', response.data.result.token);
         localStorage.setItem('refresh', response.data.result.refresh);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.result.token
-          }`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.result.token}`
 
+         window.location.reload()
+
+        }
+     
       }).catch(err => {
 
 

@@ -215,6 +215,7 @@ const BazargahList: React.FC = () => {
                                         <Select
                                             menuShouldScrollIntoView ={false}
                                             defaultValue={defaultValue}
+                                            
                                             placeholder='نام شرکت'
                                             options={CompaniesIDs()}
                                             key={defaultValue}
