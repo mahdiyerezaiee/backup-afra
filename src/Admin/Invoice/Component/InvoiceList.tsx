@@ -425,14 +425,14 @@ const handelNavigateWithDetails=async(id:number)=>{
             if(row.row.original.entityTypeId===10){
 
                 return(
-                    <button className='border-0 bg-transparent text-primary' onClick={()=>handelNavigateWithId(row.row.original.entityId)}>{row.row.original.entityId} </button>
+                    <button className='border-0 bg-transparent text-primary' onClick={()=>handelNavigateWithId(row.row.original.entityId)}>{`سفارش #${row.row.original.entityId}`} </button>
                 )
 
             }
             else{
                 
                 return(
-                    <button className='border-0 bg-transparent text-primary '  onClick={()=>handelNavigateWithDetails(row.row.original.entityId)}>{row.row.original.entityId} </button>
+                    <button className='border-0 bg-transparent text-primary '  onClick={()=>handelNavigateWithDetails(row.row.original.entityId)}>{` جزییات سفارش #${row.row.original.entityId}`}  </button>
                 )
             }
 

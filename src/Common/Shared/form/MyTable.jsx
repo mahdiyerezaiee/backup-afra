@@ -178,7 +178,7 @@ const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setP
                             prepareRow(row)
 
                             return (
-                                <tr  {...row.getRowProps(rowProps(row))}>
+                                <tr  className='text-nowrap' {...row.getRowProps(rowProps(row))}>
 
                                     { // loop over the rows cells
 
