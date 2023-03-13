@@ -1,51 +1,105 @@
 import Select from "react-select";
-import React, { useEffect, useState } from "react";
-import { GetGroupsForEntity } from "../../../../../services/GroupService";
-import { PaymentStructureEnums } from "../../../../../Common/Enums/PaymentStructureEnums";
-import { AdditionalTypeId } from "../../../../../Common/Enums/AdditionalTypeIdEnums";
+import React, {useEffect, useState} from "react";
+import {PaymentStructureEnums} from "../../../../../Common/Enums/PaymentStructureEnums";
+import {AdditionalTypeId} from "../../../../../Common/Enums/AdditionalTypeIdEnums";
 import Modal from 'react-modal';
-import ProductSupplyConditionReadOnly from "./ProductSupplyConditionRead";
 import {ClipLoader} from "react-spinners";
-import { GetCompanyChild } from '../../../../../services/companiesService';
-import { GetGroupWithCompany } from '../../../../../services/GroupService';
+import {GetGroupWithCompany} from '../../../../../services/GroupService';
 
-interface Props{
-    loading:any, paymentMethodId:any,companyId:any, setSpecial:any, customStyles:any, handleEditFormSubmit:any, setcustomerGroupId:any, setpaymentMethodId:any, setadditionalTypeId:any, editFormData:any, handleEditFormChange:any, handleCancelClick:any, index:any ,handelDeletData:any
+interface Props {
+    minSellableAmount: any,
+    maxSellableAmount: any,
+    installmentPeriod: any,
+    installmentOccureCount: any,
+    comment: any,
+    active: any,
+    special: any,
+    additionalAmount: any,
+    additionalTypeId: any,
+    customerGroupId: any,
+    setMinSellableAmount: any,
+    setMaxSellableAmount: any,
+    setInstallmentPeriod: any,
+    setInstallmentOccureCount: any,
+    setComment: any,
+    setAdditionalAmount: any,
+    loading: any,
+    paymentMethodId: any,
+    companyId: any,
+    setSpecial: any,
+    customStyles: any,
+    handleEditFormSubmit: any,
+    setcustomerGroupId: any,
+    setpaymentMethodId: any,
+    setadditionalTypeId: any,
+    editFormData: any,
+    handleCancelClick: any,
+    index: any,
+    handelDeletData: any
 }
-const ProductSupplyConditionEdit:React.FC<Props> = ({ loading, paymentMethodId, setSpecial, customStyles, handleEditFormSubmit, setcustomerGroupId, setpaymentMethodId, setadditionalTypeId, editFormData, handleEditFormChange, handleCancelClick, index,companyId,handelDeletData }) => {
+
+const ProductSupplyConditionEdit: React.FC<Props> = ({  minSellableAmount,
+                                                         maxSellableAmount,
+                                                         installmentPeriod,
+                                                         installmentOccureCount,
+                                                         comment,
+                                                         active,
+                                                         special,
+                                                         additionalAmount,
+                                                         additionalTypeId,
+                                                         customerGroupId,
+                                                         setMinSellableAmount,
+                                                         setMaxSellableAmount,
+                                                         setInstallmentPeriod,
+                                                         setInstallmentOccureCount,
+                                                         setComment,
+                                                         setAdditionalAmount,
+                                                         loading,
+                                                         paymentMethodId,
+                                                         setSpecial,
+                                                         customStyles,
+                                                         handleEditFormSubmit,
+                                                         setcustomerGroupId,
+                                                         setpaymentMethodId,
+                                                         setadditionalTypeId,
+                                                         editFormData,
+                                                         handleCancelClick,
+                                                         index,
+                                                         companyId,
+                                                         handelDeletData
+                                                     }) => {
     const [customerg, setCustomerg] = useState([])
     const [cu, SetCu] = useState(0)
     const [modalIsOpen, setIsOpen] = useState(true);
     const GetCustomerGroup = async () => {
-      
-      
 
-            const { data, status } = await GetGroupWithCompany(1, companyId);
 
-          setCustomerg(data.result.groups)
+        const {data, status} = await GetGroupWithCompany(1, companyId);
+
+        setCustomerg(data.result.groups)
     }
     useEffect(() => {
         GetCustomerGroup();
         valueSetter()
 
     }, [editFormData])
-    const valueSetter=()=>{
-    setcustomerGroupId(editFormData.customerGroupId)
-    setadditionalTypeId(editFormData.additionalTypeId)
+    const valueSetter = () => {
+        setcustomerGroupId(editFormData.customerGroupId)
+        setadditionalTypeId(editFormData.additionalTypeId)
 
-setpaymentMethodId(editFormData.paymentMethodId)
+        setpaymentMethodId(editFormData.paymentMethodId)
     }
-    
+
     const CustomerG = () => {
-        let customer = [...customerg, { id: null, name: 'عمومی' }]
+        let customer = [...customerg, {id: null, name: 'عمومی'}]
         return (customer.map(data => ({
             label: data.name,
             value: data.id
         })))
 
     }
-    const CustomerGId = (id:any) => {
-        let customer = [...customerg, { id: null, name: 'عمومی' }]
+    const CustomerGId = (id: any) => {
+        let customer = [...customerg, {id: null, name: 'عمومی'}]
         return (customer.filter(item => item.id === id).map(data => ({
             label: data.name,
             value: data.id
@@ -53,10 +107,10 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
     }
 
-    const paymentMethod:any = () => {
-        return (PaymentStructureEnums.map(data => ({ label: data.name, value: data.id })))
+    const paymentMethod: any = () => {
+        return (PaymentStructureEnums.map(data => ({label: data.name, value: data.id})))
     }
-    const PaymentId = (id:any) => {
+    const PaymentId = (id: any) => {
         return (PaymentStructureEnums.filter(item => item.id === id).map(data => ({
             label: data.name,
             id: data.id
@@ -71,7 +125,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
     }
 
-    const additionalType = (id:any) => {
+    const additionalType = (id: any) => {
         return (AdditionalTypeId.filter(item => item.id === id).map(data => ({
             label: data.name,
             value: data.id
@@ -85,10 +139,11 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
 
         maximumFractionDigits: 0,
-        minimumFractionDigits: 0, });
+        minimumFractionDigits: 0,
+    });
     return (
 
-        <div >
+        <div>
 
             <div className=" col-7  my-2 p-1" key={editFormData.id}>
 
@@ -99,10 +154,10 @@ setpaymentMethodId(editFormData.paymentMethodId)
                 </div>
 
                 <Modal isOpen={modalIsOpen}
-                    style={customStyles}
-                    contentLabel="Selected Option"
-                    ariaHideApp={false}>
-                    <div >
+                       style={customStyles}
+                       contentLabel="Selected Option"
+                       ariaHideApp={false}>
+                    <div>
                         <div className="card-body p-0">
 
                             <div className="form-row">
@@ -112,7 +167,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         <label className="mr-2 text-danger"> شرایط خاص </label>
 
                                         <input type="checkbox" defaultChecked={editFormData.special}
-                                            onChange={e => setSpecial(e.target.checked)}
+                                               onChange={e => setSpecial(e.target.checked)}
                                         />
 
                                     </div>
@@ -129,24 +184,21 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
 
                                     <Select
-                                        defaultValue={PaymentId(editFormData.paymentMethodId)}
+                                        defaultValue={PaymentId(paymentMethodId)}
                                         placeholder="نوع پرداخت"
                                         options={paymentMethod()}
-                                        onChange={(e:any) => {setpaymentMethodId(e.value)
+                                        onChange={(e: any) => {
+                                            setpaymentMethodId(e.value)
                                             handelDeletData()
-                                            editFormData.installmentOccureCount=null
-                                            editFormData.installmentPeriod=null
-                                            editFormData.additionalAmount=null
-                                            editFormData.minSellableAmount=null
-                                            editFormData.comment=null
+
                                         }}
-                                        menuShouldScrollIntoView ={false}
+                                        menuShouldScrollIntoView={false}
                                     />
 
                                 </div>
 
                                 <div className="  form-group col-md-6 col-xs-12 textOnInput  "
-                                    style={{ zIndex: '4' }}>
+                                     style={{zIndex: '4'}}>
 
                                     <label>نوع افزایش</label>
 
@@ -154,10 +206,10 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                     <Select
 
                                         placeholder=' نوع افزایش'
-                                        defaultValue={additionalType(editFormData.additionalTypeId)}
-                                        menuShouldScrollIntoView ={false}
+                                        defaultValue={additionalType(additionalTypeId)}
+                                        menuShouldScrollIntoView={false}
                                         options={additionalTypeIdS()}
-                                        onChange={(e:any) => setadditionalTypeId(e.value)}
+                                        onChange={(e: any) => setadditionalTypeId(e.value)}
 
                                     />
 
@@ -171,17 +223,17 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                     <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                         <label>تعداد اقساط</label>
                                         <input name="installmentOccureCount" type="number"
-                                            className="form-control opacityForInput"
-                                            defaultValue={editFormData.installmentOccureCount}
-                                            onChange={handleEditFormChange}
+                                               className="form-control opacityForInput"
+                                               value={installmentOccureCount}
+                                               onChange={(e: any) => setInstallmentOccureCount(e.target.value)}
                                         />
                                     </div>
 
                                     <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                         <label>بازه پرداخت</label>
                                         <input type="number" className="form-control opacityForInput"
-                                            name="installmentPeriod" defaultValue={editFormData.installmentPeriod}
-                                            onChange={handleEditFormChange}
+                                               name="installmentPeriod" value={installmentPeriod}
+                                               onChange={(e: any) => setInstallmentPeriod(e.target.value)}
                                         />
 
                                     </div>
@@ -195,20 +247,20 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                 <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                     <label>مقدار افزایش</label>
                                     <input type="number" className="form-control opacityForInput"
-                                        name="additionalAmount" defaultValue={editFormData.additionalAmount}
-                                        onChange={handleEditFormChange}
+                                           name="additionalAmount" value={additionalAmount}
+                                           onChange={(e: any) => setAdditionalAmount(e.target.value)}
                                     />
                                 </div>
 
                                 <div className="form-group col-md-6 col-xs-12 textOnInput   "
-                                    style={{ zIndex: '3' }}>
+                                     style={{zIndex: '3'}}>
                                     <label>گروه مشتریان</label>
                                     {cu === 0 ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
-                                            value={CustomerGId(editFormData.customerGroupId)}
+                                            menuShouldScrollIntoView={false}
+                                            value={CustomerGId(customerGroupId)}
                                             options={CustomerG()}
-                                            onChange={function (e:any) {
+                                            onChange={function (e: any) {
                                                 setcustomerGroupId(e.value)
                                                 SetCu(e.value)
                                             }}
@@ -217,14 +269,13 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                         :
                                         <Select
 
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             options={CustomerG()}
-                                            onChange={(e:any) => setcustomerGroupId(e.value)}
+                                            onChange={(e: any) => setcustomerGroupId(e.value)}
 
                                         />
 
                                     }
-
 
 
                                 </div>
@@ -233,16 +284,17 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                 <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                     <label>حداقل سفارش</label>
                                     <input type="text" className="form-control opacityForInput"
-                                        name="minSellableAmount"
-                                        defaultValue={ formatter.format(editFormData.minSellableAmount)}
-                                        onChange={handleEditFormChange}
+                                           name="minSellableAmount"
+                                           value={formatter.format(minSellableAmount)}
+                                           onChange={(e:any) => setMinSellableAmount(e.target.value.replaceAll(",", ''))}
                                     />
                                 </div>
                                 <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                     <label>حداکثر سفارش</label>
                                     <input type="text" className="form-control opacityForInput"
-                                        name="maxSellableAmount" defaultValue={formatter.format(editFormData.maxSellableAmount)}
-                                        onChange={handleEditFormChange}
+                                           name="maxSellableAmount"
+                                           value={formatter.format(maxSellableAmount)}
+                                           onChange={(e:any) => setMaxSellableAmount(e.target.value.replaceAll(",", ''))}
                                     />
                                 </div>
 
@@ -252,10 +304,10 @@ setpaymentMethodId(editFormData.paymentMethodId)
                             <div className="form-group mb-1 textOnInput ">
                                 <label>توضیحات</label>
 
-                                <textarea  className="form-control opacityForInput " rows={4}
-                                    placeholder='توضیحات تکمیلی' name="comment"
-                                    defaultValue={editFormData.comment}
-                                    onChange={handleEditFormChange}
+                                <textarea className="form-control opacityForInput " rows={4}
+                                          placeholder='توضیحات تکمیلی' name="comment"
+                                          value={comment}
+                                          onChange={(e:any) => setComment(e.target.value)}
                                 />
 
                             </div>
@@ -266,7 +318,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
 
                                 <div className='col-6 '>
                                     <button disabled={loading} className="btn btn-success float-left "
-                                        onClick={handleEditFormSubmit} >تایید
+                                            onClick={handleEditFormSubmit}>تایید
                                         <ClipLoader
 
                                             loading={loading}
@@ -276,7 +328,7 @@ setpaymentMethodId(editFormData.paymentMethodId)
                                 </div>
                                 <div className='col-6 '>
                                     <button className="btn btn-danger float-right "
-                                        onClick={handleCancelClick}>انصراف
+                                            onClick={handleCancelClick}>انصراف
                                     </button>
                                 </div>
                             </div>
