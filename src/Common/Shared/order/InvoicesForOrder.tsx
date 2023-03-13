@@ -99,7 +99,7 @@ SetModalOpenPayment(false)
               {show === true ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showInvoice}
                 />
               ) : (
@@ -198,7 +198,7 @@ SetModalOpenPayment(false)
               {show ? (
                 <IoIosArrowUp
                   size="1.5rem"
-                  className="float-right"
+                  className="float-right up-svg"
                   onClick={showInvoice}
                 />
               ) : (
