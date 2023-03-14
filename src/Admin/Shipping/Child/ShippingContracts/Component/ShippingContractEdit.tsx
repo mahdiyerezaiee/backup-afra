@@ -11,6 +11,7 @@ import {getEditProduct} from "../../../../../services/productService";
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validatNumber} from "../../../../../Utils/validitionParams";
+import {formatter} from "../../../../../Utils/Formatter";
 
 
 const EditShippingContract:React.FC = () => {
@@ -153,11 +154,12 @@ setLoading(false)
 
                                 <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput">
                                     <label>مقدار</label>
-                                    <Field  validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={quantity}
-                                            onChange={(e:any) => {
-                                                setQuantity(e.target.value)
+                                    <Field validate={validatNumber} name="quantity" type="text"
+                                           className="form-control opacityForInput" value={formatter.format(quantity)}
+                                           onChange={(e: any) => {
+                                               setQuantity(e.target.value.replaceAll(",", ""))
 
-                                            }}/>
+                                           }}/>
                                     {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
 
                                 </div>
