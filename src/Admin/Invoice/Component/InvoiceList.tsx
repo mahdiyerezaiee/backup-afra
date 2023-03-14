@@ -435,7 +435,7 @@ const handelNavigateWithDetails=async(id:number)=>{
                 return(
 
                   
-                    <button className='border-0 bg-transparent text-primary '  onClick={()=>handelNavigateWithDetails(row.row.original.entityId)}>`جزییات سفارش # ${row.row.original.entityId}` </button>
+                    <button className='border-0 bg-transparent text-primary '  onClick={()=>handelNavigateWithDetails(row.row.original.entityId)}>{`جزییات سفارش # ${row.row.original.entityId}`} </button>
                 )
             }
 
