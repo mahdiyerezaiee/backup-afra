@@ -7,6 +7,7 @@ import Select from "react-select";
 import {ClipLoader} from "react-spinners";
 import {Field, Form, Formik} from "formik";
 import {validatNumber} from "../../../../../Utils/validitionParams";
+import {formatter} from "../../../../../Utils/Formatter";
 
 
 const NewShippingContract :React.FC= () => {
@@ -101,85 +102,84 @@ setLoading(false)
                             // same shape as initial values
                             submit()
                         }}>
-                        {({ errors, touched, validateField, validateForm,setFieldValue ,handleChange,values}) => (
-
+                        {({errors, touched, validateField, validateForm, setFieldValue, handleChange, values}) => (
 
 
                             <Form className="row">
 
-                        <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput  align-content-between">
+                                <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput  align-content-between">
 
-                            <label>شماره قرارداد</label>
-                            <Field  validate={validatNumber} name="contractNumber" type="text" className="form-control opacityForInput" placeholder="شماره قرارداد"
-                                   value={contractNumber} onChange={(e:any) => {
-                                setContractNumber(e.target.value)
+                                    <label>شماره قرارداد</label>
+                                    <Field validate={validatNumber} name="contractNumber" type="text"
+                                           className="form-control opacityForInput" placeholder="شماره قرارداد"
+                                           value={contractNumber} onChange={(e: any) => {
+                                        setContractNumber(e.target.value)
 
-                            }}/>
-                            {errors.contractNumber && touched.contractNumber && <div className="text-danger">{errors.contractNumber}</div>}
+                                    }}/>
+                                    {errors.contractNumber && touched.contractNumber &&
+                                        <div className="text-danger">{errors.contractNumber}</div>}
 
-                        </div>
+                                </div>
 
-                        <div className="col-lg-6 col-sm-12 form-group mb-4 textOnInput">
-                            <label>مقدار</label>
-                            <Field  validate={validatNumber} name="quantity" type="text" className="form-control opacityForInput" value={quantity}
-                                   onChange={(e:any) => {
-                                       setQuantity(e.target.value)
+                                <div className="col-lg-6 col-sm-12 form-group mb-4 textOnInput">
+                                    <label>مقدار</label>
+                                    <Field validate={validatNumber} name="quantity" type="text"
+                                           className="form-control opacityForInput" value={formatter.format(quantity)}
+                                           onChange={(e: any) => {
+                                               setQuantity(e.target.value.replaceAll(",", ""))
 
-                                   }}/>
-                            {errors.quantity && touched.quantity && <div className="text-danger">{errors.quantity}</div>}
+                                           }}/>
+                                    {errors.quantity && touched.quantity &&
+                                        <div className="text-danger">{errors.quantity}</div>}
 
-                        </div>
-                        <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput">
+                                </div>
+                                <div className=" col-lg-6 col-sm-12 form-group mb-4 textOnInput">
 
-                        
 
                                     <label>واحد</label>
                                     <Select
-                                        menuShouldScrollIntoView ={false}
+                                        menuShouldScrollIntoView={false}
                                         placeholder="واحد"
 
                                         options={Mesures()}
-                                        onChange={(e:any) => {
+                                        onChange={(e: any) => {
                                             setMeasureUnitId(e.value)
 
                                         }}
                                     />
 
 
-
-                            </div>
-                            <div className='col-lg-6 col-sm-12 form-group mb-4 textOnInput'>
+                                </div>
+                                <div className='col-lg-6 col-sm-12 form-group mb-4 textOnInput'>
 
                                     <label>باربری</label>
                                     <Select
-                                        menuShouldScrollIntoView ={false}
+                                        menuShouldScrollIntoView={false}
                                         placeholder="باربری"
 
                                         options={Barbaries()}
-                                        onChange={(e:any) => {
+                                        onChange={(e: any) => {
                                             SetshippingCompanyId(Number(e.value))
 
                                         }}
                                     />
 
 
+                                </div>
 
-                           
+                                <div className='col-6 '>
+                                    <button disabled={loading} type="submit"
+                                            className="btn btn-success float-right ">تایید <ClipLoader
 
-                        </div>
-                        
-                        <div className='col-6 '>                         
-                               <button disabled={loading} type="submit" className="btn btn-success float-right " >تایید <ClipLoader
-
-                                    loading={loading}
-                                    color="#ffff"
-                                    size={15}
-                                /></button>
-                            </div>
-                            <div className='col-6  '>        
-                                                    <NavLink to='/admin/ShippingContract'
-                                         className="btn btn-danger ">بازگشت</NavLink>
-                            </div>
+                                        loading={loading}
+                                        color="#ffff"
+                                        size={15}
+                                    /></button>
+                                </div>
+                                <div className='col-6  '>
+                                    <NavLink to='/admin/ShippingContract'
+                                             className="btn btn-danger ">بازگشت</NavLink>
+                                </div>
 
 
                             </Form>
