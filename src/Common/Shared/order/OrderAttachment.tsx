@@ -128,14 +128,8 @@ setShow(true)
                   <div className=" row text-center">
                     {newAttachment.map((item: any) =>
                       <div onClick={() => handelPreview(item)} className={item.attachmentTypeId === 2 ? " img col-md-2 col-sm-12" : "  col-md-2 col-sm-12"} >
-                        <img src={`${attachmet}${item.path}`} className={item.attachmentTypeId === 2 ? "img-thumbnail border-danger" : " img-thumbnail"} alt={item.name} />
-                        {item.attachmentTypeId === 2 ? <div className="detial-img">
-                          <div className="text">
-                            <p >مقدار چک : {item.value}</p>
-                            <p >شماره چک : {item.trackingCode}</p>
-                            <p >موعد چک : {new Date(item.dueDate).toLocaleDateString("fa-IR")}</p></div>
-
-                        </div> : null}
+                        <img src={`${attachmet}${item.path}`} className= "img-thumbnail" alt={item.name} />
+                        {item.attachmentTypeId === 2 ?<p className="text-danger">سند مالی</p>:''}
                       </div>)}
 
 
