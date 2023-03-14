@@ -287,7 +287,7 @@ const InvoiceClient: React.FC = () => {
                         to={`/client/payment`}
                     state="fromInvoiceClient"
                       >
-                        <button className="border-0 bg-transparent  non-hover "   onClick={ ()=>sessionStorage.setItem(`param/client/payment/invoice`, JSON.stringify([item.id]))}>
+                        <button className="border-0 bg-transparent  non-hover btn-Payment "   onClick={ ()=>sessionStorage.setItem(`param/client/payment/invoice`, JSON.stringify([item.id]))}>
                           {" "}
                           مشاهده پرداخت ها
                         </button></Link>

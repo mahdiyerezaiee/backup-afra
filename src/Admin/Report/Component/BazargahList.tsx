@@ -307,7 +307,7 @@ const BazargahList: React.FC = () => {
             <div className=" statbox widget-content widget-content-area ">
                 <div>
                     <button className="btn btn-primary m-3" onClick={handelFrom} >تغییر تاریخ</button>
-
+                    {Response.length > 0 ?
                     <MyTableBazargah columns={columns} data={data} getData={(rows: any) => setSelectedRows(rows)} rowProps={(row: any) => ({
 
 
@@ -318,6 +318,13 @@ const BazargahList: React.FC = () => {
                         }
                     })} bulkJob={getBulkJob}
                     />
+                        : <div className=" statbox widget-content widget-content-area">
+                            <div>
+                                <div className='text-center mt-5'>
+                                    <h5>اطلاعاتی جهت نمایش موجود نیست</h5>
+                                </div>
+                            </div>
+                        </div> }
                     {/*<ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />*/}
                 </div>
             </div>

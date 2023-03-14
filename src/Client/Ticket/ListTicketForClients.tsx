@@ -40,10 +40,6 @@ const ListTicketForClients:React.FC = () => {
       if(roles.includes(7) || roles.includes(5) ||roles.includes(8)){
         const {data , status}= await GetSupportRequesstsAdmin(config)
         setTicket(data.result.supportRequests.values)
-      }else {
-        const {data , status}= await GetSupportRequesstsUser(userId)
-        setTicket(data.result.supportRequests.values)
-
       }
     } catch (error) {
       console.log(error);

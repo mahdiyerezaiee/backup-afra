@@ -9,6 +9,7 @@ import { GetCompanyChild } from '../../../services/companiesService';
 import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import  Select  from 'react-select';
 import MySimpleTable from './../../../Common/Shared/Form/MySimpleTable';
+import {toast} from "react-toastify";
 
 const WareHouseType :React.FC= () => {
 
@@ -252,6 +253,10 @@ const WareHouseType :React.FC= () => {
             const {data , status}= await DeleteGroup(id)
             if (status===200)
             {
+                toast.success("گروه انبار  با موفقیت حذف شد", {
+                    position: "top-right",
+                    closeOnClick: true
+                });
                 setIsOpen(false)
                 GetWareHouseGroup(companyId);
             }

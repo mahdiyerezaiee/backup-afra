@@ -259,7 +259,7 @@ const[id,setId]=useState(0)
         try {
 
             const { data, status } = await DeleteNews(id)
-            if (data.result.success === true)
+            if (status === 200)
             {
                 toast.success("اعلان با موفقیت حذف شد", {
                     position: "top-right",
@@ -267,7 +267,7 @@ const[id,setId]=useState(0)
                 });
                 setIsOpen(false)
                 getNewsAdmin()
-            }if (data.result.success === false)
+            }if (status === 500)
             {
 
                 toast.error("این اعلان به یک یا چند کاربر اختصاص داده شده است", {
@@ -279,6 +279,8 @@ const[id,setId]=useState(0)
         } catch (err) {
             console.log(err)
         }
+        setIsOpen(false)
+
     }
     const editHandler = (id:any) => {
         navigate(`/admin/editNews/${id}`)

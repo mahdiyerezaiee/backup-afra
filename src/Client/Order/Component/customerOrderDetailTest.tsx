@@ -261,7 +261,7 @@ const OrderDetailTest:React.FC = () => {
                         <OrderCustomerInfo  order={order} product={product} customerDetail={customerDetail} customerName={customerName}/>
                         {number !== 12 || number > 4   ?   <OrderInfo orderWeight={OrderWeight} TakhsisWeight={sumTakhsis} havalehWeight={returnHavaleSum()} barbariWeight={returnBarbariSum()}/>:''}
                     </div>
-                    <div className=" statbox widget-content widget-content-area text-dark ">
+                    <div className=" statbox widget-content widget-content-area text-dark mainMenu">
                         <ProgressBar  number={number} id={order.orderStatusId}/>
                         { number === 12 || number < 4 ? <><OrderCustomerDetail  params={params} order={order}  orderDetail={DetailAddress} />
                                <OrderAttachment order={order} params={params} 

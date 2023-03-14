@@ -170,6 +170,7 @@ const EditWareHouse: React.FC = () => {
                 });
 
                  setAttributevalueforHajm();
+                setAddressForWare()
                 navigator('/admin/warehouselist')
             }
             setLoading(false)
