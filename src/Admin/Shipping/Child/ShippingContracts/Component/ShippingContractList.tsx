@@ -10,6 +10,7 @@ import QueryString from "qs";
 import { GetAllShippingCompanies, SetShippingCompany, SetShoppingContract } from "../../../../../services/ShippingService";
 import { MeasureUnitSample } from "../../../../../Common/Enums/MeasureUnitSample";
 import { GetShoppingContracts } from '../../../../../services/ShippingService';
+import {formatter} from "../../../../../Utils/Formatter";
 
 
 const customStyles = {
@@ -341,7 +342,7 @@ setGeData(false)
             Header: 'نام باربری', accessor: 'shippingCompanyName'
         }
         ,
-        { Header: ' مقدار ', accessor: 'quantity' },
+        { Header: ' مقدار ', accessor: 'quantity' ,Cell:(row:any) =>{return (formatter.format(row.row.original.quantity))}},
         {
             Header: 'واحد', accessor: 'measureUnitId', Cell: (row:any) => {
 
