@@ -73,14 +73,14 @@ const OrderWayBillReportBrief: React.FC<Props> = ({  idCustomer}) => {
         return (
             <section className=" mt-2">
                 
-            <div className="  p-3 border rounded" >
-                <div className="row">
+            <div className="   mb-1 rounded" >
+                <div className="row p-3 itemA">
                 <div className=" col-6  ">
                 <h4 className="float-left"> حواله های اخیر</h4> 
   
                 </div>
             <div   className="  col-6   ">
-                                            { show === true? <IoIosArrowUp size="1.5rem" className="float-right" onClick={showOrderWayBill} />:  <svg onClick={CollapsOrderWayBill}  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            { show === true? <IoIosArrowUp size="1.5rem" className="float-right up-svg" onClick={showOrderWayBill} />:  <svg onClick={CollapsOrderWayBill}  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
                                                  strokeLinecap="round" strokeLinejoin="round"
                                                  className="float-right feather feather-chevron-down">
@@ -164,14 +164,14 @@ const OrderWayBillReportBrief: React.FC<Props> = ({  idCustomer}) => {
     } else  {
         return (
             <section className="mb-2 mt-2">
-            <div className="   p-3 border rounded  " >
-                <div className="row">
-                <div className=" col-6  ">
+                <div className="   mb-1 rounded" >
+                    <div className="row p-3 itemA">
+                <div className=" col-6    ">
                 <span className="float-left">حواله های اخیر</span> 
   
                 </div>
             <div   className="  col-6   ">
-                                            { show ? <IoIosArrowUp size="1.5rem" className="float-right" onClick={showOrderWayBill} /> :<svg onClick={CollapsOrderWayBill}  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            { show ? <IoIosArrowUp size="1.5rem" className="float-right up-svg" onClick={showOrderWayBill} /> :<svg onClick={CollapsOrderWayBill}  xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
                                                  strokeLinecap="round" strokeLinejoin="round"
                                                  className="float-right feather feather-chevron-down">
