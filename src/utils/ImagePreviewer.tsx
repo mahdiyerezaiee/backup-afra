@@ -183,15 +183,7 @@ const closeModelDelete = () => {
 
                         <Form >
                 {!isUser ? <div className="row ">
-                        {item.trackingCode ? null :
-                            <div className="col-6 mb-2 ">
-
-                                <input className='m-1' type="checkbox" checked={chacked} onChange={() => {
-                                    setchacked(!chacked)
-                                }}/>
-                                <label>سند مالی</label></div>}
-
-
+                    
                         {item.trackingCode || chacked === true ?
                             <div className="col-12 text-center p-4">
                                 <div className="row  text-center form-row textOnInput">
