@@ -225,6 +225,8 @@ let body={"customer":{...dataUser,
 
 
                     }}
+                    enableReinitialize={true}
+
                         onSubmit={values => {
                             // same shape as initial values
                             submit(  values )

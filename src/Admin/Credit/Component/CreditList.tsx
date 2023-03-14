@@ -6,6 +6,7 @@ import QueryString from 'qs';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { PriceUnitEnums } from './../../../Common/Enums/PriceUnit';
 
 const CreditList: React.FC = () => {
 
@@ -331,7 +332,11 @@ const CreditList: React.FC = () => {
                 return (formatterForMoney.format(rows.row.original.value))
             }
         },
-        { Header: 'واحد', accessor: 'priceUnitId' },
+        { Header: 'واحد', accessor: 'priceUnitId',Cell:(row:any)=>{
+
+return(PriceUnitEnums.filter((i:any)=>i.id===row.row.original.priceUnitId).map((i:any)=>i.name))
+
+        } },
         { Header: 'توضیحات', accessor: 'comment' },
         {
             Header: 'مشاهده جزییات ', accessor: '', Cell: (row: any) => (<div>
