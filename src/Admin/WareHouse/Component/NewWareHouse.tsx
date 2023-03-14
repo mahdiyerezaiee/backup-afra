@@ -148,7 +148,7 @@ companyId, companyName,active
                 });
                 wareId = data.result.id;
 
-                // setAddressForWare();
+                setAddressForWare();
                  setAttributevalueforHajm();
                 navigate('/admin/warehouselist')
             }

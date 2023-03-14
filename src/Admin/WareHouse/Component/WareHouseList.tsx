@@ -276,7 +276,7 @@ const WareHouseList:React.FC = () => {
     const deleteHandler2 = async () => {
         try {
             const { data, status } = await DeleteHouses(id)
-            if (data.result.success === true)
+            if (status === 200)
             {
                 closeModal2()
                 toast.success("انبار با موفقیت حذف شد", {
@@ -285,17 +285,23 @@ const WareHouseList:React.FC = () => {
                 });
                 setIsOpen(false)
                 getWareHouses()
-            }if (data.result.success === false)
+            }if (status === 500)
             {
+                closeModal2()
 
                 toast.error("این انبار به یک یا چند کالا اختصاص داده شده است", {
                     position: "top-right",
                     closeOnClick: true
                 });
+                setIsOpen(false)
+
             }
         } catch (err) {
             console.log(err)
         }
+        closeModal2()
+        setIsOpen(false)
+
     }
 
     var formatter = new Intl.NumberFormat('fa-IR', {

@@ -99,7 +99,7 @@ window.addEventListener('resize',getSize)
                     <MenuItem onClick={handleHeaderClick} routerLink={<Link to='customergroup'></Link>}>گروه کاربران </MenuItem>
 
                     <MenuItem onClick={handleHeaderClick} routerLink={<Link to='organizationlist'></Link>}> لیست سازمان ها</MenuItem>
-                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} onClick={handleHeaderClick}> گروه اعتباری</MenuItem>
+                    <MenuItem hidden={roles.includes(7) || roles.includes(8) ? false : true} routerLink={<Link to='Credits'></Link>} onClick={handleHeaderClick}> گروه اعتباری</MenuItem>
 
 
                 </SubMenu>

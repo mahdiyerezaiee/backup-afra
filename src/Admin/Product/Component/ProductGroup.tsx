@@ -13,6 +13,7 @@ import MyTableBazargah from "../../../Common/Shared/Form/MyTableBazargah";
 import { GetCompanyChild } from '../../../services/companiesService';
 import AdvancedSearch from '../../../Common/Shared/Common/AdvancedSearch';
 import  Select  from 'react-select';
+import {toast} from "react-toastify";
 
 
 const ProductGroup:React.FC = () => {
@@ -298,6 +299,10 @@ const deletHandler =async () => {
         const {data , status}= await DeleteGroup(id)
         if (status===200)
         {
+            toast.success("گروه کالا  با موفقیت حذف شد", {
+                position: "top-right",
+                closeOnClick: true
+            });
            setIsOpen(false)
            GetProductGroup(companyId);
         }

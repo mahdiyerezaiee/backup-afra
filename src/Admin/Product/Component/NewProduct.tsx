@@ -109,7 +109,7 @@ const NewProduct: React.FC = () => {
         companyId, companyName
 
     };
-
+console.log(groupId)
     const setAttributevalue = async () => {
 
         const attribute = {
@@ -312,7 +312,7 @@ const NewProduct: React.FC = () => {
                                                 menuShouldScrollIntoView ={false}
                                                 name="measureUnitId"
                                                 onBlur={() => setFieldTouched('measureUnitId', true)}
-                                                onChange={(option, e: any) => {
+                                                onChange={( e: any) => {
                                                     setMeasureUnitId(e.value)
                                                 }}
                                                 placeholder="واحد"
@@ -331,7 +331,7 @@ const NewProduct: React.FC = () => {
                                                 placeholder="گروه کالا"
                                                 options={inputProductG()}
                                                 onBlur={() => setFieldTouched('groupId', true)}
-                                                onChange={(option, e: any) => {
+                                                onChange={(e: any) => {
 
                                                     setGroupId(e.value)
 

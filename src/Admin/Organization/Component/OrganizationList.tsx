@@ -360,7 +360,7 @@ getOrganizationName()
     const deletHandler = async () => {
         try {
             const { data, status } = await DeleteOrganization(id)
-            if (data.result.success === true) {
+            if (status === 200) {
                 toast.success("سازمان با موفقیت حذف شد", {
                     position: "top-right",
                     closeOnClick: true
@@ -368,7 +368,7 @@ getOrganizationName()
                 setIsOpen(false)
                 getOrganizationName()
             }
-            if (data.result.success === false) {
+            if (status === 500) {
 
                 toast.error("این سازمان به یک یا چند کاربر اختصاص داده شده است", {
                     position: "top-right",
@@ -378,6 +378,8 @@ getOrganizationName()
         } catch (err) {
             console.log(err)
         }
+        setIsOpen(false)
+
     }
 
     const columns = useMemo(() => [
