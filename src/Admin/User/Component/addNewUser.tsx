@@ -219,15 +219,15 @@ let body={"customer":{...dataUser,
                         password,
                         active,
                         actionBlock,
-                       
+
                       
 
 
 
                     }}
-                    enableReinitialize={true}
+                            enableReinitialize={true}
 
-                        onSubmit={values => {
+                            onSubmit={values => {
                             // same shape as initial values
                             submit(  values )
                         }}>

@@ -4,7 +4,7 @@ const Setting = () => {
     const [mode, setMode] = useState(getDefaultMode());
 
     function getDefaultMode() {
-        const savedMode = sessionStorage.getItem('mode');
+        const savedMode = localStorage.getItem('mode');
         return savedMode ? savedMode : 'light';
     } 
 useEffect(()=>{
@@ -21,7 +21,7 @@ useEffect(()=>{
         toggle.classList.add('toggle-active')
 
     }
-    sessionStorage.setItem('mode', mode); // mode saved to local storage
+    localStorage.setItem('mode', mode); // mode saved to local storage
 
 },[mode])
 

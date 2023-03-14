@@ -331,14 +331,14 @@ const ProductSupply:React.FC = () => {
     const deletHandler = async () => {
         try {
             const { data, status } = await DeleteProductSupply(id)
-            if (data.result.success === true) {
+            if (status === 200) {
                 toast.success("عرضه با موفقیت حذف شد", {
                     position: "top-right",
                     closeOnClick: true
                 });
                 setIsOpen(false)
                 getProductSupply()
-            } if (data.result.success === false) {
+            } if (status === 500) {
 
                 toast.error("این عرضه به یک یا چند سفارش اختصاص داده شده است", {
                     position: "top-right",

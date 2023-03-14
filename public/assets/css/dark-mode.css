@@ -980,3 +980,12 @@ select:-webkit-autofill:focus {
 .dark-mode .ps-submenu-content .css-ewdv3l{
     background-color: transparent!important;
 }
+.dark-mode .addressUser{
+    border: 1px solid lightgrey!important;
+}
+.dark-mode .addAddressUser{
+    border: 1px solid lightgrey!important;
+}
+.dark-mode .btn-Payment{
+    color: white!important;
+}
