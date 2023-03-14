@@ -77,16 +77,16 @@ const OrderReportBrief:React.FC<Props> = ({ UserName}) => {
     return (
 
         <section className="mb-2 mt-2">
-    <div className=" mb-1  p-3 border rounded">
-      <div className="row">
-        <div className=" col-6  ">
+            <div className="   mb-1 rounded" >
+                <div className="row p-3 itemA">
+                    <div className=" col-6  ">
           <h4 className="float-left">سفارشات اخیر</h4>
         </div>
         <div className="  col-6   ">
           {show === true ? (
             <IoIosArrowUp
               size="1.5rem"
-              className="float-right"
+              className="float-right up-svg"
               onClick={showOrder}
             />
           ) : (
@@ -173,16 +173,16 @@ const OrderReportBrief:React.FC<Props> = ({ UserName}) => {
 else {
     return ( 
     <section className="mb-2 mt-2">
-    <div className="   p-3 border rounded  ">
-      <div className="row">
-        <div className=" col-6  ">
+        <div className="   mb-1 rounded" >
+            <div className="row p-3 itemA">
+                <div className=" col-6  ">
           <span className="float-left">سفارشات اخیر</span>
         </div>
         <div className="  col-6   ">
           {show ? (
             <IoIosArrowUp
               size="1.5rem"
-              className="float-right"
+              className="float-right up-svg"
               onClick={showOrder}
             />
           ) : (
