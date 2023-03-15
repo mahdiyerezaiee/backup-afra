@@ -4,20 +4,26 @@ import QueryString from "qs";
 import { GetAttachments } from "../../../services/attachmentService";
 import { IoIosArrowUp } from "react-icons/io";
 import { GridLoader } from "react-spinners";
+import ImagePreviewer from "../../../Utils/ImagePreviewer";
+import {OrderStatusEnumsProgressBar} from "../../Enums/OrderStatusEnumsProgressBar";
 
 const attachmet = (window as any).globalThis.stie_att
 
 interface Props {
-  order: any, params: any, handelPreview: any, modalIsOpenUpload: any, closeModalForUpload: any, setIsOpenUpload: any
+  order: any, params: any, modalIsOpenUpload: any, closeModalForUpload: any, setIsOpenUpload: any
 }
 
-const OrderAttAchment: React.FC<Props> = ({ order, params, handelPreview, modalIsOpenUpload, closeModalForUpload, setIsOpenUpload }) => {
+const OrderAttAchment: React.FC<Props> = ({ order, params, modalIsOpenUpload, closeModalForUpload, setIsOpenUpload }) => {
   const [attachments, Setattachments] = useState([]);
   const [show, setShow] = useState(false);
   let [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState({});
 
   let newAttachment = attachments.filter((item: any) => item.deleted === false)
-
+  const number = OrderStatusEnumsProgressBar.filter(
+      (item) => item.id === order.orderStatusId
+  ).map((item) => item.number)[0];
 
   let entityId = params.id;
   useEffect(()=>{
@@ -69,6 +75,13 @@ setShow(true)
     setShow(!show);
     handelGetAttachment();
 
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const handelPreview = (item:  any) => {
+    setImage(item);
+    setIsOpen(true);
   };
 
   if (newAttachment.length > 0 && show) {
@@ -150,6 +163,7 @@ setShow(true)
 
                   </button>
                   <ImageFileUploader modalIsOpen={modalIsOpenUpload} closeModal={closeModalForUpload} EntityId={params.id} EntityTypesId={10} comment={'لطفا فایل  مورد نظر را بارگزاری کنید.'}  AttchmentTypeId={1}/>
+                  <ImagePreviewer modalIsOpen={isOpen} closeModal={closeModal} item={image} isUser={false} orderStatus={number} />
 
                 </div>
               </div>

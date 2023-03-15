@@ -4039,9 +4039,8 @@ border-top: 1px dotted #0c4088;
 
 .info-Item{
 
-  animation: fadeIn 2s  normal forwards ;
+  animation: fadeIn 2s ;
   background-color: #ffffff!important;
-  animation-iteration-count: 1
 
 }
 .wrapper{

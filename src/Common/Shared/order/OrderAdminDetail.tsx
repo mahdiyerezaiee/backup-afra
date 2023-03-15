@@ -23,10 +23,10 @@ const customStyles = {
 
 interface Props{
 
-    orderDetail:any ,order:any , handelPreview:any, getOrder:any
+    orderDetail:any ,order:any , getOrder:any
 
 }
-const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order ,  handelPreview, getOrder}) => {
+const OrderAdminDetail:React.FC<Props> = ({orderDetail ,order , getOrder}) => {
     const [cottageCode, setcottageCode] = useState('');
     const [idEdit, setIdEdit] = useState(0);
     const [id, setId] = useState(0);
