@@ -3870,9 +3870,10 @@ border-top: 1px dotted #0c4088;
 
 .info-Item{
 
-  animation: fadeIn 2s ;
+  animation: fadeIn 2s forwards ;
   background-color: #ffffff!important;
-
+/*animation-fill-mode: forwards;*/
+  animation-iteration-count: 1;
 }
 .wrapper{
   position: relative;

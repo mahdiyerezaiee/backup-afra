@@ -31,9 +31,7 @@ const OrderDetailTest:React.FC = () => {
     const [modalIsOpenUpload, setIsOpenUpload] = useState(false);
     const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
     const [order, setOrder] = useState<any>([])
-    const [isOpen, setIsOpen] = useState(false)
     const [isOpenAddress, setIsOpenAddress] = useState(false)
-    const [image, setImage] = useState({})
     const [orderPaymentStatusId, setorderPaymentStatusId] = useState<any>()
 
     const [customerDetail, setCustomerDetail] = useState<any>([])
@@ -56,9 +54,7 @@ const OrderDetailTest:React.FC = () => {
         }
     }
    
-    const closeModal = () => {
-        setIsOpen(false);
-    }
+
     const closeModalForUpload = () => {
         setIsOpenUpload(false)
     }
@@ -197,10 +193,7 @@ const OrderDetailTest:React.FC = () => {
         getOrderDetail()
         GetShipping()
 }, [])
-    const handelPreview = (item:any) => {
-        setImage(item)
-        setIsOpen(true)
-    }
+
     const customerName = () => {
         let fName = customerDetail.firstName;
         let lName = customerDetail.lastName;
@@ -268,7 +261,7 @@ const OrderDetailTest:React.FC = () => {
                                                                   closeModalForUpload={closeModalForUpload}
                                                                   modalIsOpenUpload={modalIsOpenUpload}
                                                                   setIsOpenUpload={setIsOpenUpload}
-                                                                  handelPreview={handelPreview}/> 
+                                                                  />
                             </>
                             :
                             (
@@ -278,8 +271,7 @@ const OrderDetailTest:React.FC = () => {
                                                                      closeModalForUpload={closeModalForUpload}
                                                                      modalIsOpenUpload={modalIsOpenUpload}
                                                                      setIsOpenUpload={setIsOpenUpload}
-                                                                     handelPreview={handelPreview}/></>)}
-                        <ImagePreviewer modalIsOpen={isOpen} closeModal={closeModal} item={image} isUser={true} orderStatus={number}/>
+                                                                     /></>)}
 
                     </div>
                 </div>

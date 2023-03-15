@@ -37,9 +37,7 @@ const OrderDetailTest: React.FC = () => {
   const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
   const [order, setOrder] = useState<any>([]);
   const [orderPaymentStatusId, setorderPaymentStatusId] = useState<any>();
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpenAddress, setIsOpenAddress] = useState(false);
-  const [image, setImage] = useState({});
   const [customerDetail, setCustomerDetail] = useState<any>([]);
   const [product, setProduct] = useState([]);
   const [ShippingInformation, SetShippingInformation] = useState([]);
@@ -58,9 +56,7 @@ const OrderDetailTest: React.FC = () => {
 
 
     }}
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+
   const closeModalForUpload = () => {
     setIsOpenUpload(false);
   };
@@ -190,10 +186,7 @@ const OrderDetailTest: React.FC = () => {
     GetShipping();
     getOrganizationName();
   }, []);
-  const handelPreview = (item:  any) => {
-    setImage(item);
-    setIsOpen(true);
-  };
+
   const customerName = () => {
     let fName = customerDetail.firstName;
     let lName = customerDetail.lastName;
@@ -260,12 +253,12 @@ const OrderDetailTest: React.FC = () => {
                     </div>
                     <div className=" statbox widget-content widget-content-area text-dark mainMenu ">
                         <ProgressBar number={number} id={order.orderStatusId}  order={order}/>
-                        {number === 12 || number < 4 ? <><OrderAdminDetail getOrder={getOrder} handelPreview={handelPreview}  order={order} orderDetail={DetailAddress} />
+                        {number === 12 || number < 4 ? <><OrderAdminDetail getOrder={getOrder}   order={order} orderDetail={DetailAddress} />
                            <OrderAttachment order={order} params={params} 
                                 closeModalForUpload={closeModalForUpload}
                                 modalIsOpenUpload={modalIsOpenUpload}
                                 setIsOpenUpload={setIsOpenUpload}
-                                handelPreview={handelPreview} />
+                           />
                         </> :
                             (
                                 <>
@@ -277,12 +270,12 @@ const OrderDetailTest: React.FC = () => {
                                         closeModalForUpload={closeModalForUpload}
                                         modalIsOpenUpload={modalIsOpenUpload}
                                         setIsOpenUpload={setIsOpenUpload}
-                                        handelPreview={handelPreview} />  
+
+                                     />
                                     <InvoicesForOrder Order={order} />
 
                                 </>)}
 
-                        <ImagePreviewer modalIsOpen={isOpen} closeModal={closeModal} item={image} isUser={false} orderStatus={number} />
 
                     </div>
                 </div>
