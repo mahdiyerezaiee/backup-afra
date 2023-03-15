@@ -989,3 +989,21 @@ select:-webkit-autofill:focus {
 .dark-mode .btn-Payment{
     color: white!important;
 }
+.dark-mode .detial-img p {
+    color: #263965!important;
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    padding: 2px;
+    background: transparent;
+    z-index: 2;
+}
+.dark-mode  .detial-img h4 {
+    color: #243d69!important;
+    position: absolute;
+    bottom: -11px;
+    left: 10px;
+    padding: 2px;
+    background: transparent;
+    z-index: 2;
+}
