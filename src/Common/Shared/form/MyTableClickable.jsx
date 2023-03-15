@@ -279,7 +279,7 @@ const MyTableClick = ({ showAddress, columns, data, getData, bulkJob, formatRowP
                                                 row.cells.map(cell => (
                                                     <Fragment>
 
-                                                        <td data-th={`${cell.column.Header ? cell.column.Header : cell.column.header}`} {...cell.getCellProps()}>
+                                                        <td data-th={cell.column.Header ? cell.column.Header : cell.column.header} {...cell.getCellProps()}>
                                                             {cell.render('Cell')}
 
                                                         </td>

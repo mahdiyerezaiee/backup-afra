@@ -190,7 +190,7 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) =>
                                 <tr {...row.getRowProps(rowProps(row))}>
                                     { // loop over the rows cells
                                         row.cells.map(cell => (
-                                            <td data-th={`${cell.column.Header}`} {...cell.getCellProps()}>
+                                            <td data-th={cell.column.Header} {...cell.getCellProps()}>
                                                 {cell.render('Cell')}
                                             </td>
                                         ))
