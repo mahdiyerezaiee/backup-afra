@@ -83,7 +83,7 @@ setShow(true)
     setImage(item);
     setIsOpen(true);
   };
-
+  console.log(attachments)
   if (newAttachment.length > 0 && show) {
 
 
@@ -140,9 +140,26 @@ setShow(true)
                 <div className="text-center">
                   <div className=" row text-center">
                     {newAttachment.map((item: any) =>
-                      <div onClick={() => handelPreview(item)} className={item.attachmentTypeId === 2 ? " img col-md-2 col-sm-12" : "  col-md-2 col-sm-12"} >
-                        <img src={`${attachmet}${item.path}`} className= "img-thumbnail" alt={item.name} />
-                        {item.attachmentTypeId === 2 ?<p className="text-danger">سند مالی</p>:''}
+                      <div  onClick={() => handelPreview(item)} className={item.attachmentTypeId === 2 ? " img col-md-2 col-sm-12" : "  col-md-2 col-sm-12"} >
+                        <img src={`${attachmet}${item.path}`} className= " img" alt={item.name} />
+                        <div className="detial-img">
+                          {item.attachmentTypeId === 2 ?
+                              <>
+                              <h4 className="">سند پرداخت</h4>
+                              <p className="">شناسه پرداخت : { item.path.split('/')[2]}  </p>
+                            </>
+                              :item.attachmentTypeId === 1 ?
+                                  <>
+                                    <h4 className="">سند قرارداد</h4>
+                                    <p className="">  شناسه قراداد :{ item.path.split('/')[2]}</p>
+                                  </>
+                                  :item.attachmentTypeId === 0?
+                                      <>
+                                        <h4 className="">فاقد شناسه</h4>
+                                      </>:
+                                  ''}
+                        </div>
+
                       </div>)}
 
 
