@@ -52,7 +52,7 @@ const NewsHeader:React.FC = () => {
                 ):""}
             </div>
 
-            <NavLink className='text-primary ' to='/newsList'>مشاهده همه({guessNews?guessNews.length:0}) </NavLink>
+            <NavLink className='text-primary ' to='/admin/user-news'>مشاهده همه({guessNews?guessNews.length:0}) </NavLink>
 
 
         </div>
