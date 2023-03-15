@@ -38,9 +38,9 @@ interface Props {
 
 const AdminImagePreviwerForPaymentList: React.FC<Props> = ({ modalIsOpen, closeModal,id}) => {
     const [trackingCode, setTrackingCode] = useState(0)
-    const [value, setValue] = useState(0)
+    const [images, setImages] = useState<any>([])
     const [image, setImage] = useState<Attachment>()
-    const [chacked, setchacked] = useState(false)
+    const [currentIndex, setCurrentIndex] = useState(0)
     const [open, setClose] = useState(false)
     
     let [loading, setLoading] = useState(false);
@@ -70,7 +70,7 @@ const AdminImagePreviwerForPaymentList: React.FC<Props> = ({ modalIsOpen, closeM
         try {
             const {data, status} = await GetAttachments(config)
             if (status === 200) {
-
+                setImages(data.result.attachments)
                 setImage(data.result.attachments[0])
             }
 
@@ -90,6 +90,10 @@ const AdminImagePreviwerForPaymentList: React.FC<Props> = ({ modalIsOpen, closeM
 
 
     },[id])
+const changeImageHandler = (item:any , index:any) => {
+    setImage(item)
+    setCurrentIndex(parseInt(index))
+}
     return (
 
         <Modal
@@ -119,15 +123,26 @@ const AdminImagePreviwerForPaymentList: React.FC<Props> = ({ modalIsOpen, closeM
                         x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </div>
-            <div className='m-auto'>
+            <div id="gallery-container" >
+                <div className="gallery-img-container">
 
-                <div className='text-center img-previewer'>
-                {image? <img style={{
-                        width:  "50rem",
-                        height: '25rem'
-                    }}  src={`${attachmet}${image.path}`} className="img-fluid m-auto" alt={image.name}/>:''}
+
+                    {image?
+                        <img  src={`${attachmet}${image.path}`} className="gallery-img" alt={image.name}/>:''}
+
+                </div>
+                <div id="slider-img-container" >
+                    {images.map((item:any , index:any)=>
+
+                        <img    src={`${attachmet}${item.path}`}  className={[
+                            'slider-img',
+                            index === currentIndex ? 'active' : ''
+                        ].join(' ')} alt={item.name} onClick={()=>changeImageHandler(item ,index)}/>
+
+                    )}
                 </div>
             </div>
+
 
         </Modal>
 
