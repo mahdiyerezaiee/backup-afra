@@ -1,7 +1,7 @@
 
 import Modal from 'react-modal';
 import { useState } from 'react';
-import { GetPayments } from './../../../services/paymentService';
+import { GetPayments } from './../../../services/paymentsService';
 import QueryString from 'qs';
 import { MeasureUnitSample } from './../../../Common/Enums/MeasureUnitSample';
 import { useEffect } from 'react';

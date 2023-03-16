@@ -19,7 +19,7 @@ import MyTable from '../../../Common/Shared/Form/MyTable';
 import ModalGroupWork from '../../../Common/Shared/Common/ModalGroupWork';
 import { InvoceTypes } from '../../../Common/Enums/InvoiceTypeIdEnums';
 import { PaymentStructureEnums } from '../../../Common/Enums/PaymentStructureEnums';
-import { ChangePaymentStatus, GetPayments } from '../../../services/paymentService';
+import { ChangePaymentStatus, GetPayments } from '../../../services/paymentsService';
 import ChangePayment from './ChangePayment';
 import { PaidEnum } from './../../../Common/Enums/PaidEnum';
 import { ConfirmedEnum } from './../../../Common/Enums/ConfirmedEnum';

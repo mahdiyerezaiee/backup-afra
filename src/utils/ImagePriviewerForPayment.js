@@ -3,7 +3,7 @@ import Select from "react-select";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { CreatePayment } from "./../services/paymentService";
+import { CreatePayment } from "./../services/paymentsService";
 import { attachmentUpload } from "./../services/attachmentService";
 import { Field, Form, Formik } from "formik";
 import { validateRequired, validatNumber } from "./validitionParams";

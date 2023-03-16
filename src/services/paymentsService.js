@@ -21,3 +21,8 @@ export const GetInvoicePayments=(id)=>{
     return http.get(`${configure}/Payment/GetInvoicePayments?InvoiceId=${id}`);
 
 }
+export const EditPaymentService=(PaymentData)=>
+{
+    return http.post(`${configure}/Payment/EditPayment`,JSON.stringify(PaymentData));
+}
+
