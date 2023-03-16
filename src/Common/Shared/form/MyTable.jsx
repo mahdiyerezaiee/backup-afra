@@ -98,7 +98,7 @@ const MyTable = ({ columns, data ,getData,bulkJob ,setPageNumber,PageNumber,setP
 
             {/*<GlobalFilter filter={globalfilter} setFilter={setGlobalFilter} />*/}
 
-            <div className="table-responsive "
+            <div className="table-responsive table-striped"
                  style={{overflowX:'auto' }}
             >
                 <div className='d-block clearfix mt-3 float-right'>

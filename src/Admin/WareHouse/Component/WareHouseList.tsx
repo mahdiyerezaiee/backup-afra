@@ -328,41 +328,15 @@ const WareHouseList:React.FC = () => {
             }
         },
         {
-            Header: 'حجم-کیلوگرم', accessor: '', Cell: (row:any) => {
-                const [attValue, setAttValue] = useState<any>('')
-                const getAttValue = async () => {
-                    const { data, status } = await GetAttributeValues(1006, row.row.original.id)
-
-                    setAttValue(data.result.attributeValue.value)
-                }
-                useEffect(() => {
-                    getAttValue()
-
-                }, [])
-
-                return (formatter.format(attValue))
-
-            }
+            Header: 'حجم-کیلوگرم', accessor: 'capacity'
+            
         },{Header:'نام شرکت',accessor:'companyName'},
         {
-            Header: 'آدرس', accessor: '  ', Cell: row => {
-                const [attValue, setAttValue] = useState('')
-                const getAttValue = async () => {
-                    const { data, status } = await GetAttributeValues(1007, row.row.original.id)
-
-                    setAttValue(data.result.attributeValue.value)
-                }
-                useEffect(() => {
-                    getAttValue()
-
-                }, [])
-
-                return (attValue)
-            }
+            Header: 'آدرس', accessor:'address'
         }
         ,
         {
-            Header: 'عملیات', accessor: 'عمل', Cell: row => {
+            Header: 'عملیات', accessor: 'عمل', Cell: (row:any) => {
 
 
 

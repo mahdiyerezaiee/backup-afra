@@ -123,8 +123,8 @@ const handelSubmit=async()=>{
     entityId: orderId,
     paymentMethodId,
     installmentStartDate:paymentMethodId!==4?null:installmentStartDate,
-    installmentPeriod:Number(installmentPeriod),
-    installmentOccureCount:Number(installmentOccureCount),
+    installmentPeriod:installmentPeriod!==0?Number(installmentPeriod):null,
+    installmentOccureCount:installmentOccureCount!==0?Number(installmentOccureCount):null,
     comment
   }
 try {

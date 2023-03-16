@@ -69,7 +69,7 @@ const PaymentModalForInvoices: React.FC<Props> = ({ modalOpen, closeModal, Invoi
                         <div className="col-lg-4 col-md-6 col-sm-11 ">
                                                         
                         </div>
-                        <PaymnetListForInvoice InvoiceId={InvoiceId}/>
+                        <PaymnetListForInvoice InvoiceId={InvoiceId} closeModal={closeModal}/>
                       
                     </div>
                 </div>

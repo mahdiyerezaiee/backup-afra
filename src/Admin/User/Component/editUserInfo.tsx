@@ -557,8 +557,8 @@ const body ={
                                             <div className='row'>
                                                 <div className='col-6  mb-1 '>
                                                     {show === true ?
-                                                        <button type="submit" className="btn btn-success  " disabled={password !== passwordConfirm} onClick={submit} >تایید</button> :
-                                                        <button type="submit" className="btn btn-success  " disabled={!loading ? false : true}  onClick={submit}>تایید
+                                                        <button  className="btn btn-success  " disabled={password !== passwordConfirm} onClick={submit} >تایید</button> :
+                                                        <button  className="btn btn-success  " disabled={!loading ? false : true}  onClick={submit}>تایید
                                                             <ClipLoader
 
                                                                 loading={loading}

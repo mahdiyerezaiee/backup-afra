@@ -40,6 +40,7 @@ const OrderConditionEdit:React.FC<Props> = ({ orderCondition, getOrderDetail, Or
 
   useEffect(() => {
     getSupplyCode()
+    getOrderDetail()
   }, [])
 
   if (productSupply !== null) {

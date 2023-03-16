@@ -8,7 +8,7 @@ const Pagination = ({PageNumber , setPageNumber , getDataBySearch  , PageSize, t
     }
     const endPageHandler = () => {
         if(total%PageSize===0){
-            setPageNumber(Math.floor(total/PageSize) - 1)
+            setPageNumber(Math.floor(total/PageSize) )
         }
         else{
             setPageNumber(Math.floor(total/PageSize))

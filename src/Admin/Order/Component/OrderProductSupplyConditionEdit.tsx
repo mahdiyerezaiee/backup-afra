@@ -41,23 +41,7 @@ const OrderProductSupplyConditionEdit:React.FC<Props> = ({ modalIsOpen, closeMod
 
     const submit = async () => {
         const body = {
-            "orderDetail": {
-                "id": Detail.id,
-                "orderId": Detail.orderId,
-                "productId": Detail.productId,
-                "measureUnitId": Detail.measureUnitId,
-                "quantity": Detail.quantity,
-                "basePrice": Detail.basePrice,
-                "price": Detail.price,
-                "priceIncludingTax": Detail.priceIncludingTax,
-                "createDate": Detail.createDate,
-                "productSupplyId": Detail.productSupplyId,
-                "productSupplyConditionId": checked.selectedValue,
-                "extId": null,
-                "comment": Detail.comment,
-                "derivedFrom": null,
-                "product": null
-            }
+            "orderDetail":{...Detail,productSupplyConditionId:checked.selectedValue}
         }
         setLoading(true)
 

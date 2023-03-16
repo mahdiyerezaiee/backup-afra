@@ -27,7 +27,7 @@ const App:React.FC=()=>{
 
   return (
     <BrowserRouter>
-    <ProSidebarProvider>
+    <ProSidebarProvider >
       <AdminPannel />
       <ToastContainer position="top-right"
         autoClose={10000}

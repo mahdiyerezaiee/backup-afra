@@ -28,6 +28,7 @@ import ImagePriviewerForPayment from '../../../Utils/ImagePriviewerForPayment';
 import AdminImagePreviwerForPaymentList from './../../../Utils/AdminImagePreviwerForPaymentList';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import EditPayment from './EditPayment';
 
 
 
@@ -60,7 +61,7 @@ const PaymentsList: React.FC = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [open, SetOpen] = useState(false);
-    const [Ids, setIds] = useState<any>(location.state &&JSON.parse(String(sessionStorage.getItem('undeciededPayments')))?JSON.parse(String(sessionStorage.getItem('undeciededPayments'))).Ids:[])
+    const [Ids, setIds] = useState<any>(location.state && JSON.parse(String(sessionStorage.getItem('undeciededPayments'))) ? JSON.parse(String(sessionStorage.getItem('undeciededPayments'))).Ids : [])
     const [stateError, SetStateError] = useState(0)
     const [payments, SetPayments] = useState([])
     const [InvoiceId, setInvoiceId] = useState<any>(getDefault().InvoiceId)
@@ -83,7 +84,8 @@ const PaymentsList: React.FC = () => {
     const [OrganizationName, SetOrganizationName] = useState(getDefault().OrganizationName)
     const [OrganizationNationalId, SetOrganizationNationalId] = useState(getDefault().OrganizationNationalId)
     const [IsOpenEdit, setIsOpenEdit] = useState(false)
-    const [EditPayment, setEditPayment] = useState()
+    const [Payment, setEditPayment] = useState()
+    const[EditmodalPay,setEditmodalPay]=useState(false)
     const [Id, setId] = useState(0)
     const companies = useSelector((state: RootState) => state.companies)
 
@@ -96,7 +98,7 @@ const PaymentsList: React.FC = () => {
 
 
     }
-    const params = { InvoiceId,Ids, EntityTypeId, EntityId, PaymentMethodId, PaymentStatusId, PriceUnitId, MinPrice, MaxPrice, MinCreateDate, MaxCreateDate, MinPaymentDueDate, MaxPaymentDueDate, TrackingCode, HasAttachment, Paid, Confirmed }
+    const params = { InvoiceId, Ids, EntityTypeId, EntityId, PaymentMethodId, PaymentStatusId, PriceUnitId, MinPrice, MaxPrice, MinCreateDate, MaxCreateDate, MinPaymentDueDate, MaxPaymentDueDate, TrackingCode, HasAttachment, Paid, Confirmed }
     function getDefault() {
         let items = JSON.parse(String(sessionStorage.getItem(`params${window.location.pathname}`)));
         return items ? items : ''
@@ -131,6 +133,18 @@ const PaymentsList: React.FC = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
+
+    const editHandler=(item:any)=>{
+        setEditPayment(item)
+
+        setEditmodalPay(true)
+
+    }
+    const closeEditHandler=()=>{
+
+        setEditmodalPay(false)
+
+    }
     const openModalEdit = (id: number) => {
 
         setId(id)
@@ -139,6 +153,7 @@ const PaymentsList: React.FC = () => {
     }
     const closeModalEdit = () => {
         setIsOpenEdit(false);
+    
     }
     const DeleteSelectedItem = async () => {
         const arrayOfData = getSelectedData(selectedRows);
@@ -461,29 +476,29 @@ const PaymentsList: React.FC = () => {
 
             headers: { 'Content-Type': 'application/json' },
             params: {
-                Ids:[],
-                InvoiceId:null,
-                EntityTypeId:null,
-                EntityId:null,
-                PriceUnitId:null,
-                MinPrice:null,
-                MaxPrice:null,
-                PaymentStatusId:null,
-                PaymentMethodId:null,
-                MinCreateDate:null,
-                MaxCreateDate:null,
-                MinPaymentDueDate:null,
-                MaxPaymentDueDate:null,
-                CustomerName:null,
-                OrganizationName:null,
-                TrackingCode:null,
-                HasAttachment:null,
-                Paid:null,
-                Confirmed:null,
-                OrganizationNationalId:null,
+                Ids: [],
+                InvoiceId: null,
+                EntityTypeId: null,
+                EntityId: null,
+                PriceUnitId: null,
+                MinPrice: null,
+                MaxPrice: null,
+                PaymentStatusId: null,
+                PaymentMethodId: null,
+                MinCreateDate: null,
+                MaxCreateDate: null,
+                MinPaymentDueDate: null,
+                MaxPaymentDueDate: null,
+                CustomerName: null,
+                OrganizationName: null,
+                TrackingCode: null,
+                HasAttachment: null,
+                Paid: null,
+                Confirmed: null,
+                OrganizationNationalId: null,
                 IsAdmin: true,
-                PageNumber:0,
-                PageSize:10
+                PageNumber: 0,
+                PageSize: 10
 
             }
             ,
@@ -521,38 +536,38 @@ const PaymentsList: React.FC = () => {
 
     });
     const CompaniesIDs = () => {
-        let all =companies.map((data:any) => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = companies.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
     }
     const EntityTypesIDs = () => {
-        let all =EntityTypes.filter((item: any) => item.id === 10 || item.id === 11).map((data: any) => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = EntityTypes.filter((item: any) => item.id === 10 || item.id === 11).map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
 
     }
     const PriceUnitIDS = () => {
-        let all =PriceUnitEnums.map((data: any) => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = PriceUnitEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
     }
     const PaymentStatusIds = () => {
-        let all =PaymentStatusEnums.map((data: any) => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = PaymentStatusEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
     }
     const PaumentMrthodIds = () => {
-        let all =PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = PaymentStructureEnums.map((data: any) => ({ label: data.name, value: data.id }))
+        return ([{ label: "همه", value: null }, ...all])
     }
     const Paids = () => {
-        let all =PaidEnum.map((data: any) => ({ label: data.name, value: data.value }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = PaidEnum.map((data: any) => ({ label: data.name, value: data.value }))
+        return ([{ label: "همه", value: null }, ...all])
     }
     const Confirms = () => {
-        let all =ConfirmedEnum.map((data: any) => ({ label: data.name, value: data.value }))
-        return ([{label :"همه", value : null} , ...all ])
-     
+        let all = ConfirmedEnum.map((data: any) => ({ label: data.name, value: data.value }))
+        return ([{ label: "همه", value: null }, ...all])
+
     }
     const HasAttach = () => {
-        let all =HasAttchmentEnum.map((data: any) => ({ label: data.name, value: data.value }))
-        return ([{label :"همه", value : null} , ...all ])
+        let all = HasAttchmentEnum.map((data: any) => ({ label: data.name, value: data.value }))
+        return ([{ label: "همه", value: null }, ...all])
 
     }
     const columns = useMemo(() => [
@@ -760,26 +775,44 @@ const PaymentsList: React.FC = () => {
 
 
             }
-        }, {
+        },
 
+        {
             Header: 'عملیات', accessor: '  ', Cell: (rows: any) => {
 
 
-                if (rows.row.original.paymentStatusId === 1 || rows.row.original.paymentStatusId === 7 || rows.row.original.paymentStatusId === 2 || rows.row.original.paymentStatusId === 8) {
 
-                    return (<button title='باطل کردن اسناد پرداختی' className='btn btn-sm rounded btn-danger ' onClick={() => SetPaymnetChange(rows.row.original.id)}>ابطال پرداخت</button>)
-                }
-                else {
-                    return ('')
-                }
+                return (
+                    <div>
+                        {(rows.row.original.paymentStatusId === 1 || rows.row.original.paymentStatusId === 7 || rows.row.original.paymentStatusId === 2 || rows.row.original.paymentStatusId === 8)?<button title='باطل کردن اسناد پرداختی' className='btn btn-sm rounded btn-danger ' onClick={() => SetPaymnetChange(rows.row.original.id)}>ابطال پرداخت</button>:''}
+
+                        {(rows.row.original.paymentStatusId === 1 || rows.row.original.paymentStatusId === 7 )?
+                        
+                        <button className="border-0 bg-transparent non-hover edit-btn" data-toggle="tooltip" data-placement="top" title="ویرایش"
+                        onClick={e => editHandler(rows.row.original)}   >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                         viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                         strokeLinejoin="round"
+                         className="feather feather-edit-2">
+                        <path
+                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                    </svg>
+                </button>
+                        
+                        :''}
+                        
+                    </div>
+                )
+
 
 
             }
-        }
 
 
 
-    ], [payments])
+
+        }], [payments])
 
     const data = useMemo(() => payments, [payments])
 
@@ -809,7 +842,7 @@ const PaymentsList: React.FC = () => {
         SetPaymentMethodId(null)
         setPageNumber(0)
         setPageSize(10)
-    
+
 
         sessionStorage.clear()
 
@@ -932,7 +965,7 @@ const PaymentsList: React.FC = () => {
                                     <label>نوع فاکتور</label>
                                     {EntityTypeId && EntityTypeId === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
 
@@ -941,7 +974,7 @@ const PaymentsList: React.FC = () => {
                                                 SetEntityTypeId(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
                                             value={EntityTypesIDs().filter((i: any) => i.value === EntityTypeId).map((i: any) => i)}
@@ -959,7 +992,7 @@ const PaymentsList: React.FC = () => {
                                     <label>واحد پول </label>
                                     {PriceUnitId && PriceUnitId === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
 
@@ -968,7 +1001,7 @@ const PaymentsList: React.FC = () => {
                                                 SetPriceUnitId(e.value)
                                             }} /> :
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
                                             value={PriceUnitIDS().filter((i: any) => i.value === PriceUnitId).map((i: any) => i)}
@@ -987,7 +1020,7 @@ const PaymentsList: React.FC = () => {
 
                                     {PaymentStatusId && PaymentStatusId === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
 
@@ -996,7 +1029,7 @@ const PaymentsList: React.FC = () => {
                                                 SetPaymentStatusId(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={PaymentStatusIds().filter((i: any) => i.value === PaymentStatusId).map((i: any) => i)}
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
@@ -1016,7 +1049,7 @@ const PaymentsList: React.FC = () => {
 
                                     {PaymentMethodId && PaymentMethodId === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
 
@@ -1025,7 +1058,7 @@ const PaymentsList: React.FC = () => {
                                                 SetPaymentMethodId(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={PaumentMrthodIds().filter((i: any) => i.value === PaymentMethodId).map((i: any) => i)}
                                             placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
@@ -1046,7 +1079,7 @@ const PaymentsList: React.FC = () => {
 
                                     {HasAttachment && HasAttachment === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder=' وضعیت سند '
                                             options={HasAttach()}
 
@@ -1055,7 +1088,7 @@ const PaymentsList: React.FC = () => {
                                                 setHasAttachment(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={HasAttach().filter((i: any) => i.value === HasAttachment).map((i: any) => i)}
                                             placeholder=' وضعیت سند '
                                             options={HasAttach()}
@@ -1074,7 +1107,7 @@ const PaymentsList: React.FC = () => {
 
                                     {Paid && Paid === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder=' وضعیت مالی '
                                             options={Paids()}
 
@@ -1083,7 +1116,7 @@ const PaymentsList: React.FC = () => {
                                                 setPaid(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={Paids().filter((i: any) => i.value === Paid).map((i: any) => i)}
                                             placeholder=' وضعیت مالی '
                                             options={Paids()}
@@ -1102,7 +1135,7 @@ const PaymentsList: React.FC = () => {
 
                                     {Confirmed && Confirmed === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder=' وضعیت تایید '
                                             options={Confirms()}
 
@@ -1111,7 +1144,7 @@ const PaymentsList: React.FC = () => {
                                                 setConfirmed(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={Confirms().filter((i: any) => i.value === Confirmed).map((i: any) => i)}
                                             placeholder=' وضعیت تایید '
                                             options={Confirms()}
@@ -1140,10 +1173,10 @@ const PaymentsList: React.FC = () => {
                         </div>
                     </AdvancedSearch>
                     {
-            getDefault().InvoiceId||  getDefault().EntityId|| getDefault().PaymentMethodId|| getDefault().PaymentStatusId|| getDefault().PriceUnitId||
-            getDefault().MinPrice||getDefault().MaxPrice||getDefault().MinCreateDate||getDefault().MaxCreateDate||getDefault().MinPaymentDueDate||
-            getDefault().MaxPaymentDueDate||getDefault().TrackingCode||getDefault().HasAttachment||getDefault().Paid||getDefault().Confirmed?  <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
-          
+                        getDefault().InvoiceId || getDefault().EntityId || getDefault().PaymentMethodId || getDefault().PaymentStatusId || getDefault().PriceUnitId ||
+                            getDefault().MinPrice || getDefault().MaxPrice || getDefault().MinCreateDate || getDefault().MaxCreateDate || getDefault().MinPaymentDueDate ||
+                            getDefault().MaxPaymentDueDate || getDefault().TrackingCode || getDefault().HasAttachment || getDefault().Paid || getDefault().Confirmed ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
+
                 </div>
                 <div className=" statbox widget-content widget-content-area">
                     <Modal
@@ -1173,7 +1206,7 @@ const PaymentsList: React.FC = () => {
                         />
 
                         <ModalGroupWork open={open} close={close} success={stateSuccess} error={stateError} />
-
+                        <EditPayment closeModal={closeEditHandler} modalIsOpen={EditmodalPay} Item={Payment} reload={getDataBySearch}/>
                     </div>
                     <div className="d-flex justify-content-end">
 
@@ -1301,7 +1334,7 @@ const PaymentsList: React.FC = () => {
                                     <label>نوع فاکتور</label>
                                     {EntityTypeId && EntityTypeId === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
 
@@ -1310,7 +1343,7 @@ const PaymentsList: React.FC = () => {
                                                 SetEntityTypeId(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder="نوع فاکتور"
                                             options={EntityTypesIDs()}
                                             value={EntityTypesIDs().filter((i: any) => i.value === EntityTypeId).map((i: any) => i)}
@@ -1328,7 +1361,7 @@ const PaymentsList: React.FC = () => {
                                     <label>واحد پول </label>
                                     {PriceUnitId && PriceUnitId === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
 
@@ -1337,7 +1370,7 @@ const PaymentsList: React.FC = () => {
                                                 SetPriceUnitId(e.value)
                                             }} /> :
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder='واحد پول '
                                             options={PriceUnitIDS()}
                                             value={PriceUnitIDS().filter((i: any) => i.value === PriceUnitId).map((i: any) => i)}
@@ -1359,13 +1392,13 @@ const PaymentsList: React.FC = () => {
 
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
 
                                             onChange={(e: any) => {
                                                 SetPaymentStatusId(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={PaymentStatusIds().filter((i: any) => i.value === PaymentStatusId).map((i: any) => i)}
                                             placeholder='وضعیت پرداخت'
                                             options={PaymentStatusIds()}
@@ -1385,7 +1418,7 @@ const PaymentsList: React.FC = () => {
 
                                     {PaymentMethodId && PaymentMethodId === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
 
@@ -1394,7 +1427,7 @@ const PaymentsList: React.FC = () => {
                                                 SetPaymentMethodId(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={PaumentMrthodIds().filter((i: any) => i.value === PaymentMethodId).map((i: any) => i)}
                                             placeholder='نوع پرداخت'
                                             options={PaumentMrthodIds()}
@@ -1415,7 +1448,7 @@ const PaymentsList: React.FC = () => {
 
                                     {HasAttachment && HasAttachment === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder=' وضعیت سند '
                                             options={HasAttach()}
 
@@ -1424,7 +1457,7 @@ const PaymentsList: React.FC = () => {
                                                 setHasAttachment(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={HasAttach().filter((i: any) => i.value === HasAttachment).map((i: any) => i)}
                                             placeholder=' وضعیت سند '
                                             options={HasAttach()}
@@ -1443,7 +1476,7 @@ const PaymentsList: React.FC = () => {
 
                                     {Paid && Paid === null ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder=' وضعیت مالی '
                                             options={Paids()}
 
@@ -1452,7 +1485,7 @@ const PaymentsList: React.FC = () => {
                                                 setPaid(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={Paids().filter((i: any) => i.value === Paid).map((i: any) => i)}
                                             placeholder=' وضعیت مالی '
                                             options={Paids()}
@@ -1471,7 +1504,7 @@ const PaymentsList: React.FC = () => {
 
                                     {Confirmed ?
                                         <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             placeholder=' وضعیت تایید '
                                             options={Confirms()}
 
@@ -1480,7 +1513,7 @@ const PaymentsList: React.FC = () => {
                                                 setConfirmed(e.value)
                                             }}
                                         /> : <Select
-                                            menuShouldScrollIntoView ={false}
+                                            menuShouldScrollIntoView={false}
                                             value={Confirms().filter((i: any) => i.value === Confirmed).map((i: any) => i)}
                                             placeholder=' وضعیت تایید '
                                             options={Confirms()}
@@ -1509,9 +1542,9 @@ const PaymentsList: React.FC = () => {
                         </div>
                     </AdvancedSearch>
                     {
-            getDefault().InvoiceId||  getDefault().EntityId|| getDefault().PaymentMethodId|| getDefault().PaymentStatusId|| getDefault().PriceUnitId||
-            getDefault().MinPrice||getDefault().MaxPrice||getDefault().MinCreateDate||getDefault().MaxCreateDate||getDefault().MinPaymentDueDate||
-            getDefault().MaxPaymentDueDate||getDefault().TrackingCode||getDefault().HasAttachment||getDefault().Paid||getDefault().Confirmed?  <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
+                        getDefault().InvoiceId || getDefault().EntityId || getDefault().PaymentMethodId || getDefault().PaymentStatusId || getDefault().PriceUnitId ||
+                            getDefault().MinPrice || getDefault().MaxPrice || getDefault().MinCreateDate || getDefault().MaxCreateDate || getDefault().MinPaymentDueDate ||
+                            getDefault().MaxPaymentDueDate || getDefault().TrackingCode || getDefault().HasAttachment || getDefault().Paid || getDefault().Confirmed ? <span className="d-block p-3 text-center w-100 bg-light-primary  " style={{ fontSize: "15px" }}>نمایش اطلاعات بر اساس فیلتر  </span> : null}
                 </div>
                 <div className=" statbox widget-content widget-content-area">
                     <div>

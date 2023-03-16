@@ -7,40 +7,96 @@ import { useEffect, useState } from "react";
 import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
 import ImageUploaderForPayment from "../../Utils/ImageUploaderForPayment";
 import { GetInvoicePayments, GetPayments } from './../../services/paymentService';
+import { useNavigate } from 'react-router-dom';
 
-const PaymentMethodComponent: React.FC = () => {
+interface Props {
+  invoiceId: any, closeModal: any
+}
+const PaymentMethodComponent: React.FC<Props> = ({ invoiceId, closeModal }) => {
   const [paymentId, setPaymentId] = useState([]);
   const [currentTab, setCurrentTab] = useState(1);
   const [currentPay, SetCurrentPay] = useState<any>([])
+
+  const navigate = useNavigate()
 
   let payments = JSON.parse(
     String(sessionStorage.getItem(`param/client/PaymentMethod`))
   );
   const paymentMethodsGroup = async () => {
-    let config = {
-      headers: { "Content-Type": "application/json" },
-      params: {
-        InvoiceIds: payments,
-      },
-      paramsSerializer: (params: any) => {
-        return QueryString.stringify(params);
-      },
-    };
+    if (invoiceId) {
 
-    try {
-      const { data, status } = await GetPaymentMethods(config);
-      if (status === 200) {
-        setPaymentId(data.result.paymentMethods);
+
+      let config = {
+        headers: { "Content-Type": "application/json" },
+        params: {
+          InvoiceIds: invoiceId,
+        },
+        paramsSerializer: (params: any) => {
+          return QueryString.stringify(params);
+        },
+      };
+
+      try {
+        const { data, status } = await GetPaymentMethods(config);
+        if (status === 200) {
+          setPaymentId(data.result.paymentMethods);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    }
+    else {
+      let config = {
+        headers: { "Content-Type": "application/json" },
+        params: {
+          InvoiceIds: payments,
+        },
+        paramsSerializer: (params: any) => {
+          return QueryString.stringify(params);
+        },
+      };
+
+      try {
+        const { data, status } = await GetPaymentMethods(config);
+        if (status === 200) {
+          setPaymentId(data.result.paymentMethods);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
-  var formatter = new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 0, 
-    minimumFractionDigits: 0, });
+  var formatter = new Intl.NumberFormat('fa-IR', {
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  });
   const getCurrentPaids = async () => {
     let pays = []
+    if(invoiceId){
+
+      for (let i = 0; i < invoiceId.length; i++) {
+
+
+
+        try {
+          const { data, status } = await GetInvoicePayments(invoiceId[i])
+  
+          if (status === 200) {
+  
+            pays.push(...data.result.payments)
+  
+          }
+        } catch (error) {
+  
+        }
+  
+  
+        SetCurrentPay(pays)
+      }
+
+    }
+    else{
 
     for (let i = 0; i < payments.length; i++) {
 
@@ -61,7 +117,7 @@ const PaymentMethodComponent: React.FC = () => {
 
       SetCurrentPay(pays)
     }
-
+  }
 
   }
   useEffect(() => {
@@ -73,9 +129,21 @@ const PaymentMethodComponent: React.FC = () => {
   }
 
 
+  const handelClick = () => {
+    if (invoiceId) {
 
+      closeModal()
+    }
+    else {
+      navigate(-1)
+    }
 
-  if (payments) {
+  }
+
+ console.log(currentPay);
+ 
+  
+  if (payments || invoiceId) {
     return (
       <div className="row">
         <div id="tabsIcons" className="col-lg-12 col-12 layout-spacing">
@@ -114,33 +182,47 @@ const PaymentMethodComponent: React.FC = () => {
                         <h6 className="float-left "><b>مجموع اسناد قابل پرداخت:</b> {item.totalValue}</h6>
                         <h6 className="float-right"><b>    نحوه پرداخت: </b> {PaymentStructureEnums.filter((i: any) => i.id === item.paymentMethodId).map((i: any) => i.name)}</h6>
 
-                        <div dangerouslySetInnerHTML={{__html:item.message}} className="mb-4 d-block clearfixed">
-                        
+                        <div dangerouslySetInnerHTML={{ __html: item.message }} className="mb-4 d-block clearfixed">
+
                         </div>
                         <br></br>
-                        {currentPay.length > 0 ?
-                          <div><table className='table text-center table-striped'>
-                          <thead>
+
+                        {currentPay.length>0?
+                          <div><table className='table text-center table-striped test'>
+                            <thead>
                               <tr>
-                                  <th>#</th>
-                                  <th>کدرهگیری</th>
-                                  <th>مبلغ</th>
-      
+                                <th>#</th>
+                                <th>کدرهگیری</th>
+                                <th>مبلغ</th>
+
                               </tr>
-                          </thead>
-      
-                          <tbody>
-                              {currentPay.map((i:any) => (
-                                  <tr>
-                                      <td>{i.id}</td>
-                                      <td>{i.trackingCode}</td>
-                                      <td>{formatter.format(i.price)}</td>
-                                  </tr>
-      
+                            </thead>
+
+                            <tbody>
+                              {currentPay.map((i: any) => (
+                                <tr>
+                                  <td>{i.id}</td>
+                                  <td>{i.trackingCode}</td>
+                                  <td>{formatter.format(i.price)}</td>
+                                </tr>
+
                               ))}
-                          </tbody>
-      
-                      </table></div> : < ImageUploaderForPayment data={paymentId} index={item.tabIndex} Ids={payments} />}
+                            </tbody>
+
+
+                          </table>
+
+
+                         {currentPay.length>0?<button className="btn btn-success " onClick={handelClick} >ثبت نهایی</button>:''}
+
+                         < ImageUploaderForPayment data={paymentId} index={item.tabIndex} Ids={payments ? payments : invoiceId} currentPay={getCurrentPaids} />
+
+                          </div> : < ImageUploaderForPayment data={paymentId} index={item.tabIndex} Ids={payments ? payments : invoiceId} currentPay={getCurrentPaids} />
+
+                         
+
+
+                        }
                       </div>}
 
 
@@ -149,6 +231,9 @@ const PaymentMethodComponent: React.FC = () => {
 
                 )}
               </div>
+
+
+
             </div>
           </div>
         </div>

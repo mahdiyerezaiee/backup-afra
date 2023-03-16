@@ -15,6 +15,7 @@ const ImagePriviewerForPayment = ({
   payments,
   Index,
   Ids,
+  currentPay
 }) => {
   const [invoiceIds, SetinvoiceIds] = useState([]);
   const [dueDate, SetdueDate] = useState();
@@ -62,7 +63,11 @@ const ImagePriviewerForPayment = ({
             formData.append("EntityId", data.result.payment.id);
             formData.append("AttchmentTypeId",2)
             const response = await attachmentUpload(formData);
-          } catch (error) {}
+          } catch (error) {
+
+          }
+
+          currentPay()
         }
       } catch (error) {
         console.log(error);

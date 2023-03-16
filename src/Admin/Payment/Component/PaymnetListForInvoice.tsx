@@ -29,6 +29,7 @@ import AdminImagePreviwerForPaymentList from './../../../Utils/AdminImagePreviwe
 import { toast } from 'react-toastify';
 import MyTableBazargah from './../../../Common/Shared/Form/MyTableBazargah';
 import TableForPaymentsInOrder from './../../../Common/Shared/Form/TableForPaymentsInOrder';
+import PaymentMethodComponent from './../../../Client/paymentMethods/paymentMethods';
 
 
 
@@ -50,14 +51,15 @@ const customStyles = {
 
 }
 interface Props {
-    InvoiceId: any
+    InvoiceId: any,closeModal:any
 }
-const PaymnetListForInvoice: React.FC<Props> = ({ InvoiceId }) => {
+const PaymnetListForInvoice: React.FC<Props> = ({ InvoiceId ,closeModal}) => {
 
 
     const [selectedRows, setSelectedRows] = useState([])
     const [stateSuccess, SetStateSuccess] = useState(0)
     const [payments, SetPayments] = useState([])
+    const [Show, SetShow] = useState(false)
 
 
     const companies = useSelector((state: RootState) => state.companies)
@@ -477,6 +479,10 @@ const PaymnetListForInvoice: React.FC<Props> = ({ InvoiceId }) => {
 
     console.log(data);
 
+    const handelClick=()=>{
+        SetShow(true)
+    }
+
     if (payments) {
         return (
             <div className="rounded">
@@ -516,16 +522,28 @@ const PaymnetListForInvoice: React.FC<Props> = ({ InvoiceId }) => {
 
         )
     }
-    else {
+    else if (!payments && Show === false) {
         return (
             <div className="rounded text-center">
 
-           
+
 
                 <p>پرداختی جهت نمایش موجود نمیباشد</p>
-                
+
+                <button className='btn btn-success' onClick={handelClick}>پرداخت</button>
+
 
             </div >)
+    }
+    else {
+        return (
+        <div className="rounded text-center">
+
+
+
+            <PaymentMethodComponent invoiceId={[InvoiceId]} closeModal={closeModal} />
+
+        </div >)
     }
 
 

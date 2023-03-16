@@ -13,21 +13,26 @@ import { Field, Form, Formik } from "formik";
 import { validatAlpha, validateRequired, validatNumber } from "../../../Utils/validitionParams";
 import { useSelector } from 'react-redux';
 import { RootState } from "../../../store";
+import { GetAllProvince } from './../../../services/addressService';
 
 const EditWareHouse: React.FC = () => {
     const params = useParams()
-    const [Addres, setAddres] = useState('');
+    const [address, setAddres] = useState('');
     const [name, Setname] = useState('');
     const [wareGid, setWareGId] = useState(0)
     const [wareHouseT, SetWarehouseT] = useState<any>([]);
     const [groupId, setGroupId] = useState(0);
-    const [attributeIdHajm, setattributeIdHajm] = useState(0);
-    const [attributeIdadd, setattributeIdadd] = useState(0);
+   
     const [loading, setLoading] = useState(false);
     const [active, setActive] = useState(true);
-    const [attValuehajm, setAttValueHajm] = useState('')
+
     let [companyId, SetcompanyId] = useState()
     let [companyName, SetCompanyName] = useState()
+    const[capacity,SetCapacity]=useState(0)
+    const [province, setProvince] = useState([]);
+    const[provinceId,setProvinceId]=useState(0);
+    const[ostanId,setostanId]=useState(0);
+
     const companies = useSelector((state: RootState) => state.companies)
     const id = params.id
     const navigator = useNavigate();
@@ -36,7 +41,7 @@ const EditWareHouse: React.FC = () => {
         "wareHouse": {
             id:Number(id),
             name,
-            groupId, companyId, companyName, active
+            groupId, companyId, companyName, active,address,capacity:Number(capacity),provinceId
         }
 
     }
@@ -48,7 +53,11 @@ const EditWareHouse: React.FC = () => {
             SetcompanyId(data.result.wareHouse.companyId)
             SetCompanyName(data.result.wareHouse.companyName)
             setActive(data.result.wareHouse.active)
-
+            setAddres(data.result.wareHouse.address)
+            SetCapacity(data.result.wareHouse.capacity)
+            setProvinceId(data.result.wareHouse.provinceId)
+         
+        
         } catch (err) {
             console.log(err)
         }
@@ -79,80 +88,25 @@ const EditWareHouse: React.FC = () => {
 
     }
 
-    const getWareHajm = async () => {
-        try {
+  
+
+    const getProvince = async () => {
+
+        const { data, status } = await GetAllProvince();
+        setProvince(data.result.provinces);
 
 
-            const { data, status } = await GetAttributeValues(1006, params.id);
-            if (status === 200) {
-                setAttValueHajm(data.result.attributeValue.value)
-                setattributeIdHajm(data.result.attributeValue.id)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const getWareAddress = async () => {
-        try {
-            const { data, status } = await GetAttributeValues(1007, params.id);
-            if (status === 200) {
-                setAddres(data.result.attributeValue.value)
-                setattributeIdadd(data.result.attributeValue.id)
-
-            }
-        } catch (error) {
-
-        }
+       
 
     }
 
+console.log(ostanId);
 
     const inputwareHouseT = () => {
         return (wareHouseT.map((data: any) => ({ label: data.name, value: data.id })))
     }
     let defaultwareValue: any = inputwareHouseT().filter((item: any) => item.value === groupId)
 
-
-    const setAddressForWare = async () => {
-
-        const attribute = {
-            "attributeValues": [
-                {
-                    id: attributeIdadd,
-                    attributeTypeId: 1007,
-                    entityId: params.id,
-                    value: `${Addres}`
-                }
-            ]
-        }
-
-        try {
-            const { data, status } = await SetAttributeValues(attribute)
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
-    const setAttributevalueforHajm = async () => {
-
-        const attribute = {
-            "attributeValues": [
-                {
-                    id: attributeIdHajm,
-                    attributeTypeId: 1006,
-                    entityId: params.id,
-                    value: `${attValuehajm}`
-                }
-            ]
-        }
-
-        try {
-            const { data, status } = await SetAttributeValues(attribute)
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     const handelSubmit = async () => {
         setLoading(true)
@@ -169,8 +123,6 @@ const EditWareHouse: React.FC = () => {
                     progress: undefined
                 });
 
-                 setAttributevalueforHajm();
-                setAddressForWare()
                 navigator('/admin/warehouselist')
             }
             setLoading(false)
@@ -184,12 +136,28 @@ const EditWareHouse: React.FC = () => {
     useEffect(() => {
         getWareHouse()
         GetWareHouseTypes();
-        getWareHajm();
+        getProvince()
 
-        getWareAddress();
+      
     }, [])
 
-
+    const Allcities = province.filter((data:any) => data.parentId !== null);
+    const cities =Allcities.filter((data:any)=>data.parentId===ostanId)
+  
+    const ostan = province.filter((data:any) => data.parentId === null);
+    const ProvincerenderList = () => {
+        return (ostan.map((data:any) => ({ label: data.name, value: data.id })))
+    
+    }
+    const CitiesrenderList = () => {
+    
+        return (cities.map((data:any)=> ({ label: data.name, value: data.id })))
+    }
+    const provinceOstan=()=>{
+        let currentostanId=Allcities.filter((i:any)=>i.id===provinceId).map((i:any)=>i.parentId)
+        setostanId(currentostanId[0])
+        return(ProvincerenderList().filter((i:any)=>i.value===currentostanId[0])[0])
+    }
     const companys = () => {
         return (companies.map((item: any) => ({ label: item.name, value: item.id })))
 
@@ -214,9 +182,9 @@ const EditWareHouse: React.FC = () => {
                             groupId,
                             companyId,
                             companyName,
-                            Addres,
-                            attValuehajm,
-                            active
+                            address,
+                           capacity,
+                            active,provinceId
                         }}
                         enableReinitialize={true}
                         onSubmit={values => {
@@ -240,9 +208,9 @@ const EditWareHouse: React.FC = () => {
 
                                     <label>حجم انبار</label>
 
-                                    <Field name="attValuehajm" validate={validatNumber} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={attValuehajm} onChange={(e: any) => setAttValueHajm(e.target.value)} />
+                                    <Field name="attValuehajm" validate={capacity} type="text" className="form-control opacityForInput" placeholder="انبار" aria-describedby="basic-addon1" value={capacity} onChange={(e: any) => SetCapacity(e.target.value)} />
 
-                                    {errors.attValuehajm && touched.attValuehajm && <div className="text-danger">{errors.attValuehajm}</div>}
+                                    {errors.capacity && touched.capacity && <div className="text-danger">{errors.capacity}</div>}
 
 
 
@@ -293,19 +261,65 @@ const EditWareHouse: React.FC = () => {
 
 
                                 </div>
+                                
+                                    <div className="form-group col-md-6 textOnInput">
+                                        <label>استان</label>
+                                        {provinceId!==0?<Select
+                                        value={provinceOstan()}
+                                            menuShouldScrollIntoView ={false}
+                                            placeholder='استان'
+                                            options={ProvincerenderList()}
+                                            onChange={(e:any)=>{setostanId(e.value)
+                                            }}
+                                        />:
+                                        
+                                        <Select
+                                            menuShouldScrollIntoView ={false}
+                                            placeholder='استان'
+                                            options={ProvincerenderList()}
+                                            onChange={(e:any)=>{setostanId(e.value)
+                                            }}
+                                        />
+                                        }
+                                        {ostanId ===0 ?<span className="text-danger">استان خود را انتخاب کنید</span> :null }
+
+                                    </div>
+                                    <div className="form-group col-md-6 textOnInput">
+
+                                        <label >شهر</label>
+                                        {provinceId!==0? <Select
+                                            value={CitiesrenderList().filter((i:any)=>i.value===provinceId).map((i:any)=>i)}
+                                            menuShouldScrollIntoView ={false}
+                                            placeholder='شهر'
+                                            options={CitiesrenderList()}
+                                            className='form-group'
+                                            onChange={(e:any)=>setProvinceId(e.value)}
+                                        />:
+                                        
+                                        <Select
+                                            menuShouldScrollIntoView ={false}
+                                            placeholder='شهر'
+                                            options={CitiesrenderList()}
+                                            className='form-group'
+                                            onChange={(e:any)=>setProvinceId(e.value)}
+                                            />
+                                        }
+                                        {provinceId ===0 ?<span className="text-danger">شهر خود را انتخاب کنید</span> :null }
+
+                                    </div>
                                 <div className='col-lg-12 col-sm-12 mb-4 textOnInput'>
                                     <label>آدرس</label>
-                                    <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={Addres} onChange={(e: any) => {
+                                    <Field name="Addres" validate={validateRequired} as="textarea" className="form-control opacityForInput " rows='4' placeholder='آدرس انبار' value={address} onChange={(e: any) => {
                                         setAddres(e.target.value)
 
                                     }} />
-                                    {errors.Addres && touched.Addres && <div className="text-danger">{errors.Addres}</div>}
+                                    {errors.address && touched.address && <div className="text-danger">{errors.address}</div>}
 
                                 </div>
                                < div className='col-lg-12 col-sm-12 '>
                                 <div className='row '>
                                     <div className='col-6  '>
-                                        <button type="submit" disabled={loading} className="btn btn-success float-right"  >ثبت<ClipLoader
+                                        <button  disabled={loading} className="btn btn-success float-right"  onClick={handelSubmit} >ثبت<ClipLoader
 
                                             loading={loading}
                                             color="#ffff"
