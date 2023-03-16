@@ -6,7 +6,7 @@ import QueryString from "qs";
 import { useEffect, useState } from "react";
 import { PaymentStructureEnums } from "../../Common/Enums/PaymentStructureEnums";
 import ImageUploaderForPayment from "../../Utils/ImageUploaderForPayment";
-import { GetInvoicePayments, GetPayments } from './../../services/paymentsService';
+import { GetInvoicePayments, GetInvoicePaymentsForAdmin } from './../../services/paymentsService';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -80,7 +80,7 @@ const PaymentMethodComponent: React.FC<Props> = ({ invoiceId, closeModal }) => {
 
 
         try {
-          const { data, status } = await GetInvoicePayments(invoiceId[i])
+          const { data, status } = await GetInvoicePaymentsForAdmin(invoiceId[i])
   
           if (status === 200) {
   

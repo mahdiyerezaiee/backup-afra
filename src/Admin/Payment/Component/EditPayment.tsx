@@ -39,6 +39,7 @@ const EditPayment: React.FC<Props> = ({ closeModal, modalIsOpen, Item, reload })
     const [dueDate, SetdueDate] = useState<any>()
     const [trackingCode, SettrackingCode] = useState<any>()
     const [comment, Setcomment] = useState<any>()
+    const[paymentMethodId,SetpaymentMethodId]=useState<any>()
 
     var formatter = new Intl.NumberFormat('en-US', {
 
@@ -54,13 +55,14 @@ const EditPayment: React.FC<Props> = ({ closeModal, modalIsOpen, Item, reload })
         Setcomment('')
 
         if (Item) {
-            const { id, price, paymentDueDate, trackingCode, comment } = Item
+            const { id, price, paymentDueDate, trackingCode, comment ,paymentMethodId} = Item
 
             SetpaymentId(id)
             SetPrice(price)
             SetdueDate(paymentDueDate ? new Date(paymentDueDate) : null)
             SettrackingCode(trackingCode)
             Setcomment(comment)
+            SetpaymentMethodId(paymentMethodId)
 
             console.log(id, price, paymentDueDate);
         }
@@ -170,9 +172,10 @@ const EditPayment: React.FC<Props> = ({ closeModal, modalIsOpen, Item, reload })
 
 
                         </div>
-                        <div className="  form-group col-md-4 col-xs-4   ">
 
-                            <label className="" > تاریخ انقضا  </label>
+                       {paymentMethodId===4? <div className="  form-group col-md-4 col-xs-4   ">
+
+                            <label className="" > تاریخ سررسید  </label>
                             <div className='form-group  '>
                                 <DatePicker
 
@@ -186,7 +189,7 @@ const EditPayment: React.FC<Props> = ({ closeModal, modalIsOpen, Item, reload })
                             </div>
 
 
-                        </div>
+                        </div>:''}
 
 
                     </div>

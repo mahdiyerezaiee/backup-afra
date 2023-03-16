@@ -62,6 +62,7 @@ const PaymentModalForInvoices: React.FC<Props> = ({ modalOpen, closeModal, Invoi
                     y2="18"></line><line
                         x1="6" y1="6" x2="18" y2="18"></line></svg></div>
             <div>
+                <div style={{width:'80vw',height:'50vh'}}>
             <h6 className='text-center'> {`پرداختی های مربوط به صورتحساب شماره ${InvoiceId}`}</h6>
                 <div className=" rounded  " style={{ border: " 1px solid #bfc9d4" }} >
 
@@ -73,6 +74,7 @@ const PaymentModalForInvoices: React.FC<Props> = ({ modalOpen, closeModal, Invoi
                       
                     </div>
                 </div>
+            </div>
             </div>
 
 
