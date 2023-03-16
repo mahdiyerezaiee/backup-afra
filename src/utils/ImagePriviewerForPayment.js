@@ -110,6 +110,7 @@ const ImagePriviewerForPayment = ({
                     <img
                       src={URL.createObjectURL(item)}
                       className="img-fluid rounded "
+                      style={{width:'15vw',height:'15vh'}}
                     />
                   </div>
 

@@ -352,6 +352,8 @@ const PaymentsList: React.FC = () => {
                         draggable: true,
                         progress: undefined
                     })
+                    
+                    getDataBySearch()
             }
 
 

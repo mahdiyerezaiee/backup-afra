@@ -10,7 +10,9 @@ const ChatBox = (id) => {
     const [newMessage ,setNewMessage]=useState("")
     const [getmessage , setGetMessage] = useState([])
 
+    console.log(id);
     const showMessage = async () => {
+        if(id.id!==0){
         try {
             const {data, status} = await GetSupportRequestMessages(id.id)
             setGetMessage(data.result.supportRequestMessages.values)
@@ -18,6 +20,7 @@ const ChatBox = (id) => {
         } catch (err) {
             console.log(err)
         }
+    }
     }
     useEffect(() => {
         showMessage()

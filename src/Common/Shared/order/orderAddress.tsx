@@ -3,6 +3,7 @@ import { getExtraData } from "../../../services/extraService";
 import { useEffect, useState, useMemo } from "react";
 import ShippingSelected from "../Common/shippingSelected";
 import { GetAllProductSupply } from "../../../services/productSupplyService";
+import { ClipLoader } from "react-spinners";
 import { GetAddress } from "../../../services/addressService";
 import { DeleteOrderDetail, editOrder } from "../../../services/orderService";
 import { toast } from "react-toastify";
@@ -80,6 +81,7 @@ const OrderAddress: React.FC<Props> = ({
   const [isReserveModal, setisReserveModal] = useState(false);
   const [modalIsOpenUploadExcel, setIsOpenUploadExcel] = useState(false);
   let [loading, setLoading] = useState(true);
+  let [loadingButton, setLoadingButton] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const getSelectedData = (data: any) => {
     let arrayOfSelectedData = [];
@@ -257,6 +259,7 @@ const closeModalinvoice = () => {
     setIsOpenUploadExcel(false);
   };
   const syncButton = async (orderId: number, orderDetailId?: number) => {
+    setLoadingButton(true)
     const body = {
       orderId,
       orderDetailId,
@@ -264,12 +267,14 @@ const closeModalinvoice = () => {
     try {
       const { data, status } = await SyncShippingsWithBazargah(body);
       if (status === 200) {
-        toast.success(data.result.syncResult, {
+        toast.success('اطلاعات بروز رسانی شد', {
           position: "top-right",
           closeOnClick: true,
         });
+        setLoadingButton(false)
       }
     } catch (error) { }
+    setLoadingButton(false)
   };
   const getDetails = async () => {
     let finalArr: any = [];
@@ -435,9 +440,16 @@ const closeModalinvoice = () => {
                     syncButton(rows.row.original.orderId, rows.row.original.id)
                   }
                   hidden={rows.row.original.shippingId !== null && order.extId !== null ? false : true}
+                  disabled={order.orderStatusId===12?true:false}
                 >
                   {" "}
                   تطابق با بازارگاه
+                  <ClipLoader
+
+                                            loading={loadingButton}
+                                            color="#ffff"
+                                            size={15}
+                                        />
                 </button>
                 <button
                   disabled={

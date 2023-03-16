@@ -111,6 +111,8 @@ if (ticket){
                       <span className="user-meta-time">{new Date(item.createDate).toLocaleString("fa-IR")}</span>
                     </div>
                     <span className="preview">{item.title}</span>
+                    <span className="preview text-info text-left " title={item.latestMessage}>{item.latestMessage.length>20?item.latestMessage.subString(0,20):item.latestMessage}</span>
+
                   </div>
                 </div>
               </div> )}

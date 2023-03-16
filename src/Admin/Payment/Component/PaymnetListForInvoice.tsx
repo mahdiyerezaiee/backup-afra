@@ -537,7 +537,7 @@ const PaymnetListForInvoice: React.FC<Props> = ({ InvoiceId ,closeModal}) => {
     }
     else {
         return (
-        <div className="rounded text-center">
+        <div className="rounded text-center ">
 
 
 
