@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { PaymentStatusEnums } from '../../../Common/Enums/PaymentStatus';
 import { ShippingStatusEnums } from '../../../Common/Enums/ShippingStatusEnums';
-import { ChangePaymentStatus } from "../../../services/paymentService";
+import { ChangePaymentStatus } from "../../../services/paymentsService";
 // import { getOrder } from "../Service/EditOrder";
 
 const customStyles = {
