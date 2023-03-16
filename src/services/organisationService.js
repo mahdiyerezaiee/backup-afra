@@ -49,3 +49,11 @@ export const DeleteOrganization=(deleteid)=>{
 
     return http.delete(`${configure}/Organization/DeleteOrganization`,config)
 }
+
+
+export const EditPaymentService=(PaymentData)=>
+{
+    return http.post(`${configure}/Payment/EditPayment`,JSON.stringify(PaymentData));
+}
+
+// soroush
