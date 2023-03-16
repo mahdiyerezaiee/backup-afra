@@ -129,7 +129,7 @@ const ClientsMainLayout: React.FC = () => {
       <section className="dashboard-section padding-bottom  mt-lg--440 pos-rel">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-sm-10 col-md-12 col-lg-3">
+            <div className="col-sm-10 col-md-12 col-lg-3  ">
               <ClientSideNavbar />
             </div>
             <div className=" col-lg-9">
@@ -171,7 +171,7 @@ const ClientsMainLayout: React.FC = () => {
                   <Route path="invoice" element={<InvoiceClient />} />
                   <Route
                     path="PaymentMethod"
-                    element={<PaymentMethodComponent />}
+                    element={<PaymentMethodComponent invoiceId={null}  closeModal={null}/>}
                   />
                   <Route path="payment" element={<PaymentList />} />
                 </Routes>

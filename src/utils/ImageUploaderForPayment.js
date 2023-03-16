@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Fragment } from 'react';
 import ImagePriviewerForPayment from './ImagePriviewerForPayment';
 import {BiAddToQueue} from "react-icons/bi"
-const ImageUploaderForPayment = ({data,index,Ids}) => {
+const ImageUploaderForPayment = ({data,index,Ids,currentPay}) => {
 
     const [files, SetFiles] = useState([])
     const[child,Setchild] =useState(false)
@@ -17,7 +17,7 @@ const ImageUploaderForPayment = ({data,index,Ids}) => {
 
     return (
         <Fragment>
-            <ImagePriviewerForPayment images={files} submited={Setchild} file={SetFiles} payments={data} Index={index} Ids={Ids} />
+            <ImagePriviewerForPayment images={files} submited={Setchild} file={SetFiles} payments={data} Index={index} Ids={Ids} currentPay={currentPay} />
             {!child?
         <div className='d-flex justify-content-end'>  
             <input disabled={false}  type="file" className="custom-file-input" id="PaymentFile" accept='image/*' onChange={onchange}  />

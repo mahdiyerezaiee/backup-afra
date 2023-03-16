@@ -126,8 +126,8 @@ const CraeteInvoceOrderDetail: React.FC<Props> = ({ modalIsOpen, closeModal, ord
                 "entityId": orderDetailId[0],
                 "paymentMethodId": paymentMethodId,
                 "installmentStartDate": paymentMethodId !== 4 ? null : installmentStartDate,
-                "installmentPeriod": installmentPeriod,
-                "installmentOccureCount": installmentOccureCount,
+                installmentPeriod:installmentPeriod!==0?Number(installmentPeriod):null,
+                installmentOccureCount:installmentOccureCount!==0?Number(installmentOccureCount):null,
                 "comment": comment
             }
 

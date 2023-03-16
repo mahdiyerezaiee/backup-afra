@@ -93,7 +93,7 @@ const ProductSupplyConditionReadOnly:React.FC<Props> = ({activeHandler, contact,
 
             <td data-th="عملیات" style={{backgroundColor: contact.special === true ? 'lightgreen' : 'transparent'}}
                 className="text-center">
-                <ul className="table-controls">
+                <ul className="table-controls text-center " style={{listStyle: "none"}}>
 
                     <li><Link to='#' onClick={(event) => handleEditClick(event, contact)} data-toggle="tooltip"
                            data-placement="top"

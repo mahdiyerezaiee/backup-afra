@@ -8,6 +8,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { FaRegHandshake } from "react-icons/fa";
 import { TiPencil } from "react-icons/ti";
 import {
+  MdOpenInNew,
   MdOutlineAdminPanelSettings,
   MdPayment,
   MdSupportAgent,
@@ -77,9 +78,10 @@ const ClickHandler =()=>{
   return (
     <Sidebar
       defaultCollapsed={false}
-      className="client-sideBar   "
+      className="client-sideBar shadow  "
+      
     >
-      <div className="m-2 text-center   text-black-50 p-3 info-client">
+      <div className="m-2 text-center   text-black-50 p-3 info-client rounded ">
         {newAttachment.length === 0 ? (
           <div className="circle pb-3 ">
             <FaUserCircle size="5rem" color="lightgray" />
@@ -106,13 +108,15 @@ const ClickHandler =()=>{
         <h6 className="text-center">{user.email}</h6>
       </div>
 
-      <Menu>
+      <Menu >
         <MenuItem
+        
         onClick={ClickHandler}
           icon={<RiDashboardLine size={"1.2rem"} />}
           routerLink={
+            
             user.requireInfo ? (
-              <Link to="/client/editProfile" />
+              <Link to="/client/editProfile"  /> 
             ) : (
               <Link to="/client" />
             )
@@ -237,7 +241,7 @@ const ClickHandler =()=>{
         </MenuItem>
 
         <MenuItem
-          className="bg-light-danger"
+          className="bg-light-danger rounded "
           icon={<ImExit size="2rem" color="red" />}
           routerLink={<Link to="/logout"></Link>}
         >

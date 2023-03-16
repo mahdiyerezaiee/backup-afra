@@ -56,6 +56,8 @@ const ClientPreviewerForPaymentList: React.FC<Props> = ({ modalIsOpen, closeModa
     }
 
     const handelGetAttachment = async () => {
+        setImages([])
+
         let config = {
 
             headers: {'Content-Type': 'application/json'},

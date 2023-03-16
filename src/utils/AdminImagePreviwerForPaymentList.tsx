@@ -52,6 +52,8 @@ const AdminImagePreviwerForPaymentList: React.FC<Props> = ({ modalIsOpen, closeM
     }
 
     const handelGetAttachment = async () => {
+
+        setImages([])
         let config = {
 
             headers: {'Content-Type': 'application/json'},

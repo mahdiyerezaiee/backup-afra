@@ -92,7 +92,7 @@ const TableForPaymentsInOrder = ({ columns, data }) => {
 
         
 
-            <div className="table-responsive "
+            <div className="table-responsive table-striped"
                 
             >
               
