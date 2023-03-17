@@ -39,6 +39,12 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
     const [comment, SetComment] = useState('')
     const [active, SetActive] = useState(true)
 
+    var formatter = new Intl.NumberFormat('en-US', {
+
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+    });
     const getMembers = async () => {
 
         if (EntityType === 1) {
@@ -219,8 +225,8 @@ const AddMemberToCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTyp
                             <div className='form-row mb-3'>
                                 <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                     <label>حداکثر اعتبار </label>
-                                    <input type="number" className="form-control opacityForInput" value={maxValue}
-                                        name="additionalAmount" onChange={(e: any) => SetmaxValue(e.target.value)}
+                                    <input type="number" className="form-control opacityForInput" value={formatter.format(maxValue) }
+                                        name="additionalAmount" onChange={(e: any) => SetmaxValue(e.target.value.replaceAll(",", ""))}
                                     />
                                     {maxValue === 0 ? (<span className="text-danger">اعتبار را وارد کنید</span>) : null}
                                 </div>

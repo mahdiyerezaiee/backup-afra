@@ -1,4 +1,4 @@
-import {editOrder, GetOrder, GetOrderDetails} from "../../../services/orderService";
+import {ChangeOrderStatus, editOrder, GetOrder, GetOrderDetails} from "../../../services/orderService";
 import React, {useEffect, useState} from "react";
 import Modal from "react-modal";
 import {OrderStatus} from "../../../Common/Enums/OrderStatusEnums";
@@ -137,28 +137,14 @@ conditionOrder=orderCondition
     const handleEditFormSubmit = async () => {
     setLoading(true)
         const datas = {
-            "order": {
-                id,
-                "customerId": order.customerId,
-                orderStatusId:4,
-                'paymentStatusId': order.paymentStatusId,
-                paymentMethodId: order.paymentMethodId,
-                shippingStatusId: order.shippingStatusId,
-                "orderTotal": order.orderTotal,
-                "orderTax": order.orderTax,
-                "orderDiscount": order.orderDiscount,
-                orderFinalizedPrice: order.orderFinalizedPrice,
-                "createDate": order.createDate,
-                "extId": order.extId,
-                "paid": false,
-                comment,
-                "customer": null,
-                "extraData": null,
-                companyId:order.companyId
+            "orderId": id,
+            "orderStatusId": 4,
+            "paymentStatusId": order.paymentStatusId,
+            "isAdmin": true
             }
-        }
+        
         try {
-            const {data, status} = await editOrder(datas)
+            const {data, status} = await ChangeOrderStatus(datas)
 
             if (status === 200) {
                 toast.success("ویرایش با موفقعیت انجام شد", {

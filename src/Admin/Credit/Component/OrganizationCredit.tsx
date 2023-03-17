@@ -13,6 +13,8 @@ const OrganizationCredit: React.FC<Props> = ({ data, getData, creditId,value }) 
     const [currentItem, setcurrentItem] = useState<any>()
 
 
+    console.log(data);
+    
     const OpenAddModal = () => {
 
         SetIsOpen(true)

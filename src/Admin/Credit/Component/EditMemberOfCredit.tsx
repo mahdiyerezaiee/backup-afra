@@ -35,18 +35,24 @@ const EditMemberOfCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTy
     const [entityId, setEntityId] = useState(0)
     const [loading, SetLoading] = useState(false)
     const [priceUnitId, SetpriceUnitId] = useState(0)
-    const [maxValue, SetmaxValue] = useState(0)
+    const [maxValue, SetmaxValue] = useState<any>('')
     const [comment, SetComment] = useState('')
     const [active, SetActive] = useState(true)
     const [fullName, SetfullName] = useState('')
 
+    var formatter = new Intl.NumberFormat('en-US', {
+
+
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+    });
+       
     const getMembers = async () => {
 
 
 
        
-
-           
+       
 
 
         if (currentItem &&EntityType===1) {
@@ -61,13 +67,13 @@ const EditMemberOfCredit: React.FC<Props> = ({ modalIsOpen, closeModal, EntityTy
         }
         else{
 
-            const { id, priceUnitId, comment, maxValue, active,name } = currentItem
+            const { id, priceUnitId, comment, maxValue, active,organizationName } = currentItem
             setEntityId(id)
             SetComment(comment)
             SetpriceUnitId(priceUnitId)
             SetmaxValue(maxValue)
             SetActive(active)
-            SetfullName(name)
+            SetfullName(organizationName)
         }
 
     }
@@ -188,8 +194,8 @@ console.log(entityId);
                             <div className='form-row mb-3'>
                                 <div className=" form-group col-md-6 col-xs-12 textOnInput">
                                     <label>حداکثر اعتبار </label>
-                                    <input type="number" className="form-control opacityForInput" value={maxValue}
-                                        name="additionalAmount" onChange={(e: any) => SetmaxValue(e.target.value)}
+                                    <input type="number" className="form-control opacityForInput" value={formatter.format(maxValue) }
+                                        name="additionalAmount" onChange={(e: any) => SetmaxValue(e.target.value.replaceAll(",", ""))}
                                     />
                                     {maxValue === 0 ? (<span className="text-danger">اعتبار را وارد کنید</span>) : null}
                                 </div>

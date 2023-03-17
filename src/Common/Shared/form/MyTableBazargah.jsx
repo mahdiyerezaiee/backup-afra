@@ -94,7 +94,7 @@ const MyTableBazargah = ({ columns, data ,getData,bulkJob ,  rowProps = (row) =>
 
             <GlobalFilter filter={globalfilter} setFilter={setGlobalFilter} />
 
-            <div className="table-responsive table-striped"
+            <div className="table-responsive "
                  style={{overflowX:'auto' }}
             >
                 <div className='d-block clearfix mt-3 float-right'>
