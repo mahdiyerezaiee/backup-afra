@@ -84,7 +84,7 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
         const datas = {
 
-            "order": { ...order, paymentStatusId, orderStatusId, shippingStatusId,customer:null,extraData:null,isAdmin:true }
+            "order": { ...order, paymentStatusId, orderStatusId, shippingStatusId }
 
         }
         try {
@@ -112,6 +112,7 @@ const OrderEditList:React.FC<Props> = ({ id, modalIsOpen, closeModal }) => {
 
             console.log(e)
         }
+        closeModal()
     }
 
     return (
